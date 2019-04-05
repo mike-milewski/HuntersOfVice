@@ -1,0 +1,169 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+public class BasicAttack : MonoBehaviour
+{
+    [SerializeField]
+    private Character character;
+
+    [SerializeField] [Tooltip("Current targeted object. Keep this empty!")]
+    private GameObject Target = null;
+
+    [SerializeField]
+    private ParticleSystem HitParticle;
+
+    [SerializeField]
+    private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
+
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        MousePoint();
+
+        if(Target != null)
+        {
+            Attack();
+        }
+    }
+
+    public float GetAutoAttackTime
+    {
+        get
+        {
+            return AutoAttackTime;
+        }
+        set
+        {
+            AutoAttackTime = value;
+        }
+    }
+
+    public GameObject GetTarget
+    {
+        get
+        {
+            return Target;
+        }
+        set
+        {
+            Target = value;
+        }
+    }
+
+    private void MousePoint()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, MouseRange))
+        {
+            if(hit.collider.GetComponent<Enemy>())
+            {
+                if(hit.collider.GetComponent<Character>().CurrentHealth > 0)
+                {
+                    AutoAttackTime = 0;
+                    Target = hit.collider.GetComponent<Enemy>().gameObject;
+                    Target.GetComponent<EnemyHealth>().GetEnemyInfo();
+                    Target.GetComponent<EnemyHealth>().GetFilledBar();
+                    Target.GetComponent<Enemy>().GetHealthObject.SetActive(true);
+                }
+            }
+            else
+            {
+                if(Target != null)
+                {
+                    Target.GetComponent<Enemy>().GetHealthObject.SetActive(false);
+                }
+                Target = null;
+                AutoAttackTime = 0;
+            }
+        }
+    }
+
+    private void Attack()
+    {
+        if(Vector3.Distance(this.transform.position, Target.transform.position) <= AttackRange)
+        {
+            if(Target.GetComponent<Character>().CurrentHealth > 0)
+            {
+                AutoAttackTime += Time.deltaTime;
+                if (AutoAttackTime >= AttackDelay && Target != null)
+                {
+                    this.GetComponent<PlayerAnimations>().AttackAnimation();
+                    if(Target.GetComponent<EnemyAI>().GetIsHostile == false)
+                    {
+                        Target.GetComponent<EnemyAI>().GetSphereTrigger.gameObject.SetActive(true);
+                    }
+                }
+            }
+            else
+            {
+                this.GetComponent<PlayerAnimations>().EndAttackAnimation();
+                Target.GetComponent<EnemyAI>().Dead();
+                Target = null;
+                AutoAttackTime = 0;
+            }
+        }
+        else
+        {
+            this.GetComponent<PlayerAnimations>().EndAttackAnimation();
+        }
+        if(Target != null)
+        {
+            if(Vector3.Distance(this.transform.position, Target.transform.position) >= HideStatsDistance)
+            {
+                Target.GetComponent<Enemy>().GetHealthObject.SetActive(false);
+                Target = null;
+                AutoAttackTime = 0;
+            }
+        }
+    }
+
+    public Text TakeDamage()
+    {
+        Text DamageObject = null;
+
+        float Critical = character.GetCriticalChance;
+
+        var Hitparticle = HitParticle;
+
+        if (Target != null)
+        {
+            Hitparticle = Instantiate(HitParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z), 
+                                      Target.transform.rotation);
+
+            Hitparticle.transform.SetParent(Target.transform, true);
+
+            #region CriticalHitCalculation
+            if (Random.value * 100 <= Critical)
+            {
+                DamageObject = Instantiate(Target.GetComponent<EnemyHealth>().GetDamageText);
+
+                DamageObject.transform.SetParent(Target.GetComponent<EnemyHealth>().GetDamageTextHolder.transform, false);
+
+                Target.GetComponent<EnemyHealth>().ModifyHealth((-character.CharacterStrength - 5) - -Target.GetComponent<Character>().CharacterDefense);
+
+                DamageObject.fontSize = 30;
+
+                DamageObject.text = ((character.CharacterStrength + 5) - Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+            }
+            else
+            {
+                DamageObject = Instantiate(Target.GetComponent<EnemyHealth>().GetDamageText);
+
+                DamageObject.transform.SetParent(Target.GetComponent<EnemyHealth>().GetDamageTextHolder.transform, false);
+
+                Target.GetComponent<EnemyHealth>().ModifyHealth(-character.CharacterStrength - -Target.GetComponent<Character>().CharacterDefense);
+
+                DamageObject.fontSize = 20;
+
+                DamageObject.text = (character.CharacterStrength - Target.GetComponent<Character>().CharacterDefense).ToString();
+            }
+            #endregion
+
+            Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
+        }
+        return DamageObject;
+    }
+}
