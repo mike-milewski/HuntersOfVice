@@ -30,7 +30,7 @@ public class DamageRadius : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Awake()
     {
         switch (shapes)
         {

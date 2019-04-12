@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance = null;
+
+    [SerializeField]
+    private Text InvalidText;
 
     [SerializeField]
     private GameObject Player;
@@ -27,6 +31,8 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
         #endregion
+
+        InvalidText.gameObject.SetActive(false);
     }
 
     public void Dead()
@@ -62,5 +68,32 @@ public class GameManager : MonoBehaviour
         Player.GetComponent<Character>().GetRigidbody.isKinematic = false;
 
         Player.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
+    }
+
+    public Text ShowInvalidTargetText()
+    {
+        InvalidText.gameObject.SetActive(true);
+
+        InvalidText.text = "Invalid Target...";
+
+        return InvalidText;
+    }
+
+    public Text ShowNotEnoughManaText()
+    {
+        InvalidText.gameObject.SetActive(true);
+
+        InvalidText.text = "Not enough Mana...";
+
+        return InvalidText;
+    }
+
+    public Text ShowTargetOutOfRangeText()
+    {
+        InvalidText.gameObject.SetActive(true);
+
+        InvalidText.text = "Target out of range...";
+
+        return InvalidText;
     }
 }

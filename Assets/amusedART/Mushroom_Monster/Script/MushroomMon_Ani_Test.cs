@@ -73,7 +73,15 @@ public class MushroomMon_Ani_Test : MonoBehaviour
 
     public void EndDamaged()
     {
-        AI.GetStates = States.Attack;
+        if(AI.GetIsHostile == false)
+        {
+            AI.GetSphereTrigger.enabled = true;
+            AI.GetStates = States.Attack;
+        }
+        else
+        {
+            AI.GetStates = States.Attack;
+        }
     }
 
     public IEnumerator Fade()

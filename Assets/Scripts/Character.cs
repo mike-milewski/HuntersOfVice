@@ -172,6 +172,18 @@ public class Character : MonoBehaviour
             GetRigidbody = value;
         }
     }
+
+    public CharacterData GetCharacterData
+    {
+        get
+        {
+            return CharData;
+        }
+        set
+        {
+            CharData = value;
+        }
+    }
     #endregion
 
     private void Reset()
@@ -181,6 +193,18 @@ public class Character : MonoBehaviour
 
     private void Awake()
     {
+        var cData = Instantiate(CharData);
+
+        CharacterName = cData.CharacterName;
+        CharacterLevel = cData.CharacterLevel;
+        Health = cData.Health;
+        Mana = cData.Mana;
+        Strength = cData.Strength;
+        Defense = cData.Defense;
+        Intelligence = cData.Intelligence;
+        CriticalHitChance = cData.CriticalHitChance;
+        NextToLevel = cData.NextToLevel;
+        /*
         CharacterName = CharData.CharacterName;
         CharacterLevel = CharData.CharacterLevel;
         Health = CharData.Health;
@@ -190,6 +214,7 @@ public class Character : MonoBehaviour
         Intelligence = CharData.Intelligence;
         CriticalHitChance = CharData.CriticalHitChance;
         NextToLevel = CharData.NextToLevel;
+        */
     }
 
     public void GetStats()

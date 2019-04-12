@@ -73,18 +73,6 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public float GetAutoAttack
-    {
-        get
-        {
-            return AutoAttackTime;
-        }
-        set
-        {
-            AutoAttackTime = value;
-        }
-    }
-
     public States GetStates
     {
         get
@@ -94,6 +82,18 @@ public class EnemyAI : MonoBehaviour
         set
         {
             states = value;
+        }
+    }
+
+    public float GetAutoAttack
+    {
+        get
+        {
+            return AutoAttackTime;
+        }
+        set
+        {
+            AutoAttackTime = value;
         }
     }
 
@@ -149,7 +149,7 @@ public class EnemyAI : MonoBehaviour
     {
         Anim.RunAni();
 
-        if (Vector3.Distance(this.transform.position, PlayerTarget.transform.position) > AttackRange)
+        if (Vector3.Distance(this.transform.position, PlayerTarget.transform.position) >= AttackRange)
         {
             Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
                                            PlayerTarget.transform.position.z - this.transform.position.z).normalized;

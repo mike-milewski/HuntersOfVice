@@ -4,6 +4,9 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField]
+    private Character character;
+
+    [SerializeField]
     private Image HealthBar, LocalHealthBar, FillBarTwo;
 
     [SerializeField]
@@ -14,9 +17,6 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField]
     private Text EnemyInfo, LocalEnemyInfo, DamageText;
-
-    [SerializeField]
-    private Character character;
 
     private void Reset()
     {
@@ -35,7 +35,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void LateUpdate()
     {
-        FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, 4 * Time.deltaTime);
+        FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, .08f);
     }
 
     public void ModifyHealth(int Value)

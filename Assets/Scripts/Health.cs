@@ -15,6 +15,9 @@ public class Health : MonoBehaviour
     [SerializeField]
     private Text HealthText, DamageText;
 
+    [SerializeField]
+    private float FillValue;
+
     private void Reset()
     {
         character = GetComponent<Character>();
@@ -32,7 +35,19 @@ public class Health : MonoBehaviour
 
     private void LateUpdate()
     {
-        FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, 4 * Time.deltaTime);
+        FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, FillValue);
+        //HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, FillBarTwo.fillAmount, .08f);
+    }
+
+    public void IncreaseHealth(int Value)
+    {
+        character.CurrentHealth += Value;
+
+        character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
+
+        HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
+
+        FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }
 
     public void ModifyHealth(int Value)

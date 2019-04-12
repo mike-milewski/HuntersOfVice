@@ -10,13 +10,25 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
 
     [SerializeField]
-    private float Speed, LookRotation;
-    
-    [SerializeField]
-    private float JumpSpeed;
+    private Character character;
+
+    private Vector3 direction = Vector3.zero;
+    private Vector3 Movement;
 
     [SerializeField]
-    private Character character;
+    private float Speed, LookRotation;
+    
+    public Vector3 GetMovement
+    {
+        get
+        {
+            return Movement;
+        }
+        set
+        {
+            Movement = value;
+        }
+    }
 
     public float GetSpeed
     {
@@ -47,32 +59,22 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        /*
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            if (Grounded())
-            {
-                Jump();
-            }
-        }
-        */
     }
 
     private void Move()
     {
-        Vector3 direction = Vector3.zero;
-
         direction.x = Input.GetAxis("Horizontal");
         direction.z = Input.GetAxis("Vertical");
         
-        Vector3 Movement = new Vector3(direction.x, 0, direction.z);
+        Movement = new Vector3(direction.x, 0, direction.z);
 
         Movement = cam.transform.TransformDirection(Movement);
         Movement.y = 0.0f;
 
         if (Movement != Vector3.zero)
         {
-            Quaternion LookDir = Quaternion.LookRotation(Movement);
+            Quaternion Look = Quaternion.LookRotation(Movement);
+            Quaternion LookDir = Look;
 
             character.GetRigidbody.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookRotation * Time.deltaTime);
         }
@@ -92,31 +94,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             animator.SetFloat("Speed", 0);
+            direction = Vector3.zero;
         }
-    }
-
-    private void Jump()
-    {
-        character.GetRigidbody.velocity = new Vector2(0, JumpSpeed * Time.deltaTime);
-    }
-
-    private bool Grounded()
-    {
-        Ray ray = new Ray(transform.position, Vector3.down);
-
-        RaycastHit Hit;
-
-        if(Physics.Raycast(ray, out Hit, 1))
-        {
-            if(Hit.collider.tag == "Ground")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return false;
     }
 }

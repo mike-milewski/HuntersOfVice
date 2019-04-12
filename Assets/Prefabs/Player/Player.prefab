@@ -2109,8 +2109,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ManaBar: {fileID: 0}
+  FillBarTwo: {fileID: 0}
   character: {fileID: 114392228500413548}
   ManaText: {fileID: 0}
+  FillValue: 0.08
 --- !u!114 &114238346711748636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2167,10 +2169,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   animator: {fileID: 95636442410713664}
+  character: {fileID: 114392228500413548}
   Speed: 4
   LookRotation: 4
-  JumpSpeed: 200
-  character: {fileID: 114392228500413548}
 --- !u!114 &114552455547242274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2205,7 +2206,7 @@ MonoBehaviour:
   ExperienceTextParent: {fileID: 0}
   LevelUpParticle: {fileID: 198159274938206214, guid: 9e4577abe56a95f4a91d29a0473cd30c,
     type: 2}
-  FillValue: 4
+  FillValue: 0.07
 --- !u!114 &114926308544404342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2224,6 +2225,7 @@ MonoBehaviour:
   HealthText: {fileID: 0}
   DamageText: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
     type: 2}
+  FillValue: 0.08
 --- !u!137 &137347199056414644
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

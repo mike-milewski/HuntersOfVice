@@ -42,7 +42,7 @@ public class Experience : MonoBehaviour
 
     private void LateUpdate()
     {
-        ExperienceBar.fillAmount = Mathf.Lerp(ExperienceBar.fillAmount, FillBarTwo.fillAmount, FillValue * Time.deltaTime);
+        ExperienceBar.fillAmount = Mathf.Lerp(ExperienceBar.fillAmount, FillBarTwo.fillAmount, FillValue);
     }
 
     public void GainEXP(int Value)
@@ -51,7 +51,7 @@ public class Experience : MonoBehaviour
         {
             character.Experience += Value;
 
-            //Creates a level up particle effect when the player levels. 
+            //Creates a level up particle effect when the player levels up. 
             //We put this in a separate conditional so that multiple particles
             //won't spawn.
             if(character.Experience >= character.NextTo && character.Level <= 99)
@@ -88,8 +88,8 @@ public class Experience : MonoBehaviour
     private void LevelUp()
     {
         character.Level++;
-        character.MaxHealth += 50;
-        character.MaxMana += 5;
+        //character.MaxHealth += 50;
+        //character.MaxMana += 5;
         character.CharacterStrength += 3;
         character.CharacterDefense += 2;
         character.CharacterIntelligence += 1;
