@@ -909,8 +909,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.83}
-  m_SizeDelta: {x: 160, y: 107.95}
+  m_AnchoredPosition: {x: 0, y: 0.5325}
+  m_SizeDelta: {x: 160, y: 157.06}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &445733100
 MonoBehaviour:
@@ -2478,6 +2478,7 @@ MonoBehaviour:
   SkillTextObject: {fileID: 114235059858536948, guid: 52a1b7d130167a845b1d382c25a87c93,
     type: 2}
   SkillPanelObject: {fileID: 445733100}
+  SkillParticle: {fileID: 0}
   CoolDown: 5
   AttackRange: 4
   ManaCost: 5
@@ -2504,7 +2505,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -3715,6 +3716,7 @@ MonoBehaviour:
   SkillTextObject: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
     type: 2}
   SkillPanelObject: {fileID: 445733100}
+  SkillParticle: {fileID: 0}
   CoolDown: 10
   AttackRange: 0
   ManaCost: 5
@@ -3741,7 +3743,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.5019608}
     m_ColorMultiplier: 1

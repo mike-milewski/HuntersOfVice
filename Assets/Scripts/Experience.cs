@@ -106,8 +106,6 @@ public class Experience : MonoBehaviour
         character.CurrentHealth = character.MaxHealth;
         character.CurrentMana = character.MaxMana;
 
-        //character.GetStats();
-
         this.gameObject.GetComponent<Health>().GetFilledBar();
     }
 

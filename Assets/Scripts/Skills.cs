@@ -16,6 +16,9 @@ public class Skills : MonoBehaviour
     private Text SkillTextObject, SkillPanelObject;
 
     [SerializeField]
+    private ParticleSystem SkillParticle;
+
+    [SerializeField]
     private float CoolDown, AttackRange;
 
     [SerializeField]
@@ -107,6 +110,11 @@ public class Skills : MonoBehaviour
 
                 var Target = character.GetComponent<BasicAttack>().GetTarget;
 
+                var DamageParticle = Instantiate(SkillParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z),
+                                       Quaternion.identity);
+
+                DamageParticle.transform.SetParent(Target.transform, true);
+
                 Target.GetComponent<EnemyHealth>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
 
                 Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
@@ -124,7 +132,10 @@ public class Skills : MonoBehaviour
     {
         var SkillObj = Instantiate(SkillTextObject);
 
-        SkillObj.color = Color.green;
+        var HealParticle = Instantiate(SkillParticle, new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z),
+                                       Quaternion.identity);
+
+        HealParticle.transform.SetParent(character.transform, true);
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
@@ -150,6 +161,6 @@ public class Skills : MonoBehaviour
     {
         Panel.gameObject.SetActive(true);
 
-        SkillPanelObject.text = SkillName + "\n \n" + SkillDescription + "\n \n" + "Potency: " + Potency;
+        SkillPanelObject.text = SkillName + "\n \n" + SkillDescription + "\n \n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown;
     }
 }
