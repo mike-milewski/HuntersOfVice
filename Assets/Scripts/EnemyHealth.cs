@@ -49,6 +49,7 @@ public class EnemyHealth : MonoBehaviour
     public void GetFilledBar()
     {
         HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+        FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
         LocalHealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }
 

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BasicAttack : MonoBehaviour
@@ -71,14 +73,28 @@ public class BasicAttack : MonoBehaviour
             }
             else
             {
-                if(Target != null)
+                if(!IsPointerOnUIObject())
                 {
-                    Target.GetComponent<Enemy>().GetHealthObject.SetActive(false);
+                    if (Target != null)
+                    {
+                        Target.GetComponent<Enemy>().GetHealthObject.SetActive(false);
+                    }
+                    Target = null;
+                    AutoAttackTime = 0;
                 }
-                Target = null;
-                AutoAttackTime = 0;
             }
         }
+    }
+
+    //Checks to see if the mouse is positioned over a UI element.
+    private bool IsPointerOnUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        return results.Count > 0;
     }
 
     private void Attack()
@@ -90,10 +106,18 @@ public class BasicAttack : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay && Target != null)
                 {
+                    Vector3 TargetPosition = new Vector3(Target.transform.position.x - this.transform.position.x, 0, 
+                                                         Target.transform.position.z - this.transform.position.z).normalized;
+
+                    Quaternion LookDir = Quaternion.LookRotation(TargetPosition);
+
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, 5 * Time.deltaTime);
+
                     this.GetComponent<PlayerAnimations>().AttackAnimation();
                     if(Target.GetComponent<EnemyAI>().GetIsHostile == false)
                     {
                         Target.GetComponent<EnemyAI>().GetSphereTrigger.gameObject.SetActive(true);
+                        Target.GetComponent<EnemyAI>().GetPlayerTarget = this.gameObject;
                     }
                 }
             }

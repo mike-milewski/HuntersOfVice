@@ -593,8 +593,7 @@ MonoBehaviour:
   ThreatPic: {fileID: 114677610278254228}
   DocileSprite: {fileID: 21300000, guid: 7d98e05a50dca0b4b9cddaa9f1a77317, type: 3}
   ThreatSprite: {fileID: 21300000, guid: 9a67be6f2c606b545a2d43c34dc2c93c, type: 3}
-  WaypointIndex: 0
-  IsHostile: 0
+  IsHostile: 1
 --- !u!114 &114256765670847670
 MonoBehaviour:
   m_ObjectHideFlags: 1

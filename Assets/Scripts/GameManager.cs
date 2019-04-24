@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
     {
         InvalidText.gameObject.SetActive(true);
 
-        InvalidText.text = "Not enough Mana...";
+        InvalidText.text = "Not enough Mana.";
 
         return InvalidText;
     }
@@ -92,7 +92,25 @@ public class GameManager : MonoBehaviour
     {
         InvalidText.gameObject.SetActive(true);
 
-        InvalidText.text = "Target out of range...";
+        InvalidText.text = "Target out of range.";
+
+        return InvalidText;
+    }
+
+    public Text SkillStillRechargingText()
+    {
+        InvalidText.gameObject.SetActive(true);
+
+        InvalidText.text = "Skill still recharging.";
+
+        return InvalidText;
+    }
+
+    public Text InvalidTargetText()
+    {
+        InvalidText.gameObject.SetActive(true);
+
+        InvalidText.text = "Invalid Target.";
 
         return InvalidText;
     }

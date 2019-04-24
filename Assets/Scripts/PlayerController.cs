@@ -78,10 +78,6 @@ public class PlayerController : MonoBehaviour
 
             character.GetRigidbody.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookRotation * Time.deltaTime);
         }
-        else
-        {
-            character.GetRigidbody.transform.rotation = Quaternion.Slerp(this.transform.rotation, this.transform.rotation, LookRotation * Time.deltaTime);
-        }
 
         character.GetRigidbody.transform.position += Movement * Speed * Time.deltaTime;
 

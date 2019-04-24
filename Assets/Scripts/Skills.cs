@@ -9,8 +9,8 @@ public class Skills : MonoBehaviour
     [SerializeField]
     private Button button;
 
-    [SerializeField]
-    private Transform TextHolder;
+    [SerializeField] [Tooltip("The transform that holds the damage/heal text values. Keep this empty!")]
+    private Transform TextHolder = null;
 
     [SerializeField]
     private Text SkillTextObject, SkillPanelObject;
@@ -32,18 +32,6 @@ public class Skills : MonoBehaviour
 
     [SerializeField]
     private int Potency;
-
-    public string GetSkillName
-    {
-        get
-        {
-            return SkillName;
-        }
-        set
-        {
-            SkillName = value;
-        }
-    }
 
     private void Update()
     {
@@ -102,6 +90,7 @@ public class Skills : MonoBehaviour
     {
         if (character.GetComponent<BasicAttack>().GetTarget != null)
         {
+            TextHolder = character.GetComponent<BasicAttack>().GetTarget.GetComponentInChildren<NoRotationHealthBar>().transform;
             if(Vector3.Distance(character.transform.position, character.GetComponent<BasicAttack>().GetTarget.transform.position) <= AttackRange)
             {
                 this.button.GetComponent<Image>().fillAmount = 0;
@@ -109,11 +98,12 @@ public class Skills : MonoBehaviour
                 character.GetComponent<Mana>().ModifyMana(-ManaCost);
 
                 var Target = character.GetComponent<BasicAttack>().GetTarget;
-
+                /*
                 var DamageParticle = Instantiate(SkillParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z),
                                        Quaternion.identity);
 
                 DamageParticle.transform.SetParent(Target.transform, true);
+                */
 
                 Target.GetComponent<EnemyHealth>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
 
@@ -125,6 +115,11 @@ public class Skills : MonoBehaviour
             {
                 GameManager.Instance.ShowTargetOutOfRangeText();
             }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
         }
     }
 
@@ -161,6 +156,6 @@ public class Skills : MonoBehaviour
     {
         Panel.gameObject.SetActive(true);
 
-        SkillPanelObject.text = SkillName + "\n \n" + SkillDescription + "\n \n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown;
+        SkillPanelObject.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown;
     }
 }

@@ -5,5 +5,5 @@ public class CharacterData : ScriptableObject
 {
     public string CharacterName;
 
-    public int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, CriticalHitChance, NextToLevel;
+    public int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, CriticalHitChance;
 }

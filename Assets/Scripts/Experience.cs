@@ -22,6 +22,11 @@ public class Experience : MonoBehaviour
     private ParticleSystem LevelUpParticle;
 
     [SerializeField]
+    private int ExperiencePoints, NextToLevel;
+
+    private int MaxLevel = 99;
+
+    [SerializeField]
     private float FillValue;
 
     private void Reset()
@@ -47,14 +52,14 @@ public class Experience : MonoBehaviour
 
     public void GainEXP(int Value)
     {
-        if(character.Level <= 99)
+        if(character.Level <= MaxLevel)
         {
-            character.Experience += Value;
+            ExperiencePoints += Value;
 
             //Creates a level up particle effect when the player levels up. 
             //We put this in a separate conditional so that multiple particles
             //won't spawn.
-            if(character.Experience >= character.NextTo && character.Level <= 99)
+            if(ExperiencePoints >= NextToLevel && character.Level <= MaxLevel)
             {
                 var LvParticle = Instantiate(LevelUpParticle, new Vector3(Player.transform.position.x, Player.transform.position.y + 1.0f, Player.transform.position.z), 
                                              Quaternion.identity);
@@ -63,21 +68,21 @@ public class Experience : MonoBehaviour
             }
             //Loops through to check if the player's experience is enough to level them up
             //and continues as long as that's true.
-            while (character.Experience >= character.NextTo && character.Level <= 99)
+            while (ExperiencePoints >= NextToLevel && character.Level <= MaxLevel)
             {
                 LevelUp();
             }
         }
-        FillBarTwo.fillAmount = (float)character.Experience / (float)character.NextTo;
+        FillBarTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
         UpdateExperienceText();
     }
 
     public void UpdateExperienceText()
     {
-        float Percent = ((float)character.Experience / (float)character.NextTo) * 100;
+        float Percent = ((float)ExperiencePoints / (float)NextToLevel) * 100;
 
-        ExperienceText.text = character.Experience + "/" + character.NextTo + " (" + Percent.ToString("F0") + "%)";
+        ExperienceText.text = ExperiencePoints + "/" + NextToLevel + " (" + Percent.ToString("F0") + "%)";
     }
 
     private void UpdateCharacterLevel()
@@ -97,11 +102,11 @@ public class Experience : MonoBehaviour
         UpdateCharacterLevel();
 
         //Adds the extra experience left over after leveling up onto the current experience points.
-        int SurplusExperience = Mathf.Abs(character.Experience - character.NextTo);
+        int SurplusExperience = Mathf.Abs(ExperiencePoints - NextToLevel);
 
-        character.Experience = SurplusExperience;
+        ExperiencePoints = SurplusExperience;
 
-        character.NextTo += character.Level * 11;
+        NextToLevel += character.Level * 11;
 
         character.CurrentHealth = character.MaxHealth;
         character.CurrentMana = character.MaxMana;

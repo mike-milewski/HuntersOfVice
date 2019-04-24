@@ -10,12 +10,12 @@ public class Character : MonoBehaviour
     private Rigidbody _rigidBody;
 
     [SerializeField]
-    private int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, ExperiencePoints, NextToLevel, CriticalHitChance;
+    private int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, CriticalHitChance;
 
     [SerializeField]
     private string CharacterName;
 
-    //Region that gets and returns all of the character stat values.
+    //Region that gets and returns all of the character's stat values.
     #region StatProperties
     public string characterName
     {
@@ -74,30 +74,6 @@ public class Character : MonoBehaviour
         set
         {
             CharData.Mana = value;
-        }
-    }
-
-    public int Experience
-    {
-        get
-        {
-            return ExperiencePoints;
-        }
-        set
-        {
-            ExperiencePoints = value;
-        }
-    }
-
-    public int NextTo
-    {
-        get
-        {
-            return NextToLevel;
-        }
-        set
-        {
-            NextToLevel = value;
         }
     }
 
@@ -203,7 +179,6 @@ public class Character : MonoBehaviour
         Defense = cData.Defense;
         Intelligence = cData.Intelligence;
         CriticalHitChance = cData.CriticalHitChance;
-        NextToLevel = cData.NextToLevel;
         /*
         CharacterName = CharData.CharacterName;
         CharacterLevel = CharData.CharacterLevel;

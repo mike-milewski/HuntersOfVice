@@ -35,7 +35,6 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private Sprite DocileSprite, ThreatSprite;
 
-    [SerializeField]
     private int WaypointIndex;
 
     [SerializeField]
@@ -106,6 +105,18 @@ public class EnemyAI : MonoBehaviour
         set
         {
             IsHostile = value;
+        }
+    }
+
+    public GameObject GetPlayerTarget
+    {
+        get
+        {
+            return PlayerTarget;
+        }
+        set
+        {
+            PlayerTarget = value;
         }
     }
 
