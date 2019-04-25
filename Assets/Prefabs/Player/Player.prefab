@@ -2152,8 +2152,6 @@ MonoBehaviour:
   Strength: 0
   Defense: 0
   Intelligence: 0
-  ExperiencePoints: 0
-  NextToLevel: 0
   CriticalHitChance: 0
   CharacterName: 
 --- !u!114 &114525097018775528
@@ -2206,6 +2204,8 @@ MonoBehaviour:
   ExperienceTextParent: {fileID: 0}
   LevelUpParticle: {fileID: 198159274938206214, guid: 9e4577abe56a95f4a91d29a0473cd30c,
     type: 2}
+  ExperiencePoints: 0
+  NextToLevel: 50
   FillValue: 0.07
 --- !u!114 &114926308544404342
 MonoBehaviour:

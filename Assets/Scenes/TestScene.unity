@@ -826,11 +826,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114525097018775528, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
+    - target: {fileID: 114159473540686720, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 2}
-      propertyPath: cam
+      propertyPath: ManaBar
       value: 
-      objectReference: {fileID: 696282350}
+      objectReference: {fileID: 1427971676}
+    - target: {fileID: 114159473540686720, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
+        type: 2}
+      propertyPath: FillBarTwo
+      value: 
+      objectReference: {fileID: 749921530}
+    - target: {fileID: 114159473540686720, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
+        type: 2}
+      propertyPath: ManaText
+      value: 
+      objectReference: {fileID: 266616371}
     - target: {fileID: 114926308544404342, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 2}
       propertyPath: HealthBar
@@ -851,21 +861,11 @@ Prefab:
       propertyPath: HealthText
       value: 
       objectReference: {fileID: 2049743751}
-    - target: {fileID: 114159473540686720, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
+    - target: {fileID: 114525097018775528, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 2}
-      propertyPath: ManaBar
+      propertyPath: cam
       value: 
-      objectReference: {fileID: 1427971676}
-    - target: {fileID: 114159473540686720, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
-        type: 2}
-      propertyPath: FillBarTwo
-      value: 
-      objectReference: {fileID: 749921530}
-    - target: {fileID: 114159473540686720, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
-        type: 2}
-      propertyPath: ManaText
-      value: 
-      objectReference: {fileID: 266616371}
+      objectReference: {fileID: 696282350}
     - target: {fileID: 114884055767735502, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 2}
       propertyPath: ExperienceBar
@@ -891,11 +891,6 @@ Prefab:
       propertyPath: ExperienceTextParent
       value: 
       objectReference: {fileID: 30534054}
-    - target: {fileID: 114884055767735502, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
-        type: 2}
-      propertyPath: NextToLevel
-      value: 50
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 2}
   m_IsPrefabAsset: 0
