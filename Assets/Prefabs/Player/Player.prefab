@@ -2206,6 +2206,7 @@ MonoBehaviour:
     type: 2}
   ExperiencePoints: 0
   NextToLevel: 50
+  MaxLevel: 100
   FillValue: 0.07
 --- !u!114 &114926308544404342
 MonoBehaviour:

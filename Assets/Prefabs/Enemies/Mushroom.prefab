@@ -844,8 +844,6 @@ MonoBehaviour:
   Strength: 0
   Defense: 0
   Intelligence: 0
-  ExperiencePoints: 0
-  NextToLevel: 0
   CriticalHitChance: 0
   CharacterName: 
 --- !u!135 &135983528392186926

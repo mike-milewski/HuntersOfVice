@@ -7,9 +7,12 @@ public class Skills : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private SkillBar skillbar;
+
+    [SerializeField]
     private Button button;
 
-    [SerializeField] [Tooltip("The transform that holds the damage/heal text values. Keep this empty!")]
+    [SerializeField] [Tooltip("The transform that holds the damage/heal/buff text values. Keep this empty!")]
     private Transform TextHolder = null;
 
     [SerializeField]
@@ -22,7 +25,7 @@ public class Skills : MonoBehaviour
     private float CoolDown, AttackRange;
 
     [SerializeField]
-    private int ManaCost;
+    private int ManaCost, Potency, CastTime;
 
     [SerializeField]
     private string SkillName;
@@ -30,8 +33,29 @@ public class Skills : MonoBehaviour
     [SerializeField] [TextArea]
     private string SkillDescription;
 
-    [SerializeField]
-    private int Potency;
+    public int GetCastTime
+    {
+        get
+        {
+            return CastTime;
+        }
+        set
+        {
+            CastTime = value;
+        }
+    }
+
+    public string GetSkillName
+    {
+        get
+        {
+            return SkillName;
+        }
+        set
+        {
+            SkillName = value;
+        }
+    }
 
     private void Update()
     {
@@ -77,11 +101,15 @@ public class Skills : MonoBehaviour
 
     public void TestHealSkill()
     {
+        skillbar.gameObject.SetActive(true);
+
+        skillbar.GetSkill = this.button.GetComponent<Skills>();
+
         this.button.GetComponent<Image>().fillAmount = 0;
 
         character.GetComponent<Mana>().ModifyMana(-ManaCost);
 
-        character.GetComponent<Health>().ModifyHealth(Potency);
+        character.GetComponent<Health>().ModifyHealth(Potency + character.CharacterIntelligence);
 
         HealSkillText();
     }
@@ -126,15 +154,16 @@ public class Skills : MonoBehaviour
     private Text HealSkillText()
     {
         var SkillObj = Instantiate(SkillTextObject);
-
+        /*
         var HealParticle = Instantiate(SkillParticle, new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z),
                                        Quaternion.identity);
 
         HealParticle.transform.SetParent(character.transform, true);
+        */
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.text = SkillName + " " + Potency;
+        SkillObj.text = SkillName + " " + (Potency + character.CharacterIntelligence).ToString();
 
         return SkillObj;
     }
@@ -156,6 +185,14 @@ public class Skills : MonoBehaviour
     {
         Panel.gameObject.SetActive(true);
 
-        SkillPanelObject.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown;
+        if(CastTime == 0)
+        {
+            SkillPanelObject.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown;
+        }
+        else
+        {
+            SkillPanelObject.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown
+                                    + "\n" + "Cast Time: " + CastTime;
+        }
     }
 }

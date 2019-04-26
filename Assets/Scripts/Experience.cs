@@ -22,9 +22,7 @@ public class Experience : MonoBehaviour
     private ParticleSystem LevelUpParticle;
 
     [SerializeField]
-    private int ExperiencePoints, NextToLevel;
-
-    private int MaxLevel = 2;
+    private int ExperiencePoints, NextToLevel, MaxLevel;
 
     [SerializeField]
     private float FillValue;
