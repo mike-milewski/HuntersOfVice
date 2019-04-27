@@ -101,17 +101,23 @@ public class Skills : MonoBehaviour
 
     public void TestHealSkill()
     {
-        skillbar.gameObject.SetActive(true);
+        if(skillbar.GetSkillBar.fillAmount < 1)
+        {
+            this.button.GetComponent<Image>().fillAmount = 0;
 
-        skillbar.GetSkill = this.button.GetComponent<Skills>();
+            skillbar.gameObject.SetActive(true);
 
-        this.button.GetComponent<Image>().fillAmount = 0;
+            skillbar.GetSkill = this.button.GetComponent<Skills>();
+        }
 
-        character.GetComponent<Mana>().ModifyMana(-ManaCost);
+        if(skillbar.GetSkillBar.fillAmount >= 1)
+        {
+            character.GetComponent<Mana>().ModifyMana(-ManaCost);
 
-        character.GetComponent<Health>().ModifyHealth(Potency + character.CharacterIntelligence);
+            character.GetComponent<Health>().ModifyHealth(Potency + character.CharacterIntelligence);
 
-        HealSkillText();
+            HealSkillText();
+        }
     }
 
     public void TestDamageSkill()

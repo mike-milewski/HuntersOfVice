@@ -55,6 +55,7 @@ public class SkillBar : MonoBehaviour
             SkillName.text = skills.GetSkillName + " " + Mathf.Clamp(CastTime, 0, skills.GetCastTime).ToString("F2");
             if (SkillBarImage.fillAmount >= 1)
             {
+                skills.GetComponent<Button>().onClick.Invoke();
                 SkillBarImage.fillAmount = 0;
                 CastTime = skills.GetCastTime;
                 gameObject.SetActive(false);
