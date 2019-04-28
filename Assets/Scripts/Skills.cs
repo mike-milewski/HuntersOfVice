@@ -12,11 +12,11 @@ public class Skills : MonoBehaviour
     [SerializeField]
     private Button button;
 
-    [SerializeField] [Tooltip("The transform that holds the damage/heal/buff text values. Keep this empty!")]
+    [SerializeField] [Tooltip("The transform that holds the damage/heal/buff text values. Keep this empty for damage type skills!")]
     private Transform TextHolder = null;
 
     [SerializeField]
-    private Text SkillTextObject, SkillPanelObject;
+    private Text SkillTextObject, SkillPanelText;
 
     [SerializeField]
     private ParticleSystem SkillParticle;
@@ -25,7 +25,10 @@ public class Skills : MonoBehaviour
     private float CoolDown, AttackRange;
 
     [SerializeField]
-    private int ManaCost, Potency, CastTime;
+    private int ManaCost, Potency;
+    
+    [SerializeField] [Tooltip("Skills that have a cast time greater than 0 are considered spells.")]
+    private int CastTime;
 
     [SerializeField]
     private string SkillName;
@@ -45,6 +48,18 @@ public class Skills : MonoBehaviour
         }
     }
 
+    public int GetManaCost
+    {
+        get
+        {
+            return ManaCost;
+        }
+        set
+        {
+            ManaCost = value;
+        }
+    }
+
     public string GetSkillName
     {
         get
@@ -57,35 +72,24 @@ public class Skills : MonoBehaviour
         }
     }
 
-    private void Update()
+    public Character GetCharacter
     {
-        BeginCoolDown();
-
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        get
         {
-            if(this.button.GetComponent<Image>().fillAmount >= 1 && character.CurrentHealth > 0 && character.CurrentMana >= ManaCost)
-            {
-                TestHealSkill();
-            }
-            else if(character.CurrentMana <= ManaCost)
-            {
-                GameManager.Instance.ShowNotEnoughManaText();
-            }
+            return character;
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        set
         {
-            if (this.button.GetComponent<Image>().fillAmount >= 1 && character.CurrentHealth > 0 && character.CurrentMana >= ManaCost)
-            {
-                TestDamageSkill();
-            }
-            else if (character.CurrentMana <= ManaCost)
-            {
-                GameManager.Instance.ShowNotEnoughManaText();
-            }
+            character = value;
         }
     }
 
-    private void BeginCoolDown()
+    private void Update()
+    {
+        CheckCoolDownStatus();
+    }
+
+    private void CheckCoolDownStatus()
     {
         if (this.button.GetComponent<Image>().fillAmount >= 1 && character.CurrentHealth > 0 && character.CurrentMana >= ManaCost)
         {
@@ -101,7 +105,7 @@ public class Skills : MonoBehaviour
 
     public void TestHealSkill()
     {
-        if(skillbar.GetSkillBar.fillAmount < 1)
+        if (skillbar.GetSkillBar.fillAmount < 1)
         {
             this.button.GetComponent<Image>().fillAmount = 0;
 
@@ -110,7 +114,7 @@ public class Skills : MonoBehaviour
             skillbar.GetSkill = this.button.GetComponent<Skills>();
         }
 
-        if(skillbar.GetSkillBar.fillAmount >= 1)
+        if (skillbar.GetSkillBar.fillAmount >= 1)
         {
             character.GetComponent<Mana>().ModifyMana(-ManaCost);
 
@@ -191,13 +195,13 @@ public class Skills : MonoBehaviour
     {
         Panel.gameObject.SetActive(true);
 
-        if(CastTime == 0)
+        if(CastTime <= 0)
         {
-            SkillPanelObject.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown;
+            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown;
         }
         else
         {
-            SkillPanelObject.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown
+            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown
                                     + "\n" + "Cast Time: " + CastTime;
         }
     }

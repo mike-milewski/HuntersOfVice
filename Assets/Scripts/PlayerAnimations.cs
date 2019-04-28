@@ -59,4 +59,15 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Ressurecting", false);
         this.GetComponent<PlayerController>().enabled = true;
     }
+
+    public void PlaySpellCastAnimation()
+    {
+        animator.SetBool("SpellCasting", true);
+    }
+
+    public void PlaySpellCastEndAnimation()
+    {
+        animator.SetBool("SpellCasting", false);
+        animator.SetBool("FinishSpell", true);
+    }
 }
