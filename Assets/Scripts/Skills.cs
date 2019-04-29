@@ -27,7 +27,7 @@ public class Skills : MonoBehaviour
     [SerializeField]
     private int ManaCost, Potency;
     
-    [SerializeField] [Tooltip("Skills that have a cast time greater than 0 are considered spells.")]
+    [SerializeField] [Tooltip("Skills that have a cast time greater than 0 will activate the skill casting bar.")]
     private int CastTime;
 
     [SerializeField]
@@ -107,7 +107,7 @@ public class Skills : MonoBehaviour
     {
         if (skillbar.GetSkillBar.fillAmount < 1)
         {
-            this.button.GetComponent<Image>().fillAmount = 0;
+            SkillsManager.Instance.GetActivatedSkill = true;
 
             skillbar.gameObject.SetActive(true);
 
@@ -116,12 +116,26 @@ public class Skills : MonoBehaviour
 
         if (skillbar.GetSkillBar.fillAmount >= 1)
         {
+            this.button.GetComponent<Image>().fillAmount = 0;
+
+            SkillsManager.Instance.GetActivatedSkill = false;
+
+            var HealParticle = Instantiate(SkillParticle, new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z),
+                                           Quaternion.identity);
+
+            HealParticle.transform.SetParent(character.transform, true);
+
             character.GetComponent<Mana>().ModifyMana(-ManaCost);
 
-            character.GetComponent<Health>().ModifyHealth(Potency + character.CharacterIntelligence);
-
-            HealSkillText();
+            Invoke("InvokeHealthRestore", .5f);
         }
+    }
+
+    private void InvokeHealthRestore()
+    {
+        character.GetComponent<Health>().ModifyHealth(Potency + character.CharacterIntelligence);
+
+        HealSkillText();
     }
 
     public void TestDamageSkill()
@@ -131,23 +145,20 @@ public class Skills : MonoBehaviour
             TextHolder = character.GetComponent<BasicAttack>().GetTarget.GetComponentInChildren<NoRotationHealthBar>().transform;
             if(Vector3.Distance(character.transform.position, character.GetComponent<BasicAttack>().GetTarget.transform.position) <= AttackRange)
             {
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                character.GetComponent<PlayerAnimations>().PlaySkillAnimation();
+
                 this.button.GetComponent<Image>().fillAmount = 0;
 
                 character.GetComponent<Mana>().ModifyMana(-ManaCost);
 
                 var Target = character.GetComponent<BasicAttack>().GetTarget;
-                /*
+
                 var DamageParticle = Instantiate(SkillParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z),
-                                       Quaternion.identity);
+                                                 Quaternion.identity);
 
                 DamageParticle.transform.SetParent(Target.transform, true);
-                */
-
-                Target.GetComponent<EnemyHealth>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
-
-                Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
-
-                DamageSkillText();
             }
             else
             {
@@ -161,15 +172,25 @@ public class Skills : MonoBehaviour
         }
     }
 
+    //Place this on an animation as an animation event.
+    //This way damage will be dealt during a specific portion of the attack animation.
+    //If used for spell damage, invoke this function.
+    public void SkillDamage()
+    {
+        var Target = character.GetComponent<BasicAttack>().GetTarget;
+
+        Target.GetComponent<EnemyHealth>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
+
+        Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
+
+        SkillsManager.Instance.GetActivatedSkill = false;
+
+        DamageSkillText();
+    }
+
     private Text HealSkillText()
     {
         var SkillObj = Instantiate(SkillTextObject);
-        /*
-        var HealParticle = Instantiate(SkillParticle, new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z),
-                                       Quaternion.identity);
-
-        HealParticle.transform.SetParent(character.transform, true);
-        */
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 

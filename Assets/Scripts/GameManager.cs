@@ -70,15 +70,6 @@ public class GameManager : MonoBehaviour
         Player.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
     }
 
-    public Text ShowInvalidTargetText()
-    {
-        InvalidText.gameObject.SetActive(true);
-
-        InvalidText.text = "Invalid Target";
-
-        return InvalidText;
-    }
-
     public Text ShowNotEnoughManaText()
     {
         InvalidText.gameObject.SetActive(true);

@@ -70,4 +70,9 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("SpellCasting", false);
         animator.SetBool("FinishSpell", true);
     }
+
+    public void PlaySkillAnimation()
+    {
+        animator.SetBool("Skill", true);
+    }
 }

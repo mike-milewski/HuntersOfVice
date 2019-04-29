@@ -103,8 +103,15 @@ public class BasicAttack : MonoBehaviour
         {
             if(Target.GetComponent<Character>().CurrentHealth > 0)
             {
-                AutoAttackTime += Time.deltaTime;
-                if (AutoAttackTime >= AttackDelay && Target != null)
+                if(!SkillsManager.Instance.GetActivatedSkill)
+                {
+                    AutoAttackTime += Time.deltaTime;
+                }
+                else if(SkillsManager.Instance.GetActivatedSkill)
+                {
+                    AutoAttackTime = 0;
+                }
+                if (AutoAttackTime >= AttackDelay && Target != null && SkillsManager.Instance.GetActivatedSkill == false)
                 {
                     Vector3 TargetPosition = new Vector3(Target.transform.position.x - this.transform.position.x, 0, 
                                                          Target.transform.position.z - this.transform.position.z).normalized;
@@ -154,8 +161,8 @@ public class BasicAttack : MonoBehaviour
 
         if (Target != null)
         {
-            Hitparticle = Instantiate(HitParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z), 
-                                      Target.transform.rotation);
+            Hitparticle = Instantiate(HitParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z),
+                                       Target.transform.rotation);
 
             Hitparticle.transform.SetParent(Target.transform, true);
 
