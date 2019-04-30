@@ -1876,6 +1876,11 @@ Prefab:
       value: 
       objectReference: {fileID: 114156342546536388, guid: 887e67b7711a1494589f13041545af4b,
         type: 2}
+    - target: {fileID: 114402505677595056, guid: 9ca9c9af8e62482458a2a545f7e86978,
+        type: 2}
+      propertyPath: ApplySkill
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ca9c9af8e62482458a2a545f7e86978, type: 2}
   m_IsPrefabAsset: 0
@@ -2731,6 +2736,7 @@ MonoBehaviour:
   SkillParticle: {fileID: 0}
   CoolDown: 5
   AttackRange: 4
+  ApplySkill: 0
   ManaCost: 5
   Potency: 15
   CastTime: 0

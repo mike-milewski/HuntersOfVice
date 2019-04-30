@@ -26,17 +26,7 @@ public class SkillsManager : MonoBehaviour
 
     private void Awake()
     {
-        #region Singleton
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else if(Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
-        #endregion
+        Instance = this;
     }
 
     private void Update()
@@ -47,7 +37,6 @@ public class SkillsManager : MonoBehaviour
                                                    && skills[0].GetCharacter.CurrentMana >= skills[0].GetManaCost && skills[0].GetComponent<Button>().interactable)
             {
                 skills[0].GetComponent<Button>().onClick.Invoke();
-                DeactivateSkillButtons();
             }
             else if (skills[0].GetCharacter.CurrentMana < skills[0].GetManaCost)
             {

@@ -50,7 +50,6 @@ public class SkillBar : MonoBehaviour
     {
         if(character.GetComponent<PlayerController>().GetMovement == Vector3.zero)
         {
-            SkillsManager.Instance.DeactivateSkillButtons();
             SkillBarImage.fillAmount += Time.deltaTime / skills.GetCastTime;
             CastTime -= Time.deltaTime;
             SkillName.text = skills.GetSkillName + " " + Mathf.Clamp(CastTime, 0, skills.GetCastTime).ToString("F2");
@@ -67,6 +66,7 @@ public class SkillBar : MonoBehaviour
             SkillsManager.Instance.ReactivateSkillButtons();
             SkillBarImage.fillAmount = 0;
             CastTime = skills.GetCastTime;
+            SkillsManager.Instance.GetActivatedSkill = false;
             gameObject.SetActive(false);
         }
     }

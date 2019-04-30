@@ -22,7 +22,7 @@ public class Skills : MonoBehaviour
     private ParticleSystem SkillParticle;
 
     [SerializeField]
-    private float CoolDown, AttackRange;
+    private float CoolDown, AttackRange, ApplySkill;
 
     [SerializeField]
     private int ManaCost, Potency;
@@ -105,6 +105,7 @@ public class Skills : MonoBehaviour
 
     public void TestHealSkill()
     {
+        SkillsManager.Instance.DeactivateSkillButtons();
         if (skillbar.GetSkillBar.fillAmount < 1)
         {
             SkillsManager.Instance.GetActivatedSkill = true;
@@ -127,7 +128,7 @@ public class Skills : MonoBehaviour
 
             character.GetComponent<Mana>().ModifyMana(-ManaCost);
 
-            Invoke("InvokeHealthRestore", .5f);
+            Invoke("InvokeHealthRestore", ApplySkill);
         }
     }
 

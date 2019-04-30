@@ -111,7 +111,7 @@ public class BasicAttack : MonoBehaviour
                 {
                     AutoAttackTime = 0;
                 }
-                if (AutoAttackTime >= AttackDelay && Target != null && SkillsManager.Instance.GetActivatedSkill == false)
+                if (AutoAttackTime >= AttackDelay && Target != null && !SkillsManager.Instance.GetActivatedSkill)
                 {
                     Vector3 TargetPosition = new Vector3(Target.transform.position.x - this.transform.position.x, 0, 
                                                          Target.transform.position.z - this.transform.position.z).normalized;
