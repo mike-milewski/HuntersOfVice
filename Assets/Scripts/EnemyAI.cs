@@ -29,6 +29,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private ParticleSystem HitParticle;
 
+    private bool ParticleExists;
+
     [SerializeField]
     private Image ThreatPic;
 
@@ -64,6 +66,9 @@ public class EnemyAI : MonoBehaviour
                     break;
                 case (States.Attack):
                     Attack();
+                    break;
+                case (States.SkillAttack):
+                    SkillAttack();
                     break;
                 case (States.Damaged):
                     Damage();
@@ -145,11 +150,11 @@ public class EnemyAI : MonoBehaviour
 
         this.transform.position += Distance * MoveSpeed * Time.deltaTime;
 
-        if(Vector3.Distance(new Vector3(this.transform.position.x, 0, this.transform.position.z), 
+        if (Vector3.Distance(new Vector3(this.transform.position.x, 0, this.transform.position.z),
                             new Vector3(Waypoints[WaypointIndex].position.x, 0, Waypoints[WaypointIndex].position.z)) <= 0.1f)
         {
             WaypointIndex++;
-            if(WaypointIndex >= Waypoints.Length)
+            if (WaypointIndex >= Waypoints.Length)
             {
                 WaypointIndex = 0;
             }
@@ -195,7 +200,14 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    Anim.AttackAni();
+                    if (Random.value * 100 <= 50)
+                    {
+                        states = States.SkillAttack;
+                    }
+                    else
+                    {
+                        Anim.AttackAni();
+                    }
                 }
             }
             else
@@ -215,7 +227,7 @@ public class EnemyAI : MonoBehaviour
 
     private void SkillAttack()
     {
-
+        Anim.IdleAni();
     }
 
     public void Damage()
@@ -296,14 +308,21 @@ public class EnemyAI : MonoBehaviour
 
         float Critical = character.GetCriticalChance;
 
-        var particleHit = HitParticle;
-
         if(PlayerTarget != null)
         {
-            particleHit = Instantiate(HitParticle, new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.5f, PlayerTarget.transform.position.z), 
+            if(!ParticleExists)
+            {
+                SkillsManager.Instance.GetParticleObj = Instantiate(HitParticle, new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.5f, PlayerTarget.transform.position.z),
                                       PlayerTarget.transform.rotation);
 
-            particleHit.transform.SetParent(PlayerTarget.transform, true);
+                SkillsManager.Instance.GetParticleObj.transform.SetParent(PlayerTarget.transform, true);
+
+                ParticleExists = true;
+            }
+            else
+            {
+                SkillsManager.Instance.GetParticleObj.gameObject.SetActive(true);
+            }
 
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)

@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 198157547220164012}
   - component: {fileID: 199622501077141480}
   - component: {fileID: 114187966190455476}
+  - component: {fileID: 114523577824550242}
   m_Layer: 0
   m_Name: CFX2_SparksHit_B Sphere
   m_TagString: Untagged
@@ -85,6 +86,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnlyDeactivate: 1
+--- !u!114 &114523577824550242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995403933065894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761a480b2714727438710f8a6d900bd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198157547220164012
 ParticleSystem:
   m_ObjectHideFlags: 1

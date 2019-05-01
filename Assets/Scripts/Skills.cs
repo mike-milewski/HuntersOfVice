@@ -91,7 +91,7 @@ public class Skills : MonoBehaviour
 
     private void CheckCoolDownStatus()
     {
-        if (this.button.GetComponent<Image>().fillAmount >= 1 && character.CurrentHealth > 0 && character.CurrentMana >= ManaCost)
+        if (this.button.GetComponent<Image>().fillAmount >= 1 && character.CurrentHealth > 0 && character.CurrentMana >= ManaCost && !SkillsManager.Instance.GetActivatedSkill)
         {
             button.interactable = true;
             return;
@@ -105,7 +105,6 @@ public class Skills : MonoBehaviour
 
     public void TestHealSkill()
     {
-        SkillsManager.Instance.DeactivateSkillButtons();
         if (skillbar.GetSkillBar.fillAmount < 1)
         {
             SkillsManager.Instance.GetActivatedSkill = true;

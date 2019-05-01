@@ -221,8 +221,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
+  skills: {fileID: 0}
+  CastParticle: {fileID: 19800006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 2}
   SkillName: {fileID: 114350208856672362}
   SkillBarImage: {fileID: 114810623915863768}
+  ParticleExists: 0
 --- !u!222 &222185239282713598
 CanvasRenderer:
   m_ObjectHideFlags: 1

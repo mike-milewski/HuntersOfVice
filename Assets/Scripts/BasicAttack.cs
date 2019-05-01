@@ -14,6 +14,10 @@ public class BasicAttack : MonoBehaviour
     [SerializeField]
     private ParticleSystem HitParticle;
 
+    private ParticleSystem Obj = null;
+
+    private bool ParticleExists;
+
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
 
@@ -157,14 +161,21 @@ public class BasicAttack : MonoBehaviour
 
         float Critical = character.GetCriticalChance;
 
-        var Hitparticle = HitParticle;
-
         if (Target != null)
         {
-            Hitparticle = Instantiate(HitParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z),
-                                       Target.transform.rotation);
+            if(!ParticleExists)
+            {
+                Obj = Instantiate(HitParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z),
+                                        Target.transform.rotation);
 
-            Hitparticle.transform.SetParent(Target.transform, true);
+                Obj.transform.SetParent(Target.transform, true);
+
+                ParticleExists = true;
+            }
+            else
+            {
+                Obj.gameObject.SetActive(true);
+            }
 
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)

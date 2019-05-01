@@ -6,6 +6,8 @@ public class SkillsManager : MonoBehaviour
 {
     public static SkillsManager Instance = null;
 
+    private ParticleSystem ParticleObj = null;
+
     [SerializeField]
     private List<Skills> skills;
 
@@ -21,6 +23,18 @@ public class SkillsManager : MonoBehaviour
         set
         {
             ActivatedSkill = value;
+        }
+    }
+
+    public ParticleSystem GetParticleObj
+    {
+        get
+        {
+            return ParticleObj;
+        }
+        set
+        {
+            ParticleObj = value;
         }
     }
 
