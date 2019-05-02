@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public enum States { Patrol, Chase, Attack, SkillAttack, Damaged }
+public enum States { Patrol, Chase, Attack, ApplyingAttack, Skill, Damaged }
 
 public class EnemyAI : MonoBehaviour
 {
@@ -67,8 +67,11 @@ public class EnemyAI : MonoBehaviour
                 case (States.Attack):
                     Attack();
                     break;
-                case (States.SkillAttack):
-                    SkillAttack();
+                case (States.ApplyingAttack):
+                    ApplyingNormalAtk();
+                    break;
+                case (States.Skill):
+                    UseSkill();
                     break;
                 case (States.Damaged):
                     Damage();
@@ -202,17 +205,16 @@ public class EnemyAI : MonoBehaviour
                 {
                     if (Random.value * 100 <= 50)
                     {
-                        states = States.SkillAttack;
+                        states = States.Skill;
                     }
                     else
                     {
-                        Anim.AttackAni();
+                        states = States.ApplyingAttack;
                     }
                 }
             }
             else
             {
-                GameManager.Instance.Dead();
                 PlayerTarget = null;
                 AutoAttackTime = 0;
                 states = States.Patrol;
@@ -225,9 +227,19 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void SkillAttack()
+    private void ApplyingNormalAtk()
     {
-        Anim.IdleAni();
+        Anim.AttackAni();
+    }
+
+    private void UseSkill()
+    {
+
+    }
+
+    public void ApplySkill()
+    {
+        character.GetComponent<EnemySkills>().FungiBump(15, 4, "Fungi Bump");
     }
 
     public void Damage()

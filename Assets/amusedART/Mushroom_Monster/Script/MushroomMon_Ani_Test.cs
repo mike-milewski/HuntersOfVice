@@ -12,7 +12,9 @@ public class MushroomMon_Ani_Test : MonoBehaviour
 	private const string IDLE	= "Idle";
 	private const string RUN	= "Run";
 	private const string ATTACK	= "Attack";
-	private const string DAMAGE	= "Damage";
+    private const string SKILLATTACK = "SkillAttack";
+    private const string CASTING = "SpellCasting";
+    private const string DAMAGE	= "Damage";
 	private const string DEATH	= "Death";
 
 	private Animation anim;
@@ -51,7 +53,12 @@ public class MushroomMon_Ani_Test : MonoBehaviour
 		anim.CrossFade (ATTACK);
 	}
 
-	public void DamageAni ()
+    public void CastingAni()
+    {
+        anim.CrossFade(CASTING);
+    }
+
+    public void DamageAni ()
     {
 		anim.CrossFade (DAMAGE);
 	}
@@ -66,9 +73,20 @@ public class MushroomMon_Ani_Test : MonoBehaviour
         AI.TakeDamage();
     }
 
+    public void ApplySkill()
+    {
+        AI.ApplySkill();
+    }
+
+    public void SkillAttackAnim()
+    {
+        anim.CrossFade(SKILLATTACK);
+    }
+
     public void ResetAutoAttackTime()
     {
         AI.GetAutoAttack = 0;
+        AI.GetStates = States.Attack;
     }
 
     public void EndDamaged()

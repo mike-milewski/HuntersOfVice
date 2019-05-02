@@ -42,6 +42,8 @@ public class EnemyHealth : MonoBehaviour
     {
         character.CurrentHealth += Value;
 
+        character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
+
         HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
         LocalHealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }

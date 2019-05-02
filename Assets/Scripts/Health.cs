@@ -59,6 +59,11 @@ public class Health : MonoBehaviour
         HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
 
         HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+
+        if(character.CurrentHealth <= 0)
+        {
+            GameManager.Instance.Dead();
+        }
     }
 
     public void GetFilledBar()

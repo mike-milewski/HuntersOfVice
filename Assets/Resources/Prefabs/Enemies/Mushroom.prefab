@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 114492699656399902}
   - component: {fileID: 114244275959761428}
   - component: {fileID: 114874576755753074}
+  - component: {fileID: 114006354462489536}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -303,8 +304,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1722958204252142}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.0000001872535}
-  m_LocalPosition: {x: -0, y: -3.6407735, z: 3.63}
+  m_LocalRotation: {x: 0, y: 1, z: -0, w: -0.0000001872535}
+  m_LocalPosition: {x: 0, y: -3.6407735, z: 9.819547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4731271516209256}
@@ -327,7 +328,7 @@ Transform:
   - {fileID: 4694296390926014}
   m_Father: {fileID: 4780469800579470}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 1.0305043e-25, y: 7.8765375e-25, z: -4.8928547}
+  m_LocalEulerAnglesHint: {x: 1.5964696e-31, y: -2.9973206e-25, z: 0.000030517576}
 --- !u!4 &4526184334205320
 Transform:
   m_ObjectHideFlags: 1
@@ -359,7 +360,7 @@ Transform:
   - {fileID: 4780469800579470}
   m_Father: {fileID: 4731271516209256}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -104.15507}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -89.999985}
 --- !u!4 &4694296390926014
 Transform:
   m_ObjectHideFlags: 1
@@ -414,7 +415,7 @@ Transform:
   - {fileID: 4113946509398354}
   m_Father: {fileID: 4534415339494238}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 1.4189834e-12, y: -3.084302e-12, z: -26.895237}
+  m_LocalEulerAnglesHint: {x: -4.721852e-18, y: -8.865127e-12, z: -0.000030517576}
 --- !u!4 &4874757538607010
 Transform:
   m_ObjectHideFlags: 1
@@ -470,10 +471,30 @@ Animation:
   - {fileID: 7400000, guid: baceae3f2e2c08347a2dd9417bd241ae, type: 2}
   - {fileID: 7400000, guid: ceef6f883ed4525408dd849615e6bcd6, type: 2}
   - {fileID: 7400000, guid: 6ce5fa5de2f067548b4d191e6f92c50d, type: 2}
+  - {fileID: 7400000, guid: 2c73bfa3fc61028449f7c8bf190c3914, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 1
+--- !u!114 &114006354462489536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1722958204252142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b798244cafc004291d6dec6e876e06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 114979435669946942}
+  skillBar: {fileID: 0}
+  TextHolder: {fileID: 0}
+  DamageTextObject: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
+    type: 2}
+  HealTextObject: {fileID: 114788127478087752, guid: 99e2bc77069b9ee4d809099854ccf233,
+    type: 2}
+  SkillName: 
 --- !u!114 &114031368246823800
 MonoBehaviour:
   m_ObjectHideFlags: 1
