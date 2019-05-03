@@ -13,7 +13,7 @@ public class MushroomMon_Ani_Test : MonoBehaviour
 	private const string RUN	= "Run";
 	private const string ATTACK	= "Attack";
     private const string SKILLATTACK = "SkillAttack";
-    private const string CASTING = "SpellCasting";
+    private const string CASTING = "Casting";
     private const string DAMAGE	= "Damage";
 	private const string DEATH	= "Death";
 
@@ -73,12 +73,7 @@ public class MushroomMon_Ani_Test : MonoBehaviour
         AI.TakeDamage();
     }
 
-    public void ApplySkill()
-    {
-        AI.ApplySkill();
-    }
-
-    public void SkillAttackAnim()
+    public void FungiBumpAnim()
     {
         anim.CrossFade(SKILLATTACK);
     }
@@ -91,7 +86,7 @@ public class MushroomMon_Ani_Test : MonoBehaviour
 
     public void EndDamaged()
     {
-        if(AI.GetIsHostile == false)
+        if(!AI.GetIsHostile)
         {
             AI.GetSphereTrigger.enabled = true;
             AI.GetStates = States.Attack;

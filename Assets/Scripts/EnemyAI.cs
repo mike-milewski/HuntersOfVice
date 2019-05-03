@@ -42,6 +42,18 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private bool IsHostile;
 
+    public MushroomMon_Ani_Test GetAnimation
+    {
+        get
+        {
+            return Anim;
+        }
+        set
+        {
+            Anim = value;
+        }
+    }
+
     private void Awake()
     {
         states = States.Patrol;
@@ -71,7 +83,7 @@ public class EnemyAI : MonoBehaviour
                     ApplyingNormalAtk();
                     break;
                 case (States.Skill):
-                    UseSkill();
+                    Skill();
                     break;
                 case (States.Damaged):
                     Damage();
@@ -168,20 +180,29 @@ public class EnemyAI : MonoBehaviour
     {
         Anim.RunAni();
 
-        if (Vector3.Distance(this.transform.position, PlayerTarget.transform.position) >= AttackRange)
+        this.GetComponent<EnemySkills>().GetSkillBar.gameObject.SetActive(false);
+
+        if (PlayerTarget != null)
         {
-            Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
-                                           PlayerTarget.transform.position.z - this.transform.position.z).normalized;
+            if (Vector3.Distance(this.transform.position, PlayerTarget.transform.position) >= AttackRange)
+            {
+                Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
+                                               PlayerTarget.transform.position.z - this.transform.position.z).normalized;
 
-            Quaternion LookDir = Quaternion.LookRotation(Distance);
+                Quaternion LookDir = Quaternion.LookRotation(Distance);
 
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
-            this.transform.position += Distance * MoveSpeed * Time.deltaTime;
+                this.transform.position += Distance * MoveSpeed * Time.deltaTime;
+            }
+            else
+            {
+                states = States.Attack;
+            }
         }
         else
         {
-            states = States.Attack;
+            states = States.Patrol;
         }
     }
 
@@ -205,6 +226,7 @@ public class EnemyAI : MonoBehaviour
                 {
                     if (Random.value * 100 <= 50)
                     {
+                        this.GetComponent<EnemySkills>().GenerateValue();
                         states = States.Skill;
                     }
                     else
@@ -232,14 +254,10 @@ public class EnemyAI : MonoBehaviour
         Anim.AttackAni();
     }
 
-    private void UseSkill()
+    private void Skill()
     {
-
-    }
-
-    public void ApplySkill()
-    {
-        character.GetComponent<EnemySkills>().FungiBump(15, 4, "Fungi Bump");
+        this.GetComponent<EnemySkills>().ChooseSkill(this.GetComponent<EnemySkills>().GetRandomValue);
+        //character.GetComponent<EnemySkills>().PoisonMist(15, 4, 1f, "Poison Mist");
     }
 
     public void Damage()
@@ -256,6 +274,7 @@ public class EnemyAI : MonoBehaviour
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         this.GetComponent<Enemy>().GetHealthObject.SetActive(false);
         this.GetComponent<EnemyHealth>().GetLocalHealth.gameObject.SetActive(false);
+        this.GetComponent<EnemySkills>().GetSkillBar.gameObject.SetActive(false);
 
         character.GetRigidbody.useGravity = false;
 
@@ -302,15 +321,23 @@ public class EnemyAI : MonoBehaviour
         if(other.gameObject.GetComponent<Health>())
         {
             PlayerTarget = null;
-            states = States.Patrol;
-            AutoAttackTime = 0;
+            if(states != States.Skill)
+            {
+                states = States.Patrol;
+                AutoAttackTime = 0;
+                this.GetComponent<EnemySkills>().GetSkillBar.gameObject.SetActive(false);
+            }
         }
         if(!IsHostile)
         {
             PlayerTarget = null;
-            states = States.Patrol;
-            AutoAttackTime = 0;
-            EnemyTriggerSphere.gameObject.SetActive(false);
+            if (states != States.Skill)
+            {
+                states = States.Patrol;
+                AutoAttackTime = 0;
+                EnemyTriggerSphere.gameObject.SetActive(false);
+                this.GetComponent<EnemySkills>().GetSkillBar.gameObject.SetActive(false);
+            }
         }
     }
 

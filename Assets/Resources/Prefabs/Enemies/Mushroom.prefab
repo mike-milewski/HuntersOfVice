@@ -304,8 +304,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1722958204252142}
-  m_LocalRotation: {x: 0, y: 1, z: -0, w: -0.0000001872535}
-  m_LocalPosition: {x: 0, y: -3.6407735, z: 9.819547}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.0000001872535}
+  m_LocalPosition: {x: -0, y: -3.6407735, z: 3.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4731271516209256}
@@ -328,7 +328,7 @@ Transform:
   - {fileID: 4694296390926014}
   m_Father: {fileID: 4780469800579470}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 1.5964696e-31, y: -2.9973206e-25, z: 0.000030517576}
+  m_LocalEulerAnglesHint: {x: 1.285331e-25, y: 8.149355e-25, z: -3.2511365}
 --- !u!4 &4526184334205320
 Transform:
   m_ObjectHideFlags: 1
@@ -360,7 +360,7 @@ Transform:
   - {fileID: 4780469800579470}
   m_Father: {fileID: 4731271516209256}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -89.999985}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -104.66705}
 --- !u!4 &4694296390926014
 Transform:
   m_ObjectHideFlags: 1
@@ -415,7 +415,7 @@ Transform:
   - {fileID: 4113946509398354}
   m_Father: {fileID: 4534415339494238}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -4.721852e-18, y: -8.865127e-12, z: -0.000030517576}
+  m_LocalEulerAnglesHint: {x: -2.6662635e-12, y: -8.4546745e-12, z: -17.503174}
 --- !u!4 &4874757538607010
 Transform:
   m_ObjectHideFlags: 1
@@ -495,6 +495,7 @@ MonoBehaviour:
   HealTextObject: {fileID: 114788127478087752, guid: 99e2bc77069b9ee4d809099854ccf233,
     type: 2}
   SkillName: 
+  skill: 0000000000000000
 --- !u!114 &114031368246823800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -640,13 +641,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89eb8e66b9abe2343a1a25b207871f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 114979435669946942}
   DamageShape: {fileID: 114217460373930040}
   DamageShapeCircle: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   DamageShapeCylinder: {fileID: 21300000, guid: 48624f05b683e4a4ab1a142e40fd6971,
     type: 3}
   DamageShapeRectangle: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  Radius: 1
-  shapes: 2
+  Radius: 0
+  shapes: 1
 --- !u!114 &114332984057771692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1177,7 +1179,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1075821000958046}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []

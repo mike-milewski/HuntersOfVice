@@ -149,6 +149,7 @@ public class BasicAttack : MonoBehaviour
             if(Vector3.Distance(this.transform.position, Target.transform.position) >= HideStatsDistance)
             {
                 Target.GetComponent<Enemy>().GetHealthObject.SetActive(false);
+                Target.GetComponent<EnemySkills>().DisableEnemySkillBar();
                 Target = null;
                 AutoAttackTime = 0;
             }
@@ -204,6 +205,7 @@ public class BasicAttack : MonoBehaviour
             }
             #endregion
 
+            if(Target.GetComponent<EnemyAI>().GetStates != States.Skill)
             Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
         }
         return DamageObject;

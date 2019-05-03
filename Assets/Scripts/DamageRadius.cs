@@ -8,6 +8,9 @@ public enum Shapes { Circle, Cylinder, Rectangle }
 public class DamageRadius : MonoBehaviour
 {
     [SerializeField]
+    private Character character;
+
+    [SerializeField]
     private Image DamageShape;
 
     [SerializeField]
@@ -15,6 +18,30 @@ public class DamageRadius : MonoBehaviour
 
     [SerializeField]
     private float Radius;
+
+    public float GetRadius
+    {
+        get
+        {
+            return Radius;
+        }
+        set
+        {
+            Radius = value;
+        }
+    }
+
+    public Image GetDamageShape
+    {
+        get
+        {
+            return DamageShape;
+        }
+        set
+        {
+            DamageShape = value;
+        }
+    }
 
     public Shapes shapes;
 
@@ -32,8 +59,6 @@ public class DamageRadius : MonoBehaviour
 
     private void Awake()
     {
-        this.gameObject.SetActive(false);
-
         switch(shapes)
         {
             case (Shapes.Rectangle):
@@ -97,13 +122,29 @@ public class DamageRadius : MonoBehaviour
             DamageShape.transform.localScale += new Vector3(1.5f, 1.5f, 1.5f) * Time.deltaTime;
     }
 
-    private void ExplosionDamage(Vector3 center, float radius)
+    public void ResetLocalScale()
+    {
+        DamageShape.transform.localScale = new Vector3(0, 0, 0);
+    }
+
+    //Used for AOE damage skills.
+    public void TakeDamage(Vector3 center, float radius)
     {
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
 
         for(int i = 0; i < hitColliders.Length; i++)
         {
-            Debug.Log(i);
+            if(hitColliders[i].GetComponent<Health>())
+            {
+                character.GetComponent<EnemySkills>().GetTextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
+
+                character.GetComponent<EnemySkills>().SkillDamageText(character.GetComponent<EnemySkills>().GetPotency, character.GetComponent<EnemySkills>().GetSkillName);
+
+                hitColliders[i].GetComponent<Health>().ModifyHealth(-character.GetComponent<EnemySkills>().GetPotency - 
+                                                                    character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
+
+                character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+            }
         }
     }
 }
