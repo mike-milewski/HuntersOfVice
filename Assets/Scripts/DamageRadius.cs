@@ -57,13 +57,11 @@ public class DamageRadius : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void OnEnable()
     {
-        switch(shapes)
+        if(shapes == Shapes.Rectangle)
         {
-            case (Shapes.Rectangle):
-                DamageShape.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
-                break;
+            DamageShape.transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
         }
     }
 
@@ -127,8 +125,8 @@ public class DamageRadius : MonoBehaviour
         DamageShape.transform.localScale = new Vector3(0, 0, 0);
     }
 
-    //Used for AOE damage skills.
-    public void TakeDamage(Vector3 center, float radius)
+    //Used for AOE damage skills with a circle shaped radius.
+    public void TakeDamageSphereRadius(Vector3 center, float radius)
     {
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
 
@@ -141,6 +139,27 @@ public class DamageRadius : MonoBehaviour
                 character.GetComponent<EnemySkills>().SkillDamageText(character.GetComponent<EnemySkills>().GetPotency, character.GetComponent<EnemySkills>().GetSkillName);
 
                 hitColliders[i].GetComponent<Health>().ModifyHealth(-character.GetComponent<EnemySkills>().GetPotency - 
+                                                                    character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
+
+                character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+            }
+        }
+    }
+
+    //Used for AOE damage skills with a rectangle shaped radius.
+    public void TakeDamageRectangleRadius(Vector3 center, Vector3 radius)
+    {
+        Collider[] hitColliders = Physics.OverlapBox(center, DamageShape.transform.localScale, character.transform.rotation);
+
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].GetComponent<Health>())
+            {
+                character.GetComponent<EnemySkills>().GetTextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
+
+                character.GetComponent<EnemySkills>().SkillDamageText(character.GetComponent<EnemySkills>().GetPotency, character.GetComponent<EnemySkills>().GetSkillName);
+
+                hitColliders[i].GetComponent<Health>().ModifyHealth(-character.GetComponent<EnemySkills>().GetPotency -
                                                                     character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
 
                 character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();

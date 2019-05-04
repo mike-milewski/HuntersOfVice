@@ -73,6 +73,11 @@ public class MushroomMon_Ani_Test : MonoBehaviour
         AI.TakeDamage();
     }
 
+    public void SkillDamage()
+    {
+        AI.GetComponent<EnemySkills>().TakeDamage(AI.GetComponent<EnemySkills>().GetPotency, AI.GetComponent<EnemySkills>().GetSkillName);
+    }
+
     public void FungiBumpAnim()
     {
         anim.CrossFade(SKILLATTACK);

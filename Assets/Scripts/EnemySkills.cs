@@ -169,21 +169,17 @@ public class EnemySkills : MonoBehaviour
 
     public void FungiBump(int potency, float attackRange, string skillname)
     {
+        Potency = potency;
+        SkillName = skillname;
+
         TextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
         if (character.GetComponent<EnemyAI>().GetPlayerTarget != null)
         {
             if(Vector3.Distance(character.transform.position, character.GetComponent<EnemyAI>().GetPlayerTarget.transform.position) <= attackRange)
             {
-                SkillDamageText(potency, skillname);
-
-                character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                                 (-potency - -character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
-
-                character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                FungiBumpAnimation();
             }
         }
-        character.GetComponent<EnemyAI>().GetAutoAttack = 0;
-        character.GetComponent<EnemyAI>().GetStates = States.Attack;
         ActiveSkill = false;
     }
 
@@ -229,7 +225,7 @@ public class EnemySkills : MonoBehaviour
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
             DisableRadiusImage();
-            Invoke("InvokePoisonMist", 0.3f);
+            Invoke("InvokePoisonMist2", 0.3f);
         }
     }
 
@@ -246,7 +242,17 @@ public class EnemySkills : MonoBehaviour
 
     private void InvokePoisonMist()
     {
-        character.GetComponentInChildren<DamageRadius>().TakeDamage(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position, Radius + 1);
+        character.GetComponentInChildren<DamageRadius>().TakeDamageSphereRadius(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position, Radius + 1);
+
+        DisableRadius();
+
+        ActiveSkill = false;
+    }
+
+    private void InvokePoisonMist2()
+    {
+        character.GetComponentInChildren<DamageRadius>().TakeDamageRectangleRadius(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position,
+            character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.localScale);
 
         DisableRadius();
 
@@ -274,6 +280,11 @@ public class EnemySkills : MonoBehaviour
         character.GetComponent<EnemyAI>().GetAnimation.CastingAni();
     }
 
+    private void FungiBumpAnimation()
+    {
+        character.GetComponent<EnemyAI>().GetAnimation.FungiBumpAnim();
+    }
+
     public void DisableEnemySkillBar()
     {
         if(skillBar.gameObject.activeInHierarchy)
@@ -299,7 +310,6 @@ public class EnemySkills : MonoBehaviour
     {
         foreach (DamageRadius r in character.GetComponentsInChildren<DamageRadius>())
         {
-            Debug.Log("Disabled!");
             r.gameObject.GetComponent<Image>().enabled = false;
         }
     }
@@ -330,8 +340,27 @@ public class EnemySkills : MonoBehaviour
 
             r.GetRadius = Radius;
 
-            r.GetShapes = Shapes.Circle;
+            r.GetShapes = Shapes.Rectangle;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position,
+            character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.localScale * 2);
+    }
+
+    public int TakeDamage(int potency, string skillname)
+    {
+        SkillDamageText(potency, skillname);
+
+        character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().ModifyHealth
+                                         (-potency - -character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
+
+        character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+
+        return potency;
     }
 
     public Text SkillDamageText(int potency, string skillName)

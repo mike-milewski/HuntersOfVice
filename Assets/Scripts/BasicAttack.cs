@@ -73,6 +73,7 @@ public class BasicAttack : MonoBehaviour
                     Target.GetComponent<EnemyHealth>().GetEnemyInfo();
                     Target.GetComponent<EnemyHealth>().GetFilledBar();
                     Target.GetComponent<Enemy>().GetHealthObject.SetActive(true);
+                    Target.GetComponent<EnemySkills>().EnableEnemySkillBar();
                 }
             }
             else
@@ -82,6 +83,7 @@ public class BasicAttack : MonoBehaviour
                     if (Target != null)
                     {
                         Target.GetComponent<Enemy>().GetHealthObject.SetActive(false);
+                        Target.GetComponent<EnemySkills>().DisableEnemySkillBar();
                     }
                     Target = null;
                     AutoAttackTime = 0;

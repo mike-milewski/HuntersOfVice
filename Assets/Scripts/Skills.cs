@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Skills : MonoBehaviour
+public class Skills : StatusEffects
 {
-    [SerializeField]
-    private Character character;
-
     [SerializeField]
     private SkillBar skillbar;
 
@@ -72,26 +69,15 @@ public class Skills : MonoBehaviour
         }
     }
 
-    public Character GetCharacter
-    {
-        get
-        {
-            return character;
-        }
-        set
-        {
-            character = value;
-        }
-    }
-
     private void Update()
     {
+        if(GetCharacter != null)
         CheckCoolDownStatus();
     }
 
     private void CheckCoolDownStatus()
     {
-        if (this.button.GetComponent<Image>().fillAmount >= 1 && character.CurrentHealth > 0 && character.CurrentMana >= ManaCost && !SkillsManager.Instance.GetActivatedSkill)
+        if (this.button.GetComponent<Image>().fillAmount >= 1 && GetCharacter.CurrentHealth > 0 && GetCharacter.CurrentMana >= ManaCost && !SkillsManager.Instance.GetActivatedSkill)
         {
             button.interactable = true;
             return;
@@ -120,12 +106,12 @@ public class Skills : MonoBehaviour
 
             SkillsManager.Instance.GetActivatedSkill = false;
 
-            var HealParticle = Instantiate(SkillParticle, new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z),
+            var HealParticle = Instantiate(SkillParticle, new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z),
                                            Quaternion.identity);
 
-            HealParticle.transform.SetParent(character.transform, true);
+            HealParticle.transform.SetParent(GetCharacter.transform, true);
 
-            character.GetComponent<Mana>().ModifyMana(-ManaCost);
+            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
             Invoke("InvokeHealthRestore", ApplySkill);
         }
@@ -133,27 +119,27 @@ public class Skills : MonoBehaviour
 
     private void InvokeHealthRestore()
     {
-        character.GetComponent<Health>().ModifyHealth(Potency + character.CharacterIntelligence);
+        GetCharacter.GetComponent<Health>().ModifyHealth(Potency + GetCharacter.CharacterIntelligence);
 
         HealSkillText();
     }
 
     public void TestDamageSkill()
     {
-        if (character.GetComponent<BasicAttack>().GetTarget != null)
+        if (GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
         {
-            TextHolder = character.GetComponent<BasicAttack>().GetTarget.GetComponentInChildren<NoRotationHealthBar>().transform;
-            if(Vector3.Distance(character.transform.position, character.GetComponent<BasicAttack>().GetTarget.transform.position) <= AttackRange)
+            TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetComponentInChildren<NoRotationHealthBar>().transform;
+            if(Vector3.Distance(GetCharacter.transform.position, GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position) <= AttackRange)
             {
                 SkillsManager.Instance.GetActivatedSkill = true;
 
-                character.GetComponent<PlayerAnimations>().PlaySkillAnimation();
+                GetCharacter.GetComponent<PlayerAnimations>().PlaySkillAnimation();
 
                 this.button.GetComponent<Image>().fillAmount = 0;
 
-                character.GetComponent<Mana>().ModifyMana(-ManaCost);
+                GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
-                var Target = character.GetComponent<BasicAttack>().GetTarget;
+                var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
                 var DamageParticle = Instantiate(SkillParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z),
                                                  Quaternion.identity);
@@ -172,12 +158,21 @@ public class Skills : MonoBehaviour
         }
     }
 
+    public void ForHonor()
+    {
+        this.button.GetComponent<Image>().fillAmount = 0;
+
+        StrengthUP(GetCharacter, 10, 20f);
+
+        StatusBuffEffectSkillText();
+    }
+
     //Place this on an animation as an animation event.
     //This way damage will be dealt during a specific portion of the attack animation.
     //If used for spell damage, invoke this function.
     public void SkillDamage()
     {
-        var Target = character.GetComponent<BasicAttack>().GetTarget;
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
         Target.GetComponent<EnemyHealth>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
 
@@ -194,7 +189,31 @@ public class Skills : MonoBehaviour
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.text = SkillName + " " + (Potency + character.CharacterIntelligence).ToString();
+        SkillObj.text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
+
+        return SkillObj;
+    }
+
+    private Text StatusBuffEffectSkillText()
+    {
+        var SkillObj = Instantiate(SkillTextObject);
+
+        SkillObj.transform.SetParent(TextHolder.transform, false);
+
+        SkillObj.text = "+" + SkillName;
+
+        return SkillObj;
+    }
+
+    private Text StatusDeBuffEffectSkillText()
+    {
+        var SkillObj = Instantiate(SkillTextObject);
+
+        SkillObj.GetComponent<Image>().sprite = GetStatusIcon.sprite;
+
+        SkillObj.transform.SetParent(TextHolder.transform, false);
+
+        SkillObj.text = "-" + SkillName;
 
         return SkillObj;
     }
@@ -203,7 +222,7 @@ public class Skills : MonoBehaviour
     {
         var SkillObj = Instantiate(SkillTextObject);
 
-        var Target = character.GetComponent<BasicAttack>();
+        var Target = GetCharacter.GetComponent<BasicAttack>();
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
@@ -218,12 +237,13 @@ public class Skills : MonoBehaviour
 
         if(CastTime <= 0)
         {
-            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown;
+            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown + " Seconds"
+                                    + "\n" + "Cast Time: Instant";
         }
         else
         {
-            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown
-                                    + "\n" + "Cast Time: " + CastTime;
+            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown + " Seconds"
+                                    + "\n" + "Cast Time: " + CastTime + " Seconds";
         }
     }
 }

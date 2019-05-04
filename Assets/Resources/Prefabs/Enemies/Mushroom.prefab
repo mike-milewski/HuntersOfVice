@@ -328,7 +328,7 @@ Transform:
   - {fileID: 4694296390926014}
   m_Father: {fileID: 4780469800579470}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 1.285331e-25, y: 8.149355e-25, z: -3.2511365}
+  m_LocalEulerAnglesHint: {x: 2.0562525e-31, y: -3.8605492e-25, z: 0.000030517576}
 --- !u!4 &4526184334205320
 Transform:
   m_ObjectHideFlags: 1
@@ -360,7 +360,7 @@ Transform:
   - {fileID: 4780469800579470}
   m_Father: {fileID: 4731271516209256}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -104.66705}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90.46096}
 --- !u!4 &4694296390926014
 Transform:
   m_ObjectHideFlags: 1
@@ -373,7 +373,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4113946509398354}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.31873706, y: -90, z: 0}
 --- !u!4 &4731271516209256
 Transform:
   m_ObjectHideFlags: 1
@@ -415,7 +415,7 @@ Transform:
   - {fileID: 4113946509398354}
   m_Father: {fileID: 4534415339494238}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -2.6662635e-12, y: -8.4546745e-12, z: -17.503174}
+  m_LocalEulerAnglesHint: {x: -5.2041704e-18, y: -8.8651725e-12, z: -0.000024795532}
 --- !u!4 &4874757538607010
 Transform:
   m_ObjectHideFlags: 1
@@ -472,6 +472,7 @@ Animation:
   - {fileID: 7400000, guid: ceef6f883ed4525408dd849615e6bcd6, type: 2}
   - {fileID: 7400000, guid: 6ce5fa5de2f067548b4d191e6f92c50d, type: 2}
   - {fileID: 7400000, guid: 2c73bfa3fc61028449f7c8bf190c3914, type: 2}
+  - {fileID: 7400000, guid: ac62f948f79767046a7a4dc2ba9cfa21, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -495,7 +496,8 @@ MonoBehaviour:
   HealTextObject: {fileID: 114788127478087752, guid: 99e2bc77069b9ee4d809099854ccf233,
     type: 2}
   SkillName: 
-  skill: 0000000000000000
+  ActiveSkill: 0
+  skill: 000000000100000002000000
 --- !u!114 &114031368246823800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -605,7 +607,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   MoveSpeed: 2
-  AttackRange: 3.5
+  AttackRange: 2
   AttackDelay: 2
   AutoAttackTime: 0
   LookSpeed: 3
