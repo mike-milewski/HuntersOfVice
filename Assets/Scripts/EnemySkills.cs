@@ -225,7 +225,7 @@ public class EnemySkills : MonoBehaviour
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
             DisableRadiusImage();
-            Invoke("InvokePoisonMist2", 0.3f);
+            Invoke("InvokePoisonMist", 0.3f);
         }
     }
 
@@ -340,7 +340,7 @@ public class EnemySkills : MonoBehaviour
 
             r.GetRadius = Radius;
 
-            r.GetShapes = Shapes.Rectangle;
+            r.GetShapes = Shapes.Circle;
         }
     }
 

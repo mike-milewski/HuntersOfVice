@@ -14,6 +14,8 @@ public class SkillsManager : MonoBehaviour
     [SerializeField]
     private bool ActivatedSkill;
 
+    private int KeyInput;
+
     public bool GetActivatedSkill
     {
         get
@@ -23,6 +25,18 @@ public class SkillsManager : MonoBehaviour
         set
         {
             ActivatedSkill = value;
+        }
+    }
+
+    public int GetKeyInput
+    {
+        get
+        {
+            return KeyInput;
+        }
+        set
+        {
+            KeyInput = value;
         }
     }
 
@@ -38,6 +52,18 @@ public class SkillsManager : MonoBehaviour
         }
     }
 
+    public List<Skills> GetSkills
+    {
+        get
+        {
+            return skills;
+        }
+        set
+        {
+            skills = value;
+        }
+    }
+
     private void Awake()
     {
         Instance = this;
@@ -47,6 +73,7 @@ public class SkillsManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
+            KeyInput = 0;
             if (skills[0].GetComponent<Button>().GetComponent<Image>().fillAmount >= 1 && skills[0].GetCharacter.CurrentHealth > 0
                                                    && skills[0].GetCharacter.CurrentMana >= skills[0].GetManaCost && skills[0].GetComponent<Button>().interactable)
             {
@@ -59,6 +86,7 @@ public class SkillsManager : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
+            KeyInput = 1;
             if (skills[1].GetComponent<Button>().GetComponent<Image>().fillAmount >= 1 && skills[1].GetCharacter.CurrentHealth > 0
                                                   && skills[1].GetCharacter.CurrentMana >= skills[1].GetManaCost && skills[1].GetComponent<Button>().interactable)
             {
@@ -71,6 +99,7 @@ public class SkillsManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+            KeyInput = 2;
             if (skills[2].GetComponent<Button>().GetComponent<Image>().fillAmount >= 1 && skills[2].GetCharacter.CurrentHealth > 0
                                                   && skills[2].GetCharacter.CurrentMana >= skills[2].GetManaCost && skills[2].GetComponent<Button>().interactable)
             {
@@ -83,19 +112,15 @@ public class SkillsManager : MonoBehaviour
         }
     }
 
-    public void DeactivateSkillButtons()
-    {
-        foreach(Skills s in skills)
-        {
-            s.GetComponent<Button>().interactable = false;
-        }
-    }
-
     public void ReactivateSkillButtons()
     {
         foreach (Skills s in skills)
         {
             s.GetComponent<Button>().interactable = true;
         }
+    }
+
+    public void Clicked()
+    {
     }
 }

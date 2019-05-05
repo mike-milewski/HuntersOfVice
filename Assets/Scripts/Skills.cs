@@ -9,7 +9,7 @@ public class Skills : StatusEffects
     [SerializeField]
     private Button button;
 
-    [SerializeField] [Tooltip("The transform that holds the damage/heal/buff text values. Keep this empty for damage type skills!")]
+    [SerializeField] [Tooltip("The transform that holds the damage/heal/status effect text values. Keep this empty for damage type skills!")]
     private Transform TextHolder = null;
 
     [SerializeField]
@@ -99,7 +99,6 @@ public class Skills : StatusEffects
 
             skillbar.GetSkill = this.button.GetComponent<Skills>();
         }
-
         if (skillbar.GetSkillBar.fillAmount >= 1)
         {
             this.button.GetComponent<Image>().fillAmount = 0;
@@ -162,9 +161,18 @@ public class Skills : StatusEffects
     {
         this.button.GetComponent<Image>().fillAmount = 0;
 
-        StrengthUP(GetCharacter, 10, 20f);
+        StrengthUP(GetCharacter, 10, GetStatusDuration);
 
-        StatusBuffEffectSkillText();
+        StatusEffectSkillText();
+    }
+
+    public void Shield()
+    {
+        this.button.GetComponent<Image>().fillAmount = 0;
+
+        DefenseUP(GetCharacter, 10, GetStatusDuration);
+
+        StatusEffectSkillText();
     }
 
     //Place this on an animation as an animation event.
@@ -194,26 +202,28 @@ public class Skills : StatusEffects
         return SkillObj;
     }
 
-    private Text StatusBuffEffectSkillText()
+    private Text StatusEffectSkillText()
     {
         var SkillObj = Instantiate(SkillTextObject);
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.text = "+" + SkillName;
+        SkillObj.text = "+" + GetStatusEffectName;
+
+        var StatusIcon = Instantiate(GetStatusIcon);
+
+        StatusIcon.transform.SetParent(GetBuffIconTrans.transform, false);
 
         return SkillObj;
     }
 
-    private Text StatusDeBuffEffectSkillText()
+    public Text StatusEffectRemovedText()
     {
         var SkillObj = Instantiate(SkillTextObject);
 
-        SkillObj.GetComponent<Image>().sprite = GetStatusIcon.sprite;
-
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.text = "-" + SkillName;
+        SkillObj.text = "-" + GetStatusEffectName;
 
         return SkillObj;
     }
@@ -235,9 +245,9 @@ public class Skills : StatusEffects
     {
         Panel.gameObject.SetActive(true);
 
-        if(CastTime <= 0)
+        if(CastTime <= 0 || ManaCost <= 0 || Potency <= 0)
         {
-            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown + " Seconds"
+            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Cooldown: " + CoolDown + " Seconds"
                                     + "\n" + "Cast Time: Instant";
         }
         else

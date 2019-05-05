@@ -272,9 +272,13 @@ public class EnemyAI : MonoBehaviour
         EnemyTriggerSphere.enabled = false;
 
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
+
         this.GetComponent<Enemy>().GetHealthObject.SetActive(false);
+
         this.GetComponent<EnemyHealth>().GetLocalHealth.gameObject.SetActive(false);
+
         this.GetComponent<EnemySkills>().GetSkillBar.gameObject.SetActive(false);
+        this.GetComponent<EnemySkills>().GetActiveSkill = false;
 
         character.GetRigidbody.useGravity = false;
 
