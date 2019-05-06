@@ -94,7 +94,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DurationText: {fileID: 114599060693408570}
   StatusDescriptionText: {fileID: 114593775297013352}
-  TestObject: {fileID: 100000, guid: a58d4029a00459e4d89ddb56b680be38, type: 3}
   Duration: 0
   StatusPanel: {fileID: 1505679607402930}
 --- !u!114 &114262389743331990
@@ -143,7 +142,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

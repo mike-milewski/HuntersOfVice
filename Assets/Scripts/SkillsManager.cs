@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SkillsManager : MonoBehaviour
@@ -11,7 +12,6 @@ public class SkillsManager : MonoBehaviour
     [SerializeField]
     private List<Skills> skills;
 
-    [SerializeField]
     private bool ActivatedSkill;
 
     private int KeyInput;
@@ -120,7 +120,8 @@ public class SkillsManager : MonoBehaviour
         }
     }
 
-    public void Clicked()
+    public void Clicked(int index)
     {
+        KeyInput = skills.IndexOf(skills[index]);
     }
 }

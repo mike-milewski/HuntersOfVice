@@ -69,6 +69,30 @@ public class Skills : StatusEffects
         }
     }
 
+    public Text GetSkillTextObject
+    {
+        get
+        {
+            return SkillTextObject;
+        }
+        set
+        {
+            SkillTextObject = value;
+        }
+    }
+
+    public Transform GetTextHolder
+    {
+        get
+        {
+            return TextHolder;
+        }
+        set
+        {
+            TextHolder = value;
+        }
+    }
+
     private void Update()
     {
         if(GetCharacter != null)
@@ -214,16 +238,7 @@ public class Skills : StatusEffects
 
         StatusIcon.transform.SetParent(GetBuffIconTrans.transform, false);
 
-        return SkillObj;
-    }
-
-    public Text StatusEffectRemovedText()
-    {
-        var SkillObj = Instantiate(SkillTextObject);
-
-        SkillObj.transform.SetParent(TextHolder.transform, false);
-
-        SkillObj.text = "-" + GetStatusEffectName;
+        SkillObj.GetComponentInChildren<Image>().sprite = StatusIcon.sprite;
 
         return SkillObj;
     }

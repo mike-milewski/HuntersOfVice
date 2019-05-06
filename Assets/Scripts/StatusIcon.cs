@@ -7,15 +7,24 @@ public class StatusIcon : MonoBehaviour
     private Text DurationText, StatusDescriptionText;
 
     [SerializeField]
-    private GameObject TestObject;
-
-    [SerializeField]
     private float Duration;
 
     private int KeyInput;
 
     [SerializeField]
     private GameObject StatusPanel;
+
+    public int GetKeyInput
+    {
+        get
+        {
+            return KeyInput;
+        }
+        set
+        {
+            KeyInput = value;
+        }
+    }
 
     private void OnEnable()
     {
@@ -27,9 +36,22 @@ public class StatusIcon : MonoBehaviour
                                      SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
     }
 
+    public Text RemoveStatusEffectText()
+    {
+        var SkillObj = Instantiate(SkillsManager.Instance.GetSkills[KeyInput].GetSkillTextObject);
+
+        SkillObj.transform.SetParent(SkillsManager.Instance.GetSkills[KeyInput].GetTextHolder.transform, false);
+
+        SkillObj.text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+
+        SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        return SkillObj;
+    }
+
     private void OnDisable()
     {
-        SkillsManager.Instance.GetSkills[KeyInput].StatusEffectRemovedText();
+        RemoveStatusEffectText();
     }
 
     private void Update()
