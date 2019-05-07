@@ -6,6 +6,15 @@ public class Enemy : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private EnemyAI enemyAI;
+
+    [SerializeField]
+    private EnemyHealth enemyHealth;
+
+    [SerializeField]
+    private EnemySkills enemySkills;
+
+    [SerializeField]
     private Experience EXP;
 
     [SerializeField]
@@ -35,6 +44,54 @@ public class Enemy : MonoBehaviour
         set
         {
             HealthObject = value;
+        }
+    }
+
+    public Character GetCharacter
+    {
+        get
+        {
+            return character;
+        }
+        set
+        {
+            character = value;
+        }
+    }
+
+    public EnemyAI GetAI
+    {
+        get
+        {
+            return enemyAI;
+        }
+        set
+        {
+            enemyAI = value;
+        }
+    }
+
+    public EnemyHealth GetHealth
+    {
+        get
+        {
+            return enemyHealth;
+        }
+        set
+        {
+            enemyHealth = value;
+        }
+    }
+
+    public EnemySkills GetSkills
+    {
+        get
+        {
+            return enemySkills;
+        }
+        set
+        {
+            enemySkills = value;
         }
     }
 

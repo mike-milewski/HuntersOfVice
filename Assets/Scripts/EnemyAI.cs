@@ -12,6 +12,9 @@ public class EnemyAI : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private EnemySkills enemySkills;
+
+    [SerializeField]
     private MushroomMon_Ani_Test Anim;
 
     [SerializeField]
@@ -21,7 +24,7 @@ public class EnemyAI : MonoBehaviour
     private float MoveSpeed, AttackRange, AttackDelay, AutoAttackTime, LookSpeed;
 
     [SerializeField] [Tooltip("Current targeted Player. Keep this empty!")]
-    private GameObject PlayerTarget = null;
+    private Character PlayerTarget = null;
 
     [SerializeField]
     private SphereCollider EnemyTriggerSphere;
@@ -128,7 +131,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public GameObject GetPlayerTarget
+    public Character GetPlayerTarget
     {
         get
         {
@@ -180,7 +183,7 @@ public class EnemyAI : MonoBehaviour
     {
         Anim.RunAni();
 
-        this.GetComponent<EnemySkills>().GetSkillBar.gameObject.SetActive(false);
+        enemySkills.GetSkillBar.gameObject.SetActive(false);
 
         if (PlayerTarget != null)
         {
@@ -219,14 +222,14 @@ public class EnemyAI : MonoBehaviour
 
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
-            if (PlayerTarget.GetComponent<Character>().CurrentHealth > 0)
+            if (PlayerTarget.CurrentHealth > 0)
             {
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
                     if (Random.value * 100 <= 50)
                     {
-                        this.GetComponent<EnemySkills>().GenerateValue();
+                        enemySkills.GenerateValue();
                         states = States.Skill;
                     }
                     else
@@ -256,8 +259,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Skill()
     {
-        this.GetComponent<EnemySkills>().ChooseSkill(this.GetComponent<EnemySkills>().GetRandomValue);
-        //character.GetComponent<EnemySkills>().PoisonMist(15, 4, 1f, "Poison Mist");
+        enemySkills.ChooseSkill(enemySkills.GetRandomValue);
     }
 
     public void Damage()
@@ -277,10 +279,13 @@ public class EnemyAI : MonoBehaviour
 
         this.GetComponent<EnemyHealth>().GetLocalHealth.gameObject.SetActive(false);
 
-        this.GetComponent<EnemySkills>().GetSkillBar.gameObject.SetActive(false);
-        this.GetComponent<EnemySkills>().GetActiveSkill = false;
+        enemySkills.GetSkillBar.gameObject.SetActive(false);
+        enemySkills.GetActiveSkill = false;
 
         character.GetRigidbody.useGravity = false;
+
+        enemySkills.DisableRadiusImage();
+        enemySkills.DisableRadius();
 
         this.GetComponent<Enemy>().ReturnExperience();
 
@@ -292,12 +297,12 @@ public class EnemyAI : MonoBehaviour
     {
         if (IsHostile)
         {
-            ThreatPic.GetComponent<Image>().sprite = ThreatSprite;
+            ThreatPic.sprite = ThreatSprite;
             EnemyTriggerSphere.enabled = true;
         }
         else
         {
-            ThreatPic.GetComponent<Image>().sprite = DocileSprite;
+            ThreatPic.sprite = DocileSprite;
             EnemyTriggerSphere.enabled = false;
         }
 
@@ -315,7 +320,7 @@ public class EnemyAI : MonoBehaviour
     {
         if(other.gameObject.GetComponent<Health>())
         {
-            PlayerTarget = other.gameObject;
+            PlayerTarget = other.GetComponent<Character>();
             states = States.Chase;
         }
     }
@@ -329,7 +334,7 @@ public class EnemyAI : MonoBehaviour
             {
                 states = States.Patrol;
                 AutoAttackTime = 0;
-                this.GetComponent<EnemySkills>().GetSkillBar.gameObject.SetActive(false);
+                enemySkills.GetSkillBar.gameObject.SetActive(false);
             }
         }
         if(!IsHostile)
@@ -340,7 +345,7 @@ public class EnemyAI : MonoBehaviour
                 states = States.Patrol;
                 AutoAttackTime = 0;
                 EnemyTriggerSphere.gameObject.SetActive(false);
-                this.GetComponent<EnemySkills>().GetSkillBar.gameObject.SetActive(false);
+                enemySkills.GetSkillBar.gameObject.SetActive(false);
             }
         }
     }
@@ -355,8 +360,10 @@ public class EnemyAI : MonoBehaviour
         {
             if(!ParticleExists)
             {
-                SkillsManager.Instance.GetParticleObj = Instantiate(HitParticle, new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.5f, PlayerTarget.transform.position.z),
-                                      PlayerTarget.transform.rotation);
+                SkillsManager.Instance.GetParticleObj = Instantiate(HitParticle, new Vector3(PlayerTarget.transform.position.x, 
+                                                                                             PlayerTarget.transform.position.y + 0.5f, 
+                                                                                             PlayerTarget.transform.position.z),
+                                                                                             PlayerTarget.transform.rotation);
 
                 SkillsManager.Instance.GetParticleObj.transform.SetParent(PlayerTarget.transform, true);
 
@@ -374,11 +381,11 @@ public class EnemyAI : MonoBehaviour
 
                 DamageObject.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
 
-                PlayerTarget.GetComponent<Health>().ModifyHealth((-character.CharacterStrength - 5) - -PlayerTarget.GetComponent<Character>().CharacterDefense);
+                PlayerTarget.GetComponent<Health>().ModifyHealth((-character.CharacterStrength - 5) - -PlayerTarget.CharacterDefense);
 
                 DamageObject.fontSize = 40;
 
-                DamageObject.text = ((character.CharacterStrength + 5) - PlayerTarget.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                DamageObject.text = ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
             }
             else
             {
@@ -386,11 +393,11 @@ public class EnemyAI : MonoBehaviour
 
                 DamageObject.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
 
-                PlayerTarget.GetComponent<Health>().ModifyHealth(-character.CharacterStrength - -PlayerTarget.GetComponent<Character>().CharacterDefense);
+                PlayerTarget.GetComponent<Health>().ModifyHealth(-character.CharacterStrength - -PlayerTarget.CharacterDefense);
 
                 DamageObject.fontSize = 30;
 
-                DamageObject.text = (character.CharacterStrength - PlayerTarget.GetComponent<Character>().CharacterDefense).ToString();
+                DamageObject.text = (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
             }
             #endregion
 

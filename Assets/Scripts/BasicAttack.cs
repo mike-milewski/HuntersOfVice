@@ -8,8 +8,11 @@ public class BasicAttack : MonoBehaviour
     [SerializeField]
     private Character character;
 
+    [SerializeField]
+    private PlayerAnimations playerAnimations;
+
     [SerializeField] [Tooltip("Current targeted object. Keep this empty!")]
-    private GameObject Target = null;
+    private Enemy Target = null;
 
     [SerializeField]
     private ParticleSystem HitParticle;
@@ -44,7 +47,7 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
-    public GameObject GetTarget
+    public Enemy GetTarget
     {
         get
         {
@@ -69,11 +72,11 @@ public class BasicAttack : MonoBehaviour
                 if(hit.collider.GetComponent<Character>().CurrentHealth > 0)
                 {
                     AutoAttackTime = 0;
-                    Target = hit.collider.GetComponent<Enemy>().gameObject;
-                    Target.GetComponent<EnemyHealth>().GetEnemyInfo();
-                    Target.GetComponent<EnemyHealth>().GetFilledBar();
-                    Target.GetComponent<Enemy>().GetHealthObject.SetActive(true);
-                    Target.GetComponent<EnemySkills>().EnableEnemySkillBar();
+                    Target = hit.collider.GetComponent<Enemy>();
+                    Target.GetHealth.GetEnemyInfo();
+                    Target.GetHealth.GetFilledBar();
+                    Target.GetHealthObject.SetActive(true);
+                    Target.GetSkills.EnableEnemySkillBar();
                 }
             }
             else
@@ -82,8 +85,8 @@ public class BasicAttack : MonoBehaviour
                 {
                     if (Target != null)
                     {
-                        Target.GetComponent<Enemy>().GetHealthObject.SetActive(false);
-                        Target.GetComponent<EnemySkills>().DisableEnemySkillBar();
+                        Target.GetHealthObject.SetActive(false);
+                        Target.GetSkills.DisableEnemySkillBar();
                     }
                     Target = null;
                     AutoAttackTime = 0;
@@ -107,7 +110,7 @@ public class BasicAttack : MonoBehaviour
     {
         if(Vector3.Distance(this.transform.position, Target.transform.position) <= AttackRange)
         {
-            if(Target.GetComponent<Character>().CurrentHealth > 0)
+            if(Target.GetCharacter.CurrentHealth > 0)
             {
                 if(!SkillsManager.Instance.GetActivatedSkill)
                 {
@@ -126,32 +129,32 @@ public class BasicAttack : MonoBehaviour
 
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, 5 * Time.deltaTime);
 
-                    this.GetComponent<PlayerAnimations>().AttackAnimation();
-                    if(Target.GetComponent<EnemyAI>().GetIsHostile == false)
+                    playerAnimations.AttackAnimation();
+                    if(Target.GetAI.GetIsHostile == false)
                     {
-                        Target.GetComponent<EnemyAI>().GetSphereTrigger.gameObject.SetActive(true);
-                        Target.GetComponent<EnemyAI>().GetPlayerTarget = this.gameObject;
+                        Target.GetAI.GetSphereTrigger.gameObject.SetActive(true);
+                        Target.GetAI.GetPlayerTarget = this.character;
                     }
                 }
             }
             else
             {
-                this.GetComponent<PlayerAnimations>().EndAttackAnimation();
-                Target.GetComponent<EnemyAI>().Dead();
+                playerAnimations.EndAttackAnimation();
+                Target.GetAI.Dead();
                 Target = null;
                 AutoAttackTime = 0;
             }
         }
         else
         {
-            this.GetComponent<PlayerAnimations>().EndAttackAnimation();
+            playerAnimations.EndAttackAnimation();
         }
         if(Target != null)
         {
             if(Vector3.Distance(this.transform.position, Target.transform.position) >= HideStatsDistance)
             {
-                Target.GetComponent<Enemy>().GetHealthObject.SetActive(false);
-                Target.GetComponent<EnemySkills>().DisableEnemySkillBar();
+                Target.GetHealthObject.SetActive(false);
+                Target.GetSkills.DisableEnemySkillBar();
                 Target = null;
                 AutoAttackTime = 0;
             }
@@ -183,32 +186,32 @@ public class BasicAttack : MonoBehaviour
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {
-                DamageObject = Instantiate(Target.GetComponent<EnemyHealth>().GetDamageText);
+                DamageObject = Instantiate(Target.GetHealth.GetDamageText);
 
-                DamageObject.transform.SetParent(Target.GetComponent<EnemyHealth>().GetDamageTextHolder.transform, false);
+                DamageObject.transform.SetParent(Target.GetHealth.GetDamageTextHolder.transform, false);
 
-                Target.GetComponent<EnemyHealth>().ModifyHealth((-character.CharacterStrength - 5) - -Target.GetComponent<Character>().CharacterDefense);
+                Target.GetHealth.ModifyHealth((-character.CharacterStrength - 5) - -Target.GetCharacter.CharacterDefense);
 
                 DamageObject.fontSize = 30;
 
-                DamageObject.text = ((character.CharacterStrength + 5) - Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                DamageObject.text = ((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense).ToString() + "!";
             }
             else
             {
-                DamageObject = Instantiate(Target.GetComponent<EnemyHealth>().GetDamageText);
+                DamageObject = Instantiate(Target.GetHealth.GetDamageText);
 
-                DamageObject.transform.SetParent(Target.GetComponent<EnemyHealth>().GetDamageTextHolder.transform, false);
+                DamageObject.transform.SetParent(Target.GetHealth.GetDamageTextHolder.transform, false);
 
-                Target.GetComponent<EnemyHealth>().ModifyHealth(-character.CharacterStrength - -Target.GetComponent<Character>().CharacterDefense);
+                Target.GetHealth.ModifyHealth(-character.CharacterStrength - -Target.GetCharacter.CharacterDefense);
 
                 DamageObject.fontSize = 20;
 
-                DamageObject.text = (character.CharacterStrength - Target.GetComponent<Character>().CharacterDefense).ToString();
+                DamageObject.text = (character.CharacterStrength - Target.GetCharacter.CharacterDefense).ToString();
             }
             #endregion
 
-            if(Target.GetComponent<EnemyAI>().GetStates != States.Skill)
-            Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
+            if(Target.GetAI.GetStates != States.Skill)
+            Target.GetAI.GetStates = States.Damaged;
         }
         return DamageObject;
     }

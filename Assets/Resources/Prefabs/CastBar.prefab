@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa83e6abac45c84ab2e72b9aadcbec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  playerController: {fileID: 0}
   skills: {fileID: 0}
   CastParticle: {fileID: 19800006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 2}
   SkillName: {fileID: 114350208856672362}

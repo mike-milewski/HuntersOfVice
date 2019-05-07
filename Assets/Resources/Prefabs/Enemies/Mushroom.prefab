@@ -574,7 +574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.4198113, b: 0.4198113, a: 1}
+  m_Color: {r: 1, g: 0.4198113, b: 0.4198113, a: 0.62352943}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -602,6 +602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   states: 0
   character: {fileID: 114979435669946942}
+  enemySkills: {fileID: 114006354462489536}
   Anim: {fileID: 114256765670847670}
   Waypoints:
   - {fileID: 0}
@@ -638,7 +639,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1075821000958046}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89eb8e66b9abe2343a1a25b207871f4c, type: 3}
   m_Name: 
@@ -744,6 +745,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 114979435669946942}
+  enemyAI: {fileID: 114244275959761428}
+  enemyHealth: {fileID: 114874576755753074}
+  enemySkills: {fileID: 114006354462489536}
   EXP: {fileID: 0}
   HealthObject: {fileID: 0}
   ExperiencePoints: 10

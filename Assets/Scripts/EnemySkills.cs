@@ -161,7 +161,7 @@ public class EnemySkills : MonoBehaviour
                     HealingCap(15, 3, "Healing Cap");
                     break;
                 case (Skill.PoisonMist):
-                    PoisonMist(15, 4, 1f, "Poison Mist");
+                    PoisonMist(15, 10, 1f, "Poison Mist");
                     break;
             }
         }

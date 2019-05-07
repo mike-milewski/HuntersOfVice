@@ -69,6 +69,18 @@ public class Skills : StatusEffects
         }
     }
 
+    public Button GetButton
+    {
+        get
+        {
+            return button;
+        }
+        set
+        {
+            button = value;
+        }
+    }
+
     public Text GetSkillTextObject
     {
         get
