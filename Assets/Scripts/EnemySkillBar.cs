@@ -14,6 +14,8 @@ public class EnemySkillBar : MonoBehaviour
 
     private float CastTime;
 
+    private bool Casting;
+
     public Character GetCharacter
     {
         get
@@ -50,6 +52,18 @@ public class EnemySkillBar : MonoBehaviour
         }
     }
 
+    public bool GetCasting
+    {
+        get
+        {
+            return Casting;
+        }
+        set
+        {
+            Casting = value;
+        }
+    }
+
     private void OnEnable()
     {
         CastTime = character.GetComponent<EnemySkills>().GetCastTime;
@@ -68,6 +82,7 @@ public class EnemySkillBar : MonoBehaviour
         SkillName.text = character.GetComponent<EnemySkills>().GetSkillName;
         if (SkillBarFillImage.fillAmount >= 1)
         {
+            Casting = false;
             character.GetComponent<EnemySkills>().GetActiveSkill = false;
 
             character.GetComponent<EnemySkills>().ChooseSkill(character.GetComponent<EnemySkills>().GetRandomValue);

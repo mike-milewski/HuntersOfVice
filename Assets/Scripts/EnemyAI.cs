@@ -382,6 +382,7 @@ public class EnemyAI : MonoBehaviour
                 DamageObject.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
 
                 PlayerTarget.GetComponent<Health>().ModifyHealth((-character.CharacterStrength - 5) - -PlayerTarget.CharacterDefense);
+                PlayerTarget.GetComponent<Health>().GetTakingDamage = true;
 
                 DamageObject.fontSize = 40;
 
@@ -394,6 +395,7 @@ public class EnemyAI : MonoBehaviour
                 DamageObject.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
 
                 PlayerTarget.GetComponent<Health>().ModifyHealth(-character.CharacterStrength - -PlayerTarget.CharacterDefense);
+                PlayerTarget.GetComponent<Health>().GetTakingDamage = true;
 
                 DamageObject.fontSize = 30;
 

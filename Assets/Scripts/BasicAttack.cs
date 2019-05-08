@@ -61,7 +61,9 @@ public class BasicAttack : MonoBehaviour
 
     private void MousePoint()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 MousePos = Input.mousePosition;
+
+        Ray ray = Camera.main.ScreenPointToRay(MousePos);
 
         RaycastHit hit;
 
@@ -190,6 +192,7 @@ public class BasicAttack : MonoBehaviour
 
                 DamageObject.transform.SetParent(Target.GetHealth.GetDamageTextHolder.transform, false);
 
+                Target.GetHealth.GetTakingDamage = true;
                 Target.GetHealth.ModifyHealth((-character.CharacterStrength - 5) - -Target.GetCharacter.CharacterDefense);
 
                 DamageObject.fontSize = 30;
@@ -202,6 +205,7 @@ public class BasicAttack : MonoBehaviour
 
                 DamageObject.transform.SetParent(Target.GetHealth.GetDamageTextHolder.transform, false);
 
+                Target.GetHealth.GetTakingDamage = true;
                 Target.GetHealth.ModifyHealth(-character.CharacterStrength - -Target.GetCharacter.CharacterDefense);
 
                 DamageObject.fontSize = 20;

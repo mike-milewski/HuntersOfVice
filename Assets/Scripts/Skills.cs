@@ -154,7 +154,8 @@ public class Skills : StatusEffects
 
     private void InvokeHealthRestore()
     {
-        GetCharacter.GetComponent<Health>().ModifyHealth(Potency + GetCharacter.CharacterIntelligence);
+        GetCharacter.GetComponent<Health>().IncreaseHealth(Potency + GetCharacter.CharacterIntelligence);
+        GetCharacter.GetComponent<Health>().GetTakingDamage = false;
 
         HealSkillText();
     }
@@ -219,6 +220,7 @@ public class Skills : StatusEffects
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
         Target.GetComponent<EnemyHealth>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
+        Target.GetComponent<EnemyHealth>().GetTakingDamage = true;
 
         Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
 

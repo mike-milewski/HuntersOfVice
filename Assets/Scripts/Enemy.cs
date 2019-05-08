@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour
     private EnemySkills enemySkills;
 
     [SerializeField]
+    private EnemySkillBar enemySkillBar;
+
+    [SerializeField]
     private Experience EXP;
 
     [SerializeField]
@@ -92,6 +95,18 @@ public class Enemy : MonoBehaviour
         set
         {
             enemySkills = value;
+        }
+    }
+
+    public EnemySkillBar GetEnemySkillBar
+    {
+        get
+        {
+            return enemySkillBar;
+        }
+        set
+        {
+            enemySkillBar = value;
         }
     }
 

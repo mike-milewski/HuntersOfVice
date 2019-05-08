@@ -161,7 +161,7 @@ public class EnemySkills : MonoBehaviour
                     HealingCap(15, 3, "Healing Cap");
                     break;
                 case (Skill.PoisonMist):
-                    PoisonMist(15, 10, 1f, "Poison Mist");
+                    PoisonMist(15, 3, 1f, "Poison Mist");
                     break;
             }
         }
@@ -235,7 +235,8 @@ public class EnemySkills : MonoBehaviour
 
         SkillHealText(Potency, SkillName);
 
-        character.GetComponent<EnemyHealth>().ModifyHealth(Potency + character.CharacterIntelligence);
+        character.GetComponent<EnemyHealth>().IncreaseHealth(Potency + character.CharacterIntelligence);
+        character.GetComponent<EnemyHealth>().GetTakingDamage = false;
 
         ActiveSkill = false;
     }
@@ -262,6 +263,7 @@ public class EnemySkills : MonoBehaviour
     private void UseSkillBar()
     {
         skillBar.gameObject.SetActive(true);
+        skillBar.GetCasting = true;
         if(character.GetComponent<EnemyAI>().GetPlayerTarget != null)
         {
             if (character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<BasicAttack>().GetTarget != null)
@@ -299,11 +301,14 @@ public class EnemySkills : MonoBehaviour
 
     public void EnableEnemySkillBar()
     {
-        foreach (Image image in skillBar.GetComponentsInChildren<Image>())
+        if(skillBar.GetCasting)
         {
-            image.enabled = true;
+            foreach (Image image in skillBar.GetComponentsInChildren<Image>())
+            {
+                image.enabled = true;
+            }
+            skillBar.GetComponentInChildren<Text>().enabled = true;
         }
-        skillBar.GetComponentInChildren<Text>().enabled = true;
     }
 
     public void DisableRadiusImage()
@@ -359,6 +364,7 @@ public class EnemySkills : MonoBehaviour
                                          (-potency - -character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
 
         character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+        character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetTakingDamage = true;
 
         return potency;
     }

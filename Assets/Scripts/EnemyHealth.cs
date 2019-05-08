@@ -18,6 +18,23 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField]
     private Text EnemyInfo, LocalEnemyInfo, DamageText;
 
+    [SerializeField]
+    private float FillAmount;
+
+    private bool TakingDamage;
+
+    public bool GetTakingDamage
+    {
+        get
+        {
+            return TakingDamage;
+        }
+        set
+        {
+            TakingDamage = value;
+        }
+    }
+
     private void Reset()
     {
         character = GetComponent<Character>();
@@ -26,6 +43,8 @@ public class EnemyHealth : MonoBehaviour
     private void Awake()
     {
         character.GetComponent<Character>();
+
+        TakingDamage = true;
     }
 
     private void Start()
@@ -33,9 +52,26 @@ public class EnemyHealth : MonoBehaviour
         GetEnemyInfo();
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
-        FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, .08f);
+        if(TakingDamage)
+        {
+            FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, FillAmount);
+        }
+        else
+        {
+            HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, FillBarTwo.fillAmount, FillAmount);
+        }
+    }
+
+    public void IncreaseHealth(int Value)
+    {
+        character.CurrentHealth += Value;
+
+        character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
+
+        FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+        LocalHealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }
 
     public void ModifyHealth(int Value)
