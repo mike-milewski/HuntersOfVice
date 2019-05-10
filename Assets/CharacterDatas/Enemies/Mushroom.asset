@@ -13,9 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Mushroom Man
   CharacterLevel: 1
-  Health: 50
+  Health: 1000
   Mana: 0
-  Strength: 6
+  Strength: 0
   Defense: 1
   Intelligence: 1
   CriticalHitChance: 5

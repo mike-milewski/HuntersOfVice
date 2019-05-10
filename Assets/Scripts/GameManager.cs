@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,21 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private Transform SpawnPoint;
+
+    [SerializeField]
+    private EventSystem eventsystem;
+
+    public EventSystem GetEventSystem
+    {
+        get
+        {
+            return eventsystem;
+        }
+        set
+        {
+            eventsystem = value;
+        }
+    }
 
     [SerializeField]
     private float RespawnTime;
@@ -33,6 +49,8 @@ public class GameManager : MonoBehaviour
         #endregion
 
         InvalidText.gameObject.SetActive(false);
+
+        eventsystem.GetComponent<EventSystem>();
     }
 
     public void Dead()

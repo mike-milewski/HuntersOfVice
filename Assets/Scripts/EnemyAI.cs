@@ -227,6 +227,9 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
+                    enemySkills.GenerateValue();
+                    states = States.Skill;
+                    /*
                     if (Random.value * 100 <= 50)
                     {
                         enemySkills.GenerateValue();
@@ -236,6 +239,7 @@ public class EnemyAI : MonoBehaviour
                     {
                         states = States.ApplyingAttack;
                     }
+                    */
                 }
             }
             else
@@ -330,23 +334,23 @@ public class EnemyAI : MonoBehaviour
         if(other.gameObject.GetComponent<Health>())
         {
             PlayerTarget = null;
-            if(states != States.Skill)
-            {
-                states = States.Patrol;
-                AutoAttackTime = 0;
-                enemySkills.GetSkillBar.gameObject.SetActive(false);
-            }
+            states = States.Patrol;
+            AutoAttackTime = 0;
+            enemySkills.DisableRadiusImage();
+            enemySkills.DisableRadius();
+            enemySkills.GetActiveSkill = false;
+            enemySkills.GetSkillBar.gameObject.SetActive(false);
         }
         if(!IsHostile)
         {
             PlayerTarget = null;
-            if (states != States.Skill)
-            {
-                states = States.Patrol;
-                AutoAttackTime = 0;
-                EnemyTriggerSphere.gameObject.SetActive(false);
-                enemySkills.GetSkillBar.gameObject.SetActive(false);
-            }
+            states = States.Patrol;
+            AutoAttackTime = 0;
+            EnemyTriggerSphere.gameObject.SetActive(false);
+            enemySkills.DisableRadiusImage();
+            enemySkills.DisableRadius();
+            enemySkills.GetActiveSkill = false;
+            enemySkills.GetSkillBar.gameObject.SetActive(false);
         }
     }
 

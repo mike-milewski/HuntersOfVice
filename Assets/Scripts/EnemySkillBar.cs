@@ -4,7 +4,10 @@ using UnityEngine.UI;
 public class EnemySkillBar : MonoBehaviour
 {
     [SerializeField]
-    private Character character = null;
+    private Character character;
+
+    [SerializeField]
+    private Enemy enemy;
 
     [SerializeField]
     private Image SkillBarFillImage;
@@ -14,6 +17,7 @@ public class EnemySkillBar : MonoBehaviour
 
     private float CastTime;
 
+    [SerializeField]
     private bool Casting;
 
     public Character GetCharacter
@@ -67,22 +71,45 @@ public class EnemySkillBar : MonoBehaviour
     private void OnEnable()
     {
         CastTime = character.GetComponent<EnemySkills>().GetCastTime;
+        Casting = true;
         SkillBarFillImage.fillAmount = 0;
     }
 
     private void OnDisable()
     {
+        Casting = false;
         SkillBarFillImage.fillAmount = 0;
+    }
+
+    public void GetEnemySkill()
+    {
+        SkillName.text = character.GetComponent<EnemySkills>().GetSkillName;
+        CastTime = character.GetComponent<EnemySkills>().GetCastTime;
+    }
+
+    public void ToggleCastBar()
+    {
+        if (GameManager.Instance.GetEventSystem.currentSelectedGameObject == enemy.gameObject)
+        {
+            GetEnemySkill();
+            character.GetComponent<EnemySkills>().EnableEnemySkillBar();
+        }
+        else if (GameManager.Instance.GetEventSystem.currentSelectedGameObject != enemy.gameObject)
+        {
+            GetEnemySkill();
+            character.GetComponent<EnemySkills>().DisableEnemySkillBar();
+        }
     }
 
     private void Update()
     {
+        ToggleCastBar();
+
         SkillBarFillImage.fillAmount += Time.deltaTime / character.GetComponent<EnemySkills>().GetCastTime;
         CastTime -= Time.deltaTime;
         SkillName.text = character.GetComponent<EnemySkills>().GetSkillName;
         if (SkillBarFillImage.fillAmount >= 1)
         {
-            Casting = false;
             character.GetComponent<EnemySkills>().GetActiveSkill = false;
 
             character.GetComponent<EnemySkills>().ChooseSkill(character.GetComponent<EnemySkills>().GetRandomValue);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public enum Skill { FungiBump, HealingCap, PoisonMist };
+public enum Skill { FungiBump, HealingCap, PoisonSpore };
 
 public class EnemySkills : MonoBehaviour
 {
@@ -144,7 +144,7 @@ public class EnemySkills : MonoBehaviour
 
     public void GenerateValue()
     {
-        RandomValue = Random.Range(0, skill.Length);
+        RandomValue = 1;//Random.Range(0, skill.Length);
     }
 
     public void ChooseSkill(int value)
@@ -155,13 +155,13 @@ public class EnemySkills : MonoBehaviour
             switch (skill[RandomValue])
             {
                 case (Skill.FungiBump):
-                    FungiBump(15, 3.5f, "Fungi Bump");
+                    FungiBump(0, 3.5f, "Fungi Bump");
                     break;
                 case (Skill.HealingCap):
-                    HealingCap(15, 3, "Healing Cap");
+                    HealingCap(15, 50, "Healing Cap");
                     break;
-                case (Skill.PoisonMist):
-                    PoisonMist(15, 3, 1f, "Poison Mist");
+                case (Skill.PoisonSpore):
+                    PoisonSpore(0, 30, 1f, "Poison Spore");
                     break;
             }
         }
@@ -203,7 +203,7 @@ public class EnemySkills : MonoBehaviour
         }  
     }
 
-    public void PoisonMist(int potency, float castTime, float radius, string skillname)
+    public void PoisonSpore(int potency, float castTime, float radius, string skillname)
     {
         SpellCastingAnimation();
 
@@ -225,7 +225,7 @@ public class EnemySkills : MonoBehaviour
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
             DisableRadiusImage();
-            Invoke("InvokePoisonMist", 0.3f);
+            Invoke("InvokePoisonSpore", 0.3f);
         }
     }
 
@@ -241,7 +241,7 @@ public class EnemySkills : MonoBehaviour
         ActiveSkill = false;
     }
 
-    private void InvokePoisonMist()
+    private void InvokePoisonSpore()
     {
         character.GetComponentInChildren<DamageRadius>().TakeDamageSphereRadius(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position, Radius + 1);
 
@@ -263,18 +263,6 @@ public class EnemySkills : MonoBehaviour
     private void UseSkillBar()
     {
         skillBar.gameObject.SetActive(true);
-        skillBar.GetCasting = true;
-        if(character.GetComponent<EnemyAI>().GetPlayerTarget != null)
-        {
-            if (character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<BasicAttack>().GetTarget != null)
-            {
-                EnableEnemySkillBar();
-            }
-            else
-            {
-                DisableEnemySkillBar();
-            }
-        }
     }
 
     private void SpellCastingAnimation()
@@ -289,26 +277,20 @@ public class EnemySkills : MonoBehaviour
 
     public void DisableEnemySkillBar()
     {
-        if(skillBar.gameObject.activeInHierarchy)
+        foreach (Image image in skillBar.GetComponentsInChildren<Image>())
         {
-            foreach(Image image in skillBar.GetComponentsInChildren<Image>())
-            {
-                image.enabled = false;
-            }
-            skillBar.GetComponentInChildren<Text>().enabled = false;
+            image.enabled = false;
         }
+        skillBar.GetComponentInChildren<Text>().enabled = false;
     }
 
     public void EnableEnemySkillBar()
     {
-        if(skillBar.GetCasting)
+        foreach (Image image in skillBar.GetComponentsInChildren<Image>())
         {
-            foreach (Image image in skillBar.GetComponentsInChildren<Image>())
-            {
-                image.enabled = true;
-            }
-            skillBar.GetComponentInChildren<Text>().enabled = true;
+            image.enabled = true;
         }
+        skillBar.GetComponentInChildren<Text>().enabled = true;
     }
 
     public void DisableRadiusImage()
@@ -348,14 +330,14 @@ public class EnemySkills : MonoBehaviour
             r.GetShapes = Shapes.Circle;
         }
     }
-
+    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position,
             character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.localScale * 2);
     }
-
+    */
     public int TakeDamage(int potency, string skillname)
     {
         SkillDamageText(potency, skillname);

@@ -15,7 +15,6 @@ public class Health : MonoBehaviour
     [SerializeField]
     private Text HealthText, DamageText;
 
-    [SerializeField]
     private bool TakingDamage;
 
     [SerializeField]
