@@ -9,7 +9,19 @@ public class EnemySkills : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private Enemy enemy;
+
+    [SerializeField]
+    private EnemyAI enemyAI;
+
+    [SerializeField]
     private EnemySkillBar skillBar;
+
+    [SerializeField]
+    private DamageRadius damageRadius;
+
+    [SerializeField]
+    private Health health;
 
     [SerializeField]
     private Transform TextHolder = null;
@@ -155,13 +167,13 @@ public class EnemySkills : MonoBehaviour
             switch (skill[RandomValue])
             {
                 case (Skill.FungiBump):
-                    FungiBump(0, 3.5f, "Fungi Bump");
+                    FungiBump(10, 3.5f, "Fungi Bump");
                     break;
                 case (Skill.HealingCap):
-                    HealingCap(15, 50, "Healing Cap");
+                    HealingCap(15, 3, "Healing Cap");
                     break;
                 case (Skill.PoisonSpore):
-                    PoisonSpore(0, 30, 1f, "Poison Spore");
+                    PoisonSpore(0, 4, 1f, "Poison Spore");
                     break;
             }
         }
@@ -172,10 +184,10 @@ public class EnemySkills : MonoBehaviour
         Potency = potency;
         SkillName = skillname;
 
-        TextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
-        if (character.GetComponent<EnemyAI>().GetPlayerTarget != null)
+        TextHolder = enemyAI.GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
+        if (enemyAI.GetPlayerTarget != null)
         {
-            if(Vector3.Distance(character.transform.position, character.GetComponent<EnemyAI>().GetPlayerTarget.transform.position) <= attackRange)
+            if(Vector3.Distance(character.transform.position, enemyAI.GetPlayerTarget.transform.position) <= attackRange)
             {
                 FungiBumpAnimation();
             }
@@ -231,19 +243,21 @@ public class EnemySkills : MonoBehaviour
 
     private void InvokeHealingCap()
     {
-        TextHolder = character.GetComponent<EnemyHealth>().GetDamageTextHolder.transform;
+        TextHolder = health.GetDamageTextParent.transform;
 
         SkillHealText(Potency, SkillName);
 
-        character.GetComponent<EnemyHealth>().IncreaseHealth(Potency + character.CharacterIntelligence);
-        character.GetComponent<EnemyHealth>().GetTakingDamage = false;
+        health.IncreaseHealth(Potency + character.CharacterIntelligence);
+        health.GetTakingDamage = false;
+
+        enemy.GetLocalHealthInfo();
 
         ActiveSkill = false;
     }
 
     private void InvokePoisonSpore()
     {
-        character.GetComponentInChildren<DamageRadius>().TakeDamageSphereRadius(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position, Radius + 1);
+        damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, Radius + 1);
 
         DisableRadius();
 
@@ -252,8 +266,7 @@ public class EnemySkills : MonoBehaviour
 
     private void InvokePoisonMist2()
     {
-        character.GetComponentInChildren<DamageRadius>().TakeDamageRectangleRadius(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position,
-            character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.localScale);
+        damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.GetDamageShape.transform.localScale);
 
         DisableRadius();
 
@@ -267,12 +280,12 @@ public class EnemySkills : MonoBehaviour
 
     private void SpellCastingAnimation()
     {
-        character.GetComponent<EnemyAI>().GetAnimation.CastingAni();
+        enemyAI.GetAnimation.CastingAni();
     }
 
     private void FungiBumpAnimation()
     {
-        character.GetComponent<EnemyAI>().GetAnimation.FungiBumpAnim();
+        enemyAI.GetAnimation.FungiBumpAnim();
     }
 
     public void DisableEnemySkillBar()
@@ -295,40 +308,34 @@ public class EnemySkills : MonoBehaviour
 
     public void DisableRadiusImage()
     {
-        foreach (DamageRadius r in character.GetComponentsInChildren<DamageRadius>())
+        foreach (Image r in damageRadius.GetComponentsInChildren<Image>())
         {
-            r.gameObject.GetComponent<Image>().enabled = false;
+            r.enabled = false;
         }
     }
 
     public void EnableRadiusImage()
     {
-        foreach (DamageRadius r in character.GetComponentsInChildren<DamageRadius>())
+        foreach (Image r in damageRadius.GetComponentsInChildren<Image>())
         {
-            r.gameObject.GetComponent<Image>().enabled = true;
+            r.enabled = true;
         }
     }
 
     public void DisableRadius()
     {
-        foreach (DamageRadius r in character.GetComponentsInChildren<DamageRadius>())
-        {
-            r.ResetLocalScale();
-            r.GetRadius = 0;
-            r.enabled = false;
-        }
+        damageRadius.ResetLocalScale();
+        damageRadius.GetRadius = 0;
+        damageRadius.enabled = false;
     }
 
     public void EnableRadius()
     {
-        foreach (DamageRadius r in character.GetComponentsInChildren<DamageRadius>())
-        {
-            r.enabled = true;
+        damageRadius.enabled = true;
 
-            r.GetRadius = Radius;
+        damageRadius.GetRadius = Radius;
 
-            r.GetShapes = Shapes.Circle;
-        }
+        damageRadius.GetShapes = Shapes.Circle;
     }
     /*
     private void OnDrawGizmos()

@@ -4,17 +4,21 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     [SerializeField]
-    private Image HealthBar, FillBarTwo;
+    private Character character;
 
     [SerializeField]
-    private Character character;
+    private Image HealthBar, FillBarTwo;
 
     [SerializeField]
     private GameObject DamageTextParent;
 
     [SerializeField]
-    private Text HealthText, DamageText;
+    private Text HealthText = null; 
+    
+    [SerializeField]
+    private Text DamageText;
 
+    [SerializeField]
     private bool TakingDamage;
 
     [SerializeField]
@@ -32,65 +36,40 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void Reset()
+    public Image GetHealthBar
     {
-        character = GetComponent<Character>();
-    }
-
-    private void Awake()
-    {
-        character = GetComponent<Character>();
-    }
-
-    private void Start()
-    {
-        HealthText.text = character.CurrentHealth + "/" + character.MaxHealth;
-    }
-
-    private void LateUpdate()
-    {
-        if(TakingDamage)
+        get
         {
-            FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, FillValue);
+            return HealthBar;
         }
-        else
+        set
         {
-            HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, FillBarTwo.fillAmount, FillValue);
+            HealthBar = value;
         }
     }
 
-    public void IncreaseHealth(int Value)
+    public Image GetFillBarTwo
     {
-        character.CurrentHealth += Value;
-
-        character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
-
-        HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
-
-        FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
-    }
-
-    public void ModifyHealth(int Value)
-    {
-        character.CurrentHealth += Value;
-
-        character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
-
-        HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
-
-        HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
-
-        if(character.CurrentHealth <= 0)
+        get
         {
-            GameManager.Instance.Dead();
+            return FillBarTwo;
+        }
+        set
+        {
+            FillBarTwo = value;
         }
     }
 
-    public void GetFilledBar()
+    public Character GetCharacter
     {
-        HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
-
-        HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+        get
+        {
+            return character;
+        }
+        set
+        {
+            character = value;
+        }
     }
 
     public GameObject GetDamageTextParent
@@ -115,5 +94,82 @@ public class Health : MonoBehaviour
         {
             DamageText = value;
         }
+    }
+
+    private void Reset()
+    {
+        character = GetComponent<Character>();
+    }
+
+    private void Start()
+    {
+        character.GetComponent<Character>();
+
+        if (HealthText != null)
+        HealthText.text = character.CurrentHealth + "/" + character.MaxHealth;
+    }
+
+    private void FixedUpdate()
+    {
+        if(TakingDamage)
+        {
+            FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, FillValue);
+        }
+        else
+        {
+            HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, FillBarTwo.fillAmount, FillValue);
+        }
+    }
+
+    public void IncreaseHealth(int Value)
+    {
+        character.CurrentHealth += Value;
+
+        character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
+
+        if(HealthText != null)
+        {
+            HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
+        }
+
+        FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+    }
+
+    public void ModifyHealth(int Value)
+    {
+        character.CurrentHealth += Value;
+
+        character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
+
+        if(character.GetComponent<Enemy>())
+        {
+            character.GetComponent<Enemy>().GetLocalHealthInfo();
+        }
+
+        if(HealthText != null)
+        {
+            HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
+        }
+
+        HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+
+        if(character.CurrentHealth <= 0)
+        {
+            if(character.GetComponent<PlayerController>())
+            {
+                GameManager.Instance.Dead();
+            }
+            else
+            {
+                character.GetComponent<EnemyAI>().Dead();
+            }
+        }
+    }
+
+    public void GetFilledBar()
+    {
+        HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
+
+        HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }
 }

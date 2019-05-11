@@ -12,6 +12,9 @@ public class EnemyAI : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private Enemy enemy;
+
+    [SerializeField]
     private EnemySkills enemySkills;
 
     [SerializeField]
@@ -279,9 +282,9 @@ public class EnemyAI : MonoBehaviour
 
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
 
-        this.GetComponent<Enemy>().GetHealthObject.SetActive(false);
+        enemy.GetHealth.gameObject.SetActive(false);
 
-        this.GetComponent<EnemyHealth>().GetLocalHealth.gameObject.SetActive(false);
+        enemy.GetLocalHealth.gameObject.SetActive(false);
 
         enemySkills.GetSkillBar.gameObject.SetActive(false);
         enemySkills.GetActiveSkill = false;
@@ -291,7 +294,7 @@ public class EnemyAI : MonoBehaviour
         enemySkills.DisableRadiusImage();
         enemySkills.DisableRadius();
 
-        this.GetComponent<Enemy>().ReturnExperience();
+        enemy.ReturnExperience();
 
         Anim.DeathAni();
     }
@@ -311,8 +314,8 @@ public class EnemyAI : MonoBehaviour
         }
 
         character.CurrentHealth = character.MaxHealth;
-        this.GetComponent<EnemyHealth>().GetFilledBar();
-        this.GetComponent<EnemyHealth>().GetLocalHealth.gameObject.SetActive(true);
+        enemy.GetFilledBar();
+        enemy.GetLocalHealth.gameObject.SetActive(true);
         
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
         character.GetRigidbody.useGravity = true;
@@ -322,7 +325,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.GetComponent<Health>())
+        if(other.gameObject.GetComponent<PlayerController>())
         {
             PlayerTarget = other.GetComponent<Character>();
             states = States.Chase;
@@ -331,7 +334,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.GetComponent<Health>())
+        if(other.gameObject.GetComponent<PlayerController>())
         {
             PlayerTarget = null;
             states = States.Patrol;

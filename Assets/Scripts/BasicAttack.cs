@@ -71,14 +71,14 @@ public class BasicAttack : MonoBehaviour
         {
             if(hit.collider.GetComponent<Enemy>())
             {
-                if(hit.collider.GetComponent<Character>().CurrentHealth > 0)
+                if (hit.collider.GetComponent<Character>().CurrentHealth > 0)
                 {
                     AutoAttackTime = 0;
                     Target = hit.collider.GetComponent<Enemy>();
                     GameManager.Instance.GetEventSystem.SetSelectedGameObject(Target.gameObject);
-                    Target.GetHealth.GetEnemyInfo();
-                    Target.GetHealth.GetFilledBar();
-                    Target.GetHealthObject.SetActive(true);
+                    Target.GetEnemyInfo();
+                    Target.CheckHealth();
+                    Target.GetFilledBar();
                 }
             }
             else
@@ -87,8 +87,10 @@ public class BasicAttack : MonoBehaviour
                 {
                     if (Target != null)
                     {
-                        Target.GetHealthObject.SetActive(false);
+                        Target.CheckHealth();
                     }
+                    GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
+                    Debug.Log(GameManager.Instance.GetEventSystem.currentSelectedGameObject);
                     Target = null;
                     AutoAttackTime = 0;
                 }
@@ -141,7 +143,6 @@ public class BasicAttack : MonoBehaviour
             else
             {
                 playerAnimations.EndAttackAnimation();
-                Target.GetAI.Dead();
                 Target = null;
                 AutoAttackTime = 0;
             }
@@ -154,7 +155,7 @@ public class BasicAttack : MonoBehaviour
         {
             if(Vector3.Distance(this.transform.position, Target.transform.position) >= HideStatsDistance)
             {
-                Target.GetHealthObject.SetActive(false);
+                Target.GetHealth.gameObject.SetActive(false);
                 Target.GetSkills.DisableEnemySkillBar();
                 Target = null;
                 AutoAttackTime = 0;
@@ -187,12 +188,12 @@ public class BasicAttack : MonoBehaviour
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {
-                DamageObject = Instantiate(Target.GetHealth.GetDamageText);
+                DamageObject = Instantiate(Target.GetComponentInChildren<Health>().GetDamageText);
 
-                DamageObject.transform.SetParent(Target.GetHealth.GetDamageTextHolder.transform, false);
+                DamageObject.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
 
-                Target.GetHealth.GetTakingDamage = true;
-                Target.GetHealth.ModifyHealth((-character.CharacterStrength - 5) - -Target.GetCharacter.CharacterDefense);
+                Target.GetComponentInChildren<Health>().GetTakingDamage = true;
+                Target.GetComponentInChildren<Health>().ModifyHealth((-character.CharacterStrength - 5) - -Target.GetCharacter.CharacterDefense);
 
                 DamageObject.fontSize = 30;
 
@@ -200,12 +201,12 @@ public class BasicAttack : MonoBehaviour
             }
             else
             {
-                DamageObject = Instantiate(Target.GetHealth.GetDamageText);
+                DamageObject = Instantiate(Target.GetComponentInChildren<Health>().GetDamageText);
 
-                DamageObject.transform.SetParent(Target.GetHealth.GetDamageTextHolder.transform, false);
+                DamageObject.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
 
-                Target.GetHealth.GetTakingDamage = true;
-                Target.GetHealth.ModifyHealth(-character.CharacterStrength - -Target.GetCharacter.CharacterDefense);
+                Target.GetComponentInChildren<Health>().GetTakingDamage = true;
+                Target.GetComponentInChildren<Health>().ModifyHealth(-character.CharacterStrength - -Target.GetCharacter.CharacterDefense);
 
                 DamageObject.fontSize = 20;
 

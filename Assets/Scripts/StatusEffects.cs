@@ -142,6 +142,18 @@ public class StatusEffects : MonoBehaviour
         StatusIcon.sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
     }
 
+    public void Poison(Character chara, float DamageTick, int DamageValue, float duration)
+    {
+        float tick = DamageTick;
+        tick -= Time.deltaTime;
+        if(tick <= 0)
+        {
+            chara.GetComponent<Health>().GetTakingDamage = true;
+            chara.GetComponent<Health>().ModifyHealth(-DamageValue);
+        }
+        tick = DamageTick;
+    }
+
     public void RemoveStatusAffix(Character chara)
     {
         switch(effects)

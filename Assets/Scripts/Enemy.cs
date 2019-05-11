@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Enemy : MonoBehaviour
     private EnemyAI enemyAI;
 
     [SerializeField]
-    private EnemyHealth enemyHealth;
+    private Health health;
 
     [SerializeField]
     private EnemySkills enemySkills;
@@ -21,7 +22,13 @@ public class Enemy : MonoBehaviour
     private Experience EXP;
 
     [SerializeField]
-    private GameObject HealthObject;
+    private GameObject LocalHealth;
+
+    [SerializeField]
+    private Image LocalHealthBar;
+
+    [SerializeField]
+    private Text EnemyInfo, LocalEnemyInfo;
 
     [SerializeField]
     private int ExperiencePoints;
@@ -35,18 +42,6 @@ public class Enemy : MonoBehaviour
         set
         {
             ExperiencePoints = value;
-        }
-    }
-
-    public GameObject GetHealthObject
-    {
-        get
-        {
-            return HealthObject;
-        }
-        set
-        {
-            HealthObject = value;
         }
     }
 
@@ -74,18 +69,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public EnemyHealth GetHealth
-    {
-        get
-        {
-            return enemyHealth;
-        }
-        set
-        {
-            enemyHealth = value;
-        }
-    }
-
     public EnemySkills GetSkills
     {
         get
@@ -108,6 +91,69 @@ public class Enemy : MonoBehaviour
         {
             enemySkillBar = value;
         }
+    }
+
+    public Health GetHealth
+    {
+        get
+        {
+            return health;
+        }
+        set
+        {
+            health = value;
+        }
+    }
+
+    public GameObject GetLocalHealth
+    {
+        get
+        {
+            return LocalHealth;
+        }
+        set
+        {
+            LocalHealth = value;
+        }
+    }
+
+    private void Awake()
+    {
+        character = GetComponent<Character>();
+    }
+
+    private void Start()
+    {
+        GetEnemyInfo();
+    }
+
+    public void GetFilledBar()
+    {
+        health.GetHealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+        health.GetFillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+    }
+
+    public void CheckHealth()
+    {
+        if (GameManager.Instance.GetEventSystem.currentSelectedGameObject == enemySkillBar.GetEnemy.gameObject)
+        {
+            health.gameObject.SetActive(true);
+        }
+        else if (GameManager.Instance.GetEventSystem.currentSelectedGameObject != enemySkillBar.GetEnemy.gameObject)
+        {
+            health.gameObject.SetActive(false);
+        }
+    }
+
+    public void GetLocalHealthInfo()
+    {
+        LocalHealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+    }
+
+    public void GetEnemyInfo()
+    {
+        EnemyInfo.text = "LV: " + character.Level + " " + character.characterName;
+        LocalEnemyInfo.text = "LV: " + character.Level + " " + character.characterName;
     }
 
     public void ReturnExperience()

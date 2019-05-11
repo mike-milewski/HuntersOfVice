@@ -219,8 +219,8 @@ public class Skills : StatusEffects
     {
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
-        Target.GetComponent<EnemyHealth>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
-        Target.GetComponent<EnemyHealth>().GetTakingDamage = true;
+        Target.GetComponent<Health>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
+        Target.GetComponent<Health>().GetTakingDamage = true;
 
         Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
 

@@ -56,6 +56,18 @@ public class EnemySkillBar : MonoBehaviour
         }
     }
 
+    public Enemy GetEnemy
+    {
+        get
+        {
+            return enemy;
+        }
+        set
+        {
+            enemy = value;
+        }
+    }
+
     public bool GetCasting
     {
         get

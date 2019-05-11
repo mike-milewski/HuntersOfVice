@@ -132,7 +132,7 @@ public class DamageRadius : MonoBehaviour
 
         for(int i = 0; i < hitColliders.Length; i++)
         {
-            if(hitColliders[i].GetComponent<Health>())
+            if(hitColliders[i].GetComponent<PlayerController>())
             {
                 character.GetComponent<EnemySkills>().GetTextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
 

@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         
         if(Player.GetComponent<BasicAttack>().GetTarget != null)
         {
-            Player.GetComponent<BasicAttack>().GetTarget.GetComponent<Enemy>().GetHealthObject.SetActive(false);
+            Player.GetComponent<BasicAttack>().GetTarget.GetComponent<Enemy>().GetHealth.gameObject.SetActive(false);
             Player.GetComponent<BasicAttack>().GetTarget = null;
         }
 
