@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 223081407415897518}
   - component: {fileID: 114961937841191090}
   - component: {fileID: 114286634376394306}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UICanvasScreenSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4897931895153148}
   - component: {fileID: 114272879539269974}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EnemyHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 224156836978723152}
   - component: {fileID: 222133879710609938}
   - component: {fileID: 114119759583685392}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CharacterInfoTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -506,8 +506,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1722958204252142}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.0000001872535}
-  m_LocalPosition: {x: -0, y: -3.6407735, z: 3.63}
+  m_LocalRotation: {x: 0, y: 1, z: -0, w: -0.0000001872535}
+  m_LocalPosition: {x: 0, y: -3.6407735, z: 9.819547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4731271516209256}
@@ -722,7 +722,7 @@ MonoBehaviour:
     type: 2}
   SkillName: 
   ActiveSkill: 0
-  skill: 000000000000000002000000
+  skill: 000000000200000002000000
 --- !u!114 &114031368246823800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1070,7 +1070,7 @@ MonoBehaviour:
   enemyAI: {fileID: 114244275959761428}
   health: {fileID: 114272879539269974}
   enemySkills: {fileID: 114006354462489536}
-  enemySkillBar: {fileID: 114588050136725898}
+  enemySkillBar: {fileID: 0}
   EXP: {fileID: 0}
   LocalHealth: {fileID: 1951018771963510}
   LocalHealthBar: {fileID: 114152917645832156}

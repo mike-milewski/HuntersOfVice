@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour
     private EnemySkills enemySkills;
 
     [SerializeField]
+    private Enemy enemy;
+
+    [SerializeField]
     private EnemySkillBar enemySkillBar;
 
     [SerializeField]
@@ -127,19 +130,24 @@ public class Enemy : MonoBehaviour
         GetEnemyInfo();
     }
 
+    private void LateUpdate()
+    {
+        ToggleHealthBar();
+    }
+
     public void GetFilledBar()
     {
         health.GetHealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
         health.GetFillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }
 
-    public void CheckHealth()
+    public void ToggleHealthBar()
     {
-        if (GameManager.Instance.GetEventSystem.currentSelectedGameObject == enemySkillBar.GetEnemy.gameObject)
+        if (GameManager.Instance.GetLastObject == enemy.gameObject)
         {
             health.gameObject.SetActive(true);
         }
-        else if (GameManager.Instance.GetEventSystem.currentSelectedGameObject != enemySkillBar.GetEnemy.gameObject)
+        else
         {
             health.gameObject.SetActive(false);
         }

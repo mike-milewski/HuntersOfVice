@@ -200,7 +200,7 @@ public class Skills : StatusEffects
 
         StrengthUP(GetCharacter, 10, GetStatusDuration);
 
-        StatusEffectSkillText();
+        BuffStatusEffectSkillText();
     }
 
     public void Shield()
@@ -209,7 +209,7 @@ public class Skills : StatusEffects
 
         DefenseUP(GetCharacter, 10, GetStatusDuration);
 
-        StatusEffectSkillText();
+        BuffStatusEffectSkillText();
     }
 
     //Place this on an animation as an animation event.
@@ -240,7 +240,7 @@ public class Skills : StatusEffects
         return SkillObj;
     }
 
-    private Text StatusEffectSkillText()
+    public Text BuffStatusEffectSkillText()
     {
         var SkillObj = Instantiate(SkillTextObject);
 
@@ -251,6 +251,23 @@ public class Skills : StatusEffects
         var StatusIcon = Instantiate(GetStatusIcon);
 
         StatusIcon.transform.SetParent(GetBuffIconTrans.transform, false);
+
+        SkillObj.GetComponentInChildren<Image>().sprite = StatusIcon.sprite;
+
+        return SkillObj;
+    }
+
+    public Text DebuffStatusEffectSkillText()
+    {
+        var SkillObj = Instantiate(SkillTextObject);
+
+        SkillObj.transform.SetParent(TextHolder.transform, false);
+
+        SkillObj.text = "+" + GetStatusEffectName;
+
+        var StatusIcon = Instantiate(GetStatusIcon);
+
+        StatusIcon.transform.SetParent(GetDeBuffIconTrans.transform, false);
 
         SkillObj.GetComponentInChildren<Image>().sprite = StatusIcon.sprite;
 

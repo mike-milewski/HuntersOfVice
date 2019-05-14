@@ -11,6 +11,9 @@ public class DamageRadius : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private EnemySkills enemySkills;
+
+    [SerializeField]
     private Image DamageShape;
 
     [SerializeField]
@@ -134,13 +137,13 @@ public class DamageRadius : MonoBehaviour
         {
             if(hitColliders[i].GetComponent<PlayerController>())
             {
-                character.GetComponent<EnemySkills>().GetTextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
+                enemySkills.GetTextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
 
-                character.GetComponent<EnemySkills>().SkillDamageText(character.GetComponent<EnemySkills>().GetPotency, character.GetComponent<EnemySkills>().GetSkillName);
+                enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
 
                 hitColliders[i].GetComponent<Health>().GetTakingDamage = true;
 
-                hitColliders[i].GetComponent<Health>().ModifyHealth(-character.GetComponent<EnemySkills>().GetPotency - 
+                hitColliders[i].GetComponent<Health>().ModifyHealth(-enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency - 
                                                                     character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
 
                 character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
@@ -157,13 +160,13 @@ public class DamageRadius : MonoBehaviour
         {
             if (hitColliders[i].GetComponent<Health>())
             {
-                character.GetComponent<EnemySkills>().GetTextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
+                enemySkills.GetTextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
 
-                character.GetComponent<EnemySkills>().SkillDamageText(character.GetComponent<EnemySkills>().GetPotency, character.GetComponent<EnemySkills>().GetSkillName);
+                enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
 
                 hitColliders[i].GetComponent<Health>().GetTakingDamage = true;
 
-                hitColliders[i].GetComponent<Health>().ModifyHealth(-character.GetComponent<EnemySkills>().GetPotency -
+                hitColliders[i].GetComponent<Health>().ModifyHealth(-enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency -
                                                                     character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
 
                 character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();

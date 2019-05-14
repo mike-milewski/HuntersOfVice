@@ -24,17 +24,6 @@ public class BasicAttack : MonoBehaviour
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
 
-    private void Update()
-    {
-        if(Input.GetMouseButtonDown(0))
-        MousePoint();
-
-        if(Target != null)
-        {
-            Attack();
-        }
-    }
-
     public float GetAutoAttackTime
     {
         get
@@ -59,6 +48,19 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            MousePoint();
+        }
+
+        if (Target != null)
+        {
+            Attack();
+        }
+    }
+
     private void MousePoint()
     {
         Vector3 MousePos = Input.mousePosition;
@@ -69,28 +71,25 @@ public class BasicAttack : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, MouseRange))
         {
-            if(hit.collider.GetComponent<Enemy>())
+            if (hit.collider.GetComponent<Enemy>())
             {
                 if (hit.collider.GetComponent<Character>().CurrentHealth > 0)
                 {
                     AutoAttackTime = 0;
                     Target = hit.collider.GetComponent<Enemy>();
+
                     GameManager.Instance.GetEventSystem.SetSelectedGameObject(Target.gameObject);
-                    Target.GetEnemyInfo();
-                    Target.CheckHealth();
+                    GameManager.Instance.GetLastObject = GameManager.Instance.GetEventSystem.currentSelectedGameObject;
+
                     Target.GetFilledBar();
                 }
             }
             else
             {
-                if(!IsPointerOnUIObject())
+                if (!IsPointerOnUIObject())
                 {
-                    if (Target != null)
-                    {
-                        Target.CheckHealth();
-                    }
                     GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
-                    Debug.Log(GameManager.Instance.GetEventSystem.currentSelectedGameObject);
+                    GameManager.Instance.GetLastObject = null;
                     Target = null;
                     AutoAttackTime = 0;
                 }
@@ -158,6 +157,8 @@ public class BasicAttack : MonoBehaviour
                 Target.GetHealth.gameObject.SetActive(false);
                 Target.GetSkills.DisableEnemySkillBar();
                 Target = null;
+                GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
+                GameManager.Instance.GetLastObject = null;
                 AutoAttackTime = 0;
             }
         }

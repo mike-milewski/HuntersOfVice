@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 
 public enum statuseffects { NONE, StrengthUP, DefenseUP, IntelliegenceUP, SpeedUP,
-                            StrengthDOWN, DefenseDOWN, IntelligenceDOWN, SpeedDOWN }
+                            StrengthDOWN, DefenseDOWN, IntelligenceDOWN, SpeedDOWN,
+                            Poison }
 
 public class StatusEffects : MonoBehaviour
 {
@@ -144,6 +145,8 @@ public class StatusEffects : MonoBehaviour
 
     public void Poison(Character chara, float DamageTick, int DamageValue, float duration)
     {
+        duration = StatusDuration;
+
         float tick = DamageTick;
         tick -= Time.deltaTime;
         if(tick <= 0)

@@ -10,6 +10,12 @@ public class EnemySkillBar : MonoBehaviour
     private Enemy enemy;
 
     [SerializeField]
+    private EnemyAI enemyAI;
+
+    [SerializeField]
+    private EnemySkills enemySkills;
+
+    [SerializeField]
     private Image SkillBarFillImage;
 
     [SerializeField]
@@ -82,7 +88,7 @@ public class EnemySkillBar : MonoBehaviour
 
     private void OnEnable()
     {
-        CastTime = character.GetComponent<EnemySkills>().GetCastTime;
+        CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
         Casting = true;
         SkillBarFillImage.fillAmount = 0;
     }
@@ -95,21 +101,21 @@ public class EnemySkillBar : MonoBehaviour
 
     public void GetEnemySkill()
     {
-        SkillName.text = character.GetComponent<EnemySkills>().GetSkillName;
-        CastTime = character.GetComponent<EnemySkills>().GetCastTime;
+        SkillName.text = enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName;
+        CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
     }
 
     public void ToggleCastBar()
     {
-        if (GameManager.Instance.GetEventSystem.currentSelectedGameObject == enemy.gameObject)
+        if (GameManager.Instance.GetLastObject == enemy.gameObject)
         {
             GetEnemySkill();
-            character.GetComponent<EnemySkills>().EnableEnemySkillBar();
+            enemySkills.EnableEnemySkillBar();
         }
-        else if (GameManager.Instance.GetEventSystem.currentSelectedGameObject != enemy.gameObject)
+        else if (GameManager.Instance.GetLastObject != enemy.gameObject)
         {
             GetEnemySkill();
-            character.GetComponent<EnemySkills>().DisableEnemySkillBar();
+            enemySkills.DisableEnemySkillBar();
         }
     }
 
@@ -117,20 +123,20 @@ public class EnemySkillBar : MonoBehaviour
     {
         ToggleCastBar();
 
-        SkillBarFillImage.fillAmount += Time.deltaTime / character.GetComponent<EnemySkills>().GetCastTime;
+        SkillBarFillImage.fillAmount += Time.deltaTime / enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
         CastTime -= Time.deltaTime;
-        SkillName.text = character.GetComponent<EnemySkills>().GetSkillName;
+        SkillName.text = enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName;
         if (SkillBarFillImage.fillAmount >= 1)
         {
-            character.GetComponent<EnemySkills>().GetActiveSkill = false;
+            enemySkills.GetActiveSkill = false;
 
-            character.GetComponent<EnemySkills>().ChooseSkill(character.GetComponent<EnemySkills>().GetRandomValue);
+            enemySkills.ChooseSkill(enemySkills.GetRandomValue);
 
-            character.GetComponent<EnemyAI>().GetAutoAttack = 0;
-            character.GetComponent<EnemyAI>().GetStates = States.Attack;
+            enemyAI.GetAutoAttack = 0;
+            enemyAI.GetStates = States.Attack;
 
             SkillBarFillImage.fillAmount = 0;
-            CastTime = character.GetComponent<EnemySkills>().GetCastTime;
+            CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
 
             gameObject.SetActive(false);
         }

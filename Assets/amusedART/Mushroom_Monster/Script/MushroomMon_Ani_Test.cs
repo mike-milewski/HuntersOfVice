@@ -7,6 +7,9 @@ public class MushroomMon_Ani_Test : MonoBehaviour
     private EnemyAI AI;
 
     [SerializeField]
+    private EnemySkills enemyskills;
+
+    [SerializeField]
     private GameObject ParentObject;
 
 	private const string IDLE	= "Idle";
@@ -75,7 +78,7 @@ public class MushroomMon_Ani_Test : MonoBehaviour
 
     public void SkillDamage()
     {
-        AI.GetComponent<EnemySkills>().TakeDamage(AI.GetComponent<EnemySkills>().GetPotency, AI.GetComponent<EnemySkills>().GetSkillName);
+        enemyskills.TakeDamage(enemyskills.GetManager[enemyskills.GetRandomValue].GetPotency, enemyskills.GetManager[enemyskills.GetRandomValue].GetSkillName);
     }
 
     public void FungiBumpAnim()

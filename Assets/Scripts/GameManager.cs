@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     private GameObject Player;
 
     [SerializeField]
+    private GameObject LastObject = null;
+
+    [SerializeField]
     private Transform SpawnPoint;
 
     [SerializeField]
@@ -28,6 +31,18 @@ public class GameManager : MonoBehaviour
         set
         {
             eventsystem = value;
+        }
+    }
+
+    public GameObject GetLastObject
+    {
+        get
+        {
+            return LastObject;
+        }
+        set
+        {
+            LastObject = value;
         }
     }
 

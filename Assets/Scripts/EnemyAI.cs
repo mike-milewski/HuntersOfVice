@@ -294,6 +294,9 @@ public class EnemyAI : MonoBehaviour
         enemySkills.DisableRadiusImage();
         enemySkills.DisableRadius();
 
+        GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
+        GameManager.Instance.GetLastObject = null;
+
         enemy.ReturnExperience();
 
         Anim.DeathAni();
