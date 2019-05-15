@@ -137,8 +137,6 @@ public class DamageRadius : MonoBehaviour
         {
             if(hitColliders[i].GetComponent<PlayerController>())
             {
-                enemySkills.GetTextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
-
                 enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
 
                 hitColliders[i].GetComponent<Health>().GetTakingDamage = true;
@@ -160,8 +158,6 @@ public class DamageRadius : MonoBehaviour
         {
             if (hitColliders[i].GetComponent<Health>())
             {
-                enemySkills.GetTextHolder = character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
-
                 enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
 
                 hitColliders[i].GetComponent<Health>().GetTakingDamage = true;

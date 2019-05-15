@@ -3,7 +3,9 @@ using UnityEngine.UI;
 
 public enum Skill { //MushroomMan Skills
                     FungiBump, HealingCap, PoisonSpore,
-                    Regen};
+                    Regen, Regen2 };
+
+public enum Status { NONE, Poison, HealthRegen };
 
 [System.Serializable]
 public class enemySkillManager
@@ -11,8 +13,17 @@ public class enemySkillManager
     [SerializeField]
     private Skill skills;
 
+    [SerializeField]
+    private Status status;
+
     [SerializeField] [Tooltip("Image of the status effect inflicted. Only apply if the skill will have a status effect.")]
+    private Sprite StatusSprite = null;
+
+    [SerializeField]
     private Image StatusIcon = null;
+
+    [SerializeField]
+    private Transform TextHolder;
 
     [SerializeField]
     private Transform BuffIconTrans = null;
@@ -26,12 +37,25 @@ public class enemySkillManager
     [SerializeField]
     private string StatusEffectName;
 
+    [SerializeField]
+    private string StatusDescription;
+
+    [SerializeField]
     private string SkillName;
 
+    [SerializeField]
+    private float StatusDuration;
+
+    [SerializeField]
     private float CastTime;
 
+    [SerializeField]
     private float Radius;
 
+    [SerializeField]
+    public float AttackRange;
+
+    [SerializeField]
     private int Potency;
 
     public string GetSkillName
@@ -67,6 +91,18 @@ public class enemySkillManager
         set
         {
             Radius = value;
+        }
+    }
+
+    public float GetAttackRange
+    {
+        get
+        {
+            return AttackRange;
+        }
+        set
+        {
+            AttackRange = value;
         }
     }
 
@@ -106,6 +142,54 @@ public class enemySkillManager
         }
     }
 
+    public Status GetStatus
+    {
+        get
+        {
+            return status;
+        }
+        set
+        {
+            status = value;
+        }
+    }
+
+    public string GetStatusDescription
+    {
+        get
+        {
+            return StatusDescription;
+        }
+        set
+        {
+            StatusDescription = value;
+        }
+    }
+
+    public float GetStatusDuration
+    {
+        get
+        {
+            return StatusDuration;
+        }
+        set
+        {
+            StatusDuration = value;
+        }
+    }
+
+    public Sprite GetStatusSprite
+    {
+        get
+        {
+            return StatusSprite;
+        }
+        set
+        {
+            StatusSprite = value;
+        }
+    }
+
     public Image GetStatusIcon
     {
         get
@@ -127,6 +211,18 @@ public class enemySkillManager
         set
         {
             SkillTextObject = value;
+        }
+    }
+
+    public Transform GetTextHolder
+    {
+        get
+        {
+            return TextHolder;
+        }
+        set
+        {
+            TextHolder = value;
         }
     }
 
@@ -160,18 +256,6 @@ public class EnemySkills : MonoBehaviour
     [SerializeField]
     private enemySkillManager[] skills;
 
-    public enemySkillManager[] GetManager
-    {
-        get
-        {
-            return skills;
-        }
-        set
-        {
-            skills = value;
-        }
-    }
-
     [SerializeField]
     private Character character;
 
@@ -190,13 +274,22 @@ public class EnemySkills : MonoBehaviour
     [SerializeField]
     private Health health;
 
-    [SerializeField] [Tooltip("The transform that holds the damage/heal/status effect text values. Keep this empty for damage type skills!")]
-    private Transform TextHolder = null;
-
     private int RandomValue;
 
     [SerializeField]
     private bool ActiveSkill;
+
+    public enemySkillManager[] GetManager
+    {
+        get
+        {
+            return skills;
+        }
+        set
+        {
+            skills = value;
+        }
+    }
 
     public EnemySkillBar GetSkillBar
     {
@@ -207,18 +300,6 @@ public class EnemySkills : MonoBehaviour
         set
         {
             skillBar = value;
-        }
-    }
-
-    public Transform GetTextHolder
-    {
-        get
-        {
-            return TextHolder;
-        }
-        set
-        {
-            TextHolder = value;
         }
     }
 
@@ -261,23 +342,44 @@ public class EnemySkills : MonoBehaviour
             {
                 #region MushroomMan Skills
                 case (Skill.FungiBump):
-                    FungiBump(10, 3.5f, "Fungi Bump");
+                    FungiBump(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetAttackRange, GetManager[RandomValue].GetSkillName);
                     break;
                 case (Skill.HealingCap):
-                    HealingCap(15, 3, "Healing Cap");
+                    HealingCap(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetSkillName);
                     break;
                 case (Skill.PoisonSpore):
-                    PoisonSpore(10, 4, 1f, "Poison Spore");
+                    PoisonSpore(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetRadius, GetManager[RandomValue].GetSkillName);
                     break;
                 case (Skill.Regen):
-                    Regen(5f, "Regen");
+                    Regen(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
                     break;
-                #endregion
+                case (Skill.Regen2):
+                    Regen2(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
+                    break;
+                    #endregion
             }
         }
     }
 
-    public void Regen(float castTime, string skillname)
+    public void Regen(float castTime, float Duration, string skillname)
+    {
+        SpellCastingAnimation();
+
+        skills[RandomValue].GetCastTime = castTime;
+
+        skills[RandomValue].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            Invoke("InvokeRegen", 0.2f);
+        }
+    }
+
+    public void Regen2(float castTime, float Duration, string skillname)
     {
         SpellCastingAnimation();
 
@@ -297,7 +399,9 @@ public class EnemySkills : MonoBehaviour
 
     public void InvokeRegen()
     {
+        BuffStatusEffectSkillText();
 
+        ActiveSkill = false;
     }
 
     public void FungiBump(int potency, float attackRange, string skillname)
@@ -305,7 +409,6 @@ public class EnemySkills : MonoBehaviour
         skills[RandomValue].GetPotency = potency;
         skills[RandomValue].GetSkillName = skillname;
 
-        TextHolder = enemyAI.GetPlayerTarget.GetComponent<Health>().GetDamageTextParent.transform;
         if (enemyAI.GetPlayerTarget != null)
         {
             if(Vector3.Distance(character.transform.position, enemyAI.GetPlayerTarget.transform.position) <= attackRange)
@@ -338,8 +441,6 @@ public class EnemySkills : MonoBehaviour
 
     private void InvokeHealingCap()
     {
-        TextHolder = health.GetDamageTextParent.transform;
-
         SkillHealText(skills[RandomValue].GetPotency, skills[RandomValue].GetSkillName);
 
         health.IncreaseHealth(skills[RandomValue].GetPotency + character.CharacterIntelligence);
@@ -384,6 +485,7 @@ public class EnemySkills : MonoBehaviour
 
         ActiveSkill = false;
     }
+
     /*
     private void InvokePoisonMist2()
     {
@@ -486,7 +588,7 @@ public class EnemySkills : MonoBehaviour
     {
         var SkillObj = Instantiate(GetManager[RandomValue].GetSkillTextObject);
 
-        SkillObj.transform.SetParent(TextHolder.transform, false);
+        SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
         SkillObj.text = "+" + GetManager[RandomValue].GetStatusEffectName;
 
@@ -494,7 +596,7 @@ public class EnemySkills : MonoBehaviour
 
         StatusIcon.transform.SetParent(GetManager[RandomValue].GetBuffIconTrans.transform, false);
 
-        SkillObj.GetComponentInChildren<Image>().sprite = StatusIcon.sprite;
+        SkillObj.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
 
         return SkillObj;
     }
@@ -503,7 +605,7 @@ public class EnemySkills : MonoBehaviour
     {
         var SkillObj = Instantiate(GetManager[RandomValue].GetSkillTextObject);
 
-        SkillObj.transform.SetParent(TextHolder.transform, false);
+        SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
         SkillObj.text = "+" + GetManager[RandomValue].GetStatusEffectName;
 
@@ -511,7 +613,7 @@ public class EnemySkills : MonoBehaviour
 
         StatusIcon.transform.SetParent(GetManager[RandomValue].GetDebuffIconTrans.transform, false);
 
-        SkillObj.GetComponentInChildren<Image>().sprite = StatusIcon.sprite;
+        SkillObj.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
 
         return SkillObj;
     }
@@ -524,7 +626,7 @@ public class EnemySkills : MonoBehaviour
 
         var Target = character.GetComponent<EnemyAI>().GetPlayerTarget;
 
-        SkillObj.transform.SetParent(TextHolder.transform, false);
+        SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
         SkillObj.text = skills[RandomValue].GetSkillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
 
@@ -537,7 +639,7 @@ public class EnemySkills : MonoBehaviour
 
         var SkillObj = Instantiate(GetManager[RandomValue].GetSkillTextObject);
 
-        SkillObj.transform.SetParent(TextHolder.transform, false);
+        SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
         SkillObj.text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
 
