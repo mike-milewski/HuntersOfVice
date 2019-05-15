@@ -598,6 +598,8 @@ public class EnemySkills : MonoBehaviour
 
         SkillObj.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
 
+        StatusIcon.sprite = GetManager[RandomValue].GetStatusSprite;
+
         return SkillObj;
     }
 
@@ -614,6 +616,8 @@ public class EnemySkills : MonoBehaviour
         StatusIcon.transform.SetParent(GetManager[RandomValue].GetDebuffIconTrans.transform, false);
 
         SkillObj.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
+
+        StatusIcon.sprite = GetManager[RandomValue].GetStatusSprite;
 
         return SkillObj;
     }
