@@ -1,14 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public enum statuseffects { NONE, StrengthUP, DefenseUP, IntelliegenceUP, SpeedUP,
-                            StrengthDOWN, DefenseDOWN, IntelligenceDOWN, SpeedDOWN,
-                            Poison }
-
 public class StatusEffects : MonoBehaviour
 {
     [SerializeField]
-    private statuseffects effects;
+    private StatusEffect effects;
 
     [SerializeField]
     private Character character;
@@ -17,7 +13,7 @@ public class StatusEffects : MonoBehaviour
     private Image StatusIcon;
 
     [SerializeField]
-    private Transform StatusBuffIconTrans, StatusDebuffIconTrans;
+    private Transform StatusEffectIconTrans;
 
     [SerializeField]
     private string StatusEffectName, StatusDescription;
@@ -53,23 +49,11 @@ public class StatusEffects : MonoBehaviour
     {
         get
         {
-            return StatusBuffIconTrans;
+            return StatusEffectIconTrans;
         }
         set
         {
-            StatusBuffIconTrans = value;
-        }
-    }
-
-    public Transform GetDeBuffIconTrans
-    {
-        get
-        {
-            return StatusDebuffIconTrans;
-        }
-        set
-        {
-            StatusDebuffIconTrans = value;
+            StatusEffectIconTrans = value;
         }
     }
 
@@ -109,6 +93,18 @@ public class StatusEffects : MonoBehaviour
         }
     }
 
+    public StatusEffect GetStatusEffects
+    {
+        get
+        {
+            return effects;
+        }
+        set
+        {
+            effects = value;
+        }
+    }
+
     public void StrengthUP(Character chara, int value, float duration)
     {
         duration = StatusDuration;
@@ -142,21 +138,7 @@ public class StatusEffects : MonoBehaviour
 
         StatusIcon.sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
     }
-
-    public void Poison(Character chara, float DamageTick, int DamageValue, float duration)
-    {
-        duration = StatusDuration;
-
-        float tick = DamageTick;
-        tick -= Time.deltaTime;
-        if(tick <= 0)
-        {
-            chara.GetComponent<Health>().GetTakingDamage = true;
-            chara.GetComponent<Health>().ModifyHealth(-DamageValue);
-        }
-        tick = DamageTick;
-    }
-
+    /*
     public void RemoveStatusAffix(Character chara)
     {
         switch(effects)
@@ -181,4 +163,5 @@ public class StatusEffects : MonoBehaviour
                 break;
         }
     }
+    */
 }

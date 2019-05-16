@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
     private Text HealthText = null; 
     
     [SerializeField]
-    private Text DamageText;
+    private Text DamageText, HealText;
 
     [SerializeField]
     private bool TakingDamage;
@@ -93,6 +93,18 @@ public class Health : MonoBehaviour
         set
         {
             DamageText = value;
+        }
+    }
+
+    public Text GetHealText
+    {
+        get
+        {
+            return HealText;
+        }
+        set
+        {
+            HealText = value;
         }
     }
 

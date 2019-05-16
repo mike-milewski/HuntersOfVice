@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
         eventsystem.GetComponent<EventSystem>();
     }
 
+    public GameObject CheckLastObject()
+    {
+        return LastObject;
+    }
+
     public void Dead()
     {
         Player.GetComponent<BasicAttack>().GetAutoAttackTime = 0;

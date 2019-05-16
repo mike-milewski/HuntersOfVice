@@ -137,6 +137,11 @@ public class DamageRadius : MonoBehaviour
         {
             if(hitColliders[i].GetComponent<PlayerController>())
             {
+                if (enemySkills.GetManager[enemySkills.GetRandomValue].GetStatus != Status.NONE)
+                {
+                    enemySkills.StatusEffectSkillTextTransform();
+                }
+
                 enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
 
                 hitColliders[i].GetComponent<Health>().GetTakingDamage = true;

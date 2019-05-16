@@ -5,7 +5,7 @@ public enum Skill { //MushroomMan Skills
                     FungiBump, HealingCap, PoisonSpore,
                     Regen, Regen2 };
 
-public enum Status { NONE, Poison, HealthRegen };
+public enum Status { NONE, DamageOverTime, HealthRegen };
 
 [System.Serializable]
 public class enemySkillManager
@@ -26,13 +26,13 @@ public class enemySkillManager
     private Transform TextHolder;
 
     [SerializeField]
-    private Transform BuffIconTrans = null;
+    private Transform StatusIconTrans = null;
     
     [SerializeField]
-    private Transform DebuffIconTrans = null;
+    private Text SkillTextObject = null;
 
     [SerializeField]
-    private Text SkillTextObject;
+    private Text StatusEffectText = null;
 
     [SerializeField]
     private string StatusEffectName;
@@ -214,6 +214,18 @@ public class enemySkillManager
         }
     }
 
+    public Text GetStatusEffectText
+    {
+        get
+        {
+            return StatusEffectText;
+        }
+        set
+        {
+            StatusEffectText = value;
+        }
+    }
+
     public Transform GetTextHolder
     {
         get
@@ -226,27 +238,15 @@ public class enemySkillManager
         }
     }
 
-    public Transform GetBuffIconTrans
+    public Transform GetStatusIconTrans
     {
         get
         {
-            return BuffIconTrans;
+            return StatusIconTrans;
         }
         set
         {
-            BuffIconTrans = value;
-        }
-    }
-
-    public Transform GetDebuffIconTrans
-    {
-        get
-        {
-            return DebuffIconTrans;
-        }
-        set
-        {
-            DebuffIconTrans = value;
+            StatusIconTrans = value;
         }
     }
 }
@@ -340,7 +340,7 @@ public class EnemySkills : MonoBehaviour
             ActiveSkill = true;
             switch (skills[RandomValue].GetSkills)
             {
-                #region MushroomMan Skills
+                #region Mushroom Man Skills
                 case (Skill.FungiBump):
                     FungiBump(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetAttackRange, GetManager[RandomValue].GetSkillName);
                     break;
@@ -399,7 +399,7 @@ public class EnemySkills : MonoBehaviour
 
     public void InvokeRegen()
     {
-        BuffStatusEffectSkillText();
+        StatusEffectSkillTextTransform();
 
         ActiveSkill = false;
     }
@@ -584,40 +584,28 @@ public class EnemySkills : MonoBehaviour
         return potency;
     }
 
-    public Text BuffStatusEffectSkillText()
+    public Text StatusEffectSkillTextTransform()
     {
-        var SkillObj = Instantiate(GetManager[RandomValue].GetSkillTextObject);
+        var SkillObj = Instantiate(GetManager[RandomValue].GetStatusEffectText);
 
         SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
         SkillObj.text = "+" + GetManager[RandomValue].GetStatusEffectName;
 
-        var StatusIcon = Instantiate(GetManager[RandomValue].GetStatusIcon);
-
-        StatusIcon.transform.SetParent(GetManager[RandomValue].GetBuffIconTrans.transform, false);
+        var StatIcon = Instantiate(GetManager[RandomValue].GetStatusIcon);
 
         SkillObj.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
 
-        StatusIcon.sprite = GetManager[RandomValue].GetStatusSprite;
+        StatIcon.sprite = GetManager[RandomValue].GetStatusSprite;
 
-        return SkillObj;
-    }
+        StatIcon.transform.SetParent(GetManager[RandomValue].GetStatusIconTrans.transform, false);
 
-    public Text DebuffStatusEffectSkillText()
-    {
-        var SkillObj = Instantiate(GetManager[RandomValue].GetSkillTextObject);
-
-        SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
-
-        SkillObj.text = "+" + GetManager[RandomValue].GetStatusEffectName;
-
-        var StatusIcon = Instantiate(GetManager[RandomValue].GetStatusIcon);
-
-        StatusIcon.transform.SetParent(GetManager[RandomValue].GetDebuffIconTrans.transform, false);
-
-        SkillObj.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
-
-        StatusIcon.sprite = GetManager[RandomValue].GetStatusSprite;
+        if(StatIcon.GetComponent<StatusIcon>())
+        {
+            StatIcon.GetComponent<StatusIcon>().GetEffectStatus = GetManager[RandomValue].GetStatus;
+            StatIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
+            StatIcon.GetComponent<StatusIcon>().EnemyInput();
+        }
 
         return SkillObj;
     }

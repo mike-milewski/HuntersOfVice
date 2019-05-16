@@ -7,6 +7,15 @@ public class SkillsManager : MonoBehaviour
 {
     public static SkillsManager Instance = null;
 
+    [SerializeField]
+    private Character character;
+
+    [SerializeField]
+    private StatusIcon statusIcon;
+
+    [SerializeField]
+    private EnemyStatusIcon enemystatusIcon;
+
     private ParticleSystem ParticleObj = null;
 
     [SerializeField]
@@ -40,6 +49,18 @@ public class SkillsManager : MonoBehaviour
         }
     }
 
+    public Character GetCharacter
+    {
+        get
+        {
+            return character;
+        }
+        set
+        {
+            character = value;
+        }
+    }
+
     public ParticleSystem GetParticleObj
     {
         get
@@ -61,6 +82,30 @@ public class SkillsManager : MonoBehaviour
         set
         {
             skills = value;
+        }
+    }
+
+    public StatusIcon GetStatusIcon
+    {
+        get
+        {
+            return statusIcon;
+        }
+        set
+        {
+            statusIcon = value;
+        }
+    }
+
+    public EnemyStatusIcon GetEnemyStatusIcon
+    {
+        get
+        {
+            return enemystatusIcon;
+        }
+        set
+        {
+            enemystatusIcon = value;
         }
     }
 
@@ -106,6 +151,19 @@ public class SkillsManager : MonoBehaviour
                 skills[2].GetButton.onClick.Invoke();
             }
             else if (skills[2].GetCharacter.CurrentMana < skills[2].GetManaCost)
+            {
+                GameManager.Instance.ShowNotEnoughManaText();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            KeyInput = 3;
+            if (skills[3].GetButton.GetComponent<Image>().fillAmount >= 1 && skills[3].GetCharacter.CurrentHealth > 0
+                                                  && skills[3].GetCharacter.CurrentMana >= skills[3].GetManaCost && skills[3].GetComponent<Button>().interactable)
+            {
+                skills[3].GetButton.onClick.Invoke();
+            }
+            else if (skills[3].GetCharacter.CurrentMana < skills[3].GetManaCost)
             {
                 GameManager.Instance.ShowNotEnoughManaText();
             }

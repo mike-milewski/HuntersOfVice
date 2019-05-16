@@ -16,6 +16,9 @@ public class Skills : StatusEffects
     private Text SkillTextObject, SkillPanelText;
 
     [SerializeField]
+    private Text StatusEffectText;
+
+    [SerializeField]
     private ParticleSystem SkillParticle;
 
     [SerializeField]
@@ -90,6 +93,18 @@ public class Skills : StatusEffects
         set
         {
             SkillTextObject = value;
+        }
+    }
+
+    public Text GetStatusEffectText
+    {
+        get
+        {
+            return StatusEffectText;
+        }
+        set
+        {
+            StatusEffectText = value;
         }
     }
 
@@ -200,7 +215,9 @@ public class Skills : StatusEffects
 
         StrengthUP(GetCharacter, 10, GetStatusDuration);
 
-        BuffStatusEffectSkillText();
+        StatusEffectSkillText();
+
+        SkillsManager.Instance.GetStatusIcon.PlayerInput();
     }
 
     public void Shield()
@@ -209,7 +226,16 @@ public class Skills : StatusEffects
 
         DefenseUP(GetCharacter, 10, GetStatusDuration);
 
-        BuffStatusEffectSkillText();
+        StatusEffectSkillText();
+
+        SkillsManager.Instance.GetStatusIcon.PlayerInput();
+    }
+
+    public void Poison()
+    {
+        this.button.GetComponent<Image>().fillAmount = 0;
+
+        StatusEffectSkillText();
     }
 
     //Place this on an animation as an animation event.
@@ -240,36 +266,26 @@ public class Skills : StatusEffects
         return SkillObj;
     }
 
-    public Text BuffStatusEffectSkillText()
+    public Text StatusEffectSkillText()
     {
-        var SkillObj = Instantiate(SkillTextObject);
+        var SkillObj = Instantiate(StatusEffectText);
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
         SkillObj.text = "+" + GetStatusEffectName;
 
-        var StatusIcon = Instantiate(GetStatusIcon);
+        var StatIcon = Instantiate(GetStatusIcon);
 
-        StatusIcon.transform.SetParent(GetBuffIconTrans.transform, false);
+        StatIcon.transform.SetParent(GetBuffIconTrans.transform, false);
 
-        SkillObj.GetComponentInChildren<Image>().sprite = StatusIcon.sprite;
+        SkillObj.GetComponentInChildren<Image>().sprite = StatIcon.sprite;
 
-        return SkillObj;
-    }
-
-    public Text DebuffStatusEffectSkillText()
-    {
-        var SkillObj = Instantiate(SkillTextObject);
-
-        SkillObj.transform.SetParent(TextHolder.transform, false);
-
-        SkillObj.text = "+" + GetStatusEffectName;
-
-        var StatusIcon = Instantiate(GetStatusIcon);
-
-        StatusIcon.transform.SetParent(GetDeBuffIconTrans.transform, false);
-
-        SkillObj.GetComponentInChildren<Image>().sprite = StatusIcon.sprite;
+        if (StatIcon.GetComponent<EnemyStatusIcon>())
+        {
+            StatIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetStatusEffects;
+            StatIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+            StatIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+        }
 
         return SkillObj;
     }

@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
+  effect: 0
   DurationText: {fileID: 114087952247464328}
   StatusDescriptionText: {fileID: 114299974548908556}
   Duration: 0

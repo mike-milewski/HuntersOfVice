@@ -1,16 +1,50 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+public enum StatusEffect { NONE, DamageOverTime, HealthRegen };
+
 public class EnemyStatusIcon : MonoBehaviour
 {
+    private PlayerController player = null;
+
     [SerializeField]
     private Character character = null;
 
     [SerializeField]
+    private StatusEffect effect;
+
+    [SerializeField]
     private Text DurationText, StatusDescriptionText;
+
+    public PlayerController GetPlayer
+    {
+        get
+        {
+            return player;
+        }
+        set
+        {
+            player = value;
+        }
+    }
+
+    public StatusEffect GetStatusEffect
+    {
+        get
+        {
+            return effect;
+        }
+        set
+        {
+            effect = value;
+        }
+    }
 
     [SerializeField]
     private float Duration;
+
+    private float RegenHealTick; //Value used for status effects with health regeneration.
+    private float DamageTick; //Value used for status effects that damage over time;
 
     private int KeyInput;
 
@@ -29,9 +63,11 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void EnemyInput()
     {
         character = GetComponentInParent<Character>();
+
+        effect = (StatusEffect)character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatus;
 
         KeyInput = character.GetComponent<EnemySkills>().GetRandomValue;
 
@@ -39,16 +75,28 @@ public class EnemyStatusIcon : MonoBehaviour
 
         StatusDescriptionText.text = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" +
                                      character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
+
+        RegenHealTick = 3f;
+        DamageTick = 3f;
     }
 
-    private void LateUpdate()
+    public void PlayerInput()
     {
-        ToggleStatusIcon();
+        character = GetComponentInParent<Character>();
+
+        KeyInput = SkillsManager.Instance.GetKeyInput;
+
+        Duration = SkillsManager.Instance.GetSkills[KeyInput].GetStatusDuration;
+
+        StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" +
+                                     SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
+
+        DamageTick = 3f;
     }
 
     public Text RemoveStatusEffectText()
     {
-        var SkillObj = Instantiate(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetSkillTextObject);
+        var SkillObj = Instantiate(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectText);
 
         SkillObj.transform.SetParent(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
 
@@ -59,9 +107,29 @@ public class EnemyStatusIcon : MonoBehaviour
         return SkillObj;
     }
 
+    public Text RemoveEnemyStatusEffectText()
+    {
+        var SkillObj = Instantiate(SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectText);
+
+        SkillObj.transform.SetParent(SkillsManager.Instance.GetSkills[KeyInput].GetTextHolder.transform, false);
+
+        SkillObj.text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+
+        SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        return SkillObj;
+    }
+
     private void OnDisable()
     {
-        RemoveStatusEffectText();
+        if(player == null)
+        {
+            RemoveStatusEffectText();
+        }
+        else
+        {
+            RemoveEnemyStatusEffectText();
+        }
     }
 
     private void ToggleStatusIcon()
@@ -78,8 +146,63 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void HealthRegen(int value, float healTick)
     {
+        RegenHealTick -= Time.deltaTime;
+        if (RegenHealTick <= 0)
+        {
+            character.GetComponent<Enemy>().GetHealth.GetTakingDamage = false;
+            character.GetComponent<Enemy>().GetHealth.IncreaseHealth(value);
+            character.GetComponent<Enemy>().GetLocalHealthInfo();
+
+            var Healtxt = Instantiate(character.GetComponent<Enemy>().GetHealth.GetHealText);
+
+            Healtxt.transform.SetParent(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
+
+            Healtxt.text = value.ToString();
+
+            RegenHealTick = healTick;
+        }
+    }
+
+    private void DamageOverTime(int value, float damageTick)
+    {
+        DamageTick -= Time.deltaTime;
+        if (DamageTick <= 0)
+        {
+            character.GetComponent<Enemy>().GetHealth.GetTakingDamage = true;
+            character.GetComponent<Enemy>().GetHealth.ModifyHealth(-value);
+            character.GetComponent<Enemy>().GetLocalHealthInfo();
+
+            var EnemyDamagetxt = Instantiate(character.GetComponent<Enemy>().GetHealth.GetDamageText);
+
+            EnemyDamagetxt.transform.SetParent(character.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
+
+            EnemyDamagetxt.text = value.ToString();
+
+            DamageTick = damageTick;
+        }
+    }
+
+    private void CheckStatusEffect()
+    {
+        switch (effect)
+        {
+            case (StatusEffect.HealthRegen):
+                HealthRegen(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetPotency, 3f);
+                break;
+            case (StatusEffect.DamageOverTime):
+                DamageOverTime(5, 3f);
+                break;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        ToggleStatusIcon();
+
+        CheckStatusEffect();
+
         DurationText.text = Duration.ToString("F0");
         Duration -= Time.deltaTime;
         if (Duration <= 0)
