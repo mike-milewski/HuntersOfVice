@@ -63,6 +63,12 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if(player == null)
+        EnemyInput();
+    }
+
     public void EnemyInput()
     {
         character = GetComponentInParent<Character>();
@@ -111,7 +117,7 @@ public class EnemyStatusIcon : MonoBehaviour
     {
         var SkillObj = Instantiate(SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectText);
 
-        SkillObj.transform.SetParent(SkillsManager.Instance.GetSkills[KeyInput].GetTextHolder.transform, false);
+        SkillObj.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
 
         SkillObj.text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
 

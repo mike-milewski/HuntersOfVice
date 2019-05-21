@@ -13,7 +13,7 @@ public class StatusEffects : MonoBehaviour
     private Image StatusIcon;
 
     [SerializeField]
-    private Transform StatusEffectIconTrans;
+    private Transform StatusEffectIconTrans = null;
 
     [SerializeField]
     private string StatusEffectName, StatusDescription;
@@ -45,7 +45,7 @@ public class StatusEffects : MonoBehaviour
         }
     }
 
-    public Transform GetBuffIconTrans
+    public Transform GetStatusEffectIconTrans
     {
         get
         {

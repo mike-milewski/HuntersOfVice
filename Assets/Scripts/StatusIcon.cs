@@ -18,6 +18,7 @@ public class StatusIcon : MonoBehaviour
 
     private float PoisonDamageTick;
 
+    [SerializeField]
     private int KeyInput;
 
     [SerializeField]
@@ -85,7 +86,7 @@ public class StatusIcon : MonoBehaviour
 
     public Text RemoveStatusEffectText()
     {
-        var SkillObj = Instantiate(SkillsManager.Instance.GetSkills[KeyInput].GetSkillTextObject);
+        var SkillObj = Instantiate(SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectText);
 
         SkillObj.transform.SetParent(SkillsManager.Instance.GetSkills[KeyInput].GetTextHolder.transform, false);
 
@@ -98,6 +99,8 @@ public class StatusIcon : MonoBehaviour
 
     public Text RemoveEnemyStatusEffectText()
     {
+        KeyInput = enemyTarget.GetComponent<EnemySkills>().GetRandomValue;
+
         var SkillObj = Instantiate(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectText);
 
         SkillObj.transform.SetParent(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
@@ -121,7 +124,7 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
-    private void Poison(int value, float damageTick)
+    private void DamageOverTime(int value, float damageTick)
     {
         PoisonDamageTick -= Time.deltaTime;
         if (PoisonDamageTick <= 0)
@@ -144,7 +147,7 @@ public class StatusIcon : MonoBehaviour
         switch (status)
         {
             case (Status.DamageOverTime):
-                Poison(5, 3f);
+                DamageOverTime(5, 3f);
                 break;
         }
     }

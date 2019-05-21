@@ -215,9 +215,9 @@ public class Skills : StatusEffects
 
         StrengthUP(GetCharacter, 10, GetStatusDuration);
 
-        StatusEffectSkillText();
-
         SkillsManager.Instance.GetStatusIcon.PlayerInput();
+
+        StatusEffectSkillText();
     }
 
     public void Shield()
@@ -226,13 +226,15 @@ public class Skills : StatusEffects
 
         DefenseUP(GetCharacter, 10, GetStatusDuration);
 
-        StatusEffectSkillText();
-
         SkillsManager.Instance.GetStatusIcon.PlayerInput();
+
+        StatusEffectSkillText();
     }
 
     public void Poison()
     {
+        TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
+
         this.button.GetComponent<Image>().fillAmount = 0;
 
         StatusEffectSkillText();
@@ -276,17 +278,17 @@ public class Skills : StatusEffects
 
         var StatIcon = Instantiate(GetStatusIcon);
 
-        StatIcon.transform.SetParent(GetBuffIconTrans.transform, false);
+        StatIcon.transform.SetParent(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform.transform, false);
 
-        SkillObj.GetComponentInChildren<Image>().sprite = StatIcon.sprite;
+        SkillObj.GetComponentInChildren<Image>().sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
 
         if (StatIcon.GetComponent<EnemyStatusIcon>())
         {
             StatIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetStatusEffects;
             StatIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+            StatIcon.GetComponentInChildren<Image>().sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
             StatIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
         }
-
         return SkillObj;
     }
 

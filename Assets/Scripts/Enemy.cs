@@ -28,6 +28,9 @@ public class Enemy : MonoBehaviour
     private GameObject LocalHealth;
 
     [SerializeField]
+    private Transform UI, DebuffTransform;
+
+    [SerializeField]
     private Image LocalHealthBar;
 
     [SerializeField]
@@ -120,6 +123,30 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public Transform GetUI
+    {
+        get
+        {
+            return UI;
+        }
+        set
+        {
+            UI = value;
+        }
+    }
+
+    public Transform GetDebuffTransform
+    {
+        get
+        {
+            return DebuffTransform;
+        }
+        set
+        {
+            DebuffTransform = value;
+        }
+    }
+
     private void Awake()
     {
         character = GetComponent<Character>();
@@ -145,11 +172,19 @@ public class Enemy : MonoBehaviour
     {
         if (GameManager.Instance.GetLastObject == enemy.gameObject)
         {
-            health.gameObject.SetActive(true);
+            foreach(Image i in health.GetComponentsInChildren<Image>())
+            {
+                i.enabled = true;
+            }
+            health.GetComponentInChildren<Text>().enabled = true;
         }
         else
         {
-            health.gameObject.SetActive(false);
+            foreach (Image i in health.GetComponentsInChildren<Image>())
+            {
+                i.enabled = false;
+            }
+            health.GetComponentInChildren<Text>().enabled = false;
         }
     }
 
