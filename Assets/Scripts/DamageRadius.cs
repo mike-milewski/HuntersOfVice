@@ -147,7 +147,7 @@ public class DamageRadius : MonoBehaviour
                 hitColliders[i].GetComponent<Health>().GetTakingDamage = true;
 
                 hitColliders[i].GetComponent<Health>().ModifyHealth(-enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency - 
-                                                                    character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
+                                                                    -character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
 
                 character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
             }

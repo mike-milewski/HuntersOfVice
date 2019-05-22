@@ -209,11 +209,14 @@ public class EnemyStatusIcon : MonoBehaviour
 
         CheckStatusEffect();
 
-        DurationText.text = Duration.ToString("F0");
-        Duration -= Time.deltaTime;
-        if (Duration <= 0)
+        if(Duration > -1)
         {
-            gameObject.SetActive(false);
+            DurationText.text = Duration.ToString("F0");
+            Duration -= Time.deltaTime;
+            if (Duration <= 0 || character.CurrentHealth <= 0)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

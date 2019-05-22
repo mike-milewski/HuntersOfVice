@@ -156,11 +156,14 @@ public class StatusIcon : MonoBehaviour
     {
         CheckStatusEffectIcon();
 
-        DurationText.text = Duration.ToString("F0");
-        Duration -= Time.deltaTime;
-        if(Duration <= 0)
+        if(Duration > -1)
         {
-            gameObject.SetActive(false);
+            DurationText.text = Duration.ToString("F0");
+            Duration -= Time.deltaTime;
+            if (Duration <= 0 || SkillsManager.Instance.GetCharacter.CurrentHealth <= 0)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

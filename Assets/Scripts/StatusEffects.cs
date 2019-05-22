@@ -18,7 +18,7 @@ public class StatusEffects : MonoBehaviour
     [SerializeField]
     private string StatusEffectName, StatusDescription;
 
-    [SerializeField]
+    [SerializeField] [Tooltip("The duration of the status effect. Set this to -1 to make the effect permanent.")]
     private float StatusDuration;
 
     public Character GetCharacter

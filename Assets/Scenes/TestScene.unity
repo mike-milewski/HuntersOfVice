@@ -331,16 +331,6 @@ Prefab:
       propertyPath: Waypoints.Array.data[1]
       value: 
       objectReference: {fileID: 1369396520}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].TextHolder
-      value: 
-      objectReference: {fileID: 1740856443}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].StatusIconTrans
-      value: 
-      objectReference: {fileID: 386355280}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: EXP
@@ -355,78 +345,99 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: DebuffTransform
-      value: 
-      objectReference: {fileID: 1959608821}
-    - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: UI
-      value: 
-      objectReference: {fileID: 1740856443}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].skills
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].status
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
-      propertyPath: skills.Array.data[0].StatusSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c144ece9d040e1349bc5e660a04eb618,
-        type: 3}
+      propertyPath: skills.Array.data[0].status
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
-      propertyPath: skills.Array.data[0].StatusIcon
+      propertyPath: skills.Array.data[0].TextHolder
       value: 
-      objectReference: {fileID: 114810387314933698, guid: 5b307f24223f2014090a17a5275e8dc8,
+      objectReference: {fileID: 30534058}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].StatusIconTrans
+      value: 
+      objectReference: {fileID: 1886012712}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].SkillTextObject
+      value: 
+      objectReference: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
         type: 2}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].StatusEffectText
       value: 
-      objectReference: {fileID: 114407719146158416, guid: 8d847d957c2995b43bc863b354a1fa16,
-        type: 2}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].SkillTextObject
-      value: 
-      objectReference: {fileID: 114407719146158416, guid: 8d847d957c2995b43bc863b354a1fa16,
+      objectReference: {fileID: 114129377947423632, guid: d1530b36f7b2c714e82dc1c31b02b5ae,
         type: 2}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].StatusEffectName
-      value: Regen
+      value: Poison
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].StatusDescription
-      value: Healing HP
+      value: Taking Damage
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].SkillName
-      value: Regen
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].Potency
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].Radius
-      value: 0
+      value: Poison Spore
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].StatusDuration
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].StatusIcon
+      value: 
+      objectReference: {fileID: 114375432815335230, guid: b67c014625f00f14aa3ea33a3f92e0db,
+        type: 2}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].DamageText
+      value: 
+      objectReference: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
+        type: 2}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].DamageORHealText
+      value: 
+      objectReference: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
+        type: 2}
+    - target: {fileID: 224673607506291504, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224673607506291504, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224673607506291504, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].Potency
       value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1021,11 +1032,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 2}
   m_IsPrefabAsset: 0
---- !u!224 &386355280 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 224992860828033654, guid: d1b40f4cedbe929489899902c0b8de32,
-    type: 2}
-  m_PrefabInternal: {fileID: 113251645}
 --- !u!1 &391264402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1900,16 +1906,15 @@ MonoBehaviour:
   StatusEffectIconTrans: {fileID: 0}
   StatusEffectName: Poison
   StatusDescription: Taking Damage
-  StatusDuration: 5
+  StatusDuration: 15
   skillbar: {fileID: 2122115158}
   button: {fileID: 766406072}
   TextHolder: {fileID: 0}
-  SkillTextObject: {fileID: 114156342546536388, guid: 887e67b7711a1494589f13041545af4b,
-    type: 2}
+  DamageORHealText: {fileID: 0}
   SkillPanelText: {fileID: 445733100}
   StatusEffectText: {fileID: 114407719146158416, guid: 8d847d957c2995b43bc863b354a1fa16,
     type: 2}
-  SkillParticle: {fileID: 19800004, guid: 757df604761b8ef42831192c70ee1099, type: 2}
+  SkillParticle: {fileID: 0}
   CoolDown: 2
   AttackRange: 0
   ApplySkill: 0
@@ -2367,6 +2372,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000010376938618, guid: 8f9905bf996cdc74cb9766b8781e580e,
     type: 2}
   m_PrefabInternal: {fileID: 797537156}
+--- !u!224 &1077441764 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224992860828033654, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 2}
+  m_PrefabInternal: {fileID: 2135500739}
 --- !u!1 &1087373495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2461,8 +2471,7 @@ MonoBehaviour:
   skillbar: {fileID: 2122115158}
   button: {fileID: 1124948427}
   TextHolder: {fileID: 30534058}
-  SkillTextObject: {fileID: 114156342546536388, guid: 887e67b7711a1494589f13041545af4b,
-    type: 2}
+  DamageORHealText: {fileID: 0}
   SkillPanelText: {fileID: 445733100}
   StatusEffectText: {fileID: 114319390542154430, guid: 26b87c56b9b1d444394be37e141a70bf,
     type: 2}
@@ -3013,12 +3022,11 @@ MonoBehaviour:
   StatusEffectIconTrans: {fileID: 1486375004}
   StatusEffectName: Shield
   StatusDescription: Increased Defense
-  StatusDuration: 5
+  StatusDuration: -1
   skillbar: {fileID: 2122115158}
   button: {fileID: 1380929676}
   TextHolder: {fileID: 30534058}
-  SkillTextObject: {fileID: 114319390542154430, guid: 26b87c56b9b1d444394be37e141a70bf,
-    type: 2}
+  DamageORHealText: {fileID: 0}
   SkillPanelText: {fileID: 445733100}
   StatusEffectText: {fileID: 114319390542154430, guid: 26b87c56b9b1d444394be37e141a70bf,
     type: 2}
@@ -3863,11 +3871,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224954703251667864, guid: 400f75204afdb3c47866ac458aaf7c74,
     type: 2}
   m_PrefabInternal: {fileID: 2049743750}
---- !u!224 &1740856443 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 224301079154289522, guid: d1b40f4cedbe929489899902c0b8de32,
-    type: 2}
-  m_PrefabInternal: {fileID: 113251645}
 --- !u!1001 &1773854546
 Prefab:
   m_ObjectHideFlags: 0
@@ -4032,8 +4035,7 @@ MonoBehaviour:
   skillbar: {fileID: 2122115158}
   button: {fileID: 1872873914}
   TextHolder: {fileID: 30534058}
-  SkillTextObject: {fileID: 114319390542154430, guid: 26b87c56b9b1d444394be37e141a70bf,
-    type: 2}
+  DamageORHealText: {fileID: 0}
   SkillPanelText: {fileID: 445733100}
   StatusEffectText: {fileID: 114319390542154430, guid: 26b87c56b9b1d444394be37e141a70bf,
     type: 2}
@@ -4513,11 +4515,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000012797962896, guid: 946d6139259d35444ae7eafbdf8f87fe,
     type: 2}
   m_PrefabInternal: {fileID: 1955737731}
---- !u!224 &1959608821 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 224078241610419814, guid: d1b40f4cedbe929489899902c0b8de32,
-    type: 2}
-  m_PrefabInternal: {fileID: 113251645}
 --- !u!1001 &2008712840
 Prefab:
   m_ObjectHideFlags: 0
@@ -5203,12 +5200,12 @@ Prefab:
         type: 2}
       propertyPath: skills.Array.data[0].TextHolder
       value: 
-      objectReference: {fileID: 30534058}
+      objectReference: {fileID: 901277783}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].StatusIconTrans
       value: 
-      objectReference: {fileID: 1886012712}
+      objectReference: {fileID: 1077441764}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: DebuffTransform
@@ -5219,6 +5216,18 @@ Prefab:
       propertyPath: UI
       value: 
       objectReference: {fileID: 901277783}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].DamageORHealText
+      value: 
+      objectReference: {fileID: 114788127478087752, guid: 99e2bc77069b9ee4d809099854ccf233,
+        type: 2}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].StatusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 28f4a64773b2ef141bc72c59d67db866,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
   m_IsPrefabAsset: 0

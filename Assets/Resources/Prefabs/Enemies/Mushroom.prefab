@@ -741,25 +741,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills:
-  - skills: 2
-    status: 1
-    StatusSprite: {fileID: 21300000, guid: ce7ce35077fa2bb42b7ae82999bb67e7, type: 3}
-    StatusIcon: {fileID: 114375432815335230, guid: b67c014625f00f14aa3ea33a3f92e0db,
+  - skills: 3
+    status: 2
+    StatusSprite: {fileID: 21300000, guid: c144ece9d040e1349bc5e660a04eb618, type: 3}
+    StatusIcon: {fileID: 114810387314933698, guid: 5b307f24223f2014090a17a5275e8dc8,
       type: 2}
-    TextHolder: {fileID: 0}
-    StatusIconTrans: {fileID: 0}
-    SkillTextObject: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
+    TextHolder: {fileID: 224301079154289522}
+    StatusIconTrans: {fileID: 224992860828033654}
+    SkillTextObject: {fileID: 114407719146158416, guid: 8d847d957c2995b43bc863b354a1fa16,
       type: 2}
-    StatusEffectText: {fileID: 114129377947423632, guid: d1530b36f7b2c714e82dc1c31b02b5ae,
+    StatusEffectText: {fileID: 114407719146158416, guid: 8d847d957c2995b43bc863b354a1fa16,
       type: 2}
-    StatusEffectName: Poison
-    StatusDescription: Taking Damage
-    SkillName: Poison Spore
-    StatusDuration: 2
+    StatusEffectName: Regen
+    StatusDescription: Healing HP
+    SkillName: Regen
+    StatusDuration: 20
     CastTime: 2
-    Radius: 1
+    Radius: 0
     AttackRange: 0
-    Potency: 13
+    Potency: 5
   character: {fileID: 114979435669946942}
   enemy: {fileID: 114492699656399902}
   enemyAI: {fileID: 114244275959761428}
@@ -1121,6 +1121,8 @@ MonoBehaviour:
   enemySkillBar: {fileID: 114588050136725898}
   EXP: {fileID: 0}
   LocalHealth: {fileID: 1951018771963510}
+  UI: {fileID: 224301079154289522}
+  DebuffTransform: {fileID: 224078241610419814}
   LocalHealthBar: {fileID: 114152917645832156}
   EnemyInfo: {fileID: 114119759583685392}
   LocalEnemyInfo: {fileID: 114332984057771692}
@@ -1459,7 +1461,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 2
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 48.4, y: 44.7}
@@ -1846,16 +1848,16 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1494270107743976}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00000010391523}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224982102418611130}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 124.5, y: 189.79993}
-  m_SizeDelta: {x: 146.96, y: 44.2}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 122.3, y: 84.100006}
+  m_SizeDelta: {x: 146.96, y: 44.199997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224155487149570714
 RectTransform:

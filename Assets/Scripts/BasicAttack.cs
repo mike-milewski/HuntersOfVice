@@ -154,7 +154,6 @@ public class BasicAttack : MonoBehaviour
         {
             if(Vector3.Distance(this.transform.position, Target.transform.position) >= HideStatsDistance)
             {
-                Target.GetHealth.gameObject.SetActive(false);
                 Target.GetSkills.DisableEnemySkillBar();
                 Target = null;
                 GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);

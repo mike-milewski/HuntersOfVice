@@ -9,11 +9,11 @@ public class Skills : StatusEffects
     [SerializeField]
     private Button button;
 
-    [SerializeField] [Tooltip("The transform that holds the damage/heal/status effect text values. Keep this empty for damage type skills!")]
+    [SerializeField][Tooltip("The transform that holds the damage/heal/status effect text values. Keep this empty for damage type skills!")]
     private Transform TextHolder = null;
 
     [SerializeField]
-    private Text SkillTextObject, SkillPanelText;
+    private Text DamageORHealText, SkillPanelText;
 
     [SerializeField]
     private Text StatusEffectText;
@@ -33,7 +33,7 @@ public class Skills : StatusEffects
     [SerializeField]
     private string SkillName;
 
-    [SerializeField] [TextArea]
+    [SerializeField][TextArea]
     private string SkillDescription;
 
     public int GetCastTime
@@ -88,11 +88,11 @@ public class Skills : StatusEffects
     {
         get
         {
-            return SkillTextObject;
+            return DamageORHealText;
         }
         set
         {
-            SkillTextObject = value;
+            DamageORHealText = value;
         }
     }
 
@@ -235,6 +235,8 @@ public class Skills : StatusEffects
     {
         TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
 
+        GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
+
         this.button.GetComponent<Image>().fillAmount = 0;
 
         StatusEffectSkillText();
@@ -259,7 +261,7 @@ public class Skills : StatusEffects
 
     private Text HealSkillText()
     {
-        var SkillObj = Instantiate(SkillTextObject);
+        var SkillObj = Instantiate(DamageORHealText);
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
@@ -278,7 +280,7 @@ public class Skills : StatusEffects
 
         var StatIcon = Instantiate(GetStatusIcon);
 
-        StatIcon.transform.SetParent(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform.transform, false);
+        StatIcon.transform.SetParent(GetStatusEffectIconTrans, false);
 
         SkillObj.GetComponentInChildren<Image>().sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
 
@@ -294,7 +296,7 @@ public class Skills : StatusEffects
 
     private Text DamageSkillText()
     {
-        var SkillObj = Instantiate(SkillTextObject);
+        var SkillObj = Instantiate(DamageORHealText);
 
         var Target = GetCharacter.GetComponent<BasicAttack>();
 

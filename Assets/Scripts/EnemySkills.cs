@@ -28,8 +28,8 @@ public class enemySkillManager
     [SerializeField]
     private Transform StatusIconTrans = null;
     
-    [SerializeField]
-    private Text SkillTextObject = null;
+    [SerializeField] [Tooltip("Text representing heal or damage.")]
+    private Text DamageORHealText = null;
 
     [SerializeField]
     private Text StatusEffectText = null;
@@ -54,6 +54,9 @@ public class enemySkillManager
 
     [SerializeField]
     public float AttackRange;
+
+    [SerializeField][Tooltip("The amount of recovery or damage a target takes based on a regenerating or damage over time status.")]
+    private int StatusEffectPotency;
 
     [SerializeField]
     private int Potency;
@@ -115,6 +118,18 @@ public class enemySkillManager
         set
         {
             Potency = value;
+        }
+    }
+
+    public int GetStatusEffectPotency
+    {
+        get
+        {
+            return StatusEffectPotency;
+        }
+        set
+        {
+            StatusEffectPotency = value;
         }
     }
     
@@ -206,11 +221,11 @@ public class enemySkillManager
     {
         get
         {
-            return SkillTextObject;
+            return DamageORHealText;
         }
         set
         {
-            SkillTextObject = value;
+            DamageORHealText = value;
         }
     }
 
