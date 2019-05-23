@@ -9,6 +9,9 @@ public class BasicAttack : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private Camera cam;
+
+    [SerializeField]
     private PlayerAnimations playerAnimations;
 
     [SerializeField] [Tooltip("Current targeted object. Keep this empty!")]
@@ -48,6 +51,11 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        cam.GetComponent<Camera>();
+    }
+
     private void Update()
     {
         if(Input.GetMouseButtonDown(0))
@@ -65,7 +73,7 @@ public class BasicAttack : MonoBehaviour
     {
         Vector3 MousePos = Input.mousePosition;
 
-        Ray ray = Camera.main.ScreenPointToRay(MousePos);
+        Ray ray = cam.ScreenPointToRay(MousePos);
 
         RaycastHit hit;
 
