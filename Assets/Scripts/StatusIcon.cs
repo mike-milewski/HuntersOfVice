@@ -147,7 +147,7 @@ public class StatusIcon : MonoBehaviour
         switch (status)
         {
             case (Status.DamageOverTime):
-                DamageOverTime(5, 3f);
+                DamageOverTime(10, 3f);
                 break;
         }
     }

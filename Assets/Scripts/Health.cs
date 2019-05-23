@@ -143,6 +143,14 @@ public class Health : MonoBehaviour
         {
             HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
         }
+        if(character.GetComponentInChildren<LowEnemyHPAnimation>())
+        {
+            if(character.CurrentHealth > character.MaxHealth / 4)
+            {
+                character.GetComponentInChildren<LowEnemyHPAnimation>().ResetAnimator();
+                character.GetComponentInChildren<LowEnemyHPAnimation>().DisableAnimator();
+            }
+        }
         FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }
 
@@ -160,6 +168,13 @@ public class Health : MonoBehaviour
         if(HealthText != null)
         {
             HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
+        }
+        if (character.GetComponentInChildren<LowEnemyHPAnimation>())
+        {
+            if (character.CurrentHealth <= character.MaxHealth / 4)
+            {
+                character.GetComponentInChildren<LowEnemyHPAnimation>().EnableAnimator();
+            }
         }
 
         HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;

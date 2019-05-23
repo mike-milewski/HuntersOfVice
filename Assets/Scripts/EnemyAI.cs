@@ -282,8 +282,6 @@ public class EnemyAI : MonoBehaviour
 
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
 
-        enemy.GetHealth.gameObject.SetActive(false);
-
         enemy.GetLocalHealth.gameObject.SetActive(false);
 
         enemySkills.GetSkillBar.gameObject.SetActive(false);
@@ -319,6 +317,7 @@ public class EnemyAI : MonoBehaviour
         character.CurrentHealth = character.MaxHealth;
         enemy.GetFilledBar();
         enemy.GetLocalHealth.gameObject.SetActive(true);
+        enemy.GetLocalHealthInfo();
         
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
         character.GetRigidbody.useGravity = true;

@@ -198,7 +198,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 HealthRegen(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetPotency, 3f);
                 break;
             case (StatusEffect.DamageOverTime):
-                DamageOverTime(5, 3f);
+                DamageOverTime(10, 3f);
                 break;
         }
     }

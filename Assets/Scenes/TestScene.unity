@@ -440,6 +440,26 @@ Prefab:
       propertyPath: skills.Array.data[0].Potency
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 114152917645832156, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114411650546611462, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114411650546611462, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114411650546611462, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
   m_IsPrefabAsset: 0
@@ -2109,6 +2129,42 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f9905bf996cdc74cb9766b8781e580e, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &803525826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1739082173684510, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 2}
+  m_PrefabInternal: {fileID: 2135500739}
+--- !u!114 &803525827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 803525826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e53935b6eaaed54abf1bbccebb95a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 1586771199}
+  animator: {fileID: 803525828}
+--- !u!95 &803525828
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 803525826}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d87ea7c820f902c4882278e58ca3ee83, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &822783097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,6 +2283,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1598163404}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &934248598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114979435669946942, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 2}
+  m_PrefabInternal: {fileID: 113251645}
+  m_Script: {fileID: 11500000, guid: a4507c4bc4e5af241851f9be26ef58ad, type: 3}
 --- !u!1 &980506101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2334,6 +2396,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 980506105}
+--- !u!1 &1002515489 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1739082173684510, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 2}
+  m_PrefabInternal: {fileID: 113251645}
+--- !u!95 &1002515493
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1002515489}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d87ea7c820f902c4882278e58ca3ee83, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1002515494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1002515489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e53935b6eaaed54abf1bbccebb95a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 934248598}
+  animator: {fileID: 1002515493}
 --- !u!1 &1058073836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2471,10 +2569,10 @@ MonoBehaviour:
   skillbar: {fileID: 2122115158}
   button: {fileID: 1124948427}
   TextHolder: {fileID: 30534058}
-  DamageORHealText: {fileID: 0}
-  SkillPanelText: {fileID: 445733100}
-  StatusEffectText: {fileID: 114319390542154430, guid: 26b87c56b9b1d444394be37e141a70bf,
+  DamageORHealText: {fileID: 114156342546536388, guid: 887e67b7711a1494589f13041545af4b,
     type: 2}
+  SkillPanelText: {fileID: 445733100}
+  StatusEffectText: {fileID: 0}
   SkillParticle: {fileID: 19800004, guid: 757df604761b8ef42831192c70ee1099, type: 2}
   CoolDown: 10
   AttackRange: 0
@@ -3022,7 +3120,7 @@ MonoBehaviour:
   StatusEffectIconTrans: {fileID: 1486375004}
   StatusEffectName: Shield
   StatusDescription: Increased Defense
-  StatusDuration: -1
+  StatusDuration: 10
   skillbar: {fileID: 2122115158}
   button: {fileID: 1380929676}
   TextHolder: {fileID: 30534058}
@@ -3578,6 +3676,12 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 0
+--- !u!114 &1586771199 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114979435669946942, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 2}
+  m_PrefabInternal: {fileID: 2135500739}
+  m_Script: {fileID: 11500000, guid: a4507c4bc4e5af241851f9be26ef58ad, type: 3}
 --- !u!1001 &1598163404
 Prefab:
   m_ObjectHideFlags: 0
@@ -4031,7 +4135,7 @@ MonoBehaviour:
   StatusEffectIconTrans: {fileID: 1486375004}
   StatusEffectName: For Honor
   StatusDescription: Increased Damage
-  StatusDuration: 2
+  StatusDuration: 10
   skillbar: {fileID: 2122115158}
   button: {fileID: 1872873914}
   TextHolder: {fileID: 30534058}
