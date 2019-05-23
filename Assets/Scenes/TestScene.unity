@@ -438,7 +438,7 @@ Prefab:
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].Potency
-      value: 20
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 114152917645832156, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
@@ -5224,6 +5224,11 @@ Prefab:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 601881697}
+    - target: {fileID: 114968256959312660, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
+        type: 2}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 601881691}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16a8da0e93fa734429b7dd04b9ff6edc, type: 2}
   m_IsPrefabAsset: 0

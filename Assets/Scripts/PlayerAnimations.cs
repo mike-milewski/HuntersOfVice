@@ -5,6 +5,18 @@ public class PlayerAnimations : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
+    public Animator GetAnimator
+    {
+        get
+        {
+            return animator;
+        }
+        set
+        {
+            animator = value;
+        }
+    }
+
     public void IdleAnimation()
     {
         animator.SetFloat("Speed", 0);
@@ -58,6 +70,8 @@ public class PlayerAnimations : MonoBehaviour
     {
         animator.SetBool("Ressurecting", false);
         this.GetComponent<PlayerController>().enabled = true;
+        GameManager.Instance.GetIsDead = false;
+        SkillsManager.Instance.ReactivateSkillButtons();
     }
 
     public void PlaySpellCastAnimation()

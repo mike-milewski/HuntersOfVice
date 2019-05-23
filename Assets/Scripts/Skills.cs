@@ -128,7 +128,7 @@ public class Skills : StatusEffects
 
     private void CheckCoolDownStatus()
     {
-        if (this.button.GetComponent<Image>().fillAmount >= 1 && GetCharacter.CurrentHealth > 0 && GetCharacter.CurrentMana >= ManaCost && !SkillsManager.Instance.GetActivatedSkill)
+        if (this.button.GetComponent<Image>().fillAmount >= 1 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead && !SkillsManager.Instance.GetActivatedSkill)
         {
             button.interactable = true;
             return;

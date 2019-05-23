@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform SpawnPoint;
 
+    private bool IsDead;
+
     [SerializeField]
     private EventSystem eventsystem;
 
@@ -49,6 +51,18 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float RespawnTime;
 
+    public bool GetIsDead
+    {
+        get
+        {
+            return IsDead;
+        }
+        set
+        {
+            IsDead = value;
+        }
+    }
+
     private void Awake()
     {
         #region Singleton
@@ -75,6 +89,8 @@ public class GameManager : MonoBehaviour
 
     public void Dead()
     {
+        IsDead = true;
+        SkillsManager.Instance.DeactivateSkillButtons();
         Player.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
         Player.GetComponent<BasicAttack>().enabled = false;
 
@@ -113,6 +129,7 @@ public class GameManager : MonoBehaviour
         Player.GetComponent<Character>().GetRigidbody.isKinematic = false;
 
         Player.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
+        Player.GetComponent<PlayerAnimations>().GetAnimator.ResetTrigger("Damaged");
     }
 
     public Text ShowNotEnoughManaText()

@@ -4,6 +4,9 @@ using UnityEngine.UI;
 public class SkillBar : MonoBehaviour
 {
     [SerializeField]
+    private Character character;
+
+    [SerializeField]
     private PlayerController playerController;
 
     [SerializeField]
@@ -80,7 +83,7 @@ public class SkillBar : MonoBehaviour
 
     private void Update()
     {
-        if(playerController.GetMovement == Vector3.zero)
+        if(playerController.GetMovement == Vector3.zero && character.CurrentHealth > 0)
         {
             SkillBarImage.fillAmount += Time.deltaTime / skills.GetCastTime;
             CastTime -= Time.deltaTime;
