@@ -2,8 +2,11 @@
 
 public class DestroyUIelement : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject Parent;
+
     public void DestroyUI()
     {
-        gameObject.SetActive(false);
+        Parent.SetActive(false);
     }
 }

@@ -16,7 +16,7 @@ public class Skills : StatusEffects
     private Text DamageORHealText, SkillPanelText;
 
     [SerializeField]
-    private Text StatusEffectText;
+    private GameObject StatusEffectText;
 
     [SerializeField]
     private ParticleSystem SkillParticle;
@@ -96,7 +96,7 @@ public class Skills : StatusEffects
         }
     }
 
-    public Text GetStatusEffectText
+    public GameObject GetStatusEffectText
     {
         get
         {
@@ -276,7 +276,7 @@ public class Skills : StatusEffects
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.text = "+" + GetStatusEffectName;
+        SkillObj.GetComponentInChildren<Text>().text = "+" + GetStatusEffectName;
 
         var StatIcon = Instantiate(GetStatusIcon);
 
@@ -291,7 +291,7 @@ public class Skills : StatusEffects
             StatIcon.GetComponentInChildren<Image>().sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
             StatIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
         }
-        return SkillObj;
+        return SkillObj.GetComponentInChildren<Text>();
     }
 
     private Text DamageSkillText()

@@ -90,26 +90,26 @@ public class StatusIcon : MonoBehaviour
 
         SkillObj.transform.SetParent(SkillsManager.Instance.GetSkills[KeyInput].GetTextHolder.transform, false);
 
-        SkillObj.text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+        SkillObj.GetComponentInChildren<Text>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
-        return SkillObj;
+        return SkillObj.GetComponentInChildren<Text>();
     }
 
     public Text RemoveEnemyStatusEffectText()
     {
         KeyInput = enemyTarget.GetComponent<EnemySkills>().GetRandomValue;
 
-        var SkillObj = Instantiate(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectText);
+        var SkillObj = Instantiate(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectHolder);
 
         SkillObj.transform.SetParent(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
 
-        SkillObj.text = "-" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
+        SkillObj.GetComponentInChildren<Text>().text = "-" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
-        return SkillObj;
+        return SkillObj.GetComponentInChildren<Text>();
     }
 
     private void OnDisable()

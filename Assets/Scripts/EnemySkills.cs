@@ -28,11 +28,11 @@ public class enemySkillManager
     [SerializeField]
     private Transform StatusIconTrans = null;
     
-    [SerializeField] [Tooltip("Text representing heal or damage.")]
-    private Text DamageORHealText = null;
+    [SerializeField] [Tooltip("Text holder representing heal or damage.")]
+    private GameObject DamageORHealText = null;
 
-    [SerializeField]
-    private Text StatusEffectText = null;
+    [SerializeField] [Tooltip("The gameobject that will hold the status effect text.")]
+    private GameObject StatusEffectHolder = null;
 
     [SerializeField]
     private string StatusEffectName;
@@ -217,7 +217,7 @@ public class enemySkillManager
         }
     }
 
-    public Text GetSkillTextObject
+    public GameObject GetDamageOrHealText
     {
         get
         {
@@ -229,15 +229,15 @@ public class enemySkillManager
         }
     }
 
-    public Text GetStatusEffectText
+    public GameObject GetStatusEffectHolder
     {
         get
         {
-            return StatusEffectText;
+            return StatusEffectHolder;
         }
         set
         {
-            StatusEffectText = value;
+            StatusEffectHolder = value;
         }
     }
 
@@ -601,11 +601,11 @@ public class EnemySkills : MonoBehaviour
 
     public Text StatusEffectSkillTextTransform()
     {
-        var SkillObj = Instantiate(GetManager[RandomValue].GetStatusEffectText);
+        var SkillObj = Instantiate(GetManager[RandomValue].GetStatusEffectHolder);
 
         SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        SkillObj.text = "+" + GetManager[RandomValue].GetStatusEffectName;
+        SkillObj.GetComponentInChildren<Text>().text = "+" + GetManager[RandomValue].GetStatusEffectName;
 
         var StatIcon = Instantiate(GetManager[RandomValue].GetStatusIcon);
 
@@ -622,34 +622,34 @@ public class EnemySkills : MonoBehaviour
             StatIcon.GetComponent<StatusIcon>().EnemyInput();
         }
 
-        return SkillObj;
+        return SkillObj.GetComponentInChildren<Text>();
     }
 
     public Text SkillDamageText(int potency, string skillName)
     {
         skills[RandomValue].GetSkillName = skillName;
 
-        var SkillObj = Instantiate(GetManager[RandomValue].GetSkillTextObject);
+        var SkillObj = Instantiate(GetManager[RandomValue].GetDamageOrHealText);
 
         var Target = character.GetComponent<EnemyAI>().GetPlayerTarget;
 
         SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        SkillObj.text = skills[RandomValue].GetSkillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+        SkillObj.GetComponentInChildren<Text>().text = skills[RandomValue].GetSkillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
 
-        return SkillObj;
+        return SkillObj.GetComponentInChildren<Text>();
     }
 
     public Text SkillHealText(int potency, string skillName)
     {
         skills[RandomValue].GetSkillName = skillName;
 
-        var SkillObj = Instantiate(GetManager[RandomValue].GetSkillTextObject);
+        var SkillObj = Instantiate(GetManager[RandomValue].GetDamageOrHealText);
 
-        SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+        SkillObj.GetComponentInChildren<Text>().transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        SkillObj.text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
+        SkillObj.GetComponentInChildren<Text>().text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
 
-        return SkillObj;
+        return SkillObj.GetComponentInChildren<Text>();
     }
 }
