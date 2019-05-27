@@ -230,8 +230,7 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    enemySkills.GenerateValue();
-                    states = States.Skill;
+                    states = States.ApplyingAttack;
                     /*
                     if (Random.value * 100 <= 50)
                     {
@@ -361,7 +360,9 @@ public class EnemyAI : MonoBehaviour
 
     public Text TakeDamage()
     {
-        Text DamageObject = null;
+        var DamageObject = Instantiate(PlayerTarget.GetComponent<Health>().GetDamageText);
+
+        DamageObject.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
 
         float Critical = character.GetCriticalChance;
 
@@ -386,34 +387,26 @@ public class EnemyAI : MonoBehaviour
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {
-                DamageObject = Instantiate(PlayerTarget.GetComponent<Health>().GetDamageText);
-
-                DamageObject.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
-
                 PlayerTarget.GetComponent<Health>().ModifyHealth((-character.CharacterStrength - 5) - -PlayerTarget.CharacterDefense);
                 PlayerTarget.GetComponent<Health>().GetTakingDamage = true;
 
-                DamageObject.fontSize = 40;
+                DamageObject.GetComponentInChildren<Text>().fontSize = 40;
 
-                DamageObject.text = ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
+                DamageObject.GetComponentInChildren<Text>().text = ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
             }
             else
             {
-                DamageObject = Instantiate(PlayerTarget.GetComponent<Health>().GetDamageText);
-
-                DamageObject.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
-
                 PlayerTarget.GetComponent<Health>().ModifyHealth(-character.CharacterStrength - -PlayerTarget.CharacterDefense);
                 PlayerTarget.GetComponent<Health>().GetTakingDamage = true;
 
-                DamageObject.fontSize = 30;
+                DamageObject.GetComponentInChildren<Text>().fontSize = 30;
 
-                DamageObject.text = (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                DamageObject.GetComponentInChildren<Text>().text = (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
             }
             #endregion
 
             PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
         }
-        return DamageObject;
+        return DamageObject.GetComponentInChildren<Text>();
     }
 }

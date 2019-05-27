@@ -105,7 +105,7 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
-    //Checks to see if the mouse is positioned over a UI element.
+    //Checks to see if the mouse is positioned over a UI element(s).
     private bool IsPointerOnUIObject()
     {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
@@ -173,7 +173,9 @@ public class BasicAttack : MonoBehaviour
 
     public Text TakeDamage()
     {
-        Text DamageObject = null;
+        var DamageObject = Instantiate(Target.GetComponentInChildren<Health>().GetDamageText);
+
+        DamageObject.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
 
         float Critical = character.GetCriticalChance;
 
@@ -196,35 +198,27 @@ public class BasicAttack : MonoBehaviour
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {
-                DamageObject = Instantiate(Target.GetComponentInChildren<Health>().GetDamageText);
-
-                DamageObject.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
-
                 Target.GetComponentInChildren<Health>().GetTakingDamage = true;
                 Target.GetComponentInChildren<Health>().ModifyHealth((-character.CharacterStrength - 5) - -Target.GetCharacter.CharacterDefense);
 
-                DamageObject.fontSize = 30;
+                DamageObject.GetComponentInChildren<Text>().fontSize = 30;
 
-                DamageObject.text = ((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense).ToString() + "!";
+                DamageObject.GetComponentInChildren<Text>().text = ((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense).ToString() + "!";
             }
             else
             {
-                DamageObject = Instantiate(Target.GetComponentInChildren<Health>().GetDamageText);
-
-                DamageObject.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
-
                 Target.GetComponentInChildren<Health>().GetTakingDamage = true;
                 Target.GetComponentInChildren<Health>().ModifyHealth(-character.CharacterStrength - -Target.GetCharacter.CharacterDefense);
 
-                DamageObject.fontSize = 20;
+                DamageObject.GetComponentInChildren<Text>().fontSize = 20;
 
-                DamageObject.text = (character.CharacterStrength - Target.GetCharacter.CharacterDefense).ToString();
+                DamageObject.GetComponentInChildren<Text>().text = (character.CharacterStrength - Target.GetCharacter.CharacterDefense).ToString();
             }
             #endregion
 
             if(Target.GetAI.GetStates != States.Skill)
             Target.GetAI.GetStates = States.Damaged;
         }
-        return DamageObject;
+        return DamageObject.GetComponentInChildren<Text>();
     }
 }

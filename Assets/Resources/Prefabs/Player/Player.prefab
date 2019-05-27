@@ -1703,7 +1703,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1718340075597586}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.6443715, z: -2.52}
+  m_LocalPosition: {x: 0, y: -3.6443715, z: -2.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4639550596504440}
@@ -2112,7 +2112,7 @@ MonoBehaviour:
   FillBarTwo: {fileID: 0}
   character: {fileID: 114392228500413548}
   ManaText: {fileID: 0}
-  FillValue: 0.08
+  FillValue: 0.3
 --- !u!114 &114238346711748636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2125,6 +2125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 114392228500413548}
+  cam: {fileID: 0}
   playerAnimations: {fileID: 114552455547242274}
   Target: {fileID: 0}
   HitParticle: {fileID: 198157547220164012, guid: 4961a16ba01e09547be3e1c9d16d5ad0,
@@ -2220,13 +2221,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961821574baa3954eb4c89ddbf474ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 114392228500413548}
   HealthBar: {fileID: 0}
   FillBarTwo: {fileID: 0}
-  character: {fileID: 114392228500413548}
   DamageTextParent: {fileID: 0}
   HealthText: {fileID: 0}
-  DamageText: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
+  DamageTextHolder: {fileID: 1522704258827516, guid: 6c45e0610fe491144a94837c5a382f50,
     type: 2}
+  HealTextHolder: {fileID: 1522704258827516, guid: 6c45e0610fe491144a94837c5a382f50,
+    type: 2}
+  TakingDamage: 0
   FillValue: 0.08
 --- !u!137 &137347199056414644
 SkinnedMeshRenderer:

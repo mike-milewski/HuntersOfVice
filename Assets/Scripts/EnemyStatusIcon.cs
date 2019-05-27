@@ -165,7 +165,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
             Healtxt.transform.SetParent(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
 
-            Healtxt.text = value.ToString();
+            Healtxt.GetComponentInChildren<Text>().text = value.ToString();
 
             RegenHealTick = healTick;
         }
@@ -184,7 +184,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
             EnemyDamagetxt.transform.SetParent(character.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
 
-            EnemyDamagetxt.text = value.ToString();
+            EnemyDamagetxt.GetComponentInChildren<Text>().text = value.ToString();
 
             DamageTick = damageTick;
         }

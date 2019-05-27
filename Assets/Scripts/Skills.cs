@@ -13,7 +13,10 @@ public class Skills : StatusEffects
     private Transform TextHolder = null;
 
     [SerializeField]
-    private Text DamageORHealText, SkillPanelText;
+    private GameObject DamageORHealText;
+
+    [SerializeField]
+    private Text SkillPanelText;
 
     [SerializeField]
     private GameObject StatusEffectText;
@@ -84,7 +87,7 @@ public class Skills : StatusEffects
         }
     }
 
-    public Text GetSkillTextObject
+    public GameObject GetDamageOrHealText
     {
         get
         {
@@ -265,9 +268,9 @@ public class Skills : StatusEffects
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
+        SkillObj.GetComponentInChildren<Text>().text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
 
-        return SkillObj;
+        return SkillObj.GetComponentInChildren<Text>();
     }
 
     public Text StatusEffectSkillText()
@@ -302,9 +305,9 @@ public class Skills : StatusEffects
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.text = SkillName + " " + (Potency - Target.GetTarget.GetComponent<Character>().CharacterDefense).ToString();
+        SkillObj.GetComponentInChildren<Text>().text = SkillName + " " + (Potency - Target.GetTarget.GetComponent<Character>().CharacterDefense).ToString();
 
-        return SkillObj;
+        return SkillObj.GetComponentInChildren<Text>();
     }
 
     public void ShowSkillPanel(GameObject Panel)

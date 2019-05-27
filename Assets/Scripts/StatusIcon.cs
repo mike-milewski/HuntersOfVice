@@ -136,7 +136,7 @@ public class StatusIcon : MonoBehaviour
 
             Damagetxt.transform.SetParent(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageTextParent.transform, false);
 
-            Damagetxt.text = value.ToString();
+            Damagetxt.GetComponentInChildren<Text>().text = value.ToString();
 
             PoisonDamageTick = damageTick;
         }
