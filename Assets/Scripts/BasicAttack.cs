@@ -173,6 +173,11 @@ public class BasicAttack : MonoBehaviour
 
     public Text TakeDamage()
     {
+        if(Target == null)
+        {
+            return null;
+        }
+
         var DamageObject = Instantiate(Target.GetComponentInChildren<Health>().GetDamageText);
 
         DamageObject.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
@@ -181,20 +186,6 @@ public class BasicAttack : MonoBehaviour
 
         if (Target != null)
         {
-            if(!ParticleExists)
-            {
-                Obj = Instantiate(HitParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z),
-                                        Target.transform.rotation);
-
-                Obj.transform.SetParent(Target.transform, true);
-
-                ParticleExists = true;
-            }
-            else
-            {
-                Obj.gameObject.SetActive(true);
-            }
-
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {

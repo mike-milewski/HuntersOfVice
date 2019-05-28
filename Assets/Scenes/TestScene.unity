@@ -5349,6 +5349,11 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: ExperiencePoints
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
   m_IsPrefabAsset: 0

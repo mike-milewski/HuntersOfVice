@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
 
     [SerializeField]
     private Rigidbody _rigidBody;
-
+    
     [SerializeField]
     private int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, CriticalHitChance;
 

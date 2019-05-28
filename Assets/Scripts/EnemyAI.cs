@@ -360,6 +360,11 @@ public class EnemyAI : MonoBehaviour
 
     public Text TakeDamage()
     {
+        if(PlayerTarget == null)
+        {
+            return null;
+        }
+
         var DamageObject = Instantiate(PlayerTarget.GetComponent<Health>().GetDamageText);
 
         DamageObject.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
@@ -368,22 +373,6 @@ public class EnemyAI : MonoBehaviour
 
         if(PlayerTarget != null)
         {
-            if(!ParticleExists)
-            {
-                SkillsManager.Instance.GetParticleObj = Instantiate(HitParticle, new Vector3(PlayerTarget.transform.position.x, 
-                                                                                             PlayerTarget.transform.position.y + 0.5f, 
-                                                                                             PlayerTarget.transform.position.z),
-                                                                                             PlayerTarget.transform.rotation);
-
-                SkillsManager.Instance.GetParticleObj.transform.SetParent(PlayerTarget.transform, true);
-
-                ParticleExists = true;
-            }
-            else
-            {
-                SkillsManager.Instance.GetParticleObj.gameObject.SetActive(true);
-            }
-
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {

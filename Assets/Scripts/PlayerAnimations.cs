@@ -37,9 +37,9 @@ public class PlayerAnimations : MonoBehaviour
     {
         this.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
 
-        animator.SetBool("Attacking", false);
-
         animator.ResetTrigger("Attacking");
+
+        animator.SetBool("Attacking", false);
     }
 
     public void DamagedAnimation()
