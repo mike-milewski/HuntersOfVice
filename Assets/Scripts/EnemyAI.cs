@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public enum States { Patrol, Chase, Attack, ApplyingAttack, Skill, Damaged }
+public enum States { Patrol, Chase, Attack, ApplyingAttack, Skill, Damaged, Immobile }
 
 public class EnemyAI : MonoBehaviour
 {
@@ -93,6 +93,9 @@ public class EnemyAI : MonoBehaviour
                     break;
                 case (States.Damaged):
                     Damage();
+                    break;
+                case (States.Immobile):
+                    Immobile();
                     break;
             }
         }
@@ -230,7 +233,8 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    states = States.ApplyingAttack;
+                    enemySkills.GenerateValue();
+                    states = States.Skill;
                     /*
                     if (Random.value * 100 <= 50)
                     {
@@ -266,6 +270,12 @@ public class EnemyAI : MonoBehaviour
     private void Skill()
     {
         enemySkills.ChooseSkill(enemySkills.GetRandomValue);
+    }
+
+    //Sets the enemy to this state if they are inflicted with the stun/sleep status effect.
+    private void Immobile()
+    {
+        Anim.IdleAni();
     }
 
     public void Damage()

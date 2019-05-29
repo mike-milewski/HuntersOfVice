@@ -140,5 +140,15 @@ public class EnemySkillBar : MonoBehaviour
 
             gameObject.SetActive(false);
         }
+        else if(enemySkills.GetDisruptedSkill)
+        {
+            enemySkills.GetActiveSkill = false;
+
+            enemyAI.GetAutoAttack = 0;
+
+            SkillBarFillImage.fillAmount = 0;
+
+            gameObject.SetActive(false);
+        }
     }
 }

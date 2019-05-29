@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public enum StatusEffect { NONE, DamageOverTime, HealthRegen };
+public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep };
 
 public class EnemyStatusIcon : MonoBehaviour
 {
@@ -123,7 +123,30 @@ public class EnemyStatusIcon : MonoBehaviour
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
+        switch (effect)
+        {
+            case (StatusEffect.Stun):
+                CheckEnemyStates();
+                break;
+            case (StatusEffect.Sleep):
+                CheckEnemyStates();
+                break;
+        }
         return SkillObj.GetComponentInChildren<Text>();
+    }
+
+    private void CheckEnemyStates()
+    {
+        if (character.GetComponent<EnemyAI>().GetPlayerTarget == null)
+        {
+            character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+            character.GetComponent<EnemyAI>().GetStates = States.Patrol;
+        }
+        else
+        {
+            character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+            character.GetComponent<EnemyAI>().GetStates = States.Chase;
+        }
     }
 
     private void OnDisable()
@@ -190,17 +213,48 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    private void Stun()
+    {
+        character.GetComponent<EnemySkills>().GetDisruptedSkill = true;
+        character.GetComponent<EnemyAI>().GetStates = States.Immobile;
+    }
+
+    private void Sleep()
+    {
+        character.GetComponent<EnemySkills>().GetDisruptedSkill = true;
+        character.GetComponent<EnemyAI>().GetStates = States.Immobile;
+        if (character.GetComponentInChildren<Health>().GetTakingDamage)
+        {
+            Duration = 0;
+        }
+    }
+
     private void CheckStatusEffect()
     {
         switch (effect)
         {
             case (StatusEffect.HealthRegen):
-                HealthRegen(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetPotency, 3f);
+                HealthRegen(RegenAndDOTCalculation(), 3f);
                 break;
             case (StatusEffect.DamageOverTime):
-                DamageOverTime(10, 3f);
+                DamageOverTime(RegenAndDOTCalculation(), 3f);
+                break;
+            case (StatusEffect.Stun):
+                Stun();
+                break;
+            case (StatusEffect.Sleep):
+                Sleep();
                 break;
         }
+    }
+
+    private int RegenAndDOTCalculation()
+    {
+        float percent = 0.1f * (float)character.MaxHealth;
+
+        int GetHealth = (int)percent;
+
+        return GetHealth;
     }
 
     private void LateUpdate()

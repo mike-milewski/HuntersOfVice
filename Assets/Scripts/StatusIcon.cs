@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public enum EffectStatus { NONE, DamageOverTime, HealthRegen }
+public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -109,6 +109,19 @@ public class StatusIcon : MonoBehaviour
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
+        switch (status)
+        {
+            case (Status.Stun):
+                SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
+                SkillsManager.Instance.GetDisruptedSkill = false;
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
+                break;
+            case (Status.Sleep):
+                SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
+                SkillsManager.Instance.GetDisruptedSkill = false;
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
+                break;
+        }
         return SkillObj.GetComponentInChildren<Text>();
     }
 
@@ -142,14 +155,47 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
+    private void Stun()
+    {
+        SkillsManager.Instance.GetDisruptedSkill = true;
+        SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
+        SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = false;
+    }
+
+    private void Sleep()
+    {
+        SkillsManager.Instance.GetDisruptedSkill = true;
+        SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
+        SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = false;
+        if (SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetTakingDamage)
+        {
+            Duration = 0;
+        }
+    }
+
     private void CheckStatusEffectIcon()
     {
         switch (status)
         {
             case (Status.DamageOverTime):
-                DamageOverTime(10, 3f);
+                DamageOverTime(RegenAndDOTCalculation(), 3f);
+                break;
+            case (Status.Stun):
+                Stun();
+                break;
+            case (Status.Sleep):
+                Sleep();
                 break;
         }
+    }
+
+    private int RegenAndDOTCalculation()
+    {
+        float percent = 0.1f * (float)SkillsManager.Instance.GetCharacter.MaxHealth;
+
+        int GetHealth = (int)percent;
+
+        return GetHealth;
     }
 
     private void Update()

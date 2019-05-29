@@ -1640,15 +1640,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c056b96c10bed429285bf87eeab52d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effects: 1
+  effects: 3
   character: {fileID: 601881691}
   StatusIcon: {fileID: 114810387314933698, guid: 5b307f24223f2014090a17a5275e8dc8,
     type: 2}
   StatusEffectIconTrans: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
     type: 2}
-  StatusEffectName: Poison
-  StatusDescription: Taking Damage
-  StatusDuration: 15
+  StatusEffectName: Stun
+  StatusDescription: Unable To Act
+  StatusDuration: 3
   skillbar: {fileID: 2122115158}
   button: {fileID: 766406072}
   TextHolder: {fileID: 0}
@@ -1664,8 +1664,8 @@ MonoBehaviour:
   ManaCost: 0
   Potency: 0
   CastTime: 0
-  SkillName: Poison
-  SkillDescription: A deadly poison.
+  SkillName: Stun
+  SkillDescription: Stuns the target.
 --- !u!114 &766406071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1926,6 +1926,12 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 822783097}
   m_CullTransparentMesh: 0
+--- !u!114 &869221805 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 2}
+  m_PrefabInternal: {fileID: 2094180970}
+  m_Script: {fileID: 11500000, guid: 561b9be865b0b974c8f878c215ceb929, type: 3}
 --- !u!1 &893596525
 GameObject:
   m_ObjectHideFlags: 0
@@ -2766,6 +2772,11 @@ Prefab:
       propertyPath: m_FillAmount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114268487534876906, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: enemyAI
+      value: 
+      objectReference: {fileID: 1556953908}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
   m_IsPrefabAsset: 0
@@ -3830,6 +3841,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224862909364693172, guid: f5e2b1486e8e1b94bbcf1789374f55a4,
     type: 2}
   m_PrefabInternal: {fileID: 1526953970}
+--- !u!114 &1556953908 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 2}
+  m_PrefabInternal: {fileID: 1242576362}
+  m_Script: {fileID: 11500000, guid: 561b9be865b0b974c8f878c215ceb929, type: 3}
 --- !u!1001 &1598163404
 Prefab:
   m_ObjectHideFlags: 0
@@ -5354,6 +5371,61 @@ Prefab:
       propertyPath: ExperiencePoints
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].skills
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].status
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].StatusEffectName
+      value: Stun
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].StatusDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].CastTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].SkillName
+      value: Stun Spore
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].StatusDescription
+      value: Unable To Act
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].AttackRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].Potency
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114268487534876906, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: enemyAI
+      value: 
+      objectReference: {fileID: 869221805}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
   m_IsPrefabAsset: 0

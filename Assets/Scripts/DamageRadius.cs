@@ -11,6 +11,9 @@ public class DamageRadius : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private EnemyAI enemyAI;
+
+    [SerializeField]
     private EnemySkills enemySkills;
 
     [SerializeField]
@@ -70,23 +73,31 @@ public class DamageRadius : MonoBehaviour
 
     private void Update()
     {
-        switch (shapes)
+        if(enemyAI.GetStates != States.Immobile)
         {
-            case (Shapes.Circle):
-                var Circle = DamageShapeCircle;
-                DamageShape.GetComponent<Image>().sprite = Circle;
-                IncreaseCircle();
-                break;
-            case (Shapes.Cylinder):
-                var Cylinder = DamageShapeCylinder;
-                DamageShape.GetComponent<Image>().sprite = Cylinder;
-                IncreaseCylinder();
-                break;
-            case (Shapes.Rectangle):
-                var Rectangle = DamageShapeRectangle;
-                DamageShape.GetComponent<Image>().sprite = Rectangle;
-                IncreaseRectangle();
-                break;
+            switch (shapes)
+            {
+                case (Shapes.Circle):
+                    var Circle = DamageShapeCircle;
+                    DamageShape.GetComponent<Image>().sprite = Circle;
+                    IncreaseCircle();
+                    break;
+                case (Shapes.Cylinder):
+                    var Cylinder = DamageShapeCylinder;
+                    DamageShape.GetComponent<Image>().sprite = Cylinder;
+                    IncreaseCylinder();
+                    break;
+                case (Shapes.Rectangle):
+                    var Rectangle = DamageShapeRectangle;
+                    DamageShape.GetComponent<Image>().sprite = Rectangle;
+                    IncreaseRectangle();
+                    break;
+            }
+        }
+        else
+        {
+            enemySkills.DisableRadiusImage();
+            enemySkills.DisableRadius();
         }
     }
 
@@ -115,7 +126,7 @@ public class DamageRadius : MonoBehaviour
     private void IncreaseRectangle()
     {
         DamageShape.transform.localScale = new Vector3(
-            Mathf.Clamp(DamageShape.transform.localScale.y, 0, .4f),
+            Mathf.Clamp(DamageShape.transform.localScale.y, 0, Radius),
             Mathf.Clamp(DamageShape.transform.localScale.y, 0, Radius),
             Mathf.Clamp(DamageShape.transform.localScale.z, 0, Radius));
 

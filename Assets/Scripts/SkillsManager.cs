@@ -21,7 +21,7 @@ public class SkillsManager : MonoBehaviour
     [SerializeField]
     private List<Skills> skills;
 
-    private bool ActivatedSkill;
+    private bool ActivatedSkill, DisruptedSkill;
 
     private int KeyInput;
 
@@ -34,6 +34,18 @@ public class SkillsManager : MonoBehaviour
         set
         {
             ActivatedSkill = value;
+        }
+    }
+
+    public bool GetDisruptedSkill
+    {
+        get
+        {
+            return DisruptedSkill;
+        }
+        set
+        {
+            DisruptedSkill = value;
         }
     }
 

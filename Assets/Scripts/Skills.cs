@@ -131,7 +131,8 @@ public class Skills : StatusEffects
 
     private void CheckCoolDownStatus()
     {
-        if (this.button.GetComponent<Image>().fillAmount >= 1 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead && !SkillsManager.Instance.GetActivatedSkill)
+        if (this.button.GetComponent<Image>().fillAmount >= 1 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead && 
+            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill)
         {
             button.interactable = true;
             return;
@@ -285,13 +286,13 @@ public class Skills : StatusEffects
 
         StatIcon.transform.SetParent(GetStatusEffectIconTrans, false);
 
-        SkillObj.GetComponentInChildren<Image>().sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
+        SkillObj.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
         if (StatIcon.GetComponent<EnemyStatusIcon>())
         {
-            StatIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetStatusEffects;
+            StatIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetStatusEffects;
             StatIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
-            StatIcon.GetComponentInChildren<Image>().sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
+            StatIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
             StatIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
         }
         return SkillObj.GetComponentInChildren<Text>();

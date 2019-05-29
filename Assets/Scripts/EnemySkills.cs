@@ -5,7 +5,7 @@ public enum Skill { //MushroomMan Skills
                     FungiBump, HealingCap, PoisonSpore,
                     Regen, Regen2 };
 
-public enum Status { NONE, DamageOverTime, HealthRegen };
+public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep };
 
 [System.Serializable]
 public class enemySkillManager
@@ -292,7 +292,7 @@ public class EnemySkills : MonoBehaviour
     private int RandomValue;
 
     [SerializeField]
-    private bool ActiveSkill;
+    private bool ActiveSkill, DisruptedSkill;
 
     public enemySkillManager[] GetManager
     {
@@ -340,6 +340,18 @@ public class EnemySkills : MonoBehaviour
         set
         {
             ActiveSkill = value;
+        }
+    }
+
+    public bool GetDisruptedSkill
+    {
+        get
+        {
+            return DisruptedSkill;
+        }
+        set
+        {
+            DisruptedSkill = value;
         }
     }
 
@@ -621,7 +633,6 @@ public class EnemySkills : MonoBehaviour
             StatIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
             StatIcon.GetComponent<StatusIcon>().EnemyInput();
         }
-
         return SkillObj.GetComponentInChildren<Text>();
     }
 
