@@ -60,6 +60,18 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if (enemyTarget != null)
+        {
+            RemoveEnemyStatusEffectText();
+        }
+        else
+        {
+            RemoveStatusEffectText();
+        }
+    }
+
     public void PlayerInput()
     {
         KeyInput = SkillsManager.Instance.GetKeyInput;
@@ -74,6 +86,8 @@ public class StatusIcon : MonoBehaviour
 
     public void EnemyInput()
     {
+        SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetSleepHit = false;
+
         KeyInput = enemyTarget.GetComponent<EnemySkills>().GetRandomValue;
 
         Duration = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDuration;
@@ -125,18 +139,6 @@ public class StatusIcon : MonoBehaviour
         return SkillObj.GetComponentInChildren<Text>();
     }
 
-    private void OnDisable()
-    {
-        if(enemyTarget != null)
-        {
-            RemoveEnemyStatusEffectText();
-        }
-        else
-        {
-            RemoveStatusEffectText();
-        }
-    }
-
     private void DamageOverTime(int value, float damageTick)
     {
         PoisonDamageTick -= Time.deltaTime;
@@ -167,7 +169,7 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetDisruptedSkill = true;
         SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
         SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = false;
-        if (SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetTakingDamage)
+        if (SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetSleepHit)
         {
             Duration = 0;
         }

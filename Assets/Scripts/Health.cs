@@ -21,6 +21,10 @@ public class Health : MonoBehaviour
     [SerializeField]
     private bool TakingDamage;
 
+    //This variable is used to check and uncheck a hit while under the effects of the sleep status.
+    [SerializeField]
+    private bool SleepHit;
+
     [SerializeField]
     private float FillValue;
 
@@ -33,6 +37,18 @@ public class Health : MonoBehaviour
         set
         {
             TakingDamage = value;
+        }
+    }
+
+    public bool GetSleepHit
+    {
+        get
+        {
+            return SleepHit;
+        }
+        set
+        {
+            SleepHit = value;
         }
     }
 
@@ -190,6 +206,7 @@ public class Health : MonoBehaviour
                 character.GetComponent<EnemyAI>().Dead();
             }
         }
+        SleepHit = true;
     }
 
     public void GetFilledBar()

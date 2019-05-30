@@ -164,8 +164,10 @@ public class BasicAttack : MonoBehaviour
             {
                 Target.GetSkills.DisableEnemySkillBar();
                 Target = null;
+
                 GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
                 GameManager.Instance.GetLastObject = null;
+
                 AutoAttackTime = 0;
             }
         }

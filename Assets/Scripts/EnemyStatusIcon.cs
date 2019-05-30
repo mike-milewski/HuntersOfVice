@@ -69,6 +69,18 @@ public class EnemyStatusIcon : MonoBehaviour
         EnemyInput();
     }
 
+    private void OnDisable()
+    {
+        if (player == null)
+        {
+            RemoveStatusEffectText();
+        }
+        else
+        {
+            RemoveEnemyStatusEffectText();
+        }
+    }
+
     public void EnemyInput()
     {
         character = GetComponentInParent<Character>();
@@ -89,6 +101,8 @@ public class EnemyStatusIcon : MonoBehaviour
     public void PlayerInput()
     {
         character = GetComponentInParent<Character>();
+
+        character.GetComponentInChildren<Health>().GetSleepHit = false;
 
         KeyInput = SkillsManager.Instance.GetKeyInput;
 
@@ -146,18 +160,6 @@ public class EnemyStatusIcon : MonoBehaviour
         {
             character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
             character.GetComponent<EnemyAI>().GetStates = States.Chase;
-        }
-    }
-
-    private void OnDisable()
-    {
-        if(player == null)
-        {
-            RemoveStatusEffectText();
-        }
-        else
-        {
-            RemoveEnemyStatusEffectText();
         }
     }
 
@@ -223,7 +225,7 @@ public class EnemyStatusIcon : MonoBehaviour
     {
         character.GetComponent<EnemySkills>().GetDisruptedSkill = true;
         character.GetComponent<EnemyAI>().GetStates = States.Immobile;
-        if (character.GetComponentInChildren<Health>().GetTakingDamage)
+        if (character.GetComponentInChildren<Health>().GetSleepHit)
         {
             Duration = 0;
         }
