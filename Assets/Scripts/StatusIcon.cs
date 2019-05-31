@@ -161,6 +161,7 @@ public class StatusIcon : MonoBehaviour
     {
         SkillsManager.Instance.GetDisruptedSkill = true;
         SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
+        SkillsManager.Instance.GetCharacter.GetComponent<PlayerAnimations>().EndAttackAnimation();
         SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = false;
     }
 
@@ -168,6 +169,7 @@ public class StatusIcon : MonoBehaviour
     {
         SkillsManager.Instance.GetDisruptedSkill = true;
         SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
+        SkillsManager.Instance.GetCharacter.GetComponent<PlayerAnimations>().EndAttackAnimation();
         SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = false;
         if (SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetSleepHit)
         {

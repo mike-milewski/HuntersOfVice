@@ -143,22 +143,22 @@ public class StatusEffects : MonoBehaviour
     {
         switch(effects)
         {
-            case (statuseffects.StrengthUP):
+            case (effects.StrengthUP):
                 chara.CharacterStrength = chara.GetCharacterData.Strength;
                 break;
-            case (statuseffects.StrengthDOWN):
+            case (effects.StrengthDOWN):
                 chara.CharacterStrength = chara.GetCharacterData.Strength;
                 break;
-            case (statuseffects.DefenseUP):
+            case (effects.DefenseUP):
                 chara.CharacterDefense = chara.GetCharacterData.Defense;
                 break;
-            case (statuseffects.DefenseDOWN):
+            case (effects.DefenseDOWN):
                 chara.CharacterDefense = chara.GetCharacterData.Defense;
                 break;
-            case (statuseffects.IntelliegenceUP):
+            case (effects.IntelliegenceUP):
                 chara.CharacterIntelligence = chara.GetCharacterData.Intelligence;
                 break;
-            case (statuseffects.IntelligenceDOWN):
+            case (effects.IntelligenceDOWN):
                 chara.CharacterIntelligence = chara.GetCharacterData.Intelligence;
                 break;
         }

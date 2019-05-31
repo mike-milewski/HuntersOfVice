@@ -10,6 +10,9 @@ public class SkillBar : MonoBehaviour
     private PlayerController playerController;
 
     [SerializeField]
+    private PlayerAnimations playerAnimations;
+
+    [SerializeField]
     private Skills skills = null;
 
     [SerializeField]
@@ -85,6 +88,7 @@ public class SkillBar : MonoBehaviour
     {
         if(playerController.GetMovement == Vector3.zero && character.CurrentHealth > 0 && !SkillsManager.Instance.GetDisruptedSkill)
         {
+            playerAnimations.EndAttackAnimation();
             SkillBarImage.fillAmount += Time.deltaTime / skills.GetCastTime;
             CastTime -= Time.deltaTime;
             SkillName.text = skills.GetSkillName + " " + Mathf.Clamp(CastTime, 0, skills.GetCastTime).ToString("F2");

@@ -500,7 +500,7 @@ public class EnemySkills : MonoBehaviour
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
             DisableRadiusImage();
-            Invoke("InvokePoisonSpore", 0.3f);
+            Invoke("InvokePoisonSpore2", 0.3f);
         }
     }
 
@@ -513,8 +513,7 @@ public class EnemySkills : MonoBehaviour
         ActiveSkill = false;
     }
 
-    /*
-    private void InvokePoisonMist2()
+    private void InvokePoisonSpore2()
     {
         damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.GetDamageShape.transform.localScale);
 
@@ -522,7 +521,6 @@ public class EnemySkills : MonoBehaviour
 
         ActiveSkill = false;
     }
-    */
 
     private void UseSkillBar()
     {
@@ -584,9 +582,9 @@ public class EnemySkills : MonoBehaviour
     {
         damageRadius.enabled = true;
 
-        damageRadius.GetRadius = skills[RandomValue].GetRadius;
+        damageRadius.GetRadius = 1;//skills[RandomValue].GetRadius;
 
-        damageRadius.GetShapes = Shapes.Circle;
+        damageRadius.GetShapes = Shapes.Rectangle;
     }
 
     /*

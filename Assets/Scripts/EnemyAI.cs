@@ -37,6 +37,13 @@ public class EnemyAI : MonoBehaviour
 
     private bool ParticleExists;
 
+    [SerializeField] 
+    private float TimeToMoveAgain; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
+
+    private float TimeToMove;
+
+    private bool StandingStill;
+
     [SerializeField]
     private Image ThreatPic;
 
@@ -63,6 +70,8 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         states = States.Patrol;
+
+        TimeToMove = TimeToMoveAgain;
     }
 
     private void OnEnable()
@@ -163,30 +172,46 @@ public class EnemyAI : MonoBehaviour
 
     private void Patrol()
     {
-        Anim.RunAni();
+        if(!StandingStill)
+        {
+            Anim.RunAni();
 
-        Vector3 Distance = new Vector3(Waypoints[WaypointIndex].position.x - this.transform.position.x, 0,
+            Vector3 Distance = new Vector3(Waypoints[WaypointIndex].position.x - this.transform.position.x, 0,
                                        Waypoints[WaypointIndex].position.z - this.transform.position.z).normalized;
 
-        Quaternion LookDir = Quaternion.LookRotation(Distance);
+            Quaternion LookDir = Quaternion.LookRotation(Distance);
 
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
-        this.transform.position += Distance * MoveSpeed * Time.deltaTime;
+            this.transform.position += Distance * MoveSpeed * Time.deltaTime;
+        }
+        else
+        {
+            Anim.IdleAni();
+        }
 
         if (Vector3.Distance(new Vector3(this.transform.position.x, 0, this.transform.position.z),
                             new Vector3(Waypoints[WaypointIndex].position.x, 0, Waypoints[WaypointIndex].position.z)) <= 0.1f)
         {
-            WaypointIndex++;
-            if (WaypointIndex >= Waypoints.Length)
+            StandingStill = true;
+            TimeToMove -= Time.deltaTime;
+            if(TimeToMove <= 0)
             {
-                WaypointIndex = 0;
+                WaypointIndex++;
+                if (WaypointIndex >= Waypoints.Length)
+                {
+                    WaypointIndex = 0;
+                }
+                TimeToMove = TimeToMoveAgain;
+                StandingStill = false;
             }
         }
     }
 
     private void Chase()
     {
+        StandingStill = false;
+
         Anim.RunAni();
 
         enemySkills.GetSkillBar.gameObject.SetActive(false);
@@ -285,6 +310,7 @@ public class EnemyAI : MonoBehaviour
 
     public void Dead()
     {
+        StandingStill = false;
         PlayerTarget = null;
         AutoAttackTime = 0;
         EnemyTriggerSphere.enabled = false;

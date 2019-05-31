@@ -63,12 +63,9 @@ public class DamageRadius : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        if(shapes == Shapes.Rectangle)
-        {
-            DamageShape.transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
-        }
+        transform.position = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z + 0.5f);
     }
 
     private void Update()
@@ -125,13 +122,12 @@ public class DamageRadius : MonoBehaviour
 
     private void IncreaseRectangle()
     {
-        DamageShape.transform.localScale = new Vector3(
-            Mathf.Clamp(DamageShape.transform.localScale.y, 0, Radius),
-            Mathf.Clamp(DamageShape.transform.localScale.y, 0, Radius),
-            Mathf.Clamp(DamageShape.transform.localScale.z, 0, Radius));
+        DamageShape.rectTransform.sizeDelta = new Vector2(
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, 29),
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, 60));
 
-        if (DamageShape.transform.localScale.y < Radius && DamageShape.transform.localScale.z < Radius)
-            DamageShape.transform.localScale += new Vector3(1.5f, 1.5f, 1.5f) * Time.deltaTime;
+        if (DamageShape.rectTransform.sizeDelta.x < 29 && DamageShape.rectTransform.sizeDelta.y < 60)
+            DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
     }
 
     public void ResetLocalScale()
