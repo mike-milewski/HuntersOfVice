@@ -65,7 +65,20 @@ public class DamageRadius : MonoBehaviour
 
     private void Start()
     {
-        transform.position = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z + 0.5f);
+        if(shapes == Shapes.Rectangle)
+        {
+            Debug.Log("Rectangle");
+
+            Vector3 Trans = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z);
+
+            transform.position = Trans + character.transform.forward;
+        }
+        if(shapes == Shapes.Circle)
+        {
+            Debug.Log("Circle");
+
+            transform.position = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z);
+        }
     }
 
     private void Update()
@@ -100,13 +113,12 @@ public class DamageRadius : MonoBehaviour
 
     private void IncreaseCircle()
     {
-        DamageShape.transform.localScale = new Vector3(
-            Mathf.Clamp(DamageShape.transform.localScale.x, 0, Radius),
-            Mathf.Clamp(DamageShape.transform.localScale.y, 0, Radius),
-            Mathf.Clamp(DamageShape.transform.localScale.z, 0, Radius));
+        DamageShape.rectTransform.sizeDelta = new Vector2(
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, 100),
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, 100));
 
-        if (DamageShape.transform.localScale.x < Radius && DamageShape.transform.localScale.y < Radius && DamageShape.transform.localScale.z < Radius)
-           DamageShape.transform.localScale += new Vector3(1.5f, 1.5f, 1.5f) * Time.deltaTime;
+        if (DamageShape.rectTransform.sizeDelta.x < 100 && DamageShape.rectTransform.sizeDelta.y < 100)
+           DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
     }
 
     private void IncreaseCylinder()
@@ -123,16 +135,19 @@ public class DamageRadius : MonoBehaviour
     private void IncreaseRectangle()
     {
         DamageShape.rectTransform.sizeDelta = new Vector2(
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, 29),
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, 60));
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, 30),
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, 90));
 
-        if (DamageShape.rectTransform.sizeDelta.x < 29 && DamageShape.rectTransform.sizeDelta.y < 60)
+        if (DamageShape.rectTransform.sizeDelta.x < 30 && DamageShape.rectTransform.sizeDelta.y < 90)
+        {
             DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
+        }
+            
     }
 
-    public void ResetLocalScale()
+    public void ResetSizeDelta()
     {
-        DamageShape.transform.localScale = new Vector3(0, 0, 0);
+        DamageShape.rectTransform.sizeDelta = new Vector2(0, 0);
     }
 
     //Used for AOE damage skills with a circle shaped radius.
