@@ -89,6 +89,7 @@ public class EnemySkillBar : MonoBehaviour
     private void OnEnable()
     {
         CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
+        character.GetComponentInChildren<DamageRadius>().GetShapes = enemySkills.GetManager[enemySkills.GetRandomValue].GetShapes;
         Casting = true;
         SkillBarFillImage.fillAmount = 0;
     }

@@ -16,6 +16,9 @@ public class enemySkillManager
     [SerializeField]
     private Status status;
 
+    [SerializeField] [Tooltip("The shape the skill will form when being cast. Enemy targets within its range will be hit.")]
+    private Shapes shapes;
+
     [SerializeField] [Tooltip("Image of the status effect inflicted. Only apply if the skill will have a status effect.")]
     private Sprite StatusSprite = null;
 
@@ -49,8 +52,8 @@ public class enemySkillManager
     [SerializeField]
     private float CastTime;
 
-    [SerializeField]
-    private float Radius;
+    [SerializeField] [Tooltip("The values used for the size of the shape if chosen other than NONE.")]
+    private float SizeDeltaX, SizeDeltaY;
 
     [SerializeField]
     public float AttackRange;
@@ -85,15 +88,27 @@ public class enemySkillManager
         }
     }
 
-    public float GetRadius
+    public float GetSizeDeltaX
     {
         get
         {
-            return Radius;
+            return SizeDeltaX;
         }
         set
         {
-            Radius = value;
+            SizeDeltaX = value;
+        }
+    }
+
+    public float GetSizeDeltaY
+    {
+        get
+        {
+            return SizeDeltaY;
+        }
+        set
+        {
+            SizeDeltaY = value;
         }
     }
 
@@ -166,6 +181,18 @@ public class enemySkillManager
         set
         {
             status = value;
+        }
+    }
+
+    public Shapes GetShapes
+    {
+        get
+        {
+            return shapes;
+        }
+        set
+        {
+            shapes = value;
         }
     }
 
@@ -375,7 +402,7 @@ public class EnemySkills : MonoBehaviour
                     HealingCap(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetSkillName);
                     break;
                 case (Skill.PoisonSpore):
-                    PoisonSpore(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetRadius, GetManager[RandomValue].GetSkillName);
+                    PoisonSpore(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetSizeDeltaX, GetManager[RandomValue].GetSkillName);
                     break;
                 case (Skill.Regen):
                     Regen(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
@@ -486,7 +513,7 @@ public class EnemySkills : MonoBehaviour
 
         skills[RandomValue].GetPotency = potency;
 
-        skills[RandomValue].GetRadius = radius;
+        skills[RandomValue].GetSizeDeltaX = radius;
 
         skills[RandomValue].GetSkillName = skillname;
 
@@ -506,7 +533,7 @@ public class EnemySkills : MonoBehaviour
 
     private void InvokePoisonSpore()
     {
-        damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, skills[RandomValue].GetRadius + 1);
+        damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, skills[RandomValue].GetSizeDeltaX + 1);
 
         DisableRadius();
 
@@ -584,7 +611,7 @@ public class EnemySkills : MonoBehaviour
 
         damageRadius.GetRadius = 1;//skills[RandomValue].GetRadius;
 
-        damageRadius.GetShapes = Shapes.Circle;
+        //damageRadius.GetShapes = Shapes.Circle;
     }
 
     /*

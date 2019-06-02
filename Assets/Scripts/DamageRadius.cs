@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Shapes { Circle, Cylinder, Rectangle }
+public enum Shapes { NONE, Circle, Cylinder, Rectangle }
 
 public class DamageRadius : MonoBehaviour
 {
@@ -67,16 +67,12 @@ public class DamageRadius : MonoBehaviour
     {
         if(shapes == Shapes.Rectangle)
         {
-            Debug.Log("Rectangle");
-
             Vector3 Trans = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z);
 
             transform.position = Trans + character.transform.forward;
         }
         if(shapes == Shapes.Circle)
         {
-            Debug.Log("Circle");
-
             transform.position = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z);
         }
     }
