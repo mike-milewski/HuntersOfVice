@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
         Player.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
         Player.GetComponent<BasicAttack>().enabled = false;
 
-        Player.GetComponent<BoxCollider>().enabled = false;
+        Player.GetComponent<CapsuleCollider>().enabled = false;
 
         Player.GetComponent<PlayerController>().enabled = false;
 
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
             LastObject = null;
         }
 
-        Player.GetComponent<BoxCollider>().enabled = true;
+        Player.GetComponent<CapsuleCollider>().enabled = true;
 
         Player.GetComponent<Character>().GetRigidbody.useGravity = true;
         Player.GetComponent<Character>().GetRigidbody.isKinematic = false;

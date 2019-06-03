@@ -52,8 +52,11 @@ public class enemySkillManager
     [SerializeField]
     private float CastTime;
 
-    [SerializeField] [Tooltip("The values used for the size of the shape if chosen other than NONE.")]
+    [SerializeField] [Tooltip("The values used for the shape size if its set to CIRCLE")]
     private float SizeDeltaX, SizeDeltaY;
+
+    [SerializeField]
+    private Vector3 ShapeSize;
 
     [SerializeField]
     public float AttackRange;
@@ -217,6 +220,18 @@ public class enemySkillManager
         set
         {
             StatusDuration = value;
+        }
+    }
+
+    public Vector3 GetShapeSize
+    {
+        get
+        {
+            return ShapeSize;
+        }
+        set
+        {
+            ShapeSize = value;
         }
     }
 
@@ -402,7 +417,8 @@ public class EnemySkills : MonoBehaviour
                     HealingCap(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetSkillName);
                     break;
                 case (Skill.PoisonSpore):
-                    PoisonSpore(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetSizeDeltaX, GetManager[RandomValue].GetSkillName);
+                    PoisonSpore(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, 
+                        new Vector2(GetManager[RandomValue].GetSizeDeltaX, GetManager[RandomValue].GetSizeDeltaY), GetManager[RandomValue].GetSkillName);
                     break;
                 case (Skill.Regen):
                     Regen(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
@@ -505,7 +521,7 @@ public class EnemySkills : MonoBehaviour
         ActiveSkill = false;
     }
 
-    public void PoisonSpore(int potency, float castTime, float radius, string skillname)
+    public void PoisonSpore(int potency, float castTime, Vector2 sizeDelta, string skillname)
     {
         SpellCastingAnimation();
 
@@ -513,7 +529,7 @@ public class EnemySkills : MonoBehaviour
 
         skills[RandomValue].GetPotency = potency;
 
-        skills[RandomValue].GetSizeDeltaX = radius;
+        sizeDelta = new Vector2(skills[RandomValue].GetSizeDeltaX, skills[RandomValue].GetSizeDeltaY);
 
         skills[RandomValue].GetSkillName = skillname;
 
@@ -533,17 +549,15 @@ public class EnemySkills : MonoBehaviour
 
     private void InvokePoisonSpore()
     {
-        damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, skills[RandomValue].GetSizeDeltaX + 1);
-
-        DisableRadius();
-
-        ActiveSkill = false;
-    }
-
-    private void InvokePoisonSpore2()
-    {
-        damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.GetDamageShape.transform.localScale);
-
+        switch(skills[RandomValue].GetShapes)
+        {
+            case (Shapes.Circle):
+                damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
+                break;
+            case (Shapes.Rectangle):
+                damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetRectangleColliderSize() / 2);
+                break;
+        }
         DisableRadius();
 
         ActiveSkill = false;
@@ -601,27 +615,21 @@ public class EnemySkills : MonoBehaviour
     public void DisableRadius()
     {
         damageRadius.ResetSizeDelta();
-        damageRadius.GetRadius = 0;
+        damageRadius.ResetLocalScale();
         damageRadius.enabled = false;
     }
 
     public void EnableRadius()
     {
         damageRadius.enabled = true;
-
-        damageRadius.GetRadius = 1;//skills[RandomValue].GetRadius;
-
-        //damageRadius.GetShapes = Shapes.Circle;
     }
 
-    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position,
-            character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.localScale * 2);
+                        character.GetComponentInChildren<DamageRadius>().SetRectangleColliderSize());
     }
-    */
 
     public int TakeDamage(int potency, string skillname)
     {

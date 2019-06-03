@@ -729,7 +729,7 @@ GameObject:
   - component: {fileID: 4739670478079544}
   - component: {fileID: 95636442410713664}
   - component: {fileID: 54741623991925054}
-  - component: {fileID: 65887920725371574}
+  - component: {fileID: 136923684811155158}
   - component: {fileID: 114392228500413548}
   - component: {fileID: 114525097018775528}
   - component: {fileID: 114926308544404342}
@@ -2067,18 +2067,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!65 &65887920725371574
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1718340075597586}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.46, y: 1.91, z: 1.2}
-  m_Center: {x: 0, y: 0.96, z: 0.18}
 --- !u!95 &95636442410713664
 Animator:
   serializedVersion: 3
@@ -2226,12 +2214,26 @@ MonoBehaviour:
   FillBarTwo: {fileID: 0}
   DamageTextParent: {fileID: 0}
   HealthText: {fileID: 0}
-  DamageTextHolder: {fileID: 1522704258827516, guid: 6c45e0610fe491144a94837c5a382f50,
+  DamageTextHolder: {fileID: 1750289363352162, guid: 114998f983acadd4693d0842ae4c8ffd,
     type: 2}
-  HealTextHolder: {fileID: 1522704258827516, guid: 6c45e0610fe491144a94837c5a382f50,
+  HealTextHolder: {fileID: 1750289363352162, guid: 114998f983acadd4693d0842ae4c8ffd,
     type: 2}
   TakingDamage: 0
+  SleepHit: 0
   FillValue: 0.08
+--- !u!136 &136923684811155158
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1718340075597586}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 1.9
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.91, z: 0.15}
 --- !u!137 &137347199056414644
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
