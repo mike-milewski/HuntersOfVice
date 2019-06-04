@@ -4842,6 +4842,11 @@ Prefab:
       propertyPath: ExperienceTextParent
       value: 
       objectReference: {fileID: 30534054}
+    - target: {fileID: 136923684811155158, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
+        type: 2}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 2}
   m_IsPrefabAsset: 0
@@ -5121,7 +5126,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0.9626445
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
       propertyPath: m_LocalRotation.z
@@ -5129,7 +5134,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.2707685
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
       propertyPath: m_RootOrder
@@ -5182,12 +5187,12 @@ Prefab:
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].SizeDeltaX
-      value: 19
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].SizeDeltaY
-      value: 19
+      value: 19.4
       objectReference: {fileID: 0}
     - target: {fileID: 224172724586066702, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
@@ -5201,7 +5206,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 148.58
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
@@ -5211,27 +5216,28 @@ Prefab:
     - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: LookSpeed
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224673607506291504, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 19
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 224673607506291504, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 19
+      value: 19.4
       objectReference: {fileID: 0}
     - target: {fileID: 114217460373930040, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 21300000, guid: 79ee89235d94c7845ba61cbe6dc8e0e5,
+        type: 3}
     - target: {fileID: 114217460373930040, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: m_Type
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224673607506291504, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
@@ -5281,22 +5287,33 @@ Prefab:
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].ShapeSize.x
-      value: 1.35
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].ShapeSize.y
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].ShapeSize.z
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: skills.Array.data[0].status
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114268487534876906, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: DamageShapeRectangle
+      value: 
+      objectReference: {fileID: 21300000, guid: 79ee89235d94c7845ba61cbe6dc8e0e5,
+        type: 3}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: MoveSpeed
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}

@@ -172,12 +172,15 @@ public class EnemyAI : MonoBehaviour
 
     private void Patrol()
     {
-        if(!StandingStill)
+        float DistanceToWayPoint = Vector3.Distance(new Vector3(this.transform.position.x, 0, this.transform.position.z),
+                                                    new Vector3(Waypoints[WaypointIndex].position.x, 0, Waypoints[WaypointIndex].position.z));
+
+        if (!StandingStill)
         {
             Anim.RunAni();
 
             Vector3 Distance = new Vector3(Waypoints[WaypointIndex].position.x - this.transform.position.x, 0,
-                                       Waypoints[WaypointIndex].position.z - this.transform.position.z).normalized;
+                                           Waypoints[WaypointIndex].position.z - this.transform.position.z).normalized;
 
             Quaternion LookDir = Quaternion.LookRotation(Distance);
 
@@ -190,8 +193,7 @@ public class EnemyAI : MonoBehaviour
             Anim.IdleAni();
         }
 
-        if (Vector3.Distance(new Vector3(this.transform.position.x, 0, this.transform.position.z),
-                            new Vector3(Waypoints[WaypointIndex].position.x, 0, Waypoints[WaypointIndex].position.z)) <= 0.1f)
+        if (DistanceToWayPoint <= 0.1f)
         {
             StandingStill = true;
             TimeToMove -= Time.deltaTime;
@@ -218,7 +220,9 @@ public class EnemyAI : MonoBehaviour
 
         if (PlayerTarget != null)
         {
-            if (Vector3.Distance(this.transform.position, PlayerTarget.transform.position) >= AttackRange)
+            float DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
+
+            if (DistanceToTarget >= AttackRange)
             {
                 Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
                                                PlayerTarget.transform.position.z - this.transform.position.z).normalized;
@@ -244,7 +248,9 @@ public class EnemyAI : MonoBehaviour
     {
         Anim.IdleAni();
 
-        if (PlayerTarget != null && Vector3.Distance(this.transform.position, PlayerTarget.transform.position) <= AttackRange)
+        float DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
+
+        if (PlayerTarget != null && DistanceToTarget <= AttackRange)
         {
             Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
                                            PlayerTarget.transform.position.z - this.transform.position.z).normalized;
