@@ -15,6 +15,21 @@ public class Mana : MonoBehaviour
     [SerializeField]
     private float FillValue;
 
+    [SerializeField]
+    private bool SpendingMana;
+
+    public bool GetSpendingMana
+    {
+        get
+        {
+            return SpendingMana;
+        }
+        set
+        {
+            SpendingMana = value;
+        }
+    }
+
     private void Reset()
     {
         character = GetComponent<Character>();
@@ -32,11 +47,31 @@ public class Mana : MonoBehaviour
 
     private void LateUpdate()
     {
-        FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, ManaBar.fillAmount, FillValue);
+        if(SpendingMana)
+        {
+            FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, ManaBar.fillAmount, FillValue);
+        }
+        else
+        {
+            ManaBar.fillAmount = Mathf.Lerp(ManaBar.fillAmount, FillBarTwo.fillAmount, FillValue);
+        }
+    }
+
+    public void IncreaseMana(int Value)
+    {
+        SpendingMana = false;
+
+        character.CurrentMana += Value;
+
+        ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana) + "/" + character.MaxMana.ToString();
+
+        FillBarTwo.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
     }
 
     public void ModifyMana(int Value)
     {
+        SpendingMana = true;
+
         character.CurrentMana += Value;
 
         ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana) + "/" + character.MaxMana.ToString();

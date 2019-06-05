@@ -151,6 +151,8 @@ public class Health : MonoBehaviour
 
     public void IncreaseHealth(int Value)
     {
+        TakingDamage = false;
+
         character.CurrentHealth += Value;
 
         character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
@@ -172,6 +174,8 @@ public class Health : MonoBehaviour
 
     public void ModifyHealth(int Value)
     {
+        TakingDamage = true;
+
         character.CurrentHealth += Value;
 
         character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);

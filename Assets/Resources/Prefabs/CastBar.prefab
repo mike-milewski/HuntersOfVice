@@ -94,7 +94,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &114028097993553762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,7 +220,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa83e6abac45c84ab2e72b9aadcbec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 0}
   playerController: {fileID: 0}
+  playerAnimations: {fileID: 0}
   skills: {fileID: 0}
   CastParticle: {fileID: 19800006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 2}
   SkillName: {fileID: 114350208856672362}
@@ -273,7 +275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 174}
+  m_AnchoredPosition: {x: 0, y: 188}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224219648010327350

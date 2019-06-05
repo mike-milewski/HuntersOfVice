@@ -3,23 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum FadeState { FADEIN, FADEOUT };
+
 public class FadeScreen : MonoBehaviour
 {
     [SerializeField]
     private Image Overlay;
 
-    private void Awake()
+    private Color alpha;
+
+    [SerializeField]
+    private FadeState fadeState;
+
+    public FadeState GetFadeState
     {
-        FadeOut();
+        get
+        {
+            return fadeState;
+        }
+        set
+        {
+            fadeState = value;
+        }
     }
 
-    private void FadeIn()
+    private void OnEnable()
     {
-        Overlay.CrossFadeAlpha(1, 0.9f, false);
+        alpha = Overlay.color;
+    }
+
+    private void Update()
+    {
+        switch (fadeState)
+        {
+            case (FadeState.FADEIN):
+                FadeIn();
+                break;
+            case (FadeState.FADEOUT):
+                FadeOut();
+                break;
+        }
     }
 
     private void FadeOut()
     {
-        Overlay.CrossFadeAlpha(0, 0.9f, false);
+        alpha.a += 2 * Time.deltaTime;
+        Overlay.color = alpha;
+
+        if (alpha.a >= 1)
+        {
+        }
+    }
+
+    private void FadeIn()
+    {
+        alpha.a -= 2 * Time.deltaTime;
+        Overlay.color = alpha;
+
+        if (alpha.a <= 0)
+        {
+        }
     }
 }

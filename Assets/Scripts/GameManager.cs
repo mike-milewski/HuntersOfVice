@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
 
     [SerializeField]
+    private FadeScreen fadeScreen;
+
+    [SerializeField]
     private Text InvalidText;
 
     [SerializeField]
@@ -103,16 +106,25 @@ public class GameManager : MonoBehaviour
         Player.GetComponent<Character>().GetRigidbody.useGravity = false;
         Player.GetComponent<Character>().GetRigidbody.isKinematic = true;
 
+        StartCoroutine(Fade());
+    }
+
+    private IEnumerator Fade()
+    {
+        yield return new WaitForSeconds(2);
+        fadeScreen.gameObject.SetActive(true);
+        fadeScreen.GetFadeState = FadeState.FADEOUT;
         StartCoroutine(Respawn());
     }
 
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(RespawnTime);
+        fadeScreen.GetFadeState = FadeState.FADEIN;
         Player.transform.position = SpawnPoint.position;
 
-        Player.GetComponent<Character>().CurrentHealth = Player.GetComponent<Character>().MaxHealth;
-        Player.GetComponent<Health>().GetFilledBar();
+        Player.GetComponent<Health>().IncreaseHealth(Player.GetComponent<Character>().MaxHealth);
+        Player.GetComponent<Mana>().IncreaseMana(Player.GetComponent<Character>().MaxMana);
 
         Player.GetComponent<BasicAttack>().enabled = true;
         

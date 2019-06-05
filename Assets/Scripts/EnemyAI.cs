@@ -419,7 +419,6 @@ public class EnemyAI : MonoBehaviour
             if (Random.value * 100 <= Critical)
             {
                 PlayerTarget.GetComponent<Health>().ModifyHealth((-character.CharacterStrength - 5) - -PlayerTarget.CharacterDefense);
-                PlayerTarget.GetComponent<Health>().GetTakingDamage = true;
 
                 DamageObject.GetComponentInChildren<Text>().fontSize = 40;
 
@@ -428,7 +427,6 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 PlayerTarget.GetComponent<Health>().ModifyHealth(-character.CharacterStrength - -PlayerTarget.CharacterDefense);
-                PlayerTarget.GetComponent<Health>().GetTakingDamage = true;
 
                 DamageObject.GetComponentInChildren<Text>().fontSize = 30;
 
