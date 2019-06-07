@@ -969,8 +969,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skills:
   - skills: 2
-    status: 0
-    shapes: 1
+    status: 1
+    shapes: 3
     StatusSprite: {fileID: 21300000, guid: c144ece9d040e1349bc5e660a04eb618, type: 3}
     StatusIcon: {fileID: 114375432815335230, guid: b67c014625f00f14aa3ea33a3f92e0db,
       type: 2}
@@ -985,12 +985,12 @@ MonoBehaviour:
     SkillName: Poison Spore
     StatusDuration: 10
     CastTime: 3
-    SizeDeltaX: 100
-    SizeDeltaY: 100
+    SizeDeltaX: 19
+    SizeDeltaY: 19
     ShapeSize: {x: 1.28, y: 2.5, z: 2.5}
-    AttackRange: 0
+    AttackRange: 3
     StatusEffectPotency: 0
-    Potency: 0
+    Potency: 10
   character: {fileID: 114979435669946942}
   enemy: {fileID: 114492699656399902}
   enemyAI: {fileID: 114244275959761428}
@@ -1616,6 +1616,8 @@ MonoBehaviour:
   enemy: {fileID: 114492699656399902}
   enemyAI: {fileID: 114244275959761428}
   enemySkills: {fileID: 114006354462489536}
+  CastParticle: {fileID: 19800000, guid: 7b56cd9b663f23f429e131a54ec87db0, type: 2}
+  ParticleExists: 0
   SkillBarFillImage: {fileID: 114754455364354644}
   SkillName: {fileID: 114834186010564838}
   Casting: 0
@@ -2686,8 +2688,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0}
-  m_SizeDelta: {x: 0, y: 204.075}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224502506957196738
 RectTransform:

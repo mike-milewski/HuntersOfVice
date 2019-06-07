@@ -22,7 +22,7 @@ public class SkillBar : MonoBehaviour
     private Text SkillName;
 
     [SerializeField]
-    private Image SkillBarImage;
+    private Image SkillBarImage, SkillImage;
 
     [SerializeField]
     private bool ParticleExists;
@@ -61,27 +61,27 @@ public class SkillBar : MonoBehaviour
         }
         else
         {
-            SkillsManager.Instance.GetParticleObj.gameObject.SetActive(true);
+            CastParticle.gameObject.SetActive(true);
         }
     }
 
     private void Start()
     {
         CastTime = skills.GetCastTime;
+
+        SkillImage.sprite = skills.GetComponent<Image>().sprite;
     }
 
-    private ParticleSystem CreateParticle()
+    private void CreateParticle()
     {
-        SkillsManager.Instance.GetParticleObj = Instantiate(CastParticle, new Vector3(playerController.transform.position.x, 
+        CastParticle = Instantiate(CastParticle, new Vector3(playerController.transform.position.x, 
                                                                                       playerController.transform.position.y + 0.1f, 
                                                                                       playerController.transform.position.z),
                                                                                       CastParticle.transform.rotation);
 
-        SkillsManager.Instance.GetParticleObj.transform.SetParent(playerController.transform, true);
+        CastParticle.transform.SetParent(playerController.transform, true);
 
         ParticleExists = true;
-
-        return SkillsManager.Instance.GetParticleObj;
     }
 
     private void Update()
@@ -97,7 +97,7 @@ public class SkillBar : MonoBehaviour
                 skills.GetButton.onClick.Invoke();
                 SkillBarImage.fillAmount = 0;
                 CastTime = skills.GetCastTime;
-                SkillsManager.Instance.GetParticleObj.gameObject.SetActive(false);
+                CastParticle.gameObject.SetActive(false);
                 gameObject.SetActive(false);
             }
         }
@@ -107,7 +107,7 @@ public class SkillBar : MonoBehaviour
             SkillBarImage.fillAmount = 0;
             CastTime = skills.GetCastTime;
             SkillsManager.Instance.GetActivatedSkill = false;
-            SkillsManager.Instance.GetParticleObj.gameObject.SetActive(false);
+            CastParticle.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
     }

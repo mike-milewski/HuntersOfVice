@@ -16,15 +16,21 @@ public class EnemySkillBar : MonoBehaviour
     private EnemySkills enemySkills;
 
     [SerializeField]
+    private ParticleSystem CastParticle;
+
+    [SerializeField]
+    private bool ParticleExists;
+
+    [SerializeField]
     private Image SkillBarFillImage;
 
     [SerializeField]
     private Text SkillName;
 
-    private float CastTime;
-
     [SerializeField]
     private bool Casting;
+
+    private float CastTime;
 
     public Character GetCharacter
     {
@@ -88,6 +94,15 @@ public class EnemySkillBar : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!ParticleExists)
+        {
+            CreateParticle();
+        }
+        else
+        {
+            CastParticle.gameObject.SetActive(true);
+        }
+
         CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
         character.GetComponentInChildren<DamageRadius>().GetShapes = enemySkills.GetManager[enemySkills.GetRandomValue].GetShapes;
         Casting = true;
@@ -98,6 +113,18 @@ public class EnemySkillBar : MonoBehaviour
     {
         Casting = false;
         SkillBarFillImage.fillAmount = 0;
+    }
+
+    private void CreateParticle()
+    {
+        CastParticle = Instantiate(CastParticle, new Vector3(character.transform.position.x,
+                                                             character.transform.position.y + 0.1f,
+                                                             character.transform.position.z),
+                                                             CastParticle.transform.rotation);
+
+        CastParticle.transform.SetParent(character.transform, true);
+
+        ParticleExists = true;
     }
 
     public void GetEnemySkill()
@@ -139,6 +166,7 @@ public class EnemySkillBar : MonoBehaviour
             SkillBarFillImage.fillAmount = 0;
             CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
 
+            CastParticle.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
         else if(enemySkills.GetDisruptedSkill)
@@ -149,6 +177,7 @@ public class EnemySkillBar : MonoBehaviour
 
             SkillBarFillImage.fillAmount = 0;
 
+            CastParticle.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
     }

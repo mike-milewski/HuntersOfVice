@@ -333,6 +333,9 @@ public class EnemySkills : MonoBehaviour
 
     private int RandomValue;
 
+    [Tooltip("The amount of time it takes before the skill is applied.")]
+    private float ApplySkill;
+
     [SerializeField]
     private bool ActiveSkill, DisruptedSkill;
 
@@ -445,7 +448,7 @@ public class EnemySkills : MonoBehaviour
 
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
-            Invoke("InvokeRegen", 0.2f);
+            Invoke("InvokeRegen", ApplySkill);
         }
     }
 
@@ -479,9 +482,11 @@ public class EnemySkills : MonoBehaviour
         skills[RandomValue].GetPotency = potency;
         skills[RandomValue].GetSkillName = skillname;
 
+        float Distance = Vector3.Distance(character.transform.position, enemyAI.GetPlayerTarget.transform.position);
+
         if (enemyAI.GetPlayerTarget != null)
         {
-            if(Vector3.Distance(character.transform.position, enemyAI.GetPlayerTarget.transform.position) <= attackRange)
+            if(Distance <= attackRange)
             {
                 FungiBumpAnimation();
             }
@@ -505,7 +510,7 @@ public class EnemySkills : MonoBehaviour
 
         if(skillBar.GetFillImage.fillAmount >= 1)
         {
-            Invoke("InvokeHealingCap", 0.2f);
+            Invoke("InvokeHealingCap", ApplySkill);
         }  
     }
 
@@ -543,7 +548,7 @@ public class EnemySkills : MonoBehaviour
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
             DisableRadiusImage();
-            Invoke("InvokePoisonSpore", 0.3f);
+            Invoke("InvokePoisonSpore", ApplySkill);
         }
     }
 
@@ -623,22 +628,22 @@ public class EnemySkills : MonoBehaviour
     {
         damageRadius.enabled = true;
     }
-
+    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position,
                         character.GetComponentInChildren<DamageRadius>().SetRectangleColliderSize());
     }
-
+    */
     public int TakeDamage(int potency, string skillname)
     {
         SkillDamageText(potency, skillname);
 
-        character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                         (-potency - -character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<Character>().CharacterDefense);
+        enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
+                                         (-potency - -enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense);
 
-        character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+        enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
 
         return potency;
     }
@@ -670,11 +675,16 @@ public class EnemySkills : MonoBehaviour
 
     public Text SkillDamageText(int potency, string skillName)
     {
+        if(enemyAI.GetPlayerTarget == null)
+        {
+            return null;
+        }
+
         skills[RandomValue].GetSkillName = skillName;
 
         var SkillObj = Instantiate(GetManager[RandomValue].GetDamageOrHealText);
 
-        var Target = character.GetComponent<EnemyAI>().GetPlayerTarget;
+        var Target = enemyAI.GetPlayerTarget;
 
         SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 

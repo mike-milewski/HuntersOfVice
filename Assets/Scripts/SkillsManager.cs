@@ -16,8 +16,6 @@ public class SkillsManager : MonoBehaviour
     [SerializeField]
     private EnemyStatusIcon enemystatusIcon;
 
-    private ParticleSystem ParticleObj = null;
-
     [SerializeField]
     private List<Skills> skills;
 
@@ -70,18 +68,6 @@ public class SkillsManager : MonoBehaviour
         set
         {
             character = value;
-        }
-    }
-
-    public ParticleSystem GetParticleObj
-    {
-        get
-        {
-            return ParticleObj;
-        }
-        set
-        {
-            ParticleObj = value;
         }
     }
 

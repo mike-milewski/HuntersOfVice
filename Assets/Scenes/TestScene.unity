@@ -990,26 +990,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 223990220447610758, guid: d1b40f4cedbe929489899902c0b8de32,
+    - target: {fileID: 114647223435935730, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 696282350}
+    - target: {fileID: 223028387731617080, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 696282350}
-    - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: EXP
-      value: 
-      objectReference: {fileID: 1474654865}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].TextHolder
-      value: 
-      objectReference: {fileID: 2019092555}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].StatusIconTrans
-      value: 
-      objectReference: {fileID: 1886012712}
     - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: Waypoints.Array.data[0]
@@ -1020,111 +1010,29 @@ Prefab:
       propertyPath: Waypoints.Array.data[1]
       value: 
       objectReference: {fileID: 1369396520}
-    - target: {fileID: 223028387731617080, guid: d1b40f4cedbe929489899902c0b8de32,
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].TextHolder
+      value: 
+      objectReference: {fileID: 2019092555}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].StatusIconTrans
+      value: 
+      objectReference: {fileID: 1886012712}
+    - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: EXP
+      value: 
+      objectReference: {fileID: 1474654865}
+    - target: {fileID: 223990220447610758, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 2}
       propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 696282350}
-    - target: {fileID: 114647223435935730, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: cam
       value: 
       objectReference: {fileID: 696282350}
     - target: {fileID: 1722958204252142, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
       propertyPath: m_Name
       value: Mushroom (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1728823422282226, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224499274023151554, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224499274023151554, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224499274023151554, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1143911884577300, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224999922894932806, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224794086117446916, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224794086117446916, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224794086117446916, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1136369637586094, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224022177807457968, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224022177807457968, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224499274023151554, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 224172724586066702, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].skills
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].shapes
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].AttackRange
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].SkillName
-      value: Fungi Bump
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 2}
-      propertyPath: skills.Array.data[0].Potency
-      value: 300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
@@ -3255,6 +3163,34 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1598163404}
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1 &1389101280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1389101281}
+  m_Layer: 0
+  m_Name: ParticleEffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1389101281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1389101280}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.922928, y: -2.1410677, z: -19.86832}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1427971676 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114848635586676740, guid: b7596edc9ac3a9545ae15bf2dc988677,
