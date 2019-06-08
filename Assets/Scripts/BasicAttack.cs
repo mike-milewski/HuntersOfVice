@@ -180,6 +180,15 @@ public class BasicAttack : MonoBehaviour
             return null;
         }
 
+        if(!ParticleExists)
+        {
+            CreateParticle();
+        }
+        else
+        {
+            HitParticle.gameObject.SetActive(true);
+        }
+
         var DamageObject = Instantiate(Target.GetComponentInChildren<Health>().GetDamageText);
 
         DamageObject.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
@@ -211,5 +220,15 @@ public class BasicAttack : MonoBehaviour
             Target.GetAI.GetStates = States.Damaged;
         }
         return DamageObject.GetComponentInChildren<Text>();
+    }
+
+    private void CreateParticle()
+    {
+        HitParticle = Instantiate(HitParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 0.1f, Target.transform.position.z), 
+                                                           HitParticle.transform.rotation);
+
+        HitParticle.transform.SetParent(Target.transform, true);
+
+        ParticleExists = true;
     }
 }

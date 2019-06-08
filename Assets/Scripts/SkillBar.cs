@@ -75,9 +75,9 @@ public class SkillBar : MonoBehaviour
     private void CreateParticle()
     {
         CastParticle = Instantiate(CastParticle, new Vector3(playerController.transform.position.x, 
-                                                                                      playerController.transform.position.y + 0.1f, 
-                                                                                      playerController.transform.position.z),
-                                                                                      CastParticle.transform.rotation);
+                                                             playerController.transform.position.y + 0.1f, 
+                                                             playerController.transform.position.z),
+                                                             CastParticle.transform.rotation);
 
         CastParticle.transform.SetParent(playerController.transform, true);
 

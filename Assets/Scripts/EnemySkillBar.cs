@@ -32,6 +32,9 @@ public class EnemySkillBar : MonoBehaviour
 
     private float CastTime;
 
+    [SerializeField]
+    private float CastParticleSize;
+
     public Character GetCharacter
     {
         get
@@ -123,6 +126,10 @@ public class EnemySkillBar : MonoBehaviour
                                                              CastParticle.transform.rotation);
 
         CastParticle.transform.SetParent(character.transform, true);
+
+        var castPart = CastParticle.main;
+
+        castPart.startSize = CastParticleSize;
 
         ParticleExists = true;
     }

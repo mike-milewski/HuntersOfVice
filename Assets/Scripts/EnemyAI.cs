@@ -35,7 +35,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private ParticleSystem HitParticle;
 
-    private bool ParticleExists;
+    private bool ParticleExists, DamageTextExists;
 
     [SerializeField] 
     private float TimeToMoveAgain; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
@@ -407,9 +407,23 @@ public class EnemyAI : MonoBehaviour
             return null;
         }
 
-        var DamageObject = Instantiate(PlayerTarget.GetComponent<Health>().GetDamageText);
+        if(!ParticleExists)
+        {
+            CreateParticle();
+        }
+        else
+        {
+            HitParticle.gameObject.SetActive(true);
+        }
 
-        DamageObject.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
+        if(!DamageTextExists)
+        {
+            CreateDamageText();
+        }
+        else
+        {
+            PlayerTarget.GetComponent<Health>().GetDamageText.SetActive(true);
+        }
 
         float Critical = character.GetCriticalChance;
 
@@ -420,22 +434,41 @@ public class EnemyAI : MonoBehaviour
             {
                 PlayerTarget.GetComponent<Health>().ModifyHealth((-character.CharacterStrength - 5) - -PlayerTarget.CharacterDefense);
 
-                DamageObject.GetComponentInChildren<Text>().fontSize = 40;
+                PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>().fontSize = 40;
 
-                DamageObject.GetComponentInChildren<Text>().text = ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
+                PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>().text = ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
             }
             else
             {
                 PlayerTarget.GetComponent<Health>().ModifyHealth(-character.CharacterStrength - -PlayerTarget.CharacterDefense);
 
-                DamageObject.GetComponentInChildren<Text>().fontSize = 30;
+                PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>().fontSize = 30;
 
-                DamageObject.GetComponentInChildren<Text>().text = (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>().text = (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
             }
             #endregion
 
             PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
         }
-        return DamageObject.GetComponentInChildren<Text>();
+        return PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>();
+    }
+
+    private void CreateParticle()
+    {
+        HitParticle = Instantiate(HitParticle, new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.2f, PlayerTarget.transform.position.z),
+                                                           HitParticle.transform.rotation);
+
+        HitParticle.transform.SetParent(PlayerTarget.transform, true);
+
+        ParticleExists = true;
+    }
+
+    private void CreateDamageText()
+    {
+        PlayerTarget.GetComponent<Health>().GetDamageText = Instantiate(PlayerTarget.GetComponent<Health>().GetDamageText);
+
+        PlayerTarget.GetComponent<Health>().GetDamageText.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
+
+        DamageTextExists = true;
     }
 }
