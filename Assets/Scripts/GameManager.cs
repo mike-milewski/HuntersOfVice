@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
     private FadeScreen fadeScreen;
 
     [SerializeField]
-    private Text InvalidText;
+    private TextMeshProUGUI InvalidText;
 
     [SerializeField]
     private GameObject Player;
@@ -144,7 +145,7 @@ public class GameManager : MonoBehaviour
         Player.GetComponent<PlayerAnimations>().GetAnimator.ResetTrigger("Damaged");
     }
 
-    public Text ShowNotEnoughManaText()
+    public TextMeshProUGUI ShowNotEnoughManaText()
     {
         InvalidText.gameObject.SetActive(true);
 
@@ -153,7 +154,7 @@ public class GameManager : MonoBehaviour
         return InvalidText;
     }
 
-    public Text ShowTargetOutOfRangeText()
+    public TextMeshProUGUI ShowTargetOutOfRangeText()
     {
         InvalidText.gameObject.SetActive(true);
 
@@ -162,7 +163,7 @@ public class GameManager : MonoBehaviour
         return InvalidText;
     }
 
-    public Text SkillStillRechargingText()
+    public TextMeshProUGUI SkillStillRechargingText()
     {
         InvalidText.gameObject.SetActive(true);
 
@@ -171,7 +172,7 @@ public class GameManager : MonoBehaviour
         return InvalidText;
     }
 
-    public Text InvalidTargetText()
+    public TextMeshProUGUI InvalidTargetText()
     {
         InvalidText.gameObject.SetActive(true);
 

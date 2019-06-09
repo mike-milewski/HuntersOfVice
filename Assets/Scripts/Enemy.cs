@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Enemy : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class Enemy : MonoBehaviour
     private Image LocalHealthBar;
 
     [SerializeField]
-    private Text EnemyInfo, LocalEnemyInfo;
+    private TextMeshProUGUI EnemyInfo, LocalEnemyInfo;
 
     [SerializeField]
     private int ExperiencePoints;
@@ -176,7 +177,7 @@ public class Enemy : MonoBehaviour
             {
                 i.enabled = true;
             }
-            health.GetComponentInChildren<Text>().enabled = true;
+            health.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
         }
         else
         {
@@ -184,7 +185,7 @@ public class Enemy : MonoBehaviour
             {
                 i.enabled = false;
             }
-            health.GetComponentInChildren<Text>().enabled = false;
+            health.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
         }
     }
 

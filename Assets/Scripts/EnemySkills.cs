@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public enum Skill { //MushroomMan Skills
                     FungiBump, HealingCap, PoisonSpore,
@@ -589,7 +590,7 @@ public class EnemySkills : MonoBehaviour
         {
             image.enabled = false;
         }
-        skillBar.GetComponentInChildren<Text>().enabled = false;
+        skillBar.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
     }
 
     public void EnableEnemySkillBar()
@@ -598,7 +599,7 @@ public class EnemySkills : MonoBehaviour
         {
             image.enabled = true;
         }
-        skillBar.GetComponentInChildren<Text>().enabled = true;
+        skillBar.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
     }
 
     public void DisableRadiusImage()

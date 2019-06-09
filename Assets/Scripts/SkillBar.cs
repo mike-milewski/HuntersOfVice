@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SkillBar : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class SkillBar : MonoBehaviour
     private ParticleSystem CastParticle;
 
     [SerializeField]
-    private Text SkillName;
+    private TextMeshProUGUI SkillName;
 
     [SerializeField]
     private Image SkillBarImage, SkillImage;

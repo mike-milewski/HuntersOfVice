@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Skills : StatusEffects
 {
@@ -16,7 +17,7 @@ public class Skills : StatusEffects
     private GameObject DamageORHealText;
 
     [SerializeField]
-    private Text SkillPanelText;
+    private TextMeshProUGUI SkillPanelText;
 
     [SerializeField]
     private GameObject StatusEffectText;
@@ -273,13 +274,13 @@ public class Skills : StatusEffects
         return SkillObj.GetComponentInChildren<Text>();
     }
 
-    public Text StatusEffectSkillText()
+    public TextMeshProUGUI StatusEffectSkillText()
     {
         var SkillObj = Instantiate(StatusEffectText);
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = "+" + GetStatusEffectName;
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetStatusEffectName;
 
         var StatIcon = Instantiate(GetStatusIcon);
 
@@ -294,7 +295,7 @@ public class Skills : StatusEffects
             StatIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
             StatIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
         }
-        return SkillObj.GetComponentInChildren<Text>();
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private Text DamageSkillText()

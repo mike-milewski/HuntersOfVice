@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Health : MonoBehaviour
 {
@@ -13,8 +14,8 @@ public class Health : MonoBehaviour
     private GameObject DamageTextParent;
 
     [SerializeField]
-    private Text HealthText = null; 
-    
+    private TextMeshProUGUI HealthText = null;
+
     [SerializeField]
     private GameObject DamageTextHolder, HealTextHolder;
 
@@ -134,7 +135,7 @@ public class Health : MonoBehaviour
         character.GetComponent<Character>();
 
         if (HealthText != null)
-        HealthText.text = character.CurrentHealth + "/" + character.MaxHealth;
+            HealthText.text = character.CurrentHealth.ToString();
     }
 
     private void FixedUpdate()
@@ -159,7 +160,7 @@ public class Health : MonoBehaviour
 
         if(HealthText != null)
         {
-            HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
+            HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth).ToString();
         }
         if(character.GetComponentInChildren<LowEnemyHPAnimation>())
         {
@@ -187,7 +188,7 @@ public class Health : MonoBehaviour
 
         if(HealthText != null)
         {
-            HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
+            HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth).ToString();
         }
         if (character.GetComponentInChildren<LowEnemyHPAnimation>())
         {
@@ -215,7 +216,7 @@ public class Health : MonoBehaviour
 
     public void GetFilledBar()
     {
-        HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth) + "/" + character.MaxHealth;
+        HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth).ToString();
 
         HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }

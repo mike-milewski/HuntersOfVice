@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Mana : MonoBehaviour
@@ -10,7 +11,7 @@ public class Mana : MonoBehaviour
     private Character character;
 
     [SerializeField]
-    private Text ManaText;
+    private TextMeshProUGUI ManaText;
 
     [SerializeField]
     private float FillValue;
@@ -42,7 +43,7 @@ public class Mana : MonoBehaviour
 
     private void Start()
     {
-        ManaText.text = character.CurrentMana.ToString() + "/" + character.MaxMana.ToString();
+        ManaText.text = character.CurrentMana.ToString();
     }
 
     private void LateUpdate()
@@ -63,7 +64,7 @@ public class Mana : MonoBehaviour
 
         character.CurrentMana += Value;
 
-        ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana) + "/" + character.MaxMana.ToString();
+        ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana).ToString();
 
         FillBarTwo.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
     }
@@ -74,7 +75,7 @@ public class Mana : MonoBehaviour
 
         character.CurrentMana += Value;
 
-        ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana) + "/" + character.MaxMana.ToString();
+        ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana).ToString();
 
         ManaBar.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
     }

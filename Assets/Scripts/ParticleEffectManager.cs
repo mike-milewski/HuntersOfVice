@@ -19,5 +19,7 @@ public class ParticleEffectManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
         #endregion
+
+        Debug.Log("Test");
     }
 }

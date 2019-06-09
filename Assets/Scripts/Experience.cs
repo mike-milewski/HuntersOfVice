@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Experience : MonoBehaviour
@@ -13,7 +14,10 @@ public class Experience : MonoBehaviour
     private Character character;
 
     [SerializeField]
-    private Text ExperienceText, CharacterLevelText, ShowExperienceText;
+    private Text ShowExperienceText;
+
+    [SerializeField]
+    private TextMeshProUGUI ExperienceText, CharacterLevelText;
 
     [SerializeField]
     private GameObject ExperienceTextParent;

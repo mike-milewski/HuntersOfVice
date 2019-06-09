@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EnemySkillBar : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class EnemySkillBar : MonoBehaviour
     private Image SkillBarFillImage;
 
     [SerializeField]
-    private Text SkillName;
+    private TextMeshProUGUI SkillName;
 
     [SerializeField]
     private bool Casting;
@@ -59,7 +60,7 @@ public class EnemySkillBar : MonoBehaviour
         }
     }
 
-    public Text GetSkillName
+    public TextMeshProUGUI GetSkillName
     {
         get
         {

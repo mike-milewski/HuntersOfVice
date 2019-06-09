@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep };
 
@@ -14,7 +15,7 @@ public class EnemyStatusIcon : MonoBehaviour
     private StatusEffect effect;
 
     [SerializeField]
-    private Text DurationText, StatusDescriptionText;
+    private TextMeshProUGUI DurationText, StatusDescriptionText;
 
     public PlayerController GetPlayer
     {
@@ -114,26 +115,26 @@ public class EnemyStatusIcon : MonoBehaviour
         DamageTick = 3f;
     }
 
-    public Text RemoveStatusEffectText()
+    public TextMeshProUGUI RemoveStatusEffectText()
     {
         var SkillObj = Instantiate(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectHolder);
 
         SkillObj.transform.SetParent(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = "-" + character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
-        return SkillObj.GetComponentInChildren<Text>();
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public Text RemoveEnemyStatusEffectText()
+    public TextMeshProUGUI RemoveEnemyStatusEffectText()
     {
         var SkillObj = Instantiate(SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectText);
 
         SkillObj.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
@@ -146,7 +147,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 CheckEnemyStates();
                 break;
         }
-        return SkillObj.GetComponentInChildren<Text>();
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void CheckEnemyStates()
