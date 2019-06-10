@@ -158,11 +158,6 @@ public class Enemy : MonoBehaviour
         GetEnemyInfo();
     }
 
-    private void LateUpdate()
-    {
-        ToggleHealthBar();
-    }
-
     public void GetFilledBar()
     {
         health.GetHealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
@@ -171,7 +166,7 @@ public class Enemy : MonoBehaviour
 
     public void ToggleHealthBar()
     {
-        if (GameManager.Instance.GetLastObject == enemy.gameObject)
+        if (GameManager.Instance.GetEnemyObject == enemy.gameObject)
         {
             foreach(Image i in health.GetComponentsInChildren<Image>())
             {
@@ -187,6 +182,15 @@ public class Enemy : MonoBehaviour
             }
             health.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
         }
+    }
+
+    public void TurnOffHealthBar()
+    {
+        foreach (Image i in health.GetComponentsInChildren<Image>())
+        {
+            i.enabled = false;
+        }
+        health.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
     }
 
     public void GetLocalHealthInfo()

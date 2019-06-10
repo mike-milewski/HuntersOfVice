@@ -86,20 +86,34 @@ public class BasicAttack : MonoBehaviour
                     AutoAttackTime = 0;
                     Target = hit.collider.GetComponent<Enemy>();
 
-                    GameManager.Instance.GetEventSystem.SetSelectedGameObject(Target.gameObject);
-                    GameManager.Instance.GetLastObject = GameManager.Instance.GetEventSystem.currentSelectedGameObject;
+                    GameManager.Instance.GetEnemyObject = Target.gameObject;
+                    Target.GetEnemySkillBar.ToggleCastBar();
+                    Target.ToggleHealthBar();
 
                     Target.GetFilledBar();
+
+                    if (GameManager.Instance.GetLastEnemyObject != null)
+                    {
+                        GameManager.Instance.GetLastEnemyObject.GetComponent<Enemy>().ToggleHealthBar();
+                        GameManager.Instance.GetLastEnemyObject.GetComponent<Enemy>().GetEnemySkillBar.ToggleCastBar();
+                    }
+                    GameManager.Instance.GetLastEnemyObject = Target.gameObject;
                 }
             }
             else
             {
                 if (!IsPointerOnUIObject())
                 {
-                    GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
-                    GameManager.Instance.GetLastObject = null;
-                    Target = null;
-                    AutoAttackTime = 0;
+                    if(Target != null)
+                    {
+                        GameManager.Instance.GetEnemyObject = null;
+                        GameManager.Instance.GetLastEnemyObject = null;
+
+                        Target.GetEnemySkillBar.ToggleCastBar();
+                        Target.ToggleHealthBar();
+                        Target = null;
+                        AutoAttackTime = 0;
+                    }
                 }
             }
         }
@@ -150,23 +164,32 @@ public class BasicAttack : MonoBehaviour
             else
             {
                 playerAnimations.EndAttackAnimation();
+
+                Target.GetSkills.DisableEnemySkillBar();
+                Target.TurnOffHealthBar();
                 Target = null;
+
+                GameManager.Instance.GetEnemyObject = null;
+                GameManager.Instance.GetLastEnemyObject = null;
+                
                 AutoAttackTime = 0;
             }
         }
         else
         {
             playerAnimations.EndAttackAnimation();
+            AutoAttackTime = 0;
         }
         if(Target != null)
         {
             if(Vector3.Distance(this.transform.position, Target.transform.position) >= HideStatsDistance)
             {
                 Target.GetSkills.DisableEnemySkillBar();
+                Target.TurnOffHealthBar();
                 Target = null;
 
-                GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
-                GameManager.Instance.GetLastObject = null;
+                GameManager.Instance.GetEnemyObject = null;
+                GameManager.Instance.GetLastEnemyObject = null;
 
                 AutoAttackTime = 0;
             }

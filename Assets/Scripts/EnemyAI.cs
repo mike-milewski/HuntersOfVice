@@ -334,7 +334,8 @@ public class EnemyAI : MonoBehaviour
         enemySkills.DisableRadius();
 
         GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
-        GameManager.Instance.GetLastObject = null;
+        GameManager.Instance.GetEnemyObject = null;
+        GameManager.Instance.GetLastEnemyObject = null;
 
         enemy.ReturnExperience();
 

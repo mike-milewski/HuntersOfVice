@@ -20,13 +20,13 @@ public class EnemySkillBar : MonoBehaviour
     private ParticleSystem CastParticle;
 
     [SerializeField]
-    private bool ParticleExists;
-
-    [SerializeField]
     private Image SkillBarFillImage;
 
     [SerializeField]
     private TextMeshProUGUI SkillName;
+
+    [SerializeField]
+    private bool ParticleExists;
 
     [SerializeField]
     private bool Casting;
@@ -143,12 +143,12 @@ public class EnemySkillBar : MonoBehaviour
 
     public void ToggleCastBar()
     {
-        if (GameManager.Instance.GetLastObject == enemy.gameObject)
+        if (GameManager.Instance.GetEnemyObject == enemy.gameObject)
         {
             GetEnemySkill();
             enemySkills.EnableEnemySkillBar();
         }
-        else if (GameManager.Instance.GetLastObject != enemy.gameObject)
+        else if (GameManager.Instance.GetEnemyObject != enemy.gameObject)
         {
             GetEnemySkill();
             enemySkills.DisableEnemySkillBar();
@@ -157,8 +157,6 @@ public class EnemySkillBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        ToggleCastBar();
-
         SkillBarFillImage.fillAmount += Time.deltaTime / enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
         CastTime -= Time.deltaTime;
         SkillName.text = enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName;

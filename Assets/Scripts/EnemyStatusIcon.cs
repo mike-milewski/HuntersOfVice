@@ -166,13 +166,14 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private void ToggleStatusIcon()
     {
-        if (GameManager.Instance.GetLastObject == character.GetComponent<Enemy>().gameObject)
+        if (GameManager.Instance.GetEnemyObject == character.GetComponent<Enemy>().gameObject)
         {
             this.GetComponentInChildren<Image>().enabled = true;
             DurationText.enabled = true;
         }
-        else if (GameManager.Instance.GetLastObject != character.GetComponent<Enemy>().gameObject)
+        else if (GameManager.Instance.GetEnemyObject != character.GetComponent<Enemy>().gameObject)
         {
+            GameManager.Instance.GetLastEnemyObject = character.GetComponent<Enemy>().gameObject;
             this.GetComponentInChildren<Image>().enabled = false;
             DurationText.enabled = false;
         }
@@ -253,7 +254,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private int RegenAndDOTCalculation()
     {
-        float percent = 0.1f * (float)character.MaxHealth;
+        float percent = (float)character.MaxHealth;
 
         int GetHealth = (int)percent;
 
@@ -266,6 +267,13 @@ public class EnemyStatusIcon : MonoBehaviour
 
         CheckStatusEffect();
 
+        if(Duration <= -1)
+        {
+            if(character.CurrentHealth <= 0)
+            {
+                gameObject.SetActive(false);
+            }
+        }
         if(Duration > -1)
         {
             DurationText.text = Duration.ToString("F0");

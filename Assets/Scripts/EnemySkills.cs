@@ -572,6 +572,7 @@ public class EnemySkills : MonoBehaviour
     private void UseSkillBar()
     {
         skillBar.gameObject.SetActive(true);
+        skillBar.ToggleCastBar();
     }
 
     private void SpellCastingAnimation()

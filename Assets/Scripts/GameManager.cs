@@ -15,10 +15,16 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI InvalidText;
 
     [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
     private GameObject Player;
 
     [SerializeField]
-    private GameObject LastObject = null;
+    private GameObject EnemyObject = null;
+
+    [SerializeField]
+    private GameObject LastEnemyObject = null;
 
     [SerializeField]
     private Transform SpawnPoint;
@@ -40,15 +46,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GameObject GetLastObject
+    public GameObject GetEnemyObject
     {
         get
         {
-            return LastObject;
+            return EnemyObject;
         }
         set
         {
-            LastObject = value;
+            EnemyObject = value;
+        }
+    }
+
+    public GameObject GetLastEnemyObject
+    {
+        get
+        {
+            return LastEnemyObject;
+        }
+        set
+        {
+            LastEnemyObject = value;
         }
     }
 
@@ -84,11 +102,6 @@ public class GameManager : MonoBehaviour
         InvalidText.gameObject.SetActive(false);
 
         eventsystem.GetComponent<EventSystem>();
-    }
-
-    public GameObject CheckLastObject()
-    {
-        return LastObject;
     }
 
     public void Dead()
@@ -131,9 +144,10 @@ public class GameManager : MonoBehaviour
         
         if(Player.GetComponent<BasicAttack>().GetTarget != null)
         {
+            Player.GetComponent<BasicAttack>().GetTarget.TurnOffHealthBar();
             Player.GetComponent<BasicAttack>().GetTarget = null;
-            eventsystem.SetSelectedGameObject(null);
-            LastObject = null;
+            EnemyObject = null;
+            LastEnemyObject = null;
         }
 
         Player.GetComponent<CapsuleCollider>().enabled = true;
@@ -149,6 +163,8 @@ public class GameManager : MonoBehaviour
     {
         InvalidText.gameObject.SetActive(true);
 
+        animator.Play("InvalidText", -1, 0f);
+
         InvalidText.text = "Not enough Mana";
 
         return InvalidText;
@@ -157,6 +173,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI ShowTargetOutOfRangeText()
     {
         InvalidText.gameObject.SetActive(true);
+
+        animator.Play("InvalidText", -1, 0f);
 
         InvalidText.text = "Target out of range";
 
@@ -167,6 +185,8 @@ public class GameManager : MonoBehaviour
     {
         InvalidText.gameObject.SetActive(true);
 
+        animator.Play("InvalidText", -1, 0f);
+
         InvalidText.text = "Skill still recharging";
 
         return InvalidText;
@@ -175,6 +195,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI InvalidTargetText()
     {
         InvalidText.gameObject.SetActive(true);
+
+        animator.Play("InvalidText", -1, 0f);
 
         InvalidText.text = "Invalid Target";
 

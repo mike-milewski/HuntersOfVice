@@ -59,16 +59,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c056b96c10bed429285bf87eeab52d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effects: 0
   character: {fileID: 0}
+  StatusIcon: {fileID: 0}
+  StatusEffectIconTrans: {fileID: 0}
+  StatusEffectName: 
+  StatusDescription: 
+  StatusDuration: 0
   skillbar: {fileID: 0}
   button: {fileID: 114434970074382962}
   TextHolder: {fileID: 0}
-  SkillTextObject: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
-    type: 2}
-  SkillPanelObject: {fileID: 0}
+  DamageORHealText: {fileID: 0}
+  SkillPanelText: {fileID: 0}
+  StatusEffectText: {fileID: 0}
   SkillParticle: {fileID: 0}
   CoolDown: 10
   AttackRange: 0
+  ApplySkill: 0
   ManaCost: 5
   Potency: 25
   CastTime: 3
