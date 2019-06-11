@@ -4,9 +4,9 @@ using TMPro;
 
 public enum Skill { //MushroomMan Skills
                     FungiBump, HealingCap, PoisonSpore,
-                    Regen, Regen2 };
+                    Regen };
 
-public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep };
+public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste };
 
 [System.Serializable]
 public class enemySkillManager
@@ -427,9 +427,6 @@ public class EnemySkills : MonoBehaviour
                 case (Skill.Regen):
                     Regen(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
                     break;
-                case (Skill.Regen2):
-                    Regen2(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
-                    break;
                     #endregion
             }
         }
@@ -450,24 +447,6 @@ public class EnemySkills : MonoBehaviour
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
             Invoke("InvokeRegen", ApplySkill);
-        }
-    }
-
-    public void Regen2(float castTime, float Duration, string skillname)
-    {
-        SpellCastingAnimation();
-
-        skills[RandomValue].GetCastTime = castTime;
-
-        skills[RandomValue].GetSkillName = skillname;
-
-        skillBar.GetCharacter = character;
-
-        UseSkillBar();
-
-        if (skillBar.GetFillImage.fillAmount >= 1)
-        {
-            Invoke("InvokeRegen", 0.2f);
         }
     }
 
@@ -675,24 +654,43 @@ public class EnemySkills : MonoBehaviour
         return SkillObj.GetComponentInChildren<Text>();
     }
 
-    public Text SkillDamageText(int potency, string skillName)
+    public TextMeshProUGUI SkillDamageText(int potency, string skillName)
     {
         if(enemyAI.GetPlayerTarget == null)
         {
             return null;
         }
 
+        float Critical = character.GetCriticalChance;
+
         skills[RandomValue].GetSkillName = skillName;
 
         var SkillObj = Instantiate(GetManager[RandomValue].GetDamageOrHealText);
 
-        var Target = enemyAI.GetPlayerTarget;
-
         SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = skills[RandomValue].GetSkillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+        var Target = enemyAI.GetPlayerTarget;
 
-        return SkillObj.GetComponentInChildren<Text>();
+        #region CriticalHitCalculation
+        if (Random.value * 100 <= Critical)
+        {
+            enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
+                                         ((-potency - 5) - -enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense);
+
+            SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + ((character.CharacterStrength + 5) -
+                                                                      enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense).ToString() + "!";
+        }
+        else
+        {
+            Target.GetComponentInChildren<Health>().ModifyHealth(-character.CharacterStrength - -enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense);
+
+            SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + (character.CharacterStrength - enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense).ToString();
+        }
+        #endregion
+
+        enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public Text SkillHealText(int potency, string skillName)

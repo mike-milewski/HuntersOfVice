@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class BasicAttack : MonoBehaviour
 {
@@ -19,8 +20,6 @@ public class BasicAttack : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem HitParticle;
-
-    private ParticleSystem Obj = null;
 
     private bool ParticleExists;
 
@@ -196,7 +195,7 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
-    public Text TakeDamage()
+    public TextMeshProUGUI TakeDamage()
     {
         if(Target == null)
         {
@@ -225,24 +224,24 @@ public class BasicAttack : MonoBehaviour
             {
                 Target.GetComponentInChildren<Health>().ModifyHealth((-character.CharacterStrength - 5) - -Target.GetCharacter.CharacterDefense);
 
-                DamageObject.GetComponentInChildren<Text>().fontSize = 30;
+                DamageObject.GetComponentInChildren<TextMeshProUGUI>().fontSize = 25;
 
-                DamageObject.GetComponentInChildren<Text>().text = ((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense).ToString() + "!";
+                DamageObject.GetComponentInChildren<TextMeshProUGUI>().text = ((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense).ToString() + "!";
             }
             else
             {
                 Target.GetComponentInChildren<Health>().ModifyHealth(-character.CharacterStrength - -Target.GetCharacter.CharacterDefense);
 
-                DamageObject.GetComponentInChildren<Text>().fontSize = 20;
+                DamageObject.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
 
-                DamageObject.GetComponentInChildren<Text>().text = (character.CharacterStrength - Target.GetCharacter.CharacterDefense).ToString();
+                DamageObject.GetComponentInChildren<TextMeshProUGUI>().text = (character.CharacterStrength - Target.GetCharacter.CharacterDefense).ToString();
             }
             #endregion
 
             if(Target.GetAI.GetStates != States.Skill)
             Target.GetAI.GetStates = States.Damaged;
         }
-        return DamageObject.GetComponentInChildren<Text>();
+        return DamageObject.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void CreateParticle()

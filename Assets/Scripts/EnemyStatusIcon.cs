@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep };
+public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste };
 
 public class EnemyStatusIcon : MonoBehaviour
 {
@@ -233,6 +233,11 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    private void Haste()
+    {
+
+    }
+
     private void CheckStatusEffect()
     {
         switch (effect)
@@ -248,6 +253,9 @@ public class EnemyStatusIcon : MonoBehaviour
                 break;
             case (StatusEffect.Sleep):
                 Sleep();
+                break;
+            case (StatusEffect.Haste):
+                Haste();
                 break;
         }
     }

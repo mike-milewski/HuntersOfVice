@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep }
+public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -177,6 +177,11 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
+    private void Haste()
+    {
+
+    }
+
     private void CheckStatusEffectIcon()
     {
         switch (status)
@@ -189,6 +194,9 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (Status.Sleep):
                 Sleep();
+                break;
+            case (Status.Haste):
+                Haste();
                 break;
         }
     }

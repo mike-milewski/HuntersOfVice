@@ -18,5 +18,4 @@ MonoBehaviour:
   Strength: 10
   Defense: 3
   Intelligence: 1
-  CriticalHitChance: 5
-  NextToLevel: 50
+  CriticalHitChance: 100

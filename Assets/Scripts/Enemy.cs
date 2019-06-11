@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
     private Transform UI, DebuffTransform;
 
     [SerializeField]
-    private Image LocalHealthBar;
+    private Image LocalHealthBar, TargetedImage;
 
     [SerializeField]
     private TextMeshProUGUI EnemyInfo, LocalEnemyInfo;
@@ -151,6 +151,8 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         character = GetComponent<Character>();
+
+        TargetedImage.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -173,6 +175,7 @@ public class Enemy : MonoBehaviour
                 i.enabled = true;
             }
             health.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
+            TargetedImage.gameObject.SetActive(true);
         }
         else
         {
@@ -181,6 +184,7 @@ public class Enemy : MonoBehaviour
                 i.enabled = false;
             }
             health.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+            TargetedImage.gameObject.SetActive(false);
         }
     }
 

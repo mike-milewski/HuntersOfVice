@@ -78,7 +78,7 @@ public class MushroomMon_Ani_Test : MonoBehaviour
 
     public void SkillDamage()
     {
-        enemyskills.TakeDamage(enemyskills.GetManager[enemyskills.GetRandomValue].GetPotency, enemyskills.GetManager[enemyskills.GetRandomValue].GetSkillName);
+        enemyskills.SkillDamageText(enemyskills.GetManager[enemyskills.GetRandomValue].GetPotency, enemyskills.GetManager[enemyskills.GetRandomValue].GetSkillName);
     }
 
     public void FungiBumpAnim()
