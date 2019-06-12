@@ -116,6 +116,7 @@ public class EnemySkillBar : MonoBehaviour
     private void OnDisable()
     {
         Casting = false;
+        CastParticle.gameObject.SetActive(false);
         SkillBarFillImage.fillAmount = 0;
     }
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste }
 
@@ -11,7 +12,7 @@ public class StatusIcon : MonoBehaviour
     private Status status;
 
     [SerializeField]
-    private Text DurationText, StatusDescriptionText;
+    private TextMeshProUGUI DurationText, StatusDescriptionText;
 
     [SerializeField]
     private float Duration;
@@ -98,20 +99,20 @@ public class StatusIcon : MonoBehaviour
         PoisonDamageTick = 3f;
     }
 
-    public Text RemoveStatusEffectText()
+    public TextMeshProUGUI RemoveStatusEffectText()
     {
         var SkillObj = Instantiate(SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectText);
 
         SkillObj.transform.SetParent(SkillsManager.Instance.GetSkills[KeyInput].GetTextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
-        return SkillObj.GetComponentInChildren<Text>();
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public Text RemoveEnemyStatusEffectText()
+    public TextMeshProUGUI RemoveEnemyStatusEffectText()
     {
         KeyInput = enemyTarget.GetComponent<EnemySkills>().GetRandomValue;
 
@@ -119,7 +120,7 @@ public class StatusIcon : MonoBehaviour
 
         SkillObj.transform.SetParent(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = "-" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
@@ -136,7 +137,7 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
                 break;
         }
-        return SkillObj.GetComponentInChildren<Text>();
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void DamageOverTime(int value, float damageTick)
@@ -151,7 +152,7 @@ public class StatusIcon : MonoBehaviour
 
             Damagetxt.transform.SetParent(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageTextParent.transform, false);
 
-            Damagetxt.GetComponentInChildren<Text>().text = value.ToString();
+            Damagetxt.GetComponentInChildren<TextMeshProUGUI>().text = value.ToString();
 
             PoisonDamageTick = damageTick;
         }

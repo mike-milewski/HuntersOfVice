@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Experience : MonoBehaviour
 {
@@ -14,13 +15,10 @@ public class Experience : MonoBehaviour
     private Character character;
 
     [SerializeField]
-    private Text ShowExperienceText;
-
-    [SerializeField]
     private TextMeshProUGUI ExperienceText, CharacterLevelText;
 
     [SerializeField]
-    private GameObject ExperienceTextParent;
+    private GameObject ExperienceTextParent, ExperienceTextHolder;
 
     [SerializeField]
     private ParticleSystem LevelUpParticle;
@@ -126,12 +124,12 @@ public class Experience : MonoBehaviour
         this.gameObject.GetComponent<Health>().GetFilledBar();
     }
 
-    public Text GetShowExperienceText()
+    public TextMeshProUGUI GetShowExperienceText()
     {
-        var ExpText = Instantiate(ShowExperienceText);
+        ExperienceTextHolder = Instantiate(ExperienceTextHolder);
 
-        ExpText.transform.SetParent(ExperienceTextParent.transform, false);
+        ExperienceTextHolder.transform.SetParent(ExperienceTextParent.transform, false);
 
-        return ExpText;
+        return ExperienceTextHolder.GetComponentInChildren<TextMeshProUGUI>();
     }
 }

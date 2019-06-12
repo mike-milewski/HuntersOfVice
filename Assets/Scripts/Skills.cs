@@ -28,6 +28,8 @@ public class Skills : StatusEffects
     [SerializeField]
     private float CoolDown, AttackRange, ApplySkill;
 
+    private bool StatusIconCreated;
+
     [SerializeField]
     private int ManaCost, Potency;
     
@@ -263,15 +265,15 @@ public class Skills : StatusEffects
         DamageSkillText();
     }
 
-    private Text HealSkillText()
+    private TextMeshProUGUI HealSkillText()
     {
         var SkillObj = Instantiate(DamageORHealText);
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
 
-        return SkillObj.GetComponentInChildren<Text>();
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public TextMeshProUGUI StatusEffectSkillText()
@@ -282,18 +284,18 @@ public class Skills : StatusEffects
 
         SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetStatusEffectName;
 
-        var StatIcon = Instantiate(GetStatusIcon);
+        GetStatusIcon = Instantiate(GetStatusIcon);
 
-        StatIcon.transform.SetParent(GetStatusEffectIconTrans, false);
+        GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
 
         SkillObj.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
-        if (StatIcon.GetComponent<EnemyStatusIcon>())
+        if (GetStatusIcon.GetComponent<EnemyStatusIcon>())
         {
-            StatIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetStatusEffects;
-            StatIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
-            StatIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
-            StatIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetStatusEffects;
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
         }
         return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }

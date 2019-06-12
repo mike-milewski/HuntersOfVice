@@ -164,6 +164,11 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    private void ResetStatusEffect()
+    {
+        Duration = SkillsManager.Instance.GetSkills[KeyInput].GetStatusDuration;
+    }
+
     private void ToggleStatusIcon()
     {
         if (GameManager.Instance.GetEnemyObject == character.GetComponent<Enemy>().gameObject)

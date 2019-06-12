@@ -38,6 +38,8 @@ public class enemySkillManager
     [SerializeField] [Tooltip("The gameobject that will hold the status effect text.")]
     private GameObject StatusEffectHolder = null;
 
+    private bool StatusIconCreated;
+
     [SerializeField]
     private string StatusEffectName;
 
@@ -221,6 +223,18 @@ public class enemySkillManager
         set
         {
             StatusDuration = value;
+        }
+    }
+
+    public bool GetStatusIconCreated
+    {
+        get
+        {
+            return StatusIconCreated;
+        }
+        set
+        {
+            StatusIconCreated = value;
         }
     }
 
@@ -629,29 +643,40 @@ public class EnemySkills : MonoBehaviour
         return potency;
     }
 
-    public Text StatusEffectSkillTextTransform()
+    public TextMeshProUGUI StatusEffectSkillTextTransform()
     {
         var SkillObj = Instantiate(GetManager[RandomValue].GetStatusEffectHolder);
 
         SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = "+" + GetManager[RandomValue].GetStatusEffectName;
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetManager[RandomValue].GetStatusEffectName;
 
-        var StatIcon = Instantiate(GetManager[RandomValue].GetStatusIcon);
+        if(!GetManager[RandomValue].GetStatusIcon.isActiveAndEnabled)
+        {
+            if(!GetManager[RandomValue].GetStatusIconCreated)
+            {
+                GetManager[RandomValue].GetStatusIcon = Instantiate(GetManager[RandomValue].GetStatusIcon);
+                GetManager[RandomValue].GetStatusIconCreated = true;
+            }
+            else
+            {
+                GetManager[RandomValue].GetStatusIcon.gameObject.SetActive(true);
+            }
+        }
 
         SkillObj.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
 
-        StatIcon.sprite = GetManager[RandomValue].GetStatusSprite;
+        GetManager[RandomValue].GetStatusIcon.sprite = GetManager[RandomValue].GetStatusSprite;
 
-        StatIcon.transform.SetParent(GetManager[RandomValue].GetStatusIconTrans.transform, false);
+        GetManager[RandomValue].GetStatusIcon.transform.SetParent(GetManager[RandomValue].GetStatusIconTrans.transform, false);
 
-        if(StatIcon.GetComponent<StatusIcon>())
+        if(GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>())
         {
-            StatIcon.GetComponent<StatusIcon>().GetEffectStatus = GetManager[RandomValue].GetStatus;
-            StatIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
-            StatIcon.GetComponent<StatusIcon>().EnemyInput();
+            GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = GetManager[RandomValue].GetStatus;
+            GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
+            GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
         }
-        return SkillObj.GetComponentInChildren<Text>();
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public TextMeshProUGUI SkillDamageText(int potency, string skillName)
