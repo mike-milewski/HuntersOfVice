@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 222792021501001696}
   - component: {fileID: 114087581685180536}
   m_Layer: 5
-  m_Name: Background
+  m_Name: ManaBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 222977362183992380}
   - component: {fileID: 114305500647710334}
   m_Layer: 5
-  m_Name: Frame
+  m_Name: ManaFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,7 +383,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 107.51, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224632181268201180
 RectTransform:
@@ -419,7 +419,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.63, y: 0}
-  m_SizeDelta: {x: 100.44, y: 100}
+  m_SizeDelta: {x: 107.51, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224794824101964964
 RectTransform:
@@ -437,7 +437,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.76, y: 0}
-  m_SizeDelta: {x: 100.51, y: 100}
+  m_SizeDelta: {x: 107.35, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224803914299795102
 RectTransform:
@@ -455,7 +455,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 107.51, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224981799165800370
 RectTransform:

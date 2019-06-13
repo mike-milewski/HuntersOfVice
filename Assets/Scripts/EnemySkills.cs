@@ -631,17 +631,6 @@ public class EnemySkills : MonoBehaviour
                         character.GetComponentInChildren<DamageRadius>().SetRectangleColliderSize());
     }
     */
-    public int TakeDamage(int potency, string skillname)
-    {
-        SkillDamageText(potency, skillname);
-
-        enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                         (-potency - -enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense);
-
-        enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
-
-        return potency;
-    }
 
     public TextMeshProUGUI StatusEffectSkillTextTransform()
     {
@@ -672,7 +661,7 @@ public class EnemySkills : MonoBehaviour
 
         if(GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>())
         {
-            GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = GetManager[RandomValue].GetStatus;
+            GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)GetManager[RandomValue].GetStatus;
             GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
             GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
         }
@@ -700,16 +689,16 @@ public class EnemySkills : MonoBehaviour
         if (Random.value * 100 <= Critical)
         {
             enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                         ((-potency - 5) - -enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense);
+                                         ((-potency - 5) - -Target.GetComponent<Character>().CharacterDefense);
 
-            SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + ((character.CharacterStrength + 5) -
-                                                                      enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense).ToString() + "!";
+            SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + ((potency + 5) -
+                                                                      Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
         }
         else
         {
-            Target.GetComponentInChildren<Health>().ModifyHealth(-character.CharacterStrength - -enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense);
+            Target.GetComponentInChildren<Health>().ModifyHealth(-potency - -Target.GetComponent<Character>().CharacterDefense);
 
-            SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + (character.CharacterStrength - enemyAI.GetPlayerTarget.GetComponent<Character>().CharacterDefense).ToString();
+            SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
         }
         #endregion
 
@@ -718,16 +707,16 @@ public class EnemySkills : MonoBehaviour
         return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public Text SkillHealText(int potency, string skillName)
+    public TextMeshProUGUI SkillHealText(int potency, string skillName)
     {
         skills[RandomValue].GetSkillName = skillName;
 
         var SkillObj = Instantiate(GetManager[RandomValue].GetDamageOrHealText);
 
-        SkillObj.GetComponentInChildren<Text>().transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
 
-        return SkillObj.GetComponentInChildren<Text>();
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 }

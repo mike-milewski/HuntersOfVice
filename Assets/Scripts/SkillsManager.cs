@@ -166,6 +166,19 @@ public class SkillsManager : MonoBehaviour
                 GameManager.Instance.ShowNotEnoughManaText();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            KeyInput = 4;
+            if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
+                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+            {
+                skills[KeyInput].GetButton.onClick.Invoke();
+            }
+            else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+            {
+                GameManager.Instance.ShowNotEnoughManaText();
+            }
+        }
     }
  
     public void ReactivateSkillButtons()

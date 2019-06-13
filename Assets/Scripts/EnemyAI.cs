@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public enum States { Patrol, Chase, Attack, ApplyingAttack, Skill, Damaged, Immobile }
 
@@ -401,7 +402,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public Text TakeDamage()
+    public TextMeshProUGUI TakeDamage()
     {
         if(PlayerTarget == null)
         {
@@ -417,41 +418,32 @@ public class EnemyAI : MonoBehaviour
             HitParticle.gameObject.SetActive(true);
         }
 
-        if(!DamageTextExists)
-        {
-            CreateDamageText();
-        }
-        else
-        {
-            PlayerTarget.GetComponent<Health>().GetDamageText.SetActive(true);
-        }
-
         float Critical = character.GetCriticalChance;
 
-        if(PlayerTarget != null)
+        var t = ObjectPooler.Instance.GetText();
+
+        if (PlayerTarget != null)
         {
+            t.gameObject.SetActive(true);
+
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {
                 PlayerTarget.GetComponent<Health>().ModifyHealth((-character.CharacterStrength - 5) - -PlayerTarget.CharacterDefense);
 
-                PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>().fontSize = 40;
-
-                PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>().text = ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
+                t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
             }
             else
             {
                 PlayerTarget.GetComponent<Health>().ModifyHealth(-character.CharacterStrength - -PlayerTarget.CharacterDefense);
 
-                PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>().fontSize = 30;
-
-                PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>().text = (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                t.GetComponentInChildren<TextMeshProUGUI>().text = (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
             }
             #endregion
 
             PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
         }
-        return PlayerTarget.GetComponent<Health>().GetDamageText.GetComponentInChildren<Text>();
+        return t.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void CreateParticle()
@@ -462,14 +454,5 @@ public class EnemyAI : MonoBehaviour
         HitParticle.transform.SetParent(PlayerTarget.transform, true);
 
         ParticleExists = true;
-    }
-
-    private void CreateDamageText()
-    {
-        PlayerTarget.GetComponent<Health>().GetDamageText = Instantiate(PlayerTarget.GetComponent<Health>().GetDamageText);
-
-        PlayerTarget.GetComponent<Health>().GetDamageText.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
-
-        DamageTextExists = true;
     }
 }

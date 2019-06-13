@@ -238,6 +238,15 @@ public class Skills : StatusEffects
         StatusEffectSkillText();
     }
 
+    public void BloodAndSinew()
+    {
+        this.button.GetComponent<Image>().fillAmount = 0;
+
+        SkillsManager.Instance.GetStatusIcon.PlayerInput();
+
+        StatusEffectSkillText();
+    }
+
     public void Poison()
     {
         TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
@@ -284,18 +293,20 @@ public class Skills : StatusEffects
 
         SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetStatusEffectName;
 
-        GetStatusIcon = Instantiate(GetStatusIcon);
+        var Staticon = Instantiate(GetStatusIcon);
 
-        GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
+        Staticon.transform.SetParent(GetStatusEffectIconTrans, false);
+
+        Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
         SkillObj.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
-        if (GetStatusIcon.GetComponent<EnemyStatusIcon>())
+        if (Staticon.GetComponent<EnemyStatusIcon>())
         {
-            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetStatusEffects;
-            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
-            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
-            GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+            Staticon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
+            Staticon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+            Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            Staticon.GetComponent<EnemyStatusIcon>().PlayerInput();
         }
         return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }

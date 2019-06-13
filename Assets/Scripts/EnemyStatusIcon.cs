@@ -216,7 +216,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
             EnemyDamagetxt.transform.SetParent(character.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
 
-            EnemyDamagetxt.GetComponentInChildren<Text>().text = value.ToString();
+            EnemyDamagetxt.GetComponentInChildren<TextMeshProUGUI>().text = value.ToString();
 
             DamageTick = damageTick;
         }
@@ -267,7 +267,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private int RegenAndDOTCalculation()
     {
-        float percent = (float)character.MaxHealth;
+        float percent = Mathf.Round(0.1f * (float)character.MaxHealth);
 
         int GetHealth = (int)percent;
 

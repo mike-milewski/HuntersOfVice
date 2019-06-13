@@ -4,7 +4,10 @@ using UnityEngine.UI;
 public class StatusEffects : MonoBehaviour
 {
     [SerializeField]
-    private StatusEffect effects;
+    private EffectStatus PlayerStatusEffect;
+
+    [SerializeField]
+    private StatusEffect EnemystatusEffect;
 
     [SerializeField]
     private Character character;
@@ -93,15 +96,28 @@ public class StatusEffects : MonoBehaviour
         }
     }
 
-    public StatusEffect GetStatusEffects
+    public EffectStatus GetPlayerStatusEffect
     {
         get
         {
-            return effects;
+            return PlayerStatusEffect;
         }
         set
         {
-            effects = value;
+            PlayerStatusEffect
+ = value;
+        }
+    }
+
+    public StatusEffect GetEnemyStatusEffect
+    {
+        get
+        {
+            return EnemystatusEffect;
+        }
+        set
+        {
+            EnemystatusEffect = value;
         }
     }
 
@@ -138,30 +154,4 @@ public class StatusEffects : MonoBehaviour
 
         StatusIcon.sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
     }
-    /*
-    public void RemoveStatusAffix(Character chara)
-    {
-        switch(effects)
-        {
-            case (effects.StrengthUP):
-                chara.CharacterStrength = chara.GetCharacterData.Strength;
-                break;
-            case (effects.StrengthDOWN):
-                chara.CharacterStrength = chara.GetCharacterData.Strength;
-                break;
-            case (effects.DefenseUP):
-                chara.CharacterDefense = chara.GetCharacterData.Defense;
-                break;
-            case (effects.DefenseDOWN):
-                chara.CharacterDefense = chara.GetCharacterData.Defense;
-                break;
-            case (effects.IntelliegenceUP):
-                chara.CharacterIntelligence = chara.GetCharacterData.Intelligence;
-                break;
-            case (effects.IntelligenceDOWN):
-                chara.CharacterIntelligence = chara.GetCharacterData.Intelligence;
-                break;
-        }
-    }
-    */
 }

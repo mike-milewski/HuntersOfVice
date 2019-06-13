@@ -2,14 +2,14 @@
 using UnityEngine.UI;
 using TMPro;
 
-public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste }
+public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, BloodAndSinew }
 
 public class StatusIcon : MonoBehaviour
 {
     private Enemy enemyTarget = null;
 
     [SerializeField]
-    private Status status;
+    private EffectStatus status;
 
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
@@ -37,7 +37,7 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
-    public Status GetEffectStatus
+    public EffectStatus GetEffectStatus
     {
         get
         {
@@ -126,12 +126,12 @@ public class StatusIcon : MonoBehaviour
 
         switch (status)
         {
-            case (Status.Stun):
+            case (EffectStatus.Stun):
                 SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
                 SkillsManager.Instance.GetDisruptedSkill = false;
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
                 break;
-            case (Status.Sleep):
+            case (EffectStatus.Sleep):
                 SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
                 SkillsManager.Instance.GetDisruptedSkill = false;
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
@@ -183,28 +183,36 @@ public class StatusIcon : MonoBehaviour
 
     }
 
+    private void BloodAndSinew()
+    {
+
+    }
+
     private void CheckStatusEffectIcon()
     {
         switch (status)
         {
-            case (Status.DamageOverTime):
+            case (EffectStatus.DamageOverTime):
                 DamageOverTime(RegenAndDOTCalculation(), 3f);
                 break;
-            case (Status.Stun):
+            case (EffectStatus.Stun):
                 Stun();
                 break;
-            case (Status.Sleep):
+            case (EffectStatus.Sleep):
                 Sleep();
                 break;
-            case (Status.Haste):
+            case (EffectStatus.Haste):
                 Haste();
+                break;
+            case (EffectStatus.BloodAndSinew):
+                BloodAndSinew();
                 break;
         }
     }
 
     private int RegenAndDOTCalculation()
     {
-        float percent = 0.1f * (float)SkillsManager.Instance.GetCharacter.MaxHealth;
+        float percent = Mathf.Round(0.1f * (float)SkillsManager.Instance.GetCharacter.MaxHealth);
 
         int GetHealth = (int)percent;
 
