@@ -126,8 +126,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator Fade()
     {
         yield return new WaitForSeconds(2);
-        fadeScreen.gameObject.SetActive(true);
         fadeScreen.GetFadeState = FadeState.FADEOUT;
+        fadeScreen.gameObject.SetActive(true);
         StartCoroutine(Respawn());
     }
 
@@ -135,6 +135,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(RespawnTime);
         fadeScreen.GetFadeState = FadeState.FADEIN;
+        fadeScreen.gameObject.SetActive(true);
         Player.transform.position = SpawnPoint.position;
 
         Player.GetComponent<Health>().IncreaseHealth(Player.GetComponent<Character>().MaxHealth);

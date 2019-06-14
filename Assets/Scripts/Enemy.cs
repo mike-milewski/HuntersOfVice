@@ -195,6 +195,7 @@ public class Enemy : MonoBehaviour
             i.enabled = false;
         }
         health.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+        TargetedImage.gameObject.SetActive(false);
     }
 
     public void GetLocalHealthInfo()

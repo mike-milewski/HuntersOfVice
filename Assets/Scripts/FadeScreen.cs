@@ -30,6 +30,15 @@ public class FadeScreen : MonoBehaviour
     private void OnEnable()
     {
         alpha = Overlay.color;
+
+        if(fadeState == FadeState.FADEIN)
+        {
+            SetToMaxAlpha();
+        }
+        else
+        {
+            SetToMinAlpha();
+        }
     }
 
     private void Update()
@@ -50,8 +59,9 @@ public class FadeScreen : MonoBehaviour
         alpha.a += 2 * Time.deltaTime;
         Overlay.color = alpha;
 
-        if (alpha.a >= 1)
+        if(alpha.a >= 1)
         {
+            gameObject.SetActive(false);
         }
     }
 
@@ -60,8 +70,19 @@ public class FadeScreen : MonoBehaviour
         alpha.a -= 2 * Time.deltaTime;
         Overlay.color = alpha;
 
-        if (alpha.a <= 0)
+        if(alpha.a <= 0)
         {
+            gameObject.SetActive(false);
         }
+    }
+
+    public void SetToMaxAlpha()
+    {
+        alpha.a = 1;
+    }
+
+    public void SetToMinAlpha()
+    {
+        alpha.a = 0;
     }
 }
