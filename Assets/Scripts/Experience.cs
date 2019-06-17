@@ -83,11 +83,11 @@ public class Experience : MonoBehaviour
 
         if(character.Level < MaxLevel)
         {
-            ExperienceText.text = ExperiencePoints + "/" + NextToLevel + " (" + Percent.ToString("F0") + "%)";
+            ExperienceText.text = ExperiencePoints + "/" + NextToLevel;// + " (" + Percent.ToString("F1") + "%)";
         }
         else
         {
-            ExperienceText.text = "---" + "/" + "---" + " (" + 100 + "%)";
+            ExperienceText.text = "---" + "/" + "---";// + " (" + 100 + "%)";
         }
     }
 
@@ -98,9 +98,11 @@ public class Experience : MonoBehaviour
 
     private void LevelUp()
     {
+        ExperienceBar.fillAmount = 0;
+
         character.Level++;
-        //character.MaxHealth += 50;
-        //character.MaxMana += 5;
+        character.MaxHealth += 50;
+        character.MaxMana += 5;
         character.CharacterStrength += 3;
         character.CharacterDefense += 2;
         character.CharacterIntelligence += 1;
@@ -120,7 +122,8 @@ public class Experience : MonoBehaviour
         character.CurrentHealth = character.MaxHealth;
         character.CurrentMana = character.MaxMana;
 
-        this.gameObject.GetComponent<Health>().GetFilledBar();
+        character.GetComponent<Health>().GetFilledBar();
+        character.GetComponent<Mana>().GetFilledBar();
     }
 
     public TextMeshProUGUI GetShowExperienceText()

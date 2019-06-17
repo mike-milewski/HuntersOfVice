@@ -67,7 +67,10 @@ public class EnemyStatusIcon : MonoBehaviour
     private void Start()
     {
         if(player == null)
-        EnemyInput();
+        {
+            EnemyInput();
+        }
+        StatusPanel.SetActive(false);
     }
 
     private void OnDisable()
@@ -92,7 +95,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
         Duration = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDuration;
 
-        StatusDescriptionText.text = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" +
+        StatusDescriptionText.text = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" + "<size=14>" +
                                      character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
 
         RegenHealTick = 3f;
@@ -109,7 +112,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
         Duration = SkillsManager.Instance.GetSkills[KeyInput].GetStatusDuration;
 
-        StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" +
+        StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" + "<size=14>" +
                                      SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
 
         DamageTick = 3f;
@@ -287,7 +290,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-        if(Duration > -1)
+        else if(Duration > -1)
         {
             DurationText.text = Duration.ToString("F0");
             Duration -= Time.deltaTime;

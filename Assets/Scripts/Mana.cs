@@ -79,4 +79,11 @@ public class Mana : MonoBehaviour
 
         ManaBar.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
     }
+
+    public void GetFilledBar()
+    {
+        ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana).ToString();
+
+        ManaBar.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
+    }
 }

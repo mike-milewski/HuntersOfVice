@@ -330,13 +330,30 @@ public class Skills : StatusEffects
 
         if(CastTime <= 0 || ManaCost <= 0 || Potency <= 0)
         {
-            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Cooldown: " + CoolDown + " Seconds"
+            if(GetPlayerStatusEffect == EffectStatus.NONE)
+            {
+                SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Cooldown: " + CoolDown + " Seconds"
                                     + "\n" + "Cast Time: Instant";
+            }
+            else
+            {
+                SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Added effect: " + GetStatusEffectName + "\n" + "Status Duration: " + GetStatusDuration + 
+                                                "\n\n" + "Cooldown: " + CoolDown + " Seconds" + "\n" + "Cast Time: Instant";
+            }
         }
         else
         {
-            SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown + " Seconds"
-                                    + "\n" + "Cast Time: " + CastTime + " Seconds";
+            if(GetPlayerStatusEffect == EffectStatus.NONE)
+            {
+                SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown + 
+                                                " Seconds" + "\n" + "Cast Time: " + CastTime + " Seconds";
+            }
+            else
+            {
+                SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Added effect: " + GetStatusEffectName + "\n" + "Status Duration: " + GetStatusDuration + 
+                                                "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown + " Seconds" + "\n" + "Cast Time: " 
+                                                + CastTime + " Seconds";
+            }
         }
     }
 }

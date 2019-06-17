@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, BloodAndSinew }
+public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, StrengthUP, DefenseUP, BloodAndSinew }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -61,6 +61,11 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        StatusPanel.SetActive(false);
+    }
+
     private void OnDisable()
     {
         if (enemyTarget != null)
@@ -79,7 +84,7 @@ public class StatusIcon : MonoBehaviour
 
         Duration = SkillsManager.Instance.GetSkills[KeyInput].GetStatusDuration;
 
-        StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" +
+        StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" + "<size=14>" +
                                      SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
 
         PoisonDamageTick = 3f;
@@ -93,7 +98,7 @@ public class StatusIcon : MonoBehaviour
 
         Duration = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDuration;
 
-        StatusDescriptionText.text = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" +
+        StatusDescriptionText.text = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" + "<size=14>" +
                                      enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
 
         PoisonDamageTick = 3f;
@@ -183,6 +188,16 @@ public class StatusIcon : MonoBehaviour
 
     }
 
+    private void StrengthUP()
+    {
+
+    }
+
+    private void DefenseUP()
+    {
+
+    }
+
     private void BloodAndSinew()
     {
 
@@ -204,6 +219,12 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.Haste):
                 Haste();
                 break;
+            case (EffectStatus.StrengthUP):
+                StrengthUP();
+                break;
+            case (EffectStatus.DefenseUP):
+                DefenseUP();
+                break;
             case (EffectStatus.BloodAndSinew):
                 BloodAndSinew();
                 break;
@@ -223,7 +244,14 @@ public class StatusIcon : MonoBehaviour
     {
         CheckStatusEffectIcon();
 
-        if(Duration > -1)
+        if(Duration <= -1)
+        {
+            if(SkillsManager.Instance.GetCharacter.CurrentHealth <= 0)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+        else if(Duration > -1)
         {
             DurationText.text = Duration.ToString("F0");
             Duration -= Time.deltaTime;
