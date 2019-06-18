@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, StrengthUP, DefenseUP, BloodAndSinew }
+public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, StrengthUP, DefenseUP, BloodAndSinew, DefenseDOWN }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -61,7 +61,7 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void OnEnable()
     {
         StatusPanel.SetActive(false);
     }
@@ -198,6 +198,11 @@ public class StatusIcon : MonoBehaviour
 
     }
 
+    private void DefenseDOWN(int value)
+    {
+
+    }
+
     private void BloodAndSinew()
     {
 
@@ -227,6 +232,9 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.BloodAndSinew):
                 BloodAndSinew();
+                break;
+            case (EffectStatus.DefenseDOWN):
+                DefenseDOWN(50);
                 break;
         }
     }

@@ -247,9 +247,13 @@ public class Skills : StatusEffects
         StatusEffectSkillText();
     }
 
-    public void Poison()
+    public void StormThrust()
     {
         TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
+
+        SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
+
+        SkillsManager.Instance.GetActivatedSkill = true;
 
         GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
 
@@ -330,7 +334,7 @@ public class Skills : StatusEffects
 
         if(CastTime <= 0 || ManaCost <= 0 || Potency <= 0)
         {
-            if(GetPlayerStatusEffect == EffectStatus.NONE)
+            if(GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
                 SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Cooldown: " + CoolDown + " Seconds"
                                     + "\n" + "Cast Time: Instant";
@@ -343,7 +347,7 @@ public class Skills : StatusEffects
         }
         else
         {
-            if(GetPlayerStatusEffect == EffectStatus.NONE)
+            if(GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
                 SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown + 
                                                 " Seconds" + "\n" + "Cast Time: " + CastTime + " Seconds";

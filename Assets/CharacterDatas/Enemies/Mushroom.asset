@@ -16,6 +16,6 @@ MonoBehaviour:
   Health: 154
   Mana: 0
   Strength: 6
-  Defense: 1
+  Defense: 20
   Intelligence: 1
   CriticalHitChance: 5

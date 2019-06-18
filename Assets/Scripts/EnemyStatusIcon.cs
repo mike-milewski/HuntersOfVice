@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste };
+public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, DefenseDOWN };
 
 public class EnemyStatusIcon : MonoBehaviour
 {
@@ -70,6 +70,17 @@ public class EnemyStatusIcon : MonoBehaviour
         {
             EnemyInput();
         }
+
+        switch (effect)
+        {
+            case (StatusEffect.DefenseDOWN):
+                DefenseDOWN(50);
+                break;
+        }
+    }
+
+    private void OnEnable()
+    {
         StatusPanel.SetActive(false);
     }
 
@@ -95,7 +106,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
         Duration = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDuration;
 
-        StatusDescriptionText.text = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" + "<size=14>" +
+        StatusDescriptionText.text = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" + "<size=12>" +
                                      character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
 
         RegenHealTick = 3f;
@@ -112,7 +123,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
         Duration = SkillsManager.Instance.GetSkills[KeyInput].GetStatusDuration;
 
-        StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" + "<size=14>" +
+        StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" + "<size=12>" +
                                      SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
 
         DamageTick = 3f;
@@ -148,6 +159,9 @@ public class EnemyStatusIcon : MonoBehaviour
                 break;
             case (StatusEffect.Sleep):
                 CheckEnemyStates();
+                break;
+            case (StatusEffect.DefenseDOWN):
+                SetDefenseToDefault();
                 break;
         }
         return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
@@ -244,6 +258,28 @@ public class EnemyStatusIcon : MonoBehaviour
     private void Haste()
     {
 
+    }
+
+    private void DefenseDOWN(float value)
+    {
+        float Percentage = (float)value / 100;
+
+        float TempDefense = (float)character.CharacterDefense;
+
+        Mathf.FloorToInt(TempDefense);
+
+        TempDefense -= (float)character.CharacterDefense * Percentage;
+
+        character.CharacterDefense = (int)TempDefense;
+    }
+
+    private void SetDefenseToDefault()
+    {
+        int DefaultDefense = character.GetCharacterData.Defense;
+
+        character.CharacterDefense = DefaultDefense;
+
+        Debug.Log(character.GetCharacterData.Defense);
     }
 
     private void CheckStatusEffect()
