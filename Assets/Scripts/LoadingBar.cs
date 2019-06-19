@@ -10,7 +10,7 @@ public class LoadingBar : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(Async("TestScene"));
+        StartCoroutine(Async("Level1"));
     }
 
     public IEnumerator Async(string Level)

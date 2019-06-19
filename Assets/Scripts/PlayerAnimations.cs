@@ -91,4 +91,9 @@ public class PlayerAnimations : MonoBehaviour
     {
         animator.SetBool("Skill", true);
     }
+
+    public void PlayFallSoundEffect()
+    {
+        SoundManager.Instance.FallSE();
+    }
 }

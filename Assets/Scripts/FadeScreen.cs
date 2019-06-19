@@ -7,6 +7,8 @@ public enum FadeState { FADEIN, FADEOUT };
 
 public class FadeScreen : MonoBehaviour
 {
+    public static FadeScreen Instance = null;
+
     [SerializeField]
     private Image Overlay;
 
@@ -25,6 +27,19 @@ public class FadeScreen : MonoBehaviour
         {
             fadeState = value;
         }
+    }
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else if(Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
@@ -74,6 +89,11 @@ public class FadeScreen : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    public void EnableFadeScreen()
+    {
+        gameObject.SetActive(true);
     }
 
     public void SetToMaxAlpha()

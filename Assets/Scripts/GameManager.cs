@@ -9,9 +9,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
 
     [SerializeField]
-    private FadeScreen fadeScreen;
-
-    [SerializeField]
     private TextMeshProUGUI InvalidText;
 
     [SerializeField]
@@ -104,6 +101,18 @@ public class GameManager : MonoBehaviour
         eventsystem.GetComponent<EventSystem>();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log("Opened Inventory.");
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+
+        }
+    }
+
     public void Dead()
     {
         IsDead = true;
@@ -126,16 +135,17 @@ public class GameManager : MonoBehaviour
     private IEnumerator Fade()
     {
         yield return new WaitForSeconds(2);
-        fadeScreen.GetFadeState = FadeState.FADEOUT;
-        fadeScreen.gameObject.SetActive(true);
+        FadeScreen.Instance.gameObject.SetActive(true);
+        FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
         StartCoroutine(Respawn());
     }
 
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(RespawnTime);
-        fadeScreen.GetFadeState = FadeState.FADEIN;
-        fadeScreen.gameObject.SetActive(true);
+        FadeScreen.Instance.gameObject.SetActive(true);
+        FadeScreen.Instance.GetFadeState = FadeState.FADEIN;
+
         Player.transform.position = SpawnPoint.position;
 
         Player.GetComponent<Health>().IncreaseHealth(Player.GetComponent<Character>().MaxHealth);
