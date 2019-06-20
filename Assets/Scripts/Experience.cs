@@ -28,6 +28,18 @@ public class Experience : MonoBehaviour
     [SerializeField]
     private float FillValue;
 
+    public int GetNextToLevel
+    {
+        get
+        {
+            return NextToLevel;
+        }
+        set
+        {
+            NextToLevel = value;
+        }
+    }
+
     private void Reset()
     {
         character = GetComponent<Character>();
@@ -83,11 +95,11 @@ public class Experience : MonoBehaviour
 
         if(character.Level < MaxLevel)
         {
-            ExperienceText.text = ExperiencePoints + "/" + NextToLevel;// + " (" + Percent.ToString("F1") + "%)";
+            ExperienceText.text = ExperiencePoints + "/" + NextToLevel;
         }
         else
         {
-            ExperienceText.text = "---" + "/" + "---";// + " (" + 100 + "%)";
+            ExperienceText.text = "---" + "/" + "---";
         }
     }
 

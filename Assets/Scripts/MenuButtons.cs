@@ -7,15 +7,7 @@ public class MenuButtons : MonoBehaviour
     private void Awake()
     {
         #region Singleton
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
+        Instance = this;
         #endregion
     }
 
@@ -24,13 +16,27 @@ public class MenuButtons : MonoBehaviour
         Loadingbar.SetActive(true);
     }
 
-    public void LoadGame()
-    {
-
-    }
-
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void ReturnToMenu()
+    {
+        Debug.Log("Return");
+        FadeScreen.Instance.GetReturnToMenu = true;
+        FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
+    }
+
+    public void ToggleMenuPanel(GameObject Panel)
+    {
+        if(!Panel.activeInHierarchy)
+        {
+            Panel.SetActive(true);
+        }
+        else
+        {
+            Panel.SetActive(false);
+        }
     }
 }

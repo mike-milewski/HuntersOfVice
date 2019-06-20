@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public enum FadeState { FADEIN, FADEOUT };
+public enum FadeState { FADEIN, FADEOUT, NONE };
 
 public class FadeScreen : MonoBehaviour
 {
@@ -13,6 +13,8 @@ public class FadeScreen : MonoBehaviour
     private Image Overlay;
 
     private Color alpha;
+
+    private bool ReturnToMenu;
 
     [SerializeField]
     private FadeState fadeState;
@@ -29,31 +31,25 @@ public class FadeScreen : MonoBehaviour
         }
     }
 
-    private void Awake()
+    public bool GetReturnToMenu
     {
-        if(Instance == null)
+        get
         {
-            Instance = this;
+            return ReturnToMenu;
         }
-        else if(Instance != this)
+        set
         {
-            Destroy(gameObject);
+            ReturnToMenu = value;
         }
-        DontDestroyOnLoad(gameObject);
     }
 
-    private void OnEnable()
+    private void Awake()
     {
-        alpha = Overlay.color;
+        Instance = this;
 
-        if(fadeState == FadeState.FADEIN)
-        {
-            SetToMaxAlpha();
-        }
-        else
-        {
-            SetToMinAlpha();
-        }
+        alpha.a = 1;
+
+        fadeState = FadeState.FADEIN;
     }
 
     private void Update()
@@ -66,6 +62,8 @@ public class FadeScreen : MonoBehaviour
             case (FadeState.FADEOUT):
                 FadeOut();
                 break;
+            case (FadeState.NONE):
+                return;
         }
     }
 
@@ -76,7 +74,11 @@ public class FadeScreen : MonoBehaviour
 
         if(alpha.a >= 1)
         {
-            gameObject.SetActive(false);
+            fadeState = FadeState.NONE;
+            if(ReturnToMenu)
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
         }
     }
 
@@ -87,22 +89,7 @@ public class FadeScreen : MonoBehaviour
 
         if(alpha.a <= 0)
         {
-            gameObject.SetActive(false);
+            fadeState = FadeState.NONE;
         }
-    }
-
-    public void EnableFadeScreen()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void SetToMaxAlpha()
-    {
-        alpha.a = 1;
-    }
-
-    public void SetToMinAlpha()
-    {
-        alpha.a = 0;
     }
 }

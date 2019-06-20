@@ -104,6 +104,8 @@ GameObject:
   - component: {fileID: 224250561219321840}
   - component: {fileID: 222905400968068524}
   - component: {fileID: 114792873930422526}
+  - component: {fileID: 111767850413294738}
+  - component: {fileID: 114418815612405138}
   m_Layer: 5
   m_Name: HealthBackground
   m_TagString: Untagged
@@ -111,6 +113,34 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!111 &111767850413294738
+Animation:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1922730545786968}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 7c6e455ec9d047849912d1bf32d5305c, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 7c6e455ec9d047849912d1bf32d5305c, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &114418815612405138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1922730545786968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e53935b6eaaed54abf1bbccebb95a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  _animation: {fileID: 111767850413294738}
 --- !u!114 &114621301613880602
 MonoBehaviour:
   m_ObjectHideFlags: 1

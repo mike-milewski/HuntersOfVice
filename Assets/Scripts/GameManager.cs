@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform SpawnPoint;
 
+    [SerializeField]
+    private GameObject CharacterPanel, InventoryPanel, SettingsPanel;
+
     private bool IsDead;
 
     [SerializeField]
@@ -103,20 +106,69 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        #region UIPanels
         if(Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log("Opened Inventory.");
+            if(!InventoryPanel.activeInHierarchy)
+            {
+                ToggleIventoryPanel();
+            }
+            else
+            {
+                InventoryPanel.SetActive(false);
+            }
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-
+            if (!CharacterPanel.activeInHierarchy)
+            {
+                ToggleCharacterPanel();
+            }
+            else
+            {
+                CharacterPanel.SetActive(false);
+            }
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            if (!SettingsPanel.activeInHierarchy)
+            {
+                ToggleSettingsPanel();
+            }
+            else
+            {
+                SettingsPanel.SetActive(false);
+            }
+        }
+        #endregion
+    }
+
+    private void ToggleIventoryPanel()
+    {
+        InventoryPanel.SetActive(true);
+        CharacterPanel.SetActive(false);
+        SettingsPanel.SetActive(false);
+    }
+
+    private void ToggleCharacterPanel()
+    {
+        CharacterPanel.SetActive(true);
+        InventoryPanel.SetActive(false);
+        SettingsPanel.SetActive(false);
+    }
+
+    private void ToggleSettingsPanel()
+    {
+        SettingsPanel.SetActive(true);
+        CharacterPanel.SetActive(false);
+        InventoryPanel.SetActive(false);
     }
 
     public void Dead()
     {
         IsDead = true;
         SkillsManager.Instance.DeactivateSkillButtons();
+
         Player.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
         Player.GetComponent<BasicAttack>().enabled = false;
 
@@ -135,7 +187,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator Fade()
     {
         yield return new WaitForSeconds(2);
-        FadeScreen.Instance.gameObject.SetActive(true);
         FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
         StartCoroutine(Respawn());
     }
@@ -143,7 +194,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(RespawnTime);
-        FadeScreen.Instance.gameObject.SetActive(true);
         FadeScreen.Instance.GetFadeState = FadeState.FADEIN;
 
         Player.transform.position = SpawnPoint.position;

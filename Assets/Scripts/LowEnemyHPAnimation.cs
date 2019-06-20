@@ -5,7 +5,7 @@ public class LowEnemyHPAnimation : MonoBehaviour
     [SerializeField]
     private Character character;
 
-    private const string LOWHEALTH = "EnemyHealthLowHP";
+    private const string LOWHEALTH = "LowHP";
 
     [SerializeField]
     private Animation _animation;

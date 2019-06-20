@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
     private TextMeshProUGUI HealthText = null;
 
     [SerializeField]
-    private GameObject DamageTextHolder, HealTextHolder;
+    private GameObject DamageTextHolder, HealTextHolder, HealthAnimationObj;
 
     [SerializeField]
     private bool TakingDamage;
@@ -162,12 +162,12 @@ public class Health : MonoBehaviour
         {
             HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth).ToString();
         }
-        if(character.GetComponentInChildren<LowEnemyHPAnimation>())
+        if(HealthAnimationObj.GetComponent<LowEnemyHPAnimation>())
         {
             if(character.CurrentHealth > character.MaxHealth / 4)
             {
-                character.GetComponentInChildren<LowEnemyHPAnimation>().ResetAnimator();
-                character.GetComponentInChildren<LowEnemyHPAnimation>().DisableAnimator();
+                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().ResetAnimator();
+                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().DisableAnimator();
             }
         }
         FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
@@ -190,11 +190,11 @@ public class Health : MonoBehaviour
         {
             HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth).ToString();
         }
-        if (character.GetComponentInChildren<LowEnemyHPAnimation>())
+        if (HealthAnimationObj.GetComponent<LowEnemyHPAnimation>())
         {
             if (character.CurrentHealth <= character.MaxHealth / 4)
             {
-                character.GetComponentInChildren<LowEnemyHPAnimation>().EnableAnimator();
+                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().EnableAnimator();
             }
         }
 

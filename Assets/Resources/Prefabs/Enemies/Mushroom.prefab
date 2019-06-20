@@ -1552,6 +1552,7 @@ MonoBehaviour:
     type: 2}
   HealTextHolder: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091,
     type: 2}
+  HealthAnimationObj: {fileID: 1739082173684510}
   TakingDamage: 0
   SleepHit: 0
   FillValue: 0.3
@@ -2685,7 +2686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 90.6, y: -20.400024}
+  m_AnchoredPosition: {x: 90.6, y: -20.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224078241610419814
@@ -2930,7 +2931,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 15.903017, y: -335.6}
+  m_AnchoredPosition: {x: 15.903017, y: -335.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224488557437737960
