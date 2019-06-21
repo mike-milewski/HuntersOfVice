@@ -91,8 +91,6 @@ public class Experience : MonoBehaviour
 
     public void UpdateExperienceText()
     {
-        float Percent = ((float)ExperiencePoints / (float)NextToLevel) * 100;
-
         if(character.Level < MaxLevel)
         {
             ExperienceText.text = ExperiencePoints + "/" + NextToLevel;

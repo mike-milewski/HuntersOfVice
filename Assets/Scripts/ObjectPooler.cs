@@ -12,9 +12,6 @@ public class ObjectPooler : MonoBehaviour
     private GameObject UiText;
 
     [SerializeField]
-    private Transform CanvasTransform;
-
-    [SerializeField]
     private int PoolAmount;
 
     private void Awake()
@@ -41,7 +38,6 @@ public class ObjectPooler : MonoBehaviour
             var UI = Instantiate(UiText);
             UiTexts.Enqueue(UI);
 
-            UI.transform.SetParent(CanvasTransform, false);
             UI.gameObject.SetActive(false);
         }
     }

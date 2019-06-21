@@ -166,8 +166,7 @@ public class Health : MonoBehaviour
         {
             if(character.CurrentHealth > character.MaxHealth / 4)
             {
-                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().ResetAnimator();
-                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().DisableAnimator();
+                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().GetAnimator.SetBool("LowHealth", false);
             }
         }
         FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
@@ -194,7 +193,7 @@ public class Health : MonoBehaviour
         {
             if (character.CurrentHealth <= character.MaxHealth / 4)
             {
-                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().EnableAnimator();
+                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().GetAnimator.SetBool("LowHealth", true);
             }
         }
 

@@ -12,6 +12,9 @@ public class EnemyStatusIcon : MonoBehaviour
     private Character character = null;
 
     [SerializeField]
+    private ParticleSystem StatusRemovalParticle;
+
+    [SerializeField]
     private StatusEffect effect;
 
     [SerializeField]
@@ -139,6 +142,8 @@ public class EnemyStatusIcon : MonoBehaviour
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
+        CreateParticleOnRemovePlayer();
+
         return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -151,6 +156,8 @@ public class EnemyStatusIcon : MonoBehaviour
         SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        CreateParticleOnRemoveEnemy();
 
         switch (effect)
         {
@@ -311,6 +318,24 @@ public class EnemyStatusIcon : MonoBehaviour
         int GetHealth = (int)percent;
 
         return GetHealth;
+    }
+
+    private void CreateParticleOnRemovePlayer()
+    { 
+        var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(player.transform.position.x,
+                                                                            player.transform.position.y + 1f,
+                                                                            player.transform.position.z), transform.rotation);
+
+        StatusParticle.transform.SetParent(player.transform, true);
+    }
+
+    private void CreateParticleOnRemoveEnemy()
+    {
+        var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(character.transform.position.x,
+                                                                            character.transform.position.y + 0.65f,
+                                                                            character.transform.position.z), transform.rotation);
+
+        StatusParticle.transform.SetParent(character.transform, true);
     }
 
     private void LateUpdate()

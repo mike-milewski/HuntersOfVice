@@ -247,6 +247,17 @@ public class Skills : StatusEffects
         StatusEffectSkillText();
     }
 
+    public void Poison()
+    {
+        TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
+
+        GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
+
+        this.button.GetComponent<Image>().fillAmount = 0;
+
+        StatusEffectSkillText();
+    }
+
     public void StormThrust()
     {
         TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuButtons : MonoBehaviour
 {
@@ -23,7 +24,6 @@ public class MenuButtons : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        Debug.Log("Return");
         FadeScreen.Instance.GetReturnToMenu = true;
         FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
     }
@@ -37,6 +37,16 @@ public class MenuButtons : MonoBehaviour
         else
         {
             Panel.SetActive(false);
+        }
+    }
+
+    public void Volume(Slider slider)
+    {
+        var audio = SoundManager.Instance.GetAudioSource;
+
+        foreach(AudioSource source in audio)
+        {
+            source.volume = slider.value;
         }
     }
 }

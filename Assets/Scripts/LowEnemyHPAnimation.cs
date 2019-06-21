@@ -5,45 +5,28 @@ public class LowEnemyHPAnimation : MonoBehaviour
     [SerializeField]
     private Character character;
 
-    private const string LOWHEALTH = "LowHP";
-
     [SerializeField]
-    private Animation _animation;
+    private Animator _animator;
 
-    public Animation GetAnimation
+    public Animator GetAnimator
     {
         get
         {
-            return _animation;
+            return _animator;
         }
         set
         {
-            _animation = value;
+            _animator = value;
         }
     }
 
     private void OnEnable()
     {
-        _animation = GetComponent<Animation>();
-
-        ResetAnimator();
-
-        DisableAnimator();
+        _animator = GetComponent<Animator>();
     }
 
     public void ResetAnimator()
     {
-        _animation.Rewind(LOWHEALTH);
-    }
-
-    public void EnableAnimator()
-    {
-        _animation.enabled = true;
-        _animation.CrossFade(LOWHEALTH);
-    }
-
-    public void DisableAnimator()
-    {
-        _animation.enabled = false;
+        _animator.Play("LowHP", -1, 0f);
     }
 }

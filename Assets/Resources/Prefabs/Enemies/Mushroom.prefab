@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 224155487149570714}
   - component: {fileID: 222211528459958380}
   - component: {fileID: 114411650546611462}
-  - component: {fileID: 111136683093198518}
+  - component: {fileID: 95142373014556358}
   - component: {fileID: 114082855906819456}
   m_Layer: 5
   m_Name: HealthBackground
@@ -832,6 +832,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.13, y: 1.2, z: 1.1}
   m_Center: {x: 0, y: 0.64, z: 0}
+--- !u!95 &95142373014556358
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1739082173684510}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 08378635746f1c34591900415f69fdfb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &95373084091106378
 Animator:
   serializedVersion: 3
@@ -868,21 +886,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!111 &111136683093198518
-Animation:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1739082173684510}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 7c6e455ec9d047849912d1bf32d5305c, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 7c6e455ec9d047849912d1bf32d5305c, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!111 &111614583403917066
 Animation:
   m_ObjectHideFlags: 1
@@ -980,7 +983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 114979435669946942}
-  _animation: {fileID: 111136683093198518}
+  _animator: {fileID: 95142373014556358}
 --- !u!114 &114093157438022692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1371,7 +1374,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   MoveSpeed: 2
-  AttackRange: 2
+  AttackRange: 2.5
   AttackDelay: 1
   AutoAttackTime: 0
   LookSpeed: 3
@@ -3077,8 +3080,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.05, y: 1.4970882}
-  m_SizeDelta: {x: 77.75, y: 84.7}
+  m_AnchoredPosition: {x: 1.043, y: 1.4958}
+  m_SizeDelta: {x: 77.75, y: 86.63405}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224875952206841664
 RectTransform:

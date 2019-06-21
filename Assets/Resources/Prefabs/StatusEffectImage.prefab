@@ -92,12 +92,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35ef38a20845fc04581bc62f9ab2c5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 0
+  StatusPanel: {fileID: 1505679607402930}
   DurationText: {fileID: 114382150169196584}
   StatusDescriptionText: {fileID: 114909423992531630}
+  StatusRemovalParticle: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e,
+    type: 2}
+  status: 0
   Duration: -1
   KeyInput: 4
-  StatusPanel: {fileID: 1505679607402930}
 --- !u!114 &114262389743331990
 MonoBehaviour:
   m_ObjectHideFlags: 1

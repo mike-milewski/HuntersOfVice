@@ -9,10 +9,16 @@ public class StatusIcon : MonoBehaviour
     private Enemy enemyTarget = null;
 
     [SerializeField]
-    private EffectStatus status;
+    private GameObject StatusPanel;
 
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
+
+    [SerializeField]
+    private ParticleSystem StatusRemovalParticle;
+
+    [SerializeField]
+    private EffectStatus status;
 
     [SerializeField]
     private float Duration;
@@ -21,9 +27,6 @@ public class StatusIcon : MonoBehaviour
 
     [SerializeField]
     private int KeyInput;
-
-    [SerializeField]
-    private GameObject StatusPanel;
 
     public Enemy GetEnemyTarget
     {
@@ -114,6 +117,8 @@ public class StatusIcon : MonoBehaviour
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
+        CreateParticleOnRemovePlayer();
+
         return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -128,6 +133,8 @@ public class StatusIcon : MonoBehaviour
         SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
 
         SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        CreateParticleOnRemoveEnemy();
 
         switch (status)
         {
@@ -188,7 +195,7 @@ public class StatusIcon : MonoBehaviour
 
     }
 
-    private void StrengthUP()
+    private void StrengthUP(int value)
     {
 
     }
@@ -225,7 +232,7 @@ public class StatusIcon : MonoBehaviour
                 Haste();
                 break;
             case (EffectStatus.StrengthUP):
-                StrengthUP();
+                StrengthUP(50);
                 break;
             case (EffectStatus.DefenseUP):
                 DefenseUP();
@@ -246,6 +253,26 @@ public class StatusIcon : MonoBehaviour
         int GetHealth = (int)percent;
 
         return GetHealth;
+    }
+
+    private void CreateParticleOnRemovePlayer()
+    {
+        var character = SkillsManager.Instance.GetCharacter;
+
+        var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(character.transform.position.x, 
+                                                                            character.transform.position.y + 1f, 
+                                                                            character.transform.position.z), transform.rotation);
+
+        StatusParticle.transform.SetParent(character.transform, true);
+    }
+
+    private void CreateParticleOnRemoveEnemy()
+    {
+        var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(enemyTarget.transform.position.x,
+                                                                            enemyTarget.transform.position.y + 0.65f,
+                                                                            enemyTarget.transform.position.z), transform.rotation);
+
+        StatusParticle.transform.SetParent(enemyTarget.transform, true);
     }
 
     private void Update()

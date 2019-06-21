@@ -41,7 +41,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] 
     private float TimeToMoveAgain; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
 
-    private float TimeToMove;
+    private float TimeToMove, DistanceToTarget;
 
     private bool StandingStill;
 
@@ -221,7 +221,10 @@ public class EnemyAI : MonoBehaviour
 
         if (PlayerTarget != null)
         {
-            float DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
+            if(PlayerTarget != null)
+            {
+                DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
+            }
 
             if (DistanceToTarget >= AttackRange)
             {
@@ -379,7 +382,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.GetComponent<PlayerController>())
+        if (other.gameObject.GetComponent<PlayerController>())
         {
             PlayerTarget = null;
             states = States.Patrol;
@@ -389,7 +392,7 @@ public class EnemyAI : MonoBehaviour
             enemySkills.GetActiveSkill = false;
             enemySkills.GetSkillBar.gameObject.SetActive(false);
         }
-        if(!IsHostile)
+        if (!IsHostile)
         {
             PlayerTarget = null;
             states = States.Patrol;
