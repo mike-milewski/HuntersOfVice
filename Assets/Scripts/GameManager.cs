@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     private Transform SpawnPoint;
 
     [SerializeField]
-    private GameObject CharacterPanel, InventoryPanel, SettingsPanel;
+    private GameObject CharacterPanel, SkillsPanel, InventoryPanel, SettingsPanel;
 
     private bool IsDead;
 
@@ -129,6 +129,17 @@ public class GameManager : MonoBehaviour
                 CharacterPanel.SetActive(false);
             }
         }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (!SkillsPanel.activeInHierarchy)
+            {
+                ToggleSkillsPanel();
+            }
+            else
+            {
+                SkillsPanel.SetActive(false);
+            }
+        }
         if (Input.GetKeyDown(KeyCode.O))
         {
             if (!SettingsPanel.activeInHierarchy)
@@ -143,17 +154,27 @@ public class GameManager : MonoBehaviour
         #endregion
     }
 
+    private void ToggleCharacterPanel()
+    {
+        CharacterPanel.SetActive(true);
+        SkillsPanel.SetActive(false);
+        InventoryPanel.SetActive(false);
+        SettingsPanel.SetActive(false);
+    }
+
+    private void ToggleSkillsPanel()
+    {
+        SkillsPanel.SetActive(true);
+        CharacterPanel.SetActive(false);
+        InventoryPanel.SetActive(false);
+        SettingsPanel.SetActive(false);
+    }
+
     private void ToggleIventoryPanel()
     {
         InventoryPanel.SetActive(true);
         CharacterPanel.SetActive(false);
-        SettingsPanel.SetActive(false);
-    }
-
-    private void ToggleCharacterPanel()
-    {
-        CharacterPanel.SetActive(true);
-        InventoryPanel.SetActive(false);
+        SkillsPanel.SetActive(false);
         SettingsPanel.SetActive(false);
     }
 
@@ -161,6 +182,7 @@ public class GameManager : MonoBehaviour
     {
         SettingsPanel.SetActive(true);
         CharacterPanel.SetActive(false);
+        SkillsPanel.SetActive(false);
         InventoryPanel.SetActive(false);
     }
 

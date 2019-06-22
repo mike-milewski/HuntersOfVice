@@ -26,6 +26,8 @@ public class BasicAttack : MonoBehaviour
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
 
+    private float AttackDistance;
+
     public float GetAutoAttackTime
     {
         get
@@ -129,9 +131,18 @@ public class BasicAttack : MonoBehaviour
         return results.Count > 0;
     }
 
+    public float DistanceToTarget()
+    {
+        if (Target != null)
+        {
+            AttackDistance = Vector3.Distance(this.transform.position, Target.transform.position);
+        }
+        return AttackDistance;
+    }
+
     private void Attack()
     {
-        if(Vector3.Distance(this.transform.position, Target.transform.position) <= AttackRange)
+        if(DistanceToTarget() <= AttackRange)
         {
             if(Target.GetCharacter.CurrentHealth > 0)
             {

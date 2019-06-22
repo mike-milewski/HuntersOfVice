@@ -92,6 +92,16 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Skill", true);
     }
 
+    public void DealSkillDamage()
+    {
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SkillDamage();
+    }
+
+    public void EndSkillAnimation()
+    {
+        animator.SetBool("Skill", false);
+    }
+
     public void PlayFallSoundEffect()
     {
         SoundManager.Instance.FallSE();

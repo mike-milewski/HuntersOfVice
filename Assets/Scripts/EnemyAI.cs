@@ -252,7 +252,10 @@ public class EnemyAI : MonoBehaviour
     {
         Anim.IdleAni();
 
-        float DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
+        if(PlayerTarget != null)
+        {
+            DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
+        }
 
         if (PlayerTarget != null && DistanceToTarget <= AttackRange)
         {

@@ -258,6 +258,36 @@ public class Skills : StatusEffects
         StatusEffectSkillText();
     }
 
+    public void SwiftStrike()
+    {
+        if(GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        {
+            if(GetCharacter.GetComponent<BasicAttack>().DistanceToTarget() <= AttackRange)
+            {
+                TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
+
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
+
+                this.button.GetComponent<Image>().fillAmount = 0;
+
+                GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
+                GetCharacter.GetComponent<PlayerAnimations>().PlaySkillAnimation();
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
+    }
+
     public void StormThrust()
     {
         TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
@@ -280,7 +310,7 @@ public class Skills : StatusEffects
     {
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
-        Target.GetComponent<Health>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
+        Target.GetComponentInChildren<Health>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
 
         Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
 
@@ -326,7 +356,7 @@ public class Skills : StatusEffects
         return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private Text DamageSkillText()
+    private TextMeshProUGUI DamageSkillText()
     {
         var SkillObj = Instantiate(DamageORHealText);
 
@@ -334,9 +364,9 @@ public class Skills : StatusEffects
 
         SkillObj.transform.SetParent(TextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Text>().text = SkillName + " " + (Potency - Target.GetTarget.GetComponent<Character>().CharacterDefense).ToString();
+        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + Mathf.Abs((-Potency - -Target.GetTarget.GetComponent<Character>().CharacterDefense)).ToString();
 
-        return SkillObj.GetComponentInChildren<Text>();
+        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void ShowSkillPanel(GameObject Panel)
