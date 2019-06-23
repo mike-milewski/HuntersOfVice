@@ -87,15 +87,17 @@ public class EnemyStatusIcon : MonoBehaviour
         StatusPanel.SetActive(false);
     }
 
-    private void OnDisable()
+    private void RemoveEffect()
     {
         if (player == null)
         {
             RemoveStatusEffectText();
+            ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
         }
         else
         {
             RemoveEnemyStatusEffectText();
+            ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
         }
     }
 
@@ -134,28 +136,32 @@ public class EnemyStatusIcon : MonoBehaviour
 
     public TextMeshProUGUI RemoveStatusEffectText()
     {
-        var SkillObj = Instantiate(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectHolder);
+        var StatusEffectText = ObjectPooler.Instance.GetPlayerStatusText();
 
-        SkillObj.transform.SetParent(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
+        StatusEffectText.SetActive(true);
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
+        StatusEffectText.transform.SetParent(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "-" + character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
         CreateParticleOnRemovePlayer();
 
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public TextMeshProUGUI RemoveEnemyStatusEffectText()
     {
-        var SkillObj = Instantiate(SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectText);
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
 
-        SkillObj.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
+        StatusEffectText.SetActive(true);
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+        StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
 
-        SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
         CreateParticleOnRemoveEnemy();
 
@@ -171,7 +177,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 SetDefenseToDefault();
                 break;
         }
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void CheckEnemyStates()
@@ -219,6 +225,8 @@ public class EnemyStatusIcon : MonoBehaviour
 
             var Healtxt = Instantiate(character.GetComponent<Enemy>().GetHealth.GetHealText);
 
+            Healtxt.SetActive(true);
+
             Healtxt.transform.SetParent(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
 
             Healtxt.GetComponentInChildren<Text>().text = value.ToString();
@@ -232,15 +240,17 @@ public class EnemyStatusIcon : MonoBehaviour
         DamageTick -= Time.deltaTime;
         if (DamageTick <= 0)
         {
-            character.GetComponent<Enemy>().GetHealth.GetTakingDamage = true;
-            character.GetComponent<Enemy>().GetHealth.ModifyHealth(-value);
-            character.GetComponent<Enemy>().GetLocalHealthInfo();
-
-            var EnemyDamagetxt = Instantiate(character.GetComponent<Enemy>().GetHealth.GetDamageText);
+            var EnemyDamagetxt = ObjectPooler.Instance.GetEnemyDamageText();
 
             EnemyDamagetxt.transform.SetParent(character.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
 
+            EnemyDamagetxt.SetActive(true);
+
             EnemyDamagetxt.GetComponentInChildren<TextMeshProUGUI>().text = value.ToString();
+
+            character.GetComponent<Enemy>().GetHealth.GetTakingDamage = true;
+            character.GetComponent<Enemy>().GetHealth.ModifyHealth(-value);
+            character.GetComponent<Enemy>().GetLocalHealthInfo();
 
             DamageTick = damageTick;
         }
@@ -348,7 +358,7 @@ public class EnemyStatusIcon : MonoBehaviour
         {
             if(character.CurrentHealth <= 0)
             {
-                gameObject.SetActive(false);
+                RemoveEffect();
             }
         }
         else if(Duration > -1)
@@ -357,7 +367,7 @@ public class EnemyStatusIcon : MonoBehaviour
             Duration -= Time.deltaTime;
             if (Duration <= 0 || character.CurrentHealth <= 0)
             {
-                gameObject.SetActive(false);
+                RemoveEffect();
             }
         }
     }

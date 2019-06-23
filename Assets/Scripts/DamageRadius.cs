@@ -169,7 +169,7 @@ public class DamageRadius : MonoBehaviour
             {
                 if (enemySkills.GetManager[enemySkills.GetRandomValue].GetStatus != Status.NONE)
                 {
-                    enemySkills.StatusEffectSkillTextTransform();
+                    enemySkills.PlayerStatus();
                 }
 
                 enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
@@ -192,7 +192,7 @@ public class DamageRadius : MonoBehaviour
             {
                 if (enemySkills.GetManager[enemySkills.GetRandomValue].GetStatus != Status.NONE)
                 {
-                    enemySkills.StatusEffectSkillTextTransform();
+                    enemySkills.PlayerStatus();
                 }
 
                 enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);

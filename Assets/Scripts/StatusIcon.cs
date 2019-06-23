@@ -69,15 +69,17 @@ public class StatusIcon : MonoBehaviour
         StatusPanel.SetActive(false);
     }
 
-    private void OnDisable()
+    private void RemoveEffect()
     {
         if (enemyTarget != null)
         {
             RemoveEnemyStatusEffectText();
+            ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
         }
         else
         {
             RemoveStatusEffectText();
+            ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
         }
     }
 
@@ -109,32 +111,36 @@ public class StatusIcon : MonoBehaviour
 
     public TextMeshProUGUI RemoveStatusEffectText()
     {
-        var SkillObj = Instantiate(SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectText);
+        var StatusEffectTxt = ObjectPooler.Instance.GetPlayerStatusText();
 
-        SkillObj.transform.SetParent(SkillsManager.Instance.GetSkills[KeyInput].GetTextHolder.transform, false);
+        StatusEffectTxt.SetActive(true);
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+        StatusEffectTxt.transform.SetParent(SkillsManager.Instance.GetSkills[KeyInput].GetTextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+        StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+
+        StatusEffectTxt.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
         CreateParticleOnRemovePlayer();
 
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
+        return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public TextMeshProUGUI RemoveEnemyStatusEffectText()
     {
         KeyInput = enemyTarget.GetComponent<EnemySkills>().GetRandomValue;
 
-        var SkillObj = Instantiate(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectHolder);
+        var StatusEffectTxt = ObjectPooler.Instance.GetPlayerStatusText();
 
-        SkillObj.transform.SetParent(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
+        StatusEffectTxt.SetActive(true);
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "-" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
+        StatusEffectTxt.transform.SetParent(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
 
-        SkillObj.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+        StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>().text = "-" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
 
-        CreateParticleOnRemoveEnemy();
+        StatusEffectTxt.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        CreateParticleOnRemovePlayer();
 
         switch (status)
         {
@@ -149,7 +155,7 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
                 break;
         }
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
+        return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void DamageOverTime(int value, float damageTick)
@@ -160,7 +166,9 @@ public class StatusIcon : MonoBehaviour
             SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetTakingDamage = true;
             SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(-value);
 
-            var Damagetxt = Instantiate(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageText);
+            var Damagetxt = ObjectPooler.Instance.GetPlayerDamageText();
+
+            Damagetxt.SetActive(true);
 
             Damagetxt.transform.SetParent(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageTextParent.transform, false);
 
@@ -283,7 +291,7 @@ public class StatusIcon : MonoBehaviour
         {
             if(SkillsManager.Instance.GetCharacter.CurrentHealth <= 0)
             {
-                gameObject.SetActive(false);
+                RemoveEffect();
             }
         }
         else if(Duration > -1)
@@ -292,7 +300,7 @@ public class StatusIcon : MonoBehaviour
             Duration -= Time.deltaTime;
             if (Duration <= 0 || SkillsManager.Instance.GetCharacter.CurrentHealth <= 0)
             {
-                gameObject.SetActive(false);
+                RemoveEffect();
             }
         }
     }

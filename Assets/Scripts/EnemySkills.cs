@@ -504,7 +504,7 @@ public class EnemySkills : MonoBehaviour
 
         if(skillBar.GetFillImage.fillAmount >= 1)
         {
-            Invoke("InvokeHealingCap", ApplySkill);
+            Invoke("SkillHealText", ApplySkill);
         }  
     }
 
@@ -512,12 +512,7 @@ public class EnemySkills : MonoBehaviour
     {
         SkillHealText(skills[RandomValue].GetPotency, skills[RandomValue].GetSkillName);
 
-        health.IncreaseHealth(skills[RandomValue].GetPotency + character.CharacterIntelligence);
-        health.GetTakingDamage = false;
-
-        enemy.GetLocalHealthInfo();
-
-        ActiveSkill = false;
+        
     }
 
     public void PoisonSpore(int potency, float castTime, Vector2 sizeDelta, string skillname)
@@ -632,17 +627,46 @@ public class EnemySkills : MonoBehaviour
     }
     */
 
-    public TextMeshProUGUI StatusEffectSkillTextTransform()
+    public TextMeshProUGUI EnemyStatus()
     {
-        var SkillObj = Instantiate(GetManager[RandomValue].GetStatusEffectHolder);
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
 
-        SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+        StatusEffectText.SetActive(true);
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetManager[RandomValue].GetStatusEffectName;
+        StatusEffectText.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        if(!GetManager[RandomValue].GetStatusIcon.isActiveAndEnabled)
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetManager[RandomValue].GetStatusEffectName;
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
+
+        StatusEffectSkillTextTransform();
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI PlayerStatus()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetPlayerStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetManager[RandomValue].GetStatusEffectName;
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
+
+        StatusEffectSkillTextTransform();
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void StatusEffectSkillTextTransform()
+    {
+        /*
+        if (!GetManager[RandomValue].GetStatusIcon.isActiveAndEnabled)
         {
-            if(!GetManager[RandomValue].GetStatusIconCreated)
+            if (!GetManager[RandomValue].GetStatusIconCreated)
             {
                 GetManager[RandomValue].GetStatusIcon = Instantiate(GetManager[RandomValue].GetStatusIcon);
                 GetManager[RandomValue].GetStatusIconCreated = true;
@@ -652,20 +676,33 @@ public class EnemySkills : MonoBehaviour
                 GetManager[RandomValue].GetStatusIcon.gameObject.SetActive(true);
             }
         }
-
-        SkillObj.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
-
-        GetManager[RandomValue].GetStatusIcon.sprite = GetManager[RandomValue].GetStatusSprite;
-
-        GetManager[RandomValue].GetStatusIcon.transform.SetParent(GetManager[RandomValue].GetStatusIconTrans.transform, false);
-
-        if(GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>())
+        */
+        if (GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>())
         {
-            GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)GetManager[RandomValue].GetStatus;
-            GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
-            GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
+            var StatIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
+
+            StatIcon.SetActive(true);
+
+            StatIcon.transform.SetParent(GetManager[RandomValue].GetStatusIconTrans.transform, false);
+
+            StatIcon.GetComponent<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
+
+            StatIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)GetManager[RandomValue].GetStatus;
+            StatIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
+            StatIcon.GetComponent<StatusIcon>().EnemyInput();
         }
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
+        else
+        {
+            var StatIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+            StatIcon.SetActive(true);
+
+            StatIcon.transform.SetParent(GetManager[RandomValue].GetStatusIconTrans.transform, false);
+
+            StatIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = (StatusEffect)GetManager[RandomValue].GetStatus;
+
+            StatIcon.GetComponent<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
+        }
     }
 
     public TextMeshProUGUI SkillDamageText(int potency, string skillName)
@@ -675,15 +712,17 @@ public class EnemySkills : MonoBehaviour
             return null;
         }
 
-        float Critical = character.GetCriticalChance;
-
         skills[RandomValue].GetSkillName = skillName;
 
-        var SkillObj = Instantiate(GetManager[RandomValue].GetDamageOrHealText);
+        var DamageTxt = ObjectPooler.Instance.GetPlayerDamageText();
 
-        SkillObj.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+        DamageTxt.SetActive(true);
+
+        DamageTxt.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
         var Target = enemyAI.GetPlayerTarget;
+
+        float Critical = character.GetCriticalChance;
 
         #region CriticalHitCalculation
         if (Random.value * 100 <= Critical)
@@ -691,32 +730,58 @@ public class EnemySkills : MonoBehaviour
             enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
                                          ((-potency - 5) - -Target.GetComponent<Character>().CharacterDefense);
 
-            SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + ((potency + 5) -
-                                                                      Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + ((potency + 5) -
+                                                                       Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
         }
         else
         {
             Target.GetComponentInChildren<Health>().ModifyHealth(-potency - -Target.GetComponent<Character>().CharacterDefense);
 
-            SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
         }
         #endregion
 
         enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
 
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
+        return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public TextMeshProUGUI SkillHealText(int potency, string skillName)
     {
         skills[RandomValue].GetSkillName = skillName;
 
-        var SkillObj = Instantiate(GetManager[RandomValue].GetDamageOrHealText);
+        var HealTxt = ObjectPooler.Instance.GetEnemyHealText();
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+        HealTxt.SetActive(true);
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
+        var Critical = character.GetCriticalChance;
 
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
+        health.GetTakingDamage = false;
+
+        ActiveSkill = false;
+
+        if (Random.value * 100 <= Critical)
+        {
+            health.IncreaseHealth((skills[RandomValue].GetPotency + 10) + character.CharacterIntelligence);
+
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + "<size=25>" + 
+                                                                    (potency + character.CharacterIntelligence).ToString() + "!";
+
+            enemy.GetLocalHealthInfo();
+        }
+        else
+        {
+            health.IncreaseHealth(skills[RandomValue].GetPotency + character.CharacterIntelligence);
+
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
+
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
+
+            enemy.GetLocalHealthInfo();
+        }
+
+        HealTxt.GetComponentInChildren<TextMeshProUGUI>().transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+
+        return HealTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 }

@@ -7,6 +7,6 @@ public class DestroyUIelement : MonoBehaviour
 
     public void DestroyUI()
     {
-        ObjectPooler.Instance.ReturnToPool(Parent);
+        ObjectPooler.Instance.ReturnPlayerDamageToPool(Parent);
     }
 }

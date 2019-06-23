@@ -426,11 +426,13 @@ public class EnemyAI : MonoBehaviour
 
         float Critical = character.GetCriticalChance;
 
-        var t = ObjectPooler.Instance.GetText();
+        var t = ObjectPooler.Instance.GetPlayerDamageText();
 
         if (PlayerTarget != null)
         {
             t.gameObject.SetActive(true);
+
+            t.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
 
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)

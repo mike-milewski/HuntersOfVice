@@ -170,16 +170,8 @@ public class Skills : StatusEffects
 
             GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
-            Invoke("InvokeHealthRestore", ApplySkill);
+            Invoke("HealSkillText", ApplySkill);
         }
-    }
-
-    private void InvokeHealthRestore()
-    {
-        GetCharacter.GetComponent<Health>().IncreaseHealth(Potency + GetCharacter.CharacterIntelligence);
-        GetCharacter.GetComponent<Health>().GetTakingDamage = false;
-
-        HealSkillText();
     }
 
     public void TestDamageSkill()
@@ -224,7 +216,7 @@ public class Skills : StatusEffects
 
         SkillsManager.Instance.GetStatusIcon.PlayerInput();
 
-        StatusEffectSkillText();
+        PlayerStatus();
     }
 
     public void Shield()
@@ -235,7 +227,7 @@ public class Skills : StatusEffects
 
         SkillsManager.Instance.GetStatusIcon.PlayerInput();
 
-        StatusEffectSkillText();
+        PlayerStatus();
     }
 
     public void BloodAndSinew()
@@ -255,7 +247,7 @@ public class Skills : StatusEffects
 
         this.button.GetComponent<Image>().fillAmount = 0;
 
-        StatusEffectSkillText();
+        EnemyStatus();
     }
 
     public void SwiftStrike()
@@ -267,8 +259,6 @@ public class Skills : StatusEffects
                 TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
 
                 SkillsManager.Instance.GetActivatedSkill = true;
-
-                GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
 
                 this.button.GetComponent<Image>().fillAmount = 0;
 
@@ -303,70 +293,139 @@ public class Skills : StatusEffects
         StatusEffectSkillText();
     }
 
-    //Place this on an animation as an animation event.
-    //This way damage will be dealt during a specific portion of the attack animation.
-    //If used for spell damage, invoke this function.
-    public void SkillDamage()
-    {
-        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
-
-        Target.GetComponentInChildren<Health>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
-
-        Target.GetComponent<EnemyAI>().GetStates = States.Damaged;
-
-        SkillsManager.Instance.GetActivatedSkill = false;
-
-        DamageSkillText();
-    }
-
     private TextMeshProUGUI HealSkillText()
     {
-        var SkillObj = Instantiate(DamageORHealText);
+        var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
 
-        SkillObj.transform.SetParent(TextHolder.transform, false);
+        var Critical = GetCharacter.GetCriticalChance;
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
+        HealTxt.SetActive(true);
 
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
+        HealTxt.transform.SetParent(TextHolder.transform, false);
+
+        GetCharacter.GetComponent<Health>().GetTakingDamage = false;
+
+        #region CriticalHealChance
+        if (Random.value * 100 <= Critical)
+        {
+            GetCharacter.GetComponent<Health>().IncreaseHealth((Potency + 10) + GetCharacter.CharacterIntelligence);
+
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=35>" + ((Potency + 10) + GetCharacter.CharacterIntelligence).ToString() + "!";
+        }
+        else
+        {
+            GetCharacter.GetComponent<Health>().IncreaseHealth(Potency + GetCharacter.CharacterIntelligence);
+
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 25;
+
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
+        }
+        #endregion
+
+        return HealTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public TextMeshProUGUI StatusEffectSkillText()
+    private TextMeshProUGUI PlayerStatus()
     {
-        var SkillObj = Instantiate(StatusEffectText);
+        var StatusTxt = ObjectPooler.Instance.GetPlayerStatusText();
 
-        SkillObj.transform.SetParent(TextHolder.transform, false);
+        StatusTxt.SetActive(true);
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetStatusEffectName;
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
 
-        var Staticon = Instantiate(GetStatusIcon);
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetStatusEffectName;
 
-        Staticon.transform.SetParent(GetStatusEffectIconTrans, false);
+        StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
-        Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+        StatusEffectSkillText();
 
-        SkillObj.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
 
-        if (Staticon.GetComponent<EnemyStatusIcon>())
+    private TextMeshProUGUI EnemyStatus()
+    {
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetStatusEffectName;
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
+        StatusEffectSkillText();
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void StatusEffectSkillText()
+    {
+        if(GetStatusIcon.GetComponent<StatusIcon>())
         {
+            var Staticon = ObjectPooler.Instance.GetPlayerStatusIcon();
+
+            Staticon.SetActive(true);
+
+            Staticon.transform.SetParent(GetStatusEffectIconTrans, false);
+
+            Staticon.transform.GetComponent<StatusIcon>().GetEffectStatus = GetPlayerStatusEffect;
+
+            Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+        }
+        else
+        {
+            var Staticon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+            Staticon.SetActive(true);
+
+            Staticon.transform.SetParent(GetStatusEffectIconTrans, false);
+
+            Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
             Staticon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
             Staticon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
             Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
             Staticon.GetComponent<EnemyStatusIcon>().PlayerInput();
         }
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private TextMeshProUGUI DamageSkillText()
+    public TextMeshProUGUI DamageSkillText()
     {
-        var SkillObj = Instantiate(DamageORHealText);
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
-        var Target = GetCharacter.GetComponent<BasicAttack>();
+        var DamageTxt = ObjectPooler.Instance.GetEnemyDamageText();
 
-        SkillObj.transform.SetParent(TextHolder.transform, false);
+        if(Target != null)
+        {
+            DamageTxt.SetActive(true);
 
-        SkillObj.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + Mathf.Abs((-Potency - -Target.GetTarget.GetComponent<Character>().CharacterDefense)).ToString();
+            DamageTxt.transform.SetParent(TextHolder.transform, false);
 
-        return SkillObj.GetComponentInChildren<TextMeshProUGUI>();
+            var Critical = GetCharacter.GetCriticalChance;
+
+            #region CriticalHitChance
+            if (Random.value * 100 <= Critical)
+            {
+                Target.GetComponentInChildren<Health>().ModifyHealth((-Potency - 5) - -Target.GetComponent<Character>().CharacterDefense);
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=25>" + Mathf.Abs((-Potency - 5) -
+                                                                         -Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+            }
+            else
+            {
+                Target.GetComponentInChildren<Health>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + Mathf.Abs((-Potency - -Target.GetComponent<Character>().CharacterDefense)).ToString();
+            }
+            #endregion
+
+            if (Target.GetAI.GetStates != States.Skill)
+                Target.GetAI.GetStates = States.Damaged;
+        }
+        return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void ShowSkillPanel(GameObject Panel)

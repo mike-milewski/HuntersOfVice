@@ -222,37 +222,39 @@ public class BasicAttack : MonoBehaviour
             HitParticle.gameObject.SetActive(true);
         }
 
-        var DamageObject = Instantiate(Target.GetComponentInChildren<Health>().GetDamageText);
-
-        DamageObject.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
-
         float Critical = character.GetCriticalChance;
+
+        var t = ObjectPooler.Instance.GetEnemyDamageText();
 
         if (Target != null)
         {
+            t.SetActive(true);
+
+            t.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
+
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {
                 Target.GetComponentInChildren<Health>().ModifyHealth((-character.CharacterStrength - 5) - -Target.GetCharacter.CharacterDefense);
 
-                DamageObject.GetComponentInChildren<TextMeshProUGUI>().fontSize = 25;
+                t.GetComponentInChildren<TextMeshProUGUI>().fontSize = 25;
 
-                DamageObject.GetComponentInChildren<TextMeshProUGUI>().text = ((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense).ToString() + "!";
+                t.GetComponentInChildren<TextMeshProUGUI>().text = Mathf.Abs((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense).ToString() + "!";
             }
             else
             {
                 Target.GetComponentInChildren<Health>().ModifyHealth(-character.CharacterStrength - -Target.GetCharacter.CharacterDefense);
 
-                DamageObject.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
+                t.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
 
-                DamageObject.GetComponentInChildren<TextMeshProUGUI>().text = (character.CharacterStrength - Target.GetCharacter.CharacterDefense).ToString();
+                t.GetComponentInChildren<TextMeshProUGUI>().text = Mathf.Abs(character.CharacterStrength - Target.GetCharacter.CharacterDefense).ToString();
             }
             #endregion
 
             if(Target.GetAI.GetStates != States.Skill)
             Target.GetAI.GetStates = States.Damaged;
         }
-        return DamageObject.GetComponentInChildren<TextMeshProUGUI>();
+        return t.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void CreateParticle()

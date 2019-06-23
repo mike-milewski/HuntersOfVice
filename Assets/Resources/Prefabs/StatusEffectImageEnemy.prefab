@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 114473636292512474}
   - component: {fileID: 114642851624478784}
   m_Layer: 5
-  m_Name: StatusEffectImageEnemy 1
+  m_Name: StatusEffectImageEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
