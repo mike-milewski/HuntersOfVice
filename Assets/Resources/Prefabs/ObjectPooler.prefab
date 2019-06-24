@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1290425030425808}
+  m_IsPrefabAsset: 1
+--- !u!1 &1290425030425808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4804529681230462}
+  - component: {fileID: 114547043723728064}
+  m_Layer: 0
+  m_Name: ObjectPooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4804529681230462
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1290425030425808}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 552.30505, y: 136.05998, z: 8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114547043723728064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1290425030425808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54308cda0d29ca64d9e690082a29b76d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolcontroller:
+  - UiObject: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53, type: 2}
+    UiParent: {fileID: 0}
+    PoolAmount: 5
+    ObjectNumber: 0
+  - UiObject: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091, type: 2}
+    UiParent: {fileID: 0}
+    PoolAmount: 5
+    ObjectNumber: 0
+  - UiObject: {fileID: 1509009448252176, guid: fc6877a7be1781e4dbc38c1eed7ecb78, type: 2}
+    UiParent: {fileID: 0}
+    PoolAmount: 5
+    ObjectNumber: 0
+  - UiObject: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e, type: 2}
+    UiParent: {fileID: 0}
+    PoolAmount: 10
+    ObjectNumber: 0
+  - UiObject: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091, type: 2}
+    UiParent: {fileID: 0}
+    PoolAmount: 5
+    ObjectNumber: 0
+  - UiObject: {fileID: 1839082241841786, guid: 56933e54bfcaab94ba68a71bdd8393d1, type: 2}
+    UiParent: {fileID: 0}
+    PoolAmount: 10
+    ObjectNumber: 0
+  - UiObject: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 2}
+    UiParent: {fileID: 0}
+    PoolAmount: 10
+    ObjectNumber: 0
+  - UiObject: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf, type: 2}
+    UiParent: {fileID: 0}
+    PoolAmount: 10
+    ObjectNumber: 0
+  - UiObject: {fileID: 1973221308264212, guid: a92bfa09ac536724babad9c112ad28d0, type: 2}
+    UiParent: {fileID: 0}
+    PoolAmount: 5
+    ObjectNumber: 0

@@ -223,7 +223,7 @@ public class EnemyStatusIcon : MonoBehaviour
             character.GetComponent<Enemy>().GetHealth.IncreaseHealth(value);
             character.GetComponent<Enemy>().GetLocalHealthInfo();
 
-            var Healtxt = Instantiate(character.GetComponent<Enemy>().GetHealth.GetHealText);
+            var Healtxt = ObjectPooler.Instance.GetEnemyHealText();
 
             Healtxt.SetActive(true);
 

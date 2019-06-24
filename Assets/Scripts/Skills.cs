@@ -30,6 +30,8 @@ public class Skills : StatusEffects
 
     private bool StatusIconCreated;
 
+    private bool IsBeingDragged;
+
     [SerializeField]
     private int ManaCost, Potency;
     
@@ -63,6 +65,18 @@ public class Skills : StatusEffects
         set
         {
             ManaCost = value;
+        }
+    }
+
+    public bool GetIsBeingDragged
+    {
+        get
+        {
+            return IsBeingDragged;
+        }
+        set
+        {
+            IsBeingDragged = value;
         }
     }
 
@@ -135,7 +149,7 @@ public class Skills : StatusEffects
     private void CheckCoolDownStatus()
     {
         if (this.button.GetComponent<Image>().fillAmount >= 1 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead && 
-            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill)
+            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged)
         {
             button.interactable = true;
             return;
@@ -407,14 +421,14 @@ public class Skills : StatusEffects
             #region CriticalHitChance
             if (Random.value * 100 <= Critical)
             {
-                Target.GetComponentInChildren<Health>().ModifyHealth((-Potency - 5) - -Target.GetComponent<Character>().CharacterDefense);
+                Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs((-Potency - 5) - -Target.GetComponent<Character>().CharacterDefense));
 
                 DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=25>" + Mathf.Abs((-Potency - 5) -
                                                                          -Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
             }
             else
             {
-                Target.GetComponentInChildren<Health>().ModifyHealth(-Potency - -Target.GetComponent<Character>().CharacterDefense);
+                Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs(-Potency - -Target.GetComponent<Character>().CharacterDefense));
 
                 DamageTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
 

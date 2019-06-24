@@ -110,6 +110,7 @@ public class ObjectPooler : MonoBehaviour
         AddTextForEnemyStatusIcon(poolcontroller[5].GetPoolAmount);
         AddPlayerStatusIcon(poolcontroller[6].GetPoolAmount);
         AddEnemyStatusIcon(poolcontroller[7].GetPoolAmount);
+        AddExperienceText(poolcontroller[8].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -208,6 +209,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddExperienceText(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var UI = Instantiate(poolcontroller[8].GetUiObject);
+            UI.transform.SetParent(poolcontroller[8].GetUiParent.transform, false);
+            poolcontroller[8].GetUiTexts.Enqueue(UI);
+
+            UI.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetUiTexts.Dequeue();
@@ -246,6 +259,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetEnemyStatusIcon()
     {
         return poolcontroller[7].GetUiTexts.Dequeue();
+    }
+
+    public GameObject GetExperienceText()
+    {
+        return poolcontroller[8].GetUiTexts.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -309,6 +327,14 @@ public class ObjectPooler : MonoBehaviour
         textObject.transform.SetParent(poolcontroller[7].GetUiParent.transform, false);
 
         poolcontroller[7].GetUiTexts.Enqueue(textObject);
+        textObject.SetActive(false);
+    }
+
+    public void ReturnExperienceTextToPool(GameObject textObject)
+    {
+        textObject.transform.SetParent(poolcontroller[8].GetUiParent.transform, false);
+
+        poolcontroller[8].GetUiTexts.Enqueue(textObject);
         textObject.SetActive(false);
     }
 }

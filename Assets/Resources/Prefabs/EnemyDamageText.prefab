@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224609065680964418}
   - component: {fileID: 114538175628819836}
   m_Layer: 5
-  m_Name: EnemyDamage_HealTextHolder
+  m_Name: EnemyDamageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114568937940882514}
   - component: {fileID: 114149553812298974}
   m_Layer: 5
-  m_Name: EnemyInfoWorldSpace (1)
+  m_Name: TextMeshPro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

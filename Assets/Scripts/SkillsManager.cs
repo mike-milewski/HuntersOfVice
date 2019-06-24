@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
+using System.Linq;
 
 public class SkillsManager : MonoBehaviour
 {
@@ -17,7 +20,7 @@ public class SkillsManager : MonoBehaviour
     private EnemyStatusIcon enemystatusIcon;
 
     [SerializeField]
-    private List<Skills> skills;
+    private List<Skills> skills = new List<Skills>();
 
     private bool ActivatedSkill, DisruptedSkill;
 
@@ -110,6 +113,22 @@ public class SkillsManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        AddSkillsToList();
+        ArrangeSkills();
+    }
+
+    private void AddSkillsToList()
+    {
+        foreach(Skills s in gameObject.transform.GetComponentsInChildren<Skills>())
+        {
+            skills.Add(s);
+        }
+    }
+
+    public void ArrangeSkills()
+    {
+        skills = skills.OrderBy(g => g.name).ToList();
     }
 
     private void Update()

@@ -138,10 +138,12 @@ public class Experience : MonoBehaviour
 
     public TextMeshProUGUI GetShowExperienceText()
     {
-        ExperienceTextHolder = Instantiate(ExperienceTextHolder);
+        var ExpText = ObjectPooler.Instance.GetExperienceText();
 
-        ExperienceTextHolder.transform.SetParent(ExperienceTextParent.transform, false);
+        ExpText.SetActive(true);
 
-        return ExperienceTextHolder.GetComponentInChildren<TextMeshProUGUI>();
+        ExpText.transform.SetParent(ExperienceTextParent.transform, false);
+
+        return ExpText.GetComponentInChildren<TextMeshProUGUI>();
     }
 }

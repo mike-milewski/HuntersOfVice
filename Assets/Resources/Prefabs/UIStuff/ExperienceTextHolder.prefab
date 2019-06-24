@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 224085343858199368}
   - component: {fileID: 222293895541985784}
+  - component: {fileID: 114449991719169772}
   - component: {fileID: 95230580987454376}
-  - component: {fileID: 114605234914035850}
   - component: {fileID: 114985822494719040}
   m_Layer: 5
   m_Name: TextMeshPro Text
@@ -63,7 +63,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114605234914035850
+--- !u!114 &114449991719169772
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1683382525018962}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98286c0abf8680743943bc88cf9cdff0, type: 3}
+  m_Script: {fileID: 11500000, guid: 578cd703de6ffab41acab2697f651238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Parent: {fileID: 1973221308264212}

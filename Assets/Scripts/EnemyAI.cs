@@ -271,8 +271,7 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    enemySkills.GenerateValue();
-                    states = States.Skill;
+                    states = States.ApplyingAttack;
                     /*
                     if (Random.value * 100 <= 50)
                     {
@@ -343,6 +342,8 @@ public class EnemyAI : MonoBehaviour
         GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
         GameManager.Instance.GetEnemyObject = null;
         GameManager.Instance.GetLastEnemyObject = null;
+
+        enemy.ToggleHealthBar();
 
         enemy.ReturnExperience();
 
@@ -437,15 +438,15 @@ public class EnemyAI : MonoBehaviour
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {
-                PlayerTarget.GetComponent<Health>().ModifyHealth((-character.CharacterStrength - 5) - -PlayerTarget.CharacterDefense);
+                PlayerTarget.GetComponent<Health>().ModifyHealth(-Mathf.Abs((-character.CharacterStrength - 5) - -PlayerTarget.CharacterDefense));
 
-                t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
+                t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + Mathf.Abs(((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense)).ToString() + "!";
             }
             else
             {
-                PlayerTarget.GetComponent<Health>().ModifyHealth(-character.CharacterStrength - -PlayerTarget.CharacterDefense);
+                PlayerTarget.GetComponent<Health>().ModifyHealth(-Mathf.Abs(-character.CharacterStrength - -PlayerTarget.CharacterDefense));
 
-                t.GetComponentInChildren<TextMeshProUGUI>().text = (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                t.GetComponentInChildren<TextMeshProUGUI>().text = Mathf.Abs((character.CharacterStrength - PlayerTarget.CharacterDefense)).ToString();
             }
             #endregion
 

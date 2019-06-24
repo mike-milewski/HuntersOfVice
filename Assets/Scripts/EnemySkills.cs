@@ -728,16 +728,16 @@ public class EnemySkills : MonoBehaviour
         if (Random.value * 100 <= Critical)
         {
             enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                         ((-potency - 5) - -Target.GetComponent<Character>().CharacterDefense);
+                                                         (-Mathf.Abs((-potency - 5) - -Target.GetComponent<Character>().CharacterDefense));
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + ((potency + 5) -
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + Mathf.Abs((potency + 5) -
                                                                        Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
         }
         else
         {
-            Target.GetComponentInChildren<Health>().ModifyHealth(-potency - -Target.GetComponent<Character>().CharacterDefense);
+            Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs(-potency - -Target.GetComponent<Character>().CharacterDefense));
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + Mathf.Abs(potency - Target.GetComponent<Character>().CharacterDefense).ToString();
         }
         #endregion
 
