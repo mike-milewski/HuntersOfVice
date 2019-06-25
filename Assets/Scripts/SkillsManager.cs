@@ -26,6 +26,8 @@ public class SkillsManager : MonoBehaviour
 
     private int KeyInput;
 
+    private int input;
+
     public bool GetActivatedSkill
     {
         get
@@ -115,87 +117,151 @@ public class SkillsManager : MonoBehaviour
         Instance = this;
 
         AddSkillsToList();
-        ArrangeSkills();
     }
 
-    private void AddSkillsToList()
+    public void AddSkillsToList()
     {
         foreach(Skills s in gameObject.transform.GetComponentsInChildren<Skills>())
         {
             skills.Add(s);
+            for(int i = 0; i < skills.Count; i++)
+            {
+                s.GetIndex = i;
+            }
         }
     }
 
-    public void ArrangeSkills()
+    public void ClearSkills()
     {
-        skills = skills.OrderBy(g => g.name).ToList();
+        skills.Clear();
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            KeyInput = 0;
-            if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
-                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+            input = 1;
+            if (input > skills.Count)
             {
-                skills[KeyInput].GetButton.onClick.Invoke();
+                return;
             }
-            else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+            else
             {
-                GameManager.Instance.ShowNotEnoughManaText();
+                KeyInput = skills.IndexOf(skills[0]);
+                if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
+                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+                {
+                    skills[KeyInput].GetButton.onClick.Invoke();
+                }
+                else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+                {
+                    GameManager.Instance.ShowNotEnoughManaText();
+                }
             }
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            KeyInput = 1;
-            if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
-                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+            input = 2;
+            if (input > skills.Count)
             {
-                skills[KeyInput].GetButton.onClick.Invoke();
+                return;
             }
-            else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+            else
             {
-                GameManager.Instance.ShowNotEnoughManaText();
+                KeyInput = skills.IndexOf(skills[1]);
+                if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
+                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+                {
+                    skills[KeyInput].GetButton.onClick.Invoke();
+                }
+                else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+                {
+                    GameManager.Instance.ShowNotEnoughManaText();
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            KeyInput = 2;
-            if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
-                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+            input = 3;
+            if (input > skills.Count)
             {
-                skills[KeyInput].GetButton.onClick.Invoke();
+                return;
             }
-            else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+            else
             {
-                GameManager.Instance.ShowNotEnoughManaText();
+                KeyInput = skills.IndexOf(skills[2]);
+                if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
+                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+                {
+                    skills[KeyInput].GetButton.onClick.Invoke();
+                }
+                else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+                {
+                    GameManager.Instance.ShowNotEnoughManaText();
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            KeyInput = 3;
-            if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1 
-                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+            input = 4;
+            if (input > skills.Count)
             {
-                skills[KeyInput].GetButton.onClick.Invoke();
+                return;
             }
-            else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+            else
             {
-                GameManager.Instance.ShowNotEnoughManaText();
+                KeyInput = skills.IndexOf(skills[3]);
+                if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
+                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+                {
+                    skills[KeyInput].GetButton.onClick.Invoke();
+                }
+                else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+                {
+                    GameManager.Instance.ShowNotEnoughManaText();
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            KeyInput = 4;
-            if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
-                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+            input = 5;
+            if (input > skills.Count)
             {
-                skills[KeyInput].GetButton.onClick.Invoke();
+                return;
             }
-            else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+            else
             {
-                GameManager.Instance.ShowNotEnoughManaText();
+                KeyInput = skills.IndexOf(skills[4]);
+                if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
+                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+                {
+                    skills[KeyInput].GetButton.onClick.Invoke();
+                }
+                else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+                {
+                    GameManager.Instance.ShowNotEnoughManaText();
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            input = 6;
+            if(input > skills.Count)
+            {
+                return;
+            }
+            else
+            {
+                KeyInput = skills.IndexOf(skills[5]);
+                if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
+                                                   && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
+                {
+                    skills[KeyInput].GetButton.onClick.Invoke();
+                }
+                else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
+                {
+                    GameManager.Instance.ShowNotEnoughManaText();
+                }
             }
         }
     }
@@ -208,16 +274,27 @@ public class SkillsManager : MonoBehaviour
         }
     }
 
+    public void AllSkillsBeingDragged()
+    {
+        foreach (Skills s in skills)
+        {
+            s.GetIsBeingDragged = true;
+        }
+    }
+
+    public void AllSkillsNotBeingDragged()
+    {
+        foreach (Skills s in skills)
+        {
+            s.GetIsBeingDragged = false;
+        }
+    }
+
     public void DeactivateSkillButtons()
     {
         foreach (Skills s in skills)
         {
             s.GetButton.interactable = false;
         }
-    }
- 
-    public void Clicked(int index)
-    {
-        KeyInput = skills.IndexOf(skills[index]);
     }
 }

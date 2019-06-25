@@ -20,6 +20,8 @@ public class StatusIcon : MonoBehaviour
     [SerializeField]
     private EffectStatus status;
 
+    private int index;
+
     [SerializeField]
     private float Duration;
 
@@ -61,6 +63,16 @@ public class StatusIcon : MonoBehaviour
         set
         {
             KeyInput = value;
+        }
+    }
+
+    private void Start()
+    {
+        switch(status)
+        {
+            case (EffectStatus.StrengthUP):
+                StrengthUP(10);
+                break;
         }
     }
 
@@ -122,6 +134,13 @@ public class StatusIcon : MonoBehaviour
         StatusEffectTxt.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
         CreateParticleOnRemovePlayer();
+
+        switch (status)
+        {
+            case (EffectStatus.StrengthUP):
+                SetStrengthToDefault();
+                break;
+        }
 
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -205,10 +224,18 @@ public class StatusIcon : MonoBehaviour
 
     private void StrengthUP(int value)
     {
+        float Percentage = (float)value / 100;
 
+        float TempStrength = (float)SkillsManager.Instance.GetCharacter.CharacterStrength;
+
+        Mathf.FloorToInt(TempStrength);
+
+        TempStrength += (float)SkillsManager.Instance.GetCharacter.CharacterStrength * Percentage;
+
+        SkillsManager.Instance.GetCharacter.CharacterStrength = (int)TempStrength;
     }
 
-    private void DefenseUP()
+    private void DefenseUP(int value)
     {
 
     }
@@ -221,6 +248,13 @@ public class StatusIcon : MonoBehaviour
     private void BloodAndSinew()
     {
 
+    }
+
+    private void SetStrengthToDefault()
+    {
+        int DefaultStrength = SkillsManager.Instance.GetCharacter.GetCharacterData.Strength;
+
+        SkillsManager.Instance.GetCharacter.CharacterStrength = DefaultStrength;
     }
 
     private void CheckStatusEffectIcon()
@@ -238,18 +272,6 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.Haste):
                 Haste();
-                break;
-            case (EffectStatus.StrengthUP):
-                StrengthUP(50);
-                break;
-            case (EffectStatus.DefenseUP):
-                DefenseUP();
-                break;
-            case (EffectStatus.BloodAndSinew):
-                BloodAndSinew();
-                break;
-            case (EffectStatus.DefenseDOWN):
-                DefenseDOWN(50);
                 break;
         }
     }

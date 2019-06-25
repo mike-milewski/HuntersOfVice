@@ -2334,7 +2334,7 @@ MonoBehaviour:
     type: 2}
   StatusEffectName: Defense Down
   StatusDescription: Lowered defense
-  StatusDuration: 10
+  StatusDuration: 1
   skillbar: {fileID: 2122115158}
   button: {fileID: 766406072}
   TextHolder: {fileID: 0}
@@ -2350,6 +2350,7 @@ MonoBehaviour:
   ManaCost: 6
   Potency: 35
   CastTime: 0
+  index: 0
   SkillName: Storm Thrust
   SkillDescription: Strike a target from a distance.
 --- !u!114 &766406071
@@ -2438,13 +2439,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1450060823}
-        m_MethodName: Clicked
-        m_Mode: 3
+      - m_Target: {fileID: 766406070}
+        m_MethodName: SetSkillIndex
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4265,6 +4266,7 @@ MonoBehaviour:
   ManaCost: 5
   Potency: 25
   CastTime: 3
+  index: 0
   SkillName: Heal
   SkillDescription: A small recovery spell.
 --- !u!114 &1124948426
@@ -4353,13 +4355,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1450060823}
-        m_MethodName: Clicked
-        m_Mode: 3
+      - m_Target: {fileID: 1124948425}
+        m_MethodName: SetSkillIndex
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5719,6 +5721,7 @@ MonoBehaviour:
   ManaCost: 2
   Potency: 50
   CastTime: 0
+  index: 0
   SkillName: Swift Strike
   SkillDescription: Slash a target with precision.
 --- !u!114 &1380929676
@@ -5760,9 +5763,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1450060823}
-        m_MethodName: Clicked
-        m_Mode: 3
+      - m_Target: {fileID: 1380929675}
+        m_MethodName: SetSkillIndex
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7954,6 +7957,7 @@ MonoBehaviour:
   ManaCost: 0
   Potency: 0
   CastTime: 0
+  index: 0
   SkillName: Blood And Sinew
   SkillDescription: Imbues self with darkness.
 --- !u!114 &1818896680
@@ -8042,13 +8046,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1450060823}
-        m_MethodName: Clicked
-        m_Mode: 3
+      - m_Target: {fileID: 1818896679}
+        m_MethodName: SetSkillIndex
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8628,6 +8632,7 @@ MonoBehaviour:
   ManaCost: 0
   Potency: 0
   CastTime: 0
+  index: 0
   SkillName: For Honor
   SkillDescription: 'A warcry that increases
 
@@ -8718,13 +8723,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1450060823}
-        m_MethodName: Clicked
-        m_Mode: 3
+      - m_Target: {fileID: 1872873912}
+        m_MethodName: SetSkillIndex
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8735,7 +8740,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

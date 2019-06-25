@@ -10,13 +10,7 @@ public class UiDropZone : MonoBehaviour, IDropHandler
         {
             dragObject.transform.SetParent(this.transform, false);
 
-            SkillsManager.Instance.ArrangeSkills();
-        }
-
-        Skills skills = eventData.pointerDrag.GetComponent<Skills>();
-        if(skills != null)
-        {
-            skills.GetIsBeingDragged = false;
+            SkillsManager.Instance.ClearSkills();
         }
     }
 }

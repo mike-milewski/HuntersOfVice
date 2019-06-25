@@ -39,6 +39,9 @@ public class Skills : StatusEffects
     private int CastTime;
 
     [SerializeField]
+    private int index;
+
+    [SerializeField]
     private string SkillName;
 
     [SerializeField][TextArea]
@@ -65,6 +68,18 @@ public class Skills : StatusEffects
         set
         {
             ManaCost = value;
+        }
+    }
+
+    public int GetIndex
+    {
+        get
+        {
+            return index;
+        }
+        set
+        {
+            index = value;
         }
     }
 
@@ -226,8 +241,6 @@ public class Skills : StatusEffects
     {
         this.button.GetComponent<Image>().fillAmount = 0;
 
-        StrengthUP(GetCharacter, 10, GetStatusDuration);
-
         SkillsManager.Instance.GetStatusIcon.PlayerInput();
 
         PlayerStatus();
@@ -383,7 +396,9 @@ public class Skills : StatusEffects
 
             Staticon.transform.SetParent(GetStatusEffectIconTrans, false);
 
-            Staticon.transform.GetComponent<StatusIcon>().GetEffectStatus = GetPlayerStatusEffect;
+            Staticon.GetComponent<StatusIcon>().GetEffectStatus = GetPlayerStatusEffect;
+
+            Staticon.GetComponent<StatusIcon>().PlayerInput();
 
             Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
         }
@@ -473,5 +488,10 @@ public class Skills : StatusEffects
                                                 + CastTime + " Seconds";
             }
         }
+    }
+
+    public void SetSkillIndex()
+    {
+        SkillsManager.Instance.GetKeyInput = index;
     }
 }

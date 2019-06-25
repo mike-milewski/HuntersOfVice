@@ -28,12 +28,14 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         PlaceHolder = new GameObject();
         PlaceHolder.transform.SetParent(zone.transform, false);
+
         RectTransform RectTrans = PlaceHolder.AddComponent<RectTransform>();
+
         RectTrans.sizeDelta = new Vector2(GetComponent<RectTransform>().sizeDelta.x, GetComponent<RectTransform>().sizeDelta.y);
 
         PlaceHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
 
-        gameObject.GetComponent<Skills>().GetIsBeingDragged = true;
+        SkillsManager.Instance.AllSkillsBeingDragged();
         gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
@@ -67,11 +69,17 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         if(gameObject.transform.parent != zone.transform)
         {
             Destroy(gameObject);
+            SkillsManager.Instance.ClearSkills();
+            SkillsManager.Instance.AddSkillsToList();
+            SkillsManager.Instance.AllSkillsNotBeingDragged();
         }
         else
         {
             transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
+            SkillsManager.Instance.ClearSkills();
+            SkillsManager.Instance.AddSkillsToList();
         }
+        SkillsManager.Instance.AllSkillsNotBeingDragged();
         Destroy(PlaceHolder);
     }
 }
