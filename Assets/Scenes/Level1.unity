@@ -2328,13 +2328,12 @@ MonoBehaviour:
   PlayerStatusEffect: 0
   EnemystatusEffect: 3
   character: {fileID: 601881691}
-  StatusIcon: {fileID: 114082864009470332, guid: 4f30b12cb74f0364bbe4643058eefecf,
-    type: 2}
+  StatusIcon: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf, type: 2}
   StatusEffectIconTrans: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
     type: 2}
   StatusEffectName: Defense Down
   StatusDescription: Lowered defense
-  StatusDuration: 1
+  StatusDuration: 5
   skillbar: {fileID: 2122115158}
   button: {fileID: 766406072}
   TextHolder: {fileID: 0}
@@ -4246,8 +4245,7 @@ MonoBehaviour:
   PlayerStatusEffect: 0
   EnemystatusEffect: 0
   character: {fileID: 601881691}
-  StatusIcon: {fileID: 114375432815335230, guid: b67c014625f00f14aa3ea33a3f92e0db,
-    type: 2}
+  StatusIcon: {fileID: 0}
   StatusEffectIconTrans: {fileID: 0}
   StatusEffectName: 
   StatusDescription: 
@@ -4826,6 +4824,16 @@ Prefab:
         type: 2}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].StatusDuration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].CastTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
@@ -5700,8 +5708,7 @@ MonoBehaviour:
   PlayerStatusEffect: 0
   EnemystatusEffect: 0
   character: {fileID: 601881691}
-  StatusIcon: {fileID: 114375432815335230, guid: b67c014625f00f14aa3ea33a3f92e0db,
-    type: 2}
+  StatusIcon: {fileID: 0}
   StatusEffectIconTrans: {fileID: 1486375004}
   StatusEffectName: 
   StatusDescription: 
@@ -7937,8 +7944,7 @@ MonoBehaviour:
   PlayerStatusEffect: 0
   EnemystatusEffect: 0
   character: {fileID: 601881691}
-  StatusIcon: {fileID: 114375432815335230, guid: b67c014625f00f14aa3ea33a3f92e0db,
-    type: 2}
+  StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 2}
   StatusEffectIconTrans: {fileID: 1486375004}
   StatusEffectName: Blood & Sinew
   StatusDescription: Overwhelming Darkness
@@ -8612,8 +8618,7 @@ MonoBehaviour:
   PlayerStatusEffect: 6
   EnemystatusEffect: 0
   character: {fileID: 601881691}
-  StatusIcon: {fileID: 114375432815335230, guid: b67c014625f00f14aa3ea33a3f92e0db,
-    type: 2}
+  StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 2}
   StatusEffectIconTrans: {fileID: 1486375004}
   StatusEffectName: For Honor
   StatusDescription: Increased Damage
@@ -8636,7 +8641,7 @@ MonoBehaviour:
   SkillName: For Honor
   SkillDescription: 'A warcry that increases
 
-    your damage.'
+    your damage by 10%.'
 --- !u!114 &1872873913
 MonoBehaviour:
   m_ObjectHideFlags: 0

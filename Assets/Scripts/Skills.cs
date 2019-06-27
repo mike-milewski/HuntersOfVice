@@ -250,8 +250,6 @@ public class Skills : StatusEffects
     {
         this.button.GetComponent<Image>().fillAmount = 0;
 
-        DefenseUP(GetCharacter, 10, GetStatusDuration);
-
         SkillsManager.Instance.GetStatusIcon.PlayerInput();
 
         PlayerStatus();
@@ -263,7 +261,7 @@ public class Skills : StatusEffects
 
         SkillsManager.Instance.GetStatusIcon.PlayerInput();
 
-        StatusEffectSkillText();
+        PlayerStatus();
     }
 
     public void Poison()
@@ -390,32 +388,32 @@ public class Skills : StatusEffects
     {
         if(GetStatusIcon.GetComponent<StatusIcon>())
         {
-            var Staticon = ObjectPooler.Instance.GetPlayerStatusIcon();
+            GetStatusIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
 
-            Staticon.SetActive(true);
+            GetStatusIcon.SetActive(true);
 
-            Staticon.transform.SetParent(GetStatusEffectIconTrans, false);
+            GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
 
-            Staticon.GetComponent<StatusIcon>().GetEffectStatus = GetPlayerStatusEffect;
+            GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = GetPlayerStatusEffect;
 
-            Staticon.GetComponent<StatusIcon>().PlayerInput();
+            GetStatusIcon.GetComponent<StatusIcon>().PlayerInput();
 
-            Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
         }
         else
         {
-            var Staticon = ObjectPooler.Instance.GetEnemyStatusIcon();
+            GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
-            Staticon.SetActive(true);
+            GetStatusIcon.SetActive(true);
 
-            Staticon.transform.SetParent(GetStatusEffectIconTrans, false);
+            GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
 
-            Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
-            Staticon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
-            Staticon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
-            Staticon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
-            Staticon.GetComponent<EnemyStatusIcon>().PlayerInput();
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
         }
     }
 

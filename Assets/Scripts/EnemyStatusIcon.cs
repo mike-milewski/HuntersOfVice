@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, DefenseDOWN };
 
@@ -16,6 +17,10 @@ public class EnemyStatusIcon : MonoBehaviour
 
     [SerializeField]
     private StatusEffect effect;
+
+    private Skills skill;
+
+    private int TempSkillIndex;
 
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
@@ -87,7 +92,7 @@ public class EnemyStatusIcon : MonoBehaviour
         StatusPanel.SetActive(false);
     }
 
-    private void RemoveEffect()
+    public void RemoveEffect()
     {
         if (player == null)
         {
@@ -126,7 +131,11 @@ public class EnemyStatusIcon : MonoBehaviour
 
         KeyInput = SkillsManager.Instance.GetKeyInput;
 
-        Duration = SkillsManager.Instance.GetSkills[KeyInput].GetStatusDuration;
+        skill = SkillsManager.Instance.GetSkills[KeyInput];
+
+        TempSkillIndex = skill.GetIndex;
+
+        Duration = skill.GetStatusDuration;
 
         StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" + "<size=12>" +
                                      SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
@@ -159,7 +168,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
         StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "-" + skill.GetStatusEffectName;
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 

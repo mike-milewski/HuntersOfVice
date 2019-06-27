@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface ICharacter
 {
-    void TakeDamage(int Value);
+    void TakeDamage(int value);
+
+    void IncreaseHealth(int value);
 }

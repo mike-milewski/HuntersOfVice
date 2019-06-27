@@ -68,6 +68,18 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
         if(gameObject.transform.parent != zone.transform)
         {
+            if(gameObject.GetComponent<Skills>().GetStatusIcon != null)
+            {
+                if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>())
+                {
+                    gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+
+                }
+                else if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>())
+                {
+                    gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>().RemoveEffect();
+                }
+            }
             Destroy(gameObject);
             SkillsManager.Instance.ClearSkills();
             SkillsManager.Instance.AddSkillsToList();

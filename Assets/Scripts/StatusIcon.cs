@@ -20,6 +20,10 @@ public class StatusIcon : MonoBehaviour
     [SerializeField]
     private EffectStatus status;
 
+    private Skills skill;
+
+    private int TempSkillIndex;
+
     private int index;
 
     [SerializeField]
@@ -81,7 +85,7 @@ public class StatusIcon : MonoBehaviour
         StatusPanel.SetActive(false);
     }
 
-    private void RemoveEffect()
+    public void RemoveEffect()
     {
         if (enemyTarget != null)
         {
@@ -98,6 +102,10 @@ public class StatusIcon : MonoBehaviour
     public void PlayerInput()
     {
         KeyInput = SkillsManager.Instance.GetKeyInput;
+
+        skill = SkillsManager.Instance.GetSkills[KeyInput];
+
+        TempSkillIndex = skill.GetIndex;
 
         Duration = SkillsManager.Instance.GetSkills[KeyInput].GetStatusDuration;
 
@@ -127,9 +135,9 @@ public class StatusIcon : MonoBehaviour
 
         StatusEffectTxt.SetActive(true);
 
-        StatusEffectTxt.transform.SetParent(SkillsManager.Instance.GetSkills[KeyInput].GetTextHolder.transform, false);
+        StatusEffectTxt.transform.SetParent(skill.GetTextHolder.transform, false);
 
-        StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>().text = "-" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName;
+        StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>().text = "-" + skill.GetStatusEffectName;
 
         StatusEffectTxt.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
@@ -140,7 +148,7 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.StrengthUP):
                 SetStrengthToDefault();
                 break;
-        }
+        }   
 
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
     }

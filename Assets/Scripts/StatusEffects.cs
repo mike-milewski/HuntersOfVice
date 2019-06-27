@@ -13,7 +13,7 @@ public class StatusEffects : MonoBehaviour
     private Character character;
 
     [SerializeField]
-    private Image StatusIcon;
+    private GameObject StatusIcon;
 
     [SerializeField]
     private Transform StatusEffectIconTrans = null;
@@ -36,7 +36,7 @@ public class StatusEffects : MonoBehaviour
         }
     }
 
-    public Image GetStatusIcon
+    public GameObject GetStatusIcon
     {
         get
         {
@@ -119,39 +119,5 @@ public class StatusEffects : MonoBehaviour
         {
             EnemystatusEffect = value;
         }
-    }
-
-    public void StrengthUP(Character chara, int value, float duration)
-    {
-        duration = StatusDuration;
-
-        float Percentage = (float)value / 100;
-
-        float TempStrength = (float)chara.CharacterStrength;
-
-        Mathf.FloorToInt(TempStrength);
-
-        TempStrength += (float)chara.CharacterStrength * Percentage;
-
-        chara.CharacterStrength = (int)TempStrength;
-
-        StatusIcon.sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
-    }
-
-    public void DefenseUP(Character chara, int value, float duration)
-    {
-        duration = StatusDuration;
-
-        float Percentage = (float)value / 100;
-
-        float TempDefense = (float)chara.CharacterDefense;
-
-        Mathf.FloorToInt(TempDefense);
-
-        TempDefense += (float)chara.CharacterDefense * Percentage;
-
-        chara.CharacterDefense = (int)TempDefense;
-
-        StatusIcon.sprite = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetComponent<Button>().GetComponent<Image>().sprite;
     }
 }

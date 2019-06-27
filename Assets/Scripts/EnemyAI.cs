@@ -271,7 +271,8 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    states = States.ApplyingAttack;
+                    enemySkills.GenerateValue();
+                    states = States.Skill;
                     /*
                     if (Random.value * 100 <= 50)
                     {
