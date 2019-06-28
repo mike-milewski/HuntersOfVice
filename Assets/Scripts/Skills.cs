@@ -386,34 +386,48 @@ public class Skills : StatusEffects
 
     public void StatusEffectSkillText()
     {
-        if(GetStatusIcon.GetComponent<StatusIcon>())
+        if(!GetStatusIcon.activeInHierarchy)
         {
-            GetStatusIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
+            if (GetStatusIcon.GetComponent<StatusIcon>())
+            {
+                GetStatusIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
 
-            GetStatusIcon.SetActive(true);
+                GetStatusIcon.SetActive(true);
 
-            GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
+                GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
 
-            GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = GetPlayerStatusEffect;
+                GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = GetPlayerStatusEffect;
 
-            GetStatusIcon.GetComponent<StatusIcon>().PlayerInput();
+                GetStatusIcon.GetComponent<StatusIcon>().PlayerInput();
 
-            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+                GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            }
+            else
+            {
+                GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+                GetStatusIcon.SetActive(true);
+
+                GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
+
+                GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
+                GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
+                GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+                GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+                GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+            }
         }
         else
         {
-            GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
-
-            GetStatusIcon.SetActive(true);
-
-            GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
-
-            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
-
-            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
-            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
-            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
-            GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+            if (GetStatusIcon.GetComponent<StatusIcon>())
+            {
+                GetStatusIcon.GetComponent<StatusIcon>().PlayerInput();
+            }
+            else
+            {
+                GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+            }
         }
     }
 

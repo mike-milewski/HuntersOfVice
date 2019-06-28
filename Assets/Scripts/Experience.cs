@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class Experience : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Experience : MonoBehaviour
 
     [SerializeField]
     private Character character;
+
+    private Coroutine routine = null;
 
     [SerializeField]
     private TextMeshProUGUI ExperienceText, CharacterLevelText;
@@ -56,13 +59,27 @@ public class Experience : MonoBehaviour
         UpdateCharacterLevel();
     }
 
-    private void LateUpdate()
+    public IEnumerator FillExperienceBar()
     {
-        ExperienceBar.fillAmount = Mathf.Lerp(ExperienceBar.fillAmount, FillBarTwo.fillAmount, FillValue);
+        float elapsedTime = 0;
+        float time = 2f;
+
+        while(elapsedTime < time)
+        {
+            ExperienceBar.fillAmount = Mathf.Lerp(ExperienceBar.fillAmount, FillBarTwo.fillAmount, (elapsedTime / time));
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
     }
 
     public void GainEXP(int Value)
     {
+        if(routine != null)
+        {
+            StopCoroutine(routine);
+        }
+
         if(character.Level < MaxLevel)
         {
             ExperiencePoints += Value;
@@ -77,6 +94,7 @@ public class Experience : MonoBehaviour
 
                 LvParticle.transform.SetParent(Player.transform, true);
             }
+
             //Loops through to check if the player's experience is enough to level them up
             //and continues as long as that's true.
             while (ExperiencePoints >= NextToLevel && character.Level < MaxLevel)
@@ -87,6 +105,8 @@ public class Experience : MonoBehaviour
         FillBarTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
         UpdateExperienceText();
+
+        routine = StartCoroutine(FillExperienceBar());
     }
 
     public void UpdateExperienceText()

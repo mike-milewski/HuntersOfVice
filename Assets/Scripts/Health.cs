@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class Health : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class Health : MonoBehaviour
 
     [SerializeField]
     private bool TakingDamage;
+
+    private Coroutine routine = null;
 
     //This variable is used to check and uncheck a hit while under the effects of the sleep status.
     [SerializeField]
@@ -137,7 +140,7 @@ public class Health : MonoBehaviour
         if (HealthText != null)
             HealthText.text = character.CurrentHealth.ToString();
     }
-
+    /*
     private void FixedUpdate()
     {
         if(TakingDamage)
@@ -149,9 +152,42 @@ public class Health : MonoBehaviour
             HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, FillBarTwo.fillAmount, FillValue);
         }
     }
+    */
+    private IEnumerator Heal()
+    {
+        float elapsedTime = 0;
+        float time = 2f;
+
+        while (elapsedTime < time)
+        {
+            HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, FillBarTwo.fillAmount, (elapsedTime / time));
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator DealDamage()
+    {
+        float elapsedTime = 0;
+        float time = 2f;
+
+        while (elapsedTime < time)
+        {
+            FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, (elapsedTime / time));
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+    }
 
     public void IncreaseHealth(int Value)
     {
+        if (routine != null)
+        {
+            StopCoroutine(routine);
+        }
+
         TakingDamage = false;
 
         character.CurrentHealth += Value;
@@ -170,10 +206,17 @@ public class Health : MonoBehaviour
             }
         }
         FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+
+        routine = StartCoroutine(Heal());
     }
 
     public void ModifyHealth(int Value)
     {
+        if(routine != null)
+        {
+            StopCoroutine(routine);
+        }
+
         TakingDamage = true;
 
         character.CurrentHealth += Value;
@@ -211,6 +254,8 @@ public class Health : MonoBehaviour
             }
         }
         SleepHit = true;
+
+        routine = StartCoroutine(DealDamage());
     }
 
     public void GetFilledBar()

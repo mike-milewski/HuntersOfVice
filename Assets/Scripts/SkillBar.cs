@@ -87,7 +87,7 @@ public class SkillBar : MonoBehaviour
 
     private void Update()
     {
-        if(playerController.GetMovement == Vector3.zero && character.CurrentHealth > 0 && !SkillsManager.Instance.GetDisruptedSkill)
+        if(playerController.GetMovement == Vector3.zero && character.CurrentHealth > 0 && !SkillsManager.Instance.GetDisruptedSkill && !skills.GetIsBeingDragged)
         {
             playerAnimations.EndAttackAnimation();
             SkillBarImage.fillAmount += Time.deltaTime / skills.GetCastTime;

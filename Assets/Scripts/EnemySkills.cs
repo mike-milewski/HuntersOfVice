@@ -24,7 +24,7 @@ public class enemySkillManager
     private Sprite StatusSprite = null;
 
     [SerializeField]
-    private Image StatusIcon = null;
+    private GameObject StatusIcon = null;
 
     [SerializeField]
     private Transform TextHolder;
@@ -37,8 +37,6 @@ public class enemySkillManager
 
     [SerializeField] [Tooltip("The gameobject that will hold the status effect text.")]
     private GameObject StatusEffectHolder = null;
-
-    private bool StatusIconCreated;
 
     [SerializeField]
     private string StatusEffectName;
@@ -226,18 +224,6 @@ public class enemySkillManager
         }
     }
 
-    public bool GetStatusIconCreated
-    {
-        get
-        {
-            return StatusIconCreated;
-        }
-        set
-        {
-            StatusIconCreated = value;
-        }
-    }
-
     public Vector3 GetShapeSize
     {
         get
@@ -262,7 +248,7 @@ public class enemySkillManager
         }
     }
 
-    public Image GetStatusIcon
+    public GameObject GetStatusIcon
     {
         get
         {
@@ -663,45 +649,45 @@ public class EnemySkills : MonoBehaviour
 
     public void StatusEffectSkillTextTransform()
     {
-        /*
-        if (!GetManager[RandomValue].GetStatusIcon.isActiveAndEnabled)
+        if(!GetManager[RandomValue].GetStatusIcon.activeInHierarchy)
         {
-            if (!GetManager[RandomValue].GetStatusIconCreated)
+            if (GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>())
             {
-                GetManager[RandomValue].GetStatusIcon = Instantiate(GetManager[RandomValue].GetStatusIcon);
-                GetManager[RandomValue].GetStatusIconCreated = true;
+                GetManager[RandomValue].GetStatusIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
+
+                GetManager[RandomValue].GetStatusIcon.SetActive(true);
+
+                GetManager[RandomValue].GetStatusIcon.transform.SetParent(this.GetManager[RandomValue].GetStatusIconTrans.transform, false);
+
+                GetManager[RandomValue].GetStatusIcon.GetComponent<Image>().sprite = this.GetManager[RandomValue].GetStatusSprite;
+
+                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)this.GetManager[RandomValue].GetStatus;
+                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
+                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
             }
             else
             {
-                GetManager[RandomValue].GetStatusIcon.gameObject.SetActive(true);
+                GetManager[RandomValue].GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+                GetManager[RandomValue].GetStatusIcon.SetActive(true);
+
+                GetManager[RandomValue].GetStatusIcon.transform.SetParent(this.GetManager[RandomValue].GetStatusIconTrans.transform, false);
+
+                GetManager[RandomValue].GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = (StatusEffect)this.GetManager[RandomValue].GetStatus;
+
+                GetManager[RandomValue].GetStatusIcon.GetComponent<Image>().sprite = this.GetManager[RandomValue].GetStatusSprite;
             }
-        }
-        */
-        if (GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>())
-        {
-            var StatIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
-
-            StatIcon.SetActive(true);
-
-            StatIcon.transform.SetParent(GetManager[RandomValue].GetStatusIconTrans.transform, false);
-
-            StatIcon.GetComponent<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
-
-            StatIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)GetManager[RandomValue].GetStatus;
-            StatIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
-            StatIcon.GetComponent<StatusIcon>().EnemyInput();
         }
         else
         {
-            var StatIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
-
-            StatIcon.SetActive(true);
-
-            StatIcon.transform.SetParent(GetManager[RandomValue].GetStatusIconTrans.transform, false);
-
-            StatIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = (StatusEffect)GetManager[RandomValue].GetStatus;
-
-            StatIcon.GetComponent<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
+            if (GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>())
+            {
+                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
+            }
+            else
+            {
+                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
+            }
         }
     }
 

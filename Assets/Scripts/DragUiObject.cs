@@ -88,10 +88,22 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         else
         {
             transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
+            CheckForSameSkills(gameObject.GetComponent<Skills>());
             SkillsManager.Instance.ClearSkills();
             SkillsManager.Instance.AddSkillsToList();
         }
         SkillsManager.Instance.AllSkillsNotBeingDragged();
         Destroy(PlaceHolder);
+    }
+
+    private void CheckForSameSkills(Skills other)
+    {
+        foreach (Skills s in zone.GetComponentsInChildren<Skills>())
+        {
+            if (other.GetSkillName == s.GetSkillName)
+            {
+
+            }
+        }
     }
 }
