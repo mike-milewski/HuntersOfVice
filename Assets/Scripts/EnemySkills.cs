@@ -6,7 +6,7 @@ public enum Skill { //MushroomMan Skills
                     FungiBump, HealingCap, PoisonSpore,
                     Regen };
 
-public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste };
+public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom };
 
 [System.Serializable]
 public class enemySkillManager
@@ -714,10 +714,10 @@ public class EnemySkills : MonoBehaviour
         if (Random.value * 100 <= Critical)
         {
             enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                                         (-Mathf.Abs((-potency - 5) - -Target.GetComponent<Character>().CharacterDefense));
+                                                         (-Mathf.Abs((-potency + 5) - -Target.GetComponent<Character>().CharacterDefense));
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + Mathf.Abs((potency + 5) -
-                                                                       Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + (Mathf.Abs((-potency + 5) -
+                                                                       -Target.GetComponent<Character>().CharacterDefense)).ToString() + "!";
         }
         else
         {
@@ -746,25 +746,30 @@ public class EnemySkills : MonoBehaviour
 
         ActiveSkill = false;
 
-        if (Random.value * 100 <= Critical)
+        #region CritChance
+        if(character.CurrentHealth > 0)
         {
-            health.IncreaseHealth((skills[RandomValue].GetPotency + 10) + character.CharacterIntelligence);
+            if (Random.value * 100 <= Critical)
+            {
+                health.IncreaseHealth((skills[RandomValue].GetPotency + 10) + character.CharacterIntelligence);
 
-            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + "<size=25>" + 
-                                                                    (potency + character.CharacterIntelligence).ToString() + "!";
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + "<size=25>" +
+                                                                        (potency + character.CharacterIntelligence).ToString() + "!";
 
-            enemy.GetLocalHealthInfo();
+                enemy.GetLocalHealthInfo();
+            }
+            else
+            {
+                health.IncreaseHealth(skills[RandomValue].GetPotency + character.CharacterIntelligence);
+
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
+
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
+
+                enemy.GetLocalHealthInfo();
+            }
         }
-        else
-        {
-            health.IncreaseHealth(skills[RandomValue].GetPotency + character.CharacterIntelligence);
-
-            HealTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
-
-            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
-
-            enemy.GetLocalHealthInfo();
-        }
+        #endregion
 
         HealTxt.GetComponentInChildren<TextMeshProUGUI>().transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 

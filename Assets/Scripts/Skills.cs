@@ -331,19 +331,22 @@ public class Skills : StatusEffects
         GetCharacter.GetComponent<Health>().GetTakingDamage = false;
 
         #region CriticalHealChance
-        if (Random.value * 100 <= Critical)
+        if (GetCharacter.CurrentHealth > 0)
         {
-            GetCharacter.GetComponent<Health>().IncreaseHealth((Potency + 10) + GetCharacter.CharacterIntelligence);
+            if (Random.value * 100 <= Critical)
+            {
+                GetCharacter.GetComponent<Health>().IncreaseHealth((Potency + 10) + GetCharacter.CharacterIntelligence);
 
-            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=35>" + ((Potency + 10) + GetCharacter.CharacterIntelligence).ToString() + "!";
-        }
-        else
-        {
-            GetCharacter.GetComponent<Health>().IncreaseHealth(Potency + GetCharacter.CharacterIntelligence);
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=35>" + ((Potency + 10) + GetCharacter.CharacterIntelligence).ToString() + "!";
+            }
+            else
+            {
+                GetCharacter.GetComponent<Health>().IncreaseHealth(Potency + GetCharacter.CharacterIntelligence);
 
-            HealTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 25;
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 25;
 
-            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
+            }
         }
         #endregion
 

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, StrengthUP, DefenseUP, BloodAndSinew, DefenseDOWN }
+public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, BloodAndSinew, DefenseDOWN }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -129,6 +129,7 @@ public class StatusIcon : MonoBehaviour
         PoisonDamageTick = 3f;
     }
 
+    //Called when a status effect cast by the player onto themselves gets removed.
     public TextMeshProUGUI RemoveStatusEffectText()
     {
         var StatusEffectTxt = ObjectPooler.Instance.GetPlayerStatusText();
@@ -153,6 +154,7 @@ public class StatusIcon : MonoBehaviour
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    //Called when a status effect cast by an enemy onto the player gets removed.
     public TextMeshProUGUI RemoveEnemyStatusEffectText()
     {
         KeyInput = enemyTarget.GetComponent<EnemySkills>().GetRandomValue;
@@ -180,6 +182,9 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
                 SkillsManager.Instance.GetDisruptedSkill = false;
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
+                break;
+            case (EffectStatus.Doom):
+                SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(-SkillsManager.Instance.GetCharacter.CurrentHealth);
                 break;
         }
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();

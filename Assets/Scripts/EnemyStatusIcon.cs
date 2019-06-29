@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 
-public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, DefenseDOWN };
+public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, BloodAndSinew, DefenseDOWN };
 
 public class EnemyStatusIcon : MonoBehaviour
 {
@@ -184,6 +184,9 @@ public class EnemyStatusIcon : MonoBehaviour
                 break;
             case (StatusEffect.DefenseDOWN):
                 SetDefenseToDefault();
+                break;
+            case (StatusEffect.Doom):
+                character.GetComponentInChildren<Health>().ModifyHealth(-character.CurrentHealth);
                 break;
         }
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
