@@ -19,7 +19,7 @@ public class EnemyAI : MonoBehaviour
     private EnemySkills enemySkills;
 
     [SerializeField]
-    private MushroomMon_Ani_Test Anim;
+    private EnemyAnimations Anim;
 
     [SerializeField]
     private Transform[] Waypoints;
@@ -56,7 +56,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private bool IsHostile;
 
-    public MushroomMon_Ani_Test GetAnimation
+    public EnemyAnimations GetAnimation
     {
         get
         {

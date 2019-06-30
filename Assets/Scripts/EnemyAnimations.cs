@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class MushroomMon_Ani_Test : MonoBehaviour
+public class EnemyAnimations : MonoBehaviour
 {
     [SerializeField]
     private EnemyAI AI;
@@ -109,13 +109,14 @@ public class MushroomMon_Ani_Test : MonoBehaviour
     {
         Color alpha = rend.material.color;
         rend.material.color = alpha;
-        while(alpha.a > 0.2f)
+        yield return new WaitForSeconds(3f);
+        while(alpha.a > 0.1f)
         {
-            alpha.a -= Mathf.Clamp01(alpha.a) * 6 * Time.deltaTime;
+            alpha.a -= 11 * Time.deltaTime;
             rend.material.color = alpha;
             this.gameObject.GetComponent<SkinnedMeshRenderer>().material = rend.material;
             yield return new WaitForSeconds(0.1f);
-            alpha.a -= Mathf.Clamp01(alpha.a) * 6 * Time.deltaTime;
+            alpha.a -= 11 * Time.deltaTime;
             rend.material.color = alpha;
             this.gameObject.GetComponent<SkinnedMeshRenderer>().material = rend.material;
             yield return new WaitForSeconds(0.1f);
