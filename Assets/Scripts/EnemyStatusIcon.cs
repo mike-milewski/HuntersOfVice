@@ -52,8 +52,7 @@ public class EnemyStatusIcon : MonoBehaviour
     [SerializeField]
     private float Duration;
 
-    private float RegenHealTick; //Value used for status effects with health regeneration.
-    private float DamageTick; //Value used for status effects that damage over time;
+    private float DamageOrHealTick, TempTick;
 
     private int KeyInput;
 
@@ -119,8 +118,9 @@ public class EnemyStatusIcon : MonoBehaviour
         StatusDescriptionText.text = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" + "<size=12>" +
                                      character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
 
-        RegenHealTick = 3f;
-        DamageTick = 3f;
+        DamageOrHealTick = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectPotency;
+
+        TempTick = DamageOrHealTick;
     }
 
     public void PlayerInput()
@@ -140,7 +140,9 @@ public class EnemyStatusIcon : MonoBehaviour
         StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" + "<size=12>" +
                                      SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
 
-        DamageTick = 3f;
+        DamageOrHealTick = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency;
+
+        TempTick = DamageOrHealTick;
     }
 
     public TextMeshProUGUI RemoveStatusEffectText()
@@ -228,8 +230,8 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private void HealthRegen(int value, float healTick)
     {
-        RegenHealTick -= Time.deltaTime;
-        if (RegenHealTick <= 0)
+        DamageOrHealTick -= Time.deltaTime;
+        if (DamageOrHealTick <= 0)
         {
             character.GetComponent<Enemy>().GetHealth.GetTakingDamage = false;
             character.GetComponent<Enemy>().GetHealth.IncreaseHealth(value);
@@ -243,14 +245,14 @@ public class EnemyStatusIcon : MonoBehaviour
 
             Healtxt.GetComponentInChildren<Text>().text = value.ToString();
 
-            RegenHealTick = healTick;
+            DamageOrHealTick = healTick;
         }
     }
 
-    private void DamageOverTime(int value, float damageTick)
+    private void DamageOverTime(int value)
     {
-        DamageTick -= Time.deltaTime;
-        if (DamageTick <= 0)
+        TempTick -= Time.deltaTime;
+        if (TempTick <= 0)
         {
             var EnemyDamagetxt = ObjectPooler.Instance.GetEnemyDamageText();
 
@@ -264,7 +266,7 @@ public class EnemyStatusIcon : MonoBehaviour
             character.GetComponent<Enemy>().GetHealth.ModifyHealth(-value);
             character.GetComponent<Enemy>().GetLocalHealthInfo();
 
-            DamageTick = damageTick;
+            TempTick = DamageOrHealTick;
         }
     }
 
@@ -307,8 +309,6 @@ public class EnemyStatusIcon : MonoBehaviour
         int DefaultDefense = character.GetCharacterData.Defense;
 
         character.CharacterDefense = DefaultDefense;
-
-        Debug.Log(character.GetCharacterData.Defense);
     }
 
     private void CheckStatusEffect()
@@ -319,7 +319,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 HealthRegen(RegenAndDOTCalculation(), 3f);
                 break;
             case (StatusEffect.DamageOverTime):
-                DamageOverTime(RegenAndDOTCalculation(), 3f);
+                DamageOverTime(RegenAndDOTCalculation());
                 break;
             case (StatusEffect.Stun):
                 Stun();

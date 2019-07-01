@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class Skills : StatusEffects
 {
@@ -26,7 +27,9 @@ public class Skills : StatusEffects
     private ParticleSystem SkillParticle;
 
     [SerializeField]
-    private float CoolDown, AttackRange, ApplySkill;
+    private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency;
+
+    private float AttackDistance;
 
     private bool StatusIconCreated;
 
@@ -80,6 +83,18 @@ public class Skills : StatusEffects
         set
         {
             index = value;
+        }
+    }
+
+    public float GetStatusEffectPotency
+    {
+        get
+        {
+            return StatusEffectPotency;
+        }
+        set
+        {
+            StatusEffectPotency = value;
         }
     }
 
@@ -155,6 +170,8 @@ public class Skills : StatusEffects
         }
     }
 
+    private bool StormThrustActivated;
+
     private void Update()
     {
         if(GetCharacter != null)
@@ -173,6 +190,11 @@ public class Skills : StatusEffects
         {
             this.button.GetComponent<Image>().fillAmount += Time.deltaTime / CoolDown;
             this.button.interactable = false;
+        }
+
+        if(StormThrustActivated)
+        {
+            StormThrustHit();
         }
     }
 
@@ -303,19 +325,70 @@ public class Skills : StatusEffects
         }
     }
 
+    private float DistanceToAttack()
+    {
+        if(GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        AttackDistance = Vector3.Distance(GetCharacter.transform.position, GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position);
+
+        return AttackDistance;
+    }
+
     public void StormThrust()
     {
-        TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
+        if(GetCharacter.GetComponent<BasicAttack>().GetTarget == null)
+        {
+            GameManager.Instance.InvalidTargetText();
+        }
+        else if(DistanceToAttack() <= 7)
+        {
+            GameManager.Instance.ShowTargetOutOfRangeText();
+        }
+        else if (DistanceToAttack() <= AttackRange)
+        {
+            StormThrustActivated = true;
 
-        SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
+            TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
 
-        SkillsManager.Instance.GetActivatedSkill = true;
+            SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
 
-        GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
+            this.button.GetComponent<Image>().fillAmount = 0;
 
-        this.button.GetComponent<Image>().fillAmount = 0;
+            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
-        StatusEffectSkillText();
+            SkillsManager.Instance.GetActivatedSkill = true;
+        }
+    }
+
+    private void StormThrustHit()
+    {
+        GetCharacter.GetComponent<PlayerAnimations>().StormThrustAnimation();
+
+        Vector3 Distance = new Vector3(GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position.x - GetCharacter.transform.position.x, 0,
+                                       GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position.z - GetCharacter.transform.position.z).normalized;
+
+        Quaternion Look = Quaternion.LookRotation(Distance);
+
+        GetCharacter.transform.rotation = Quaternion.Slerp(GetCharacter.transform.rotation, Look, 10 * Time.deltaTime);
+        GetCharacter.GetRigidbody.transform.position += Distance * 30 * Time.deltaTime;
+
+        if(DistanceToAttack() <= 2)
+        {
+            GetCharacter.GetComponent<BasicAttack>().HitParticleEffect();
+
+            DamageSkillText();
+
+            GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
+
+            EnemyStatus();
+
+            StormThrustActivated = false;
+
+            SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
+
+            SkillsManager.Instance.GetActivatedSkill = false;
+
+            GetCharacter.GetComponent<PlayerAnimations>().EndStormThrustAnimation();
+        }
     }
 
     private TextMeshProUGUI HealSkillText()

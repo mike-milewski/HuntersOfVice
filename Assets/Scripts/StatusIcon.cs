@@ -15,7 +15,7 @@ public class StatusIcon : MonoBehaviour
     private TextMeshProUGUI DurationText, StatusDescriptionText;
 
     [SerializeField]
-    private ParticleSystem StatusRemovalParticle;
+    private ParticleSystem StatusRemovalParticle, DoomParticle;
 
     [SerializeField]
     private EffectStatus status;
@@ -29,7 +29,9 @@ public class StatusIcon : MonoBehaviour
     [SerializeField]
     private float Duration;
 
-    private float PoisonDamageTick;
+    private float DamageOrHealTick; //The amount of seconds that passes before taking damage from poison effects or healing from regen effects.
+
+    private float TempTick;
 
     [SerializeField]
     private int KeyInput;
@@ -112,7 +114,9 @@ public class StatusIcon : MonoBehaviour
         StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" + "<size=14>" +
                                      SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
 
-        PoisonDamageTick = 3f;
+        DamageOrHealTick = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency;
+
+        TempTick = DamageOrHealTick;
     }
 
     public void EnemyInput()
@@ -126,7 +130,9 @@ public class StatusIcon : MonoBehaviour
         StatusDescriptionText.text = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" + "<size=14>" +
                                      enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
 
-        PoisonDamageTick = 3f;
+        DamageOrHealTick = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectPotency;
+
+        TempTick = DamageOrHealTick;
     }
 
     //Called when a status effect cast by the player onto themselves gets removed.
@@ -190,10 +196,10 @@ public class StatusIcon : MonoBehaviour
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private void DamageOverTime(int value, float damageTick)
+    private void DamageOverTime(int value)
     {
-        PoisonDamageTick -= Time.deltaTime;
-        if (PoisonDamageTick <= 0)
+        TempTick -= Time.deltaTime;
+        if (TempTick <= 0)
         {
             SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetTakingDamage = true;
             SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(-value);
@@ -206,7 +212,7 @@ public class StatusIcon : MonoBehaviour
 
             Damagetxt.GetComponentInChildren<TextMeshProUGUI>().text = value.ToString();
 
-            PoisonDamageTick = damageTick;
+            TempTick = DamageOrHealTick;
         }
     }
 
@@ -275,7 +281,7 @@ public class StatusIcon : MonoBehaviour
         switch (status)
         {
             case (EffectStatus.DamageOverTime):
-                DamageOverTime(RegenAndDOTCalculation(), 3f);
+                DamageOverTime(RegenAndDOTCalculation());
                 break;
             case (EffectStatus.Stun):
                 Stun();
@@ -300,13 +306,26 @@ public class StatusIcon : MonoBehaviour
 
     private void CreateParticleOnRemovePlayer()
     {
-        var character = SkillsManager.Instance.GetCharacter;
+        if(status == EffectStatus.Doom)
+        {
+            var chara = SkillsManager.Instance.GetCharacter;
 
-        var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(character.transform.position.x, 
-                                                                            character.transform.position.y + 1f, 
-                                                                            character.transform.position.z), transform.rotation);
+            var Statusparticle = Instantiate(DoomParticle, new Vector3(chara.transform.position.x,
+                                                                                chara.transform.position.y + 1f,
+                                                                                chara.transform.position.z), transform.rotation);
 
-        StatusParticle.transform.SetParent(character.transform, true);
+            Statusparticle.transform.SetParent(chara.transform, true);
+        }
+        else
+        {
+            var character = SkillsManager.Instance.GetCharacter;
+
+            var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(character.transform.position.x,
+                                                                                character.transform.position.y + 1f,
+                                                                                character.transform.position.z), transform.rotation);
+
+            StatusParticle.transform.SetParent(character.transform, true);
+        }
     }
 
     private void CreateParticleOnRemoveEnemy()

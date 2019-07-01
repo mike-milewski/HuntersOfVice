@@ -17,9 +17,6 @@ public class PoolController
     [SerializeField]
     private int PoolAmount;
 
-    [SerializeField]
-    private int ObjectNumber;
-
     public GameObject GetUiObject
     {
         get
@@ -41,18 +38,6 @@ public class PoolController
         set
         {
             PoolAmount = value;
-        }
-    }
-
-    public int GetObjectNum
-    {
-        get
-        {
-            return ObjectNumber;
-        }
-        set
-        {
-            ObjectNumber = value;
         }
     }
 

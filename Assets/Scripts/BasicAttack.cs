@@ -217,13 +217,7 @@ public class BasicAttack : MonoBehaviour
 
         var Damagetext = ObjectPooler.Instance.GetEnemyDamageText();
 
-        var Hitparticle = ObjectPooler.Instance.GetHitParticle();
-
-        Hitparticle.SetActive(true);
-
-        Hitparticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z);
-
-        Hitparticle.transform.SetParent(Target.transform, true);
+        HitParticleEffect();
 
         Damagetext.SetActive(true);
 
@@ -252,5 +246,16 @@ public class BasicAttack : MonoBehaviour
             Target.GetAI.GetStates = States.Damaged;
 
         return Damagetext.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void HitParticleEffect()
+    {
+        var Hitparticle = ObjectPooler.Instance.GetHitParticle();
+
+        Hitparticle.SetActive(true);
+
+        Hitparticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z);
+
+        Hitparticle.transform.SetParent(Target.transform, true);
     }
 }

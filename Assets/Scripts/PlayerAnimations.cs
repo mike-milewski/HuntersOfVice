@@ -92,6 +92,11 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Skill", true);
     }
 
+    public void StormThrustAnimation()
+    {
+        animator.SetBool("StormThrust", true);
+    }
+
     public void DealSkillDamage()
     {
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText();
@@ -102,6 +107,11 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Skill", false);
 
         SkillsManager.Instance.GetActivatedSkill = false;
+    }
+
+    public void EndStormThrustAnimation()
+    {
+        animator.SetBool("StormThrust", false);
     }
 
     public void PlayFallSoundEffect()

@@ -97,6 +97,7 @@ MonoBehaviour:
   StatusDescriptionText: {fileID: 114909423992531630}
   StatusRemovalParticle: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e,
     type: 2}
+  DoomParticle: {fileID: 19800004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 2}
   status: 0
   Duration: 5
   KeyInput: 1
