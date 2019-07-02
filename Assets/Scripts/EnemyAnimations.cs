@@ -4,6 +4,9 @@ using UnityEngine;
 public class EnemyAnimations : MonoBehaviour
 {
     [SerializeField]
+    private Animation anim;
+
+    [SerializeField]
     private EnemyAI AI;
 
     [SerializeField]
@@ -20,16 +23,12 @@ public class EnemyAnimations : MonoBehaviour
     private const string DAMAGE	= "Damage";
 	private const string DEATH	= "Death";
 
-	private Animation anim;
-
     [SerializeField]
     private SkinnedMeshRenderer rend;
 
 	void Start ()
     {
-		anim = GetComponent<Animation>();
-
-        rend.material = GetComponent<SkinnedMeshRenderer>().material;
+        CheckSkinnedMesh();
     }
 
     private void OnEnable()
@@ -38,7 +37,7 @@ public class EnemyAnimations : MonoBehaviour
         rend.material.color = alpha;
         alpha.a = 1.0f;
         rend.material.color = alpha;
-        this.gameObject.GetComponent<SkinnedMeshRenderer>().material = rend.material;
+        CheckSkinnedMesh();
     }
 
     public void IdleAni ()
@@ -114,14 +113,26 @@ public class EnemyAnimations : MonoBehaviour
         {
             alpha.a -= 11 * Time.deltaTime;
             rend.material.color = alpha;
-            this.gameObject.GetComponent<SkinnedMeshRenderer>().material = rend.material;
+            CheckSkinnedMesh();
             yield return new WaitForSeconds(0.1f);
             alpha.a -= 11 * Time.deltaTime;
             rend.material.color = alpha;
-            this.gameObject.GetComponent<SkinnedMeshRenderer>().material = rend.material;
+            CheckSkinnedMesh();
             yield return new WaitForSeconds(0.1f);
         }
         ParentObject.SetActive(false);
         yield return null;
+    }
+
+    private void CheckSkinnedMesh()
+    {
+        if (gameObject.GetComponent<SkinnedMeshRenderer>() == null)
+        {
+            this.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = rend.material;
+        }
+        else
+        {
+            this.gameObject.GetComponent<SkinnedMeshRenderer>().material = rend.material;
+        }
     }
 }

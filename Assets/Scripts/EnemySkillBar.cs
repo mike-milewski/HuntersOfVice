@@ -138,8 +138,11 @@ public class EnemySkillBar : MonoBehaviour
 
     public void GetEnemySkill()
     {
-        SkillName.text = enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName;
-        CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
+        if(enemySkills.GetManager.Length > 0)
+        {
+            SkillName.text = enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName;
+            CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
+        }
     }
 
     public void ToggleCastBar()

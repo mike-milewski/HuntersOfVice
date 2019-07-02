@@ -52,43 +52,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolcontroller:
-  - UiObject: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53, type: 2}
-    UiParent: {fileID: 0}
-    PoolAmount: 5
-    ObjectNumber: 0
-  - UiObject: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091, type: 2}
-    UiParent: {fileID: 0}
-    PoolAmount: 5
-    ObjectNumber: 0
-  - UiObject: {fileID: 1509009448252176, guid: fc6877a7be1781e4dbc38c1eed7ecb78, type: 2}
-    UiParent: {fileID: 0}
-    PoolAmount: 5
-    ObjectNumber: 0
-  - UiObject: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e, type: 2}
-    UiParent: {fileID: 0}
+  - ObjectToPool: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53,
+      type: 2}
+    PoolParent: {fileID: 0}
     PoolAmount: 10
-    ObjectNumber: 0
-  - UiObject: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091, type: 2}
-    UiParent: {fileID: 0}
+  - ObjectToPool: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091,
+      type: 2}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10
+  - ObjectToPool: {fileID: 1509009448252176, guid: fc6877a7be1781e4dbc38c1eed7ecb78,
+      type: 2}
+    PoolParent: {fileID: 0}
     PoolAmount: 5
-    ObjectNumber: 0
-  - UiObject: {fileID: 1839082241841786, guid: 56933e54bfcaab94ba68a71bdd8393d1, type: 2}
-    UiParent: {fileID: 0}
+  - ObjectToPool: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
+      type: 2}
+    PoolParent: {fileID: 0}
     PoolAmount: 10
-    ObjectNumber: 0
-  - UiObject: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 2}
-    UiParent: {fileID: 0}
-    PoolAmount: 10
-    ObjectNumber: 0
-  - UiObject: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf, type: 2}
-    UiParent: {fileID: 0}
-    PoolAmount: 10
-    ObjectNumber: 0
-  - UiObject: {fileID: 1973221308264212, guid: a92bfa09ac536724babad9c112ad28d0, type: 2}
-    UiParent: {fileID: 0}
+  - ObjectToPool: {fileID: 1522704258827516, guid: 6c45e0610fe491144a94837c5a382f50,
+      type: 2}
+    PoolParent: {fileID: 0}
     PoolAmount: 5
-    ObjectNumber: 0
-  - UiObject: {fileID: 1995403933065894, guid: 4961a16ba01e09547be3e1c9d16d5ad0, type: 2}
-    UiParent: {fileID: 0}
+  - ObjectToPool: {fileID: 1839082241841786, guid: 56933e54bfcaab94ba68a71bdd8393d1,
+      type: 2}
+    PoolParent: {fileID: 0}
     PoolAmount: 10
-    ObjectNumber: 0
+  - ObjectToPool: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db,
+      type: 2}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10
+  - ObjectToPool: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf,
+      type: 2}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10
+  - ObjectToPool: {fileID: 1973221308264212, guid: a92bfa09ac536724babad9c112ad28d0,
+      type: 2}
+    PoolParent: {fileID: 0}
+    PoolAmount: 5
+  - ObjectToPool: {fileID: 1995403933065894, guid: 4961a16ba01e09547be3e1c9d16d5ad0,
+      type: 2}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10

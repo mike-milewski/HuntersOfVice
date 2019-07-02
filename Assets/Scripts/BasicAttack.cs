@@ -226,7 +226,7 @@ public class BasicAttack : MonoBehaviour
         #region CriticalHitCalculation
         if (Random.value * 100 <= Critical)
         {
-            Target.GetComponentInChildren<Health>().ModifyHealth((-character.CharacterStrength - 5) - -Target.GetCharacter.CharacterDefense);
+            Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense));
 
             Damagetext.GetComponentInChildren<TextMeshProUGUI>().fontSize = 25;
 
@@ -234,7 +234,7 @@ public class BasicAttack : MonoBehaviour
         }
         else
         {
-            Target.GetComponentInChildren<Health>().ModifyHealth(-character.CharacterStrength - -Target.GetCharacter.CharacterDefense);
+            Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
 
             Damagetext.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
 

@@ -247,9 +247,9 @@ public class StatusIcon : MonoBehaviour
 
         float TempStrength = (float)SkillsManager.Instance.GetCharacter.CharacterStrength;
 
-        Mathf.FloorToInt(TempStrength);
-
         TempStrength += (float)SkillsManager.Instance.GetCharacter.CharacterStrength * Percentage;
+
+        Mathf.Round(TempStrength);
 
         SkillsManager.Instance.GetCharacter.CharacterStrength = (int)TempStrength;
     }
@@ -300,6 +300,8 @@ public class StatusIcon : MonoBehaviour
         float percent = Mathf.Round(0.1f * (float)SkillsManager.Instance.GetCharacter.MaxHealth);
 
         int GetHealth = (int)percent;
+
+        Mathf.Round(GetHealth);
 
         return GetHealth;
     }

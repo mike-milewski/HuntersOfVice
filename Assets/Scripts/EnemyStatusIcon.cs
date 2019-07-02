@@ -297,9 +297,9 @@ public class EnemyStatusIcon : MonoBehaviour
 
         float TempDefense = (float)character.CharacterDefense;
 
-        Mathf.FloorToInt(TempDefense);
-
         TempDefense -= (float)character.CharacterDefense * Percentage;
+
+        Mathf.Round(TempDefense);
 
         character.CharacterDefense = (int)TempDefense;
     }

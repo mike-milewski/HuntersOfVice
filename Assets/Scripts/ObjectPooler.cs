@@ -6,26 +6,26 @@ using TMPro;
 [System.Serializable]
 public class PoolController
 {
-    private Queue<GameObject> UiTexts = new Queue<GameObject>();
+    private Queue<GameObject> PooledObject = new Queue<GameObject>();
 
     [SerializeField]
-    private GameObject UiObject;
+    private GameObject ObjectToPool;
 
     [SerializeField]
-    private Transform UiParent;
+    private Transform PoolParent;
 
     [SerializeField]
     private int PoolAmount;
 
-    public GameObject GetUiObject
+    public GameObject GetObjectToPool
     {
         get
         {
-            return UiObject;
+            return ObjectToPool;
         }
         set
         {
-            UiObject = value;
+            ObjectToPool = value;
         }
     }
 
@@ -41,27 +41,27 @@ public class PoolController
         }
     }
 
-    public Queue<GameObject> GetUiTexts
+    public Queue<GameObject> GetPooledObject
     {
         get
         {
-            return UiTexts;
+            return PooledObject;
         }
         set
         {
-            UiTexts = value;
+            PooledObject = value;
         }
     }
 
-    public Transform GetUiParent
+    public Transform GetPoolParent
     {
         get
         {
-            return UiParent;
+            return PoolParent;
         }
         set
         {
-            UiParent = value;
+            PoolParent = value;
         }
     }
 }
@@ -103,11 +103,11 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[0].GetUiObject);
-            UI.transform.SetParent(poolcontroller[0].GetUiParent.transform, false);
-            poolcontroller[0].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[0].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[0].GetPoolParent.transform, false);
+            poolcontroller[0].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
@@ -115,11 +115,11 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[1].GetUiObject);
-            UI.transform.SetParent(poolcontroller[1].GetUiParent.transform, false);
-            poolcontroller[1].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[1].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[1].GetPoolParent.transform, false);
+            poolcontroller[1].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
@@ -127,11 +127,11 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[2].GetUiObject);
-            UI.transform.SetParent(poolcontroller[2].GetUiParent.transform, false);
-            poolcontroller[2].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[2].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[2].GetPoolParent.transform, false);
+            poolcontroller[2].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
@@ -139,11 +139,11 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[3].GetUiObject);
-            UI.transform.SetParent(poolcontroller[3].GetUiParent.transform, false);
-            poolcontroller[3].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[3].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[3].GetPoolParent.transform, false);
+            poolcontroller[3].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
@@ -151,11 +151,11 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[4].GetUiObject);
-            UI.transform.SetParent(poolcontroller[4].GetUiParent.transform, false);
-            poolcontroller[4].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[4].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[4].GetPoolParent.transform, false);
+            poolcontroller[4].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
@@ -163,11 +163,11 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[5].GetUiObject);
-            UI.transform.SetParent(poolcontroller[5].GetUiParent.transform, false);
-            poolcontroller[5].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[5].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[5].GetPoolParent.transform, false);
+            poolcontroller[5].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
@@ -175,11 +175,11 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[6].GetUiObject);
-            UI.transform.SetParent(poolcontroller[6].GetUiParent.transform, false);
-            poolcontroller[6].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[6].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[6].GetPoolParent.transform, false);
+            poolcontroller[6].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
@@ -187,11 +187,11 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[7].GetUiObject);
-            UI.transform.SetParent(poolcontroller[7].GetUiParent.transform, false);
-            poolcontroller[7].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[7].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[7].GetPoolParent.transform, false);
+            poolcontroller[7].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
@@ -199,11 +199,11 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[8].GetUiObject);
-            UI.transform.SetParent(poolcontroller[8].GetUiParent.transform, false);
-            poolcontroller[8].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[8].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[8].GetPoolParent.transform, false);
+            poolcontroller[8].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
@@ -211,141 +211,141 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < Count; i++)
         {
-            var UI = Instantiate(poolcontroller[9].GetUiObject);
-            UI.transform.SetParent(poolcontroller[9].GetUiParent.transform, false);
-            poolcontroller[9].GetUiTexts.Enqueue(UI);
+            var PO = Instantiate(poolcontroller[9].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[9].GetPoolParent.transform, false);
+            poolcontroller[9].GetPooledObject.Enqueue(PO);
 
-            UI.gameObject.SetActive(false);
+            PO.gameObject.SetActive(false);
         }
     }
 
     public GameObject GetPlayerDamageText()
     {
-        return poolcontroller[0].GetUiTexts.Dequeue();
+        return poolcontroller[0].GetPooledObject.Dequeue();
     }
 
     public GameObject GetEnemyDamageText()
     {
-        return poolcontroller[1].GetUiTexts.Dequeue();
+        return poolcontroller[1].GetPooledObject.Dequeue();
     }
 
     public GameObject GetPlayerHealText()
     {
-        return poolcontroller[2].GetUiTexts.Dequeue();
+        return poolcontroller[2].GetPooledObject.Dequeue();
     }
 
     public GameObject GetPlayerStatusText()
     {
-        return poolcontroller[3].GetUiTexts.Dequeue();
+        return poolcontroller[3].GetPooledObject.Dequeue();
     }
 
     public GameObject GetEnemyHealText()
     {
-        return poolcontroller[4].GetUiTexts.Dequeue();
+        return poolcontroller[4].GetPooledObject.Dequeue();
     }
 
     public GameObject GetEnemyStatusText()
     {
-        return poolcontroller[5].GetUiTexts.Dequeue();
+        return poolcontroller[5].GetPooledObject.Dequeue();
     }
 
     public GameObject GetPlayerStatusIcon()
     {
-        return poolcontroller[6].GetUiTexts.Dequeue();
+        return poolcontroller[6].GetPooledObject.Dequeue();
     }
 
     public GameObject GetEnemyStatusIcon()
     {
-        return poolcontroller[7].GetUiTexts.Dequeue();
+        return poolcontroller[7].GetPooledObject.Dequeue();
     }
 
     public GameObject GetExperienceText()
     {
-        return poolcontroller[8].GetUiTexts.Dequeue();
+        return poolcontroller[8].GetPooledObject.Dequeue();
     }
 
     public GameObject GetHitParticle()
     {
-        return poolcontroller[9].GetUiTexts.Dequeue();
+        return poolcontroller[9].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
     {
-        textObject.transform.SetParent(poolcontroller[0].GetUiParent.transform, false);
+        textObject.transform.SetParent(poolcontroller[0].GetPoolParent.transform, false);
 
-        poolcontroller[0].GetUiTexts.Enqueue(textObject);
+        poolcontroller[0].GetPooledObject.Enqueue(textObject);
         textObject.SetActive(false);
     }
 
     public void ReturnEnemyDamageToPool(GameObject textObject)
     {
-        textObject.transform.SetParent(poolcontroller[1].GetUiParent.transform, false);
+        textObject.transform.SetParent(poolcontroller[1].GetPoolParent.transform, false);
 
-        poolcontroller[1].GetUiTexts.Enqueue(textObject);
+        poolcontroller[1].GetPooledObject.Enqueue(textObject);
         textObject.SetActive(false);
     }
 
     public void ReturnPlayerHealToPool(GameObject textObject)
     {
-        textObject.transform.SetParent(poolcontroller[2].GetUiParent.transform, false);
+        textObject.transform.SetParent(poolcontroller[2].GetPoolParent.transform, false);
 
-        poolcontroller[2].GetUiTexts.Enqueue(textObject);
+        poolcontroller[2].GetPooledObject.Enqueue(textObject);
         textObject.SetActive(false);
     }
 
     public void ReturnPlayerStatusTextToPool(GameObject textObject)
     {
-        textObject.transform.SetParent(poolcontroller[3].GetUiParent.transform, false);
+        textObject.transform.SetParent(poolcontroller[3].GetPoolParent.transform, false);
 
-        poolcontroller[3].GetUiTexts.Enqueue(textObject);
+        poolcontroller[3].GetPooledObject.Enqueue(textObject);
         textObject.SetActive(false);
     }
 
     public void ReturnEnemyHealToPool(GameObject textObject)
     {
-        textObject.transform.SetParent(poolcontroller[4].GetUiParent.transform, false);
+        textObject.transform.SetParent(poolcontroller[4].GetPoolParent.transform, false);
 
-        poolcontroller[4].GetUiTexts.Enqueue(textObject);
+        poolcontroller[4].GetPooledObject.Enqueue(textObject);
         textObject.SetActive(false);
     }
 
     public void ReturnEnemyStatusTextToPool(GameObject textObject)
     {
-        textObject.transform.SetParent(poolcontroller[5].GetUiParent.transform, false);
+        textObject.transform.SetParent(poolcontroller[5].GetPoolParent.transform, false);
 
-        poolcontroller[5].GetUiTexts.Enqueue(textObject);
+        poolcontroller[5].GetPooledObject.Enqueue(textObject);
         textObject.SetActive(false);
     }
 
     public void ReturnPlayerStatusIconToPool(GameObject textObject)
     {
-        textObject.transform.SetParent(poolcontroller[6].GetUiParent.transform, false);
+        textObject.transform.SetParent(poolcontroller[6].GetPoolParent.transform, false);
 
-        poolcontroller[6].GetUiTexts.Enqueue(textObject);
+        poolcontroller[6].GetPooledObject.Enqueue(textObject);
         textObject.SetActive(false);
     }
 
     public void ReturnEnemyStatusIconToPool(GameObject textObject)
     {
-        textObject.transform.SetParent(poolcontroller[7].GetUiParent.transform, false);
+        textObject.transform.SetParent(poolcontroller[7].GetPoolParent.transform, false);
 
-        poolcontroller[7].GetUiTexts.Enqueue(textObject);
+        poolcontroller[7].GetPooledObject.Enqueue(textObject);
         textObject.SetActive(false);
     }
 
     public void ReturnExperienceTextToPool(GameObject textObject)
     {
-        textObject.transform.SetParent(poolcontroller[8].GetUiParent.transform, false);
+        textObject.transform.SetParent(poolcontroller[8].GetPoolParent.transform, false);
 
-        poolcontroller[8].GetUiTexts.Enqueue(textObject);
+        poolcontroller[8].GetPooledObject.Enqueue(textObject);
         textObject.SetActive(false);
     }
 
     public void ReturnHitParticleToPool(GameObject Object)
     {
-        Object.transform.SetParent(poolcontroller[9].GetUiParent.transform, false);
+        Object.transform.SetParent(poolcontroller[9].GetPoolParent.transform, false);
 
-        poolcontroller[9].GetUiTexts.Enqueue(Object);
+        poolcontroller[9].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

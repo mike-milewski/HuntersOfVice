@@ -140,19 +140,7 @@ public class Health : MonoBehaviour
         if (HealthText != null)
             HealthText.text = character.CurrentHealth.ToString();
     }
-    /*
-    private void FixedUpdate()
-    {
-        if(TakingDamage)
-        {
-            FillBarTwo.fillAmount = Mathf.Lerp(FillBarTwo.fillAmount, HealthBar.fillAmount, FillValue);
-        }
-        else
-        {
-            HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, FillBarTwo.fillAmount, FillValue);
-        }
-    }
-    */
+
     private IEnumerator Heal()
     {
         float elapsedTime = 0;

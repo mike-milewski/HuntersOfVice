@@ -271,8 +271,7 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    enemySkills.GenerateValue();
-                    states = States.Skill;
+                    states = States.ApplyingAttack;
                     /*
                     if (Random.value * 100 <= 50)
                     {
@@ -439,13 +438,13 @@ public class EnemyAI : MonoBehaviour
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {
-                PlayerTarget.GetComponent<Health>().ModifyHealth(-Mathf.Abs((-character.CharacterStrength - 5) - -PlayerTarget.CharacterDefense));
+                PlayerTarget.GetComponent<Health>().ModifyHealth(-Mathf.Abs((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense));
 
                 t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + Mathf.Abs(((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense)).ToString() + "!";
             }
             else
             {
-                PlayerTarget.GetComponent<Health>().ModifyHealth(-Mathf.Abs(-character.CharacterStrength - -PlayerTarget.CharacterDefense));
+                PlayerTarget.GetComponent<Health>().ModifyHealth(-Mathf.Abs(character.CharacterStrength - PlayerTarget.CharacterDefense));
 
                 t.GetComponentInChildren<TextMeshProUGUI>().text = Mathf.Abs((character.CharacterStrength - PlayerTarget.CharacterDefense)).ToString();
             }
@@ -458,11 +457,12 @@ public class EnemyAI : MonoBehaviour
 
     private void CreateParticle()
     {
-        HitParticle = Instantiate(HitParticle, new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.2f, PlayerTarget.transform.position.z),
-                                                           HitParticle.transform.rotation);
+        var Hitparticle = ObjectPooler.Instance.GetHitParticle();
 
-        HitParticle.transform.SetParent(PlayerTarget.transform, true);
+        Hitparticle.SetActive(true);
 
-        ParticleExists = true;
+        Hitparticle.transform.position = new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.3f, PlayerTarget.transform.position.z);
+
+        Hitparticle.transform.SetParent(PlayerTarget.transform, true);
     }
 }
