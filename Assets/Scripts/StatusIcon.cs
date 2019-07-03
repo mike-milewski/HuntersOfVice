@@ -79,6 +79,9 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.StrengthUP):
                 StrengthUP(10);
                 break;
+            case (EffectStatus.Haste):
+                Haste(50);
+                break;
         }
     }
 
@@ -154,6 +157,9 @@ public class StatusIcon : MonoBehaviour
         {
             case (EffectStatus.StrengthUP):
                 SetStrengthToDefault();
+                break;
+            case (EffectStatus.Haste):
+                ResetSpeedAndCoolDowns();
                 break;
         }   
 
@@ -236,9 +242,25 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
-    private void Haste()
+    private void Haste(int value)
     {
+        float Percentage = (float)value / 100;
 
+        float TempSpeed = (float)SkillsManager.Instance.GetCharacter.GetMoveSpeed;
+
+        TempSpeed += (float)SkillsManager.Instance.GetCharacter.GetMoveSpeed * Percentage;
+
+        Mathf.Round(TempSpeed);
+
+        SkillsManager.Instance.GetCharacter.GetMoveSpeed = (int)TempSpeed;
+
+        foreach (Skills s in SkillsManager.Instance.GetSkills)
+        {
+            float TempCoolDown = s.GetCoolDown;
+            TempCoolDown -= s.GetCoolDown * Percentage;
+            Mathf.Round(TempCoolDown);
+            s.GetCoolDown = (int)TempCoolDown;
+        }
     }
 
     private void StrengthUP(int value)
@@ -269,6 +291,13 @@ public class StatusIcon : MonoBehaviour
 
     }
 
+    private void ResetSpeedAndCoolDowns()
+    {
+        float DefaultSpeed = SkillsManager.Instance.GetCharacter.GetCharacterData.MoveSpeed;
+
+        SkillsManager.Instance.GetCharacter.GetMoveSpeed = DefaultSpeed;
+    }
+
     private void SetStrengthToDefault()
     {
         int DefaultStrength = SkillsManager.Instance.GetCharacter.GetCharacterData.Strength;
@@ -288,9 +317,6 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.Sleep):
                 Sleep();
-                break;
-            case (EffectStatus.Haste):
-                Haste();
                 break;
         }
     }

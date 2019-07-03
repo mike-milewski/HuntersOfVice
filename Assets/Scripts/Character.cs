@@ -13,6 +13,9 @@ public class Character : MonoBehaviour
     private int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, CriticalHitChance;
 
     [SerializeField]
+    private float MoveSpeed;
+
+    [SerializeField]
     private string CharacterName;
 
     //Region that gets and returns all of the character's stat values.
@@ -137,6 +140,18 @@ public class Character : MonoBehaviour
         }
     }
 
+    public float GetMoveSpeed
+    {
+        get
+        {
+            return MoveSpeed;
+        }
+        set
+        {
+            MoveSpeed = value;
+        }
+    }
+
     public Rigidbody GetRigidbody
     {
         get
@@ -179,24 +194,6 @@ public class Character : MonoBehaviour
         Defense = cData.Defense;
         Intelligence = cData.Intelligence;
         CriticalHitChance = cData.CriticalHitChance;
-        /*
-        CharacterName = CharData.CharacterName;
-        CharacterLevel = CharData.CharacterLevel;
-        Health = CharData.Health;
-        Mana = CharData.Mana;
-        Strength = CharData.Strength;
-        Defense = CharData.Defense;
-        Intelligence = CharData.Intelligence;
-        CriticalHitChance = CharData.CriticalHitChance;
-        NextToLevel = CharData.NextToLevel;
-        */
-    }
-
-    public void GetStats()
-    {
-        CharData.CharacterLevel = CharacterLevel;
-        CharData.Strength = Strength;
-        CharData.Defense = Defense;
-        CharData.Intelligence = Intelligence;
+        MoveSpeed = cData.MoveSpeed;
     }
 }

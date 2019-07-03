@@ -104,6 +104,7 @@ public class SkillBar : MonoBehaviour
         }
         else
         {
+            playerAnimations.EndAllSpellcastingBools();
             SkillsManager.Instance.ReactivateSkillButtons();
             SkillBarImage.fillAmount = 0;
             CastTime = skills.GetCastTime;

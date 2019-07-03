@@ -19,3 +19,4 @@ MonoBehaviour:
   Defense: 20
   Intelligence: 10
   CriticalHitChance: 5
+  MoveSpeed: 4

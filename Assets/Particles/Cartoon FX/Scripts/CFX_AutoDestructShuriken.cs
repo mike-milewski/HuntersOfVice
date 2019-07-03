@@ -10,21 +10,25 @@ using System.Collections;
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
 {
+    [SerializeField]
     private ParticleSystem ps;
 
     private void Awake()
     {
-        ps = this.GetComponent<ParticleSystem>();
+        ps = this.GetComponent<ParticleSystem>();   
     }
 
     private void OnEnable()
+    {
+        StartCoroutine(CheckIfAlive());
+    }
+
+    private IEnumerator CheckIfAlive ()
 	{
-		StartCoroutine("CheckIfAlive");
-	}
-	
-	private IEnumerator CheckIfAlive ()
-	{
-        yield return new WaitForSeconds(ps.main.duration);
+        var duration = ps.main.duration;
+
+        yield return new WaitForSeconds(duration);
+        ps.transform.localScale = new Vector3(1, 1, 1);
         ObjectPooler.Instance.ReturnHitParticleToPool(gameObject);
     }
 }

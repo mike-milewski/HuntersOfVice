@@ -714,16 +714,16 @@ public class EnemySkills : MonoBehaviour
         if (Random.value * 100 <= Critical)
         {
             enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                                         (-Mathf.Abs((-potency + 5) - -Target.GetComponent<Character>().CharacterDefense));
+                                                         (-(potency + 5) - Target.GetComponent<Character>().CharacterDefense);
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=35>" + (Mathf.Abs((-potency + 5) -
-                                                                       -Target.GetComponent<Character>().CharacterDefense)).ToString() + "!";
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=20>" + ((potency + 5) - 
+                                                                       Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
         }
         else
         {
-            Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs(-potency - -Target.GetComponent<Character>().CharacterDefense));
+            Target.GetComponentInChildren<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + Mathf.Abs(potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + skillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
         }
         #endregion
 
@@ -753,7 +753,7 @@ public class EnemySkills : MonoBehaviour
             {
                 health.IncreaseHealth((skills[RandomValue].GetPotency + 10) + character.CharacterIntelligence);
 
-                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + "<size=25>" +
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + "<size=20>" +
                                                                         (potency + character.CharacterIntelligence).ToString() + "!";
 
                 enemy.GetLocalHealthInfo();
@@ -762,9 +762,8 @@ public class EnemySkills : MonoBehaviour
             {
                 health.IncreaseHealth(skills[RandomValue].GetPotency + character.CharacterIntelligence);
 
-                HealTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
-
-                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + (potency + character.CharacterIntelligence).ToString();
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + skills[RandomValue].GetSkillName + " " + 
+                                                                         (potency + character.CharacterIntelligence).ToString();
 
                 enemy.GetLocalHealthInfo();
             }

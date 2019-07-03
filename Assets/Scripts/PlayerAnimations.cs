@@ -31,6 +31,8 @@ public class PlayerAnimations : MonoBehaviour
     public void AttackAnimation()
     {
         animator.SetBool("Attacking", true);
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
     }
 
     public void EndAttackAnimation()
@@ -81,20 +83,40 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("SpellCasting", true);
     }
 
-    public void PlaySpellCastEndAnimation()
+    public void PlayContinueCastAnimation()
     {
         animator.SetBool("SpellCasting", false);
-        animator.SetBool("FinishSpell", true);
+        animator.SetBool("ContinueCasting", true);
+    }
+
+    public void EndSpellCastingAnimation()
+    {
+        animator.SetBool("ContinueCasting", false);
+    }
+
+    public void EndAllSpellcastingBools()
+    {
+        animator.ResetTrigger("SpellCasting");
+        animator.ResetTrigger("ConinueCasting");
+
+        animator.SetBool("SpellCasting", false);
+        animator.SetBool("ContinueCasting", false);
     }
 
     public void PlaySkillAnimation()
     {
         animator.SetBool("Skill", true);
+        animator.SetBool("Attacking", false);
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
     }
 
     public void StormThrustAnimation()
     {
         animator.SetBool("StormThrust", true);
+        animator.SetBool("Attacking", false);
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
     }
 
     public void DealSkillDamage()

@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
             character.GetRigidbody.transform.rotation = characterRotation;
         }
 
-        character.GetRigidbody.transform.position += Movement * Speed * Time.deltaTime;
+        character.GetRigidbody.transform.position += Movement * character.GetMoveSpeed * Time.deltaTime;
 
         direction.Normalize();
 

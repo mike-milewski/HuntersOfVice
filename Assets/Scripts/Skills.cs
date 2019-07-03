@@ -98,6 +98,18 @@ public class Skills : StatusEffects
         }
     }
 
+    public float GetCoolDown
+    {
+        get
+        {
+            return CoolDown;
+        }
+        set
+        {
+            CoolDown = value;
+        }
+    }
+
     public bool GetIsBeingDragged
     {
         get
@@ -198,7 +210,7 @@ public class Skills : StatusEffects
         }
     }
 
-    public void TestHealSkill()
+    public void Heal()
     {
         if (skillbar.GetSkillBar.fillAmount < 1)
         {
@@ -207,6 +219,8 @@ public class Skills : StatusEffects
             skillbar.gameObject.SetActive(true);
 
             skillbar.GetSkill = this.button.GetComponent<Skills>();
+
+            GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
         }
         if (skillbar.GetSkillBar.fillAmount >= 1)
         {
@@ -221,63 +235,13 @@ public class Skills : StatusEffects
 
             GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
+            GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+
             Invoke("HealSkillText", ApplySkill);
         }
     }
 
-    public void TestDamageSkill()
-    {
-        if (GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
-        {
-            TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetComponentInChildren<NoRotationHealthBar>().transform;
-            if(Vector3.Distance(GetCharacter.transform.position, GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position) <= AttackRange)
-            {
-                SkillsManager.Instance.GetActivatedSkill = true;
-
-                GetCharacter.GetComponent<PlayerAnimations>().PlaySkillAnimation();
-
-                this.button.GetComponent<Image>().fillAmount = 0;
-
-                GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
-
-                var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
-
-                var DamageParticle = Instantiate(SkillParticle, new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z),
-                                                 Quaternion.identity);
-
-                DamageParticle.transform.SetParent(Target.transform, true);
-            }
-            else
-            {
-                GameManager.Instance.ShowTargetOutOfRangeText();
-            }
-        }
-        else
-        {
-            GameManager.Instance.InvalidTargetText();
-            TextHolder = null;
-        }
-    }
-
-    public void ForHonor()
-    {
-        this.button.GetComponent<Image>().fillAmount = 0;
-
-        SkillsManager.Instance.GetStatusIcon.PlayerInput();
-
-        PlayerStatus();
-    }
-
-    public void Shield()
-    {
-        this.button.GetComponent<Image>().fillAmount = 0;
-
-        SkillsManager.Instance.GetStatusIcon.PlayerInput();
-
-        PlayerStatus();
-    }
-
-    public void BloodAndSinew()
+    public void PlayerStatusEffectSkill()
     {
         this.button.GetComponent<Image>().fillAmount = 0;
 
@@ -410,15 +374,13 @@ public class Skills : StatusEffects
             {
                 GetCharacter.GetComponent<Health>().IncreaseHealth((Potency + 10) + GetCharacter.CharacterIntelligence);
 
-                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=35>" + ((Potency + 10) + GetCharacter.CharacterIntelligence).ToString() + "!";
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=20>" + ((Potency + 10) + GetCharacter.CharacterIntelligence).ToString() + "!";
             }
             else
             {
                 GetCharacter.GetComponent<Health>().IncreaseHealth(Potency + GetCharacter.CharacterIntelligence);
 
-                HealTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 25;
-
-                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + (Potency + GetCharacter.CharacterIntelligence).ToString();
             }
         }
         #endregion
@@ -524,18 +486,16 @@ public class Skills : StatusEffects
             #region CriticalHitChance
             if (Random.value * 100 <= Critical)
             {
-                Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs((-Potency - 5) - -Target.GetComponent<Character>().CharacterDefense));
+                Target.GetComponentInChildren<Health>().ModifyHealth(-((Potency - 5) - -Target.GetComponent<Character>().CharacterDefense));
 
-                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=25>" + Mathf.Abs((-Potency - 5) -
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=20>" + Mathf.Abs((-Potency - 5) -
                                                                          -Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
             }
             else
             {
-                Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs(-Potency - -Target.GetComponent<Character>().CharacterDefense));
+                Target.GetComponentInChildren<Health>().ModifyHealth(-(Potency - Target.GetComponent<Character>().CharacterDefense));
 
-                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
-
-                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + Mathf.Abs((-Potency - -Target.GetComponent<Character>().CharacterDefense)).ToString();
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + (Potency - Target.GetComponent<Character>().CharacterDefense).ToString();
             }
             #endregion
 

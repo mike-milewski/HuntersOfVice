@@ -226,19 +226,15 @@ public class BasicAttack : MonoBehaviour
         #region CriticalHitCalculation
         if (Random.value * 100 <= Critical)
         {
-            Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense));
+            Target.GetComponentInChildren<Health>().ModifyHealth(-((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense));
 
-            Damagetext.GetComponentInChildren<TextMeshProUGUI>().fontSize = 25;
-
-            Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = Mathf.Abs((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense).ToString() + "!";
+            Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + ((character.CharacterStrength + 5) - Target.GetCharacter.CharacterDefense).ToString() + "!";
         }
         else
         {
-            Target.GetComponentInChildren<Health>().ModifyHealth(-Mathf.Abs(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
+            Target.GetComponentInChildren<Health>().ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
 
-            Damagetext.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
-
-            Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = Mathf.Abs(character.CharacterStrength - Target.GetCharacter.CharacterDefense).ToString();
+            Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength - Target.GetCharacter.CharacterDefense).ToString();
         }
         #endregion
 
