@@ -519,7 +519,7 @@ public class Skills : StatusEffects
             else
             {
                 SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Added effect: " + GetStatusEffectName + "\n" + "Status Duration: " + GetStatusDuration + 
-                                                "\n\n" + "Cooldown: " + CoolDown + " Seconds" + "\n" + "Cast Time: Instant";
+                                                "\n\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: Instant";
             }
         }
         else
@@ -527,13 +527,13 @@ public class Skills : StatusEffects
             if(GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
                 SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown + 
-                                                " Seconds" + "\n" + "Cast Time: " + CastTime + " Seconds";
+                                                " Seconds" + "\n" + "Cast Time: " + CastTime + "s";
             }
             else
             {
                 SkillPanelText.text = SkillName + "\n\n" + SkillDescription + "\n\n" + "Added effect: " + GetStatusEffectName + "\n" + "Status Duration: " + GetStatusDuration + 
                                                 "\n\n" + "Mana: " + ManaCost + "\n" + "Potency: " + Potency + "\n" + "Cooldown: " + CoolDown + " Seconds" + "\n" + "Cast Time: " 
-                                                + CastTime + " Seconds";
+                                                + CastTime + "s";
             }
         }
     }

@@ -5064,7 +5064,7 @@ MonoBehaviour:
   SkillPanelText: {fileID: 834340804}
   StatusEffectText: {fileID: 0}
   SkillParticle: {fileID: 19800004, guid: 757df604761b8ef42831192c70ee1099, type: 2}
-  CoolDown: 10
+  CoolDown: 1
   AttackRange: 0
   ApplySkill: 0.3
   StatusEffectPotency: 0
@@ -5679,6 +5679,11 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 1.715
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 2}
+      propertyPath: skills.Array.data[0].StatusEffectPotency
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 2}
@@ -11367,15 +11372,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4898162828388426, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 2}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4898162828388426, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4898162828388426, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 114238346711748636, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 2}
