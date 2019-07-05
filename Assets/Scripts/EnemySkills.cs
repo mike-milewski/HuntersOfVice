@@ -8,11 +8,16 @@ public enum Skill { //MushroomMan Skills
 
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom };
 
+public enum EnemyElement { NONE, Fire, Water, Wind, Earth, Light, Dark };
+
 [System.Serializable]
 public class enemySkillManager
 {
     [SerializeField]
     private Skill skills;
+
+    [SerializeField]
+    private EnemyElement enemyElement;
 
     [SerializeField]
     private Status status;
@@ -173,6 +178,18 @@ public class enemySkillManager
         set
         {
             skills = value;
+        }
+    }
+
+    public EnemyElement GetEnemyElement
+    {
+        get
+        {
+            return enemyElement;
+        }
+        set
+        {
+            enemyElement = value;
         }
     }
 
@@ -497,8 +514,6 @@ public class EnemySkills : MonoBehaviour
     private void InvokeHealingCap()
     {
         SkillHealText(skills[RandomValue].GetPotency, skills[RandomValue].GetSkillName);
-
-        
     }
 
     public void PoisonSpore(int potency, float castTime, Vector2 sizeDelta, string skillname)
@@ -522,6 +537,7 @@ public class EnemySkills : MonoBehaviour
 
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
+            MushroomSporeAnimation();
             DisableRadiusImage();
             Invoke("InvokePoisonSpore", ApplySkill);
         }
@@ -557,6 +573,11 @@ public class EnemySkills : MonoBehaviour
     private void FungiBumpAnimation()
     {
         enemyAI.GetAnimation.FungiBumpAnim();
+    }
+
+    private void MushroomSporeAnimation()
+    {
+        enemyAI.GetAnimation.SkillAtk2();
     }
 
     public void DisableEnemySkillBar()

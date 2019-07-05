@@ -115,8 +115,8 @@ public class EnemyStatusIcon : MonoBehaviour
 
         Duration = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDuration;
 
-        StatusDescriptionText.text = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "\n" + "<size=12>" +
-                                     character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u>" + character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "</u>" + "</color>" + 
+                                     "</size>" + "\n" + "<size=10>" + character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
 
         DamageOrHealTick = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectPotency;
 
@@ -137,8 +137,8 @@ public class EnemyStatusIcon : MonoBehaviour
 
         Duration = skill.GetStatusDuration;
 
-        StatusDescriptionText.text = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "\n" + "<size=12>" +
-                                     SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u>" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "</u>" + "</color>" +
+                                     "</size>" + "\n" + "<size=10>" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
 
         DamageOrHealTick = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency;
 

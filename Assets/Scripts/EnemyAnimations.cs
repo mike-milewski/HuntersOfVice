@@ -19,6 +19,7 @@ public class EnemyAnimations : MonoBehaviour
 	private const string RUN	= "Run";
 	private const string ATTACK	= "Attack";
     private const string SKILLATTACK = "SkillAttack";
+    private const string SKILLATTACK2 = "SkillAttack2";
     private const string CASTING = "Casting";
     private const string DAMAGE	= "Damage";
 	private const string DEATH	= "Death";
@@ -83,6 +84,11 @@ public class EnemyAnimations : MonoBehaviour
     public void FungiBumpAnim()
     {
         anim.CrossFade(SKILLATTACK);
+    }
+
+    public void SkillAtk2()
+    {
+        anim.CrossFade(SKILLATTACK2);
     }
 
     public void ResetAutoAttackTime()
