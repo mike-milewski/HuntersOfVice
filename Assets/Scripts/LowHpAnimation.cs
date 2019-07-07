@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class LowEnemyHPAnimation : MonoBehaviour
+public class LowHpAnimation : MonoBehaviour
 {
     [SerializeField]
     private Character character;

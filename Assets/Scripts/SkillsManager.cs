@@ -349,6 +349,17 @@ public class SkillsManager : MonoBehaviour
             }
         }
     }
+
+    public void CheckForSameSkills(Skills other)
+    {
+        foreach (Skills s in gameObject.transform.GetComponentsInChildren<Skills>())
+        {
+            if (s.GetSkillName == other.GetSkillName)
+            {
+                s.GetButton.GetComponent<Image>().fillAmount = 0;
+            }
+        }
+    }
  
     public void ReactivateSkillButtons()
     {

@@ -763,8 +763,6 @@ public class EnemySkills : MonoBehaviour
 
         var Critical = character.GetCriticalChance;
 
-        health.GetTakingDamage = false;
-
         ActiveSkill = false;
 
         #region CritChance

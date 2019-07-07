@@ -207,7 +207,6 @@ public class StatusIcon : MonoBehaviour
         TempTick -= Time.deltaTime;
         if (TempTick <= 0)
         {
-            SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetTakingDamage = true;
             SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(-value);
 
             var Damagetxt = ObjectPooler.Instance.GetPlayerDamageText();

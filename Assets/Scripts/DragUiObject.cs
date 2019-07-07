@@ -8,7 +8,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private UiDropZone zone;
 
     [SerializeField]
-    private Transform ParentObj;
+    private Transform ParentObj, SkillMenuParent;
 
     private GameObject PlaceHolder = null;
 
@@ -70,17 +70,22 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         {
             if(gameObject.GetComponent<Skills>().GetStatusIcon != null)
             {
-                if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>())
+                if (gameObject.GetComponent<Skills>().GetStatusIcon.activeInHierarchy)
                 {
-                    gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                    if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>())
+                    {
+                        gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
 
-                }
-                else if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>())
-                {
-                    gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>().RemoveEffect();
+                    }
+                    else if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>())
+                    {
+                        gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>().RemoveEffect();
+                    }
                 }
             }
-            Destroy(gameObject);
+            gameObject.transform.SetParent(SkillMenuParent, false);
+            gameObject.transform.position = new Vector2(SkillMenuParent.transform.position.x, SkillMenuParent.transform.position.y);
+
             SkillsManager.Instance.ClearSkills();
             SkillsManager.Instance.AddSkillsToList();
             SkillsManager.Instance.AllSkillsNotBeingDragged();
@@ -89,20 +94,22 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         {
             transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
             CheckForSameSkills(gameObject.GetComponent<Skills>());
+
             SkillsManager.Instance.ClearSkills();
             SkillsManager.Instance.AddSkillsToList();
         }
         SkillsManager.Instance.AllSkillsNotBeingDragged();
+
         Destroy(PlaceHolder);
     }
 
-    private void CheckForSameSkills(Skills other)
+    public void CheckForSameSkills(Skills other)
     {
-        foreach (Skills s in zone.GetComponentsInChildren<Skills>())
+        foreach (Skills s in zone.transform.GetComponentsInChildren<Skills>())
         {
-            if (other.GetSkillName == s.GetSkillName)
+            if(s.GetSkillName == other.GetSkillName)
             {
-
+                other.GetButton.GetComponent<Image>().fillAmount = s.GetButton.GetComponent<Image>().fillAmount;
             }
         }
     }

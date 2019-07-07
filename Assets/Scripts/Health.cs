@@ -20,9 +20,6 @@ public class Health : MonoBehaviour
     [SerializeField]
     private GameObject DamageTextHolder, HealTextHolder, HealthAnimationObj;
 
-    [SerializeField]
-    private bool TakingDamage;
-
     private Coroutine routine = null;
 
     //This variable is used to check and uncheck a hit while under the effects of the sleep status.
@@ -31,18 +28,6 @@ public class Health : MonoBehaviour
 
     [SerializeField]
     private float FillValue;
-
-    public bool GetTakingDamage
-    {
-        get
-        {
-            return TakingDamage;
-        }
-        set
-        {
-            TakingDamage = value;
-        }
-    }
 
     public bool GetSleepHit
     {
@@ -176,8 +161,6 @@ public class Health : MonoBehaviour
             StopCoroutine(routine);
         }
 
-        TakingDamage = false;
-
         character.CurrentHealth += Value;
 
         character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
@@ -186,11 +169,11 @@ public class Health : MonoBehaviour
         {
             HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth).ToString();
         }
-        if(HealthAnimationObj.GetComponent<LowEnemyHPAnimation>())
+        if(HealthAnimationObj.GetComponent<LowHpAnimation>())
         {
             if(character.CurrentHealth > character.MaxHealth / 4)
             {
-                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().GetAnimator.SetBool("LowHealth", false);
+                HealthAnimationObj.GetComponent<LowHpAnimation>().GetAnimator.SetBool("LowHealth", false);
             }
         }
         FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
@@ -205,8 +188,6 @@ public class Health : MonoBehaviour
             StopCoroutine(routine);
         }
 
-        TakingDamage = true;
-
         character.CurrentHealth += Value;
 
         character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
@@ -220,11 +201,11 @@ public class Health : MonoBehaviour
         {
             HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth).ToString();
         }
-        if (HealthAnimationObj.GetComponent<LowEnemyHPAnimation>())
+        if (HealthAnimationObj.GetComponent<LowHpAnimation>())
         {
             if (character.CurrentHealth <= character.MaxHealth / 4)
             {
-                HealthAnimationObj.GetComponent<LowEnemyHPAnimation>().GetAnimator.SetBool("LowHealth", true);
+                HealthAnimationObj.GetComponent<LowHpAnimation>().GetAnimator.SetBool("LowHealth", true);
             }
         }
 

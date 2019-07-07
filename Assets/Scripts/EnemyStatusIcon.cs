@@ -233,7 +233,6 @@ public class EnemyStatusIcon : MonoBehaviour
         DamageOrHealTick -= Time.deltaTime;
         if (DamageOrHealTick <= 0)
         {
-            character.GetComponent<Enemy>().GetHealth.GetTakingDamage = false;
             character.GetComponent<Enemy>().GetHealth.IncreaseHealth(value);
             character.GetComponent<Enemy>().GetLocalHealthInfo();
 
@@ -262,7 +261,6 @@ public class EnemyStatusIcon : MonoBehaviour
 
             EnemyDamagetxt.GetComponentInChildren<TextMeshProUGUI>().text = value.ToString();
 
-            character.GetComponent<Enemy>().GetHealth.GetTakingDamage = true;
             character.GetComponent<Enemy>().GetHealth.ModifyHealth(-value);
             character.GetComponent<Enemy>().GetLocalHealthInfo();
 

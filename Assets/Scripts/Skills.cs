@@ -245,6 +245,8 @@ public class Skills : StatusEffects
 
             SkillsManager.Instance.GetActivatedSkill = false;
 
+            SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
             var HealParticle = Instantiate(SkillParticle, new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z),
                                            Quaternion.identity);
 
@@ -262,6 +264,8 @@ public class Skills : StatusEffects
     {
         this.button.GetComponent<Image>().fillAmount = 0;
 
+        SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
         SkillsManager.Instance.GetStatusIcon.PlayerInput();
 
         PlayerStatus();
@@ -274,6 +278,8 @@ public class Skills : StatusEffects
         GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
 
         this.button.GetComponent<Image>().fillAmount = 0;
+
+        SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
         EnemyStatus();
     }
@@ -289,6 +295,8 @@ public class Skills : StatusEffects
                 SkillsManager.Instance.GetActivatedSkill = true;
 
                 this.button.GetComponent<Image>().fillAmount = 0;
+
+                SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
                 GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
@@ -334,6 +342,8 @@ public class Skills : StatusEffects
 
             this.button.GetComponent<Image>().fillAmount = 0;
 
+            SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
             GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
             SkillsManager.Instance.GetActivatedSkill = true;
@@ -372,6 +382,11 @@ public class Skills : StatusEffects
         }
     }
 
+    public void WhirlwindSlash()
+    {
+
+    }
+
     private TextMeshProUGUI HealSkillText()
     {
         var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
@@ -381,8 +396,6 @@ public class Skills : StatusEffects
         HealTxt.SetActive(true);
 
         HealTxt.transform.SetParent(TextHolder.transform, false);
-
-        GetCharacter.GetComponent<Health>().GetTakingDamage = false;
 
         #region CriticalHealChance
         if (GetCharacter.CurrentHealth > 0)
@@ -498,6 +511,8 @@ public class Skills : StatusEffects
         if(Target != null)
         {
             DamageTxt.SetActive(true);
+
+            TextHolder = Target.GetUI;
 
             DamageTxt.transform.SetParent(TextHolder.transform, false);
 

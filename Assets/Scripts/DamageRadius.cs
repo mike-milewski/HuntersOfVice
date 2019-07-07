@@ -174,8 +174,6 @@ public class DamageRadius : MonoBehaviour
 
                 enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
 
-                hitColliders[i].GetComponent<Health>().GetTakingDamage = true;
-
                 character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
             }
         }
@@ -196,8 +194,6 @@ public class DamageRadius : MonoBehaviour
                 }
 
                 enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
-
-                hitColliders[i].GetComponent<Health>().GetTakingDamage = true;
 
                 character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
             }
