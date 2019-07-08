@@ -46,6 +46,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public GameObject GetSkillPanel
+    {
+        get
+        {
+            return SkillsPanel;
+        }
+        set
+        {
+            SkillsPanel = value;
+        }
+    }
+
     public GameObject GetEnemyObject
     {
         get
@@ -131,13 +143,13 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            if (!SkillsPanel.activeInHierarchy)
+            if (!SkillsPanel.GetComponent<Image>().enabled)
             {
                 ToggleSkillsPanel();
             }
             else
             {
-                SkillsPanel.SetActive(false);
+                MaskSkillsPanel();
             }
         }
         if (Input.GetKeyDown(KeyCode.O))
@@ -157,14 +169,14 @@ public class GameManager : MonoBehaviour
     private void ToggleCharacterPanel()
     {
         CharacterPanel.SetActive(true);
-        SkillsPanel.SetActive(false);
+        MaskSkillsPanel();
         InventoryPanel.SetActive(false);
         SettingsPanel.SetActive(false);
     }
 
     private void ToggleSkillsPanel()
     {
-        SkillsPanel.SetActive(true);
+        UnmaskSkillsPanel();
         CharacterPanel.SetActive(false);
         InventoryPanel.SetActive(false);
         SettingsPanel.SetActive(false);
@@ -174,7 +186,7 @@ public class GameManager : MonoBehaviour
     {
         InventoryPanel.SetActive(true);
         CharacterPanel.SetActive(false);
-        SkillsPanel.SetActive(false);
+        MaskSkillsPanel();
         SettingsPanel.SetActive(false);
     }
 
@@ -182,8 +194,34 @@ public class GameManager : MonoBehaviour
     {
         SettingsPanel.SetActive(true);
         CharacterPanel.SetActive(false);
-        SkillsPanel.SetActive(false);
+        MaskSkillsPanel();
         InventoryPanel.SetActive(false);
+    }
+
+    public void MaskSkillsPanel()
+    {
+        SkillsPanel.GetComponent<Image>().enabled = false;
+        foreach(Mask m in SkillsPanel.GetComponentsInChildren<Mask>())
+        {
+            m.showMaskGraphic = false;
+        }
+        foreach(Image i in SkillsPanel.GetComponentsInChildren<Image>())
+        {
+            i.raycastTarget = false;
+        }
+    }
+
+    public void UnmaskSkillsPanel()
+    {
+        SkillsPanel.GetComponent<Image>().enabled = true;
+        foreach (Mask m in SkillsPanel.GetComponentsInChildren<Mask>())
+        {
+            m.showMaskGraphic = true;
+        }
+        foreach (Image i in SkillsPanel.GetComponentsInChildren<Image>())
+        {
+            i.raycastTarget = true;
+        }
     }
 
     public void Dead()

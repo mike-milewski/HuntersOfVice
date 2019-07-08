@@ -148,7 +148,7 @@ public class SkillsManager : MonoBehaviour
             else
             {
                 KeyInput = skills.IndexOf(skills[0]);
-                if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
+                if (skills[KeyInput].GetCoolDownImage.fillAmount <= 0
                                                    && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost && skills[KeyInput].GetComponent<Button>().interactable)
                 {
                     skills[KeyInput].GetButton.onClick.Invoke();
@@ -356,7 +356,7 @@ public class SkillsManager : MonoBehaviour
         {
             if (s.GetSkillName == other.GetSkillName)
             {
-                s.GetButton.GetComponent<Image>().fillAmount = 0;
+                s.GetCoolDownImage.fillAmount = 1;
             }
         }
     }

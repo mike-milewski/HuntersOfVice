@@ -24,6 +24,18 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
     }
 
+    public UiDropZone GetDropZone
+    {
+        get
+        {
+            return zone;
+        }
+        set
+        {
+            zone = value;
+        }
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         PlaceHolder = new GameObject();
@@ -48,8 +60,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         for (int i = 0; i < zone.transform.childCount; i++)
         {
-            if (transform.position.x < zone.transform.GetChild(i).position.x || transform.position.y <= zone.transform.GetChild(i).position.y - 30 
-                || transform.position.y >= zone.transform.GetChild(i).position.y + 30)
+            if (transform.position.x < zone.transform.GetChild(i).position.x)
             {
                 NewSiblingIndex = i;
 
@@ -84,7 +95,15 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 }
             }
             gameObject.transform.SetParent(SkillMenuParent, false);
+            gameObject.GetComponent<Button>().enabled = false;
             gameObject.transform.position = new Vector2(SkillMenuParent.transform.position.x, SkillMenuParent.transform.position.y);
+
+            if (!GameManager.Instance.GetSkillPanel.GetComponent<Image>().enabled)
+            {
+                gameObject.GetComponent<Mask>().showMaskGraphic = false;
+                gameObject.GetComponent<Skills>().GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = false;
+                gameObject.GetComponent<Image>().raycastTarget = false;
+            }
 
             SkillsManager.Instance.ClearSkills();
             SkillsManager.Instance.AddSkillsToList();
@@ -92,6 +111,11 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
         else
         {
+            if(!gameObject.GetComponent<Button>().enabled)
+            {
+                gameObject.GetComponent<Button>().enabled = true;
+            }
+
             transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
             CheckForSameSkills(gameObject.GetComponent<Skills>());
 

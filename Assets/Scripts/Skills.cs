@@ -14,6 +14,9 @@ public class Skills : StatusEffects
     private SkillBar skillbar;
 
     [SerializeField]
+    private Image CoolDownImage;
+
+    [SerializeField]
     private Button button;
 
     [SerializeField][Tooltip("The transform that holds the damage/heal/status effect text values. Keep this empty for damage type skills!")]
@@ -67,6 +70,30 @@ public class Skills : StatusEffects
         }
     }
 
+    public Image GetCoolDownImage
+    {
+        get
+        {
+            return CoolDownImage;
+        }
+        set
+        {
+            CoolDownImage = value;
+        }
+    }
+
+    public string GetSkillDescription
+    {
+        get
+        {
+            return SkillDescription;
+        }
+        set
+        {
+            SkillDescription = value;
+        }
+    }
+
     public int GetCastTime
     {
         get
@@ -88,6 +115,18 @@ public class Skills : StatusEffects
         set
         {
             ManaCost = value;
+        }
+    }
+
+    public int GetPotency
+    {
+        get
+        {
+            return Potency;
+        }
+        set
+        {
+            Potency = value;
         }
     }
 
@@ -209,7 +248,7 @@ public class Skills : StatusEffects
 
     private void CheckCoolDownStatus()
     {
-        if (this.button.GetComponent<Image>().fillAmount >= 1 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead && 
+        if (CoolDownImage.fillAmount <= 0 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead && 
             !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged)
         {
             button.interactable = true;
@@ -217,7 +256,7 @@ public class Skills : StatusEffects
         }
         else
         {
-            this.button.GetComponent<Image>().fillAmount += Time.deltaTime / CoolDown;
+            this.CoolDownImage.fillAmount -= Time.deltaTime / CoolDown;
             this.button.interactable = false;
         }
 
@@ -241,7 +280,7 @@ public class Skills : StatusEffects
         }
         if (skillbar.GetSkillBar.fillAmount >= 1)
         {
-            this.button.GetComponent<Image>().fillAmount = 0;
+            this.button.GetComponent<Image>().fillAmount = 1;
 
             SkillsManager.Instance.GetActivatedSkill = false;
 
@@ -262,7 +301,7 @@ public class Skills : StatusEffects
 
     public void PlayerStatusEffectSkill()
     {
-        this.button.GetComponent<Image>().fillAmount = 0;
+        this.button.GetComponent<Image>().fillAmount = 1;
 
         SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
@@ -277,7 +316,7 @@ public class Skills : StatusEffects
 
         GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
 
-        this.button.GetComponent<Image>().fillAmount = 0;
+        this.button.GetComponent<Image>().fillAmount = 1;
 
         SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
@@ -294,7 +333,7 @@ public class Skills : StatusEffects
 
                 SkillsManager.Instance.GetActivatedSkill = true;
 
-                this.button.GetComponent<Image>().fillAmount = 0;
+                this.CoolDownImage.fillAmount = 1;
 
                 SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
@@ -340,7 +379,7 @@ public class Skills : StatusEffects
 
             SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
 
-            this.button.GetComponent<Image>().fillAmount = 0;
+            this.button.GetComponent<Image>().fillAmount = 1;
 
             SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
@@ -547,7 +586,10 @@ public class Skills : StatusEffects
 
     public void ShowSkillPanel(GameObject Panel)
     {
-        Panel.gameObject.SetActive(true);
+        if (gameObject.transform.parent == gameObject.GetComponent<DragUiObject>().GetDropZone.transform)
+        {
+            Panel.gameObject.SetActive(true);
+        }
 
         if(CastTime <= 0 && Potency <= 0 && ManaCost <= 0)
         {

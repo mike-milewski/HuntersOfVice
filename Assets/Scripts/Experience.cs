@@ -6,6 +6,9 @@ using System.Collections;
 public class Experience : MonoBehaviour
 {
     [SerializeField]
+    private GameObject skillMenu;
+
+    [SerializeField]
     private Transform Player;
 
     [SerializeField]
@@ -131,8 +134,8 @@ public class Experience : MonoBehaviour
         ExperienceBar.fillAmount = 0;
 
         character.Level++;
-        character.MaxHealth += 50;
-        character.MaxMana += 5;
+        //character.MaxHealth += 50;
+        //character.MaxMana += 5;
         character.CharacterStrength += 3;
         character.CharacterDefense += 2;
         character.CharacterIntelligence += 1;
@@ -154,6 +157,11 @@ public class Experience : MonoBehaviour
 
         character.GetComponent<Health>().GetFilledBar();
         character.GetComponent<Mana>().GetFilledBar();
+
+        foreach(SkillMenu s in skillMenu.GetComponentsInChildren<SkillMenu>())
+        {
+            s.CheckIfUnlockedNewSkill();
+        }
     }
 
     public TextMeshProUGUI GetShowExperienceText()

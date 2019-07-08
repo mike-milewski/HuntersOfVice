@@ -49,4 +49,16 @@ public class MenuButtons : MonoBehaviour
             source.volume = slider.value;
         }
     }
+
+    public void ToggleSkillsPanel()
+    {
+        if(!GameManager.Instance.GetSkillPanel.GetComponent<Image>().enabled)
+        {
+            GameManager.Instance.UnmaskSkillsPanel();
+        }
+        else
+        {
+            GameManager.Instance.MaskSkillsPanel();
+        }
+    }
 }
