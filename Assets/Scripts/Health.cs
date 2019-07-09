@@ -232,5 +232,7 @@ public class Health : MonoBehaviour
         HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth).ToString();
 
         HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
+
+        FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }
 }

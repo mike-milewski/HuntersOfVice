@@ -595,83 +595,84 @@ public class Skills : StatusEffects
         {
             if(GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: Instant";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Cooldown: " + CoolDown + "s" + "\n" + 
+                                      "Cast Time: Instant";
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + GetStatusEffectName +
-                                      "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cooldown: " + CoolDown + "s" + "\n" + 
-                                      "Cast Time: Instant";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
+                                      GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cooldown: " + CoolDown + "s" + 
+                                      "\n" + "Cast Time: Instant";
             }
         }
         if(CastTime > 0 && Potency <= 0 && ManaCost <= 0)
         {
             if(GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Cooldown: " + CoolDown + " Seconds" + "\n" + "Cast Time: " + 
-                                      CastTime + "s";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Cooldown: " + CoolDown + " Seconds" + "\n" + 
+                                      "Cast Time: " + CastTime + "s";
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + GetStatusEffectName +
-                                      "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: "
-                                      + CastTime + "s";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
+                                      GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cooldown: " + CoolDown + "s" + 
+                                      "\n" + "Cast Time: " + CastTime + "s";
             }
         }
         if(CastTime > 0 && Potency > 0 && ManaCost <= 0)
         {
             if (GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n" + "Cooldown: " + CoolDown + "s" + "\n" +
-                                      "Cast Time: " + CastTime + "s";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n" + "Cooldown: " + 
+                                      CoolDown + "s" + "\n" + "Cast Time: " + CastTime + "s";
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + GetStatusEffectName +
-                                      "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n" + "Cooldown: " + 
-                                      CoolDown + "s" + "\n" + "Cast Time: " + CastTime + "s";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
+                                      GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n" + 
+                                      "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: " + CastTime + "s";
             }
         }
         if(CastTime > 0 && Potency > 0 && ManaCost > 0)
         {
             if (GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Power: " + Potency + "\n" + 
-                                      "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: " + CastTime + "s";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Power: " + Potency + 
+                                      "\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: " + CastTime + "s";
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n" + "Mana: " + ManaCost + "\n\n" + "<#EBF500>" + "Added effect: " + 
-                                      "</color>" + GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + 
-                                      Potency + "\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: " + CastTime + "s";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n" + "Mana: " + ManaCost + "\n\n" + "<#EBF500>" + 
+                                      "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" 
+                                      + "Power: " + Potency + "\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: " + CastTime + "s";
             }
         }
         if(CastTime <= 0 && Potency > 0 && ManaCost <= 0)
         {
             if (GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n" + "Cooldown: " + CoolDown + "s" + "\n"
-                                      + "Cast Time: Instant";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n" + "Cooldown: " + 
+                                      CoolDown + "s" + "\n" + "Cast Time: Instant";
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + GetStatusEffectName +
-                                      "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n" + "Cooldown: " + 
-                                      CoolDown + "s" + "\n" + "Cast Time: Instant";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
+                                      GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n" + 
+                                      "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: Instant";
             }
         }
         if(CastTime <= 0 && Potency > 0 && ManaCost > 0)
         {
             if (GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Power: " + Potency + "\n" + 
-                                      "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: Instant";
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n" + "Power: " + Potency + 
+                                      "\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: Instant";
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + SkillName + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n\n" + "<#EBF500>" + "Added effect: " 
-                                      + "</color>" + GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>"+ GetStatusDuration + "s" + "\n\n" + "Power: " 
-                                      + Potency + "\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: Instant";
+                SkillPanelText.text = "<size=12>" + "<u>" +SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n\n" + "<#EBF500>" + 
+                                      "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>"+ GetStatusDuration + "s" + "\n\n" + 
+                                      "Power: " + Potency + "\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: Instant";
             }
         }
     }

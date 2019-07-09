@@ -2,6 +2,10 @@
 using UnityEngine.UI;
 using TMPro;
 
+public enum SkillType { Active, Passive };
+
+public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, StormThrust };
+
 public class SkillMenu : MonoBehaviour
 {
     public static SkillMenu skillmenu;
@@ -12,13 +16,25 @@ public class SkillMenu : MonoBehaviour
     private Transform DropZoneTransform;
 
     [SerializeField]
-    private TextMeshProUGUI LevelRequirementText, SkillInfo;
+    private TextMeshProUGUI LevelRequirementText, ActiveSkillInfo;
+
+    [SerializeField]
+    private string PassiveSkillName;
+
+    [SerializeField] [Tooltip("The value used for passive abilities that increases stats via percentage.")]
+    private int PassiveBonusValue;
 
     [SerializeField]
     private Image SkillImage;
 
     [SerializeField]
-    private Skills skill;
+    private GameObject skill;
+
+    [SerializeField]
+    private SkillType skilltype;
+
+    [SerializeField]
+    private PassiveBonus passivebonus;
 
     [SerializeField]
     private int LevelRequirement;
@@ -27,6 +43,7 @@ public class SkillMenu : MonoBehaviour
     {
         skillmenu = this;
 
+        if(skilltype == SkillType.Active)
         DropZoneTransform = skill.GetComponent<DragUiObject>().GetDropZone.transform;
     }
 
@@ -37,58 +54,86 @@ public class SkillMenu : MonoBehaviour
 
     private void CheckCharacterLevel()
     {
-        LevelRequirementText.text = LevelRequirement.ToString();
+        LevelRequirementText.text = "<size=11>" + "<b>" + "Lv " + "</b>" +"</size>" + LevelRequirement.ToString();
 
         if(character.Level < LevelRequirement)
         {
-            SkillImage.GetComponent<Button>().interactable = false;
-            skill.GetComponent<Image>().enabled = false;
-            skill.GetComponent<Button>().interactable = false;
+            if(skilltype == SkillType.Active)
+            {
+                SkillImage.GetComponent<Button>().interactable = false;
+                skill.GetComponent<Skills>().GetComponent<Image>().enabled = false;
+                skill.GetComponent<Skills>().GetComponent<Button>().interactable = false;
 
-            skill.GetComponent<DragUiObject>().enabled = false;
+                skill.GetComponent<DragUiObject>().enabled = false;
+            }
+            else
+            {
+                skill.GetComponent<Button>().interactable = false;
+            }
         }
         else
         {
-            SkillImage.GetComponent<Button>().interactable = true;
-            skill.GetComponent<Button>().enabled = true;
+            if(skilltype == SkillType.Active)
+            {
+                SkillImage.GetComponent<Button>().interactable = true;
+                skill.GetComponent<Button>().enabled = true;
 
-            skill.GetComponent<DragUiObject>().enabled = true;
+                skill.GetComponent<DragUiObject>().enabled = true;
 
-            skill.enabled = true;
+                skill.GetComponent<Skills>().enabled = true;
 
-            skill.transform.SetParent(DropZoneTransform, false);
+                skill.transform.SetParent(DropZoneTransform, false);
 
-            skill.GetComponent<Mask>().showMaskGraphic = true;
-            skill.GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = true;
+                skill.GetComponent<Mask>().showMaskGraphic = true;
+                skill.GetComponent<Skills>().GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = true;
 
-            skill.GetComponent<Image>().raycastTarget = true;
+                skill.GetComponent<Skills>().GetComponent<Image>().raycastTarget = true;
 
-            SkillsManager.Instance.ClearSkills();
-            SkillsManager.Instance.AddSkillsToList();
+                SkillsManager.Instance.ClearSkills();
+                SkillsManager.Instance.AddSkillsToList();
+            }
+            else
+            {
+                skill.GetComponent<Button>().interactable = true;
+            }
         }
     }
 
     //Function used for when the player levels up.
     public void CheckIfUnlockedNewSkill()
     {
-        if (character.Level >= LevelRequirement && !skill.GetComponent<DragUiObject>().enabled)
+        if (character.Level >= LevelRequirement)
         {
-            SkillImage.GetComponent<Button>().interactable = true;
-            skill.GetComponent<Image>().enabled = true;
-            skill.GetComponent<Button>().enabled = true;
-            
-            skill.GetComponent<DragUiObject>().enabled = true;
-            skill.enabled = true;
+            if(skilltype == SkillType.Active)
+            {
+                if(!skill.GetComponent<DragUiObject>().enabled)
+                {
+                    SkillImage.GetComponent<Button>().interactable = true;
+                    skill.GetComponent<Image>().enabled = true;
+                    skill.GetComponent<Button>().enabled = true;
 
-            skill.transform.SetParent(DropZoneTransform, false);
+                    skill.GetComponent<DragUiObject>().enabled = true;
+                    skill.GetComponent<Skills>().enabled = true;
 
-            skill.GetComponent<Mask>().showMaskGraphic = true;
-            skill.GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = true;
+                    skill.transform.SetParent(DropZoneTransform, false);
 
-            skill.GetComponent<Image>().raycastTarget = true;
+                    skill.GetComponent<Mask>().showMaskGraphic = true;
+                    skill.GetComponent<Skills>().GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = true;
 
-            SkillsManager.Instance.ClearSkills();
-            SkillsManager.Instance.AddSkillsToList();
+                    skill.GetComponent<Image>().raycastTarget = true;
+
+                    SkillsManager.Instance.ClearSkills();
+                    SkillsManager.Instance.AddSkillsToList();
+                }
+            }
+            else
+            {
+                if(!skill.GetComponent<Button>().interactable)
+                {
+                    skill.GetComponent<Button>().interactable = true;
+                    GetPassiveBonus();
+                }
+            }
         }
     }
 
@@ -97,90 +142,300 @@ public class SkillMenu : MonoBehaviour
         Panel.SetActive(true);
 
         #region SkillInformation
-        if (skill.GetCastTime <= 0 && skill.GetPotency <= 0 && skill.GetManaCost <= 0)
+        if(skilltype == SkillType.Active)
         {
-            if (skill.GetPlayerStatusEffect == EffectStatus.NONE && skill.GetEnemyStatusEffect == StatusEffect.NONE)
+            if (skill.GetComponent<Skills>().GetCastTime <= 0 && skill.GetComponent<Skills>().GetPotency <= 0 && skill.GetComponent<Skills>().GetManaCost <= 0)
             {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "Cooldown: " + skill.GetCoolDown + "s" + "\n" + 
-                                 "Cast Time: Instant";
+                if (skill.GetComponent<Skills>().GetPlayerStatusEffect == EffectStatus.NONE && skill.GetComponent<Skills>().GetEnemyStatusEffect == StatusEffect.NONE)
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" +skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + 
+                                           "Cast Time: Instant";
+                }
+                else
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + 
+                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cooldown: " +
+                                           skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + "Cast Time: Instant";
+                }
             }
-            else
+            if (skill.GetComponent<Skills>().GetCastTime > 0 && skill.GetComponent<Skills>().GetPotency <= 0 && skill.GetComponent<Skills>().GetManaCost <= 0)
             {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
-                                 skill.GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + skill.GetStatusDuration + "s" + "\n\n" + "Cooldown: " + 
-                                 skill.GetCoolDown + "s" + "\n" + "Cast Time: Instant";
+                if (skill.GetComponent<Skills>().GetPlayerStatusEffect == EffectStatus.NONE && skill.GetComponent<Skills>().GetEnemyStatusEffect == StatusEffect.NONE)
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + " Seconds" + "\n" +
+                                           "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s";
+                }
+                else
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + 
+                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + 
+                                           "s" + "\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s";
+                }
+            }
+            if (skill.GetComponent<Skills>().GetCastTime > 0 && skill.GetComponent<Skills>().GetPotency > 0 && skill.GetComponent<Skills>().GetManaCost <= 0)
+            {
+                if (skill.GetComponent<Skills>().GetPlayerStatusEffect == EffectStatus.NONE && skill.GetComponent<Skills>().GetEnemyStatusEffect == StatusEffect.NONE)
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "Cooldown: " +
+                                           skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s";
+                }
+                else
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + 
+                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " +
+                                           skill.GetComponent<Skills>().GetPotency + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + "Cast Time: " + 
+                                           skill.GetComponent<Skills>().GetCastTime + "s";
+                }
+            }
+            if (skill.GetComponent<Skills>().GetCastTime > 0 && skill.GetComponent<Skills>().GetPotency > 0 && skill.GetComponent<Skills>().GetManaCost > 0)
+            {
+                if (skill.GetComponent<Skills>().GetPlayerStatusEffect == EffectStatus.NONE && skill.GetComponent<Skills>().GetEnemyStatusEffect == StatusEffect.NONE)
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Mana: " + skill.GetComponent<Skills>().GetManaCost + "\n" + "Power: " +
+                                           skill.GetComponent<Skills>().GetPotency + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + "Cast Time: " + 
+                                           skill.GetComponent<Skills>().GetCastTime + "s";
+                }
+                else
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n" + "Mana: " + skill.GetComponent<Skills>().GetManaCost + "\n\n" + "<#EFDFB8>" +
+                                           "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + 
+                                           "</color>" + skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + 
+                                           "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s";
+                }
+            }
+            if (skill.GetComponent<Skills>().GetCastTime <= 0 && skill.GetComponent<Skills>().GetPotency > 0 && skill.GetComponent<Skills>().GetManaCost <= 0)
+            {
+                if (skill.GetComponent<Skills>().GetPlayerStatusEffect == EffectStatus.NONE && skill.GetComponent<Skills>().GetEnemyStatusEffect == StatusEffect.NONE)
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "Cooldown: " +
+                                           skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + "Cast Time: Instant";
+                }
+                else
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + 
+                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + 
+                                           "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + "Cast Time: Instant";
+                }
+            }
+            if (skill.GetComponent<Skills>().GetCastTime <= 0 && skill.GetComponent<Skills>().GetPotency > 0 && skill.GetComponent<Skills>().GetManaCost > 0)
+            {
+                if (skill.GetComponent<Skills>().GetPlayerStatusEffect == EffectStatus.NONE && skill.GetComponent<Skills>().GetEnemyStatusEffect == StatusEffect.NONE)
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Mana: " + skill.GetComponent<Skills>().GetManaCost + "\n" + "Power: " + 
+                                           skill.GetComponent<Skills>().GetPotency + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + "Cast Time: Instant";
+                }
+                else
+                {
+                    ActiveSkillInfo.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" + 
+                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Mana: " + skill.GetComponent<Skills>().GetManaCost + "\n\n" + "<#EFDFB8>" +
+                                           "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + 
+                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "Cooldown: " + 
+                                           skill.GetComponent<Skills>().GetCoolDown + "s" + "\n" + "Cast Time: Instant";
+                }
             }
         }
-        if (skill.GetCastTime > 0 && skill.GetPotency <= 0 && skill.GetManaCost <= 0)
+        else
         {
-            if (skill.GetPlayerStatusEffect == EffectStatus.NONE && skill.GetEnemyStatusEffect == StatusEffect.NONE)
+            switch (passivebonus)
             {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "Cooldown: " + skill.GetCoolDown + " Seconds" + "\n" + 
-                                 "Cast Time: " + skill.GetCastTime + "s";
-            }
-            else
-            {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
-                                 skill.GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + skill.GetStatusDuration + "s" + "\n\n" + "Cooldown: " + 
-                                 skill.GetCoolDown + "s" + "\n" + "Cast Time: " + skill.GetCastTime + "s";
-            }
-        }
-        if (skill.GetCastTime > 0 && skill.GetPotency > 0 && skill.GetManaCost <= 0)
-        {
-            if (skill.GetPlayerStatusEffect == EffectStatus.NONE && skill.GetEnemyStatusEffect == StatusEffect.NONE)
-            {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "Power: " + skill.GetPotency + "\n" + "Cooldown: " + 
-                                 skill.GetCoolDown + "s" + "\n" + "Cast Time: " + skill.GetCastTime + "s";
-            }
-            else
-            {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
-                                 skill.GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + skill.GetStatusDuration + "s" + "\n\n" + "Power: " + 
-                                 skill.GetPotency + "\n" + "Cooldown: " + skill.GetCoolDown + "s" + "\n" + "Cast Time: " + skill.GetCastTime + "s";
-            }
-        }
-        if (skill.GetCastTime > 0 && skill.GetPotency > 0 && skill.GetManaCost > 0)
-        {
-            if (skill.GetPlayerStatusEffect == EffectStatus.NONE && skill.GetEnemyStatusEffect == StatusEffect.NONE)
-            {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "Mana: " + skill.GetManaCost + "\n" + "Power: " + 
-                                 skill.GetPotency + "\n" + "Cooldown: " + skill.GetCoolDown + "s" + "\n" + "Cast Time: " + skill.GetCastTime + "s";
-            }
-            else
-            {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n" + "Mana: " + skill.GetManaCost + "\n\n" + "<#EBF500>" + 
-                                 "Added effect: " + "</color>" + skill.GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + skill.GetStatusDuration + "s" + 
-                                 "\n\n" + "Power: " + skill.GetPotency + "\n" + "Cooldown: " + skill.GetCoolDown + "s" + "\n" + "Cast Time: " + skill.GetCastTime + "s";
-            }
-        }
-        if (skill.GetCastTime <= 0 && skill.GetPotency > 0 && skill.GetManaCost <= 0)
-        {
-            if (skill.GetPlayerStatusEffect == EffectStatus.NONE && skill.GetEnemyStatusEffect == StatusEffect.NONE)
-            {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "Power: " + skill.GetPotency + "\n" + "Cooldown: " + 
-                                 skill.GetCoolDown + "s" + "\n" + "Cast Time: Instant";
-            }
-            else
-            {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
-                                 skill.GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + skill.GetStatusDuration + "s" + "\n\n" + "Power: " + 
-                                 skill.GetPotency + "\n" + "Cooldown: " + skill.GetCoolDown + "s" + "\n" + "Cast Time: Instant";
-            }
-        }
-        if (skill.GetCastTime <= 0 && skill.GetPotency > 0 && skill.GetManaCost > 0)
-        {
-            if (skill.GetPlayerStatusEffect == EffectStatus.NONE && skill.GetEnemyStatusEffect == StatusEffect.NONE)
-            {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "Mana: " + skill.GetManaCost + "\n" + "Power: " + skill.GetPotency + "\n" +
-                                      "Cooldown: " + skill.GetCoolDown + "s" + "\n" + "Cast Time: Instant";
-            }
-            else
-            {
-                SkillInfo.text = "<size=12>" + skill.GetSkillName + "</size>" + "\n\n" + skill.GetSkillDescription + "\n\n" + "Mana: " + skill.GetManaCost + "\n\n" + "<#EBF500>" + 
-                                 "Added effect: " + "</color>" + skill.GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + skill.GetStatusDuration + "s" + 
-                                 "\n\n" + "Power: " + skill.GetPotency + "\n" + "Cooldown: " + skill.GetCoolDown + "s" + "\n" + "Cast Time: Instant";
+                case (PassiveBonus.HP):
+                    HpBonusPassiveText();
+                    break;
+                case (PassiveBonus.MP):
+                    MpBonusPassiveText();
+                    break;
+                case (PassiveBonus.Strength):
+                    StrengthBonusPassiveText();
+                    break;
+                case (PassiveBonus.Defense):
+                    DefenseBonusPassiveText();
+                    break;
+                case (PassiveBonus.Intelligence):
+                    IntelligenceBonusPassiveText();
+                    break;
+                case (PassiveBonus.Critical):
+                    CriticalBonusPassiveText();
+                    break;
+                case (PassiveBonus.StormThrust):
+                    StormThrustBonusPassiveText();
+                    break;
             }
         }
         #endregion
+    }
+
+    private void HpBonusPassiveText()
+    {
+        ActiveSkillInfo.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases Maximum HP by " + PassiveBonusValue + "%";
+    }
+
+    private void MpBonusPassiveText()
+    {
+        ActiveSkillInfo.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases Maximum MP by " + PassiveBonusValue + "%";
+    }
+
+    private void StrengthBonusPassiveText()
+    {
+        ActiveSkillInfo.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases Strength by " + PassiveBonusValue + "%";
+    }
+
+    private void DefenseBonusPassiveText()
+    {
+        ActiveSkillInfo.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases Defense by " + PassiveBonusValue + "%";
+    }
+
+    private void IntelligenceBonusPassiveText()
+    {
+        ActiveSkillInfo.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases Intelligence by " + PassiveBonusValue + "%";
+    }
+
+    private void CriticalBonusPassiveText()
+    {
+        ActiveSkillInfo.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases critical hit chance by " + PassiveBonusValue + "%";
+    }
+
+    private void StormThrustBonusPassiveText()
+    {
+        ActiveSkillInfo.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Storm Thrust receives the following bonuses:" + 
+                               "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + "Wind" + "\n" + "<#EFDFB8>" + "Added Effect: " + "</color>" + "Stun" + "\n" + "<#EFDFB8>" + 
+                               "Duration: " + "</color>" + "4s";
+    }
+
+    private void GetPassiveBonus()
+    {
+        switch(passivebonus)
+        {
+            case (PassiveBonus.HP):
+                HpBonus();
+                break;
+            case (PassiveBonus.MP):
+                MpBonus();
+                break;
+            case (PassiveBonus.Strength):
+                StrengthBonus();
+                break;
+            case (PassiveBonus.Defense):
+                DefenseBonus();
+                break;
+            case (PassiveBonus.Intelligence):
+                IntelligenceBonus();
+                break;
+            case (PassiveBonus.Critical):
+                CriticalBonus();
+                break;
+            case (PassiveBonus.StormThrust):
+                StormThrustBonus();
+                break;
+        }
+    }
+
+    private int HpBonus()
+    {
+        float Percentage = (float)PassiveBonusValue / 100;
+
+        float Hpbonus = character.MaxHealth;
+
+        Hpbonus += character.MaxHealth * Percentage;
+
+        Mathf.Round(Hpbonus);
+
+        character.MaxHealth = (int)Hpbonus;
+
+        return character.MaxHealth;
+    }
+
+    private int MpBonus()
+    {
+        float Percentage = (float)PassiveBonusValue / 100;
+
+        float Mpbonus = character.MaxMana;
+
+        Mpbonus += character.MaxMana * Percentage;
+
+        Mathf.Round(Mpbonus);
+
+        character.MaxMana = (int)Mpbonus;
+
+        return character.MaxMana;
+    }
+
+    private int StrengthBonus()
+    {
+        float Percentage = (float)PassiveBonusValue / 100;
+
+        float Strengthbonus = character.CharacterStrength;
+
+        Strengthbonus += character.CharacterStrength * Percentage;
+
+        Mathf.Round(Strengthbonus);
+
+        character.CharacterStrength = (int)Strengthbonus;
+
+        return character.CharacterStrength;
+    }
+
+    private int DefenseBonus()
+    {
+        float Percentage = (float)PassiveBonusValue / 100;
+
+        float Defensebonus = character.CharacterDefense;
+
+        Defensebonus += character.CharacterDefense * Percentage;
+
+        Mathf.Round(Defensebonus);
+
+        character.CharacterDefense = (int)Defensebonus;
+
+        return character.CharacterDefense;
+    }
+
+    private int IntelligenceBonus()
+    {
+        float Percentage = (float)PassiveBonusValue / 100;
+
+        float Intelligencebonus = character.CharacterIntelligence;
+
+        Intelligencebonus += character.CharacterIntelligence * Percentage;
+
+        Mathf.Round(Intelligencebonus);
+
+        character.CharacterIntelligence = (int)Intelligencebonus;
+
+        return character.CharacterIntelligence;
+    }
+
+    private int CriticalBonus()
+    {
+        float Percentage = (float)PassiveBonusValue / 100;
+
+        float Criticalbonus = character.GetCriticalChance;
+
+        Criticalbonus += character.GetCriticalChance * Percentage;
+
+        Mathf.Round(Criticalbonus);
+
+        character.GetCriticalChance = (int)Criticalbonus;
+
+        return character.GetCriticalChance;
+    }
+
+    private void StormThrustBonus()
+    {
+
     }
 }

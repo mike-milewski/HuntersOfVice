@@ -134,7 +134,7 @@ public class Experience : MonoBehaviour
         ExperienceBar.fillAmount = 0;
 
         character.Level++;
-        //character.MaxHealth += 50;
+        character.MaxHealth += 50;
         //character.MaxMana += 5;
         character.CharacterStrength += 3;
         character.CharacterDefense += 2;
@@ -152,16 +152,13 @@ public class Experience : MonoBehaviour
             NextToLevel += character.Level * 11;
         }
 
-        character.CurrentHealth = character.MaxHealth;
-        character.CurrentMana = character.MaxMana;
-
-        character.GetComponent<Health>().GetFilledBar();
-        character.GetComponent<Mana>().GetFilledBar();
-
         foreach(SkillMenu s in skillMenu.GetComponentsInChildren<SkillMenu>())
         {
             s.CheckIfUnlockedNewSkill();
         }
+
+        character.GetComponent<Health>().IncreaseHealth(character.MaxHealth);
+        character.GetComponent<Mana>().IncreaseMana(character.MaxMana);
     }
 
     public TextMeshProUGUI GetShowExperienceText()

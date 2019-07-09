@@ -61,4 +61,9 @@ public class MenuButtons : MonoBehaviour
             GameManager.Instance.MaskSkillsPanel();
         }
     }
+
+    public void TurnOffSkillsPanel()
+    {
+        GameManager.Instance.MaskSkillsPanel();
+    }
 }
