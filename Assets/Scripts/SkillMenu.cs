@@ -312,7 +312,7 @@ public class SkillMenu : MonoBehaviour
     private void StormThrustBonusPassiveText()
     {
         ActiveSkillInfo.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Storm Thrust receives the following bonuses:" + 
-                               "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + "Wind" + "\n" + "<#EFDFB8>" + "Added Effect: " + "</color>" + "Stun" + "\n" + "<#EFDFB8>" + 
+                               "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + "Wind" + "\n\n" + "<#EFDFB8>" + "Added Effect: " + "</color>" + "Stun" + "\n" + "<#EFDFB8>" + 
                                "Duration: " + "</color>" + "4s";
     }
 

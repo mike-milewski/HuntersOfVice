@@ -9,6 +9,9 @@ public class Health : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private CharacterMenu characterMenu = null;
+
+    [SerializeField]
     private Image HealthBar, FillBarTwo;
 
     [SerializeField]
@@ -179,6 +182,11 @@ public class Health : MonoBehaviour
         FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
 
         routine = StartCoroutine(Heal());
+
+        if(characterMenu != null)
+        {
+            characterMenu.SetCharacterInfoText();
+        }
     }
 
     public void ModifyHealth(int Value)
@@ -225,6 +233,11 @@ public class Health : MonoBehaviour
         SleepHit = true;
 
         routine = StartCoroutine(DealDamage());
+
+        if (characterMenu != null)
+        {
+            characterMenu.SetCharacterInfoText();
+        }
     }
 
     public void GetFilledBar()

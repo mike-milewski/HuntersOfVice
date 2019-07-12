@@ -642,7 +642,7 @@ public class EnemySkills : MonoBehaviour
 
         StatusEffectText.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetManager[RandomValue].GetStatusEffectName;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4> +" + GetManager[RandomValue].GetStatusEffectName;
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
 
@@ -659,7 +659,7 @@ public class EnemySkills : MonoBehaviour
 
         StatusEffectText.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetManager[RandomValue].GetStatusEffectName;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4> +" + GetManager[RandomValue].GetStatusEffectName;
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
 
@@ -735,7 +735,7 @@ public class EnemySkills : MonoBehaviour
         if (Random.value * 100 <= Critical)
         {
             enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                                         (-(potency + 5) - Target.GetComponent<Character>().CharacterDefense);
+                                                         (-(potency + 5 - Target.GetComponent<Character>().CharacterDefense));
 
             DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=20>" + ((potency + 5) - 
                                                                        Target.GetComponent<Character>().CharacterDefense).ToString() + "!";

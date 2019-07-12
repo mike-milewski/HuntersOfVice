@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 199368054502676096}
   - component: {fileID: 114960206652300638}
   m_Layer: 0
-  m_Name: CFX_Magical_Source
+  m_Name: LevelUpParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1545806602296978}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.85, y: -2.12, z: 1.3983597}
+  m_LocalPosition: {x: 371.34586, y: 218.17645, z: 1.3983597}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4824551249195714}
@@ -115,7 +115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd2e8874f60266498a388d7229a1bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnlyDeactivate: 0
+  ps: {fileID: 198159274938206214}
+  Duration: 2
 --- !u!198 &198159274938206214
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -13,6 +13,9 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
     [SerializeField]
     private ParticleSystem ps;
 
+    [SerializeField]
+    private float Duration;
+
     private void Awake()
     {
         ps = this.GetComponent<ParticleSystem>();   
@@ -25,9 +28,7 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 
     private IEnumerator CheckIfAlive ()
 	{
-        var duration = ps.main.duration;
-
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(Duration);
         ps.transform.localScale = new Vector3(1, 1, 1);
         ObjectPooler.Instance.ReturnHitParticleToPool(gameObject);
     }

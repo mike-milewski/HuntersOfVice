@@ -119,6 +119,14 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Damaged", false);
     }
 
+    public void WhirlwindSlashAnimation()
+    {
+        animator.SetBool("WhirlwindSlash", true);
+        animator.SetBool("Attacking", false);
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
+    }
+
     public void DealSkillDamage()
     {
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText();
@@ -134,6 +142,11 @@ public class PlayerAnimations : MonoBehaviour
     public void EndStormThrustAnimation()
     {
         animator.SetBool("StormThrust", false);
+    }
+
+    public void EndWhirlwindSlashAnimation()
+    {
+        animator.SetBool("WhirlwindSlash", false);
     }
 
     public void PlayFallSoundEffect()

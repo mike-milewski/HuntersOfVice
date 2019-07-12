@@ -77,10 +77,12 @@ public class StatusIcon : MonoBehaviour
         switch(status)
         {
             case (EffectStatus.StrengthUP):
-                StrengthUP(10);
+                StrengthUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
+                SkillsManager.Instance.GetCharacterMenu.GetStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.Haste):
-                Haste(50);
+                Haste((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
                 break;
         }
     }
@@ -147,7 +149,7 @@ public class StatusIcon : MonoBehaviour
 
         StatusEffectTxt.transform.SetParent(skill.GetTextHolder.transform, false);
 
-        StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>().text = "-" + skill.GetStatusEffectName;
+        StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696> -" + skill.GetStatusEffectName;
 
         StatusEffectTxt.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
@@ -157,6 +159,8 @@ public class StatusIcon : MonoBehaviour
         {
             case (EffectStatus.StrengthUP):
                 SetStrengthToDefault();
+                SkillsManager.Instance.GetCharacterMenu.GetStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.Haste):
                 ResetSpeedAndCoolDowns();
@@ -177,7 +181,7 @@ public class StatusIcon : MonoBehaviour
 
         StatusEffectTxt.transform.SetParent(enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetTextHolder.transform, false);
 
-        StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>().text = "-" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
+        StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696> -" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
 
         StatusEffectTxt.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
@@ -216,6 +220,25 @@ public class StatusIcon : MonoBehaviour
             Damagetxt.transform.SetParent(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageTextParent.transform, false);
 
             Damagetxt.GetComponentInChildren<TextMeshProUGUI>().text = value.ToString();
+
+            TempTick = DamageOrHealTick;
+        }
+    }
+
+    private void HealOverTime(int value)
+    {
+        TempTick -= Time.deltaTime;
+        if (TempTick <= 0)
+        {
+            SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(value);
+
+            var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
+
+            HealTxt.SetActive(true);
+
+            HealTxt.transform.SetParent(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageTextParent.transform, false);
+
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = value.ToString();
 
             TempTick = DamageOrHealTick;
         }
@@ -277,17 +300,67 @@ public class StatusIcon : MonoBehaviour
 
     private void DefenseUP(int value)
     {
+        float Percentage = (float)value / 100;
 
+        float TempDefense = (float)SkillsManager.Instance.GetCharacter.CharacterDefense;
+
+        TempDefense += (float)SkillsManager.Instance.GetCharacter.CharacterDefense * Percentage;
+
+        Mathf.Round(TempDefense);
+
+        SkillsManager.Instance.GetCharacter.CharacterDefense = (int)TempDefense;
+    }
+
+    private void IntelligenceUP(int value)
+    {
+        float Percentage = (float)value / 100;
+
+        float TempIntelligence = (float)SkillsManager.Instance.GetCharacter.CharacterIntelligence;
+
+        TempIntelligence += (float)SkillsManager.Instance.GetCharacter.CharacterIntelligence * Percentage;
+
+        Mathf.Round(TempIntelligence);
+
+        SkillsManager.Instance.GetCharacter.CharacterIntelligence = (int)TempIntelligence;
+    }
+
+    private void StrengthDOWN(int value)
+    {
+        float Percentage = (float)value / 100;
+
+        float TempStrength = (float)SkillsManager.Instance.GetCharacter.CharacterStrength;
+
+        TempStrength -= (float)SkillsManager.Instance.GetCharacter.CharacterStrength * Percentage;
+
+        Mathf.Round(TempStrength);
+
+        SkillsManager.Instance.GetCharacter.CharacterStrength = (int)TempStrength;
     }
 
     private void DefenseDOWN(int value)
     {
+        float Percentage = (float)value / 100;
 
+        float TempDefense = (float)SkillsManager.Instance.GetCharacter.CharacterDefense;
+
+        TempDefense -= (float)SkillsManager.Instance.GetCharacter.CharacterDefense * Percentage;
+
+        Mathf.Round(TempDefense);
+
+        SkillsManager.Instance.GetCharacter.CharacterDefense = (int)TempDefense;
     }
 
-    private void BloodAndSinew()
+    private void IntelligenceDOWN(int value)
     {
+        float Percentage = (float)value / 100;
 
+        float TempIntelligence = (float)SkillsManager.Instance.GetCharacter.CharacterIntelligence;
+
+        TempIntelligence -= (float)SkillsManager.Instance.GetCharacter.CharacterIntelligence * Percentage;
+
+        Mathf.Round(TempIntelligence);
+
+        SkillsManager.Instance.GetCharacter.CharacterIntelligence = (int)TempIntelligence;
     }
 
     private void ResetSpeedAndCoolDowns()
@@ -304,12 +377,34 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetCharacter.CharacterStrength = DefaultStrength;
     }
 
+    private void SetDefenseToDefault()
+    {
+        int DefaultDefense = SkillsManager.Instance.GetCharacter.GetCharacterData.Defense;
+
+        SkillsManager.Instance.GetCharacter.CharacterDefense = DefaultDefense;
+    }
+
+    private void SetIntelligenceToDefault()
+    {
+        int DefaultIntelligence = SkillsManager.Instance.GetCharacter.GetCharacterData.Intelligence;
+
+        SkillsManager.Instance.GetCharacter.CharacterIntelligence = DefaultIntelligence;
+    }
+
+    private void BloodAndSinew()
+    {
+
+    }
+
     private void CheckStatusEffectIcon()
     {
         switch (status)
         {
             case (EffectStatus.DamageOverTime):
                 DamageOverTime(RegenAndDOTCalculation());
+                break;
+            case (EffectStatus.HealthRegen):
+                HealOverTime(RegenAndDOTCalculation());
                 break;
             case (EffectStatus.Stun):
                 Stun();

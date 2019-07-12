@@ -134,7 +134,7 @@ public class Experience : MonoBehaviour
         ExperienceBar.fillAmount = 0;
 
         character.Level++;
-        character.MaxHealth += 50;
+        //character.MaxHealth += 50;
         //character.MaxMana += 5;
         character.CharacterStrength += 3;
         character.CharacterDefense += 2;

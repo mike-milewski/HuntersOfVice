@@ -14,6 +14,9 @@ public class SkillsManager : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private CharacterMenu characterMenu;
+
+    [SerializeField]
     private StatusIcon statusIcon;
 
     [SerializeField]
@@ -73,6 +76,18 @@ public class SkillsManager : MonoBehaviour
         set
         {
             character = value;
+        }
+    }
+
+    public CharacterMenu GetCharacterMenu
+    {
+        get
+        {
+            return characterMenu;
+        }
+        set
+        {
+            characterMenu = value;
         }
     }
 

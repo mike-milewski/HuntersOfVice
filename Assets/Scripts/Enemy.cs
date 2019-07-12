@@ -212,6 +212,6 @@ public class Enemy : MonoBehaviour
     public void ReturnExperience()
     {
         EXP.GainEXP(ExperiencePoints);
-        EXP.GetShowExperienceText().text = ExperiencePoints + " EXP";
+        EXP.GetShowExperienceText().text = ExperiencePoints + "<size=10>" + " EXP";
     }
 }

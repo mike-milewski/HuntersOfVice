@@ -307,7 +307,7 @@ public class Skills : StatusEffects
 
         SkillsManager.Instance.GetStatusIcon.PlayerInput();
 
-        PlayerStatus();
+        PlayerStatus();  
     }
 
     public void Poison()
@@ -423,7 +423,7 @@ public class Skills : StatusEffects
 
     public void WhirlwindSlash()
     {
-
+        GetCharacter.GetComponent<PlayerAnimations>().WhirlwindSlashAnimation();
     }
 
     private TextMeshProUGUI HealSkillText()
@@ -468,7 +468,7 @@ public class Skills : StatusEffects
 
         StatusTxt.transform.SetParent(TextHolder.transform, false);
 
-        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetStatusEffectName;
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4> +" + GetStatusEffectName;
 
         StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
@@ -485,7 +485,7 @@ public class Skills : StatusEffects
 
         StatusTxt.transform.SetParent(TextHolder.transform, false);
 
-        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "+" + GetStatusEffectName;
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4> +" + GetStatusEffectName;
 
         StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
@@ -600,8 +600,8 @@ public class Skills : StatusEffects
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
-                                      GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cooldown: " + CoolDown + "s" + 
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
+                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cooldown: " + CoolDown + "s" + 
                                       "\n" + "Cast Time: Instant";
             }
         }
@@ -614,8 +614,8 @@ public class Skills : StatusEffects
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
-                                      GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cooldown: " + CoolDown + "s" + 
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
+                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cooldown: " + CoolDown + "s" + 
                                       "\n" + "Cast Time: " + CastTime + "s";
             }
         }
@@ -628,8 +628,8 @@ public class Skills : StatusEffects
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
-                                      GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n" + 
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
+                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n" + 
                                       "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: " + CastTime + "s";
             }
         }
@@ -642,8 +642,8 @@ public class Skills : StatusEffects
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n" + "Mana: " + ManaCost + "\n\n" + "<#EBF500>" + 
-                                      "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" 
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n" + "Mana: " + ManaCost + "\n\n" + "<#EFDFB8>" + 
+                                      "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" 
                                       + "Power: " + Potency + "\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: " + CastTime + "s";
             }
         }
@@ -656,8 +656,8 @@ public class Skills : StatusEffects
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EBF500>" + "Added effect: " + "</color>" + 
-                                      GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n" + 
+                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
+                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n" + 
                                       "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: Instant";
             }
         }
@@ -670,8 +670,8 @@ public class Skills : StatusEffects
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" +SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n\n" + "<#EBF500>" + 
-                                      "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EBF500>" + "Status Duration: " + "</color>"+ GetStatusDuration + "s" + "\n\n" + 
+                SkillPanelText.text = "<size=12>" + "<u>" +SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Mana: " + ManaCost + "\n\n" + "<#EFDFB8>" + 
+                                      "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>"+ GetStatusDuration + "s" + "\n\n" + 
                                       "Power: " + Potency + "\n" + "Cooldown: " + CoolDown + "s" + "\n" + "Cast Time: Instant";
             }
         }

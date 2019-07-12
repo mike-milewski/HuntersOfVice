@@ -12,6 +12,9 @@ public class Mana : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private CharacterMenu characterMenu;
+
+    [SerializeField]
     private TextMeshProUGUI ManaText;
 
     private Coroutine routine = null;
@@ -88,11 +91,18 @@ public class Mana : MonoBehaviour
 
         character.CurrentMana += Value;
 
+        character.CurrentMana = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana);
+
         ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana).ToString();
 
         FillBarTwo.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
 
         routine = StartCoroutine(HealMana());
+
+        if (characterMenu != null)
+        {
+            characterMenu.SetCharacterInfoText();
+        }
     }
 
     public void ModifyMana(int Value)
@@ -106,11 +116,18 @@ public class Mana : MonoBehaviour
 
         character.CurrentMana += Value;
 
+        character.CurrentMana = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana);
+
         ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana).ToString();
 
         ManaBar.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
 
         routine = StartCoroutine(LoseMana());
+
+        if (characterMenu != null)
+        {
+            characterMenu.SetCharacterInfoText();
+        }
     }
 
     public void GetFilledBar()

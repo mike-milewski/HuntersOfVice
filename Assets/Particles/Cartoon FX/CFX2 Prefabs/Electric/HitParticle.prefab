@@ -85,6 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ps: {fileID: 198157547220164012}
+  Duration: 0.6
 --- !u!198 &198157547220164012
 ParticleSystem:
   m_ObjectHideFlags: 1
