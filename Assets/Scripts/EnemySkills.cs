@@ -625,14 +625,6 @@ public class EnemySkills : MonoBehaviour
     {
         damageRadius.enabled = true;
     }
-    /*
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(character.GetComponentInChildren<DamageRadius>().GetDamageShape.transform.position,
-                        character.GetComponentInChildren<DamageRadius>().SetRectangleColliderSize());
-    }
-    */
 
     public TextMeshProUGUI EnemyStatus()
     {

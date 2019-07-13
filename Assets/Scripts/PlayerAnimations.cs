@@ -147,6 +147,9 @@ public class PlayerAnimations : MonoBehaviour
     public void EndWhirlwindSlashAnimation()
     {
         animator.SetBool("WhirlwindSlash", false);
+
+        SkillsManager.Instance.GetWhirlwind = false;
+        SkillsManager.Instance.GetActivatedSkill = false;
     }
 
     public void PlayFallSoundEffect()

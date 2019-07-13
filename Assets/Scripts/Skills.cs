@@ -43,6 +43,8 @@ public class Skills : StatusEffects
 
     private bool IsBeingDragged;
 
+    private bool StormThrustActivated;
+
     [SerializeField]
     private int ManaCost, Potency;
     
@@ -238,11 +240,14 @@ public class Skills : StatusEffects
         }
     }
 
-    private bool StormThrustActivated;
-
     private void Update()
     {
-        if(GetCharacter != null)
+        if (SkillsManager.Instance.GetWhirlwind)
+        {
+            WhirlwindSlashHit();
+        }
+
+        if (GetCharacter != null)
         CheckCoolDownStatus();
     }
 
@@ -424,8 +429,40 @@ public class Skills : StatusEffects
     public void WhirlwindSlash()
     {
         GetCharacter.GetComponent<PlayerAnimations>().WhirlwindSlashAnimation();
+
+        SkillsManager.Instance.GetActivatedSkill = true;
+
+        SkillsManager.Instance.GetWhirlwind = true;
     }
 
+    private void WhirlwindSlashHit()
+    {
+        GetCharacter.transform.Rotate(0, 460 * Time.deltaTime, 0);
+
+        SetUpDamagePerimiter(GetCharacter.transform.position, 2);
+    }
+
+    public void SetUpDamagePerimiter(Vector3 center, float radius)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(GetCharacter.transform.position, radius);
+
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].GetComponent<Enemy>())
+            {
+                hitColliders[i].GetComponentInChildren<Health>().ModifyHealth(-Potency);
+
+                hitColliders[i].GetComponent<EnemyAnimations>().DamageAni();
+            }
+        }
+    }
+    /*
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1, GetCharacter.transform.position.z), 2f);
+    }
+    */
     private TextMeshProUGUI HealSkillText()
     {
         var HealTxt = ObjectPooler.Instance.GetPlayerHealText();

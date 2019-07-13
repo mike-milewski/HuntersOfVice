@@ -25,7 +25,7 @@ public class SkillsManager : MonoBehaviour
     [SerializeField]
     private List<Skills> skills = new List<Skills>();
 
-    private bool ActivatedSkill, DisruptedSkill;
+    private bool ActivatedSkill, DisruptedSkill, WhirlWindSlashAbility;
 
     private int KeyInput;
 
@@ -52,6 +52,18 @@ public class SkillsManager : MonoBehaviour
         set
         {
             DisruptedSkill = value;
+        }
+    }
+
+    public bool GetWhirlwind
+    {
+        get
+        {
+            return WhirlWindSlashAbility;
+        }
+        set
+        {
+            WhirlWindSlashAbility = value;
         }
     }
 

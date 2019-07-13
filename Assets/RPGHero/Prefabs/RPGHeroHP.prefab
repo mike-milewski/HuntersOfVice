@@ -2065,7 +2065,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 124
   m_CollisionDetection: 0
 --- !u!65 &65928126074725128
 BoxCollider:
@@ -2121,6 +2121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 114434675717457446}
+  cam: {fileID: 0}
+  playerAnimations: {fileID: 0}
   Target: {fileID: 0}
   HitParticle: {fileID: 198157547220164012, guid: 4961a16ba01e09547be3e1c9d16d5ad0,
     type: 2}
@@ -2148,8 +2150,8 @@ MonoBehaviour:
   Strength: 0
   Defense: 0
   Intelligence: 0
-  ExperiencePoints: 0
-  NextToLevel: 0
+  CriticalHitChance: 0
+  MoveSpeed: 0
   CharacterName: 
 --- !u!114 &114476408224293410
 MonoBehaviour:
@@ -2162,12 +2164,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961821574baa3954eb4c89ddbf474ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthBar: {fileID: 0}
   character: {fileID: 114434675717457446}
+  characterMenu: {fileID: 0}
+  HealthBar: {fileID: 0}
+  FillBarTwo: {fileID: 0}
   DamageTextParent: {fileID: 0}
   HealthText: {fileID: 0}
-  DamageText: {fileID: 114917287230530400, guid: d4f4ce4e9c6160647a9eff9ecdd3bb84,
-    type: 2}
+  DamageTextHolder: {fileID: 0}
+  HealTextHolder: {fileID: 0}
+  HealthAnimationObj: {fileID: 0}
+  SleepHit: 0
+  FillValue: 0
 --- !u!114 &114518751249204790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2179,11 +2186,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef992a99fe86fce4ab23de8fa2147e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   animator: {fileID: 95922273507661854}
+  character: {fileID: 114434675717457446}
   Speed: 3
   LookRotation: 4
-  JumpSpeed: 200
-  character: {fileID: 114434675717457446}
 --- !u!114 &114672839599439538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2196,8 +2203,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ManaBar: {fileID: 0}
+  FillBarTwo: {fileID: 0}
   character: {fileID: 114434675717457446}
+  characterMenu: {fileID: 0}
   ManaText: {fileID: 0}
+  FillValue: 0
+  SpendingMana: 0
 --- !u!114 &114860368480721928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2209,13 +2220,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9442b4ad235a994f81bf749d8578ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillMenu: {fileID: 0}
+  Player: {fileID: 0}
   ExperienceBar: {fileID: 0}
+  FillBarTwo: {fileID: 0}
   character: {fileID: 114434675717457446}
   ExperienceText: {fileID: 0}
   CharacterLevelText: {fileID: 0}
-  ShowExperienceText: {fileID: 114495759057959808, guid: 30bd29c93c2724a44bbbc13e81f42c1a,
-    type: 2}
   ExperienceTextParent: {fileID: 0}
+  ExperienceTextHolder: {fileID: 0}
+  LevelUpParticle: {fileID: 0}
+  ExperiencePoints: 0
+  NextToLevel: 0
+  MaxLevel: 0
+  FillValue: 0
 --- !u!137 &137440119739727844
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

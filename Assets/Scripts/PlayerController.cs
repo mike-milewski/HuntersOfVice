@@ -73,12 +73,15 @@ public class PlayerController : MonoBehaviour
 
         if (Movement != Vector3.zero)
         {
-            Quaternion Look = Quaternion.LookRotation(Movement);
-            Quaternion LookDir = Look;
+            if(!SkillsManager.Instance.GetWhirlwind)
+            {
+                Quaternion Look = Quaternion.LookRotation(Movement);
+                Quaternion LookDir = Look;
 
-            Quaternion characterRotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookRotation * Time.deltaTime);
+                Quaternion characterRotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookRotation * Time.deltaTime);
 
-            character.GetRigidbody.transform.rotation = characterRotation;
+                character.transform.rotation = characterRotation;
+            }
         }
 
         character.GetRigidbody.transform.position += Movement * character.GetMoveSpeed * Time.deltaTime;
