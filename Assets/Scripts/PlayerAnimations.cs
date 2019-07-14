@@ -129,7 +129,9 @@ public class PlayerAnimations : MonoBehaviour
 
     public void DealSkillDamage()
     {
-        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText();
+        int KeyInput = SkillsManager.Instance;
+
+        SkillsManager.Instance.GetSkills[KeyInput].DamageSkillText();
     }
 
     public void EndSkillAnimation()

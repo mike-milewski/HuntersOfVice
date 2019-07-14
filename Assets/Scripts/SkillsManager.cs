@@ -165,7 +165,7 @@ public class SkillsManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && skills[0].GetButton.interactable)
         {
             input = 1;
             if (input > skills.Count)
@@ -186,7 +186,7 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && skills[1].GetButton.interactable)
         {
             input = 2;
             if (input > skills.Count)
@@ -207,7 +207,7 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) && skills[2].GetButton.interactable)
         {
             input = 3;
             if (input > skills.Count)
@@ -228,7 +228,7 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.Alpha4) && skills[3].GetButton.interactable)
         {
             input = 4;
             if (input > skills.Count)
@@ -249,7 +249,7 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+        if (Input.GetKeyDown(KeyCode.Alpha5) && skills[4].GetButton.interactable)
         {
             input = 5;
             if (input > skills.Count)
@@ -270,7 +270,7 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
+        if (Input.GetKeyDown(KeyCode.Alpha6) && skills[5].GetButton.interactable)
         {
             input = 6;
             if(input > skills.Count)
@@ -291,7 +291,7 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
+        if (Input.GetKeyDown(KeyCode.Alpha7) && skills[6].GetButton.interactable)
         {
             input = 7;
             if (input > skills.Count)
@@ -312,7 +312,7 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
+        if (Input.GetKeyDown(KeyCode.Alpha8) && skills[7].GetButton.interactable)
         {
             input = 8;
             if (input > skills.Count)
@@ -333,7 +333,7 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
+        if (Input.GetKeyDown(KeyCode.Alpha9) && skills[8].GetButton.interactable)
         {
             input = 9;
             if (input > skills.Count)
@@ -354,7 +354,7 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.Alpha0) && skills[9].GetButton.interactable)
         {
             input = 10;
             if (input > skills.Count)
