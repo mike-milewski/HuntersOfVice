@@ -285,7 +285,7 @@ public class Skills : StatusEffects
         }
         if (skillbar.GetSkillBar.fillAmount >= 1)
         {
-            this.button.GetComponent<Image>().fillAmount = 1;
+            this.CoolDownImage.fillAmount = 1;
 
             SkillsManager.Instance.GetActivatedSkill = false;
 
@@ -306,7 +306,7 @@ public class Skills : StatusEffects
 
     public void PlayerStatusEffectSkill()
     {
-        this.button.GetComponent<Image>().fillAmount = 1;
+        this.CoolDownImage.fillAmount = 1;
 
         SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
@@ -321,7 +321,7 @@ public class Skills : StatusEffects
 
         GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
 
-        this.button.GetComponent<Image>().fillAmount = 1;
+        this.CoolDownImage.fillAmount = 1;
 
         SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
@@ -384,7 +384,7 @@ public class Skills : StatusEffects
 
             SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
 
-            this.button.GetComponent<Image>().fillAmount = 1;
+            this.CoolDownImage.fillAmount = 1;
 
             SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
@@ -428,31 +428,45 @@ public class Skills : StatusEffects
 
     public void WhirlwindSlash()
     {
-        GetCharacter.GetComponent<PlayerAnimations>().WhirlwindSlashAnimation();
+        if (GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        {
+            if(GetCharacter.GetComponent<BasicAttack>().DistanceToTarget() <= AttackRange)
+            {
+                GetCharacter.GetComponent<PlayerAnimations>().WhirlwindSlashAnimation();
 
-        SkillsManager.Instance.GetActivatedSkill = true;
+                SkillsManager.Instance.GetActivatedSkill = true;
 
-        SkillsManager.Instance.GetWhirlwind = true;
+                SkillsManager.Instance.GetWhirlwind = true;
+
+                this.CoolDownImage.fillAmount = 1;
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+        }
     }
 
     private void WhirlwindSlashHit()
     {
         GetCharacter.transform.Rotate(0, 460 * Time.deltaTime, 0);
-
-        SetUpDamagePerimiter(GetCharacter.transform.position, 2);
     }
 
     public void SetUpDamagePerimiter(Vector3 center, float radius)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(GetCharacter.transform.position, radius);
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
 
         for (int i = 0; i < hitColliders.Length; i++)
         {
             if (hitColliders[i].GetComponent<Enemy>())
             {
-                hitColliders[i].GetComponentInChildren<Health>().ModifyHealth(-Potency);
+                TextHolder = hitColliders[i].GetComponent<Enemy>().GetUI;
 
-                hitColliders[i].GetComponent<EnemyAnimations>().DamageAni();
+                DamageSkillText();
             }
         }
     }

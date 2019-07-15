@@ -17,16 +17,12 @@ public class EnemySkillBar : MonoBehaviour
     private EnemySkills enemySkills;
 
     [SerializeField]
-    private ParticleSystem CastParticle;
-
-    [SerializeField]
     private Image SkillBarFillImage;
 
     [SerializeField]
     private TextMeshProUGUI SkillName;
 
-    [SerializeField]
-    private bool ParticleExists;
+    private GameObject CastParticle;
 
     [SerializeField]
     private bool Casting;
@@ -98,14 +94,13 @@ public class EnemySkillBar : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!ParticleExists)
-        {
-            CreateParticle();
-        }
-        else
-        {
-            CastParticle.gameObject.SetActive(true);
-        }
+        CastParticle = ObjectPooler.Instance.GetEnemyCastParticle();
+
+        CastParticle.SetActive(true);
+
+        CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.1f, character.transform.position.z);
+
+        CastParticle.transform.SetParent(character.transform);
 
         CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
         character.GetComponentInChildren<DamageRadius>().GetShapes = enemySkills.GetManager[enemySkills.GetRandomValue].GetShapes;
@@ -115,25 +110,10 @@ public class EnemySkillBar : MonoBehaviour
 
     private void OnDisable()
     {
+        ObjectPooler.Instance.ReturnEnemyCastParticleToPool(CastParticle);
+
         Casting = false;
-        CastParticle.gameObject.SetActive(false);
         SkillBarFillImage.fillAmount = 0;
-    }
-
-    private void CreateParticle()
-    {
-        CastParticle = Instantiate(CastParticle, new Vector3(character.transform.position.x,
-                                                             character.transform.position.y + 0.1f,
-                                                             character.transform.position.z),
-                                                             CastParticle.transform.rotation);
-
-        CastParticle.transform.SetParent(character.transform, true);
-
-        var castPart = CastParticle.main;
-
-        castPart.startSize = CastParticleSize;
-
-        ParticleExists = true;
     }
 
     public void GetEnemySkill()
@@ -173,21 +153,23 @@ public class EnemySkillBar : MonoBehaviour
             enemyAI.GetAutoAttack = 0;
             enemyAI.GetStates = States.Attack;
 
+            ObjectPooler.Instance.ReturnEnemyCastParticleToPool(CastParticle);
+
             SkillBarFillImage.fillAmount = 0;
             CastTime = enemySkills.GetManager[enemySkills.GetRandomValue].GetCastTime;
 
-            CastParticle.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
         else if(enemySkills.GetDisruptedSkill)
-        {
+        {  
             enemySkills.GetActiveSkill = false;
 
             enemyAI.GetAutoAttack = 0;
 
             SkillBarFillImage.fillAmount = 0;
 
-            CastParticle.gameObject.SetActive(false);
+            ObjectPooler.Instance.ReturnEnemyCastParticleToPool(CastParticle);
+
             gameObject.SetActive(false);
         }
     }

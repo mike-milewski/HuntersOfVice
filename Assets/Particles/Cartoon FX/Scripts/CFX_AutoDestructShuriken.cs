@@ -23,6 +23,7 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 
     private void OnEnable()
     {
+        if(Duration > -1)
         StartCoroutine(CheckIfAlive());
     }
 

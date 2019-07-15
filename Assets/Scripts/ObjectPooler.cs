@@ -97,6 +97,8 @@ public class ObjectPooler : MonoBehaviour
         AddEnemyStatusIcon(poolcontroller[7].GetPoolAmount);
         AddExperienceText(poolcontroller[8].GetPoolAmount);
         AddHitParticle(poolcontroller[9].GetPoolAmount);
+        AddPlayerCastParticle(poolcontroller[10].GetPoolAmount);
+        AddEnemyCastParticle(poolcontroller[11].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -219,6 +221,30 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddPlayerCastParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[10].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[10].GetPoolParent.transform, false);
+            poolcontroller[10].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddEnemyCastParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[11].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[11].GetPoolParent.transform, false);
+            poolcontroller[11].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -267,6 +293,16 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetHitParticle()
     {
         return poolcontroller[9].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetPlayerCastParticle()
+    {
+        return poolcontroller[10].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetEnemyCastParticle()
+    {
+        return poolcontroller[11].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -346,6 +382,22 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[9].GetPoolParent.transform, false);
 
         poolcontroller[9].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnPlayerCastParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[10].GetPoolParent.transform, false);
+
+        poolcontroller[10].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnEnemyCastParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[11].GetPoolParent.transform, false);
+
+        poolcontroller[11].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

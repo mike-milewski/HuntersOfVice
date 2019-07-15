@@ -13,11 +13,9 @@ public class SkillBar : MonoBehaviour
     [SerializeField]
     private PlayerAnimations playerAnimations;
 
-    [SerializeField]
-    private Skills skills = null;
+    private Skills skills;
 
-    [SerializeField]
-    private ParticleSystem CastParticle;
+    private GameObject CastParticle;
 
     [SerializeField]
     private TextMeshProUGUI SkillName;
@@ -56,14 +54,18 @@ public class SkillBar : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!ParticleExists)
-        {
-            CreateParticle();
-        }
-        else
-        {
-            CastParticle.gameObject.SetActive(true);
-        }
+        CastParticle = ObjectPooler.Instance.GetPlayerCastParticle();
+
+        CastParticle.SetActive(true);
+
+        CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.1f, character.transform.position.z);
+
+        CastParticle.transform.SetParent(character.transform);
+    }
+
+    private void OnDisable()
+    {
+        ObjectPooler.Instance.ReturnPlayerCastParticleToPool(CastParticle);
     }
 
     private void Start()
@@ -71,18 +73,6 @@ public class SkillBar : MonoBehaviour
         CastTime = skills.GetCastTime;
 
         SkillImage.sprite = skills.GetComponent<Image>().sprite;
-    }
-
-    private void CreateParticle()
-    {
-        CastParticle = Instantiate(CastParticle, new Vector3(playerController.transform.position.x, 
-                                                             playerController.transform.position.y + 0.1f, 
-                                                             playerController.transform.position.z),
-                                                             CastParticle.transform.rotation);
-
-        CastParticle.transform.SetParent(playerController.transform, true);
-
-        ParticleExists = true;
     }
 
     private void Update()
@@ -95,6 +85,8 @@ public class SkillBar : MonoBehaviour
             SkillName.text = skills.GetSkillName + " " + Mathf.Clamp(CastTime, 0, skills.GetCastTime).ToString("F2");
             if (SkillBarImage.fillAmount >= 1)
             {
+                ObjectPooler.Instance.ReturnPlayerCastParticleToPool(CastParticle);
+
                 skills.GetButton.onClick.Invoke();
                 SkillBarImage.fillAmount = 0;
                 CastTime = skills.GetCastTime;
@@ -105,6 +97,7 @@ public class SkillBar : MonoBehaviour
         else
         {
             playerAnimations.EndAllSpellcastingBools();
+
             SkillsManager.Instance.ReactivateSkillButtons();
             SkillBarImage.fillAmount = 0;
             CastTime = skills.GetCastTime;

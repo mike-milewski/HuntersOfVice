@@ -85,13 +85,22 @@ public class PlayerAnimations : MonoBehaviour
 
     public void PlayContinueCastAnimation()
     {
-        animator.SetBool("SpellCasting", false);
-        animator.SetBool("ContinueCasting", true);
+        if(this.gameObject.GetComponent<PlayerController>().GetMovement == Vector3.zero)
+        {
+            animator.SetBool("SpellCasting", false);
+            animator.SetBool("ContinueCasting", true);
+        }
+        else
+        {
+            animator.SetBool("SpellCasting", false);
+            animator.SetBool("ContinueCasting", false);
+        }
     }
 
     public void EndSpellCastingAnimation()
     {
         animator.SetBool("ContinueCasting", false);
+        animator.SetBool("Spellcasting", false);
     }
 
     public void EndAllSpellcastingBools()
@@ -129,9 +138,7 @@ public class PlayerAnimations : MonoBehaviour
 
     public void DealSkillDamage()
     {
-        int KeyInput = SkillsManager.Instance;
-
-        SkillsManager.Instance.GetSkills[KeyInput].DamageSkillText();
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText();
     }
 
     public void EndSkillAnimation()
@@ -152,6 +159,8 @@ public class PlayerAnimations : MonoBehaviour
 
         SkillsManager.Instance.GetWhirlwind = false;
         SkillsManager.Instance.GetActivatedSkill = false;
+
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
     }
 
     public void PlayFallSoundEffect()
