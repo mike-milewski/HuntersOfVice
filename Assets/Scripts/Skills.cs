@@ -31,8 +31,10 @@ public class Skills : StatusEffects
     [SerializeField]
     private GameObject StatusEffectText;
 
+    private GameObject SkillParticle;
+
     [SerializeField]
-    private ParticleSystem SkillParticle;
+    private Transform SkillParticleParent;
 
     [SerializeField]
     private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency;
@@ -428,6 +430,17 @@ public class Skills : StatusEffects
 
     public void WhirlwindSlash()
     {
+        GetCharacter.GetComponent<PlayerAnimations>().WhirlwindSlashAnimation();
+        SkillsManager.Instance.GetWhirlwind = true;
+
+        SkillParticle = ObjectPooler.Instance.GetWhirlwindSlashParticle();
+
+        SkillParticle.SetActive(true);
+
+        SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y, SkillParticleParent.position.z);
+
+        SkillParticle.transform.SetParent(SkillParticleParent);
+        /*
         if (GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
         {
             if(GetCharacter.GetComponent<BasicAttack>().DistanceToTarget() <= AttackRange)
@@ -449,6 +462,7 @@ public class Skills : StatusEffects
         {
             GameManager.Instance.InvalidTargetText();
         }
+        */
     }
 
     private void WhirlwindSlashHit()

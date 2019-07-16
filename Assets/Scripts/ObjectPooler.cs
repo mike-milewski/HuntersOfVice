@@ -99,6 +99,7 @@ public class ObjectPooler : MonoBehaviour
         AddHitParticle(poolcontroller[9].GetPoolAmount);
         AddPlayerCastParticle(poolcontroller[10].GetPoolAmount);
         AddEnemyCastParticle(poolcontroller[11].GetPoolAmount);
+        AddWhirlWindSlashParticle(poolcontroller[12].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -245,6 +246,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddWhirlWindSlashParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[12].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[12].GetPoolParent.transform, false);
+            poolcontroller[12].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -303,6 +316,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetEnemyCastParticle()
     {
         return poolcontroller[11].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetWhirlwindSlashParticle()
+    {
+        return poolcontroller[12].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -398,6 +416,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[11].GetPoolParent.transform, false);
 
         poolcontroller[11].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnWhirlwindSlashParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[12].GetPoolParent.transform, false);
+
+        poolcontroller[12].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

@@ -539,6 +539,7 @@ public class EnemySkills : MonoBehaviour
         {
             MushroomSporeAnimation();
             DisableRadiusImage();
+
             Invoke("InvokePoisonSpore", ApplySkill);
         }
     }

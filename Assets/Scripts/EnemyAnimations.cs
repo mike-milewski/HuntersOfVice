@@ -93,8 +93,15 @@ public class EnemyAnimations : MonoBehaviour
 
     public void ResetAutoAttackTime()
     {
-        AI.GetAutoAttack = 0;
-        AI.GetStates = States.Attack;
+        if(AI.GetStates != States.SkillAnimation)
+        {
+            AI.GetAutoAttack = 0;
+            AI.GetStates = States.Attack;
+        }
+        else
+        {
+            AI.CheckTarget();
+        }
     }
 
     public void EndDamaged()

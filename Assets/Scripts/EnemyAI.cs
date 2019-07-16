@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-public enum States { Patrol, Chase, Attack, ApplyingAttack, Skill, Damaged, Immobile }
+public enum States { Patrol, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile }
 
 public class EnemyAI : MonoBehaviour
 {
@@ -43,7 +43,7 @@ public class EnemyAI : MonoBehaviour
 
     private float TimeToMove, DistanceToTarget;
 
-    private bool StandingStill;
+    private bool StandingStill, PlayerEntry;
 
     [SerializeField]
     private Image ThreatPic;
@@ -106,6 +106,8 @@ public class EnemyAI : MonoBehaviour
                     break;
                 case (States.Immobile):
                     Immobile();
+                    break;
+                case (States.SkillAnimation):
                     break;
             }
         }
@@ -378,6 +380,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        PlayerEntry = true;
         if(other.gameObject.GetComponent<PlayerController>())
         {
             PlayerTarget = other.GetComponent<Character>();
@@ -389,13 +392,17 @@ public class EnemyAI : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PlayerController>())
         {
-            PlayerTarget = null;
-            states = States.Patrol;
-            AutoAttackTime = 0;
-            enemySkills.DisableRadiusImage();
-            enemySkills.DisableRadius();
-            enemySkills.GetActiveSkill = false;
-            enemySkills.GetSkillBar.gameObject.SetActive(false);
+            PlayerEntry = false;
+            if(states != States.SkillAnimation)
+            {
+                PlayerTarget = null;
+                states = States.Patrol;
+                AutoAttackTime = 0;
+                enemySkills.DisableRadiusImage();
+                enemySkills.DisableRadius();
+                enemySkills.GetActiveSkill = false;
+                enemySkills.GetSkillBar.gameObject.SetActive(false);
+            }
         }
         if (!IsHostile)
         {
@@ -407,6 +414,25 @@ public class EnemyAI : MonoBehaviour
             enemySkills.DisableRadius();
             enemySkills.GetActiveSkill = false;
             enemySkills.GetSkillBar.gameObject.SetActive(false);
+        }
+    }
+
+    public void CheckTarget()
+    {
+        if(!PlayerEntry)
+        {
+            PlayerTarget = null;
+            states = States.Patrol;
+            AutoAttackTime = 0;
+            enemySkills.DisableRadiusImage();
+            enemySkills.DisableRadius();
+            enemySkills.GetActiveSkill = false;
+            enemySkills.GetSkillBar.gameObject.SetActive(false);
+        }
+        else
+        {
+            AutoAttackTime = 0;
+            states = States.Attack;
         }
     }
 
