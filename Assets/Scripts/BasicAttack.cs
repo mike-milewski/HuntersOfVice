@@ -242,7 +242,7 @@ public class BasicAttack : MonoBehaviour
         }
         #endregion
 
-        if (Target.GetAI.GetStates != States.Skill)
+        if (Target.GetAI.GetStates != States.Skill && Target.GetAI.GetStates != States.ApplyingAttack && Target.GetAI.GetStates != States.SkillAnimation)
             Target.GetAI.GetStates = States.Damaged;
 
         return Damagetext.GetComponentInChildren<TextMeshProUGUI>();

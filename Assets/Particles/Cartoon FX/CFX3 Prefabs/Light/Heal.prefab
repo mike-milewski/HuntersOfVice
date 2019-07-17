@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd2e8874f60266498a388d7229a1bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleEffect: 3
   ps: {fileID: 19800004}
   Duration: 1
 --- !u!198 &19800000

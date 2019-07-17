@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticle }
+public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticle, Heal, CastParticle, EnemyCastParticle, PoisonSpore }
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -45,6 +45,18 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
                 break;
             case (ParticleEffect.LevelupParticle):
                 Destroy(gameObject);
+                break;
+            case (ParticleEffect.PoisonSpore):
+                ObjectPooler.Instance.ReturnPoisonSporeParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.Heal):
+                ObjectPooler.Instance.ReturnHealParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.CastParticle):
+                ObjectPooler.Instance.ReturnPlayerCastParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.EnemyCastParticle):
+                ObjectPooler.Instance.ReturnEnemyCastParticleToPool(gameObject);
                 break;
         }
     }

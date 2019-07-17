@@ -273,9 +273,6 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    enemySkills.GenerateValue();
-                    states = States.Skill;
-                    /*
                     if (Random.value * 100 <= 50)
                     {
                         enemySkills.GenerateValue();
@@ -285,7 +282,6 @@ public class EnemyAI : MonoBehaviour
                     {
                         states = States.ApplyingAttack;
                     }
-                    */
                 }
             }
             else
@@ -403,6 +399,8 @@ public class EnemyAI : MonoBehaviour
                 enemySkills.GetActiveSkill = false;
                 enemySkills.GetSkillBar.gameObject.SetActive(false);
             }
+            enemy.GetHealth.IncreaseHealth(character.MaxHealth);
+            enemy.GetLocalHealthInfo();
         }
         if (!IsHostile)
         {

@@ -43,6 +43,8 @@ public class enemySkillManager
     [SerializeField] [Tooltip("The gameobject that will hold the status effect text.")]
     private GameObject StatusEffectHolder = null;
 
+    private GameObject SkillParticle;
+
     [SerializeField]
     private string StatusEffectName;
 
@@ -238,6 +240,18 @@ public class enemySkillManager
         set
         {
             StatusDuration = value;
+        }
+    }
+
+    public GameObject GetSkillParticle
+    {
+        get
+        {
+            return SkillParticle;
+        }
+        set
+        {
+            SkillParticle = value;
         }
     }
 
@@ -540,6 +554,14 @@ public class EnemySkills : MonoBehaviour
             MushroomSporeAnimation();
             DisableRadiusImage();
 
+            GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
+
+            GetManager[RandomValue].GetSkillParticle.SetActive(true);
+
+            GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+            GetManager[RandomValue].GetSkillParticle.transform.SetParent(gameObject.transform);
+
             Invoke("InvokePoisonSpore", ApplySkill);
         }
     }
@@ -721,6 +743,16 @@ public class EnemySkills : MonoBehaviour
         DamageTxt.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
         var Target = enemyAI.GetPlayerTarget;
+
+        GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+
+        GetManager[RandomValue].GetSkillParticle.SetActive(true);
+
+        GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3();
+
+        GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z);
+
+        GetManager[RandomValue].GetSkillParticle.transform.SetParent(Target.transform);
 
         float Critical = character.GetCriticalChance;
 

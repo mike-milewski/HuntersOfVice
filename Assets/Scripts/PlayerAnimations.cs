@@ -31,6 +31,7 @@ public class PlayerAnimations : MonoBehaviour
     public void AttackAnimation()
     {
         animator.SetBool("Attacking", true);
+
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);
     }
@@ -81,6 +82,9 @@ public class PlayerAnimations : MonoBehaviour
     public void PlaySpellCastAnimation()
     {
         animator.SetBool("SpellCasting", true);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
     }
 
     public void PlayContinueCastAnimation()
@@ -89,11 +93,17 @@ public class PlayerAnimations : MonoBehaviour
         {
             animator.SetBool("SpellCasting", false);
             animator.SetBool("ContinueCasting", true);
+
+            animator.ResetTrigger("Damaged");
+            animator.SetBool("Damaged", false);
         }
         else
         {
             animator.SetBool("SpellCasting", false);
             animator.SetBool("ContinueCasting", false);
+
+            animator.ResetTrigger("Damaged");
+            animator.SetBool("Damaged", false);
         }
     }
 
@@ -101,6 +111,9 @@ public class PlayerAnimations : MonoBehaviour
     {
         animator.SetBool("ContinueCasting", false);
         animator.SetBool("Spellcasting", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
     }
 
     public void EndAllSpellcastingBools()

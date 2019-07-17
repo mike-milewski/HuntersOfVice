@@ -293,10 +293,13 @@ public class Skills : StatusEffects
 
             SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
-            var HealParticle = Instantiate(SkillParticle, new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z),
-                                           Quaternion.identity);
+            SkillParticle = ObjectPooler.Instance.GetHealParticle();
 
-            HealParticle.transform.SetParent(GetCharacter.transform, true);
+            SkillParticle.SetActive(true);
+                
+            SkillParticle.transform.position =  new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z);
+
+            SkillParticle.transform.SetParent(GetCharacter.transform, true);
 
             GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
@@ -430,21 +433,18 @@ public class Skills : StatusEffects
 
     public void WhirlwindSlash()
     {
-        GetCharacter.GetComponent<PlayerAnimations>().WhirlwindSlashAnimation();
-        SkillsManager.Instance.GetWhirlwind = true;
-
-        SkillParticle = ObjectPooler.Instance.GetWhirlwindSlashParticle();
-
-        SkillParticle.SetActive(true);
-
-        SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y, SkillParticleParent.position.z);
-
-        SkillParticle.transform.SetParent(SkillParticleParent);
-        /*
         if (GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
         {
             if(GetCharacter.GetComponent<BasicAttack>().DistanceToTarget() <= AttackRange)
             {
+                SkillParticle = ObjectPooler.Instance.GetWhirlwindSlashParticle();
+
+                SkillParticle.SetActive(true);
+
+                SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y, SkillParticleParent.position.z);
+
+                SkillParticle.transform.SetParent(SkillParticleParent);
+
                 GetCharacter.GetComponent<PlayerAnimations>().WhirlwindSlashAnimation();
 
                 SkillsManager.Instance.GetActivatedSkill = true;
@@ -462,12 +462,11 @@ public class Skills : StatusEffects
         {
             GameManager.Instance.InvalidTargetText();
         }
-        */
     }
 
     private void WhirlwindSlashHit()
     {
-        GetCharacter.transform.Rotate(0, 460 * Time.deltaTime, 0);
+        GetCharacter.transform.Rotate(0, 450 * Time.deltaTime, 0);
     }
 
     public void SetUpDamagePerimiter(Vector3 center, float radius)
@@ -643,7 +642,7 @@ public class Skills : StatusEffects
             }
             #endregion
 
-            if (Target.GetAI.GetStates != States.Skill)
+            if (Target.GetAI.GetStates != States.Skill && Target.GetAI.GetStates != States.ApplyingAttack && Target.GetAI.GetStates != States.SkillAnimation)
                 Target.GetAI.GetStates = States.Damaged;
         }
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();

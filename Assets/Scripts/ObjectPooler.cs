@@ -100,6 +100,9 @@ public class ObjectPooler : MonoBehaviour
         AddPlayerCastParticle(poolcontroller[10].GetPoolAmount);
         AddEnemyCastParticle(poolcontroller[11].GetPoolAmount);
         AddWhirlWindSlashParticle(poolcontroller[12].GetPoolAmount);
+        AddPoisonSporeParticle(poolcontroller[13].GetPoolAmount);
+        AddHealParticle(poolcontroller[14].GetPoolAmount);
+        AddLevelParticle(poolcontroller[15].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -258,6 +261,42 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddPoisonSporeParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[13].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[13].GetPoolParent.transform, false);
+            poolcontroller[13].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddHealParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[14].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[14].GetPoolParent.transform, false);
+            poolcontroller[14].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddLevelParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[15].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[15].GetPoolParent.transform, false);
+            poolcontroller[15].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -321,6 +360,21 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetWhirlwindSlashParticle()
     {
         return poolcontroller[12].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetPoisonSporeParticle()
+    {
+        return poolcontroller[13].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetHealParticle()
+    {
+        return poolcontroller[14].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetLevelParticle()
+    {
+        return poolcontroller[15].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -424,6 +478,30 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[12].GetPoolParent.transform, false);
 
         poolcontroller[12].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnPoisonSporeParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[13].GetPoolParent.transform, false);
+
+        poolcontroller[13].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnHealParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[14].GetPoolParent.transform, false);
+
+        poolcontroller[14].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnLevelParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[15].GetPoolParent.transform, false);
+
+        poolcontroller[15].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }
