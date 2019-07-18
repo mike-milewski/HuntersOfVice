@@ -16,10 +16,19 @@ public class Items : MonoBehaviour
     private Transform HealTextTransform;
 
     [SerializeField]
+    private TextMeshProUGUI ItemText;
+
+    [SerializeField]
     private ItemType itemType;
 
     [SerializeField]
     private Image CooldownImage;
+
+    [SerializeField]
+    private string ItemName;
+    
+    [SerializeField] [TextArea]
+    private string ItemDescription;
 
     [SerializeField]
     private int HealAmount;
@@ -125,5 +134,12 @@ public class Items : MonoBehaviour
         }
 
         return HealingText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void ShowItemDescriptionPanel(GameObject Panel)
+    {
+        Panel.SetActive(true);
+
+        ItemText.text = "<size=12>" + "<u>"+ ItemName + "</u>" + "</size>" + "\n\n" + ItemDescription + "\n\n" + "Cooldown: " + Cooldown + "s";
     }
 }
