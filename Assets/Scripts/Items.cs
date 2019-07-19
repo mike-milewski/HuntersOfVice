@@ -48,6 +48,18 @@ public class Items : MonoBehaviour
         }
     }
 
+    public Button GetButton
+    {
+        get
+        {
+            return button;
+        }
+        set
+        {
+            button = value;
+        }
+    }
+
     private void Update()
     {
         if(character != null)
@@ -100,7 +112,7 @@ public class Items : MonoBehaviour
     {
         if(character.CurrentHealth > 0)
         {
-            character.GetComponent<Health>().IncreaseHealth(HealAmount);
+            character.GetComponent<Health>().IncreaseHealth(HpHeal(HealAmount));
 
             HealText();
         }
@@ -110,10 +122,32 @@ public class Items : MonoBehaviour
     {
         if(character.CurrentHealth > 0)
         {
-            character.GetComponent<Mana>().IncreaseMana(HealAmount);
+            character.GetComponent<Mana>().IncreaseMana(MpHeal(HealAmount));
 
             HealText();
         }
+    }
+
+    private int HpHeal(float value)
+    {
+        float Percentage = value / 100;
+
+        float HealthAmt = character.MaxHealth * Percentage;
+
+        Mathf.Round(HealthAmt);
+
+        return (int)HealthAmt;
+    }
+
+    private int MpHeal(float value)
+    {
+        float Percentage = value / 100;
+
+        float ManaAmt = character.MaxMana * Percentage;
+
+        Mathf.Round(ManaAmt);
+
+        return (int)ManaAmt;
     }
 
     private TextMeshProUGUI HealText()
@@ -126,11 +160,11 @@ public class Items : MonoBehaviour
 
         if(itemType == ItemType.HpHeal)
         {
-            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = HealAmount.ToString();
+            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = HpHeal(HealAmount).ToString();
         }
         else
         {
-            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = HealAmount + " MP";
+            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = MpHeal(HealAmount) + "<size=11>" + " MP";
         }
 
         return HealingText.GetComponentInChildren<TextMeshProUGUI>();

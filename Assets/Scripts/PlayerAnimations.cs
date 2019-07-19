@@ -59,9 +59,17 @@ public class PlayerAnimations : MonoBehaviour
     public void DeathAnimation()
     {
         animator.SetBool("Attacking", false);
+        animator.SetBool("Spellcasting", false);
+        animator.SetBool("ContinueCasting", false);
+        animator.SetBool("StormThrust", false);
+        animator.SetBool("WhirlwindSlash", false);
+        animator.SetBool("Skill", false);
+
         animator.SetBool("Damaged", false);
 
         animator.SetBool("Dead", true);
+
+        SkillsManager.Instance.GetWhirlwind = false;
     }
 
     public void PlayResurrectAnimation()
@@ -174,6 +182,11 @@ public class PlayerAnimations : MonoBehaviour
         SkillsManager.Instance.GetActivatedSkill = false;
 
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
+    }
+
+    public void SetWhirlwindOn()
+    {
+        SkillsManager.Instance.GetWhirlwind = true;
     }
 
     public void PlayFallSoundEffect()

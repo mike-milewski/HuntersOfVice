@@ -269,10 +269,13 @@ public class EnemyAI : MonoBehaviour
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
             if (PlayerTarget.CurrentHealth > 0)
-            {
+            { 
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
+                    enemySkills.GenerateValue();
+                    states = States.Skill;
+                    /*
                     if (Random.value * 100 <= 50)
                     {
                         enemySkills.GenerateValue();
@@ -282,10 +285,14 @@ public class EnemyAI : MonoBehaviour
                     {
                         states = States.ApplyingAttack;
                     }
+                    */
                 }
             }
             else
             {
+                enemy.GetHealth.IncreaseHealth(character.MaxHealth);
+                enemy.GetLocalHealthInfo();
+
                 PlayerTarget = null;
                 AutoAttackTime = 0;
                 states = States.Patrol;
@@ -404,14 +411,20 @@ public class EnemyAI : MonoBehaviour
         }
         if (!IsHostile)
         {
-            PlayerTarget = null;
-            states = States.Patrol;
-            AutoAttackTime = 0;
-            EnemyTriggerSphere.gameObject.SetActive(false);
-            enemySkills.DisableRadiusImage();
-            enemySkills.DisableRadius();
-            enemySkills.GetActiveSkill = false;
-            enemySkills.GetSkillBar.gameObject.SetActive(false);
+            PlayerEntry = false;
+            if(states != States.SkillAnimation)
+            {
+                PlayerTarget = null;
+                states = States.Patrol;
+                AutoAttackTime = 0;
+                EnemyTriggerSphere.gameObject.SetActive(false);
+                enemySkills.DisableRadiusImage();
+                enemySkills.DisableRadius();
+                enemySkills.GetActiveSkill = false;
+                enemySkills.GetSkillBar.gameObject.SetActive(false);
+            }
+            enemy.GetHealth.IncreaseHealth(character.MaxHealth);
+            enemy.GetLocalHealthInfo();
         }
     }
 

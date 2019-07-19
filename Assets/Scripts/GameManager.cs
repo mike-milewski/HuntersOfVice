@@ -229,6 +229,8 @@ public class GameManager : MonoBehaviour
         IsDead = true;
         SkillsManager.Instance.DeactivateSkillButtons();
 
+        SkillsManager.Instance.GetActivatedSkill = false;
+
         Player.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
         Player.GetComponent<BasicAttack>().enabled = false;
 

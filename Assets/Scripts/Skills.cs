@@ -449,8 +449,6 @@ public class Skills : StatusEffects
 
                 SkillsManager.Instance.GetActivatedSkill = true;
 
-                SkillsManager.Instance.GetWhirlwind = true;
-
                 this.CoolDownImage.fillAmount = 1;
             }
             else
@@ -466,7 +464,7 @@ public class Skills : StatusEffects
 
     private void WhirlwindSlashHit()
     {
-        GetCharacter.transform.Rotate(0, 450 * Time.deltaTime, 0);
+        GetCharacter.transform.Rotate(0, 480 * Time.deltaTime, 0);
     }
 
     public void SetUpDamagePerimiter(Vector3 center, float radius)
@@ -478,6 +476,15 @@ public class Skills : StatusEffects
             if (hitColliders[i].GetComponent<Enemy>())
             {
                 TextHolder = hitColliders[i].GetComponent<Enemy>().GetUI;
+
+                SkillParticle = ObjectPooler.Instance.GetHitParticle();
+
+                SkillParticle.SetActive(true);
+
+                SkillParticle.transform.position = new Vector3(hitColliders[i].transform.position.x, hitColliders[i].transform.position.y + 0.5f, 
+                                                               hitColliders[i].transform.position.z);
+
+                SkillParticle.transform.SetParent(hitColliders[i].transform);
 
                 DamageSkillText();
             }
