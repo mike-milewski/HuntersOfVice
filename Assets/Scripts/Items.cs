@@ -60,6 +60,30 @@ public class Items : MonoBehaviour
         }
     }
 
+    public float GetCoolDown
+    {
+        get
+        {
+            return Cooldown;
+        }
+        set
+        {
+            Cooldown = value;
+        }
+    }
+
+    public int GetHealAmount
+    {
+        get
+        {
+            return HealAmount;
+        }
+        set
+        {
+            HealAmount = value;
+        }
+    }
+
     private void Update()
     {
         if(character != null)
@@ -174,6 +198,13 @@ public class Items : MonoBehaviour
     {
         Panel.SetActive(true);
 
-        ItemText.text = "<size=12>" + "<u>"+ ItemName + "</u>" + "</size>" + "\n\n" + ItemDescription + "\n\n" + "Cooldown: " + Cooldown + "s";
+        if(itemType == ItemType.HpHeal)
+        {
+            ItemText.text = "<size=12>" + "<u>" + ItemName + "</u>" + "</size>" + "\n\n" + "Recovers HP by " + HealAmount + "%" + "\n\n" + "Cooldown: " + Cooldown + "s";
+        }
+        else
+        {
+            ItemText.text = "<size=12>" + "<u>" + ItemName + "</u>" + "</size>" + "\n\n" + "Recovers MP by " + HealAmount + "%" + "\n\n" + "Cooldown: " + Cooldown + "s";
+        }
     }
 }

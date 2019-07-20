@@ -4,7 +4,7 @@ using TMPro;
 
 public enum SkillType { Active, Passive };
 
-public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, StormThrust };
+public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, StormThrust, Item };
 
 public class SkillMenu : MonoBehaviour
 {
@@ -341,6 +341,9 @@ public class SkillMenu : MonoBehaviour
             case (PassiveBonus.StormThrust):
                 StormThrustBonus();
                 break;
+            case (PassiveBonus.Item):
+                ItemBonus();
+                break;
         }
     }
 
@@ -435,6 +438,11 @@ public class SkillMenu : MonoBehaviour
     }
 
     private void StormThrustBonus()
+    {
+
+    }
+
+    private void ItemBonus()
     {
 
     }
