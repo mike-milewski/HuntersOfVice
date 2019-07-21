@@ -137,6 +137,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         animator.SetBool("Skill", true);
         animator.SetBool("Attacking", false);
+        animator.SetBool("SkillCast", false);
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);
     }
@@ -160,6 +161,24 @@ public class PlayerAnimations : MonoBehaviour
     public void DealSkillDamage()
     {
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText();
+    }
+
+    public void SkillCastAnimation()
+    {
+        animator.SetBool("SkillCast", true);
+        animator.SetBool("Skill", false);
+
+        animator.SetBool("StormThrust", false);
+        animator.SetBool("WhirlwindSlash", false);
+        animator.SetBool("SpellCasting", false);
+        animator.SetBool("ContinueCasting", false);
+    }
+
+    public void EndSkillCast()
+    {
+        animator.SetBool("SkillCast", false);
+
+        SkillsManager.Instance.GetActivatedSkill = false;
     }
 
     public void EndSkillAnimation()

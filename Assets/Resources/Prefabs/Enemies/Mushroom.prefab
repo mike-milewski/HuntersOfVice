@@ -801,7 +801,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!65 &65745614162896586
 BoxCollider:
@@ -1425,7 +1425,7 @@ MonoBehaviour:
   - {fileID: 0}
   MoveSpeed: 2
   AttackRange: 2.5
-  AttackDelay: 2
+  AttackDelay: 1.5
   AutoAttackTime: 0
   LookSpeed: 3
   PlayerTarget: {fileID: 0}
@@ -1687,7 +1687,7 @@ MonoBehaviour:
   TargetedImage: {fileID: 114677610278254228}
   EnemyInfo: {fileID: 114959006871186890}
   LocalEnemyInfo: {fileID: 114202159613561654}
-  ExperiencePoints: 50
+  ExperiencePoints: 10
 --- !u!114 &114527686994712234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1749,10 +1749,8 @@ MonoBehaviour:
   enemy: {fileID: 114492699656399902}
   enemyAI: {fileID: 114244275959761428}
   enemySkills: {fileID: 114006354462489536}
-  CastParticle: {fileID: 19800000, guid: 7b56cd9b663f23f429e131a54ec87db0, type: 2}
   SkillBarFillImage: {fileID: 114754455364354644}
   SkillName: {fileID: 114093613073167338}
-  ParticleExists: 0
   Casting: 0
   CastParticleSize: 2
 --- !u!114 &114595948792050558
@@ -2324,7 +2322,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 4.76
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137669142528618890
 SkinnedMeshRenderer:
@@ -3180,6 +3178,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 83}
+  m_AnchoredPosition: {x: 45.3, y: 83}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0}

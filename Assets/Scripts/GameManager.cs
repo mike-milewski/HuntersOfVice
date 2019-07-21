@@ -114,6 +114,8 @@ public class GameManager : MonoBehaviour
         InvalidText.gameObject.SetActive(false);
 
         eventsystem.GetComponent<EventSystem>();
+
+        MaskSkillsPanel();
     }
 
     private void Update()

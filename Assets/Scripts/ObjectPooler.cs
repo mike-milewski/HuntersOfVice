@@ -103,6 +103,9 @@ public class ObjectPooler : MonoBehaviour
         AddPoisonSporeParticle(poolcontroller[13].GetPoolAmount);
         AddHealParticle(poolcontroller[14].GetPoolAmount);
         AddLevelParticle(poolcontroller[15].GetPoolAmount);
+        AddHpItemParticle(poolcontroller[16].GetPoolAmount);
+        AddMpItemParticle(poolcontroller[17].GetPoolAmount);
+        AddStrengthUpParticle(poolcontroller[18].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -297,6 +300,42 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddHpItemParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[16].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[16].GetPoolParent.transform, false);
+            poolcontroller[16].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddMpItemParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[17].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[17].GetPoolParent.transform, false);
+            poolcontroller[17].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddStrengthUpParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[18].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[18].GetPoolParent.transform, false);
+            poolcontroller[18].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -375,6 +414,21 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetLevelParticle()
     {
         return poolcontroller[15].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetHpItemParticle()
+    {
+        return poolcontroller[16].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetMpItemParticle()
+    {
+        return poolcontroller[17].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetStrengthUpParticle()
+    {
+        return poolcontroller[18].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -502,6 +556,30 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[15].GetPoolParent.transform, false);
 
         poolcontroller[15].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnHpItemParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[16].GetPoolParent.transform, false);
+
+        poolcontroller[16].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnMpItemParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[17].GetPoolParent.transform, false);
+
+        poolcontroller[17].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnStrengthUpParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[18].GetPoolParent.transform, false);
+
+        poolcontroller[18].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

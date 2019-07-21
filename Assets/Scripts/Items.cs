@@ -121,15 +121,23 @@ public class Items : MonoBehaviour
     private void ReadyHpHealing()
     {
         if(CooldownImage.fillAmount <= 0)
-        Invoke("HpHealing", ApplyItemUse);
-        CooldownImage.fillAmount = 1;
+        {
+            HpParticle();
+
+            Invoke("HpHealing", ApplyItemUse);
+            CooldownImage.fillAmount = 1;
+        }
     }
 
     private void ReadyMpHealing()
     {
         if(CooldownImage.fillAmount <= 0)
-        Invoke("MpHealing", ApplyItemUse);
-        CooldownImage.fillAmount = 1;
+        {
+            MpParticle();
+
+            Invoke("MpHealing", ApplyItemUse);
+            CooldownImage.fillAmount = 1;
+        }
     }
 
     private void HpHealing()
@@ -206,5 +214,27 @@ public class Items : MonoBehaviour
         {
             ItemText.text = "<size=12>" + "<u>" + ItemName + "</u>" + "</size>" + "\n\n" + "Recovers MP by " + HealAmount + "%" + "\n\n" + "Cooldown: " + Cooldown + "s";
         }
+    }
+
+    private void HpParticle()
+    {
+        var HpParticles = ObjectPooler.Instance.GetHpItemParticle();
+
+        HpParticles.SetActive(true);
+
+        HpParticles.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 2f, character.transform.position.z);
+
+        HpParticles.transform.SetParent(character.transform);
+    }
+
+    private void MpParticle()
+    {
+        var MpParticles = ObjectPooler.Instance.GetMpItemParticle();
+
+        MpParticles.SetActive(true);
+
+        MpParticles.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 2f, character.transform.position.z);
+
+        MpParticles.transform.SetParent(character.transform);
     }
 }

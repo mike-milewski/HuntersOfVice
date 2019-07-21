@@ -16,7 +16,7 @@ public class EnemyAnimations : MonoBehaviour
     private GameObject ParentObject;
 
 	private const string IDLE	= "Idle";
-	private const string RUN	= "Run";
+	private const string MOVE	= "Move";
 	private const string ATTACK	= "Attack";
     private const string SKILLATTACK = "SkillAttack";
     private const string SKILLATTACK2 = "SkillAttack2";
@@ -48,7 +48,7 @@ public class EnemyAnimations : MonoBehaviour
 
 	public void RunAni ()
     {
-		anim.CrossFade (RUN);
+		anim.CrossFade (MOVE);
 	}
 
 	public void AttackAni ()

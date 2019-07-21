@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Bunnykins
   CharacterLevel: 1
-  Health: 1900
+  Health: 1
   Mana: 0
   Strength: 30
   Defense: 6
