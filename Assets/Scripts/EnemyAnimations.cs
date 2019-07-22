@@ -13,7 +13,7 @@ public class EnemyAnimations : MonoBehaviour
     private EnemySkills enemyskills;
 
     [SerializeField]
-    private GameObject ParentObject;
+    private ChangeEnemyMaterial changeEnemyMaterial;
 
 	private const string IDLE	= "Idle";
 	private const string MOVE	= "Move";
@@ -23,23 +23,6 @@ public class EnemyAnimations : MonoBehaviour
     private const string CASTING = "Casting";
     private const string DAMAGE	= "Damage";
 	private const string DEATH	= "Death";
-
-    [SerializeField]
-    private SkinnedMeshRenderer rend;
-
-	void Start ()
-    {
-        CheckSkinnedMesh();
-    }
-
-    private void OnEnable()
-    {
-        Color alpha = rend.material.color;
-        rend.material.color = alpha;
-        alpha.a = 1.0f;
-        rend.material.color = alpha;
-        CheckSkinnedMesh();
-    }
 
     public void IdleAni ()
     {
@@ -117,35 +100,10 @@ public class EnemyAnimations : MonoBehaviour
         }
     }
 
-    public IEnumerator Fade()
+    public void Fading()
     {
-        Color alpha = rend.material.color;
-        rend.material.color = alpha;
-        yield return new WaitForSeconds(3f);
-        while(alpha.a > 0.1f)
-        {
-            alpha.a -= 11 * Time.deltaTime;
-            rend.material.color = alpha;
-            CheckSkinnedMesh();
-            yield return new WaitForSeconds(0.1f);
-            alpha.a -= 11 * Time.deltaTime;
-            rend.material.color = alpha;
-            CheckSkinnedMesh();
-            yield return new WaitForSeconds(0.1f);
-        }
-        ParentObject.SetActive(false);
-        yield return null;
-    }
+        changeEnemyMaterial.ChangeToAlphaMaterial();
 
-    private void CheckSkinnedMesh()
-    {
-        if (gameObject.GetComponent<SkinnedMeshRenderer>() == null)
-        {
-            this.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = rend.material;
-        }
-        else
-        {
-            this.gameObject.GetComponent<SkinnedMeshRenderer>().material = rend.material;
-        }
+        StartCoroutine(changeEnemyMaterial.Fade());
     }
 }

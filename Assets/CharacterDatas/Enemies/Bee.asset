@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Giant Bee
   CharacterLevel: 2
-  Health: 260
+  Health: 1
   Mana: 0
   Strength: 35
   Defense: 17

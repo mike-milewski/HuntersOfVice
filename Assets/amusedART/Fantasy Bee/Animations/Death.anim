@@ -20900,7 +20900,7 @@ AnimationClip:
   m_GenerateMotionCurves: 0
   m_Events:
   - time: 0.76666665
-    functionName: Fade
+    functionName: Fading
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

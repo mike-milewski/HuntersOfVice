@@ -341,8 +341,11 @@ public class EnemyAI : MonoBehaviour
 
         character.GetRigidbody.useGravity = false;
 
-        enemySkills.DisableRadiusImage();
-        enemySkills.DisableRadius();
+        if(enemySkills.GetManager.Length > 0)
+        {
+            enemySkills.DisableRadiusImage();
+            enemySkills.DisableRadius();
+        }
 
         GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
         GameManager.Instance.GetEnemyObject = null;

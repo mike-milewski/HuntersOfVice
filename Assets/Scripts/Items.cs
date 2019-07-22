@@ -120,7 +120,7 @@ public class Items : MonoBehaviour
 
     private void ReadyHpHealing()
     {
-        if(CooldownImage.fillAmount <= 0)
+        if(CooldownImage.fillAmount <= 0 && !SkillsManager.Instance.GetDisruptedSkill)
         {
             HpParticle();
 
@@ -131,7 +131,7 @@ public class Items : MonoBehaviour
 
     private void ReadyMpHealing()
     {
-        if(CooldownImage.fillAmount <= 0)
+        if(CooldownImage.fillAmount <= 0 && !SkillsManager.Instance.GetDisruptedSkill)
         {
             MpParticle();
 

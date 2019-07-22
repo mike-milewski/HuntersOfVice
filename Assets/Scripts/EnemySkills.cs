@@ -4,7 +4,9 @@ using TMPro;
 
 public enum Skill { //MushroomMan Skills
                     FungiBump, HealingCap, PoisonSpore,
-                    Regen };
+                    Regen,
+                    //Bee Skills
+                    StunningStinger };
 
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom };
 
@@ -458,6 +460,12 @@ public class EnemySkills : MonoBehaviour
                 case (Skill.Regen):
                     Regen(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
                     break;
+                #endregion
+                #region Bee Skills
+                case (Skill.StunningStinger):
+                    StunningStinger(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime,
+                        new Vector2(GetManager[RandomValue].GetSizeDeltaX, GetManager[RandomValue].GetSizeDeltaY), GetManager[RandomValue].GetSkillName);
+                    break;
                     #endregion
             }
         }
@@ -574,7 +582,67 @@ public class EnemySkills : MonoBehaviour
                 damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
                 break;
             case (Shapes.Rectangle):
-                damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetRectangleColliderSize() / 2);
+                damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetRectangleColliderSize() / 2, character.transform.rotation);
+                break;
+        }
+        DisableRadius();
+
+        ActiveSkill = false;
+    }
+
+    public void StunningStinger(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        SpellCastingAnimation();
+
+        skills[RandomValue].GetCastTime = castTime;
+
+        skills[RandomValue].GetPotency = potency;
+
+        sizeDelta = new Vector2(skills[RandomValue].GetSizeDeltaX, skills[RandomValue].GetSizeDeltaY);
+
+        skills[RandomValue].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            enemyAI.GetAnimation.FungiBumpAnim();
+            //MushroomSporeAnimation();
+            DisableRadiusImage();
+
+            GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
+
+            GetManager[RandomValue].GetSkillParticle.SetActive(true);
+
+            GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+            GetManager[RandomValue].GetSkillParticle.transform.SetParent(gameObject.transform);
+
+            Invoke("InvokeStunningStinger", ApplySkill);
+        }
+    }
+    /*
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(damageRadius.GetDamageShape.transform.position, new Vector3(GetManager[RandomValue].GetShapeSize.x * 2, 1, GetManager[RandomValue].GetShapeSize.y * 2));
+    }
+    */
+    private void InvokeStunningStinger()
+    {
+        switch (skills[RandomValue].GetShapes)
+        {
+            case (Shapes.Circle):
+                damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
+                break;
+            case (Shapes.Rectangle):
+                damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(GetManager[RandomValue].GetShapeSize.x, 
+                                                       GetManager[RandomValue].GetShapeSize.y, 1.7f), character.transform.rotation);
                 break;
         }
         DisableRadius();
@@ -639,8 +707,16 @@ public class EnemySkills : MonoBehaviour
 
     public void DisableRadius()
     {
-        damageRadius.ResetSizeDelta();
-        damageRadius.ResetLocalScale();
+        switch(skills[RandomValue].GetShapes)
+        {
+            case (Shapes.Circle):
+                damageRadius.ResetLocalScale();
+                damageRadius.ResetSizeDelta();
+                break;
+            case (Shapes.Rectangle):
+                damageRadius.ResetSizeDelta();
+                break;
+        }
         damageRadius.enabled = false;
     }
 

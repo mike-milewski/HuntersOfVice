@@ -52,9 +52,6 @@ public class DamageRadius : MonoBehaviour
     {
         if (shapes == Shapes.Rectangle)
         {
-            DamageShape.rectTransform.sizeDelta = new Vector2(enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX, 
-                                                              enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaY);
-
             Vector3 Trans = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z);
 
             transform.position = Trans + character.transform.forward * 1.6f;
@@ -138,13 +135,17 @@ public class DamageRadius : MonoBehaviour
 
     private void IncreaseRectangle()
     {
-        DamageShape.transform.localScale = new Vector3(enemySkills.GetManager[enemySkills.GetRandomValue].GetShapeSize.x, 
-                                                       Mathf.Clamp(DamageShape.transform.localScale.z, 0, enemySkills.GetManager[enemySkills.GetRandomValue].GetShapeSize.z),
-                                                       Mathf.Clamp(DamageShape.transform.localScale.z, 0, enemySkills.GetManager[enemySkills.GetRandomValue].GetShapeSize.z));
+        DamageShape.rectTransform.sizeDelta = new Vector2(
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX),
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaY));
 
-        if (DamageShape.transform.localScale.y < enemySkills.GetManager[enemySkills.GetRandomValue].GetShapeSize.y)
+        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX)
         {
-            DamageShape.transform.localScale += new Vector3(0f, 0f, 7f) * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(100, 0) * Time.deltaTime;
+        }
+        if(DamageShape.rectTransform.sizeDelta.y < enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaY)
+        {
+            DamageShape.rectTransform.sizeDelta += new Vector2(0, 100) * Time.deltaTime;
         }
     }
 
@@ -180,9 +181,9 @@ public class DamageRadius : MonoBehaviour
     }
 
     //Used for AOE damage skills with a rectangle shaped radius.
-    public void TakeDamageRectangleRadius(Vector3 center, Vector3 radius)
+    public void TakeDamageRectangleRadius(Vector3 center, Vector3 radius, Quaternion rotation)
     {
-        Collider[] hitColliders = Physics.OverlapBox(center, radius, character.transform.rotation);
+        Collider[] hitColliders = Physics.OverlapBox(center, radius, rotation);
 
         for (int i = 0; i < hitColliders.Length; i++)
         {
