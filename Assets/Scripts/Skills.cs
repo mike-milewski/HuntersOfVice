@@ -2,8 +2,9 @@
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
-public enum PlayerElement { NONE, Fire, Water, Wind, Earth, Light, Dark };
+public enum PlayerElement { NONE, Physical, Fire, Water, Wind, Earth, Light, Dark };
 
 public class Skills : StatusEffects
 {
@@ -45,7 +46,7 @@ public class Skills : StatusEffects
 
     private bool IsBeingDragged;
 
-    private bool StormThrustActivated;
+    private bool StormThrustActivated, FacingEnemy;
 
     [SerializeField]
     private int ManaCost, Potency;
@@ -182,6 +183,18 @@ public class Skills : StatusEffects
         }
     }
 
+    public bool GetFacingEnemy
+    {
+        get
+        {
+            return FacingEnemy;
+        }
+        set
+        {
+            FacingEnemy = value;
+        }
+    }
+
     public string GetSkillName
     {
         get
@@ -271,6 +284,11 @@ public class Skills : StatusEffects
         {
             WhirlwindSlashHit();
         }
+
+        if(FacingEnemy)
+        {
+            FaceEnemy();
+        }
     }
 
     public void Heal()
@@ -358,9 +376,11 @@ public class Skills : StatusEffects
     public void SwiftStrike()
     {
         if(GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
-        {
+        { 
             if(GetCharacter.GetComponent<BasicAttack>().DistanceToTarget() <= AttackRange)
             {
+                FacingEnemy = true;
+
                 TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
 
                 SkillsManager.Instance.GetActivatedSkill = true;
@@ -382,6 +402,19 @@ public class Skills : StatusEffects
         {
             GameManager.Instance.InvalidTargetText();
             TextHolder = null;
+        }
+    }
+
+    private void FaceEnemy()
+    {
+        if(GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        {
+            Vector3 Distance = new Vector3(GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position.x - GetCharacter.transform.position.x, 0,
+                                       GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position.z - GetCharacter.transform.position.z).normalized;
+
+            Quaternion Look = Quaternion.LookRotation(Distance);
+
+            GetCharacter.transform.rotation = Quaternion.Slerp(GetCharacter.transform.rotation, Look, 10 * Time.deltaTime);
         }
     }
 
@@ -437,7 +470,7 @@ public class Skills : StatusEffects
         {
             GetCharacter.GetComponent<BasicAttack>().HitParticleEffect();
 
-            DamageSkillText();
+            DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
 
             GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
 
@@ -497,8 +530,6 @@ public class Skills : StatusEffects
         {
             if (hitColliders[i].GetComponent<Enemy>())
             {
-                TextHolder = hitColliders[i].GetComponent<Enemy>().GetUI;
-
                 SkillParticle = ObjectPooler.Instance.GetHitParticle();
 
                 SkillParticle.SetActive(true);
@@ -508,17 +539,11 @@ public class Skills : StatusEffects
 
                 SkillParticle.transform.SetParent(hitColliders[i].transform);
 
-                DamageSkillText();
+                DamageSkillText(hitColliders[i].GetComponent<Enemy>());
             }
         }
     }
-    /*
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1, GetCharacter.transform.position.z), 2f);
-    }
-    */
+
     private TextMeshProUGUI HealSkillText()
     {
         var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
@@ -634,10 +659,8 @@ public class Skills : StatusEffects
         }
     }
 
-    public TextMeshProUGUI DamageSkillText()
+    public TextMeshProUGUI DamageSkillText(Enemy Target)
     {
-        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
-
         var DamageTxt = ObjectPooler.Instance.GetEnemyDamageText();
 
         if(Target != null)
@@ -664,10 +687,49 @@ public class Skills : StatusEffects
             }
             else
             {
-                Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+                for(int i = 0; i < Target.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
+                {
+                    if(GetPlayerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
+                    {
+                        Debug.Log("Weakness!");
+                        Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
 
-                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + GetCharacter.CharacterStrength) - 
-                                                                           Target.GetCharacter.CharacterDefense);
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=10>" + "<u>" + "<#EFDFB8>" + "WEAKNESS" + "</color>" + "</u>" + "</size>" + "\n" + 
+                                                                                   "<size=15>" + SkillName + " " + ((Potency + GetCharacter.CharacterStrength) - 
+                                                                                   Target.GetCharacter.CharacterDefense);
+                    }
+                    else if(GetPlayerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i])
+                    {
+                        Debug.Log("Resistance!");
+                        Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + GetCharacter.CharacterStrength) -
+                                                                                   Target.GetCharacter.CharacterDefense);
+                    }
+                    else if(GetPlayerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i])
+                    {
+                        Debug.Log("Immunity!");
+                        Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + GetCharacter.CharacterStrength) -
+                                                                                   Target.GetCharacter.CharacterDefense);
+                    }
+                    else if(GetPlayerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
+                    {
+                        Debug.Log("Absorption!");
+                        Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + GetCharacter.CharacterStrength) -
+                                                                                   Target.GetCharacter.CharacterDefense);
+                    }
+                    else
+                    {
+                        Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + GetCharacter.CharacterStrength) -
+                                                                                   Target.GetCharacter.CharacterDefense);
+                    }
+                }
             }
             #endregion
 
@@ -688,84 +750,191 @@ public class Skills : StatusEffects
         {
             if(GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Cast Time: Instant" + "\n" +
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Cast Time: Instant" + "\n" +
                                       "Cooldown" + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" 
+                                          + GetPlayerElement + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown" + CoolDown + "s";
+                }
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
-                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cast Time: Instant" + 
-                                      "\n" + "Cooldown: " + CoolDown + "s";
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                          GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cast Time: Instant" +
+                                          "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + 
+                                          "</color>" + GetStatusDuration + "s" + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
             }
         }
         if(CastTime > 0 && Potency <= 0 && ManaCost <= 0)
         {
             if(GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + 
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" +
                                       "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
-                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cast Time: " + CastTime + "s" + 
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Cast Time: " + CastTime + "s" +
                                       "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + 
+                                          "</color>" + GetStatusDuration + "s" + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
             }
         }
         if(CastTime > 0 && Potency > 0 && ManaCost <= 0)
         {
             if (GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n\n" + "Cast Time: " + 
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n\n" + "Cast Time: " +
                                       CastTime + "s" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "Power: " + Potency + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
-                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n\n" + 
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n\n" +
                                       "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + 
+                                          "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " + 
+                                          CoolDown + "s";
+                }
             }
         }
         if(CastTime > 0 && Potency > 0 && ManaCost > 0)
         {
             if (GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n" + "MP Cost: " + ManaCost + 
-                                      "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " + CoolDown + "s";
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n" + "MP Cost: " + 
+                                          ManaCost + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "Power: " + Potency + "\n" + "MP Cost: " + ManaCost + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " 
+                                          + CoolDown + "s";
+                }
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n" + "Power: " + Potency + "\n\n" + "<#EFDFB8>" + 
-                                      "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" 
-                                      + "MP Cost: " + ManaCost + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " + CoolDown + "s";
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n\n" + "<#EFDFB8>" +
+                                          "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n"
+                                          + "MP Cost: " + ManaCost + "\n\n" + "Cast Time: " + CastTime + "s" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "Power: " + Potency + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" 
+                                          + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "MP Cost: " + ManaCost + "\n\n" + "Cast Time: " + CastTime + "s" + 
+                                          "\n" + "Cooldown: " + CoolDown + "s";
+                }
             }
         }
         if(CastTime <= 0 && Potency > 0 && ManaCost <= 0)
         {
             if (GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n\n" + "Cast Time: " + 
-                                      "Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n\n" + "Cast Time: " +
+                                          "Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "Power: " + Potency + "\n\n" + "Cast Time: " + "Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
-                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n\n" + 
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                      GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n\n" +
                                       "Cast Time: Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + 
+                                          "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
             }
         }
         if(CastTime <= 0 && Potency > 0 && ManaCost > 0)
         {
             if (GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
             {
-                SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n" + "MP Cost: " + ManaCost + 
-                                      "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n" + "MP Cost: " + 
+                                          ManaCost + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "Power: " + Potency + "\n" + "MP Cost: " + ManaCost + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + 
+                                          CoolDown + "s";
+                }
             }
             else
             {
-                SkillPanelText.text = "<size=12>" + "<u>" +SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n\n" + "<#EFDFB8>" + 
-                                      "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>"+ GetStatusDuration + "s" + "\n\n" + 
-                                      "MP Cost: " + ManaCost + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                if(GetPlayerElement == PlayerElement.NONE)
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "Power: " + Potency + "\n\n" + "<#EFDFB8>" +
+                                          "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" +
+                                          "MP Cost: " + ManaCost + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + CoolDown + "s";
+                }
+                else
+                {
+                    SkillPanelText.text = "<size=12>" + "<u>" + SkillName + "</u>" + "</size>" + "\n\n" + SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                          GetPlayerElement + "\n\n" + "Power: " + Potency + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + 
+                                          "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "MP Cost: " + ManaCost + "\n\n" + "Cast Time: Instant" + "\n" + 
+                                          "Cooldown: " + CoolDown + "s";
+                }
             }
         }
     }

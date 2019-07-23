@@ -106,6 +106,7 @@ public class ObjectPooler : MonoBehaviour
         AddHpItemParticle(poolcontroller[16].GetPoolAmount);
         AddMpItemParticle(poolcontroller[17].GetPoolAmount);
         AddStrengthUpParticle(poolcontroller[18].GetPoolAmount);
+        AddRemoveStatusParticle(poolcontroller[19].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -336,6 +337,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddRemoveStatusParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[19].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[19].GetPoolParent.transform, false);
+            poolcontroller[19].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -429,6 +442,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetStrengthUpParticle()
     {
         return poolcontroller[18].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetRemoveStatusParticle()
+    {
+        return poolcontroller[19].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -580,6 +598,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[18].GetPoolParent.transform, false);
 
         poolcontroller[18].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnRemoveStatusParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[19].GetPoolParent.transform, false);
+
+        poolcontroller[19].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

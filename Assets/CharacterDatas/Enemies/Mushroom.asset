@@ -11,11 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
+  Weaknesses: 02000000
+  Resistances: 00000000
+  Immunities: 00000000
+  Absorbtions: 00000000
   CharacterName: Mushroom Man
   CharacterLevel: 1
-  Health: 1
+  Health: 200
   Mana: 0
-  Strength: 30
+  Strength: 23
   Defense: 15
   Intelligence: 1
   CriticalHitChance: 5

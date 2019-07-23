@@ -433,8 +433,8 @@ public class StatusIcon : MonoBehaviour
             var chara = SkillsManager.Instance.GetCharacter;
 
             var Statusparticle = Instantiate(DoomParticle, new Vector3(chara.transform.position.x,
-                                                                                chara.transform.position.y + 1f,
-                                                                                chara.transform.position.z), transform.rotation);
+                                                                       chara.transform.position.y + 1f,
+                                                                       chara.transform.position.z), transform.rotation);
 
             Statusparticle.transform.SetParent(chara.transform, true);
         }
@@ -442,19 +442,23 @@ public class StatusIcon : MonoBehaviour
         {
             var character = SkillsManager.Instance.GetCharacter;
 
-            var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(character.transform.position.x,
-                                                                                character.transform.position.y + 1f,
-                                                                                character.transform.position.z), transform.rotation);
+            var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
 
-            StatusParticle.transform.SetParent(character.transform, true);
+            StatusParticle.SetActive(true);
+
+            StatusParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z);
+
+            StatusParticle.transform.SetParent(character.transform);
         }
     }
 
     private void CreateParticleOnRemoveEnemy()
     {
-        var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(enemyTarget.transform.position.x,
-                                                                            enemyTarget.transform.position.y + 0.65f,
-                                                                            enemyTarget.transform.position.z), transform.rotation);
+        var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
+
+        StatusParticle.SetActive(true);
+
+        StatusParticle.transform.position = new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 1.0f, enemyTarget.transform.position.z);
 
         StatusParticle.transform.SetParent(enemyTarget.transform, true);
     }

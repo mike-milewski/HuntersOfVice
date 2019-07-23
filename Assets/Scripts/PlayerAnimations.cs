@@ -138,6 +138,7 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Skill", true);
         animator.SetBool("Attacking", false);
         animator.SetBool("SkillCast", false);
+
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);
     }
@@ -146,6 +147,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         animator.SetBool("StormThrust", true);
         animator.SetBool("Attacking", false);
+
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);
     }
@@ -160,7 +162,7 @@ public class PlayerAnimations : MonoBehaviour
 
     public void DealSkillDamage()
     {
-        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText();
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
     }
 
     public void SkillCastAnimation()
@@ -184,6 +186,11 @@ public class PlayerAnimations : MonoBehaviour
     public void EndSkillAnimation()
     {
         animator.SetBool("Skill", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
+
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetFacingEnemy = false;
 
         SkillsManager.Instance.GetActivatedSkill = false;
     }

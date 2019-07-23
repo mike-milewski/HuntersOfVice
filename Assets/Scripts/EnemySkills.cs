@@ -461,6 +461,7 @@ public class EnemySkills : MonoBehaviour
                     Regen(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
                     break;
                 #endregion
+
                 #region Bee Skills
                 case (Skill.StunningStinger):
                     StunningStinger(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime,
@@ -612,7 +613,7 @@ public class EnemySkills : MonoBehaviour
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
             enemyAI.GetAnimation.FungiBumpAnim();
-            //MushroomSporeAnimation();
+
             DisableRadiusImage();
 
             GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();

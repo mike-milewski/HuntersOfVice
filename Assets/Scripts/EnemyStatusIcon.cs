@@ -341,19 +341,23 @@ public class EnemyStatusIcon : MonoBehaviour
     }
 
     private void CreateParticleOnRemovePlayer()
-    { 
-        var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(player.transform.position.x,
-                                                                            player.transform.position.y + 1f,
-                                                                            player.transform.position.z), transform.rotation);
+    {
+        var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
+
+        StatusParticle.SetActive(true);
+
+        StatusParticle.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1.0f, player.transform.position.z);
 
         StatusParticle.transform.SetParent(player.transform, true);
     }
 
     private void CreateParticleOnRemoveEnemy()
     {
-        var StatusParticle = Instantiate(StatusRemovalParticle, new Vector3(character.transform.position.x,
-                                                                            character.transform.position.y + 0.65f,
-                                                                            character.transform.position.z), transform.rotation);
+        var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
+
+        StatusParticle.SetActive(true);
+
+        StatusParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z);
 
         StatusParticle.transform.SetParent(character.transform, true);
     }

@@ -92,7 +92,7 @@ public class Items : MonoBehaviour
 
     private void CheckCoolDownStatus()
     {
-        if(CooldownImage.fillAmount <= 0)
+        if(CooldownImage.fillAmount <= 0 && !SkillsManager.Instance.GetDisruptedSkill && !GameManager.Instance.GetIsDead && !SkillsManager.Instance.GetActivatedSkill)
         {
             button.interactable = true;
 
@@ -120,24 +120,18 @@ public class Items : MonoBehaviour
 
     private void ReadyHpHealing()
     {
-        if(CooldownImage.fillAmount <= 0 && !SkillsManager.Instance.GetDisruptedSkill)
-        {
-            HpParticle();
+        HpParticle();
 
-            Invoke("HpHealing", ApplyItemUse);
-            CooldownImage.fillAmount = 1;
-        }
+        Invoke("HpHealing", ApplyItemUse);
+        CooldownImage.fillAmount = 1;
     }
 
     private void ReadyMpHealing()
     {
-        if(CooldownImage.fillAmount <= 0 && !SkillsManager.Instance.GetDisruptedSkill)
-        {
-            MpParticle();
+        MpParticle();
 
-            Invoke("MpHealing", ApplyItemUse);
-            CooldownImage.fillAmount = 1;
-        }
+        Invoke("MpHealing", ApplyItemUse);
+        CooldownImage.fillAmount = 1;
     }
 
     private void HpHealing()

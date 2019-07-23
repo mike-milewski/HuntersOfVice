@@ -404,7 +404,10 @@ public class EnemyAI : MonoBehaviour
                 states = States.Patrol;
                 AutoAttackTime = 0;
                 enemySkills.DisableRadiusImage();
-                enemySkills.DisableRadius();
+                if(enemySkills.GetManager.Length > 0)
+                {
+                    enemySkills.DisableRadius();
+                }
                 enemySkills.GetActiveSkill = false;
                 enemySkills.GetSkillBar.gameObject.SetActive(false);
             }

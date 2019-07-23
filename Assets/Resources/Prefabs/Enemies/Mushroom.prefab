@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 111614583403917066}
   - component: {fileID: 137832095060511232}
   - component: {fileID: 114256765670847670}
+  - component: {fileID: 114916564609805402}
   m_Layer: 0
   m_Name: MushroomMonster
   m_TagString: Untagged
@@ -662,7 +663,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1722958204252142}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.53, y: -3.6, z: 6.57}
+  m_LocalPosition: {x: -13.06, y: -3.6, z: 6.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4731271516209256}
@@ -1450,8 +1451,7 @@ MonoBehaviour:
   anim: {fileID: 111614583403917066}
   AI: {fileID: 114244275959761428}
   enemyskills: {fileID: 114006354462489536}
-  ParentObject: {fileID: 1722958204252142}
-  rend: {fileID: 137832095060511232}
+  changeEnemyMaterial: {fileID: 114916564609805402}
 --- !u!114 &114268487534876906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2156,6 +2156,21 @@ MonoBehaviour:
   m_Spacing: {x: -4, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
+--- !u!114 &114916564609805402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272539182330930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfbcc47aa0e1bb6478f5ddc85368e852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinnedMeshRenderer: {fileID: 137832095060511232}
+  AlphaMaterial: {fileID: 2100000, guid: 2867a33b330c4464e8e60091565a028f, type: 2}
+  OpaqueMaterial: {fileID: 2100000, guid: 454cace436225a047a0236e67b95f9e7, type: 2}
+  ParentObject: {fileID: 1722958204252142}
 --- !u!114 &114959006871186890
 MonoBehaviour:
   m_ObjectHideFlags: 1

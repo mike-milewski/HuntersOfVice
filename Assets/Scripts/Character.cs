@@ -18,6 +18,14 @@ public class Character : MonoBehaviour
     [SerializeField]
     private string CharacterName;
 
+    private ElementalWeaknesses[] weaknesses;
+
+    private ElementalResistances[] resistances;
+
+    private ElementalImmunities[] immunities;
+
+    private ElementalAbsorbtion[] absorbtions;
+
     //Region that gets and returns all of the character's stat values.
     #region StatProperties
     public string characterName
@@ -195,5 +203,10 @@ public class Character : MonoBehaviour
         Intelligence = cData.Intelligence;
         CriticalHitChance = cData.CriticalHitChance;
         MoveSpeed = cData.MoveSpeed;
+
+        weaknesses = cData.Weaknesses;
+        resistances = cData.Resistances;
+        immunities = cData.Immunities;
+        absorbtions = cData.Absorbtions;
     }
 }
