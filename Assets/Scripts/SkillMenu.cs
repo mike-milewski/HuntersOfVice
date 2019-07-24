@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public enum SkillType { Active, Passive };
 
@@ -9,6 +10,9 @@ public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, St
 public class SkillMenu : MonoBehaviour
 {
     public static SkillMenu skillmenu;
+
+    [SerializeField]
+    private GameObject levelUp, levelUpParent;
 
     [SerializeField]
     private Character character;
@@ -108,6 +112,8 @@ public class SkillMenu : MonoBehaviour
             {
                 if(!skill.GetComponent<DragUiObject>().enabled)
                 {
+                    SetActiveSkillText();
+
                     SkillImage.GetComponent<Button>().interactable = true;
                     skill.GetComponent<Image>().enabled = true;
                     skill.GetComponent<Button>().enabled = true;
@@ -130,11 +136,48 @@ public class SkillMenu : MonoBehaviour
             {
                 if(!skill.GetComponent<Button>().interactable)
                 {
+                    SetPassiveSkillText();
+
                     skill.GetComponent<Button>().interactable = true;
                     GetPassiveBonus();
                 }
             }
         }
+    }
+
+    private void SetActiveSkillText()
+    {
+        CreateLevelUpText();
+
+        levelUp.GetComponentInChildren<LevelUp>().GetSkillImage.sprite = skill.GetComponent<Image>().sprite;
+        levelUp.GetComponentInChildren<LevelUp>().GetSkillText.text = "<size=15>Active Skill Learned</size>" + "\n" + skill.GetComponent<Skills>().GetSkillName;
+    }
+
+    private void SetPassiveSkillText()
+    {
+        CreateLevelUpText();
+
+        levelUp.GetComponentInChildren<LevelUp>().GetSkillImage.sprite = gameObject.GetComponent<Image>().sprite;
+        levelUp.GetComponentInChildren<LevelUp>().GetSkillText.text = "<size=15>Passive Skill Learned</size>" + "\n" + PassiveSkillName;
+    }
+
+    private void CreateLevelUpText()
+    {
+        levelUp = ObjectPooler.Instance.GetLevelUpText();
+
+        levelUp.SetActive(true);
+
+        levelUp.transform.position = new Vector3(levelUpParent.transform.position.x, levelUpParent.transform.position.y,
+                                                     levelUpParent.transform.position.z);
+
+        levelUp.transform.SetParent(levelUpParent.transform);
+
+        levelUp.transform.localScale = new Vector3(.7f, .7f, .7f);
+    }
+
+    public void ShowNewSkill()
+    {
+        levelUp.GetComponentInChildren<LevelUp>().PlaySkillLearned();
     }
 
     public void ShowSkillInfo(GameObject Panel)

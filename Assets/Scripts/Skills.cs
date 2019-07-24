@@ -691,11 +691,10 @@ public class Skills : StatusEffects
                 {
                     if(GetPlayerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
                     {
-                        Debug.Log("Weakness!");
                         Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=10>" + "<u>" + "<#EFDFB8>" + "WEAKNESS" + "</color>" + "</u>" + "</size>" + "\n" + 
-                                                                                   "<size=15>" + SkillName + " " + ((Potency + GetCharacter.CharacterStrength) - 
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "<u>" + "<#EFDFB8>" + "WEAKNESS" + "</color>" + "</u>" + "</size>" + "\n" + 
+                                                                                   SkillName + " " + ((Potency + GetCharacter.CharacterStrength) - 
                                                                                    Target.GetCharacter.CharacterDefense);
                     }
                     else if(GetPlayerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i])

@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  affinities: 00000000
+  Weaknesses: 
+  Resistances: 
+  Immunities: 
+  Absorbtions: 
   CharacterName: 
   CharacterLevel: 1
   Health: 105

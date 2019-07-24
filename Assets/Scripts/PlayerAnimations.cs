@@ -131,6 +131,9 @@ public class PlayerAnimations : MonoBehaviour
 
         animator.SetBool("SpellCasting", false);
         animator.SetBool("ContinueCasting", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
     }
 
     public void PlaySkillAnimation()
@@ -156,6 +159,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         animator.SetBool("WhirlwindSlash", true);
         animator.SetBool("Attacking", false);
+
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);
     }
@@ -174,11 +178,17 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("WhirlwindSlash", false);
         animator.SetBool("SpellCasting", false);
         animator.SetBool("ContinueCasting", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
     }
 
     public void EndSkillCast()
     {
         animator.SetBool("SkillCast", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
 
         SkillsManager.Instance.GetActivatedSkill = false;
     }
@@ -203,6 +213,9 @@ public class PlayerAnimations : MonoBehaviour
     public void EndWhirlwindSlashAnimation()
     {
         animator.SetBool("WhirlwindSlash", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
 
         SkillsManager.Instance.GetWhirlwind = false;
         SkillsManager.Instance.GetActivatedSkill = false;
