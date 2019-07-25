@@ -19,7 +19,7 @@ MonoBehaviour:
   CharacterLevel: 1
   Health: 1
   Mana: 0
-  Strength: 23
+  Strength: 25
   Defense: 15
   Intelligence: 1
   CriticalHitChance: 5
