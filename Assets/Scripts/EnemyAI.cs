@@ -273,18 +273,22 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    states = States.ApplyingAttack;
-                    /*
                     if (Random.value * 100 <= 50)
                     {
-                        enemySkills.GenerateValue();
-                        states = States.Skill;
+                        if(enemySkills.GetManager.Length > 0)
+                        {
+                            enemySkills.GenerateValue();
+                            states = States.Skill;
+                        }
+                        else
+                        {
+                            states = States.ApplyingAttack;
+                        }
                     }
                     else
                     {
                         states = States.ApplyingAttack;
                     }
-                    */
                 }
             }
             else
@@ -504,7 +508,7 @@ public class EnemyAI : MonoBehaviour
 
         Hitparticle.SetActive(true);
 
-        Hitparticle.transform.position = new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.3f, PlayerTarget.transform.position.z);
+        Hitparticle.transform.position = new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.6f, PlayerTarget.transform.position.z);
 
         Hitparticle.transform.SetParent(PlayerTarget.transform, true);
     }

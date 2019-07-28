@@ -544,6 +544,46 @@ public class Skills : StatusEffects
         }
     }
 
+    public void EvilsEnd()
+    {
+        if (GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        {
+            if (GetCharacter.GetComponent<BasicAttack>().DistanceToTarget() <= AttackRange)
+            {
+                if(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <=
+                   GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.MaxHealth / 4)
+                {
+                    FacingEnemy = true;
+
+                    TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
+
+                    SkillsManager.Instance.GetActivatedSkill = true;
+
+                    this.CoolDownImage.fillAmount = 1;
+
+                    SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                    GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
+                    GetCharacter.GetComponent<PlayerAnimations>().PlaySkillAnimation();
+                }
+                else
+                {
+                    GameManager.Instance.CannotExecuteText();
+                }
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
+    }
+
     private TextMeshProUGUI HealSkillText()
     {
         var HealTxt = ObjectPooler.Instance.GetPlayerHealText();

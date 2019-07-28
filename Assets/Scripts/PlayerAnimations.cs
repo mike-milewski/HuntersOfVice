@@ -41,7 +41,6 @@ public class PlayerAnimations : MonoBehaviour
         this.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
 
         animator.ResetTrigger("Attacking");
-
         animator.SetBool("Attacking", false);
     }
 
@@ -59,7 +58,7 @@ public class PlayerAnimations : MonoBehaviour
     public void DeathAnimation()
     {
         animator.SetBool("Attacking", false);
-        animator.SetBool("Spellcasting", false);
+        animator.SetBool("SpellCasting", false);
         animator.SetBool("ContinueCasting", false);
         animator.SetBool("StormThrust", false);
         animator.SetBool("WhirlwindSlash", false);
@@ -118,7 +117,7 @@ public class PlayerAnimations : MonoBehaviour
     public void EndSpellCastingAnimation()
     {
         animator.SetBool("ContinueCasting", false);
-        animator.SetBool("Spellcasting", false);
+        animator.SetBool("SpellCasting", false);
 
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);
@@ -127,7 +126,7 @@ public class PlayerAnimations : MonoBehaviour
     public void EndAllSpellcastingBools()
     {
         animator.ResetTrigger("SpellCasting");
-        animator.ResetTrigger("ConinueCasting");
+        animator.ResetTrigger("ContinueCasting");
 
         animator.SetBool("SpellCasting", false);
         animator.SetBool("ContinueCasting", false);

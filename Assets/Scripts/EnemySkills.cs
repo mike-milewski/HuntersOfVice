@@ -821,15 +821,7 @@ public class EnemySkills : MonoBehaviour
 
         var Target = enemyAI.GetPlayerTarget;
 
-        GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
-
-        GetManager[RandomValue].GetSkillParticle.SetActive(true);
-
-        GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3();
-
-        GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z);
-
-        GetManager[RandomValue].GetSkillParticle.transform.SetParent(Target.transform);
+        CreateHitParticleEffect();
 
         float Critical = character.GetCriticalChance;
 
@@ -894,5 +886,20 @@ public class EnemySkills : MonoBehaviour
         HealTxt.GetComponentInChildren<TextMeshProUGUI>().transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
         return HealTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void CreateHitParticleEffect()
+    {
+        var Target = enemyAI.GetPlayerTarget;
+
+        GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+
+        GetManager[RandomValue].GetSkillParticle.SetActive(true);
+
+        GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3();
+
+        GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
+
+        GetManager[RandomValue].GetSkillParticle.transform.SetParent(Target.transform);
     }
 }

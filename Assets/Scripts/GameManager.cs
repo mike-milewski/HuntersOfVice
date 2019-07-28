@@ -306,6 +306,17 @@ public class GameManager : MonoBehaviour
         return InvalidText;
     }
 
+    public TextMeshProUGUI CannotExecuteText()
+    {
+        InvalidText.gameObject.SetActive(true);
+
+        animator.Play("InvalidText", -1, 0f);
+
+        InvalidText.text = "Cannot execute";
+
+        return InvalidText;
+    }
+
     public TextMeshProUGUI SkillStillRechargingText()
     {
         InvalidText.gameObject.SetActive(true);
