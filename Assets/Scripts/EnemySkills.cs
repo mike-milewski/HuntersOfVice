@@ -367,7 +367,7 @@ public class EnemySkills : MonoBehaviour
 
     private int RandomValue;
 
-    [Tooltip("The amount of time it takes before the skill is applied.")]
+    [SerializeField] [Tooltip("The amount of time it takes before the skill is applied.")]
     private float ApplySkill;
 
     [SerializeField]
@@ -616,14 +616,6 @@ public class EnemySkills : MonoBehaviour
 
             DisableRadiusImage();
 
-            GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
-
-            GetManager[RandomValue].GetSkillParticle.SetActive(true);
-
-            GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
-
-            GetManager[RandomValue].GetSkillParticle.transform.SetParent(gameObject.transform);
-
             Invoke("InvokeStunningStinger", ApplySkill);
         }
     }
@@ -646,6 +638,16 @@ public class EnemySkills : MonoBehaviour
                                                        GetManager[RandomValue].GetShapeSize.y, 1.7f), character.transform.rotation);
                 break;
         }
+        var StingerParticle = ObjectPooler.Instance.GetHitParticle();
+
+        StingerParticle.SetActive(true);
+
+        Vector3 Trans = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f, character.transform.position.z);      
+
+        StingerParticle.transform.position = Trans + character.transform.forward * 1f;
+
+        StingerParticle.transform.SetParent(character.transform);
+
         DisableRadius();
 
         ActiveSkill = false;
@@ -734,7 +736,7 @@ public class EnemySkills : MonoBehaviour
 
         StatusEffectText.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4> +" + GetManager[RandomValue].GetStatusEffectName;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[RandomValue].GetStatusEffectName;
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
 
@@ -749,9 +751,9 @@ public class EnemySkills : MonoBehaviour
 
         StatusEffectText.SetActive(true);
 
-        StatusEffectText.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+        StatusEffectText.transform.SetParent(GetManager[RandomValue].GetStatusEffectHolder.transform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4> +" + GetManager[RandomValue].GetStatusEffectName;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[RandomValue].GetStatusEffectName;
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
 

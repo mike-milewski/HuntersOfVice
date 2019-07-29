@@ -11,9 +11,6 @@ public class CursorController : MonoBehaviour
     [SerializeField]
     private Texture2D AttackCursor;
 
-    [SerializeField]
-    private float MouseRange;
-
     private void Awake()
     {
         #region Singleton
@@ -29,25 +26,6 @@ public class CursorController : MonoBehaviour
         #endregion
 
         SetDefaultCursor();
-    }
-
-    private void Update()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hit;
-
-        if(Physics.Raycast(ray, out hit, MouseRange))
-        {
-            if(hit.collider.GetComponent<Enemy>())
-            {
-                SetAttackCursor();
-            }
-            else
-            {
-                SetDefaultCursor();
-            }
-        }
     }
 
     public void SetDefaultCursor()

@@ -375,13 +375,15 @@ public class Skills : StatusEffects
 
     public void SwiftStrike()
     {
-        if(GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if(Target != null)
         { 
-            if(GetCharacter.GetComponent<BasicAttack>().DistanceToTarget() <= AttackRange)
+            if(DistanceToAttack() <= AttackRange)
             {
                 FacingEnemy = true;
 
-                TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
+                TextHolder = Target.GetUI;
 
                 SkillsManager.Instance.GetActivatedSkill = true;
 
@@ -428,19 +430,21 @@ public class Skills : StatusEffects
 
     public void StormThrust()
     {
-        if(GetCharacter.GetComponent<BasicAttack>().GetTarget == null)
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if(Target == null)
         {
             GameManager.Instance.InvalidTargetText();
         }
-        else if(DistanceToAttack() <= 7)
+        else if(DistanceToAttack() < AttackRange)
         {
             GameManager.Instance.ShowTargetOutOfRangeText();
         }
-        else if (DistanceToAttack() <= AttackRange)
+        else if (DistanceToAttack() >= AttackRange)
         {
             StormThrustActivated = true;
 
-            TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
+            TextHolder = Target.GetUI;
 
             SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
 
@@ -456,10 +460,12 @@ public class Skills : StatusEffects
 
     private void StormThrustHit()
     {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
         GetCharacter.GetComponent<PlayerAnimations>().StormThrustAnimation();
 
-        Vector3 Distance = new Vector3(GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position.x - GetCharacter.transform.position.x, 0,
-                                       GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position.z - GetCharacter.transform.position.z).normalized;
+        Vector3 Distance = new Vector3(Target.transform.position.x - GetCharacter.transform.position.x, 0,
+                                       Target.transform.position.z - GetCharacter.transform.position.z).normalized;
 
         Quaternion Look = Quaternion.LookRotation(Distance);
 
@@ -470,9 +476,9 @@ public class Skills : StatusEffects
         {
             GetCharacter.GetComponent<BasicAttack>().HitParticleEffect();
 
-            DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
+            DamageSkillText(Target);
 
-            GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
+            GetStatusEffectIconTrans = Target.GetDebuffTransform;
 
             EnemyStatus();
 
@@ -488,9 +494,11 @@ public class Skills : StatusEffects
 
     public void WhirlwindSlash()
     {
-        if (GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
         {
-            if(GetCharacter.GetComponent<BasicAttack>().DistanceToTarget() <= AttackRange)
+            if(DistanceToAttack() <= AttackRange)
             {
                 SkillParticle = ObjectPooler.Instance.GetWhirlwindSlashParticle();
 
@@ -519,7 +527,7 @@ public class Skills : StatusEffects
 
     private void WhirlwindSlashHit()
     {
-        GetCharacter.transform.Rotate(0, 480 * Time.deltaTime, 0);
+        GetCharacter.transform.Rotate(0, 420 * Time.deltaTime, 0);
     }
 
     public void SetUpDamagePerimiter(Vector3 center, float radius)
@@ -546,16 +554,20 @@ public class Skills : StatusEffects
 
     public void EvilsEnd()
     {
-        if (GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
         {
-            if (GetCharacter.GetComponent<BasicAttack>().DistanceToTarget() <= AttackRange)
+            int TargetCurrentHP = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth;
+            int TargetMaxHP = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.MaxHealth;
+
+            if (DistanceToAttack() <= AttackRange)
             {
-                if(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <=
-                   GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.MaxHealth / 4)
+                if(TargetCurrentHP <= TargetMaxHP / 4)
                 {
                     FacingEnemy = true;
 
-                    TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
+                    TextHolder = Target.GetUI;
 
                     SkillsManager.Instance.GetActivatedSkill = true;
 
@@ -626,7 +638,7 @@ public class Skills : StatusEffects
 
         StatusTxt.transform.SetParent(TextHolder.transform, false);
 
-        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4> +" + GetStatusEffectName;
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetStatusEffectName;
 
         StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
@@ -643,7 +655,7 @@ public class Skills : StatusEffects
 
         StatusTxt.transform.SetParent(TextHolder.transform, false);
 
-        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4> +" + GetStatusEffectName;
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetStatusEffectName;
 
         StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 

@@ -59,7 +59,7 @@ public class BasicAttack : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             MousePoint();
         }
@@ -67,6 +67,29 @@ public class BasicAttack : MonoBehaviour
         if (Target != null)
         {
             Attack();
+        }
+
+        SearchForEnemy();
+    }
+
+    private void SearchForEnemy()
+    {
+        Vector3 MousePos = Input.mousePosition;
+
+        Ray ray = cam.ScreenPointToRay(MousePos);
+
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray, out hit, MouseRange))
+        {
+            if (hit.collider.GetComponent<Enemy>())
+            {
+                CursorController.Instance.SetAttackCursor();
+            }
+            else
+            {
+                CursorController.Instance.SetDefaultCursor();
+            }
         }
     }
 
@@ -194,6 +217,8 @@ public class BasicAttack : MonoBehaviour
         {
             if(Vector3.Distance(this.transform.position, Target.transform.position) >= HideStatsDistance)
             {
+                CursorController.Instance.SetDefaultCursor();
+
                 Target.GetSkills.DisableEnemySkillBar();
                 Target.TurnOffHealthBar();
                 Target = null;
