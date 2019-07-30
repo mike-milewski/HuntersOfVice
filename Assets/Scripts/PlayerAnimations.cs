@@ -207,6 +207,9 @@ public class PlayerAnimations : MonoBehaviour
     public void EndStormThrustAnimation()
     {
         animator.SetBool("StormThrust", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
     }
 
     public void EndWhirlwindSlashAnimation()
@@ -220,6 +223,27 @@ public class PlayerAnimations : MonoBehaviour
         SkillsManager.Instance.GetActivatedSkill = false;
 
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
+    }
+
+    public void EvilsEndAnimation()
+    {
+        animator.SetBool("EvilsEnd", true);
+        animator.SetBool("Attacking", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
+    }
+
+    public void EndEvilsEndAnimation()
+    {
+        animator.SetBool("EvilsEnd", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
+
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetFacingEnemy = false;
+
+        SkillsManager.Instance.GetActivatedSkill = false;
     }
 
     public void SetWhirlwindOn()

@@ -1282,7 +1282,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456446215871788}
   m_LocalRotation: {x: -0.10432336, y: 0.6993687, z: 0.27383786, w: 0.65193015}
-  m_LocalPosition: {x: -0.08045629, y: -0.028852522, z: 0.53519005}
+  m_LocalPosition: {x: -0.08045578, y: -0.028852522, z: 0.53519005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4976242098974608}
@@ -1324,13 +1324,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092564174094820}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.83185726, y: 0, z: 0, w: 0.55498964}
   m_LocalPosition: {x: 0.287779, y: 0.009525931, z: 0.022054225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4972362970427010}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 112.58, y: 0, z: 0}
 --- !u!4 &4202187568013120
 Transform:
   m_ObjectHideFlags: 1
@@ -1471,7 +1471,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4009663121938326}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -8.600666, y: -12.655118, z: -2.5958328}
+  m_LocalEulerAnglesHint: {x: -8.600666, y: -12.655118, z: -2.5958319}
 --- !u!4 &4411986604196190
 Transform:
   m_ObjectHideFlags: 1
@@ -1748,7 +1748,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4004930510497640}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.7582479, y: 170.75923, z: -167.12192}
+  m_LocalEulerAnglesHint: {x: 0.75824785, y: 170.75923, z: -167.12192}
 --- !u!4 &4739670478079544
 Transform:
   m_ObjectHideFlags: 1
@@ -1756,7 +1756,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1718340075597586}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.64, z: -6.4}
+  m_LocalPosition: {x: 51.28, y: -2.704, z: 7.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4639550596504440}
@@ -2119,7 +2119,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!95 &95549948492802982
 Animator:
@@ -2237,11 +2237,11 @@ MonoBehaviour:
   Target: {fileID: 0}
   HitParticle: {fileID: 198157547220164012, guid: 4961a16ba01e09547be3e1c9d16d5ad0,
     type: 2}
-  MouseRange: 20
+  MouseRange: 23
   AttackRange: 2.5
   AttackDelay: 1
   AutoAttackTime: 0
-  HideStatsDistance: 10
+  HideStatsDistance: 14
 --- !u!114 &114392228500413548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2432,6 +2432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9442b4ad235a994f81bf749d8578ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelUp: {fileID: 0}
   skillMenu: {fileID: 0}
   Player: {fileID: 4739670478079544}
   ExperienceBar: {fileID: 0}

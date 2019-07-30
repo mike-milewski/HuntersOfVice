@@ -565,6 +565,8 @@ public class Skills : StatusEffects
             {
                 if(TargetCurrentHP <= TargetMaxHP / 4)
                 {
+                    GetCharacter.GetComponent<PlayerAnimations>().EvilsEndAnimation();
+
                     FacingEnemy = true;
 
                     TextHolder = Target.GetUI;
@@ -576,8 +578,6 @@ public class Skills : StatusEffects
                     SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
                     GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
-
-                    GetCharacter.GetComponent<PlayerAnimations>().PlaySkillAnimation();
                 }
                 else
                 {
