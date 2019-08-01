@@ -662,8 +662,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1722958204252142}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -13.06, y: -3.6, z: 6.57}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
+  m_LocalPosition: {x: 50.6, y: -2.7, z: 53.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4731271516209256}
@@ -673,7 +673,7 @@ Transform:
   - {fileID: 224172724586066702}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!4 &4113946509398354
 Transform:
   m_ObjectHideFlags: 1
@@ -802,7 +802,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!65 &65745614162896586
 BoxCollider:
@@ -872,18 +872,17 @@ MonoBehaviour:
     enemyElement: 0
     status: 1
     shapes: 1
-    StatusSprite: {fileID: 21300000, guid: c144ece9d040e1349bc5e660a04eb618, type: 3}
+    StatusSprite: {fileID: 21300000, guid: 6dcb18064905519499482e45aebdf4a2, type: 3}
     StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db,
       type: 2}
     TextHolder: {fileID: 0}
     StatusIconTrans: {fileID: 0}
     DamageORHealText: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53,
       type: 2}
-    StatusEffectHolder: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
-      type: 2}
+    StatusEffectHolder: {fileID: 0}
     StatusEffectName: Poison
     StatusDescription: Taking Damage
-    SkillName: Mushroom Cap
+    SkillName: Poison Spore
     StatusDuration: 10
     CastTime: 3
     SizeDeltaX: 100
@@ -898,6 +897,7 @@ MonoBehaviour:
   skillBar: {fileID: 114588050136725898}
   damageRadius: {fileID: 114268487534876906}
   health: {fileID: 114272879539269974}
+  ApplySkill: 0
   ActiveSkill: 0
   DisruptedSkill: 0
 --- !u!114 &114031368246823800
@@ -1247,7 +1247,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 30
+  m_Spacing: 50
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -2691,7 +2691,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 75.1, y: 183.7}
+  m_AnchoredPosition: {x: 75.1, y: 183.2}
   m_SizeDelta: {x: 146.96, y: 44.199997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224155487149570714
@@ -3155,9 +3155,9 @@ RectTransform:
   m_Father: {fileID: 224172724586066702}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -300}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224992860828033654

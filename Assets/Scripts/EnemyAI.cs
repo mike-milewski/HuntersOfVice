@@ -487,13 +487,13 @@ public class EnemyAI : MonoBehaviour
             {
                 PlayerTarget.GetComponent<Health>().ModifyHealth(-((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense));
 
-                t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
+                t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
             }
             else
             {
                 PlayerTarget.GetComponent<Health>().ModifyHealth(-(character.CharacterStrength - PlayerTarget.CharacterDefense));
 
-                t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
             }
             #endregion
 

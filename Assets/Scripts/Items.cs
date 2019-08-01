@@ -186,11 +186,11 @@ public class Items : MonoBehaviour
 
         if(itemType == ItemType.HpHeal)
         {
-            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = HpHeal(HealAmount).ToString();
+            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + HpHeal(HealAmount).ToString();
         }
         else
         {
-            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = MpHeal(HealAmount) + "<size=11>" + " MP";
+            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + MpHeal(HealAmount) + "</size>" + "<size=20>" + " MP";
         }
 
         return HealingText.GetComponentInChildren<TextMeshProUGUI>();

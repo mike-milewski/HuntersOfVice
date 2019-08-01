@@ -833,14 +833,14 @@ public class EnemySkills : MonoBehaviour
             enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
                                                          (-(potency + 5 - Target.GetComponent<Character>().CharacterDefense));
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = skillName + " " + "<size=20>" + ((potency + 5) - 
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + "</size>" + " " + "<size=35>" + ((potency + 5) - 
                                                                        Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
         }
         else
         {
             Target.GetComponentInChildren<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + skillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
         }
         #endregion
 
