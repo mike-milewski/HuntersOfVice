@@ -7,13 +7,13 @@ public class LevelUp : MonoBehaviour
     private GameObject SkillMenuParent = null;
 
     [SerializeField]
-    private TextMeshProUGUI SkillText;
+    private TextMeshProUGUI SkillText = null;
 
     [SerializeField]
     private Animator animator;
 
     [SerializeField]
-    private Image SkillImage;
+    private Image SkillImage = null;
 
     public TextMeshProUGUI GetSkillText
     {
@@ -39,24 +39,9 @@ public class LevelUp : MonoBehaviour
         }
     }
 
-    public void PlayLevelUp()
-    {
-        animator.SetBool("LevelUp", true);
-    }
-
     private void Start()
     {
         SkillMenuParent = gameObject.transform.parent.parent.gameObject;
-    }
-
-    public void ReverseLevelUp()
-    {
-        foreach(SkillMenu s in SkillMenuParent.GetComponentsInChildren<SkillMenu>())
-        {
-            s.ShowNewSkill();
-        }
-
-        animator.SetBool("LevelUp", false);
     }
 
     public void PlaySkillLearned()

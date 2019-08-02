@@ -6,7 +6,7 @@ using System.Collections;
 public class Experience : MonoBehaviour
 {
     [SerializeField]
-    private LevelUp levelUp;
+    private LevelUpAnimation levelUpAnimation;
 
     [SerializeField]
     private GameObject skillMenu;
@@ -134,7 +134,7 @@ public class Experience : MonoBehaviour
 
     private void LevelUp()
     {
-        levelUp.PlayLevelUp();
+        levelUpAnimation.PlayLevelUpAnimation();
 
         ExperienceBar.fillAmount = 0;
 

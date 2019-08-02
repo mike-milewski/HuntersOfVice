@@ -29,6 +29,9 @@ public class SkillMenu : MonoBehaviour
     private int PassiveBonusValue;
 
     [SerializeField]
+    private int LevelRequirement;
+
+    [SerializeField]
     private Image SkillImage;
 
     [SerializeField]
@@ -39,9 +42,6 @@ public class SkillMenu : MonoBehaviour
 
     [SerializeField]
     private PassiveBonus passivebonus;
-
-    [SerializeField]
-    private int LevelRequirement;
 
     private void Awake()
     {
@@ -168,19 +168,28 @@ public class SkillMenu : MonoBehaviour
         levelUp.SetActive(true);
 
         levelUp.transform.position = new Vector3(levelUpParent.transform.position.x, levelUpParent.transform.position.y,
-                                                     levelUpParent.transform.position.z);
+                                                 levelUpParent.transform.position.z);
 
         levelUp.transform.SetParent(levelUpParent.transform);
 
         levelUp.transform.localScale = new Vector3(.7f, .7f, .7f);
+
+        StartCoroutine("GetNewSkillText");
     }
 
-    public void ShowNewSkill()
+    private IEnumerator GetNewSkillText()
     {
+        yield return new WaitForSeconds(1.0f);
+        ShowNewSkill();
+    }
+
+    private void ShowNewSkill()
+    {
+        if(character.Level >= LevelRequirement)
         levelUp.GetComponentInChildren<LevelUp>().PlaySkillLearned();
     }
 
-    public void ShowSkillInfo(GameObject Panel)
+    private void ShowSkillInfo(GameObject Panel)
     {
         Panel.SetActive(true);
 

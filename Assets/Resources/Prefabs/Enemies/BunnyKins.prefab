@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 224243406680114056}
   - component: {fileID: 222945053166396298}
   - component: {fileID: 114888124697394424}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TargetedImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 224705570494914894}
   - component: {fileID: 222797612057192934}
   - component: {fileID: 114638215231616318}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: EnemyInfoWorldSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +450,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4942990191865762}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 224381862636754164}
   - component: {fileID: 114935405289971924}
   - component: {fileID: 114410706483512158}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Damage/Heal/StatusTextTransformEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 114654875232276402}
   - component: {fileID: 95442507628500006}
   - component: {fileID: 114707992971575378}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HealthBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,7 +616,7 @@ GameObject:
   - component: {fileID: 224354302703504288}
   - component: {fileID: 222377364206261470}
   - component: {fileID: 114413223077712984}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HealthFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 224704789198469946}
   - component: {fileID: 222370392071062146}
   - component: {fileID: 114187062074427790}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ThreatImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -729,7 +729,7 @@ GameObject:
   - component: {fileID: 114441248015264734}
   - component: {fileID: 114330927930269488}
   - component: {fileID: 114872652767593790}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: UICanvasWorldSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -761,7 +761,7 @@ GameObject:
   - component: {fileID: 224820034631338212}
   - component: {fileID: 222481973319106080}
   - component: {fileID: 114025737882818764}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: FillArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -933,7 +933,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1987585570241918}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.3, y: -3.7, z: 66}
+  m_LocalPosition: {x: 44.3, y: 0.09, z: 66}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children:
   - {fileID: 4366026104794914}

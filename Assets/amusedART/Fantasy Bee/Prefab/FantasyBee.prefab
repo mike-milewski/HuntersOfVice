@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 224095819128521922}
   - component: {fileID: 222775276423167480}
   - component: {fileID: 114756676791719972}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ThreatImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 114817124151275458}
   - component: {fileID: 95341906858121494}
   - component: {fileID: 114124069735176932}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HealthBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 114500061217502502}
   - component: {fileID: 114138794955400838}
   - component: {fileID: 114632836939440404}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: UICanvasWorldSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 224943057451201750}
   - component: {fileID: 222363068369646836}
   - component: {fileID: 114322105824819468}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HealthFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 224742755057384228}
   - component: {fileID: 114000887594073436}
   - component: {fileID: 114819213441667006}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Damage/Heal/StatusTextTransformEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 224391009074606552}
   - component: {fileID: 222309570405723700}
   - component: {fileID: 114487629168322208}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: EnemyInfoWorldSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -621,7 +621,7 @@ GameObject:
   - component: {fileID: 224797706320787296}
   - component: {fileID: 222919172293463936}
   - component: {fileID: 114342961350095374}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: FillArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -636,7 +636,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4559278074004588}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 224218077622494538}
   - component: {fileID: 222834712763805148}
   - component: {fileID: 114969598954128844}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TargetedImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -955,7 +955,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1046869630431942}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 72.9, y: -2.5, z: 71.9}
+  m_LocalPosition: {x: 72.9, y: 0.09, z: 71.9}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4983713028428976}
@@ -2299,11 +2299,11 @@ MonoBehaviour:
     lineCount: 0
     pageCount: 0
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -3277,7 +3277,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1023828478263654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.442}
+  m_LocalPosition: {x: 0, y: 0, z: 0.387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224687718858340958}
@@ -3285,7 +3285,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 11.5}
+  m_AnchoredPosition: {x: -0, y: 0.5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224676943691009118

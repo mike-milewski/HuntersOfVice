@@ -26,32 +26,32 @@ public class EnemyAnimations : MonoBehaviour
 
     public void IdleAni ()
     {
-		anim.CrossFade (IDLE);
+        anim.Play(IDLE);
 	}
 
 	public void RunAni ()
     {
-		anim.CrossFade (MOVE);
+        anim.Play(MOVE);
 	}
 
 	public void AttackAni ()
     {
-		anim.CrossFade (ATTACK);
+        anim.Play(ATTACK);
 	}
 
     public void CastingAni()
     {
-        anim.CrossFade(CASTING);
+        anim.Play(CASTING);
     }
 
     public void DamageAni ()
     {
-		anim.CrossFade (DAMAGE);
+        anim.Play(DAMAGE);
 	}
 
 	public void DeathAni ()
     {
-		anim.CrossFade (DEATH);
+        anim.Play(DEATH);
 	}
 
     public void DamagePlayer()
@@ -66,12 +66,12 @@ public class EnemyAnimations : MonoBehaviour
 
     public void FungiBumpAnim()
     {
-        anim.CrossFade(SKILLATTACK);
+        anim.Play(SKILLATTACK);
     }
 
     public void SkillAtk2()
     {
-        anim.CrossFade(SKILLATTACK2);
+        anim.Play(SKILLATTACK2);
     }
 
     public void ResetAutoAttackTime()

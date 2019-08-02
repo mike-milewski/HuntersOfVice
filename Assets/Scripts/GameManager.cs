@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
 
     [SerializeField]
+    private Camera camera;
+
+    [SerializeField]
     private TextMeshProUGUI InvalidText;
 
     [SerializeField]
@@ -116,6 +119,13 @@ public class GameManager : MonoBehaviour
         eventsystem.GetComponent<EventSystem>();
 
         MaskSkillsPanel();
+
+        camera.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        camera.gameObject.SetActive(true);
     }
 
     private void Update()
