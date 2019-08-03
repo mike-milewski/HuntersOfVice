@@ -561,6 +561,9 @@ public class EnemySkills : MonoBehaviour
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
             MushroomSporeAnimation();
+
+            damageRadius.CheckIfPlayerIsInCircleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
+
             DisableRadiusImage();
 
             GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
@@ -580,9 +583,11 @@ public class EnemySkills : MonoBehaviour
         switch(skills[RandomValue].GetShapes)
         {
             case (Shapes.Circle):
+                if(damageRadius.GetIsInRadius)
                 damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
                 break;
             case (Shapes.Rectangle):
+                if(damageRadius.GetIsInRadius)
                 damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetRectangleColliderSize() / 2, character.transform.rotation);
                 break;
         }
@@ -614,6 +619,9 @@ public class EnemySkills : MonoBehaviour
         {
             enemyAI.GetAnimation.FungiBumpAnim();
 
+            damageRadius.CheckIfPlayerIsInRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(GetManager[RandomValue].GetShapeSize.x,
+                                                          GetManager[RandomValue].GetShapeSize.y, 1.7f), character.transform.rotation);
+
             DisableRadiusImage();
 
             Invoke("InvokeStunningStinger", ApplySkill);
@@ -628,16 +636,20 @@ public class EnemySkills : MonoBehaviour
     */
     private void InvokeStunningStinger()
     {
+        /*
         switch (skills[RandomValue].GetShapes)
         {
             case (Shapes.Circle):
+                if(damageRadius.GetIsInRadius)
                 damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
                 break;
             case (Shapes.Rectangle):
+                if(damageRadius.GetIsInRadius)
                 damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(GetManager[RandomValue].GetShapeSize.x, 
                                                        GetManager[RandomValue].GetShapeSize.y, 1.7f), character.transform.rotation);
                 break;
         }
+        */
         var StingerParticle = ObjectPooler.Instance.GetHitParticle();
 
         StingerParticle.SetActive(true);

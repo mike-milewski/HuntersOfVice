@@ -1451,6 +1451,7 @@ MonoBehaviour:
   anim: {fileID: 111614583403917066}
   AI: {fileID: 114244275959761428}
   enemyskills: {fileID: 114006354462489536}
+  damageradius: {fileID: 114268487534876906}
   changeEnemyMaterial: {fileID: 114916564609805402}
 --- !u!114 &114268487534876906
 MonoBehaviour:
@@ -1687,7 +1688,7 @@ MonoBehaviour:
   TargetedImage: {fileID: 114677610278254228}
   EnemyInfo: {fileID: 114959006871186890}
   LocalEnemyInfo: {fileID: 114202159613561654}
-  ExperiencePoints: 10
+  ExperiencePoints: 7
 --- !u!114 &114527686994712234
 MonoBehaviour:
   m_ObjectHideFlags: 1

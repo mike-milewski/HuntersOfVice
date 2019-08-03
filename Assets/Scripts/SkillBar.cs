@@ -58,7 +58,7 @@ public class SkillBar : MonoBehaviour
 
         CastParticle.SetActive(true);
 
-        CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.1f, character.transform.position.z);
+        CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.15f, character.transform.position.z);
 
         CastParticle.transform.SetParent(character.transform);
     }

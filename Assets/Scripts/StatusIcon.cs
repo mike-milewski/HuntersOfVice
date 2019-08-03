@@ -248,7 +248,11 @@ public class StatusIcon : MonoBehaviour
     {
         SkillsManager.Instance.GetDisruptedSkill = true;
         SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
+
         SkillsManager.Instance.GetCharacter.GetComponent<PlayerAnimations>().EndAttackAnimation();
+        SkillsManager.Instance.GetCharacter.GetComponent<PlayerAnimations>().GetAnimator.SetFloat("Speed", 0.0f);
+
+
         SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = false;
     }
 

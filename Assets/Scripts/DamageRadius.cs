@@ -22,6 +22,20 @@ public class DamageRadius : MonoBehaviour
     [SerializeField]
     private Sprite DamageShapeCircle, DamageShapeCylinder, DamageShapeRectangle;
 
+    private bool IsInRadius;
+
+    public bool GetIsInRadius
+    {
+        get
+        {
+            return IsInRadius;
+        }
+        set
+        {
+            IsInRadius = value;
+        }
+    }
+
     public Image GetDamageShape
     {
         get
@@ -66,16 +80,16 @@ public class DamageRadius : MonoBehaviour
 
     public float SetCircleColliderSize()
     {
-        float T = (float)enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX / (float)40;
+        float CircleRadius = (float)enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX / (float)40;
 
-        return T;
+        return CircleRadius;
     }
 
     public Vector3 SetRectangleColliderSize()
     {
-        Vector3 WH = new Vector3(DamageShape.transform.localScale.x, 1, DamageShape.transform.localScale.y);
+        Vector3 WidthHeight = new Vector3(DamageShape.transform.localScale.x, 1, DamageShape.transform.localScale.y);
 
-        return WH;
+        return WidthHeight;
     }
 
     private void Update()
@@ -159,45 +173,41 @@ public class DamageRadius : MonoBehaviour
         DamageShape.rectTransform.sizeDelta = new Vector2(0, 0);
     }
 
-    //Used for AOE damage skills with a circle shaped radius.
-    public void TakeDamageSphereRadius(Vector3 center, float radius)
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
-
-        for(int i = 0; i < hitColliders.Length; i++)
-        {
-            if(hitColliders[i].GetComponent<PlayerController>())
-            {
-                if (enemySkills.GetManager[enemySkills.GetRandomValue].GetStatus != Status.NONE)
-                {
-                    enemySkills.PlayerStatus();
-                }
-
-                enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
-
-                character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
-            }
-        }
-    }
-
-    //Used for AOE damage skills with a rectangle shaped radius.
-    public void TakeDamageRectangleRadius(Vector3 center, Vector3 radius, Quaternion rotation)
+    public void CheckIfPlayerIsInRectangleRadius(Vector3 center, Vector3 radius, Quaternion rotation)
     {
         Collider[] hitColliders = Physics.OverlapBox(center, radius, rotation);
 
         for (int i = 0; i < hitColliders.Length; i++)
         {
-            if (hitColliders[i].GetComponent<Health>())
+            if (hitColliders[i].GetComponent<PlayerController>())
             {
-                if (enemySkills.GetManager[enemySkills.GetRandomValue].GetStatus != Status.NONE)
-                {
-                    enemySkills.PlayerStatus();
-                }
-
-                enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
-
-                character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                IsInRadius = true;
             }
         }
+    }
+
+    public void CheckIfPlayerIsInCircleRadius(Vector3 center, float radius)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].GetComponent<PlayerController>())
+            {
+                IsInRadius = true;
+            }
+        }
+    }
+
+    public void TakeRadiusDamage()
+    {
+        if (enemySkills.GetManager[enemySkills.GetRandomValue].GetStatus != Status.NONE)
+        {
+            enemySkills.PlayerStatus();
+        }
+
+        enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
+
+        character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
     }
 }

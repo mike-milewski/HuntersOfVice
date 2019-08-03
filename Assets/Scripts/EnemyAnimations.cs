@@ -13,6 +13,9 @@ public class EnemyAnimations : MonoBehaviour
     private EnemySkills enemyskills;
 
     [SerializeField]
+    private DamageRadius damageradius;
+
+    [SerializeField]
     private ChangeEnemyMaterial changeEnemyMaterial;
 
 	private const string IDLE	= "Idle";
@@ -62,6 +65,15 @@ public class EnemyAnimations : MonoBehaviour
     public void SkillDamage()
     {
         enemyskills.SkillDamageText(enemyskills.GetManager[enemyskills.GetRandomValue].GetPotency, enemyskills.GetManager[enemyskills.GetRandomValue].GetSkillName);
+    }
+
+    public void SkillRadiusDamage()
+    {
+        if(damageradius.GetIsInRadius)
+        {
+            damageradius.TakeRadiusDamage();
+        }
+        damageradius.GetIsInRadius = false;
     }
 
     public void FungiBumpAnim()

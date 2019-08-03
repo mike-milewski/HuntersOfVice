@@ -63,6 +63,8 @@ public class Skills : StatusEffects
     [SerializeField][TextArea]
     private string SkillDescription;
 
+    private Quaternion rot;
+
     public PlayerElement GetPlayerElement
     {
         get
@@ -496,6 +498,8 @@ public class Skills : StatusEffects
     {
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
+        rot = GetCharacter.transform.rotation;
+
         if (Target != null)
         {
             if(DistanceToAttack() <= AttackRange)
@@ -550,6 +554,7 @@ public class Skills : StatusEffects
                 DamageSkillText(hitColliders[i].GetComponent<Enemy>());
             }
         }
+        GetCharacter.transform.rotation = rot;
     }
 
     public void EvilsEnd()
