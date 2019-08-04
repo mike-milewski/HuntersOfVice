@@ -1,13 +1,51 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public enum States { Patrol, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile }
+
+[System.Serializable]
+public class AiStates
+{
+    [SerializeField]
+    private States state;
+
+    [SerializeField]
+    private int SkillIndex;
+
+    public States GetState
+    {
+        get
+        {
+            return state;
+        }
+        set
+        {
+            state = value;
+        }
+    }
+
+    public int GetSkillIndex
+    {
+        get
+        {
+            return SkillIndex;
+        }
+        set
+        {
+            SkillIndex = value;
+        }
+    }
+}
 
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField]
     private States states;
+
+    [SerializeField]
+    private AiStates[] aiStates;
 
     [SerializeField]
     private Character character;
@@ -56,6 +94,20 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private bool IsHostile;
 
+    private int StateArrayIndex;
+
+    public int GetStateArrayIndex
+    {
+        get
+        {
+            return StateArrayIndex;
+        }
+        set
+        {
+            StateArrayIndex = value;
+        }
+    }
+
     public EnemyAnimations GetAnimation
     {
         get
@@ -65,6 +117,27 @@ public class EnemyAI : MonoBehaviour
         set
         {
             Anim = value;
+        }
+    }
+
+    public AiStates[] GetAiStates
+    {
+        get
+        {
+            return aiStates;
+        }
+        set
+        {
+            aiStates = value;
+        }
+    }
+
+    public void IncreaseArray()
+    {
+        StateArrayIndex++;
+        if(StateArrayIndex >= aiStates.Length)
+        {
+            StateArrayIndex = 0;
         }
     }
 
@@ -273,22 +346,8 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    if (Random.value * 100 <= 50)
-                    {
-                        if(enemySkills.GetManager.Length > 0)
-                        {
-                            enemySkills.GenerateValue();
-                            states = States.Skill;
-                        }
-                        else
-                        {
-                            states = States.ApplyingAttack;
-                        }
-                    }
-                    else
-                    {
-                        states = States.ApplyingAttack;
-                    }
+                    Debug.Log(StateArrayIndex);
+                    states = aiStates[StateArrayIndex].GetState;
                 }
             }
             else
@@ -315,7 +374,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Skill()
     {
-        enemySkills.ChooseSkill(enemySkills.GetRandomValue);
+        enemySkills.ChooseSkill(aiStates[StateArrayIndex].GetSkillIndex);
     }
 
     //Sets the enemy to this state if they are inflicted with the stun/sleep status effect.
@@ -417,6 +476,7 @@ public class EnemyAI : MonoBehaviour
             }
             enemy.GetHealth.IncreaseHealth(character.MaxHealth);
             enemy.GetLocalHealthInfo();
+            StateArrayIndex = 0;
         }
         if (!IsHostile)
         {
@@ -434,6 +494,7 @@ public class EnemyAI : MonoBehaviour
             }
             enemy.GetHealth.IncreaseHealth(character.MaxHealth);
             enemy.GetLocalHealthInfo();
+            StateArrayIndex = 0;
         }
     }
 

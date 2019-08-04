@@ -1948,6 +1948,7 @@ MonoBehaviour:
   anim: {fileID: 111493952083417996}
   AI: {fileID: 114981715383889750}
   enemyskills: {fileID: 114570093662719146}
+  damageradius: {fileID: 114093684727720922}
   changeEnemyMaterial: {fileID: 114171407289911956}
 --- !u!114 &114734743348568266
 MonoBehaviour:
@@ -2296,7 +2297,7 @@ MonoBehaviour:
   TargetedImage: {fileID: 114888124697394424}
   EnemyInfo: {fileID: 114443723158654292}
   LocalEnemyInfo: {fileID: 114638215231616318}
-  ExperiencePoints: 10
+  ExperiencePoints: 7
 --- !u!114 &114981715383889750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2309,6 +2310,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   states: 0
+  aiStates:
+  - state: 3
+    SkillIndex: 0
   character: {fileID: 114734743348568266}
   enemy: {fileID: 114967195343370240}
   enemySkills: {fileID: 114570093662719146}

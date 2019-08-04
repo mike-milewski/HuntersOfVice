@@ -118,4 +118,9 @@ public class EnemyAnimations : MonoBehaviour
 
         StartCoroutine(changeEnemyMaterial.Fade());
     }
+
+    public void IncreaseAiArray()
+    {
+        AI.IncreaseArray();
+    }
 }

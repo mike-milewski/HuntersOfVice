@@ -279,8 +279,11 @@ public class BasicAttack : MonoBehaviour
 
         Hitparticle.SetActive(true);
 
-        Hitparticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z);
+        if(Target != null)
+        {
+            Hitparticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z);
 
-        Hitparticle.transform.SetParent(Target.transform, true);
+            Hitparticle.transform.SetParent(Target.transform, true);
+        }
     }
 }

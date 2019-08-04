@@ -39,7 +39,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public void OnBeginDrag(PointerEventData eventData)
     {
         PlaceHolder = new GameObject();
-        PlaceHolder.transform.SetParent(zone.transform, false);
+        PlaceHolder.transform.SetParent(zone.transform, true);
 
         RectTransform RectTrans = PlaceHolder.AddComponent<RectTransform>();
 
@@ -53,7 +53,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnDrag(PointerEventData eventData)
     {
-        gameObject.transform.SetParent(ParentObj, false);
+        gameObject.transform.SetParent(ParentObj, true);
         transform.position = eventData.position;
 
         int NewSiblingIndex = zone.transform.childCount;
@@ -94,7 +94,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                     }
                 }
             }
-            gameObject.transform.SetParent(SkillMenuParent, false);
+            gameObject.transform.SetParent(SkillMenuParent, true);
             gameObject.GetComponent<Button>().enabled = false;
             gameObject.transform.position = new Vector2(SkillMenuParent.transform.position.x, SkillMenuParent.transform.position.y);
 
@@ -125,6 +125,8 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         SkillsManager.Instance.AllSkillsNotBeingDragged();
 
         Destroy(PlaceHolder);
+
+        gameObject.transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void CheckForSameSkills(Skills other)

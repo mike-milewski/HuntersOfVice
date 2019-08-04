@@ -41,24 +41,21 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         #endregion
 
-        audiosource = GetComponents<AudioSource>();
-    }
-
-    private void Start()
-    {
-        if (scene.name == "Level1")
-        {
-            audiosource[0].playOnAwake = true;
-            audiosource[0].Play();
-        }
-        else
-        {
-            audiosource[0].Stop();
-        }
+        audiosource[1].volume = 0.3f;
     }
 
     public void FallSE()
     {
         audiosource[1].PlayOneShot(audioclips[0]);
+    }
+
+    public void RightFootStep()
+    {
+        audiosource[1].PlayOneShot(audioclips[1]);
+    }
+
+    public void LeftFootStep()
+    {
+        audiosource[1].PlayOneShot(audioclips[2]);
     }
 }

@@ -444,18 +444,22 @@ public class EnemySkills : MonoBehaviour
         if(!ActiveSkill)
         {
             ActiveSkill = true;
-            switch (skills[RandomValue].GetSkills)
+            switch (skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkills)
             {
                 #region Mushroom Man Skills
+                case (Skill.PoisonSpore):
+                    PoisonSpore(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime, 
+                        new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX, GetManager[RandomValue].GetSizeDeltaY), 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                    break;
                 case (Skill.FungiBump):
-                    FungiBump(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetAttackRange, GetManager[RandomValue].GetSkillName);
+                      FungiBump(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
+                                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetAttackRange, 
+                                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                     break;
                 case (Skill.HealingCap):
                     HealingCap(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetSkillName);
-                    break;
-                case (Skill.PoisonSpore):
-                    PoisonSpore(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, 
-                        new Vector2(GetManager[RandomValue].GetSizeDeltaX, GetManager[RandomValue].GetSizeDeltaY), GetManager[RandomValue].GetSkillName);
                     break;
                 case (Skill.Regen):
                     Regen(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
@@ -499,8 +503,8 @@ public class EnemySkills : MonoBehaviour
 
     public void FungiBump(int potency, float attackRange, string skillname)
     {
-        skills[RandomValue].GetPotency = potency;
-        skills[RandomValue].GetSkillName = skillname;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
 
         float Distance = Vector3.Distance(character.transform.position, enemyAI.GetPlayerTarget.transform.position);
 
@@ -543,13 +547,14 @@ public class EnemySkills : MonoBehaviour
     {
         SpellCastingAnimation();
 
-        skills[RandomValue].GetCastTime = castTime;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
 
-        skills[RandomValue].GetPotency = potency;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
 
-        sizeDelta = new Vector2(skills[RandomValue].GetSizeDeltaX, skills[RandomValue].GetSizeDeltaY);
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX, 
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
 
-        skills[RandomValue].GetSkillName = skillname;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
 
         skillBar.GetCharacter = character;
 
@@ -566,13 +571,13 @@ public class EnemySkills : MonoBehaviour
 
             DisableRadiusImage();
 
-            GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
 
-            GetManager[RandomValue].GetSkillParticle.SetActive(true);
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
 
-            GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
 
-            GetManager[RandomValue].GetSkillParticle.transform.SetParent(gameObject.transform);
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
 
             Invoke("InvokePoisonSpore", ApplySkill);
         }
@@ -580,17 +585,6 @@ public class EnemySkills : MonoBehaviour
 
     private void InvokePoisonSpore()
     {
-        switch(skills[RandomValue].GetShapes)
-        {
-            case (Shapes.Circle):
-                if(damageRadius.GetIsInRadius)
-                damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
-                break;
-            case (Shapes.Rectangle):
-                if(damageRadius.GetIsInRadius)
-                damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetRectangleColliderSize() / 2, character.transform.rotation);
-                break;
-        }
         DisableRadius();
 
         ActiveSkill = false;
@@ -600,13 +594,14 @@ public class EnemySkills : MonoBehaviour
     {
         SpellCastingAnimation();
 
-        skills[RandomValue].GetCastTime = castTime;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
 
-        skills[RandomValue].GetPotency = potency;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
 
-        sizeDelta = new Vector2(skills[RandomValue].GetSizeDeltaX, skills[RandomValue].GetSizeDeltaY);
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX, 
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
 
-        skills[RandomValue].GetSkillName = skillname;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
 
         skillBar.GetCharacter = character;
 
@@ -619,8 +614,8 @@ public class EnemySkills : MonoBehaviour
         {
             enemyAI.GetAnimation.FungiBumpAnim();
 
-            damageRadius.CheckIfPlayerIsInRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(GetManager[RandomValue].GetShapeSize.x,
-                                                          GetManager[RandomValue].GetShapeSize.y, 1.7f), character.transform.rotation);
+            damageRadius.CheckIfPlayerIsInRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.x,
+                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 1.7f), character.transform.rotation);
 
             DisableRadiusImage();
 
@@ -746,11 +741,11 @@ public class EnemySkills : MonoBehaviour
 
         StatusEffectText.SetActive(true);
 
-        StatusEffectText.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+        StatusEffectText.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetTextHolder.transform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[RandomValue].GetStatusEffectName;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectName;
 
-        StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
+        StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
 
         StatusEffectSkillTextTransform();
 
@@ -763,11 +758,11 @@ public class EnemySkills : MonoBehaviour
 
         StatusEffectText.SetActive(true);
 
-        StatusEffectText.transform.SetParent(GetManager[RandomValue].GetStatusEffectHolder.transform, false);
+        StatusEffectText.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectHolder.transform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[RandomValue].GetStatusEffectName;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectName;
 
-        StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[RandomValue].GetStatusSprite;
+        StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
 
         StatusEffectSkillTextTransform();
 
@@ -776,44 +771,44 @@ public class EnemySkills : MonoBehaviour
 
     public void StatusEffectSkillTextTransform()
     {
-        if(!GetManager[RandomValue].GetStatusIcon.activeInHierarchy)
+        if(!GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.activeInHierarchy)
         {
-            if (GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>())
+            if (GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>())
             {
-                GetManager[RandomValue].GetStatusIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
 
-                GetManager[RandomValue].GetStatusIcon.SetActive(true);
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.SetActive(true);
 
-                GetManager[RandomValue].GetStatusIcon.transform.SetParent(this.GetManager[RandomValue].GetStatusIconTrans.transform, false);
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.transform.SetParent(this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIconTrans.transform, false);
 
-                GetManager[RandomValue].GetStatusIcon.GetComponent<Image>().sprite = this.GetManager[RandomValue].GetStatusSprite;
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite = this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
 
-                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)this.GetManager[RandomValue].GetStatus;
-                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
-                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus;
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
             }
             else
             {
-                GetManager[RandomValue].GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
-                GetManager[RandomValue].GetStatusIcon.SetActive(true);
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.SetActive(true);
 
-                GetManager[RandomValue].GetStatusIcon.transform.SetParent(this.GetManager[RandomValue].GetStatusIconTrans.transform, false);
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.transform.SetParent(this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIconTrans.transform, false);
 
-                GetManager[RandomValue].GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = (StatusEffect)this.GetManager[RandomValue].GetStatus;
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = (StatusEffect)this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus;
 
-                GetManager[RandomValue].GetStatusIcon.GetComponent<Image>().sprite = this.GetManager[RandomValue].GetStatusSprite;
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite = this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
             }
         }
         else
         {
-            if (GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>())
+            if (GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>())
             {
-                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
             }
             else
             {
-                GetManager[RandomValue].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
             }
         }
     }
@@ -831,7 +826,7 @@ public class EnemySkills : MonoBehaviour
 
         DamageTxt.SetActive(true);
 
-        DamageTxt.transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+        DamageTxt.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetTextHolder.transform, false);
 
         var Target = enemyAI.GetPlayerTarget;
 

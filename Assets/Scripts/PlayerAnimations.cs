@@ -255,4 +255,14 @@ public class PlayerAnimations : MonoBehaviour
     {
         SoundManager.Instance.FallSE();
     }
+
+    public void PlayRightFootSE()
+    {
+        SoundManager.Instance.RightFootStep();
+    }
+
+    public void PlayLeftFootSE()
+    {
+        SoundManager.Instance.LeftFootStep();
+    }
 }
