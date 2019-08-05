@@ -128,7 +128,7 @@ public class StatusIcon : MonoBehaviour
     {
         SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetSleepHit = false;
 
-        KeyInput = enemyTarget.GetComponent<EnemySkills>().GetRandomValue;
+        KeyInput = enemyTarget.GetAI.GetAiStates[enemyTarget.GetAI.GetStateArrayIndex].GetSkillIndex;
 
         Duration = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDuration;
 
@@ -173,8 +173,6 @@ public class StatusIcon : MonoBehaviour
     //Called when a status effect cast by an enemy onto the player gets removed.
     public TextMeshProUGUI RemoveEnemyStatusEffectText()
     {
-        KeyInput = enemyTarget.GetComponent<EnemySkills>().GetRandomValue;
-
         var StatusEffectTxt = ObjectPooler.Instance.GetPlayerStatusText();
 
         StatusEffectTxt.SetActive(true);

@@ -8,6 +8,9 @@ public class Enemy : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private EnemyAnimations enemyAnimations;
+
+    [SerializeField]
     private EnemyAI enemyAI;
 
     [SerializeField]
@@ -39,6 +42,18 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private int ExperiencePoints;
+
+    public EnemyAnimations GetEnemyAnimations
+    {
+        get
+        {
+            return enemyAnimations;
+        }
+        set
+        {
+            enemyAnimations = value;
+        }
+    }
 
     public int GetExperiencePoints
     {
@@ -170,32 +185,44 @@ public class Enemy : MonoBehaviour
     {
         if (GameManager.Instance.GetEnemyObject == enemy.gameObject)
         {
+            enemyAnimations.PlayHealthFade();
+            TargetedImage.gameObject.SetActive(true);
+            /*
             foreach(Image i in health.GetComponentsInChildren<Image>())
             {
                 i.enabled = true;
             }
             health.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
             TargetedImage.gameObject.SetActive(true);
+            */
         }
         else
         {
+            enemyAnimations.ReverseFadeHealth();
+            TargetedImage.gameObject.SetActive(false);
+            /*
             foreach (Image i in health.GetComponentsInChildren<Image>())
             {
                 i.enabled = false;
             }
             health.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
             TargetedImage.gameObject.SetActive(false);
+            */
         }
     }
 
     public void TurnOffHealthBar()
     {
+        enemyAnimations.ReverseFadeHealth();
+        TargetedImage.gameObject.SetActive(false);
+        /*
         foreach (Image i in health.GetComponentsInChildren<Image>())
         {
             i.enabled = false;
         }
         health.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
         TargetedImage.gameObject.SetActive(false);
+        */
     }
 
     public void GetLocalHealthInfo()

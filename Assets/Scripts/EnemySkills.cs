@@ -365,8 +365,6 @@ public class EnemySkills : MonoBehaviour
     [SerializeField]
     private Health health;
 
-    private int RandomValue;
-
     [SerializeField] [Tooltip("The amount of time it takes before the skill is applied.")]
     private float ApplySkill;
 
@@ -397,19 +395,6 @@ public class EnemySkills : MonoBehaviour
         }
     }
 
-    public int GetRandomValue
-    {
-        get
-        {
-            return RandomValue;
-        }
-        set
-        {
-            RandomValue = value;
-
-        }
-    }
-
     public bool GetActiveSkill
     {
         get
@@ -434,11 +419,6 @@ public class EnemySkills : MonoBehaviour
         }
     }
 
-    public void GenerateValue()
-    {
-        RandomValue = Random.Range(0, skills.Length);
-    }
-
     public void ChooseSkill(int value)
     {
         if(!ActiveSkill)
@@ -450,7 +430,8 @@ public class EnemySkills : MonoBehaviour
                 case (Skill.PoisonSpore):
                     PoisonSpore(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
                         GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime, 
-                        new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX, GetManager[RandomValue].GetSizeDeltaY), 
+                        new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX, 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY), 
                         GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                     break;
                 case (Skill.FungiBump):
@@ -459,17 +440,24 @@ public class EnemySkills : MonoBehaviour
                                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                     break;
                 case (Skill.HealingCap):
-                    HealingCap(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetSkillName);
+                    HealingCap(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime, 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                     break;
                 case (Skill.Regen):
-                    Regen(GetManager[RandomValue].GetCastTime, GetManager[RandomValue].GetStatusDuration, GetManager[RandomValue].GetSkillName);
+                    Regen(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime, 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusDuration, 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                     break;
                 #endregion
 
                 #region Bee Skills
                 case (Skill.StunningStinger):
-                    StunningStinger(GetManager[RandomValue].GetPotency, GetManager[RandomValue].GetCastTime,
-                        new Vector2(GetManager[RandomValue].GetSizeDeltaX, GetManager[RandomValue].GetSizeDeltaY), GetManager[RandomValue].GetSkillName);
+                    StunningStinger(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                        new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX, 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY), 
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                     break;
                     #endregion
             }
@@ -480,9 +468,9 @@ public class EnemySkills : MonoBehaviour
     {
         SpellCastingAnimation();
 
-        skills[RandomValue].GetCastTime = castTime;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
 
-        skills[RandomValue].GetSkillName = skillname;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
 
         skillBar.GetCharacter = character;
 
@@ -522,11 +510,11 @@ public class EnemySkills : MonoBehaviour
     {
         SpellCastingAnimation();
 
-        skills[RandomValue].GetCastTime = castTime;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
 
-        skills[RandomValue].GetPotency = potency;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
 
-        skills[RandomValue].GetSkillName = skillname;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
 
         skillBar.GetCharacter = character;
 
@@ -540,7 +528,8 @@ public class EnemySkills : MonoBehaviour
 
     private void InvokeHealingCap()
     {
-        SkillHealText(skills[RandomValue].GetPotency, skills[RandomValue].GetSkillName);
+        SkillHealText(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
+                      skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
     }
 
     public void PoisonSpore(int potency, float castTime, Vector2 sizeDelta, string skillname)
@@ -575,7 +564,8 @@ public class EnemySkills : MonoBehaviour
 
             GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                transform.position.x, transform.position.y + 0.2f, transform.position.z);
 
             GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
 
@@ -614,8 +604,10 @@ public class EnemySkills : MonoBehaviour
         {
             enemyAI.GetAnimation.FungiBumpAnim();
 
-            damageRadius.CheckIfPlayerIsInRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.x,
-                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 1.7f), character.transform.rotation);
+            damageRadius.CheckIfPlayerIsInRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(
+                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.x,
+                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 1.7f), 
+                                                          character.transform.rotation);
 
             DisableRadiusImage();
 
@@ -717,7 +709,7 @@ public class EnemySkills : MonoBehaviour
 
     public void DisableRadius()
     {
-        switch(skills[RandomValue].GetShapes)
+        switch(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapes)
         {
             case (Shapes.Circle):
                 damageRadius.ResetLocalScale();
@@ -743,7 +735,8 @@ public class EnemySkills : MonoBehaviour
 
         StatusEffectText.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetTextHolder.transform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectName;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].
+                                                                                          GetStatusEffectName;
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
 
@@ -760,7 +753,8 @@ public class EnemySkills : MonoBehaviour
 
         StatusEffectText.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectHolder.transform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectName;
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].
+                                                                                          GetStatusEffectName;
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
 
@@ -779,11 +773,15 @@ public class EnemySkills : MonoBehaviour
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.SetActive(true);
 
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.transform.SetParent(this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIconTrans.transform, false);
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.transform.SetParent(
+                    this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIconTrans.transform, false);
 
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite = this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite = 
+                    this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
 
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus;
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = 
+                    (EffectStatus)this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus;
+
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
             }
@@ -793,11 +791,14 @@ public class EnemySkills : MonoBehaviour
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.SetActive(true);
 
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.transform.SetParent(this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIconTrans.transform, false);
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.transform.SetParent(
+                    this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIconTrans.transform, false);
 
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = (StatusEffect)this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus;
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = 
+                    (StatusEffect)this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus;
 
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite = this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite = 
+                    this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
             }
         }
         else
@@ -820,7 +821,7 @@ public class EnemySkills : MonoBehaviour
             return null;
         }
 
-        skills[RandomValue].GetSkillName = skillName;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillName;
 
         var DamageTxt = ObjectPooler.Instance.GetPlayerDamageText();
 
@@ -847,7 +848,8 @@ public class EnemySkills : MonoBehaviour
         {
             Target.GetComponentInChildren<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + 
+                                                                       (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
         }
         #endregion
 
@@ -858,7 +860,7 @@ public class EnemySkills : MonoBehaviour
 
     public TextMeshProUGUI SkillHealText(int potency, string skillName)
     {
-        skills[RandomValue].GetSkillName = skillName;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillName;
 
         var HealTxt = ObjectPooler.Instance.GetEnemyHealText();
 
@@ -873,18 +875,18 @@ public class EnemySkills : MonoBehaviour
         {
             if (Random.value * 100 <= Critical)
             {
-                health.IncreaseHealth((skills[RandomValue].GetPotency + 10) + character.CharacterIntelligence);
+                health.IncreaseHealth((skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency + 10) + character.CharacterIntelligence);
 
-                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[RandomValue].GetSkillName + " " + "<size=20>" +
-                                                                        (potency + character.CharacterIntelligence).ToString() + "!";
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName + " " + "<size=20>" +
+                                                                         (potency + character.CharacterIntelligence).ToString() + "!";
 
                 enemy.GetLocalHealthInfo();
             }
             else
             {
-                health.IncreaseHealth(skills[RandomValue].GetPotency + character.CharacterIntelligence);
+                health.IncreaseHealth(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency + character.CharacterIntelligence);
 
-                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + skills[RandomValue].GetSkillName + " " + 
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName + " " + 
                                                                          (potency + character.CharacterIntelligence).ToString();
 
                 enemy.GetLocalHealthInfo();
@@ -892,7 +894,7 @@ public class EnemySkills : MonoBehaviour
         }
         #endregion
 
-        HealTxt.GetComponentInChildren<TextMeshProUGUI>().transform.SetParent(GetManager[RandomValue].GetTextHolder.transform, false);
+        HealTxt.GetComponentInChildren<TextMeshProUGUI>().transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetTextHolder.transform, false);
 
         return HealTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -901,14 +903,15 @@ public class EnemySkills : MonoBehaviour
     {
         var Target = enemyAI.GetPlayerTarget;
 
-        GetManager[RandomValue].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
 
-        GetManager[RandomValue].GetSkillParticle.SetActive(true);
+        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
 
-        GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3();
+        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
 
-        GetManager[RandomValue].GetSkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
+        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                            Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
 
-        GetManager[RandomValue].GetSkillParticle.transform.SetParent(Target.transform);
+        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
     }
 }

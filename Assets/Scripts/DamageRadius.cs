@@ -80,7 +80,7 @@ public class DamageRadius : MonoBehaviour
 
     public float SetCircleColliderSize()
     {
-        float CircleRadius = (float)enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX / (float)40;
+        float CircleRadius = (float)enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX / (float)40;
 
         return CircleRadius;
     }
@@ -125,11 +125,11 @@ public class DamageRadius : MonoBehaviour
     private void IncreaseCircle()
     {
         DamageShape.rectTransform.sizeDelta = new Vector2(
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX),
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaY));
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX),
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY));
 
-        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX && DamageShape.rectTransform.sizeDelta.y < 
-                                                    enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaY)
+        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX && DamageShape.rectTransform.sizeDelta.y < 
+                                                    enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
 
            DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
     }
@@ -150,14 +150,14 @@ public class DamageRadius : MonoBehaviour
     private void IncreaseRectangle()
     {
         DamageShape.rectTransform.sizeDelta = new Vector2(
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX),
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaY));
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX),
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY));
 
-        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaX)
+        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX)
         {
             DamageShape.rectTransform.sizeDelta += new Vector2(100, 0) * Time.deltaTime;
         }
-        if(DamageShape.rectTransform.sizeDelta.y < enemySkills.GetManager[enemySkills.GetRandomValue].GetSizeDeltaY)
+        if(DamageShape.rectTransform.sizeDelta.y < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
         {
             DamageShape.rectTransform.sizeDelta += new Vector2(0, 100) * Time.deltaTime;
         }
@@ -201,12 +201,13 @@ public class DamageRadius : MonoBehaviour
 
     public void TakeRadiusDamage()
     {
-        if (enemySkills.GetManager[enemySkills.GetRandomValue].GetStatus != Status.NONE)
+        if (enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus != Status.NONE)
         {
             enemySkills.PlayerStatus();
         }
 
-        enemySkills.SkillDamageText(enemySkills.GetManager[enemySkills.GetRandomValue].GetPotency, enemySkills.GetManager[enemySkills.GetRandomValue].GetSkillName);
+        enemySkills.SkillDamageText(enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
+                                    enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
 
         character.GetComponent<EnemyAI>().GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
     }

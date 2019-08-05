@@ -122,6 +122,8 @@ public class Items : MonoBehaviour
     {
         HpParticle();
 
+        SoundManager.Instance.ItemBottle();
+
         Invoke("HpHealing", ApplyItemUse);
         CooldownImage.fillAmount = 1;
     }
@@ -129,6 +131,8 @@ public class Items : MonoBehaviour
     private void ReadyMpHealing()
     {
         MpParticle();
+
+        SoundManager.Instance.ItemBottle();
 
         Invoke("MpHealing", ApplyItemUse);
         CooldownImage.fillAmount = 1;
@@ -138,6 +142,8 @@ public class Items : MonoBehaviour
     {
         if(character.CurrentHealth > 0)
         {
+            SoundManager.Instance.ItemHeal();
+
             character.GetComponent<Health>().IncreaseHealth(HpHeal(HealAmount));
 
             HealText();
@@ -148,6 +154,8 @@ public class Items : MonoBehaviour
     {
         if(character.CurrentHealth > 0)
         {
+            SoundManager.Instance.ItemHeal();
+
             character.GetComponent<Mana>().IncreaseMana(MpHeal(HealAmount));
 
             HealText();

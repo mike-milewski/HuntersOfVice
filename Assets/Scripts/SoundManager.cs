@@ -40,8 +40,6 @@ public class SoundManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
         #endregion
-
-        audiosource[1].volume = 0.3f;
     }
 
     public void FallSE()
@@ -57,5 +55,25 @@ public class SoundManager : MonoBehaviour
     public void LeftFootStep()
     {
         audiosource[1].PlayOneShot(audioclips[2]);
+    }
+
+    public void ItemBottle()
+    {
+        audiosource[1].PlayOneShot(audioclips[3]);
+    }
+
+    public void ItemHeal()
+    {
+        audiosource[1].PlayOneShot(audioclips[4]);
+    }
+
+    public void SwordHit()
+    {
+        audiosource[1].PlayOneShot(audioclips[5]);
+    }
+
+    public void EnemyHit()
+    {
+        audiosource[2].PlayOneShot(audioclips[6]);
     }
 }

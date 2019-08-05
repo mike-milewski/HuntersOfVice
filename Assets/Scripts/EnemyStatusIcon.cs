@@ -111,7 +111,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
         effect = (StatusEffect)character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatus;
 
-        KeyInput = character.GetComponent<EnemySkills>().GetRandomValue;
+        KeyInput = character.GetComponent<EnemyAI>().GetAiStates[character.GetComponent<EnemyAI>().GetStateArrayIndex].GetSkillIndex;
 
         Duration = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDuration;
 
@@ -222,7 +222,6 @@ public class EnemyStatusIcon : MonoBehaviour
         }
         else if (GameManager.Instance.GetEnemyObject != character.GetComponent<Enemy>().gameObject)
         {
-            GameManager.Instance.GetLastEnemyObject = character.GetComponent<Enemy>().gameObject;
             this.GetComponentInChildren<Image>().enabled = false;
             DurationText.enabled = false;
         }

@@ -32,6 +32,18 @@ public class Health : MonoBehaviour
     [SerializeField]
     private float FillValue;
 
+    public GameObject GetHealthObj
+    {
+        get
+        {
+            return HealthAnimationObj;
+        }
+        set
+        {
+            HealthAnimationObj = value;
+        }
+    }
+
     public bool GetSleepHit
     {
         get

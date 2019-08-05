@@ -265,4 +265,9 @@ public class PlayerAnimations : MonoBehaviour
     {
         SoundManager.Instance.LeftFootStep();
     }
+
+    public void PlaySwordHit()
+    {
+        SoundManager.Instance.SwordHit();
+    }
 }

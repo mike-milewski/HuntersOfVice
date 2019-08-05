@@ -346,7 +346,6 @@ public class EnemyAI : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    Debug.Log(StateArrayIndex);
                     states = aiStates[StateArrayIndex].GetState;
                 }
             }
@@ -439,7 +438,7 @@ public class EnemyAI : MonoBehaviour
         enemy.GetFilledBar();
         enemy.GetLocalHealth.gameObject.SetActive(true);
         enemy.GetLocalHealthInfo();
-        
+
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
         character.GetRigidbody.useGravity = true;
 
@@ -458,7 +457,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<PlayerController>())
+        if (other.gameObject.GetComponent<PlayerController>() && IsHostile)
         {
             PlayerEntry = false;
             if(states != States.SkillAnimation)
@@ -466,9 +465,9 @@ public class EnemyAI : MonoBehaviour
                 PlayerTarget = null;
                 states = States.Patrol;
                 AutoAttackTime = 0;
-                enemySkills.DisableRadiusImage();
                 if(enemySkills.GetManager.Length > 0)
                 {
+                    enemySkills.DisableRadiusImage();
                     enemySkills.DisableRadius();
                 }
                 enemySkills.GetActiveSkill = false;
@@ -478,7 +477,7 @@ public class EnemyAI : MonoBehaviour
             enemy.GetLocalHealthInfo();
             StateArrayIndex = 0;
         }
-        if (!IsHostile)
+        if (other.gameObject.GetComponent<PlayerController>() && !IsHostile)
         {
             PlayerEntry = false;
             if(states != States.SkillAnimation)
@@ -487,8 +486,11 @@ public class EnemyAI : MonoBehaviour
                 states = States.Patrol;
                 AutoAttackTime = 0;
                 EnemyTriggerSphere.gameObject.SetActive(false);
-                enemySkills.DisableRadiusImage();
-                enemySkills.DisableRadius();
+                if (enemySkills.GetManager.Length > 0)
+                {
+                    enemySkills.DisableRadiusImage();
+                    enemySkills.DisableRadius();
+                }
                 enemySkills.GetActiveSkill = false;
                 enemySkills.GetSkillBar.gameObject.SetActive(false);
             }

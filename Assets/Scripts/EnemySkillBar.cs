@@ -150,8 +150,6 @@ public class EnemySkillBar : MonoBehaviour
 
             enemySkills.ChooseSkill(enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex);
 
-            //enemyAI.GetAutoAttack = 0;
-            //enemyAI.GetStates = States.Attack;
             enemyAI.GetStates = States.SkillAnimation;
 
             ObjectPooler.Instance.ReturnEnemyCastParticleToPool(CastParticle);

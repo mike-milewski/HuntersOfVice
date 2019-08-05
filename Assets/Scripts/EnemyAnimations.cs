@@ -7,6 +7,9 @@ public class EnemyAnimations : MonoBehaviour
     private Animation anim;
 
     [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
     private EnemyAI AI;
 
     [SerializeField]
@@ -64,7 +67,8 @@ public class EnemyAnimations : MonoBehaviour
 
     public void SkillDamage()
     {
-        enemyskills.SkillDamageText(enemyskills.GetManager[enemyskills.GetRandomValue].GetPotency, enemyskills.GetManager[enemyskills.GetRandomValue].GetSkillName);
+        enemyskills.SkillDamageText(enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
+                                    enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
     }
 
     public void SkillRadiusDamage()
@@ -112,6 +116,16 @@ public class EnemyAnimations : MonoBehaviour
         }
     }
 
+    public void PlayHealthFade()
+    {
+        animator.SetBool("FadeHealth", true);
+    }
+
+    public void ReverseFadeHealth()
+    {
+        animator.SetBool("FadeHealth", false);
+    }
+
     public void Fading()
     {
         changeEnemyMaterial.ChangeToAlphaMaterial();
@@ -122,5 +136,10 @@ public class EnemyAnimations : MonoBehaviour
     public void IncreaseAiArray()
     {
         AI.IncreaseArray();
+    }
+
+    public void PlayHitSE()
+    {
+        SoundManager.Instance.EnemyHit();
     }
 }
