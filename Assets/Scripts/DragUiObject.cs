@@ -98,6 +98,8 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             gameObject.GetComponent<Button>().enabled = false;
             gameObject.transform.position = new Vector2(SkillMenuParent.transform.position.x, SkillMenuParent.transform.position.y);
 
+            ResetRectTransform();
+
             if (!GameManager.Instance.GetSkillPanel.GetComponent<Image>().enabled)
             {
                 gameObject.GetComponent<Mask>().showMaskGraphic = false;
@@ -121,12 +123,12 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
             SkillsManager.Instance.ClearSkills();
             SkillsManager.Instance.AddSkillsToList();
+
+            SetRectTransform();
         }
         SkillsManager.Instance.AllSkillsNotBeingDragged();
 
         Destroy(PlaceHolder);
-
-        gameObject.transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void CheckForSameSkills(Skills other)
@@ -138,5 +140,17 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 other.GetButton.GetComponent<Image>().fillAmount = s.GetButton.GetComponent<Image>().fillAmount;
             }
         }
+    }
+
+    public void SetRectTransform()
+    {
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(38, 36.97f);
+        gameObject.transform.localScale = new Vector3(0.94f, 0.85f, 1);
+    }
+
+    public void ResetRectTransform()
+    {
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(38, 38);
+        gameObject.transform.localScale = new Vector3(1, 1, 1);
     }
 }

@@ -100,7 +100,7 @@ MonoBehaviour:
   DoomParticle: {fileID: 19800004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 2}
   status: 0
   Duration: 15
-  KeyInput: 1
+  KeyInput: 5
 --- !u!114 &114262389743331990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -113,15 +113,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 79ee89235d94c7845ba61cbe6dc8e0e5, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: b0f37486396d7b244bda30f1ef9df665, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -416,7 +416,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -464,7 +464,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1579302006077000}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -512,7 +512,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.5, y: 73.3}
+  m_AnchoredPosition: {x: -1.5, y: 61.7}
   m_SizeDelta: {x: 97.43, y: 1.1900008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224563390783870718

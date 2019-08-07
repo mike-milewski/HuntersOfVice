@@ -12,6 +12,9 @@ public class Skills : StatusEffects
     private PlayerElement playerElement;
 
     [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
     private SkillBar skillbar;
 
     [SerializeField]
@@ -27,7 +30,7 @@ public class Skills : StatusEffects
     private GameObject DamageORHealText;
 
     [SerializeField]
-    private TextMeshProUGUI SkillPanelText;
+    private TextMeshProUGUI SkillPanelText, CoolDownText;
 
     [SerializeField]
     private GameObject StatusEffectText;
@@ -62,6 +65,8 @@ public class Skills : StatusEffects
 
     [SerializeField][TextArea]
     private string SkillDescription;
+
+    private float CD;
 
     private Quaternion rot;
 
@@ -257,6 +262,11 @@ public class Skills : StatusEffects
         }
     }
 
+    private void Start()
+    {
+        CD = CoolDown;
+    }
+
     private void Update()
     {
         if (GetCharacter != null)
@@ -269,12 +279,21 @@ public class Skills : StatusEffects
             !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged)
         {
             button.interactable = true;
+
+            CD = CoolDown;
+
             return;
         }
         else
         {
             this.CoolDownImage.fillAmount -= Time.deltaTime / CoolDown;
             this.button.interactable = false;
+        }
+        if(CoolDownImage.fillAmount > 0)
+        {
+            CD -= Time.deltaTime;
+
+            CoolDownText.text = Mathf.Clamp(CD, 0, CoolDown).ToString("F1");
         }
 
         if(StormThrustActivated)
@@ -295,10 +314,10 @@ public class Skills : StatusEffects
 
     public void Heal()
     {
+        SkillsManager.Instance.GetActivatedSkill = true;
+
         if (skillbar.GetSkillBar.fillAmount < 1)
         {
-            SkillsManager.Instance.GetActivatedSkill = true;
-
             skillbar.gameObject.SetActive(true);
 
             skillbar.GetSkill = this.button.GetComponent<Skills>();
@@ -307,8 +326,6 @@ public class Skills : StatusEffects
         }
         if (skillbar.GetSkillBar.fillAmount >= 1)
         {
-            this.CoolDownImage.fillAmount = 1;
-
             SkillsManager.Instance.GetActivatedSkill = false;
 
             SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
@@ -347,8 +364,6 @@ public class Skills : StatusEffects
     private void SkillCast()
     {
         GetCharacter.GetComponent<PlayerAnimations>().SkillCastAnimation();
-
-        this.CoolDownImage.fillAmount = 1;
 
         Invoke("PlayerStatusEffectSkill", ApplySkill);
     }
@@ -993,6 +1008,18 @@ public class Skills : StatusEffects
                                           "Cooldown: " + CoolDown + "s";
                 }
             }
+        }
+    }
+
+    public void ShowCoolDownText()
+    {
+        if(CD > 0)
+        {
+            CoolDownText.enabled = true;
+        }
+        else
+        {
+            CoolDownText.enabled = false;
         }
     }
 

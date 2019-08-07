@@ -102,7 +102,6 @@ public class SkillBar : MonoBehaviour
             SkillBarImage.fillAmount = 0;
             CastTime = skills.GetCastTime;
             SkillsManager.Instance.GetActivatedSkill = false;
-            CastParticle.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
     }

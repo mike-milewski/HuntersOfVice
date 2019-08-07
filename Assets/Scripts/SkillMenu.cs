@@ -48,7 +48,10 @@ public class SkillMenu : MonoBehaviour
         skillmenu = this;
 
         if(skilltype == SkillType.Active)
-        DropZoneTransform = skill.GetComponent<DragUiObject>().GetDropZone.transform;
+        {
+            DropZoneTransform = skill.GetComponent<DragUiObject>().GetDropZone.transform;
+            skill.GetComponent<DragUiObject>().SetRectTransform();
+        }
     }
 
     private void Start()
@@ -88,6 +91,8 @@ public class SkillMenu : MonoBehaviour
 
                 skill.transform.SetParent(DropZoneTransform, false);
 
+                skill.GetComponent<DragUiObject>().SetRectTransform();
+
                 skill.GetComponent<Mask>().showMaskGraphic = true;
                 skill.GetComponent<Skills>().GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = true;
 
@@ -122,6 +127,8 @@ public class SkillMenu : MonoBehaviour
                     skill.GetComponent<Skills>().enabled = true;
 
                     skill.transform.SetParent(DropZoneTransform, false);
+
+                    skill.GetComponent<DragUiObject>().SetRectTransform();
 
                     skill.GetComponent<Mask>().showMaskGraphic = true;
                     skill.GetComponent<Skills>().GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = true;
