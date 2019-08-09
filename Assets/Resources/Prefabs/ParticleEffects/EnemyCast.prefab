@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4262495384927972}
   - component: {fileID: 198945453576945168}
   - component: {fileID: 199996630405116192}
+  - component: {fileID: 114677665737237992}
   m_Layer: 0
   m_Name: EnemyCast
   m_TagString: Untagged
@@ -41,6 +42,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &114677665737237992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1391052643135982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd2e8874f60266498a388d7229a1bac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleEffect: 5
+  ps: {fileID: 198945453576945168}
+  Duration: -1
 --- !u!198 &198945453576945168
 ParticleSystem:
   m_ObjectHideFlags: 1

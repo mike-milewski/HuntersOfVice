@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private Camera camera;
 
     [SerializeField]
@@ -36,6 +39,18 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private EventSystem eventsystem;
+
+    public Camera GetCamera
+    {
+        get
+        {
+            return camera;
+        }
+        set
+        {
+            camera = value;
+        }
+    }
 
     public EventSystem GetEventSystem
     {
@@ -121,6 +136,8 @@ public class GameManager : MonoBehaviour
         MaskSkillsPanel();
 
         camera.gameObject.SetActive(false);
+
+        settings.UseParticleEffects = true;
     }
 
     private void Start()

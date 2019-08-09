@@ -8,6 +8,9 @@ public class EnemySkillBar : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private Enemy enemy;
 
     [SerializeField]
@@ -22,6 +25,7 @@ public class EnemySkillBar : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI SkillName;
 
+    [SerializeField]
     private GameObject CastParticle;
 
     [SerializeField]
@@ -94,14 +98,17 @@ public class EnemySkillBar : MonoBehaviour
 
     private void OnEnable()
     {
-        CastParticle = ObjectPooler.Instance.GetEnemyCastParticle();
+        if(settings.UseParticleEffects)
+        {
+            CastParticle = ObjectPooler.Instance.GetEnemyCastParticle();
 
-        CastParticle.SetActive(true);
+            CastParticle.SetActive(true);
 
-        CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.6f, character.transform.position.z);
+            CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.6f, character.transform.position.z);
 
-        CastParticle.transform.SetParent(character.transform);
+            CastParticle.transform.SetParent(character.transform);
 
+        }
         CastTime = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
         character.GetComponentInChildren<DamageRadius>().GetShapes = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapes;
         Casting = true;
@@ -110,7 +117,10 @@ public class EnemySkillBar : MonoBehaviour
 
     private void OnDisable()
     {
-        ObjectPooler.Instance.ReturnEnemyCastParticleToPool(CastParticle);
+        if(settings.UseParticleEffects || CastParticle.activeInHierarchy)
+        {
+            ObjectPooler.Instance.ReturnEnemyCastParticleToPool(CastParticle);
+        }
 
         Casting = false;
         SkillBarFillImage.fillAmount = 0;
@@ -152,8 +162,6 @@ public class EnemySkillBar : MonoBehaviour
 
             enemyAI.GetStates = States.SkillAnimation;
 
-            ObjectPooler.Instance.ReturnEnemyCastParticleToPool(CastParticle);
-
             SkillBarFillImage.fillAmount = 0;
             CastTime = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
 
@@ -166,8 +174,6 @@ public class EnemySkillBar : MonoBehaviour
             enemyAI.GetAutoAttack = 0;
 
             SkillBarFillImage.fillAmount = 0;
-
-            ObjectPooler.Instance.ReturnEnemyCastParticleToPool(CastParticle);
 
             gameObject.SetActive(false);
         }

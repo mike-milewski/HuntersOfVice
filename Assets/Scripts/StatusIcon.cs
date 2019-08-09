@@ -9,6 +9,9 @@ public class StatusIcon : MonoBehaviour
     private Enemy enemyTarget = null;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private GameObject StatusPanel;
 
     [SerializeField]
@@ -442,27 +445,33 @@ public class StatusIcon : MonoBehaviour
         }
         else
         {
-            var character = SkillsManager.Instance.GetCharacter;
+            if(settings.UseParticleEffects)
+            {
+                var character = SkillsManager.Instance.GetCharacter;
 
-            var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
+                var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
 
-            StatusParticle.SetActive(true);
+                StatusParticle.SetActive(true);
 
-            StatusParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z);
+                StatusParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z);
 
-            StatusParticle.transform.SetParent(character.transform);
+                StatusParticle.transform.SetParent(character.transform);
+            }
         }
     }
 
     private void CreateParticleOnRemoveEnemy()
     {
-        var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
+        if(settings.UseParticleEffects)
+        {
+            var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
 
-        StatusParticle.SetActive(true);
+            StatusParticle.SetActive(true);
 
-        StatusParticle.transform.position = new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 1.0f, enemyTarget.transform.position.z);
+            StatusParticle.transform.position = new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 1.0f, enemyTarget.transform.position.z);
 
-        StatusParticle.transform.SetParent(enemyTarget.transform, true);
+            StatusParticle.transform.SetParent(enemyTarget.transform, true);
+        }
     }
 
     private void Update()

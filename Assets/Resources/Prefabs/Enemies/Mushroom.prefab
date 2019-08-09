@@ -934,6 +934,7 @@ MonoBehaviour:
     StatusEffectPotency: 3
     Potency: 23
   character: {fileID: 114979435669946942}
+  settings: {fileID: 0}
   enemy: {fileID: 114492699656399902}
   enemyAI: {fileID: 114244275959761428}
   skillBar: {fileID: 114588050136725898}
@@ -1469,6 +1470,7 @@ MonoBehaviour:
   - state: 4
     SkillIndex: 1
   character: {fileID: 114979435669946942}
+  settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114492699656399902}
   enemySkills: {fileID: 114006354462489536}
   Anim: {fileID: 114256765670847670}
@@ -1753,6 +1755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 357c265f4c1987b459d282c0fe940204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 0}
   character: {fileID: 0}
   StatusRemovalParticle: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e,
     type: 2}
@@ -1800,11 +1803,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 114979435669946942}
+  settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114492699656399902}
   enemyAI: {fileID: 114244275959761428}
   enemySkills: {fileID: 114006354462489536}
   SkillBarFillImage: {fileID: 114754455364354644}
   SkillName: {fileID: 114093613073167338}
+  CastParticle: {fileID: 1391052643135982, guid: e09d4b33486bee040866beb6684238c1,
+    type: 2}
   Casting: 0
   CastParticleSize: 2
 --- !u!114 &114595948792050558

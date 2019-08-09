@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -9,8 +8,6 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField]
     private AudioClip[] audioclips;
-
-    private Scene scene;
 
     [SerializeField]
     private AudioSource[] audiosource;
@@ -39,7 +36,7 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
-        #endregion
+        #endregion 
     }
 
     public void FallSE()
@@ -75,5 +72,10 @@ public class SoundManager : MonoBehaviour
     public void EnemyHit()
     {
         audiosource[2].PlayOneShot(audioclips[6]);
+    }
+
+    public void ButtonClick()
+    {
+        audiosource[0].PlayOneShot(audioclips[7]);
     }
 }

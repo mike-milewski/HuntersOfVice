@@ -12,6 +12,9 @@ public class Skills : StatusEffects
     private PlayerElement playerElement;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private Animator animator;
 
     [SerializeField]
@@ -282,6 +285,8 @@ public class Skills : StatusEffects
 
             CD = CoolDown;
 
+            CoolDownText.enabled = false;
+
             return;
         }
         else
@@ -296,7 +301,17 @@ public class Skills : StatusEffects
             CoolDownText.text = Mathf.Clamp(CD, 0, CoolDown).ToString("F1");
         }
 
-        if(StormThrustActivated)
+        if (CoolDownImage.fillAmount > 0)
+        {
+            animator.SetBool("SkillReady", false);
+        }
+        else
+        {
+            animator.SetBool("SkillReady", true);
+        }
+
+
+        if (StormThrustActivated)
         {
             StormThrustHit();
         }
@@ -330,13 +345,16 @@ public class Skills : StatusEffects
 
             SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
-            SkillParticle = ObjectPooler.Instance.GetHealParticle();
+            if(settings.UseParticleEffects)
+            {
+                SkillParticle = ObjectPooler.Instance.GetHealParticle();
 
-            SkillParticle.SetActive(true);
-                
-            SkillParticle.transform.position =  new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z);
+                SkillParticle.SetActive(true);
 
-            SkillParticle.transform.SetParent(GetCharacter.transform, true);
+                SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z);
+
+                SkillParticle.transform.SetParent(GetCharacter.transform, true);
+            }
 
             GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
@@ -348,13 +366,16 @@ public class Skills : StatusEffects
 
     public void Tenacity()
     {
-        SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
+        if(settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
 
-        SkillParticle.SetActive(true);
+            SkillParticle.SetActive(true);
 
-        SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
+            SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
 
-        SkillParticle.transform.SetParent(GetCharacter.transform);
+            SkillParticle.transform.SetParent(GetCharacter.transform);
+        }
 
         SkillsManager.Instance.GetActivatedSkill = true;
 
@@ -557,14 +578,17 @@ public class Skills : StatusEffects
         {
             if (hitColliders[i].GetComponent<Enemy>())
             {
-                SkillParticle = ObjectPooler.Instance.GetHitParticle();
+                if(settings.UseParticleEffects)
+                {
+                    SkillParticle = ObjectPooler.Instance.GetHitParticle();
 
-                SkillParticle.SetActive(true);
+                    SkillParticle.SetActive(true);
 
-                SkillParticle.transform.position = new Vector3(hitColliders[i].transform.position.x, hitColliders[i].transform.position.y + 0.5f, 
-                                                               hitColliders[i].transform.position.z);
+                    SkillParticle.transform.position = new Vector3(hitColliders[i].transform.position.x, hitColliders[i].transform.position.y + 0.5f,
+                                                                   hitColliders[i].transform.position.z);
 
-                SkillParticle.transform.SetParent(hitColliders[i].transform);
+                    SkillParticle.transform.SetParent(hitColliders[i].transform);
+                }
 
                 DamageSkillText(hitColliders[i].GetComponent<Enemy>());
             }
@@ -620,11 +644,11 @@ public class Skills : StatusEffects
     {
         var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
 
-        var Critical = GetCharacter.GetCriticalChance;
-
         HealTxt.SetActive(true);
 
         HealTxt.transform.SetParent(TextHolder.transform, false);
+
+        var Critical = GetCharacter.GetCriticalChance;
 
         #region CriticalHealChance
         if (GetCharacter.CurrentHealth > 0)
@@ -1013,7 +1037,7 @@ public class Skills : StatusEffects
 
     public void ShowCoolDownText()
     {
-        if(CD > 0)
+        if(CoolDownImage.fillAmount > 0)
         {
             CoolDownText.enabled = true;
         }

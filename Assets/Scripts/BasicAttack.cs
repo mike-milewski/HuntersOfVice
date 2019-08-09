@@ -10,6 +10,9 @@ public class BasicAttack : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private Camera cam;
 
     [SerializeField]
@@ -275,15 +278,18 @@ public class BasicAttack : MonoBehaviour
 
     public void HitParticleEffect()
     {
-        var Hitparticle = ObjectPooler.Instance.GetHitParticle();
-
-        Hitparticle.SetActive(true);
-
-        if(Target != null)
+        if(settings.UseParticleEffects)
         {
-            Hitparticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z);
+            var Hitparticle = ObjectPooler.Instance.GetHitParticle();
 
-            Hitparticle.transform.SetParent(Target.transform, true);
+            Hitparticle.SetActive(true);
+
+            if (Target != null)
+            {
+                Hitparticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.5f, Target.transform.position.z);
+
+                Hitparticle.transform.SetParent(Target.transform, true);
+            }
         }
     }
 }

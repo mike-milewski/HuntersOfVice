@@ -8,6 +8,9 @@ public class SkillBar : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private PlayerController playerController;
 
     [SerializeField]
@@ -54,17 +57,21 @@ public class SkillBar : MonoBehaviour
 
     private void OnEnable()
     {
-        CastParticle = ObjectPooler.Instance.GetPlayerCastParticle();
+        if(settings.UseParticleEffects)
+        {
+            CastParticle = ObjectPooler.Instance.GetPlayerCastParticle();
 
-        CastParticle.SetActive(true);
+            CastParticle.SetActive(true);
 
-        CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.15f, character.transform.position.z);
+            CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.15f, character.transform.position.z);
 
-        CastParticle.transform.SetParent(character.transform);
+            CastParticle.transform.SetParent(character.transform);
+        }
     }
 
     private void OnDisable()
     {
+        if(settings.UseParticleEffects || CastParticle.activeInHierarchy)
         ObjectPooler.Instance.ReturnPlayerCastParticleToPool(CastParticle);
     }
 

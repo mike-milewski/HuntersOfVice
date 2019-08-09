@@ -351,6 +351,9 @@ public class EnemySkills : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private Enemy enemy;
 
     [SerializeField]
@@ -560,14 +563,17 @@ public class EnemySkills : MonoBehaviour
 
             DisableRadiusImage();
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
+            if(settings.UseParticleEffects)
+            {
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
-                                                                transform.position.x, transform.position.y + 0.2f, transform.position.z);
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                    transform.position.x, transform.position.y + 0.2f, transform.position.z);
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
+            }
 
             Invoke("InvokePoisonSpore", ApplySkill);
         }
@@ -623,29 +629,18 @@ public class EnemySkills : MonoBehaviour
     */
     private void InvokeStunningStinger()
     {
-        /*
-        switch (skills[RandomValue].GetShapes)
+        if(settings.UseParticleEffects)
         {
-            case (Shapes.Circle):
-                if(damageRadius.GetIsInRadius)
-                damageRadius.TakeDamageSphereRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
-                break;
-            case (Shapes.Rectangle):
-                if(damageRadius.GetIsInRadius)
-                damageRadius.TakeDamageRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(GetManager[RandomValue].GetShapeSize.x, 
-                                                       GetManager[RandomValue].GetShapeSize.y, 1.7f), character.transform.rotation);
-                break;
+            var StingerParticle = ObjectPooler.Instance.GetHitParticle();
+
+            StingerParticle.SetActive(true);
+
+            Vector3 Trans = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f, character.transform.position.z);
+
+            StingerParticle.transform.position = Trans + character.transform.forward * 1f;
+
+            StingerParticle.transform.SetParent(character.transform);
         }
-        */
-        var StingerParticle = ObjectPooler.Instance.GetHitParticle();
-
-        StingerParticle.SetActive(true);
-
-        Vector3 Trans = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f, character.transform.position.z);      
-
-        StingerParticle.transform.position = Trans + character.transform.forward * 1f;
-
-        StingerParticle.transform.SetParent(character.transform);
 
         DisableRadius();
 
@@ -901,17 +896,20 @@ public class EnemySkills : MonoBehaviour
 
     private void CreateHitParticleEffect()
     {
-        var Target = enemyAI.GetPlayerTarget;
+        if(settings.UseParticleEffects)
+        {
+            var Target = enemyAI.GetPlayerTarget;
 
-        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
 
-        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
 
-        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
 
-        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
-                                                                            Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                                Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
 
-        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
+        }
     }
 }

@@ -10,13 +10,16 @@ public class Items : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private Button button;
 
     [SerializeField]
     private Transform HealTextTransform;
 
     [SerializeField]
-    private TextMeshProUGUI ItemText;
+    private TextMeshProUGUI ItemText, CoolDownText;
 
     [SerializeField]
     private ItemType itemType;
@@ -35,6 +38,8 @@ public class Items : MonoBehaviour
 
     [SerializeField]
     private float ApplyItemUse, Cooldown;
+
+    private float cooldown;
 
     public ItemType GetItemType
     {
@@ -84,6 +89,11 @@ public class Items : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        cooldown = Cooldown;
+    }
+
     private void Update()
     {
         if(character != null)
@@ -96,12 +106,22 @@ public class Items : MonoBehaviour
         {
             button.interactable = true;
 
+            CoolDownText.enabled = false;
+
+            cooldown = Cooldown;
+
             return;
         }
         else
         {
             CooldownImage.fillAmount -= Time.deltaTime / Cooldown;
             button.interactable = false;
+        }
+
+        if(CooldownImage.fillAmount > 0)
+        {
+            cooldown -= Time.deltaTime;
+            CoolDownText.text = Mathf.Clamp(cooldown, 0, Cooldown).ToString("F1");
         }
     }
 
@@ -120,7 +140,10 @@ public class Items : MonoBehaviour
 
     private void ReadyHpHealing()
     {
-        HpParticle();
+        if(settings.UseParticleEffects)
+        {
+            HpParticle();
+        }
 
         SoundManager.Instance.ItemBottle();
 
@@ -130,7 +153,10 @@ public class Items : MonoBehaviour
 
     private void ReadyMpHealing()
     {
-        MpParticle();
+        if(settings.UseParticleEffects)
+        {
+            MpParticle();
+        }
 
         SoundManager.Instance.ItemBottle();
 
@@ -198,7 +224,7 @@ public class Items : MonoBehaviour
         }
         else
         {
-            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + MpHeal(HealAmount) + "</size>" + "<size=20>" + " MP";
+            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + MpHeal(HealAmount) + "</size>" + "<size=15>" + " MP";
         }
 
         return HealingText.GetComponentInChildren<TextMeshProUGUI>();
@@ -238,5 +264,17 @@ public class Items : MonoBehaviour
         MpParticles.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 2f, character.transform.position.z);
 
         MpParticles.transform.SetParent(character.transform);
+    }
+
+    public void ShowCoolDownText()
+    {
+        if(CooldownImage.fillAmount > 0)
+        {
+            CoolDownText.enabled = true;
+        }
+        else
+        {
+            CoolDownText.enabled = false;
+        }
     }
 }

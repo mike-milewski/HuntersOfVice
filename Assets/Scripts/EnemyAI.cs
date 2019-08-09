@@ -51,6 +51,9 @@ public class EnemyAI : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private Enemy enemy;
 
     [SerializeField]
@@ -73,8 +76,6 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem HitParticle;
-
-    private bool ParticleExists, DamageTextExists;
 
     [SerializeField] 
     private float TimeToMoveAgain; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
@@ -526,14 +527,7 @@ public class EnemyAI : MonoBehaviour
             return null;
         }
 
-        if(!ParticleExists)
-        {
-            CreateParticle();
-        }
-        else
-        {
-            HitParticle.gameObject.SetActive(true);
-        }
+        CreateParticle();
 
         float Critical = character.GetCriticalChance;
 
@@ -567,12 +561,15 @@ public class EnemyAI : MonoBehaviour
 
     private void CreateParticle()
     {
-        var Hitparticle = ObjectPooler.Instance.GetHitParticle();
+        if(settings.UseParticleEffects)
+        {
+            var Hitparticle = ObjectPooler.Instance.GetHitParticle();
 
-        Hitparticle.SetActive(true);
+            Hitparticle.SetActive(true);
 
-        Hitparticle.transform.position = new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.6f, PlayerTarget.transform.position.z);
+            Hitparticle.transform.position = new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.6f, PlayerTarget.transform.position.z);
 
-        Hitparticle.transform.SetParent(PlayerTarget.transform, true);
+            Hitparticle.transform.SetParent(PlayerTarget.transform, true);
+        }
     }
 }

@@ -10,6 +10,9 @@ public class EnemyStatusIcon : MonoBehaviour
     private PlayerController player = null;
 
     [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
     private Character character = null;
 
     [SerializeField]
@@ -341,24 +344,30 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private void CreateParticleOnRemovePlayer()
     {
-        var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
+        if(settings.UseParticleEffects)
+        {
+            var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
 
-        StatusParticle.SetActive(true);
+            StatusParticle.SetActive(true);
 
-        StatusParticle.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1.0f, player.transform.position.z);
+            StatusParticle.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1.0f, player.transform.position.z);
 
-        StatusParticle.transform.SetParent(player.transform, true);
+            StatusParticle.transform.SetParent(player.transform, true);
+        }
     }
 
     private void CreateParticleOnRemoveEnemy()
     {
-        var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
+        if(settings.UseParticleEffects)
+        {
+            var StatusParticle = ObjectPooler.Instance.GetRemoveStatusParticle();
 
-        StatusParticle.SetActive(true);
+            StatusParticle.SetActive(true);
 
-        StatusParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z);
+            StatusParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z);
 
-        StatusParticle.transform.SetParent(character.transform, true);
+            StatusParticle.transform.SetParent(character.transform, true);
+        }
     }
 
     private void LateUpdate()

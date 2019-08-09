@@ -25,7 +25,7 @@ public class Health : MonoBehaviour
 
     private Coroutine routine = null;
 
-    //This variable is used to check and uncheck a hit while under the effects of the sleep status.
+    //This variable is used to check and uncheck a hit while under the effect of the sleep status.
     [SerializeField]
     private bool SleepHit;
 

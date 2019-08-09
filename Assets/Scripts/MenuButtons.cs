@@ -48,6 +48,12 @@ public class MenuButtons : MonoBehaviour
         {
             source.volume = slider.value;
         }
+        GameManager.Instance.GetCamera.transform.parent.GetComponent<AudioSource>().volume = slider.value;
+    }
+
+    public void PlayButtonClick()
+    {
+        SoundManager.Instance.ButtonClick();
     }
 
     public void ToggleSkillsPanel()
@@ -65,5 +71,17 @@ public class MenuButtons : MonoBehaviour
     public void TurnOffSkillsPanel()
     {
         GameManager.Instance.MaskSkillsPanel();
+    }
+
+    public void TurnParticleEffectsOn(Settings setting)
+    {
+        if(!setting.UseParticleEffects)
+        {
+            setting.UseParticleEffects = true;
+        }
+        else
+        {
+            setting.UseParticleEffects = false;
+        }
     }
 }

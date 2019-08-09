@@ -20,8 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4820014529482432}
   - component: {fileID: 114722964611269328}
-  - component: {fileID: 82564589988956774}
-  - component: {fileID: 82543471441024086}
+  - component: {fileID: 82406116136772232}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -42,7 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &82543471441024086
+--- !u!82 &82406116136772232
 AudioSource:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,103 +50,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: cd8781b5884eaab49a11963bb6fadf5d, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!82 &82564589988956774
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1046307902136542}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5a4e547e8b6f01a47beab9831300ac70, type: 3}
-  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -243,7 +147,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba9abaefc20f3fa4f97be2d2a65dce55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sources:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  audioclips:
+  - {fileID: 8300000, guid: cd8781b5884eaab49a11963bb6fadf5d, type: 3}
+  - {fileID: 8300000, guid: 665385a44352eaf4297e8e488fb0d282, type: 3}
+  - {fileID: 8300000, guid: f0747f8dc2546874e98951bdfbe27453, type: 3}
+  - {fileID: 8300000, guid: e200a623f1a45f849a55dfe8d1fcaecc, type: 3}
+  - {fileID: 8300000, guid: 9b971957393b6684ea74c58b57a71025, type: 3}
+  - {fileID: 8300000, guid: a28aa97a18a9fda4582e06c469c04012, type: 3}
+  - {fileID: 8300000, guid: e447086e04d5b31439c97c3eac2cc813, type: 3}
+  - {fileID: 8300000, guid: cfa9f26828e536e48a0c359b0f3ee8c1, type: 3}
+  - {fileID: 8300000, guid: 92dbde5f7bdf68b4b89b62eb08b13de5, type: 3}
+  - {fileID: 8300000, guid: 5a4e547e8b6f01a47beab9831300ac70, type: 3}
+  audiosource:
+  - {fileID: 82406116136772232}
+  - {fileID: 82406116136772232}
+  - {fileID: 82406116136772232}
