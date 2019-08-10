@@ -188,12 +188,16 @@ public class SkillMenu : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         ShowNewSkill();
+        yield return new WaitForSeconds(0.5f);
+        levelUp.GetComponentInChildren<LevelUp>().PlaySkillLearnedSoundEffect();
     }
 
     private void ShowNewSkill()
     {
         if(character.Level >= LevelRequirement)
-        levelUp.GetComponentInChildren<LevelUp>().PlaySkillLearned();
+        {
+            levelUp.GetComponentInChildren<LevelUp>().PlaySkillLearned();
+        }
     }
 
     private void ShowSkillInfo(GameObject Panel)

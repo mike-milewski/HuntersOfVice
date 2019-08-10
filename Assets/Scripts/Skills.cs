@@ -355,6 +355,7 @@ public class Skills : StatusEffects
 
                 SkillParticle.transform.SetParent(GetCharacter.transform, true);
             }
+            SoundManager.Instance.Heal();
 
             GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 

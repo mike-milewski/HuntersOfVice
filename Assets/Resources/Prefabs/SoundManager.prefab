@@ -158,6 +158,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cfa9f26828e536e48a0c359b0f3ee8c1, type: 3}
   - {fileID: 8300000, guid: 92dbde5f7bdf68b4b89b62eb08b13de5, type: 3}
   - {fileID: 8300000, guid: 5a4e547e8b6f01a47beab9831300ac70, type: 3}
+  - {fileID: 8300000, guid: 5abbec307ba0ce045bb8e24447813eba, type: 3}
+  - {fileID: 8300000, guid: 627ab743be1e5fc47b0fe23fe689b31f, type: 3}
   audiosource:
   - {fileID: 82406116136772232}
   - {fileID: 82406116136772232}

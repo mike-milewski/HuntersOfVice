@@ -61,4 +61,9 @@ public class LevelUp : MonoBehaviour
             ObjectPooler.Instance.ReturnLevelUpTextToPool(this.gameObject.transform.parent.gameObject);
         }
     }
+
+    public void PlaySkillLearnedSoundEffect()
+    {
+        GetComponent<AudioSource>().Play();
+    }
 }

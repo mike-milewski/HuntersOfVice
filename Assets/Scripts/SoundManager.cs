@@ -78,4 +78,14 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[0].PlayOneShot(audioclips[7]);
     }
+
+    public void Heal()
+    {
+        audiosource[0].PlayOneShot(audioclips[10]);
+    }
+
+    public void SkillLearned()
+    {
+        audiosource[0].PlayOneShot(audioclips[11]);
+    }
 }
