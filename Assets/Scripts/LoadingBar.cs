@@ -15,11 +15,16 @@ public class LoadingBar : MonoBehaviour
 
     public IEnumerator Async(string Level)
     {
+        yield return new WaitForSeconds(1.0f);
         AsyncOperation async = SceneManager.LoadSceneAsync(Level);
 
-        while(!async.isDone)
+        while (!async.isDone)
         {
             LoadingImage.fillAmount = async.progress;
+            if (LoadingImage.fillAmount >= 0.9f)
+            {
+                LoadingImage.fillAmount = 1;
+            }
 
             yield return null;
         }

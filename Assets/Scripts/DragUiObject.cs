@@ -49,6 +49,15 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         SkillsManager.Instance.AllSkillsBeingDragged();
         gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        foreach (Mask m in gameObject.GetComponentsInChildren<Mask>())
+        {
+            m.showMaskGraphic = true;
+        }
+        foreach (Image i in gameObject.GetComponentsInChildren<Image>())
+        {
+            i.raycastTarget = true;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -97,6 +106,12 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             gameObject.transform.SetParent(SkillMenuParent, true);
             gameObject.GetComponent<Button>().enabled = false;
             gameObject.transform.position = new Vector2(SkillMenuParent.transform.position.x, SkillMenuParent.transform.position.y);
+            gameObject.GetComponent<Mask>().showMaskGraphic = false;
+            gameObject.GetComponent<Image>().raycastTarget = false;
+            foreach(Mask m in gameObject.GetComponentsInChildren<Mask>())
+            {
+                m.showMaskGraphic = false;
+            }
 
             ResetRectTransform();
 

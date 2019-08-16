@@ -72,6 +72,8 @@ public class SkillMenu : MonoBehaviour
                 skill.GetComponent<Skills>().GetComponent<Button>().interactable = false;
 
                 skill.GetComponent<DragUiObject>().enabled = false;
+
+                skill.gameObject.SetActive(false);
             }
             else
             {
@@ -134,6 +136,8 @@ public class SkillMenu : MonoBehaviour
                     skill.GetComponent<Skills>().GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = true;
 
                     skill.GetComponent<Image>().raycastTarget = true;
+
+                    skill.gameObject.SetActive(true);
 
                     SkillsManager.Instance.ClearSkills();
                     SkillsManager.Instance.AddSkillsToList();

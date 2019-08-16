@@ -17,6 +17,14 @@ public class MenuButtons : MonoBehaviour
         Loadingbar.SetActive(true);
     }
 
+    public void DisableButtons(GameObject ButtonPanel)
+    {
+        foreach(Button button in ButtonPanel.GetComponentsInChildren<Button>())
+        {
+            button.interactable = false;
+        }
+    }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -83,5 +91,16 @@ public class MenuButtons : MonoBehaviour
         {
             setting.UseParticleEffects = false;
         }
+    }
+
+    public void PlayPanelAnimation(GameObject panel)
+    {
+        panel.SetActive(true);
+        panel.GetComponent<Animator>().SetBool("OpenMenu", true);
+    }
+
+    public void ClosePanelAnimation(GameObject panel)
+    {
+        panel.GetComponent<Animator>().SetBool("OpenMenu", false);
     }
 }

@@ -39,4 +39,16 @@ public class CharacterMenu : MonoBehaviour
         Defense.text = "Defense: " + character.CharacterDefense;
         Intelligence.text = "Intelligence: " + character.CharacterIntelligence;
     }
+
+    public void TogglePanel()
+    {
+        if(!gameObject.activeInHierarchy)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }
