@@ -2,6 +2,8 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum ObjectType { Skill, Weapon, Armor }
+
 public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField]
@@ -9,6 +11,9 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     [SerializeField]
     private Transform ParentObj, SkillMenuParent;
+
+    [SerializeField]
+    private ObjectType objectType;
 
     private GameObject PlaceHolder = null;
 
@@ -36,18 +41,33 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
     }
 
+    public ObjectType GetObjectType
+    {
+        get
+        {
+            return objectType;
+        }
+        set
+        {
+            objectType = value;
+        }
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        PlaceHolder = new GameObject();
-        PlaceHolder.transform.SetParent(zone.transform, true);
+        if(objectType == ObjectType.Skill)
+        {
+            PlaceHolder = new GameObject();
+            PlaceHolder.transform.SetParent(zone.transform, true);
 
-        RectTransform RectTrans = PlaceHolder.AddComponent<RectTransform>();
+            RectTransform RectTrans = PlaceHolder.AddComponent<RectTransform>();
 
-        RectTrans.sizeDelta = new Vector2(GetComponent<RectTransform>().sizeDelta.x, GetComponent<RectTransform>().sizeDelta.y);
+            RectTrans.sizeDelta = new Vector2(GetComponent<RectTransform>().sizeDelta.x, GetComponent<RectTransform>().sizeDelta.y);
 
-        PlaceHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
+            PlaceHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
 
-        SkillsManager.Instance.AllSkillsBeingDragged();
+            SkillsManager.Instance.AllSkillsBeingDragged();
+        }
         gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         foreach (Mask m in gameObject.GetComponentsInChildren<Mask>())
@@ -65,22 +85,25 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         gameObject.transform.SetParent(ParentObj, true);
         transform.position = eventData.position;
 
-        int NewSiblingIndex = zone.transform.childCount;
-
-        for (int i = 0; i < zone.transform.childCount; i++)
+        if(objectType == ObjectType.Skill)
         {
-            if (transform.position.x < zone.transform.GetChild(i).position.x)
-            {
-                NewSiblingIndex = i;
+            int NewSiblingIndex = zone.transform.childCount;
 
-                if (PlaceHolder.transform.GetSiblingIndex() < NewSiblingIndex)
+            for (int i = 0; i < zone.transform.childCount; i++)
+            {
+                if (transform.position.x < zone.transform.GetChild(i).position.x)
                 {
-                    NewSiblingIndex--;
+                    NewSiblingIndex = i;
+
+                    if (PlaceHolder.transform.GetSiblingIndex() < NewSiblingIndex)
+                    {
+                        NewSiblingIndex--;
+                    }
+                    break;
                 }
-                break;
             }
+            PlaceHolder.transform.SetSiblingIndex(NewSiblingIndex);
         }
-        PlaceHolder.transform.SetSiblingIndex(NewSiblingIndex);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -88,30 +111,33 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
         if(gameObject.transform.parent != zone.transform)
         {
-            if(gameObject.GetComponent<Skills>().GetStatusIcon != null)
+            if(objectType == ObjectType.Skill)
             {
-                if (gameObject.GetComponent<Skills>().GetStatusIcon.activeInHierarchy)
+                if (gameObject.GetComponent<Skills>().GetStatusIcon != null)
                 {
-                    if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>())
+                    if (gameObject.GetComponent<Skills>().GetStatusIcon.activeInHierarchy)
                     {
-                        gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                        if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>())
+                        {
+                            gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
 
+                        }
+                        else if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>())
+                        {
+                            gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>().RemoveEffect();
+                        }
                     }
-                    else if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>())
-                    {
-                        gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>().RemoveEffect();
-                    }
+                }
+                gameObject.GetComponent<Button>().enabled = false;
+                gameObject.GetComponent<Mask>().showMaskGraphic = false;
+                gameObject.GetComponent<Image>().raycastTarget = false;
+                foreach (Mask m in gameObject.GetComponentsInChildren<Mask>())
+                {
+                    m.showMaskGraphic = false;
                 }
             }
             gameObject.transform.SetParent(SkillMenuParent, true);
-            gameObject.GetComponent<Button>().enabled = false;
             gameObject.transform.position = new Vector2(SkillMenuParent.transform.position.x, SkillMenuParent.transform.position.y);
-            gameObject.GetComponent<Mask>().showMaskGraphic = false;
-            gameObject.GetComponent<Image>().raycastTarget = false;
-            foreach(Mask m in gameObject.GetComponentsInChildren<Mask>())
-            {
-                m.showMaskGraphic = false;
-            }
 
             ResetRectTransform();
 
@@ -122,28 +148,36 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 gameObject.GetComponent<Image>().raycastTarget = false;
             }
 
-            SkillsManager.Instance.ClearSkills();
-            SkillsManager.Instance.AddSkillsToList();
-            SkillsManager.Instance.AllSkillsNotBeingDragged();
+            if(objectType == ObjectType.Skill)
+            {
+                SkillsManager.Instance.ClearSkills();
+                SkillsManager.Instance.AddSkillsToList();
+                SkillsManager.Instance.AllSkillsNotBeingDragged();
+            }
         }
         else
         {
-            if(!gameObject.GetComponent<Button>().enabled)
+            if(objectType == ObjectType.Skill)
             {
-                gameObject.GetComponent<Button>().enabled = true;
+                if (!gameObject.GetComponent<Button>().enabled)
+                {
+                    gameObject.GetComponent<Button>().enabled = true;
+                }
+                transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
+                CheckForSameSkills(gameObject.GetComponent<Skills>());
+
+                SkillsManager.Instance.ClearSkills();
+                SkillsManager.Instance.AddSkillsToList();
+
             }
-
-            transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
-            CheckForSameSkills(gameObject.GetComponent<Skills>());
-
-            SkillsManager.Instance.ClearSkills();
-            SkillsManager.Instance.AddSkillsToList();
-
             SetRectTransform();
         }
-        SkillsManager.Instance.AllSkillsNotBeingDragged();
+        if(objectType == ObjectType.Skill)
+        {
+            SkillsManager.Instance.AllSkillsNotBeingDragged();
 
-        Destroy(PlaceHolder);
+            Destroy(PlaceHolder);
+        }
     }
 
     public void CheckForSameSkills(Skills other)
