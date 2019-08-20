@@ -48,6 +48,11 @@ public class MenuButtons : MonoBehaviour
         }
     }
 
+    public void EnableMenuPanel(GameObject Panel)
+    {
+        Panel.SetActive(true);
+    }
+
     public void Volume(Slider slider)
     {
         var audio = SoundManager.Instance.GetAudioSource;

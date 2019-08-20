@@ -10,7 +10,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private UiDropZone zone;
 
     [SerializeField]
-    private Transform ParentObj, SkillMenuParent;
+    private Transform ParentObj, MenuParent;
 
     [SerializeField]
     private ObjectType objectType;
@@ -26,6 +26,18 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         set
         {
             ParentObj = value;
+        }
+    }
+
+    public Transform GetMenuParent
+    {
+        get
+        {
+            return MenuParent;
+        }
+        set
+        {
+            MenuParent = value;
         }
     }
 
@@ -68,6 +80,17 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
             SkillsManager.Instance.AllSkillsBeingDragged();
         }
+        if(objectType == ObjectType.Weapon || objectType == ObjectType.Armor)
+        {
+            if (gameObject.transform.GetComponentInParent<EquippedCheck>())
+            {
+                gameObject.GetComponent<Equipment>().UnEquip();
+            }
+            if(zone.GetComponentInChildren<DragUiObject>())
+            {
+                zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = false;
+            }
+        }
         gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         foreach (Mask m in gameObject.GetComponentsInChildren<Mask>())
@@ -109,7 +132,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public void OnEndDrag(PointerEventData eventData)
     {
         gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        if(gameObject.transform.parent != zone.transform)
+        if (gameObject.transform.parent != zone.transform)
         {
             if(objectType == ObjectType.Skill)
             {
@@ -136,8 +159,8 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                     m.showMaskGraphic = false;
                 }
             }
-            gameObject.transform.SetParent(SkillMenuParent, true);
-            gameObject.transform.position = new Vector2(SkillMenuParent.transform.position.x, SkillMenuParent.transform.position.y);
+            gameObject.transform.SetParent(MenuParent, true);
+            gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
 
             ResetRectTransform();
 
@@ -154,6 +177,17 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 SkillsManager.Instance.AddSkillsToList();
                 SkillsManager.Instance.AllSkillsNotBeingDragged();
             }
+            if(objectType == ObjectType.Weapon || objectType == ObjectType.Armor)
+            {
+                if(!zone.transform.GetComponentInChildren<Equipment>())
+                {
+                    GetComponent<Equipment>().UnEquip();
+                }
+                if (zone.GetComponentInChildren<DragUiObject>())
+                {
+                    zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;
+                }
+            }
         }
         else
         {
@@ -168,7 +202,6 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
                 SkillsManager.Instance.ClearSkills();
                 SkillsManager.Instance.AddSkillsToList();
-
             }
             SetRectTransform();
         }
