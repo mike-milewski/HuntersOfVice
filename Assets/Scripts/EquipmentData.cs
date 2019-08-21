@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "Equipment", menuName = "Character Equipment")]
 public class EquipmentData : ScriptableObject
 {
-    public string Name;
+    public string EquipmentName;
 
     public int StatIncrease;
 }

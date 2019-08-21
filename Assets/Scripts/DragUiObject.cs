@@ -13,6 +13,9 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private Transform ParentObj, MenuParent;
 
     [SerializeField]
+    private float RectSizeX, RectSizeY;
+
+    [SerializeField]
     private ObjectType objectType;
 
     private GameObject PlaceHolder = null;
@@ -226,13 +229,13 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void SetRectTransform()
     {
-        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(38, 36.97f);
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(RectSizeX, RectSizeY);
         gameObject.transform.localScale = new Vector3(0.94f, 0.85f, 1);
     }
 
     public void ResetRectTransform()
     {
-        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(38, 38);
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(RectSizeX, RectSizeY);
         gameObject.transform.localScale = new Vector3(1, 1, 1);
     }
 }

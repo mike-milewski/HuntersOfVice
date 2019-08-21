@@ -106,12 +106,12 @@ public class Equipment : MonoBehaviour
 
     private void CurrentWeaponEquippedText()
     {
-        WeaponText.text = "<u>" + equipmentData.name + "</u>" + "\n\n" + "<size=8>" +  "Strength: " + "+" + equipmentData.StatIncrease;
+        WeaponText.text = "<u>" + equipmentData.EquipmentName + "</u>" + "\n\n" + "<size=9>" +  "Strength: " + "+" + equipmentData.StatIncrease;
     }
 
     private void CurrentArmorEquippedText()
     {
-        ArmorText.text = "<u>" + equipmentData.name + "</u>" + "\n\n" + "<size=8>" + "Defense: " +  "+" + equipmentData.StatIncrease;
+        ArmorText.text = "<u>" + equipmentData.EquipmentName + "</u>" + "\n\n" + "<size=9>" + "Defense: " +  "+" + equipmentData.StatIncrease;
     }
 
     public void PanelText(GameObject panel)
@@ -121,10 +121,12 @@ public class Equipment : MonoBehaviour
         switch(equipmentType)
         {
             case (EquipmentType.Weapon):
-                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.name + "</u>" + "\n\n" + "Strength: " + "+" + equipmentData.StatIncrease;
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" + "Strength: " + "+" + 
+                                          equipmentData.StatIncrease;
                 break;
             case (EquipmentType.Armor):
-                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.name + "</u>" + "\n\n" + "Defense: " + "+" + equipmentData.StatIncrease;
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" + "Defense: " + "+" + 
+                                          equipmentData.StatIncrease;
                 break;
         }
     }

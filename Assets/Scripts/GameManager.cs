@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI InvalidText;
 
     [SerializeField]
-    private Animator animator, SkillPanelAnimator, CharacterPanelAnimator, SettingsPanelAnimator;
+    private Animator animator, SkillPanelAnimator, CharacterPanelAnimator, SettingsPanelAnimator, EquipmentPanelAnimator;
 
     [SerializeField]
     private GameObject Player;
@@ -33,9 +33,9 @@ public class GameManager : MonoBehaviour
     private Transform SpawnPoint;
 
     [SerializeField]
-    private GameObject CharacterPanel, SkillsPanel, InventoryPanel, SettingsPanel;
+    private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, SettingsPanel;
 
-    private bool IsDead, SkillsToggle, CharacterToggle, InventoryToggle, SettingsToggle;
+    private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, SettingsToggle;
 
     [SerializeField]
     private EventSystem eventsystem;
@@ -148,15 +148,16 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         #region UIPanels
-        if(Input.GetKeyDown(KeyCode.I))
+        if(Input.GetKeyDown(KeyCode.E))
         {
-            if(!InventoryToggle)
+            if(!EquipmentToggle)
             {
-                ToggleIventoryPanel();
+                ToggleEquipmentPanel();
             }
             else
             {
-                InventoryPanel.SetActive(false);
+                EquipmentToggle = false;
+                EquipmentPanelAnimator.SetBool("FadeIn", false);
             }
         }
         if (Input.GetKeyDown(KeyCode.C))
@@ -195,6 +196,19 @@ public class GameManager : MonoBehaviour
             }
         }
         #endregion
+    }
+
+    public void ButtonEquipmentPanel()
+    {
+        if (!EquipmentToggle)
+        {
+            ToggleEquipmentPanel();
+        }
+        else
+        {
+            EquipmentToggle = false;
+            EquipmentPanelAnimator.SetBool("FadeIn", false);
+        }
     }
 
     public void ButtonCharacterPanel()
@@ -238,50 +252,49 @@ public class GameManager : MonoBehaviour
     private void ToggleCharacterPanel()
     {
         CharacterToggle = true;
-        InventoryToggle = false;
+        EquipmentToggle = false;
         SettingsToggle = false;
 
-        CharacterPanel.SetActive(true);
         CharacterPanelAnimator.SetBool("FadeIn", true);
         MaskSkillsPanel();
-        InventoryPanel.SetActive(false);
+        EquipmentPanelAnimator.SetBool("FadeIn", false);
         SettingsPanelAnimator.SetBool("FadeIn", false);
     }
 
     private void ToggleSkillsPanel()
     {
         CharacterToggle = false;
-        InventoryToggle = false;
+        EquipmentToggle = false;
         SettingsToggle = false;
 
         UnmaskSkillsPanel();
         CharacterPanelAnimator.SetBool("FadeIn", false);
-        InventoryPanel.SetActive(false);
+        EquipmentPanelAnimator.SetBool("FadeIn", false);
         SettingsPanelAnimator.SetBool("FadeIn", false);
     }
 
-    private void ToggleIventoryPanel()
+    private void ToggleEquipmentPanel()
     {
         CharacterToggle = false;
-        InventoryToggle = true;
+        EquipmentToggle = true;
         SettingsToggle = false;
 
-        InventoryPanel.SetActive(true);
-        CharacterPanel.SetActive(false);
+        EquipmentPanelAnimator.SetBool("FadeIn", true);
+        CharacterPanelAnimator.SetBool("FadeIn", false);
         MaskSkillsPanel();
-        SettingsPanel.SetActive(false);
+        SettingsPanelAnimator.SetBool("FadeIn", false);
     }
 
     private void ToggleSettingsPanel()
     {
         CharacterToggle = false;
-        InventoryToggle = false;
+        EquipmentToggle = false;
         SettingsToggle = true;
 
         CharacterPanelAnimator.SetBool("FadeIn", false);
         SettingsPanelAnimator.SetBool("FadeIn", true);
         MaskSkillsPanel();
-        InventoryPanel.SetActive(false);
+        EquipmentPanelAnimator.SetBool("FadeIn", false);
     }
 
     public void MaskSkillsPanel()
