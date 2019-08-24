@@ -28,6 +28,28 @@ public class CursorController : MonoBehaviour
         SetDefaultCursor();
     }
 
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        SearchForTreasureChest();
+    }
+
+    private void SearchForTreasureChest()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray, out hit, 25))
+        {
+            if(hit.collider.GetComponent<TreasureChest>())
+            {
+                hit.collider.GetComponent<TreasureChest>().GetAnimator.SetBool("OpenChest", true);
+                hit.collider.GetComponent<BoxCollider>().enabled = false;
+            }
+        }
+    }
+
     public void SetDefaultCursor()
     {
         Cursor.SetCursor(DefaultCursor, Vector2.zero, CursorMode.Auto);
