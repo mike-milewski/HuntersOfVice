@@ -100,6 +100,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool GetEquipmentToggle
+    {
+        get
+        {
+            return EquipmentToggle;
+        }
+        set
+        {
+            EquipmentToggle = value;
+        }
+    }
+
     [SerializeField]
     private float RespawnTime;
 

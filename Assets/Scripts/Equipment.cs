@@ -16,7 +16,7 @@ public class Equipment : MonoBehaviour
     private EquippedCheck equippedCheck;
 
     [SerializeField]
-    private Sprite EquipmentImage;
+    private Sprite EquipmentSprite;
 
     [SerializeField]
     private TextMeshProUGUI WeaponText, ArmorText, EquipmentPanelText;
@@ -48,9 +48,21 @@ public class Equipment : MonoBehaviour
         }
     }
 
+    public Sprite GetEquipmentSprite
+    {
+        get
+        {
+            return EquipmentSprite;
+        }
+        set
+        {
+            EquipmentSprite = value;
+        }
+    }
+
     private void Awake()
     {
-        gameObject.GetComponent<Image>().sprite = EquipmentImage;
+        gameObject.GetComponent<Image>().sprite = EquipmentSprite;
     }
 
     public void Equip()
