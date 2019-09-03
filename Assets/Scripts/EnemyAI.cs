@@ -416,6 +416,10 @@ public class EnemyAI : MonoBehaviour
 
         enemy.ToggleHealthBar();
 
+        enemy.AddCoins();
+
+        enemy.ReturnCoins();
+
         enemy.ReturnExperience();
 
         Anim.DeathAni();

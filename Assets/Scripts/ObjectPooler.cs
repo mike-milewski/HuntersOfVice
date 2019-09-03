@@ -109,6 +109,7 @@ public class ObjectPooler : MonoBehaviour
         AddRemoveStatusParticle(poolcontroller[19].GetPoolAmount);
         AddLevelUpText(poolcontroller[20].GetPoolAmount);
         AddStunningStingerParticle(poolcontroller[21].GetPoolAmount);
+        AddCoinText(poolcontroller[22].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -375,6 +376,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddCoinText(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[22].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[22].GetPoolParent.transform, false);
+            poolcontroller[22].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -483,6 +496,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetStunningStingerParticle()
     {
         return poolcontroller[21].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetCoinText()
+    {
+        return poolcontroller[22].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -658,6 +676,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[21].GetPoolParent.transform, false);
 
         poolcontroller[21].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnCoinTextToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[22].GetPoolParent.transform, false);
+
+        poolcontroller[22].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

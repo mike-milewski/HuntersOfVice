@@ -29,6 +29,9 @@ public class Enemy : MonoBehaviour
     private Experience EXP;
 
     [SerializeField]
+    private Inventory inventory;
+
+    [SerializeField]
     private GameObject LocalHealth;
 
     [SerializeField]
@@ -41,7 +44,7 @@ public class Enemy : MonoBehaviour
     private TextMeshProUGUI EnemyInfo, LocalEnemyInfo;
 
     [SerializeField]
-    private int ExperiencePoints;
+    private int ExperiencePoints, CoinAmount;
 
     public EnemyAnimations GetEnemyAnimations
     {
@@ -187,27 +190,11 @@ public class Enemy : MonoBehaviour
         {
             enemyAnimations.PlayHealthFade();
             TargetedImage.gameObject.SetActive(true);
-            /*
-            foreach(Image i in health.GetComponentsInChildren<Image>())
-            {
-                i.enabled = true;
-            }
-            health.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
-            TargetedImage.gameObject.SetActive(true);
-            */
         }
         else
         {
             enemyAnimations.ReverseFadeHealth();
             TargetedImage.gameObject.SetActive(false);
-            /*
-            foreach (Image i in health.GetComponentsInChildren<Image>())
-            {
-                i.enabled = false;
-            }
-            health.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
-            TargetedImage.gameObject.SetActive(false);
-            */
         }
     }
 
@@ -215,14 +202,6 @@ public class Enemy : MonoBehaviour
     {
         enemyAnimations.ReverseFadeHealth();
         TargetedImage.gameObject.SetActive(false);
-        /*
-        foreach (Image i in health.GetComponentsInChildren<Image>())
-        {
-            i.enabled = false;
-        }
-        health.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
-        TargetedImage.gameObject.SetActive(false);
-        */
     }
 
     public void GetLocalHealthInfo()
@@ -234,6 +213,16 @@ public class Enemy : MonoBehaviour
     {
         EnemyInfo.text = "LV: " + character.Level + " " + character.characterName;
         LocalEnemyInfo.text = "LV: " + character.Level + " " + character.characterName;
+    }
+
+    public void AddCoins()
+    {
+        inventory.GetCoinAmount(CoinAmount);
+    }
+
+    public void ReturnCoins()
+    {
+        inventory.ReturnGoldText().text = CoinAmount + "<size=20>" + " Coins";
     }
 
     public void ReturnExperience()

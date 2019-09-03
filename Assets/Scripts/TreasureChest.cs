@@ -39,6 +39,7 @@ public class TreasureChest : MonoBehaviour
     {
         equipment.transform.SetParent(ItemTransform, true);
         equipment.transform.localScale = new Vector3(1, 1, 1);
+        equipment.transform.rotation = Quaternion.Euler(0, 0, 0);
         ItemMessageComponents();
         if(GameManager.Instance.GetEquipmentToggle)
         {

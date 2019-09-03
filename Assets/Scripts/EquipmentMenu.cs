@@ -6,7 +6,42 @@ using UnityEngine.UI;
 public class EquipmentMenu : MonoBehaviour
 {
     [SerializeField]
+    private Equipment[] equipment;
+
+    [SerializeField]
     private GameObject WeaponPanel, ArmorPanel, WeaponSlot, ArmorSlot, EquipmentDescriptionPanel;
+
+    private void Start()
+    {
+        SetStartingEquipment();
+    }
+
+    private void SetStartingEquipment()
+    {
+        if (equipment.Length > 0)
+        {
+            if (equipment[0].GetEquipmentType == EquipmentType.Weapon)
+            {
+                equipment[0].transform.SetParent(WeaponSlot.transform, true);
+                equipment[0].Equip();
+            }
+            else
+            {
+                equipment[0].transform.SetParent(ArmorSlot.transform, true);
+                equipment[0].Equip();
+            }
+            if (equipment[1].GetEquipmentType == EquipmentType.Armor)
+            {
+                equipment[1].transform.SetParent(ArmorSlot.transform, true);
+                equipment[1].Equip();
+            }
+            else
+            {
+                equipment[1].transform.SetParent(WeaponSlot.transform, true);
+                equipment[1].Equip();
+            }
+        }
+    }
 
     public void ToggleWeaponsInPanel()
     {

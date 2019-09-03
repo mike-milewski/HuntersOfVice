@@ -188,6 +188,10 @@ public class SkillsManager : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && skills.Count > 1)
         {
@@ -211,6 +215,10 @@ public class SkillsManager : MonoBehaviour
                         GameManager.Instance.ShowNotEnoughManaText();
                     }
                 }
+            }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && skills.Count > 2)
@@ -236,6 +244,10 @@ public class SkillsManager : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha4) && skills.Count > 3)
         {
@@ -259,6 +271,10 @@ public class SkillsManager : MonoBehaviour
                         GameManager.Instance.ShowNotEnoughManaText();
                     }
                 }
+            }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha5) && skills.Count > 4)
@@ -284,6 +300,10 @@ public class SkillsManager : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha6) && skills.Count > 5)
         {
@@ -307,6 +327,10 @@ public class SkillsManager : MonoBehaviour
                         GameManager.Instance.ShowNotEnoughManaText();
                     }
                 }
+            }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha7) && skills.Count > 6)
@@ -332,6 +356,10 @@ public class SkillsManager : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha8) && skills.Count > 7)
         {
@@ -355,6 +383,10 @@ public class SkillsManager : MonoBehaviour
                         GameManager.Instance.ShowNotEnoughManaText();
                     }
                 }
+            }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha9) && skills.Count > 8)
@@ -380,6 +412,10 @@ public class SkillsManager : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha0) && skills.Count > 9)
         {
@@ -404,6 +440,10 @@ public class SkillsManager : MonoBehaviour
                         GameManager.Instance.ShowNotEnoughManaText();
                     }
                 }
+            }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
             }
         }
     }

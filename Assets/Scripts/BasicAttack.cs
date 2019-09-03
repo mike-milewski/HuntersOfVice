@@ -89,6 +89,10 @@ public class BasicAttack : MonoBehaviour
             {
                 CursorController.Instance.SetAttackCursor();
             }
+            else if(hit.collider.GetComponent<TreasureChest>())
+            {
+                CursorController.Instance.SetSpeechBubbleCursor();
+            }
             else
             {
                 CursorController.Instance.SetDefaultCursor();

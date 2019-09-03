@@ -11,6 +11,9 @@ public class CursorController : MonoBehaviour
     [SerializeField]
     private Texture2D AttackCursor;
 
+    [SerializeField]
+    private Texture2D SpeechBubbleCursor;
+
     private void Awake()
     {
         #region Singleton
@@ -58,5 +61,10 @@ public class CursorController : MonoBehaviour
     public void SetAttackCursor()
     {
         Cursor.SetCursor(AttackCursor, Vector2.zero, CursorMode.Auto);
+    }
+
+    public void SetSpeechBubbleCursor()
+    {
+        Cursor.SetCursor(SpeechBubbleCursor, Vector2.zero, CursorMode.Auto);
     }
 }
