@@ -70,6 +70,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public int GetCoins
+    {
+        get
+        {
+            return CoinAmount;
+        }
+        set
+        {
+            CoinAmount = value;
+        }
+    }
+
     public Character GetCharacter
     {
         get

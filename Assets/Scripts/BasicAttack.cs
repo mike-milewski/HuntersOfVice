@@ -71,33 +71,6 @@ public class BasicAttack : MonoBehaviour
         {
             Attack();
         }
-
-        SearchForEnemy();
-    }
-
-    private void SearchForEnemy()
-    {
-        Vector3 MousePos = Input.mousePosition;
-
-        Ray ray = cam.ScreenPointToRay(MousePos);
-
-        RaycastHit hit;
-
-        if(Physics.Raycast(ray, out hit, MouseRange))
-        {
-            if (hit.collider.GetComponent<Enemy>())
-            {
-                CursorController.Instance.SetAttackCursor();
-            }
-            else if(hit.collider.GetComponent<TreasureChest>())
-            {
-                CursorController.Instance.SetSpeechBubbleCursor();
-            }
-            else
-            {
-                CursorController.Instance.SetDefaultCursor();
-            }
-        }
     }
 
     private void MousePoint()

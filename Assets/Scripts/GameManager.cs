@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     private Transform SpawnPoint;
 
     [SerializeField]
-    private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel;
+    private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, MonsterBookLayout;
 
     private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle;
 
@@ -283,6 +283,14 @@ public class GameManager : MonoBehaviour
         {
             InventoryToggle = false;
             InventoryPanelAnimator.SetBool("FadeIn", false);
+        }
+    }
+
+    public void ButtonMonsterBook()
+    {
+        foreach(MonsterInformation mi in MonsterBookLayout.GetComponentsInChildren<MonsterInformation>())
+        {
+            mi.gameObject.SetActive(false);
         }
     }
 

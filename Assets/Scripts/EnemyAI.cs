@@ -51,6 +51,12 @@ public class EnemyAI : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private MonsterBook monsterBook;
+
+    [SerializeField]
+    private MonsterInformation monsterInformation;
+
+    [SerializeField]
     private Settings settings;
 
     [SerializeField]
@@ -423,6 +429,50 @@ public class EnemyAI : MonoBehaviour
         enemy.ReturnExperience();
 
         Anim.DeathAni();
+
+        CheckForInformation();
+    }
+
+    private void CheckForInformation()
+    {
+        if (monsterBook.GetMonsterTransform.childCount <= 0)
+        {
+            var monsterinfo = Instantiate(monsterInformation, monsterBook.GetMonsterTransform);
+            monsterinfo.transform.SetParent(monsterBook.GetMonsterTransform, false);
+            monsterinfo.GetCharacter = character;
+
+            monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
+        }
+        else
+        {
+            if (CheckForSameEnemyData())
+            {
+                return;
+            }
+            else
+            {
+                var monsterinfo = Instantiate(monsterInformation, monsterBook.GetMonsterTransform);
+                monsterinfo.transform.SetParent(monsterBook.GetMonsterTransform, false);
+                monsterinfo.GetCharacter = character;
+
+                monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
+            }
+        }
+    }
+
+    private bool CheckForSameEnemyData()
+    {
+        bool SameName = false;
+
+        foreach (MonsterInformation mi in monsterBook.GetMonsterTransform.GetComponentsInChildren<MonsterInformation>())
+        {
+            if (mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName)
+            {
+                SameName = true;
+            }
+        }
+
+        return SameName;
     }
 
     //Resets the enemy's stats when enabled in the scene.

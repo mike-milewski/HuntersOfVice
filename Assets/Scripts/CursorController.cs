@@ -9,10 +9,10 @@ public class CursorController : MonoBehaviour
     private Texture2D DefaultCursor;
 
     [SerializeField]
-    private Texture2D AttackCursor;
+    private Texture2D AttackCursor, SpeechCursor, ActionCursor;
 
     [SerializeField]
-    private Texture2D SpeechBubbleCursor;
+    private float EnemyMouseRange, ActionMouseRange, SpeechMouseRange;
 
     private void Awake()
     {
@@ -33,22 +33,54 @@ public class CursorController : MonoBehaviour
 
     private void Update()
     {
+        ChangeCursor();
+
         if(Input.GetMouseButtonDown(0))
-        SearchForTreasureChest();
+        OpenTreasureChest();
     }
 
-    private void SearchForTreasureChest()
+    private void OpenTreasureChest()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, 25))
+        if(Physics.Raycast(ray, out hit, ActionMouseRange))
         {
             if(hit.collider.GetComponent<TreasureChest>())
             {
                 hit.collider.GetComponent<TreasureChest>().GetAnimator.SetBool("OpenChest", true);
                 hit.collider.GetComponent<BoxCollider>().enabled = false;
+            }
+        }
+    }
+
+    private void ChangeCursor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, EnemyMouseRange))
+        {
+            if (hit.collider.GetComponent<Enemy>())
+            {
+                CursorController.Instance.SetAttackCursor();
+            }
+            else
+            {
+                SetDefaultCursor();
+            }
+        }
+        if (Physics.Raycast(ray, out hit, ActionMouseRange))
+        {
+            if (hit.collider.GetComponent<TreasureChest>())
+            {
+                CursorController.Instance.SetActionCursor();
+            }
+            else
+            {
+                SetDefaultCursor();
             }
         }
     }
@@ -63,8 +95,13 @@ public class CursorController : MonoBehaviour
         Cursor.SetCursor(AttackCursor, Vector2.zero, CursorMode.Auto);
     }
 
-    public void SetSpeechBubbleCursor()
+    public void SetSpeechCursor()
     {
-        Cursor.SetCursor(SpeechBubbleCursor, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(SpeechCursor, Vector2.zero, CursorMode.Auto);
+    }
+
+    public void SetActionCursor()
+    {
+        Cursor.SetCursor(ActionCursor, Vector2.zero, CursorMode.Auto);
     }
 }

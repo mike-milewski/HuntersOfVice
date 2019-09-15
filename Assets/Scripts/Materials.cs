@@ -8,7 +8,7 @@ public class Materials : MonoBehaviour
     private MaterialType materialType;
 
     [SerializeField]
-    private int BuyValue;
+    private int BuyValue, ShopPoints;
 
     private int SellValue;
 
@@ -45,6 +45,18 @@ public class Materials : MonoBehaviour
         set
         {
             SellValue = value;
+        }
+    }
+
+    public int GetShopPoints
+    {
+        get
+        {
+            return ShopPoints;
+        }
+        set
+        {
+            ShopPoints = value;
         }
     }
 }

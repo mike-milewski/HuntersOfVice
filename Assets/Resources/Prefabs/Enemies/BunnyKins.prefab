@@ -2315,6 +2315,7 @@ MonoBehaviour:
   enemy: {fileID: 114967195343370240}
   enemySkillBar: {fileID: 114718509661205728}
   EXP: {fileID: 0}
+  inventory: {fileID: 0}
   LocalHealth: {fileID: 1586509311469420}
   UI: {fileID: 224381862636754164}
   DebuffTransform: {fileID: 224035211114486664}
@@ -2323,6 +2324,7 @@ MonoBehaviour:
   EnemyInfo: {fileID: 114443723158654292}
   LocalEnemyInfo: {fileID: 114638215231616318}
   ExperiencePoints: 7
+  CoinAmount: 10
 --- !u!114 &114981715383889750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2339,6 +2341,9 @@ MonoBehaviour:
   - state: 3
     SkillIndex: 0
   character: {fileID: 114734743348568266}
+  monsterBook: {fileID: 0}
+  monsterInformation: {fileID: 114702138956978278, guid: 3b5ed524b56ab30458a90b74aebc013e,
+    type: 2}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114967195343370240}
   enemySkills: {fileID: 114570093662719146}
