@@ -32,4 +32,20 @@ public class MonsterBook : MonoBehaviour
             MonsterInfoTxt = value;
         }
     }
+
+    public void ShowMonsterButton()
+    {
+        Debug.Log("!");
+        foreach(MonsterInformation mi in MonsterButtonInfoTrans.GetComponentsInChildren<MonsterInformation>(true))
+        {
+            if(mi.gameObject.activeInHierarchy)
+            {
+                mi.gameObject.SetActive(false);
+            }
+            else
+            {
+                mi.gameObject.SetActive(true);
+            }
+        }
+    }
 }

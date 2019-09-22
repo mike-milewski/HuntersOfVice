@@ -23,19 +23,45 @@ public class Experience : MonoBehaviour
     private Coroutine routine = null;
 
     [SerializeField]
-    private TextMeshProUGUI ExperienceText, CharacterLevelText;
+    private TextMeshProUGUI ExperienceText, CharacterLevelText, StatPointsTxt;
 
     [SerializeField]
-    private GameObject ExperienceTextParent, ExperienceTextHolder;
+    private GameObject ExperienceTextParent, ExperienceTextHolder, StatusButton, StatConfirmButton;
 
     [SerializeField]
     private ParticleSystem LevelUpParticle;
 
     [SerializeField]
-    private int ExperiencePoints, NextToLevel, MaxLevel;
+    private int ExperiencePoints, NextToLevel, MaxLevel, StatPoints;
+
+    private int MaxStatPoints;
 
     [SerializeField]
     private float FillValue;
+
+    public int GetStatPoints
+    {
+        get
+        {
+            return StatPoints;
+        }
+        set
+        {
+            StatPoints = value;
+        }
+    }
+
+    public int GetMaxStatPoints
+    {
+        get
+        {
+            return MaxStatPoints;
+        }
+        set
+        {
+            MaxStatPoints = value;
+        }
+    }
 
     public int GetNextToLevel
     {
@@ -91,8 +117,7 @@ public class Experience : MonoBehaviour
             ExperiencePoints += Value;
 
             //Creates a level up particle effect when the player levels up. 
-            //We put this in a separate conditional so that multiple particles
-            //won't spawn.
+            //We put this in a separate conditional so that multiple particles don't spawn.
             if(ExperiencePoints >= NextToLevel)
             {
                 var LvParticle = Instantiate(LevelUpParticle, new Vector3(Player.transform.position.x, Player.transform.position.y + 1.0f, Player.transform.position.z), 
@@ -139,13 +164,20 @@ public class Experience : MonoBehaviour
         ExperienceBar.fillAmount = 0;
 
         character.Level++;
-        //character.MaxHealth += 50;
-        //character.MaxMana += 5;
-        character.CharacterStrength += 3;
-        character.CharacterDefense += 2;
-        character.CharacterIntelligence += 1;
 
         UpdateCharacterLevel();
+
+        StatPoints += 2;
+
+        MaxStatPoints = StatPoints;
+
+        StatPointsTxt.gameObject.SetActive(true);
+
+        StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
+
+        StatPointsTxt.text = "<u>Stat Points </u> \n" + "        " + StatPoints;
+
+        StatConfirmButton.SetActive(true);
 
         if(character.Level < MaxLevel)
         {

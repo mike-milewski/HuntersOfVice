@@ -22,5 +22,5 @@ MonoBehaviour:
   Strength: 25
   Defense: 15
   Intelligence: 1
-  CriticalHitChance: 5
+  CriticalHitChance: 100
   MoveSpeed: 0

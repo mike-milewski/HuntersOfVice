@@ -438,6 +438,14 @@ public class EnemyAI : MonoBehaviour
         if (monsterBook.GetMonsterTransform.childCount <= 0)
         {
             var monsterinfo = Instantiate(monsterInformation, monsterBook.GetMonsterTransform);
+            if (!GameManager.Instance.GetMonsterToggle)
+            {
+                monsterinfo.gameObject.SetActive(false);
+            }
+            else
+            {
+                monsterinfo.gameObject.SetActive(true);
+            }
             monsterinfo.transform.SetParent(monsterBook.GetMonsterTransform, false);
             monsterinfo.GetCharacter = character;
 
@@ -452,6 +460,14 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 var monsterinfo = Instantiate(monsterInformation, monsterBook.GetMonsterTransform);
+                if (!GameManager.Instance.GetMonsterToggle)
+                {
+                    monsterinfo.gameObject.SetActive(false);
+                }
+                else
+                {
+                    monsterinfo.gameObject.SetActive(true);
+                }
                 monsterinfo.transform.SetParent(monsterBook.GetMonsterTransform, false);
                 monsterinfo.GetCharacter = character;
 
@@ -464,7 +480,7 @@ public class EnemyAI : MonoBehaviour
     {
         bool SameName = false;
 
-        foreach (MonsterInformation mi in monsterBook.GetMonsterTransform.GetComponentsInChildren<MonsterInformation>())
+        foreach (MonsterInformation mi in monsterBook.GetMonsterTransform.GetComponentsInChildren<MonsterInformation>(true))
         {
             if (mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName)
             {
