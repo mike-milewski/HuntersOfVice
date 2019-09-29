@@ -9,16 +9,7 @@ public class TreasureChest : MonoBehaviour
     private Equipment equipment;
 
     [SerializeField]
-    private GameObject ItemMessage;
-
-    [SerializeField]
-    private Image ItemImage;
-
-    [SerializeField]
-    private TextMeshProUGUI ItemMessageText;
-
-    [SerializeField]
-    private Transform ItemTransform;
+    private Transform ItemTransform, ItemMessageTransform;
 
     [SerializeField]
     private Animator animator;
@@ -40,7 +31,9 @@ public class TreasureChest : MonoBehaviour
         equipment.transform.SetParent(ItemTransform, true);
         equipment.transform.localScale = new Vector3(1, 1, 1);
         equipment.transform.rotation = Quaternion.Euler(0, 0, 0);
+
         ItemMessageComponents();
+
         if(GameManager.Instance.GetEquipmentToggle)
         {
             equipment.gameObject.SetActive(true);
@@ -49,16 +42,15 @@ public class TreasureChest : MonoBehaviour
 
     private void ItemMessageComponents()
     {
-        ItemMessage.GetComponent<Animator>().SetBool("Appear", true);
-        ItemMessageText.text = equipment.GetEquipmentData.EquipmentName;
-        ItemImage.sprite = equipment.GetEquipmentSprite;
-        StartCoroutine("ReverseItemMessage");
-    }
+        var ItemMessage = ObjectPooler.Instance.GetItemMessage();
 
-    private IEnumerator ReverseItemMessage()
-    {
-        float timer = 2.0f;
-        yield return new WaitForSeconds(timer);
-        ItemMessage.GetComponent<Animator>().SetBool("Appear", false);
+        ItemMessage.transform.SetParent(ItemMessageTransform, false);
+
+        ItemMessage.SetActive(true);
+
+        ItemMessage.GetComponent<Animator>().SetBool("Appear", true);
+        ItemMessage.GetComponentInChildren<TextMeshProUGUI>().text = equipment.GetEquipmentData.EquipmentName;
+
+        ItemMessage.GetComponentInChildren<RawImage>().texture = equipment.GetEquipmentSprite.texture;
     }
 }

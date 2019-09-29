@@ -26,7 +26,7 @@ public class Experience : MonoBehaviour
     private TextMeshProUGUI ExperienceText, CharacterLevelText, StatPointsTxt;
 
     [SerializeField]
-    private GameObject ExperienceTextParent, ExperienceTextHolder, StatusButton, StatConfirmButton;
+    private GameObject ExperienceTextParent, ExperienceTextHolder, StatusButton, StatConfirmButton, Stats;
 
     [SerializeField]
     private ParticleSystem LevelUpParticle;
@@ -72,6 +72,18 @@ public class Experience : MonoBehaviour
         set
         {
             NextToLevel = value;
+        }
+    }
+
+    public TextMeshProUGUI GetStatPointsTxt
+    {
+        get
+        {
+            return StatPointsTxt;
+        }
+        set
+        {
+            StatPointsTxt = value;
         }
     }
 
@@ -167,11 +179,13 @@ public class Experience : MonoBehaviour
 
         UpdateCharacterLevel();
 
-        StatPoints += 2;
-
-        MaxStatPoints = StatPoints;
+        Stats.gameObject.SetActive(true);
 
         StatPointsTxt.gameObject.SetActive(true);
+
+        StatPoints += 2;
+
+        MaxStatPoints += StatPoints;
 
         StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
 
