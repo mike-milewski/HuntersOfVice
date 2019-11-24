@@ -7,17 +7,20 @@ public class ConfirmStat : MonoBehaviour
 
     public void ConfirmStatus(Experience experience)
     {
-        experience.GetMaxStatPoints = experience.GetStatPoints;
-
-        AddStats();
-
-        if(experience.GetStatPoints <= 0)
+        if(!GameManager.Instance.GetIsDead)
         {
-            Stats.SetActive(false);
-            StatPointsText.SetActive(false);
+            experience.GetMaxStatPoints = experience.GetStatPoints;
 
-            StatusButton.GetComponent<Animator>().SetBool("StatPoints", false);
-            gameObject.SetActive(false);
+            AddStats();
+
+            if (experience.GetStatPoints <= 0)
+            {
+                Stats.SetActive(false);
+                StatPointsText.SetActive(false);
+
+                StatusButton.GetComponent<Animator>().SetBool("StatPoints", false);
+                gameObject.SetActive(false);
+            }
         }
     }
 
@@ -25,11 +28,10 @@ public class ConfirmStat : MonoBehaviour
     {
         var stat = StatParent.GetComponentsInChildren<StatUpgrade>();
 
-        for(int i = 0; i < StatParent.GetComponentsInChildren<StatUpgrade>().Length; i++)
+        for(int i = 0; i < stat.Length; i++)
         {
             stat[i].AddStats();
         }
-
         SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
     }
 }

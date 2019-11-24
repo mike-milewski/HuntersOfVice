@@ -187,6 +187,9 @@ public class Experience : MonoBehaviour
 
         MaxStatPoints += StatPoints;
 
+        character.GetCharacterData.HpIncrease += 3;
+        character.GetCharacterData.MpIncrease++;
+
         StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
 
         StatPointsTxt.text = "<u>Stat Points </u> \n" + "        " + StatPoints;

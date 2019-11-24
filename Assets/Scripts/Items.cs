@@ -224,7 +224,7 @@ public class Items : MonoBehaviour
         }
         else
         {
-            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + MpHeal(HealAmount) + "</size>" + "<size=15>" + " MP";
+            HealingText.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + MpHeal(HealAmount) + "</size>" + "<size=20>" + " MP";
         }
 
         return HealingText.GetComponentInChildren<TextMeshProUGUI>();

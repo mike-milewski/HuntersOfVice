@@ -422,8 +422,6 @@ public class EnemyAI : MonoBehaviour
 
         enemy.ToggleHealthBar();
 
-        enemy.AddCoins();
-
         enemy.ReturnCoins();
 
         enemy.ReturnExperience();
@@ -612,15 +610,37 @@ public class EnemyAI : MonoBehaviour
             #region CriticalHitCalculation
             if (Random.value * 100 <= Critical)
             {
-                PlayerTarget.GetComponent<Health>().ModifyHealth(-((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense));
+                float CritCalc = character.CharacterStrength * 1.25f;
 
-                t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + ((character.CharacterStrength + 5) - PlayerTarget.CharacterDefense).ToString() + "!";
+                Mathf.Round(CritCalc);
+
+                if ((int)CritCalc - PlayerTarget.GetComponent<Character>().CharacterDefense < 0)
+                {
+                    PlayerTarget.GetComponent<Health>().ModifyHealth(-1);
+
+                    t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + "1" + "!";
+                }
+                else
+                {
+                    PlayerTarget.GetComponent<Health>().ModifyHealth(-((int)CritCalc - PlayerTarget.CharacterDefense));
+
+                    t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + ((int)CritCalc - PlayerTarget.CharacterDefense).ToString() + "!";
+                }
             }
             else
             {
-                PlayerTarget.GetComponent<Health>().ModifyHealth(-(character.CharacterStrength - PlayerTarget.CharacterDefense));
+                if (character.CharacterStrength - PlayerTarget.GetComponent<Character>().CharacterDefense < 0)
+                {
+                    PlayerTarget.GetComponent<Health>().ModifyHealth(-1);
 
-                t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                    t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + "1";
+                }
+                else
+                {
+                    PlayerTarget.GetComponent<Health>().ModifyHealth(-(character.CharacterStrength - PlayerTarget.CharacterDefense));
+
+                    t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                }
             }
             #endregion
 

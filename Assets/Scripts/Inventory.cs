@@ -7,14 +7,52 @@ public class Inventory : MonoBehaviour
     private Transform CoinTextParent;
 
     [SerializeField]
-    private GameObject ShopMaterials, SynthMaterials;
+    private Transform ShopMaterialTransform;
 
     [SerializeField]
     private TextMeshProUGUI CoinText;
 
+    private bool InInventory;
+
     private int Coins;
 
-    public int GetCoinAmount(int value)
+    public int GetCoins
+    {
+        get
+        {
+            return Coins;
+        }
+        set
+        {
+            Coins = value;
+        }
+    }
+
+    public bool GetInInventory
+    {
+        get
+        {
+            return InInventory;
+        }
+        set
+        {
+            InInventory = value;
+        }
+    }
+
+    public Transform GetShopMaterialTransform
+    {
+        get
+        {
+            return ShopMaterialTransform;
+        }
+        set
+        {
+            ShopMaterialTransform = value;
+        }
+    }
+
+    public int AddCoins(int value)
     {
         Coins += value;
 
@@ -23,7 +61,7 @@ public class Inventory : MonoBehaviour
         return value;
     }
 
-    public TextMeshProUGUI ReturnGoldText()
+    public TextMeshProUGUI ReturnCoinText()
     {
         var CoinText = ObjectPooler.Instance.GetCoinText();
 
@@ -36,9 +74,9 @@ public class Inventory : MonoBehaviour
 
     public void ToggleMaterials()
     {
-        if(ShopMaterials.transform.childCount > 0)
+        if(ShopMaterialTransform.childCount > 0)
         {
-            foreach(Materials obj in ShopMaterials.GetComponentsInChildren<Materials>(true))
+            foreach(Materials obj in ShopMaterialTransform.GetComponentsInChildren<Materials>(true))
             {
                 if(!obj.gameObject.activeInHierarchy)
                 {
@@ -50,19 +88,17 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        if(SynthMaterials.transform.childCount > 0)
+    }
+
+    public void ToggleInInventory()
+    {
+        if(!InInventory)
         {
-            foreach (Materials obj in SynthMaterials.GetComponentsInChildren<Materials>(true))
-            {
-                if (!obj.gameObject.activeInHierarchy)
-                {
-                    obj.gameObject.SetActive(true);
-                }
-                else
-                {
-                    obj.gameObject.SetActive(false);
-                }
-            }
+            InInventory = true;
+        }
+        else
+        {
+            InInventory = false;
         }
     }
 }

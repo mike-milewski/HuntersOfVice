@@ -111,7 +111,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         gameObject.transform.SetParent(ParentObj, true);
         transform.position = eventData.position;
 
-        if(objectType == ObjectType.Skill)
+        if (objectType == ObjectType.Skill)
         {
             int NewSiblingIndex = zone.transform.childCount;
 
@@ -182,13 +182,13 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             }
             if(objectType == ObjectType.Weapon || objectType == ObjectType.Armor)
             {
-                if(!zone.transform.GetComponentInChildren<Equipment>())
-                {
-                    GetComponent<Equipment>().UnEquip();
-                }
                 if (zone.GetComponentInChildren<DragUiObject>())
                 {
                     zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;
+                }
+                if(!GameManager.Instance.GetEquipmentToggle)
+                {
+                    gameObject.SetActive(false);
                 }
             }
         }

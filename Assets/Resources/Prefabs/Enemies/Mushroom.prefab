@@ -663,9 +663,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1722958204252142}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 51.33, y: -0.01, z: 107.7}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 53.54, y: -0.01, z: 98.6}
+  m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children:
   - {fileID: 4731271516209256}
   - {fileID: 224172724586066702}
@@ -932,7 +932,7 @@ MonoBehaviour:
     ShapeSize: {x: 1.28, y: 2.5, z: 2.5}
     AttackRange: 3
     StatusEffectPotency: 3
-    Potency: 23
+    Potency: 29
   character: {fileID: 114979435669946942}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114492699656399902}
@@ -1747,7 +1747,7 @@ MonoBehaviour:
   TargetedImage: {fileID: 114677610278254228}
   EnemyInfo: {fileID: 114959006871186890}
   LocalEnemyInfo: {fileID: 114202159613561654}
-  ExperiencePoints: 7
+  ExperiencePoints: 50
   CoinAmount: 10
 --- !u!114 &114527686994712234
 MonoBehaviour:

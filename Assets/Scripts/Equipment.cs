@@ -4,6 +4,42 @@ using TMPro;
 
 public enum EquipmentType { Weapon, Armor }
 
+public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
+
+[System.Serializable]
+public class StatusType
+{
+    [SerializeField]
+    private StatIncreaseType StatIncreaseType;
+
+    [SerializeField]
+    private int StatIncrease;
+
+    public int GetStatIncrease
+    {
+        get
+        {
+            return StatIncrease;
+        }
+        set
+        {
+            StatIncrease = value;
+        }
+    }
+
+    public StatIncreaseType GetStatusTypes
+    {
+        get
+        {
+            return StatIncreaseType;
+        }
+        set
+        {
+            StatIncreaseType = value;
+        }
+    }
+}
+
 public class Equipment : MonoBehaviour
 {
     [SerializeField]
@@ -16,13 +52,24 @@ public class Equipment : MonoBehaviour
     private EquippedCheck equippedCheck;
 
     [SerializeField]
+    private BasicAttack basicAttack;
+
+    [SerializeField]
     private Sprite EquipmentSprite;
 
     [SerializeField]
-    private TextMeshProUGUI WeaponText, ArmorText, EquipmentPanelText;
+    private TextMeshProUGUI EquipmentNameText, EquipmentInfoText, EquipmentPanelText;
 
     [SerializeField]
     private EquipmentType equipmentType;
+
+    [SerializeField]
+    private StatusType[] stattype;
+
+    [SerializeField]
+    private int BuyValue;
+
+    private int SellValue;
 
     public EquipmentData GetEquipmentData
     {
@@ -60,6 +107,42 @@ public class Equipment : MonoBehaviour
         }
     }
 
+    public StatusType[] GetStatusType
+    {
+        get
+        {
+            return stattype;
+        }
+        set
+        {
+            stattype = value;
+        }
+    }
+
+    public int GetBuyValue
+    {
+        get
+        {
+            return BuyValue;
+        }
+        set
+        {
+            BuyValue = value;
+        }
+    }
+
+    public int GetSellValue
+    {
+        get
+        {
+            return SellValue;
+        }
+        set
+        {
+            SellValue = value;
+        }
+    }
+
     private void Awake()
     {
         gameObject.GetComponent<Image>().sprite = EquipmentSprite;
@@ -72,6 +155,7 @@ public class Equipment : MonoBehaviour
         {
             case (EquipmentType.Weapon):
                 WeaponEquip();
+                basicAttack.GetEquipment = this;
                 break;
             case (EquipmentType.Armor):
                 ArmorEquip();
@@ -81,65 +165,177 @@ public class Equipment : MonoBehaviour
 
     public void UnEquip()
     {
+        DecreaseStats();
         equippedCheck.GetIsEquipped = false;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
-        switch (equipmentType)
-        {
-            case (EquipmentType.Weapon):
-                character.CharacterStrength = character.GetCharacterData.Strength;
-                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
-                WeaponText.text = "";
-                break;
-            case (EquipmentType.Armor):
-                character.CharacterDefense = character.GetCharacterData.Defense;
-                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
-                ArmorText.text = "";
-                break;
-        }
+
+        EquipmentNameText.text = "";
+        EquipmentInfoText.text = "";
     }
 
     private void WeaponEquip()
     {
-        character.CharacterStrength += equipmentData.StatIncrease;
-
-        SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+        IncreaseStats();
 
         CurrentWeaponEquippedText();
     }
 
     private void ArmorEquip()
     {
-        character.CharacterDefense += equipmentData.StatIncrease;
-
-        SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+        IncreaseStats();
 
         CurrentArmorEquippedText();
     }
 
+    private void IncreaseStats()
+    {
+        for (int i = 0; i < stattype.Length; i++)
+        {
+            switch (stattype[i].GetStatusTypes)
+            {
+                case (StatIncreaseType.HP):
+                    character.MaxHealth += stattype[i].GetStatIncrease;
+                    character.GetComponent<Health>().GetFilledBar();
+                    break;
+                case (StatIncreaseType.MP):
+                    character.MaxMana += stattype[i].GetStatIncrease;
+                    character.GetComponent<Mana>().GetFilledBar();
+                    break;
+                case (StatIncreaseType.Strength):
+                    character.CharacterStrength += stattype[i].GetStatIncrease;
+                    character.GetCharacterData.Strength = character.CharacterStrength;
+                    break;
+                case (StatIncreaseType.Defense):
+                    character.CharacterDefense += stattype[i].GetStatIncrease;
+                    character.GetCharacterData.Defense = character.CharacterDefense;
+                    break;
+                case (StatIncreaseType.Intelligence):
+                    character.CharacterIntelligence += stattype[i].GetStatIncrease;
+                    character.GetCharacterData.Intelligence = character.CharacterIntelligence;
+                    break;
+            }
+        }
+        SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+    }
+
+    private void DecreaseStats()
+    {
+        for (int i = 0; i < stattype.Length; i++)
+        {
+            switch (stattype[i].GetStatusTypes)
+            {
+                case (StatIncreaseType.HP):
+                    character.MaxHealth -= stattype[i].GetStatIncrease;
+                    character.GetComponent<Health>().GetFilledBar();
+                    break;
+                case (StatIncreaseType.MP):
+                    character.MaxMana -= stattype[i].GetStatIncrease;
+                    character.GetComponent<Mana>().GetFilledBar();
+                    break;
+                case (StatIncreaseType.Strength):
+                    character.CharacterStrength -= stattype[i].GetStatIncrease;
+                    character.GetCharacterData.Strength = character.CharacterStrength;
+                    break;
+                case (StatIncreaseType.Defense):
+                    character.CharacterDefense -= stattype[i].GetStatIncrease;
+                    character.GetCharacterData.Defense = character.CharacterDefense;
+                    break;
+                case (StatIncreaseType.Intelligence):
+                    character.CharacterIntelligence -= stattype[i].GetStatIncrease;
+                    character.GetCharacterData.Intelligence = character.CharacterIntelligence;
+                    break;
+            }
+        }
+        SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+    }
+
     private void CurrentWeaponEquippedText()
     {
-        WeaponText.text = "<u>" + equipmentData.EquipmentName + "</u>" + "\n\n" + "<size=9>" +  "Strength: " + "+" + equipmentData.StatIncrease;
+        EquipmentNameText.text = equipmentData.EquipmentName;
+
+        EquipmentInfoText.text = StatsText().text;
     }
 
     private void CurrentArmorEquippedText()
     {
-        ArmorText.text = "<u>" + equipmentData.EquipmentName + "</u>" + "\n\n" + "<size=9>" + "Defense: " +  "+" + equipmentData.StatIncrease;
+        EquipmentNameText.text = equipmentData.EquipmentName;
+
+        EquipmentInfoText.text = StatsText().text;
     }
 
     public void PanelText(GameObject panel)
     {
         panel.SetActive(true);
 
-        switch(equipmentType)
+        if (stattype.Length == 1)
         {
-            case (EquipmentType.Weapon):
-                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" + "Strength: " + "+" + 
-                                          equipmentData.StatIncrease;
-                break;
-            case (EquipmentType.Armor):
-                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" + "Defense: " + "+" + 
-                                          equipmentData.StatIncrease;
-                break;
+            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n";
         }
+        if (stattype.Length == 2)
+        {
+            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease;
+        }
+        if (stattype.Length == 3)
+        {
+            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                       stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                       stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease;
+        }
+        if (stattype.Length == 4)
+        {
+            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease;
+        }
+        if(stattype.Length == 5)
+        {
+            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
+                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease;
+        }
+    }
+
+    private TextMeshProUGUI StatsText()
+    {
+        if (stattype.Length == 1)
+        {
+            EquipmentInfoText.text = stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease;
+        }
+        if (stattype.Length == 2)
+        {
+            EquipmentInfoText.text = stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                     stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease;
+        }
+        if (stattype.Length == 3)
+        {
+            EquipmentInfoText.text = stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                     stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                     stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease;
+        }
+        if (stattype.Length == 4)
+        {
+            EquipmentInfoText.text = stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                     stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                     stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                     stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease;
+        }
+        if (stattype.Length == 5)
+        {
+            EquipmentInfoText.text = stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                     stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                     stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                     stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
+                                     stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease;
+        }
+        return EquipmentInfoText;
     }
 }

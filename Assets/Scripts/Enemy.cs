@@ -227,19 +227,21 @@ public class Enemy : MonoBehaviour
         LocalEnemyInfo.text = "LV: " + character.Level + " " + character.characterName;
     }
 
-    public void AddCoins()
-    {
-        inventory.GetCoinAmount(CoinAmount);
-    }
-
     public void ReturnCoins()
     {
-        inventory.ReturnGoldText().text = CoinAmount + "<size=20>" + " Coins";
+        if(CoinAmount > 0)
+        {
+            inventory.AddCoins(CoinAmount);
+            inventory.ReturnCoinText().text = CoinAmount + "<size=20>" + " Coins";
+        }
     }
 
     public void ReturnExperience()
     {
-        EXP.GainEXP(ExperiencePoints);
-        EXP.GetShowExperienceText().text = ExperiencePoints + "<size=20>" + " EXP";
+        if(ExperiencePoints > 0)
+        {
+            EXP.GainEXP(ExperiencePoints);
+            EXP.GetShowExperienceText().text = ExperiencePoints + "<size=20>" + " EXP";
+        }
     }
 }

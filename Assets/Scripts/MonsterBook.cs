@@ -35,7 +35,6 @@ public class MonsterBook : MonoBehaviour
 
     public void ShowMonsterButton()
     {
-        Debug.Log("!");
         foreach(MonsterInformation mi in MonsterButtonInfoTrans.GetComponentsInChildren<MonsterInformation>(true))
         {
             if(mi.gameObject.activeInHierarchy)

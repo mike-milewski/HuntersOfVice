@@ -17,10 +17,12 @@ MonoBehaviour:
   Absorbtions: 00000000
   CharacterName: Giant Bee
   CharacterLevel: 2
-  Health: 50
+  Health: 150
   Mana: 0
-  Strength: 25
+  Strength: 38
   Defense: 17
   Intelligence: 4
+  HpIncrease: 0
+  MpIncrease: 0
   CriticalHitChance: 5
   MoveSpeed: 3

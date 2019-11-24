@@ -833,18 +833,40 @@ public class EnemySkills : MonoBehaviour
         #region CriticalHitCalculation
         if (Random.value * 100 <= Critical)
         {
-            enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                                         (-(potency + 5 - Target.GetComponent<Character>().CharacterDefense));
+            float CritCalc = potency * 1.25f;
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((potency + 5) - 
-                                                                       Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+            Mathf.Round(CritCalc);
+
+            if((int)CritCalc - Target.GetComponent<Character>().CharacterDefense < 0)
+            {
+                Target.GetComponentInChildren<Health>().ModifyHealth(-1);
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
+            }
+            else
+            {
+                enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
+                                                         (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
+                                                                           Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+            }
         }
         else
         {
-            Target.GetComponentInChildren<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
+            if (potency - Target.GetComponent<Character>().CharacterDefense < 0)
+            {
+                Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + skillName + " " + 
-                                                                       (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1";
+            }
+            else
+            {
+                Target.GetComponentInChildren<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                                                                           (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+            }    
         }
         #endregion
 

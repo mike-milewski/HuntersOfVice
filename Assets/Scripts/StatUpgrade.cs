@@ -53,7 +53,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints--;
             experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
 
-            StatIncrease += StatValue;
+            StatIncrease += character.GetCharacterData.HpIncrease;
             StatText.text = StatIncrease.ToString();
         }
     }
@@ -65,7 +65,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints--;
             experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
 
-            StatIncrease += StatValue;
+            StatIncrease += character.GetCharacterData.MpIncrease;
             StatText.text = StatIncrease.ToString();
         }
     }
@@ -113,7 +113,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints++;
             experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
 
-            StatIncrease -= StatValue;
+            StatIncrease -= character.GetCharacterData.HpIncrease;
             StatText.text = StatIncrease.ToString();
         }
     }
@@ -125,7 +125,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints++;
             experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
 
-            StatIncrease -= StatValue;
+            StatIncrease -= character.GetCharacterData.MpIncrease;
             StatText.text = StatIncrease.ToString();
         }
     }

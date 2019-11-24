@@ -108,4 +108,14 @@ public class MenuButtons : MonoBehaviour
     {
         panel.GetComponent<Animator>().SetBool("OpenMenu", false);
     }
+
+    public void PlayMenuAnimation(Animator animator)
+    {
+        animator.SetBool("FadeIn", true);
+    }
+
+    public void ReverseMenuAnimation(Animator animator)
+    {
+        animator.SetBool("FadeIn", false);
+    }
 }

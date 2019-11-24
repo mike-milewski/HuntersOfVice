@@ -5,6 +5,10 @@ public class CursorController : MonoBehaviour
 {
     public static CursorController Instance = null;
 
+    private Ray ray;
+
+    private RaycastHit hit;
+
     [SerializeField]
     private Texture2D DefaultCursor;
 
@@ -36,14 +40,15 @@ public class CursorController : MonoBehaviour
         ChangeCursor();
 
         if(Input.GetMouseButtonDown(0))
-        OpenTreasureChest();
+        {
+            OpenTreasureChest();
+            OpenShopMenu();
+        }
     }
 
     private void OpenTreasureChest()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hit;
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if(Physics.Raycast(ray, out hit, ActionMouseRange))
         {
@@ -55,11 +60,23 @@ public class CursorController : MonoBehaviour
         }
     }
 
+    private void OpenShopMenu()
+    {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, SpeechMouseRange))
+        {
+            if (hit.collider.GetComponent<ShopKeeper>())
+            {
+                hit.collider.GetComponent<ShopKeeper>().GetIsInShop = true;
+                hit.collider.GetComponent<ShopKeeper>().GetAnimator.SetBool("FadeIn", true);
+            }
+        }
+    }
+
     private void ChangeCursor()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hit;
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, EnemyMouseRange))
         {
@@ -77,6 +94,17 @@ public class CursorController : MonoBehaviour
             if (hit.collider.GetComponent<TreasureChest>())
             {
                 CursorController.Instance.SetActionCursor();
+            }
+            else
+            {
+                SetDefaultCursor();
+            }
+        }
+        if (Physics.Raycast(ray, out hit, SpeechMouseRange))
+        {
+            if (hit.collider.GetComponent<ShopKeeper>())
+            {
+                CursorController.Instance.SetSpeechCursor();
             }
             else
             {

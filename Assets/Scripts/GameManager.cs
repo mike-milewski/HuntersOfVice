@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel;
 
-    private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle;
+    private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, MenuAnimating;
 
     [SerializeField]
     private EventSystem eventsystem;
@@ -127,9 +127,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private float RespawnTime;
-
     public bool GetIsDead
     {
         get
@@ -141,6 +138,21 @@ public class GameManager : MonoBehaviour
             IsDead = value;
         }
     }
+
+    public bool GetMenuAnimating
+    {
+        get
+        {
+            return MenuAnimating;
+        }
+        set
+        {
+            MenuAnimating = value;
+        }
+    }
+
+    [SerializeField]
+    private float RespawnTime;
 
     private void Awake()
     {
@@ -172,24 +184,119 @@ public class GameManager : MonoBehaviour
         cam.gameObject.SetActive(true);
     }
 
+    public void SetMenuAnimatingToTrue()
+    {
+        MenuAnimating = true;
+    }
+
+    public void SetMenuAnimatingToFalse()
+    {
+        MenuAnimating = false;
+    }
+
     private void Update()
     {
         #region UIPanels
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (!InventoryToggle)
+            if(!MenuAnimating)
             {
-                ToggleInventoryPanel();
-            }
-            else
-            {
-                InventoryToggle = false;
-                InventoryPanelAnimator.SetBool("FadeIn", false);
+                MenuAnimating = true;
+                if (!InventoryToggle)
+                {
+                    ToggleInventoryPanel();
+                }
+                else
+                {
+                    InventoryToggle = false;
+                    InventoryPanelAnimator.SetBool("FadeIn", false);
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
             }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if(!EquipmentToggle)
+            if(!MenuAnimating)
+            {
+                MenuAnimating = true;
+                if (!EquipmentToggle)
+                {
+                    ToggleEquipmentPanel();
+                }
+                else
+                {
+                    EquipmentToggle = false;
+                    EquipmentPanelAnimator.SetBool("FadeIn", false);
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if(!MenuAnimating)
+            {
+                MenuAnimating = true;
+                if (!CharacterToggle)
+                {
+                    ToggleCharacterPanel();
+                }
+                else
+                {
+                    CharacterToggle = false;
+                    CharacterPanelAnimator.SetBool("FadeIn", false);
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if(!MenuAnimating)
+            {
+                MenuAnimating = true;
+                if (!SkillsToggle)
+                {
+                    ToggleSkillsPanel();
+                }
+                else
+                {
+                    MaskSkillsPanel();
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            if(!MenuAnimating)
+            {
+                MenuAnimating = true;
+                if (!SettingsToggle)
+                {
+                    ToggleSettingsPanel();
+                }
+                else
+                {
+                    SettingsToggle = false;
+                    SettingsPanelAnimator.SetBool("FadeIn", false);
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
+            }
+        }
+        #endregion
+    }
+
+    private IEnumerator SetMenuAnimationToFalse()
+    {
+        float SetTime = 0.6f;
+        yield return new WaitForSeconds(SetTime);
+        MenuAnimating = false;
+    }
+
+    public void ButtonEquipmentPanel()
+    {
+        if(!MenuAnimating)
+        {
+            MenuAnimating = true;
+            if (!EquipmentToggle)
             {
                 ToggleEquipmentPanel();
             }
@@ -198,9 +305,15 @@ public class GameManager : MonoBehaviour
                 EquipmentToggle = false;
                 EquipmentPanelAnimator.SetBool("FadeIn", false);
             }
+            StartCoroutine(SetMenuAnimationToFalse());
         }
-        if (Input.GetKeyDown(KeyCode.C))
+    }
+
+    public void ButtonCharacterPanel()
+    {
+        if(!MenuAnimating)
         {
+            MenuAnimating = true;
             if (!CharacterToggle)
             {
                 ToggleCharacterPanel();
@@ -210,20 +323,32 @@ public class GameManager : MonoBehaviour
                 CharacterToggle = false;
                 CharacterPanelAnimator.SetBool("FadeIn", false);
             }
+            StartCoroutine(SetMenuAnimationToFalse());
         }
-        if (Input.GetKeyDown(KeyCode.V))
+    }
+
+    public void ButtonSkillsPanel()
+    {
+        if(!MenuAnimating)
         {
+            MenuAnimating = true;
             if (!SkillsToggle)
-            {           
-                ToggleSkillsPanel();   
+            {
+                ToggleSkillsPanel();
             }
             else
             {
                 MaskSkillsPanel();
             }
+            StartCoroutine(SetMenuAnimationToFalse());
         }
-        if (Input.GetKeyDown(KeyCode.O))
+    }
+
+    public void ButtonSettingsPanel()
+    {
+        if(!MenuAnimating)
         {
+            MenuAnimating = true;
             if (!SettingsToggle)
             {
                 ToggleSettingsPanel();
@@ -233,74 +358,28 @@ public class GameManager : MonoBehaviour
                 SettingsToggle = false;
                 SettingsPanelAnimator.SetBool("FadeIn", false);
             }
-        }
-        #endregion
-    }
-
-    public void ButtonEquipmentPanel()
-    {
-        if (!EquipmentToggle)
-        {
-            ToggleEquipmentPanel();
-        }
-        else
-        {
-            EquipmentToggle = false;
-            EquipmentPanelAnimator.SetBool("FadeIn", false);
-        }
-    }
-
-    public void ButtonCharacterPanel()
-    {
-        if (!CharacterToggle)
-        {
-            ToggleCharacterPanel();
-        }
-        else
-        {
-            CharacterToggle = false;
-            CharacterPanelAnimator.SetBool("FadeIn", false);
-        }
-    }
-
-    public void ButtonSkillsPanel()
-    {
-        if (!SkillsToggle)
-        {
-            ToggleSkillsPanel();
-        }
-        else
-        {
-            MaskSkillsPanel();
-        }
-    }
-
-    public void ButtonSettingsPanel()
-    {
-        if (!SettingsToggle)
-        {
-            ToggleSettingsPanel();
-        }
-        else
-        {
-            SettingsToggle = false;
-            SettingsPanelAnimator.SetBool("FadeIn", false);
+            StartCoroutine(SetMenuAnimationToFalse());
         }
     }
 
     public void ButtonInventoryPanel()
     {
-        if (!InventoryToggle)
+        if(!MenuAnimating)
         {
-            ToggleInventoryPanel();
-        }
-        else
-        {
-            InventoryToggle = false;
-            MonsterToggle = false;
+            MenuAnimating = true;
+            if (!InventoryToggle)
+            {
+                ToggleInventoryPanel();
+            }
+            else
+            {
+                InventoryToggle = false;
+                MonsterToggle = false;
 
-            MonsterBookAnimator.SetBool("FadeIn", false);
-            InventoryPanelAnimator.SetBool("FadeIn", false);
+                MonsterBookAnimator.SetBool("FadeIn", false);
+                InventoryPanelAnimator.SetBool("FadeIn", false);
+            }
+            StartCoroutine(SetMenuAnimationToFalse());
         }
     }
 
@@ -504,7 +583,7 @@ public class GameManager : MonoBehaviour
 
         animator.Play("InvalidText", -1, 0f);
 
-        InvalidText.text = "Cannot Execute";
+        InvalidText.text = "Cannot Execute At This Time";
 
         return InvalidText;
     }

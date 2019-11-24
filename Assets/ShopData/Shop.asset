@@ -8,8 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b4e2e784dfbaf94badedcf054aebda2, type: 3}
-  m_Name: SteelBlade
+  m_Script: {fileID: 11500000, guid: 70e06f31432d7b34ea790b157c4af37b, type: 3}
+  m_Name: Shop
   m_EditorClassIdentifier: 
-  EquipmentName: Steel Blade
-  StatIncrease: 5
+  ShopLevel: 1
+  MaxShopLevel: 10
+  ExperiencePoints: 0
+  NextToLevel: 100

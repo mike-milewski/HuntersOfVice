@@ -1,62 +1,26 @@
 ﻿using UnityEngine;
-
-public enum MaterialType { Shop, Synthesis }
+using UnityEngine.UI;
 
 public class Materials : MonoBehaviour
 {
     [SerializeField]
-    private MaterialType materialType;
+    private MaterialData materialData;
 
     [SerializeField]
-    private int BuyValue, ShopPoints;
+    private Image MaterialImage;
 
-    private int SellValue;
+    [SerializeField]
+    private string MaterialName;
 
-    public MaterialType GetMaterialType
+    [SerializeField]
+    private int SellValue, ShopPoints;
+
+    private void Awake()
     {
-        get
-        {
-            return materialType;
-        }
-        set
-        {
-            materialType = value;
-        }
-    }
+        MaterialName = materialData.MaterialName;
 
-    public int GetBuyValue
-    {
-        get
-        {
-            return BuyValue;
-        }
-        set
-        {
-            BuyValue = value;
-        }
-    }
+        SellValue = materialData.SellValue;
 
-    public int GetSellValue
-    {
-        get
-        {
-            return SellValue;
-        }
-        set
-        {
-            SellValue = value;
-        }
-    }
-
-    public int GetShopPoints
-    {
-        get
-        {
-            return ShopPoints;
-        }
-        set
-        {
-            ShopPoints = value;
-        }
+        ShopPoints = materialData.ShopPoints;
     }
 }

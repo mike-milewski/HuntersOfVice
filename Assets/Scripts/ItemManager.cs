@@ -9,13 +9,28 @@ public class ItemManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.Z) && item[0].GetButton.interactable)
+        if(Input.GetKeyDown(KeyCode.Z))
         {
-            item[0].GetButton.onClick.Invoke();
+            if(item[0].GetButton.interactable)
+            {
+                item[0].GetButton.onClick.Invoke();
+            }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
+            }
         }
-        if(Input.GetKey(KeyCode.X) && item[1].GetButton.interactable)
+
+        if(Input.GetKeyDown(KeyCode.X))
         {
-            item[1].GetButton.onClick.Invoke();
+            if(item[1].GetButton.interactable)
+            {
+                item[1].GetButton.onClick.Invoke();
+            }
+            else
+            {
+                GameManager.Instance.CannotExecuteText();
+            }
         }
     }
 }
