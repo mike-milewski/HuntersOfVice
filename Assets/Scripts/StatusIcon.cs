@@ -14,6 +14,8 @@ public class StatusIcon : MonoBehaviour
     [SerializeField]
     private GameObject StatusPanel;
 
+    private GameObject PoisonParticle = null, StunParticle = null;
+
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
 
@@ -87,6 +89,12 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.Haste):
                 Haste((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
                 break;
+            case (EffectStatus.DamageOverTime):
+                CreatePoisonEffectParticle();
+                break;
+            case (EffectStatus.Stun):
+                CreateStunEffectParticle();
+                break;
         }
     }
 
@@ -100,12 +108,27 @@ public class StatusIcon : MonoBehaviour
         if (enemyTarget != null)
         {
             RemoveEnemyStatusEffectText();
+            CheckPoisonStatus();
             ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
         }
         else
         {
             RemoveStatusEffectText();
+            CheckPoisonStatus();
             ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
+        }
+    }
+
+    private void CheckPoisonStatus()
+    {
+        switch (status)
+        {
+            case (EffectStatus.DamageOverTime):
+                ObjectPooler.Instance.ReturnPoisonEffectParticleToPool(PoisonParticle);
+                break;
+            case (EffectStatus.Stun):
+                ObjectPooler.Instance.ReturnStunEffectParticleToPool(StunParticle);
+                break;
         }
     }
 
@@ -377,9 +400,91 @@ public class StatusIcon : MonoBehaviour
 
     private void SetStrengthToDefault()
     {
-        int DefaultStrength = SkillsManager.Instance.GetCharacter.GetCharacterData.Strength;
+        int DefaultStrength = 0;
+        int TempStrength = 0;
 
-        SkillsManager.Instance.GetCharacter.CharacterStrength = DefaultStrength;
+        if(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0] != null &&
+           SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1] != null)
+        {
+            if(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length >= 1 &&
+               SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length >= 1)
+            {
+                for(int i = 0; i < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length; i++)
+                {
+                    switch(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatusTypes)
+                    { 
+                        case (StatIncreaseType.Strength):
+                            DefaultStrength += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatIncrease;
+                            break;
+                    }
+                }
+                for (int j = 0; j < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length; j++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[j].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Strength):
+                            DefaultStrength += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[j].GetStatIncrease;
+                            break;
+                    }
+                }
+                TempStrength = SkillsManager.Instance.GetCharacter.GetCharacterData.Strength + DefaultStrength;
+            }
+            else
+            {
+                TempStrength = SkillsManager.Instance.GetCharacter.GetCharacterData.Strength +
+                              SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetEquipmentData.StatIncrease +
+                              SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetEquipmentData.StatIncrease;
+            }
+        }
+        else if(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0] != null &&
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1] == null)
+        {
+            if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length >= 1)
+            {
+                for (int i = 0; i < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length; i++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Strength):
+                            DefaultStrength += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatIncrease;
+                            break;
+                    }
+                }
+                TempStrength = SkillsManager.Instance.GetCharacter.GetCharacterData.Strength + DefaultStrength;
+            }
+            else
+            {
+                TempStrength = SkillsManager.Instance.GetCharacter.GetCharacterData.Strength +
+                              SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetEquipmentData.StatIncrease;
+            }
+        }
+        else if(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0] == null &&
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1] != null)
+        {
+            if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length >= 1)
+            {
+                for (int i = 0; i < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length; i++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[i].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Strength):
+                            DefaultStrength += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[i].GetStatIncrease;
+                            break;
+                    }
+                }
+                TempStrength = SkillsManager.Instance.GetCharacter.GetCharacterData.Strength + DefaultStrength;
+            }
+            else
+            {
+                DefaultStrength += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetEquipmentData.StatIncrease;
+            }
+        }
+        else
+        {
+            TempStrength = SkillsManager.Instance.GetCharacter.GetCharacterData.Strength;
+        }
+
+        SkillsManager.Instance.GetCharacter.CharacterStrength = TempStrength;
     }
 
     private void SetDefenseToDefault()
@@ -394,11 +499,6 @@ public class StatusIcon : MonoBehaviour
         int DefaultIntelligence = SkillsManager.Instance.GetCharacter.GetCharacterData.Intelligence;
 
         SkillsManager.Instance.GetCharacter.CharacterIntelligence = DefaultIntelligence;
-    }
-
-    private void BloodAndSinew()
-    {
-
     }
 
     private void CheckStatusEffectIcon()
@@ -422,7 +522,7 @@ public class StatusIcon : MonoBehaviour
 
     private int RegenAndDOTCalculation()
     {
-        float percent = Mathf.Round(0.1f * (float)SkillsManager.Instance.GetCharacter.MaxHealth);
+        float percent = Mathf.Round(0.05f * (float)SkillsManager.Instance.GetCharacter.MaxHealth);
 
         int GetHealth = (int)percent;
 
@@ -471,6 +571,42 @@ public class StatusIcon : MonoBehaviour
             StatusParticle.transform.position = new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 1.0f, enemyTarget.transform.position.z);
 
             StatusParticle.transform.SetParent(enemyTarget.transform, true);
+        }
+    }
+
+    private void CreatePoisonEffectParticle()
+    {
+        if(settings.UseParticleEffects)
+        {
+            var character = SkillsManager.Instance.GetCharacter;
+
+            var PP = ObjectPooler.Instance.GetPoisonEffectParticle();
+
+            PoisonParticle = PP;
+
+            PP.SetActive(true);
+
+            PP.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.9f, character.transform.position.z);
+
+            PP.transform.SetParent(character.transform, true);
+        }
+    }
+
+    private void CreateStunEffectParticle()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var character = SkillsManager.Instance.GetCharacter;
+
+            var SP = ObjectPooler.Instance.GetStunEffectParticle();
+
+            StunParticle = SP;
+
+            SP.SetActive(true);
+
+            SP.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.8f, character.transform.position.z);
+
+            SP.transform.SetParent(character.transform, true);
         }
     }
 

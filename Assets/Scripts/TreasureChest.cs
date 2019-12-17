@@ -44,13 +44,13 @@ public class TreasureChest : MonoBehaviour
         {
             equipment.gameObject.SetActive(true);
         }
-
+        /*
         for(int i = 0; i < meshrenderer.Length; i++)
         {
             meshrenderer[i].material = AlphaMaterial;
         }
-
-        StartCoroutine(Fade());
+        */
+        //StartCoroutine(Fade());
     }
 
     private void ItemMessageComponents()

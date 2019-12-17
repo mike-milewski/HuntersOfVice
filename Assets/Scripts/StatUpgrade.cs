@@ -190,51 +190,66 @@ public class StatUpgrade : MonoBehaviour
 
     public void AddHealth()
     {
-        character.MaxHealth += StatIncrease;
+        if(StatIncrease > 0)
+        {
+            character.MaxHealth += StatIncrease;
 
-        character.GetComponent<Health>().ModifyHealth(StatIncrease);
+            character.GetComponent<Health>().ModifyHealth(StatIncrease);
 
-        StatIncrease = 0;
-        StatText.text = StatIncrease.ToString();
+            StatIncrease = 0;
+            StatText.text = StatIncrease.ToString();
+        }
     }
 
     public void AddMP()
     {
-        character.MaxMana += StatIncrease;
+        if(StatIncrease > 0)
+        {
+            character.MaxMana += StatIncrease;
 
-        character.GetComponent<Mana>().ModifyMana(StatIncrease);
+            character.GetComponent<Mana>().ModifyMana(StatIncrease);
 
-        StatIncrease = 0;
-        StatText.text = StatIncrease.ToString();
+            StatIncrease = 0;
+            StatText.text = StatIncrease.ToString();
+        }
     }
 
     public void AddStrength()
     {
-        character.CharacterStrength += StatIncrease;
+        if(StatIncrease > 0)
+        {
+            character.CharacterStrength += StatIncrease;
 
-        character.GetCharacterData.Strength = character.CharacterStrength;
+            character.GetCharacterData.Strength += StatIncrease;
 
-        StatIncrease = 0;
-        StatText.text = StatIncrease.ToString();
+            StatIncrease = 0;
+            StatText.text = StatIncrease.ToString();
+        }
     }
 
     public void AddDefense()
     {
-        character.CharacterDefense += StatIncrease;
+        if(StatIncrease > 0)
+        {
+            character.CharacterDefense += StatIncrease;
 
-        character.GetCharacterData.Defense = character.CharacterDefense;
+            character.GetCharacterData.Defense += StatIncrease;
 
-        StatIncrease = 0;
-        StatText.text = StatIncrease.ToString();
+            StatIncrease = 0;
+            StatText.text = StatIncrease.ToString();
+        }
     }
 
     public void AddIntelligence()
     {
-        character.CharacterIntelligence += StatIncrease;
+        if(StatIncrease > 0)
+        {
+            character.CharacterIntelligence += StatIncrease;
 
-        character.GetCharacterData.Intelligence = character.CharacterIntelligence;
+            character.GetCharacterData.Intelligence += StatIncrease;
 
-        StatIncrease = 0;
-        StatText.text = StatIncrease.ToString();
+            StatIncrease = 0;
+            StatText.text = StatIncrease.ToString();
+        }
     }
 }

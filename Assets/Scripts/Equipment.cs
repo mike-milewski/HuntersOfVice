@@ -155,10 +155,11 @@ public class Equipment : MonoBehaviour
         {
             case (EquipmentType.Weapon):
                 WeaponEquip();
-                basicAttack.GetEquipment = this;
+                basicAttack.GetEquipment[0] = this;
                 break;
             case (EquipmentType.Armor):
                 ArmorEquip();
+                basicAttack.GetEquipment[1] = this;
                 break;
         }
     }
@@ -166,6 +167,15 @@ public class Equipment : MonoBehaviour
     public void UnEquip()
     {
         DecreaseStats();
+        switch(equipmentType)
+        {
+            case (EquipmentType.Weapon):
+                basicAttack.GetEquipment[0] = null;
+                break;
+            case (EquipmentType.Armor):
+                basicAttack.GetEquipment[1] = null;
+                break;
+        }
         equippedCheck.GetIsEquipped = false;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
@@ -203,15 +213,12 @@ public class Equipment : MonoBehaviour
                     break;
                 case (StatIncreaseType.Strength):
                     character.CharacterStrength += stattype[i].GetStatIncrease;
-                    character.GetCharacterData.Strength = character.CharacterStrength;
                     break;
                 case (StatIncreaseType.Defense):
                     character.CharacterDefense += stattype[i].GetStatIncrease;
-                    character.GetCharacterData.Defense = character.CharacterDefense;
                     break;
                 case (StatIncreaseType.Intelligence):
                     character.CharacterIntelligence += stattype[i].GetStatIncrease;
-                    character.GetCharacterData.Intelligence = character.CharacterIntelligence;
                     break;
             }
         }
@@ -234,15 +241,12 @@ public class Equipment : MonoBehaviour
                     break;
                 case (StatIncreaseType.Strength):
                     character.CharacterStrength -= stattype[i].GetStatIncrease;
-                    character.GetCharacterData.Strength = character.CharacterStrength;
                     break;
                 case (StatIncreaseType.Defense):
                     character.CharacterDefense -= stattype[i].GetStatIncrease;
-                    character.GetCharacterData.Defense = character.CharacterDefense;
                     break;
                 case (StatIncreaseType.Intelligence):
                     character.CharacterIntelligence -= stattype[i].GetStatIncrease;
-                    character.GetCharacterData.Intelligence = character.CharacterIntelligence;
                     break;
             }
         }

@@ -778,6 +778,11 @@ public class Skills : StatusEffects
 
                 Mathf.Round(CritValue);
 
+                Target.GetHealth.ModifyHealth(-(((int)CritValue + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=20>" + Mathf.Round((CritValue + GetCharacter.CharacterStrength) -
+                                                                           Target.GetCharacter.CharacterDefense) + "!";
+                /*
                 for (int i = 0; i < Target.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
                 {
                     if (GetPlayerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
@@ -870,9 +875,15 @@ public class Skills : StatusEffects
                         }
                     }
                 }
+                */
             }
             else
             {
+                Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + GetCharacter.CharacterStrength) -
+                                                                           Target.GetCharacter.CharacterDefense);
+                /*
                 for(int i = 0; i < Target.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
                 {
                     if(GetPlayerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
@@ -965,6 +976,7 @@ public class Skills : StatusEffects
                         }
                     }
                 }
+                */
             }
             #endregion
 

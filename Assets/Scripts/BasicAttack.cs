@@ -16,7 +16,7 @@ public class BasicAttack : MonoBehaviour
     private EquipmentMenu equipmentMenu;
 
     [SerializeField]
-    private Equipment equipment = null;
+    private Equipment[] equipment = null;
 
     [SerializeField]
     private Camera cam;
@@ -29,8 +29,6 @@ public class BasicAttack : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem HitParticle;
-
-    private bool ParticleExists;
 
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
@@ -61,7 +59,7 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
-    public Equipment GetEquipment
+    public Equipment[] GetEquipment
     {
         get
         {
@@ -252,9 +250,14 @@ public class BasicAttack : MonoBehaviour
 
             Mathf.Round(CriticalValue);
 
+            Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+
+            Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
+                                                                                   Target.GetCharacter.CharacterDefense) + "!";
+            /*
             for (int i = 0; i < Target.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
             {
-                if (equipment.GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
+                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
                 {
                     int WeakDamage = (character.CharacterStrength * 2) + (int)CriticalValue;
 
@@ -265,9 +268,9 @@ public class BasicAttack : MonoBehaviour
                 }
                 else
                 {
-                    if (equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
+                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
                     {
                         Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
 
@@ -278,7 +281,7 @@ public class BasicAttack : MonoBehaviour
             }
             for (int j = 0; j < Target.GetCharacter.GetCharacterData.Resistances.Length; j++)
             {
-                if (equipment.GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[j])
+                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[j])
                 {
                     int ResistDamage = character.CharacterStrength / 2;
 
@@ -291,9 +294,9 @@ public class BasicAttack : MonoBehaviour
                 }
                 else
                 {
-                    if (equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[j] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[j] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[j])
+                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[j] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[j] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[j])
                     {
                         Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
 
@@ -304,15 +307,15 @@ public class BasicAttack : MonoBehaviour
             }
             for(int k = 0; k < Target.GetCharacter.GetCharacterData.Immunities.Length; k++)
             {
-                if(equipment.GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[k])
+                if(equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[k])
                 {
                     Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "0" + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
                 }
                 else
                 {
-                    if (equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[k] &&
-                                           equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[k] &&
-                                           equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[k])
+                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[k] &&
+                                           equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[k] &&
+                                           equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[k])
                     {
                         Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
 
@@ -323,7 +326,7 @@ public class BasicAttack : MonoBehaviour
             }
             for (int L = 0; L < Target.GetCharacter.GetCharacterData.Absorbtions.Length; L++)
             {
-                if (equipment.GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[L])
+                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[L])
                 {
                     Target.GetHealth.IncreaseHealth(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense);
 
@@ -332,9 +335,9 @@ public class BasicAttack : MonoBehaviour
                 }
                 else
                 {
-                    if (equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[L] &&
-                                           equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[L] &&
-                                           equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[L])
+                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[L] &&
+                                           equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[L] &&
+                                           equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[L])
                     {
                         Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
 
@@ -343,12 +346,18 @@ public class BasicAttack : MonoBehaviour
                     }
                 }
             }
+            */
         }
         else
         {
+            Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
+
+            Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength -
+                                                                                    Target.GetCharacter.CharacterDefense);
+            /*
             for (int i = 0; i < Target.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
             {
-                if (equipment.GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
+                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
                 {
                     int WeakDamage = character.CharacterStrength * 2;
 
@@ -359,9 +368,9 @@ public class BasicAttack : MonoBehaviour
                 }
                 else
                 {
-                    if (equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
+                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
                     {
                         Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
 
@@ -372,7 +381,7 @@ public class BasicAttack : MonoBehaviour
             }
             for (int j = 0; j < Target.GetCharacter.GetCharacterData.Resistances.Length; j++)
             {
-                if (equipment.GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[j])
+                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[j])
                 {
                     int ResistDamage = character.CharacterStrength / 2;
 
@@ -385,9 +394,9 @@ public class BasicAttack : MonoBehaviour
                 }
                 else
                 {
-                    if (equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[j] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[j] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[j])
+                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[j] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[j] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[j])
                     {
                         Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
 
@@ -398,15 +407,15 @@ public class BasicAttack : MonoBehaviour
             }
             for (int k = 0; k < Target.GetCharacter.GetCharacterData.Immunities.Length; k++)
             {
-                if (equipment.GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[k])
+                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[k])
                 {
                     Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "0" + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
                 }
                 else
                 {
-                    if (equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[k] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[k] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[k])
+                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[k] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[k] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[k])
                     {
                         Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
 
@@ -417,7 +426,7 @@ public class BasicAttack : MonoBehaviour
             }
             for (int L = 0; L < Target.GetCharacter.GetCharacterData.Absorbtions.Length; L++)
             {
-                if (equipment.GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[L])
+                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[L])
                 {
                     Target.GetHealth.IncreaseHealth(character.CharacterStrength - Target.GetCharacter.CharacterDefense);
 
@@ -426,9 +435,9 @@ public class BasicAttack : MonoBehaviour
                 }
                 else
                 {
-                    if (equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[L] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[L] &&
-                       equipment.GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[L])
+                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[L] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[L] &&
+                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[L])
                     {
                         Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
 
@@ -437,6 +446,7 @@ public class BasicAttack : MonoBehaviour
                     }
                 }
             }
+            */
         }
         #endregion
 

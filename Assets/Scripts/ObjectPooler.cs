@@ -111,6 +111,8 @@ public class ObjectPooler : MonoBehaviour
         AddStunningStingerParticle(poolcontroller[21].GetPoolAmount);
         AddCoinText(poolcontroller[22].GetPoolAmount);
         AddItemMessage(poolcontroller[23].GetPoolAmount);
+        AddPoisonEffectParticle(poolcontroller[24].GetPoolAmount);
+        AddStunEffectParticle(poolcontroller[25].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -401,6 +403,30 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddPoisonEffectParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[24].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[24].GetPoolParent.transform, false);
+            poolcontroller[24].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddStunEffectParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[25].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[25].GetPoolParent.transform, false);
+            poolcontroller[25].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -519,6 +545,16 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetItemMessage()
     {
         return poolcontroller[23].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetPoisonEffectParticle()
+    {
+        return poolcontroller[24].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetStunEffectParticle()
+    {
+        return poolcontroller[25].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -710,6 +746,22 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[23].GetPoolParent.transform, false);
 
         poolcontroller[23].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnPoisonEffectParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[24].GetPoolParent.transform, false);
+
+        poolcontroller[24].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnStunEffectParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[25].GetPoolParent.transform, false);
+
+        poolcontroller[25].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }
