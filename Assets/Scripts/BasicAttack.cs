@@ -24,7 +24,7 @@ public class BasicAttack : MonoBehaviour
     [SerializeField]
     private PlayerAnimations playerAnimations;
 
-    [SerializeField] [Tooltip("Current targeted object. Keep this empty!")]
+    [SerializeField] [Tooltip("Current targeted object. Keep this null!")]
     private Enemy Target = null;
 
     [SerializeField]

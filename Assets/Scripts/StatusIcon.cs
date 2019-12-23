@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 using TMPro;
 
-public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, BloodAndSinew, DefenseDOWN }
+public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
+                           IntelligenceDOWN, BloodAndSinew }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -83,7 +84,32 @@ public class StatusIcon : MonoBehaviour
         {
             case (EffectStatus.StrengthUP):
                 StrengthUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
-                SkillsManager.Instance.GetCharacterMenu.GetStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.GetStrengthStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.DefenseUP):
+                DefenseUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
+                SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.IntelligenceUP):
+                IntelligenceUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.StrengthDOWN):
+                StrengthDOWN(15);
+                SkillsManager.Instance.GetCharacterMenu.GetStrengthStatColor = "<#FA2900>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.DefenseDOWN):
+                DefenseDOWN(15);
+                SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FA2900>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.IntelligenceDOWN):
+                IntelligenceDOWN(15);
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#FA2900>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.Haste):
@@ -108,27 +134,43 @@ public class StatusIcon : MonoBehaviour
         if (enemyTarget != null)
         {
             RemoveEnemyStatusEffectText();
-            CheckPoisonStatus();
+            CheckStatus();
             ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
         }
         else
         {
             RemoveStatusEffectText();
-            CheckPoisonStatus();
+            CheckStatus();
             ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
         }
     }
 
-    private void CheckPoisonStatus()
+    private void CheckStatus()
     {
         switch (status)
         {
             case (EffectStatus.DamageOverTime):
-                ObjectPooler.Instance.ReturnPoisonEffectParticleToPool(PoisonParticle);
+                CheckPoisonParticleActive();
                 break;
             case (EffectStatus.Stun):
-                ObjectPooler.Instance.ReturnStunEffectParticleToPool(StunParticle);
+                CheckStunParticleActive();
                 break;
+        }
+    }
+
+    private void CheckPoisonParticleActive()
+    {
+        if(PoisonParticle.activeInHierarchy)
+        {
+            ObjectPooler.Instance.ReturnPoisonEffectParticleToPool(PoisonParticle);
+        }
+    }
+
+    private void CheckStunParticleActive()
+    {
+        if(StunParticle.activeInHierarchy)
+        {
+            ObjectPooler.Instance.ReturnStunEffectParticleToPool(StunParticle);
         }
     }
 
@@ -158,8 +200,8 @@ public class StatusIcon : MonoBehaviour
 
         Duration = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDuration;
 
-        StatusDescriptionText.text = "<#EFDFB8>" + "<size=16>" + "<u>" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "</u>" + "</color>" +
-                                     "\n" + "</size>" + "<size=15>" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=16>" + "<u>" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName + "</u>" + 
+                                     "</color>" + "\n" + "</size>" + "<size=15>" + enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusDescription;
 
         DamageOrHealTick = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectPotency;
 
@@ -185,7 +227,17 @@ public class StatusIcon : MonoBehaviour
         {
             case (EffectStatus.StrengthUP):
                 SetStrengthToDefault();
-                SkillsManager.Instance.GetCharacterMenu.GetStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.GetStrengthStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.DefenseUP):
+                SetDefenseToDefault();
+                SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.IntelligenceUP):
+                SetIntelligenceToDefault();
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#FFFFFF>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.Haste):
@@ -222,6 +274,21 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
                 SkillsManager.Instance.GetDisruptedSkill = false;
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
+                break;
+            case (EffectStatus.StrengthDOWN):
+                SetStrengthToDefault();
+                SkillsManager.Instance.GetCharacterMenu.GetStrengthStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.DefenseDOWN):
+                SetDefenseToDefault();
+                SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.IntelligenceDOWN):
+                SetIntelligenceToDefault();
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.Doom):
                 SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(-SkillsManager.Instance.GetCharacter.CurrentHealth);
@@ -317,9 +384,9 @@ public class StatusIcon : MonoBehaviour
     {
         float Percentage = (float)value / 100;
 
-        float TempStrength = (float)SkillsManager.Instance.GetCharacter.CharacterStrength;
+        float TempStrength = SkillsManager.Instance.GetCharacter.CharacterStrength;
 
-        TempStrength += (float)SkillsManager.Instance.GetCharacter.CharacterStrength * Percentage;
+        TempStrength += SkillsManager.Instance.GetCharacter.CharacterStrength * Percentage;
 
         Mathf.Round(TempStrength);
 
@@ -330,9 +397,9 @@ public class StatusIcon : MonoBehaviour
     {
         float Percentage = (float)value / 100;
 
-        float TempDefense = (float)SkillsManager.Instance.GetCharacter.CharacterDefense;
+        float TempDefense = SkillsManager.Instance.GetCharacter.CharacterDefense;
 
-        TempDefense += (float)SkillsManager.Instance.GetCharacter.CharacterDefense * Percentage;
+        TempDefense += SkillsManager.Instance.GetCharacter.CharacterDefense * Percentage;
 
         Mathf.Round(TempDefense);
 
@@ -343,9 +410,9 @@ public class StatusIcon : MonoBehaviour
     {
         float Percentage = (float)value / 100;
 
-        float TempIntelligence = (float)SkillsManager.Instance.GetCharacter.CharacterIntelligence;
+        float TempIntelligence = SkillsManager.Instance.GetCharacter.CharacterIntelligence;
 
-        TempIntelligence += (float)SkillsManager.Instance.GetCharacter.CharacterIntelligence * Percentage;
+        TempIntelligence += SkillsManager.Instance.GetCharacter.CharacterIntelligence * Percentage;
 
         Mathf.Round(TempIntelligence);
 
@@ -356,9 +423,9 @@ public class StatusIcon : MonoBehaviour
     {
         float Percentage = (float)value / 100;
 
-        float TempStrength = (float)SkillsManager.Instance.GetCharacter.CharacterStrength;
+        float TempStrength = SkillsManager.Instance.GetCharacter.CharacterStrength;
 
-        TempStrength -= (float)SkillsManager.Instance.GetCharacter.CharacterStrength * Percentage;
+        TempStrength -= SkillsManager.Instance.GetCharacter.CharacterStrength * Percentage;
 
         Mathf.Round(TempStrength);
 
@@ -369,9 +436,9 @@ public class StatusIcon : MonoBehaviour
     {
         float Percentage = (float)value / 100;
 
-        float TempDefense = (float)SkillsManager.Instance.GetCharacter.CharacterDefense;
+        float TempDefense = SkillsManager.Instance.GetCharacter.CharacterDefense;
 
-        TempDefense -= (float)SkillsManager.Instance.GetCharacter.CharacterDefense * Percentage;
+        TempDefense -= SkillsManager.Instance.GetCharacter.CharacterDefense * Percentage;
 
         Mathf.Round(TempDefense);
 
@@ -382,9 +449,9 @@ public class StatusIcon : MonoBehaviour
     {
         float Percentage = (float)value / 100;
 
-        float TempIntelligence = (float)SkillsManager.Instance.GetCharacter.CharacterIntelligence;
+        float TempIntelligence = SkillsManager.Instance.GetCharacter.CharacterIntelligence;
 
-        TempIntelligence -= (float)SkillsManager.Instance.GetCharacter.CharacterIntelligence * Percentage;
+        TempIntelligence -= SkillsManager.Instance.GetCharacter.CharacterIntelligence * Percentage;
 
         Mathf.Round(TempIntelligence);
 
@@ -489,16 +556,180 @@ public class StatusIcon : MonoBehaviour
 
     private void SetDefenseToDefault()
     {
-        int DefaultDefense = SkillsManager.Instance.GetCharacter.GetCharacterData.Defense;
+        int DefaultDefense = 0;
+        int TempDefense = 0;
 
-        SkillsManager.Instance.GetCharacter.CharacterDefense = DefaultDefense;
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0] != null &&
+           SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1] != null)
+        {
+            if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length >= 1 &&
+               SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length >= 1)
+            {
+                for (int i = 0; i < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length; i++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Defense):
+                            DefaultDefense += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatIncrease;
+                            break;
+                    }
+                }
+                for (int j = 0; j < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length; j++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[j].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Defense):
+                            DefaultDefense += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[j].GetStatIncrease;
+                            break;
+                    }
+                }
+                TempDefense = SkillsManager.Instance.GetCharacter.GetCharacterData.Defense + DefaultDefense;
+            }
+            else
+            {
+                TempDefense = SkillsManager.Instance.GetCharacter.GetCharacterData.Defense +
+                              SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetEquipmentData.StatIncrease +
+                              SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetEquipmentData.StatIncrease;
+            }
+        }
+        else if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0] != null &&
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1] == null)
+        {
+            if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length >= 1)
+            {
+                for (int i = 0; i < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length; i++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Defense):
+                            DefaultDefense += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatIncrease;
+                            break;
+                    }
+                }
+                TempDefense = SkillsManager.Instance.GetCharacter.GetCharacterData.Defense + DefaultDefense;
+            }
+            else
+            {
+                TempDefense = SkillsManager.Instance.GetCharacter.GetCharacterData.Defense +
+                              SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetEquipmentData.StatIncrease;
+            }
+        }
+        else if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0] == null &&
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1] != null)
+        {
+            if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length >= 1)
+            {
+                for (int i = 0; i < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length; i++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[i].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Defense):
+                            DefaultDefense += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[i].GetStatIncrease;
+                            break;
+                    }
+                }
+                TempDefense = SkillsManager.Instance.GetCharacter.GetCharacterData.Defense + DefaultDefense;
+            }
+            else
+            {
+                DefaultDefense += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetEquipmentData.StatIncrease;
+            }
+        }
+        else
+        {
+            TempDefense = SkillsManager.Instance.GetCharacter.GetCharacterData.Defense;
+        }
+
+        SkillsManager.Instance.GetCharacter.CharacterDefense = TempDefense;
     }
 
     private void SetIntelligenceToDefault()
     {
-        int DefaultIntelligence = SkillsManager.Instance.GetCharacter.GetCharacterData.Intelligence;
+        int DefaultIntelligence = 0;
+        int TempIntelligence = 0;
 
-        SkillsManager.Instance.GetCharacter.CharacterIntelligence = DefaultIntelligence;
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0] != null &&
+           SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1] != null)
+        {
+            if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length >= 1 &&
+               SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length >= 1)
+            {
+                for (int i = 0; i < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length; i++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Intelligence):
+                            DefaultIntelligence += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatIncrease;
+                            break;
+                    }
+                }
+                for (int j = 0; j < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length; j++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[j].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Intelligence):
+                            DefaultIntelligence += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[j].GetStatIncrease;
+                            break;
+                    }
+                }
+                TempIntelligence = SkillsManager.Instance.GetCharacter.GetCharacterData.Intelligence + DefaultIntelligence;
+            }
+            else
+            {
+                TempIntelligence = SkillsManager.Instance.GetCharacter.GetCharacterData.Intelligence +
+                              SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetEquipmentData.StatIncrease +
+                              SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetEquipmentData.StatIncrease;
+            }
+        }
+        else if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0] != null &&
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1] == null)
+        {
+            if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length >= 1)
+            {
+                for (int i = 0; i < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType.Length; i++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Intelligence):
+                            DefaultIntelligence += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetStatusType[i].GetStatIncrease;
+                            break;
+                    }
+                }
+                TempIntelligence = SkillsManager.Instance.GetCharacter.GetCharacterData.Intelligence + DefaultIntelligence;
+            }
+            else
+            {
+                TempIntelligence = SkillsManager.Instance.GetCharacter.GetCharacterData.Intelligence +
+                              SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0].GetEquipmentData.StatIncrease;
+            }
+        }
+        else if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[0] == null &&
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1] != null)
+        {
+            if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length >= 1)
+            {
+                for (int i = 0; i < SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType.Length; i++)
+                {
+                    switch (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[i].GetStatusTypes)
+                    {
+                        case (StatIncreaseType.Intelligence):
+                            DefaultIntelligence += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetStatusType[i].GetStatIncrease;
+                            break;
+                    }
+                }
+                TempIntelligence = SkillsManager.Instance.GetCharacter.GetCharacterData.Intelligence + DefaultIntelligence;
+            }
+            else
+            {
+                DefaultIntelligence += SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetEquipment[1].GetEquipmentData.StatIncrease;
+            }
+        }
+        else
+        {
+            TempIntelligence = SkillsManager.Instance.GetCharacter.GetCharacterData.Intelligence;
+        }
+
+        SkillsManager.Instance.GetCharacter.CharacterIntelligence = TempIntelligence;
     }
 
     private void CheckStatusEffectIcon()
@@ -535,13 +766,16 @@ public class StatusIcon : MonoBehaviour
     {
         if(status == EffectStatus.Doom)
         {
-            var chara = SkillsManager.Instance.GetCharacter;
+            if(settings.UseParticleEffects)
+            {
+                var chara = SkillsManager.Instance.GetCharacter;
 
-            var Statusparticle = Instantiate(DoomParticle, new Vector3(chara.transform.position.x,
-                                                                       chara.transform.position.y + 1f,
-                                                                       chara.transform.position.z), transform.rotation);
+                var Statusparticle = Instantiate(DoomParticle, new Vector3(chara.transform.position.x,
+                                                                           chara.transform.position.y + 1f,
+                                                                           chara.transform.position.z), transform.rotation);
 
-            Statusparticle.transform.SetParent(chara.transform, true);
+                Statusparticle.transform.SetParent(chara.transform, true);
+            }
         }
         else
         {
@@ -584,11 +818,18 @@ public class StatusIcon : MonoBehaviour
 
             PoisonParticle = PP;
 
-            PP.SetActive(true);
+            if(PP.activeInHierarchy)
+            {
+                
+            }
+            else
+            {
+                PP.SetActive(true);
 
-            PP.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.9f, character.transform.position.z);
+                PP.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.9f, character.transform.position.z);
 
-            PP.transform.SetParent(character.transform, true);
+                PP.transform.SetParent(character.transform, true);
+            }
         }
     }
 

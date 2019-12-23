@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CursorController : MonoBehaviour
 {
@@ -48,68 +49,81 @@ public class CursorController : MonoBehaviour
 
     private void OpenTreasureChest()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if(Physics.Raycast(ray, out hit, ActionMouseRange))
+        if(!EventSystem.current.IsPointerOverGameObject())
         {
-            if(hit.collider.GetComponent<TreasureChest>())
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, ActionMouseRange))
             {
-                hit.collider.GetComponent<TreasureChest>().GetAnimator.SetBool("OpenChest", true);
-                hit.collider.GetComponent<BoxCollider>().enabled = false;
+                if (hit.collider.GetComponent<TreasureChest>())
+                {
+                    hit.collider.GetComponent<TreasureChest>().GetAnimator.SetBool("OpenChest", true);
+                    hit.collider.GetComponent<BoxCollider>().enabled = false;
+                }
             }
         }
     }
 
     private void OpenShopMenu()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit, SpeechMouseRange))
+        if(!EventSystem.current.IsPointerOverGameObject())
         {
-            if (hit.collider.GetComponent<ShopKeeper>())
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, SpeechMouseRange))
             {
-                hit.collider.GetComponent<ShopKeeper>().GetIsInShop = true;
-                hit.collider.GetComponent<ShopKeeper>().GetAnimator.SetBool("FadeIn", true);
+                if (hit.collider.GetComponent<ShopKeeper>())
+                {
+                    hit.collider.GetComponent<ShopKeeper>().GetIsInShop = true;
+                    hit.collider.GetComponent<ShopKeeper>().GetAnimator.SetBool("FadeIn", true);
+                }
             }
         }
     }
 
     private void ChangeCursor()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(!EventSystem.current.IsPointerOverGameObject())
+        {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, EnemyMouseRange))
-        {
-            if (hit.collider.GetComponent<Enemy>())
+            if (Physics.Raycast(ray, out hit, EnemyMouseRange))
             {
-                CursorController.Instance.SetAttackCursor();
+                if (hit.collider.GetComponent<Enemy>())
+                {
+                    CursorController.Instance.SetAttackCursor();
+                }
+                else
+                {
+                    SetDefaultCursor();
+                }
             }
-            else
+            if (Physics.Raycast(ray, out hit, ActionMouseRange))
             {
-                SetDefaultCursor();
+                if (hit.collider.GetComponent<TreasureChest>())
+                {
+                    CursorController.Instance.SetActionCursor();
+                }
+                else
+                {
+                    SetDefaultCursor();
+                }
+            }
+            if (Physics.Raycast(ray, out hit, SpeechMouseRange))
+            {
+                if (hit.collider.GetComponent<ShopKeeper>())
+                {
+                    CursorController.Instance.SetSpeechCursor();
+                }
+                else
+                {
+                    SetDefaultCursor();
+                }
             }
         }
-        if (Physics.Raycast(ray, out hit, ActionMouseRange))
+        else
         {
-            if (hit.collider.GetComponent<TreasureChest>())
-            {
-                CursorController.Instance.SetActionCursor();
-            }
-            else
-            {
-                SetDefaultCursor();
-            }
-        }
-        if (Physics.Raycast(ray, out hit, SpeechMouseRange))
-        {
-            if (hit.collider.GetComponent<ShopKeeper>())
-            {
-                CursorController.Instance.SetSpeechCursor();
-            }
-            else
-            {
-                SetDefaultCursor();
-            }
+            SetDefaultCursor();
         }
     }
 

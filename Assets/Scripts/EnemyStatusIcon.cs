@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 
-public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, BloodAndSinew, DefenseDOWN };
+public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
+                           IntelligenceDOWN};
 
 public class EnemyStatusIcon : MonoBehaviour
 {
