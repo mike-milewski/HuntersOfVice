@@ -257,7 +257,7 @@ public class Equipment : MonoBehaviour
     {
         EquipmentNameText.text = equipmentData.EquipmentName;
 
-        EquipmentInfoText.text = StatsText().text;
+        EquipmentInfoText.text = StatsText().text + "\n" + "Element: " + equipmentData.Element;
     }
 
     private void CurrentArmorEquippedText()
@@ -273,38 +273,88 @@ public class Equipment : MonoBehaviour
 
         if (stattype.Length == 1)
         {
-            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n";
+            if(equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease;
+            }
         }
         if (stattype.Length == 2)
         {
-            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+            if (equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease;
+            } 
         }
         if (stattype.Length == 3)
         {
-            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+            if (equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                       stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                       stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease;
+            }
         }
         if (stattype.Length == 4)
         {
-            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+            if (equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease;
+            }
         }
         if(stattype.Length == 5)
         {
-            EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+            if (equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
+                                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
                                         stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease;
+            }
         }
     }
 
