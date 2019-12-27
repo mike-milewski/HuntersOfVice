@@ -31,6 +31,9 @@ public class BasicAttack : MonoBehaviour
     private ParticleSystem HitParticle;
 
     [SerializeField]
+    private PlayerElement playerElement;
+
+    [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
 
     private float AttackDistance;
@@ -250,203 +253,85 @@ public class BasicAttack : MonoBehaviour
 
             Mathf.Round(CriticalValue);
 
-            Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
-
-            Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
-                                                                                   Target.GetCharacter.CharacterDefense) + "!";
-            /*
-            for (int i = 0; i < Target.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
+            if(CheckWeaknesses())
             {
-                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
-                {
-                    int WeakDamage = (character.CharacterStrength * 2) + (int)CriticalValue;
+                int WeakDamage = (character.CharacterStrength * 2) + (int)CriticalValue;
 
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
+                Target.GetComponentInChildren<Health>().ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(WeakDamage - Target.GetCharacter.CharacterDefense) + "!" +
-                                                                                "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
-                }
-                else
-                {
-                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
-                    {
-                        Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
-
-                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
-                                                                                    Target.GetCharacter.CharacterDefense) + "!";
-                    }
-                }
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(WeakDamage - Target.GetCharacter.CharacterDefense) + "!" +
+                                                                            "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
             }
-            for (int j = 0; j < Target.GetCharacter.GetCharacterData.Resistances.Length; j++)
+            else if(CheckResistances())
             {
-                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[j])
-                {
-                    int ResistDamage = character.CharacterStrength / 2;
+                float ResistDamage = (character.CharacterStrength / 1.25f) + (int)CriticalValue;
 
-                    Mathf.Round(ResistDamage);
+                Mathf.RoundToInt(ResistDamage);
 
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-(ResistDamage - Target.GetCharacter.CharacterDefense));
+                Target.GetComponentInChildren<Health>().ModifyHealth(-((int)ResistDamage - Target.GetCharacter.CharacterDefense));
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(ResistDamage - Target.GetCharacter.CharacterDefense) + "!" +
-                                                                                "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
-                }
-                else
-                {
-                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[j] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[j] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[j])
-                    {
-                        Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
-
-                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
-                                                                                    Target.GetCharacter.CharacterDefense) + "!";
-                    }
-                }
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(ResistDamage - Target.GetCharacter.CharacterDefense) + "!" +
+                                                                            "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
             }
-            for(int k = 0; k < Target.GetCharacter.GetCharacterData.Immunities.Length; k++)
+            else if(CheckImmunities())
             {
-                if(equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[k])
-                {
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "0" + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
-                }
-                else
-                {
-                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[k] &&
-                                           equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[k] &&
-                                           equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[k])
-                    {
-                        Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
-
-                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
-                                                                                    Target.GetCharacter.CharacterDefense) + "!";
-                    }
-                }
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "0" + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
             }
-            for (int L = 0; L < Target.GetCharacter.GetCharacterData.Absorbtions.Length; L++)
+            else if(CheckAbsorptions())
             {
-                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[L])
-                {
-                    Target.GetHealth.IncreaseHealth(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense);
+                Target.GetHealth.IncreaseHealth(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
-                                                                                Target.GetCharacter.CharacterDefense) + "!";
-                }
-                else
-                {
-                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[L] &&
-                                           equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[L] &&
-                                           equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[L])
-                    {
-                        Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
-
-                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
-                                                                                    Target.GetCharacter.CharacterDefense) + "!";
-                    }
-                }
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
+                                                                            Target.GetCharacter.CharacterDefense) + "!";
             }
-            */
+            else
+            {
+                Target.GetHealth.ModifyHealth(-(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
+                                                                            Target.GetCharacter.CharacterDefense) + "!";
+            }
         }
         else
         {
-            Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
-
-            Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength -
-                                                                                    Target.GetCharacter.CharacterDefense);
-            /*
-            for (int i = 0; i < Target.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
+            if (CheckWeaknesses())
             {
-                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
-                {
-                    int WeakDamage = character.CharacterStrength * 2;
+                int WeakDamage = (character.CharacterStrength * 2);
 
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
+                Target.GetComponentInChildren<Health>().ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(WeakDamage - Target.GetCharacter.CharacterDefense) +
-                                                                                "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
-                }
-                else
-                {
-                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
-                    {
-                        Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
-
-                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength -
-                                                                                    Target.GetCharacter.CharacterDefense);
-                    }
-                }
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(WeakDamage - Target.GetCharacter.CharacterDefense) +
+                                                                            "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
             }
-            for (int j = 0; j < Target.GetCharacter.GetCharacterData.Resistances.Length; j++)
+            else if (CheckResistances())
             {
-                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[j])
-                {
-                    int ResistDamage = character.CharacterStrength / 2;
+                float ResistDamage = (character.CharacterStrength / 1.25f);
 
-                    Mathf.Round(ResistDamage);
+                Mathf.RoundToInt(ResistDamage);
 
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-(ResistDamage - Target.GetCharacter.CharacterDefense));
+                Target.GetComponentInChildren<Health>().ModifyHealth(-((int)ResistDamage - Target.GetCharacter.CharacterDefense));
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(ResistDamage - Target.GetCharacter.CharacterDefense) +
-                                                                                "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
-                }
-                else
-                {
-                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[j] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[j] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[j])
-                    {
-                        Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
-
-                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength -
-                                                                                    Target.GetCharacter.CharacterDefense);
-                    }
-                }
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(ResistDamage - Target.GetCharacter.CharacterDefense) +
+                                                                            "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
             }
-            for (int k = 0; k < Target.GetCharacter.GetCharacterData.Immunities.Length; k++)
+            else if (CheckImmunities())
             {
-                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[k])
-                {
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "0" + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
-                }
-                else
-                {
-                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[k] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[k] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[k])
-                    {
-                        Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
-
-                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength -
-                                                                                    Target.GetCharacter.CharacterDefense);
-                    }
-                }
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "0" + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
             }
-            for (int L = 0; L < Target.GetCharacter.GetCharacterData.Absorbtions.Length; L++)
+            else if (CheckAbsorptions())
             {
-                if (equipment[0].GetEquipmentData.Element == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[L])
-                {
-                    Target.GetHealth.IncreaseHealth(character.CharacterStrength - Target.GetCharacter.CharacterDefense);
+                Target.GetHealth.IncreaseHealth((character.CharacterStrength - Target.GetCharacter.CharacterDefense));
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(character.CharacterStrength -
-                                                                                Target.GetCharacter.CharacterDefense);
-                }
-                else
-                {
-                    if (equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[L] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[L] &&
-                       equipment[0].GetEquipmentData.Element != (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[L])
-                    {
-                        Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
-
-                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength -
-                                                                                    Target.GetCharacter.CharacterDefense);
-                    }
-                }
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(character.CharacterStrength -
+                                                                            Target.GetCharacter.CharacterDefense);
             }
-            */
+            else
+            {
+                Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
+
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength -
+                                                                                        Target.GetCharacter.CharacterDefense);
+            }
         }
         #endregion
 
@@ -454,6 +339,66 @@ public class BasicAttack : MonoBehaviour
             Target.GetAI.GetStates = States.Damaged;
 
         return Damagetext.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private bool CheckWeaknesses()
+    {
+        bool Weakness = false;
+
+        for (int i = 0; i < Target.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
+        {
+            if(playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
+            {
+                Weakness = true;
+            }
+        }
+
+        return Weakness;
+    }
+
+    private bool CheckResistances()
+    {
+        bool Resistance = false;
+
+        for (int i = 0; i < Target.GetCharacter.GetCharacterData.Resistances.Length; i++)
+        {
+            if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i])
+            {
+                Resistance = true;
+            }
+        }
+
+        return Resistance;
+    }
+
+    private bool CheckImmunities()
+    {
+        bool Immunity = false;
+
+        for (int i = 0; i < Target.GetCharacter.GetCharacterData.Immunities.Length; i++)
+        {
+            if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i])
+            {
+                Immunity = true;
+            }
+        }
+
+        return Immunity;
+    }
+
+    private bool CheckAbsorptions()
+    {
+        bool Absorption = false;
+
+        for (int i = 0; i < Target.GetCharacter.GetCharacterData.Absorbtions.Length; i++)
+        {
+            if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
+            {
+                Absorption = true;
+            }
+        }
+
+        return Absorption;
     }
 
     public void HitParticleEffect()
