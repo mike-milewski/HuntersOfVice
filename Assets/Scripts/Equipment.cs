@@ -156,6 +156,7 @@ public class Equipment : MonoBehaviour
             case (EquipmentType.Weapon):
                 WeaponEquip();
                 basicAttack.GetEquipment[0] = this;
+                basicAttack.GetPlayerElement = basicAttack.GetEquipment[0].equipmentData.Element;
                 break;
             case (EquipmentType.Armor):
                 ArmorEquip();
@@ -171,6 +172,7 @@ public class Equipment : MonoBehaviour
         {
             case (EquipmentType.Weapon):
                 basicAttack.GetEquipment[0] = null;
+                basicAttack.GetPlayerElement = PlayerElement.Physical;
                 break;
             case (EquipmentType.Armor):
                 basicAttack.GetEquipment[1] = null;

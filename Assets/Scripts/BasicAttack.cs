@@ -74,6 +74,18 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
+    public PlayerElement GetPlayerElement
+    {
+        get
+        {
+            return playerElement;
+        }
+        set
+        {
+            playerElement = value;
+        }
+    }
+
     private void Awake()
     {
         cam.GetComponent<Camera>();
@@ -249,7 +261,7 @@ public class BasicAttack : MonoBehaviour
         #region CriticalHitCalculation
         if (Random.value * 100 <= Critical)
         {
-            float CriticalValue = character.CharacterStrength * 1.5f;
+            float CriticalValue = character.CharacterStrength * 1.25f;
 
             Mathf.Round(CriticalValue);
 
@@ -281,8 +293,11 @@ public class BasicAttack : MonoBehaviour
             {
                 Target.GetHealth.IncreaseHealth(((int)CriticalValue + character.CharacterStrength) - Target.GetCharacter.CharacterDefense);
 
-                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
-                                                                            Target.GetCharacter.CharacterDefense) + "!";
+                Target.GetLocalHealthInfo();
+
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "<#4CFFAD>" + Mathf.Round((CriticalValue + character.CharacterStrength) -
+                                                                            Target.GetCharacter.CharacterDefense) + "!" + "</color>" + "\n" + "</size>" + "<size=12> " +
+                                                                            "<#EFDFB8>" + "(ABSORBED!)" + "</color> </size>";
             }
             else
             {
@@ -322,21 +337,26 @@ public class BasicAttack : MonoBehaviour
             {
                 Target.GetHealth.IncreaseHealth((character.CharacterStrength - Target.GetCharacter.CharacterDefense));
 
-                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(character.CharacterStrength -
-                                                                            Target.GetCharacter.CharacterDefense);
+                Target.GetLocalHealthInfo();
+
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "<#4CFFAD>" + Mathf.Round(character.CharacterStrength -
+                                                                            Target.GetCharacter.CharacterDefense) + "</color>" + "\n" + "<size=12> <#EFDFB8>" + 
+                                                                            "(ABSORBED!)";
             }
             else
             {
                 Target.GetHealth.ModifyHealth(-(character.CharacterStrength - Target.GetCharacter.CharacterDefense));
 
-                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength -
-                                                                                        Target.GetCharacter.CharacterDefense);
+                Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (character.CharacterStrength - Target.GetCharacter.CharacterDefense);
             }
         }
         #endregion
 
-        if (Target.GetAI.GetStates != States.Skill && Target.GetAI.GetStates != States.ApplyingAttack && Target.GetAI.GetStates != States.SkillAnimation)
+        if (Target.GetAI.GetStates != States.Skill && Target.GetAI.GetStates != States.ApplyingAttack && Target.GetAI.GetStates != States.SkillAnimation && 
+            !CheckAbsorptions())
+        {
             Target.GetAI.GetStates = States.Damaged;
+        }   
 
         return Damagetext.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -352,7 +372,6 @@ public class BasicAttack : MonoBehaviour
                 Weakness = true;
             }
         }
-
         return Weakness;
     }
 
@@ -367,7 +386,6 @@ public class BasicAttack : MonoBehaviour
                 Resistance = true;
             }
         }
-
         return Resistance;
     }
 
@@ -382,7 +400,6 @@ public class BasicAttack : MonoBehaviour
                 Immunity = true;
             }
         }
-
         return Immunity;
     }
 
@@ -397,7 +414,6 @@ public class BasicAttack : MonoBehaviour
                 Absorption = true;
             }
         }
-
         return Absorption;
     }
 
