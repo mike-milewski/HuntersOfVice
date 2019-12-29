@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public enum States { Patrol, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile }
 
+public enum EnemyType { Monster, Boss }
+
 [System.Serializable]
 public class AiStates
 {
@@ -45,6 +47,9 @@ public class EnemyAI : MonoBehaviour
     private States states;
 
     [SerializeField]
+    private EnemyType enemyType;
+
+    [SerializeField]
     private AiStates[] aiStates;
 
     [SerializeField]
@@ -83,7 +88,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private ParticleSystem HitParticle;
 
-    [SerializeField] 
+    [SerializeField]
     private float TimeToMoveAgain; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
 
     private float TimeToMove, DistanceToTarget;
@@ -142,7 +147,7 @@ public class EnemyAI : MonoBehaviour
     public void IncreaseArray()
     {
         StateArrayIndex++;
-        if(StateArrayIndex >= aiStates.Length)
+        if (StateArrayIndex >= aiStates.Length)
         {
             StateArrayIndex = 0;
         }
@@ -280,7 +285,7 @@ public class EnemyAI : MonoBehaviour
         {
             StandingStill = true;
             TimeToMove -= Time.deltaTime;
-            if(TimeToMove <= 0)
+            if (TimeToMove <= 0)
             {
                 WaypointIndex++;
                 if (WaypointIndex >= Waypoints.Length)
@@ -303,7 +308,7 @@ public class EnemyAI : MonoBehaviour
 
         if (PlayerTarget != null)
         {
-            if(PlayerTarget != null)
+            if (PlayerTarget != null)
             {
                 DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
             }
@@ -334,7 +339,7 @@ public class EnemyAI : MonoBehaviour
     {
         Anim.IdleAni();
 
-        if(PlayerTarget != null)
+        if (PlayerTarget != null)
         {
             DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
         }
@@ -349,7 +354,7 @@ public class EnemyAI : MonoBehaviour
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
             if (PlayerTarget.CurrentHealth > 0)
-            { 
+            {
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
@@ -410,7 +415,7 @@ public class EnemyAI : MonoBehaviour
 
         character.GetRigidbody.useGravity = false;
 
-        if(enemySkills.GetManager.Length > 0)
+        if (enemySkills.GetManager.Length > 0)
         {
             enemySkills.DisableRadiusImage();
             enemySkills.DisableRadius();
@@ -433,9 +438,9 @@ public class EnemyAI : MonoBehaviour
 
     private void CheckForInformation()
     {
-        if (monsterBook.GetMonsterTransform.childCount <= 0)
+        if (monsterBook.GetMonsterTransform.childCount <= 0 || monsterBook.GetBossTransform.childCount <= 0)
         {
-            var monsterinfo = Instantiate(monsterInformation, monsterBook.GetMonsterTransform);
+            var monsterinfo = Instantiate(monsterInformation, EnemyTransform());
             if (!GameManager.Instance.GetMonsterToggle)
             {
                 monsterinfo.gameObject.SetActive(false);
@@ -444,7 +449,7 @@ public class EnemyAI : MonoBehaviour
             {
                 monsterinfo.gameObject.SetActive(true);
             }
-            monsterinfo.transform.SetParent(monsterBook.GetMonsterTransform, false);
+            monsterinfo.transform.SetParent(EnemyTransform(), false);
             monsterinfo.GetCharacter = character;
 
             monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
@@ -457,7 +462,7 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                var monsterinfo = Instantiate(monsterInformation, monsterBook.GetMonsterTransform);
+                var monsterinfo = Instantiate(monsterInformation, EnemyTransform());
                 if (!GameManager.Instance.GetMonsterToggle)
                 {
                     monsterinfo.gameObject.SetActive(false);
@@ -466,7 +471,7 @@ public class EnemyAI : MonoBehaviour
                 {
                     monsterinfo.gameObject.SetActive(true);
                 }
-                monsterinfo.transform.SetParent(monsterBook.GetMonsterTransform, false);
+                monsterinfo.transform.SetParent(EnemyTransform(), false);
                 monsterinfo.GetCharacter = character;
 
                 monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
@@ -474,19 +479,36 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private Transform EnemyTransform()
+    {
+        Transform EnemyButtonTransform = null;
+
+        switch(enemyType)
+        {
+            case (EnemyType.Monster):
+                EnemyButtonTransform = monsterBook.GetMonsterTransform;
+                break;
+            case (EnemyType.Boss):
+                EnemyButtonTransform = monsterBook.GetBossTransform;
+                break;
+        }
+
+        return EnemyButtonTransform;
+    }
+
     private bool CheckForSameEnemyData()
     {
-        bool SameName = false;
+        bool SameLevel = false;
 
         foreach (MonsterInformation mi in monsterBook.GetMonsterTransform.GetComponentsInChildren<MonsterInformation>(true))
         {
-            if (mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName)
+            if (mi.GetCharacter.GetCharacterData.CharacterLevel == character.GetCharacterData.CharacterLevel)
             {
-                SameName = true;
+                SameLevel = true;
             }
         }
 
-        return SameName;
+        return SameLevel;
     }
 
     //Resets the enemy's stats when enabled in the scene.

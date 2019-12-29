@@ -18,7 +18,7 @@ public class MonsterInformation : MonoBehaviour
 
     private void Awake()
     {
-        ParentObj = transform.parent.parent.gameObject;
+        ParentObj = transform.parent.parent.parent.gameObject;
     }
 
     public Character GetCharacter
