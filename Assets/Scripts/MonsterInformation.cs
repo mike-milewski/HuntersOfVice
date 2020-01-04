@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class MonsterInformation : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class MonsterInformation : MonoBehaviour
 
     [SerializeField]
     private Character character = null;
+
+    [SerializeField]
+    private List<CharacterData> characterData = new List<CharacterData>();
 
     private void Awake()
     {
@@ -33,6 +37,18 @@ public class MonsterInformation : MonoBehaviour
         }
     }
 
+    public List<CharacterData> GetCharacterData
+    {
+        get
+        {
+            return characterData;
+        }
+        set
+        {
+            characterData = value;
+        }
+    }
+
     public TextMeshProUGUI GetMonsterName
     {
         get
@@ -47,13 +63,25 @@ public class MonsterInformation : MonoBehaviour
 
     public void ShowMonsterInfo()
     {
-        ParentObj.GetComponent<MonsterBook>().GetMonsterInfoTxt.text = "<u>" + character.GetCharacterData.CharacterName + "</u>" + "\n\n" + "<size=12>" + "Level: " +
-                                                                        character.GetCharacterData.CharacterLevel + "\n" + "HP: " + character.GetCharacterData.Health +
-                                                                        "\n" + "Strength: " + character.GetCharacterData.Strength + "\n" + "Defense: " +
-                                                                        character.GetCharacterData.Defense + "\n" + "Intelligence: " +
-                                                                        character.GetCharacterData.Intelligence + "\n\n" + GetWeaknesses() + "EXP: " +
+        ShowLevelButtons();
+
+        ParentObj.GetComponent<MonsterBook>().GetMonsterInfoTxt.text = "<u>" + characterData[0].CharacterName + "</u>" + "\n\n" + "<size=12>" + "Level: " +
+                                                                        characterData[0].CharacterLevel + "\n" + "HP: " + characterData[0].Health +
+                                                                        "\n" + "Strength: " + characterData[0].Strength + "\n" + "Defense: " +
+                                                                        characterData[0].Defense + "\n" + "Intelligence: " +
+                                                                        characterData[0].Intelligence + "\n\n" + GetWeaknesses() + "EXP: " +
                                                                         character.GetComponent<Enemy>().GetExperiencePoints + "\n" + "Coins: " +
                                                                         character.GetComponent<Enemy>().GetCoins;
+    }
+
+    private void ShowLevelButtons()
+    {
+        for(int i = 0; i < characterData.Count; i++)
+        {
+            ParentObj.GetComponent<MonsterBook>().GetMonsterLevelButtons[i].gameObject.SetActive(true);
+
+            ParentObj.GetComponent<MonsterBook>().GetMonsterLevelButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = "Lv: " + characterData[i].CharacterLevel.ToString();
+        }
     }
 
     private string GetWeaknesses()

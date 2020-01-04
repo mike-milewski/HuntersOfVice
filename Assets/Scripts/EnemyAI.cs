@@ -453,10 +453,12 @@ public class EnemyAI : MonoBehaviour
             monsterinfo.GetCharacter = character;
 
             monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
+
+            monsterinfo.GetCharacterData.Add(character.GetCharacterData);
         }
         else
         {
-            if (CheckForSameEnemyData())
+            if (CheckForSameEnemyDataName())
             {
                 return;
             }
@@ -496,7 +498,22 @@ public class EnemyAI : MonoBehaviour
         return EnemyButtonTransform;
     }
 
-    private bool CheckForSameEnemyData()
+    private bool CheckForSameEnemyDataName()
+    {
+        bool SameName = false;
+
+        foreach (MonsterInformation mi in monsterBook.GetMonsterTransform.GetComponentsInChildren<MonsterInformation>(true))
+        {
+            if (mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName)
+            {
+                SameName = true;
+            }
+        }
+
+        return SameName;
+    }
+
+    private bool CheckForSameEnemyDataLevel()
     {
         bool SameLevel = false;
 

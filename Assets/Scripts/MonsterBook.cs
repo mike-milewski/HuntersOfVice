@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class MonsterBook : MonoBehaviour
@@ -7,7 +8,22 @@ public class MonsterBook : MonoBehaviour
     private TextMeshProUGUI MonsterInfoTxt;
 
     [SerializeField]
+    private Button[] MonsterLevelButtons;
+
+    [SerializeField]
     private Transform MonsterButtonInfoTrans, BossButtonInfoTrans;
+
+    public Button[] GetMonsterLevelButtons
+    {
+        get
+        {
+            return MonsterLevelButtons;
+        }
+        set
+        {
+            MonsterLevelButtons = value;
+        }
+    }
 
     public Transform GetMonsterTransform
     {
