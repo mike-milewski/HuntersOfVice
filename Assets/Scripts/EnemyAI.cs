@@ -438,9 +438,11 @@ public class EnemyAI : MonoBehaviour
 
     private void CheckForInformation()
     {
-        if (monsterBook.GetMonsterTransform.childCount <= 0 || monsterBook.GetBossTransform.childCount <= 0)
+        var monsterinfo = monsterInformation;
+
+        if (monsterBook.GetMonsterTransform.childCount <= 0)
         {
-            var monsterinfo = Instantiate(monsterInformation, EnemyTransform());
+            monsterinfo = Instantiate(monsterInformation, EnemyTransform());
             if (!GameManager.Instance.GetMonsterToggle)
             {
                 monsterinfo.gameObject.SetActive(false);
@@ -458,13 +460,15 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
+            CheckForSameEnemyDataLevel();
+
             if (CheckForSameEnemyDataName())
             {
                 return;
             }
             else
             {
-                var monsterinfo = Instantiate(monsterInformation, EnemyTransform());
+                monsterinfo = Instantiate(monsterInformation, EnemyTransform());
                 if (!GameManager.Instance.GetMonsterToggle)
                 {
                     monsterinfo.gameObject.SetActive(false);
@@ -477,6 +481,8 @@ public class EnemyAI : MonoBehaviour
                 monsterinfo.GetCharacter = character;
 
                 monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
+
+                monsterinfo.GetCharacterData.Add(character.GetCharacterData);
             }
         }
     }
@@ -513,19 +519,23 @@ public class EnemyAI : MonoBehaviour
         return SameName;
     }
 
-    private bool CheckForSameEnemyDataLevel()
+    private void CheckForSameEnemyDataLevel()
     {
-        bool SameLevel = false;
-
         foreach (MonsterInformation mi in monsterBook.GetMonsterTransform.GetComponentsInChildren<MonsterInformation>(true))
         {
-            if (mi.GetCharacter.GetCharacterData.CharacterLevel == character.GetCharacterData.CharacterLevel)
+            if (mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName &&
+                mi.GetCharacter.GetCharacterData.CharacterLevel != character.GetCharacterData.CharacterLevel)
             {
-                SameLevel = true;
+                if (mi.GetIsSelected)
+                {
+                    mi.ShowLevelButtons();
+                }
+                if(mi.GetCharacterData.Count < monsterBook.GetMonsterLevelButtons.Length)
+                {
+                    mi.GetCharacterData.Add(character.GetCharacterData);
+                }
             }
         }
-
-        return SameLevel;
     }
 
     //Resets the enemy's stats when enabled in the scene.

@@ -8,7 +8,7 @@ public class ItemDescription : MonoBehaviour
 
     public void MonsterBookDescription()
     {
-        ItemDescriptionText.text = "<size=12>" + "<u>" + "Monster Book" + "</u>" + "</size>" + "\n\n" + "A tome recording the information of all defeated monsters.";
+        ItemDescriptionText.text = "<size=12>" + "<u>" + "Bestiary" + "</u>" + "</size>" + "\n\n" + "A tome recording the information of all defeated monsters.";
     }
 
     public void TutorialBookDescription()

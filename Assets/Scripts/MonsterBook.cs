@@ -100,6 +100,37 @@ public class MonsterBook : MonoBehaviour
                 }
             }
         }
-        
+    }
+
+    public void ToggleMonsterLevelButtons()
+    {
+        foreach(Button button in MonsterLevelButtons)
+        {
+            if(!GameManager.Instance.GetMonsterToggle)
+            {
+                button.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void DisableMonsterLevelButtons()
+    {
+        foreach (Button button in MonsterLevelButtons)
+        {
+            button.gameObject.SetActive(false);
+        }
+    }
+
+    public void RemoveText()
+    {
+        MonsterInfoTxt.text = "";
+    }
+
+    public void SetIsSelectedToFalse()
+    {
+        foreach (MonsterInformation mi in MonsterButtonInfoTrans.GetComponentsInChildren<MonsterInformation>(true))
+        {
+            mi.GetIsSelected = false;
+        }
     }
 }

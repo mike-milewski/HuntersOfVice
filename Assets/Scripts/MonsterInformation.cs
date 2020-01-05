@@ -20,6 +20,9 @@ public class MonsterInformation : MonoBehaviour
     [SerializeField]
     private List<CharacterData> characterData = new List<CharacterData>();
 
+    [SerializeField]
+    private bool IsSelected;
+
     private void Awake()
     {
         ParentObj = transform.parent.parent.parent.gameObject;
@@ -61,8 +64,25 @@ public class MonsterInformation : MonoBehaviour
         }
     }
 
+    public bool GetIsSelected
+    {
+        get
+        {
+            return IsSelected;
+        }
+        set
+        {
+            IsSelected = value;
+        }
+    }
+
     public void ShowMonsterInfo()
     {
+        if(GameManager.Instance.GetMonsterToggle)
+        {
+            IsSelected = true;
+        }
+
         ShowLevelButtons();
 
         ParentObj.GetComponent<MonsterBook>().GetMonsterInfoTxt.text = "<u>" + characterData[0].CharacterName + "</u>" + "\n\n" + "<size=12>" + "Level: " +
@@ -74,17 +94,27 @@ public class MonsterInformation : MonoBehaviour
                                                                         character.GetComponent<Enemy>().GetCoins;
     }
 
-    private void ShowLevelButtons()
+    public void ShowLevelButtons()
     {
+        for(int j = 0; j < ParentObj.GetComponent<MonsterBook>().GetMonsterLevelButtons.Length; j++)
+        {
+            ParentObj.GetComponent<MonsterBook>().GetMonsterLevelButtons[j].gameObject.SetActive(false);
+        }
+
         for(int i = 0; i < characterData.Count; i++)
         {
             ParentObj.GetComponent<MonsterBook>().GetMonsterLevelButtons[i].gameObject.SetActive(true);
 
-            ParentObj.GetComponent<MonsterBook>().GetMonsterLevelButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = "Lv: " + characterData[i].CharacterLevel.ToString();
+            ParentObj.GetComponent<MonsterBook>().GetMonsterLevelButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = "Lv: " + 
+                                                                                                                             characterData[i].CharacterLevel.ToString();
+
+            ParentObj.GetComponent<MonsterBook>().GetMonsterLevelButtons[i].GetComponent<MonsterButton>().GetMonsterInformation = this;
+
+            ParentObj.GetComponent<MonsterBook>().GetMonsterLevelButtons[i].GetComponent<MonsterButton>().GetIndex = i;
         }
     }
 
-    private string GetWeaknesses()
+    public string GetWeaknesses()
     {
         string weakness = "";
 
