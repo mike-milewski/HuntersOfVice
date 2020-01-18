@@ -89,7 +89,7 @@ public class MonsterInformation : MonoBehaviour
                                                                         characterData[0].CharacterLevel + "\n" + "HP: " + characterData[0].Health +
                                                                         "\n" + "Strength: " + characterData[0].Strength + "\n" + "Defense: " +
                                                                         characterData[0].Defense + "\n" + "Intelligence: " +
-                                                                        characterData[0].Intelligence + "\n\n" + GetWeaknesses() + "EXP: " +
+                                                                        characterData[0].Intelligence + "\n\n" + GetWeaknesses() + GetResistances() + "\n\n" + "EXP: " +
                                                                         character.GetComponent<Enemy>().GetExperiencePoints + "\n" + "Coins: " +
                                                                         character.GetComponent<Enemy>().GetCoins;
     }
@@ -117,46 +117,46 @@ public class MonsterInformation : MonoBehaviour
     public string GetWeaknesses()
     {
         string weakness = "";
+        string weak = "";
 
-        if(character.GetCharacterData.Weaknesses[0] != ElementalWeaknesses.NONE && character.GetCharacterData.Resistances[0] == ElementalResistances.NONE
-           && character.GetCharacterData.Immunities[0] == ElementalImmunities.NONE)
+        int i = 0;
+
+        if(characterData[0].Weaknesses.Length > 0)
         {
-            weakness = "Weak: " + "<#EFDFB8>" + character.GetCharacterData.Weaknesses[0] + "</color>" + "\n\n";
-        }
-        else if(character.GetCharacterData.Weaknesses[0] != ElementalWeaknesses.NONE && character.GetCharacterData.Resistances[0] != ElementalResistances.NONE
-                && character.GetCharacterData.Immunities[0] == ElementalImmunities.NONE)
-        {
-            weakness = "Weak: " + "<#EFDFB8>" + character.GetCharacterData.Weaknesses[0] + "</color>" + "\n" + "Resist: " +
-                       "<#EFDFB8>" + character.GetCharacterData.Resistances[0] + "</color>" + "\n\n";
-        }
-        else if (character.GetCharacterData.Weaknesses[0] != ElementalWeaknesses.NONE && character.GetCharacterData.Resistances[0] != ElementalResistances.NONE
-                && character.GetCharacterData.Immunities[0] != ElementalImmunities.NONE)
-        {
-            weakness = "Weak: " + "<#EFDFB8>" + character.GetCharacterData.Weaknesses[0] + "</color>" + "\n" + "Resist: " + "<#EFDFB8>" + 
-                       character.GetCharacterData.Resistances[0] + "</color>" + "\n" + "Immune: " + "<#EFDFB8>" + character.GetCharacterData.Immunities[0] + "</color>" + 
-                       "\n\n";
-        }
-        else if (character.GetCharacterData.Weaknesses[0] == ElementalWeaknesses.NONE && character.GetCharacterData.Resistances[0] != ElementalResistances.NONE
-                && character.GetCharacterData.Immunities[0] != ElementalImmunities.NONE)
-        {
-            weakness = "Resist: " + "<#EFDFB8>" + character.GetCharacterData.Resistances[0] + "</color>" + "\n" + "Immune: " + "<#EFDFB8>" + 
-                       character.GetCharacterData.Immunities[0] + "</color>" + "\n\n";
-        }
-        else if (character.GetCharacterData.Weaknesses[0] == ElementalWeaknesses.NONE && character.GetCharacterData.Resistances[0] == ElementalResistances.NONE
-                && character.GetCharacterData.Immunities[0] != ElementalImmunities.NONE)
-        {
-            weakness = "Immune: " + "<#EFDFB8>" + character.GetCharacterData.Immunities[0] + "</color>" + "\n\n";
-        }
-        else if (character.GetCharacterData.Weaknesses[0] == ElementalWeaknesses.NONE && character.GetCharacterData.Resistances[0] != ElementalResistances.NONE
-                && character.GetCharacterData.Immunities[0] == ElementalImmunities.NONE)
-        {
-            weakness = "Resist: " + "<#EFDFB8>" + character.GetCharacterData.Resistances[0] + "</color>" + "\n\n";
+            for (i = 0; i < character.GetCharacterData.Weaknesses.Length; i++)
+            {
+                weakness += "<#EFDFB8>" + character.GetCharacterData.Weaknesses[i] + "</color>" + " ";
+            }
+            weak = "Weak: " + weakness;
         }
         else
         {
-            weakness = "";
+            weak = "";
         }
 
-        return weakness;
+        return weak;
+    }
+
+    public string GetResistances()
+    {
+        string resistance = "";
+        string resist = "";
+
+        int i = 0;
+
+        if (characterData[0].Resistances.Length > 0)
+        {
+            for (i = 0; i < character.GetCharacterData.Resistances.Length; i++)
+            {
+                resistance += "<#EFDFB8>" + character.GetCharacterData.Resistances[i] + "</color>" + " ";
+            }
+            resist = "Resist: " + resistance;
+        }
+        else
+        {
+            resist = "";
+        }
+
+        return resist;
     }
 }

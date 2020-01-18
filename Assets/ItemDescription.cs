@@ -6,13 +6,14 @@ public class ItemDescription : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI ItemDescriptionText;
 
-    public void MonsterBookDescription()
+    public void MonsterTomeDescription()
     {
-        ItemDescriptionText.text = "<size=12>" + "<u>" + "Bestiary" + "</u>" + "</size>" + "\n\n" + "A tome recording the information of all defeated monsters.";
+        ItemDescriptionText.text = "<size=12>" + "<u>" + "Monster Tome" + "</u>" + "</size>" + "\n\n" + 
+                                   "A mystic tome that records valuable information of all defeated monsters.";
     }
 
-    public void TutorialBookDescription()
+    public void TipTomeDescription()
     {
-        ItemDescriptionText.text = "<size=12>" + "<u>" + "Tutorial Book" + "</u>" + "</size>" + "\n\n" + "A tome that keeps track of helpful information.";
+        ItemDescriptionText.text = "<size=12>" + "<u>" + "Tip Tome" + "</u>" + "</size>" + "\n\n" + "A mystic tome that highlights a list of helpful information.";
     }
 }

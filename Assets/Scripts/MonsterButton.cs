@@ -43,7 +43,8 @@ public class MonsterButton : MonoBehaviour
                                                                         monsterInformation.GetCharacterData[Index].Health +
                                                                         "\n" + "Strength: " + monsterInformation.GetCharacterData[Index].Strength + "\n" + "Defense: " +
                                                                         monsterInformation.GetCharacterData[Index].Defense + "\n" + "Intelligence: " +
-                                                                        monsterInformation.GetCharacterData[Index].Intelligence + "\n\n" + monsterInformation.GetWeaknesses() 
+                                                                        monsterInformation.GetCharacterData[Index].Intelligence + "\n\n" + monsterInformation.GetWeaknesses()
+                                                                        + monsterInformation.GetResistances() + "\n\n"
                                                                         + "EXP: " + monsterInformation.GetCharacter.GetComponent<Enemy>().GetExperiencePoints + "\n" + 
                                                                         "Coins: " + monsterInformation.GetCharacter.GetComponent<Enemy>().GetCoins;
     }
