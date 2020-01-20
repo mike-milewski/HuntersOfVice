@@ -1641,8 +1641,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Lv: 0 ???'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ec044cca9c03e9844bc2c99fa272415c, type: 2}
+  m_sharedMaterial: {fileID: 21375117388996326, guid: ec044cca9c03e9844bc2c99fa272415c,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1803,8 +1804,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'LV: 0 Enemy Name'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ec044cca9c03e9844bc2c99fa272415c, type: 2}
+  m_sharedMaterial: {fileID: 21375117388996326, guid: ec044cca9c03e9844bc2c99fa272415c,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2033,7 +2035,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ec044cca9c03e9844bc2c99fa272415c, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2113,7 +2115,7 @@ MonoBehaviour:
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 1
   m_inputSource: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -2323,7 +2325,7 @@ MonoBehaviour:
   TargetedImage: {fileID: 114888124697394424}
   EnemyInfo: {fileID: 114443723158654292}
   LocalEnemyInfo: {fileID: 114638215231616318}
-  ExperiencePoints: 7
+  ExperiencePoints: 100
   CoinAmount: 10
 --- !u!114 &114981715383889750
 MonoBehaviour:
@@ -2337,6 +2339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   states: 0
+  enemyType: 0
   aiStates:
   - state: 3
     SkillIndex: 0

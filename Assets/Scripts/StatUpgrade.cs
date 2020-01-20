@@ -51,7 +51,7 @@ public class StatUpgrade : MonoBehaviour
         if(experience.GetStatPoints > 0)
         {
             experience.GetStatPoints--;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease += character.GetCharacterData.HpIncrease;
             StatText.text = StatIncrease.ToString();
@@ -63,7 +63,7 @@ public class StatUpgrade : MonoBehaviour
         if (experience.GetStatPoints > 0)
         {
             experience.GetStatPoints--;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease += character.GetCharacterData.MpIncrease;
             StatText.text = StatIncrease.ToString();
@@ -75,7 +75,7 @@ public class StatUpgrade : MonoBehaviour
         if (experience.GetStatPoints > 0)
         {
             experience.GetStatPoints--;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease += StatValue;
             StatText.text = StatIncrease.ToString();
@@ -87,7 +87,7 @@ public class StatUpgrade : MonoBehaviour
         if (experience.GetStatPoints > 0)
         {
             experience.GetStatPoints--;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease += StatValue;
             StatText.text = StatIncrease.ToString();
@@ -99,7 +99,7 @@ public class StatUpgrade : MonoBehaviour
         if (experience.GetStatPoints > 0)
         {
             experience.GetStatPoints--;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease += StatValue;
             StatText.text = StatIncrease.ToString();
@@ -111,7 +111,7 @@ public class StatUpgrade : MonoBehaviour
         if(experience.GetStatPoints < experience.GetMaxStatPoints && StatIncrease > 0)
         {
             experience.GetStatPoints++;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease -= character.GetCharacterData.HpIncrease;
             StatText.text = StatIncrease.ToString();
@@ -123,7 +123,7 @@ public class StatUpgrade : MonoBehaviour
         if (experience.GetStatPoints < experience.GetMaxStatPoints && StatIncrease > 0)
         {
             experience.GetStatPoints++;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease -= character.GetCharacterData.MpIncrease;
             StatText.text = StatIncrease.ToString();
@@ -135,7 +135,7 @@ public class StatUpgrade : MonoBehaviour
         if (experience.GetStatPoints < experience.GetMaxStatPoints && StatIncrease > 0)
         {
             experience.GetStatPoints++;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease -= StatValue;
             StatText.text = StatIncrease.ToString();
@@ -147,7 +147,7 @@ public class StatUpgrade : MonoBehaviour
         if (experience.GetStatPoints < experience.GetMaxStatPoints && StatIncrease > 0)
         {
             experience.GetStatPoints++;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease -= StatValue;
             StatText.text = StatIncrease.ToString();
@@ -159,7 +159,7 @@ public class StatUpgrade : MonoBehaviour
         if (experience.GetStatPoints < experience.GetMaxStatPoints && StatIncrease > 0)
         {
             experience.GetStatPoints++;
-            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + "        " + experience.GetStatPoints.ToString();
+            experience.GetStatPointsTxt.text = "<u>Stat Points</u> \n" + experience.GetStatPoints.ToString();
 
             StatIncrease -= StatValue;
             StatText.text = StatIncrease.ToString();

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+using UnityEngine;
 
 [RequireComponent(typeof(Character))]
 public class PlayerController : MonoBehaviour

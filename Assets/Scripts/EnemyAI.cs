@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
@@ -526,14 +527,15 @@ public class EnemyAI : MonoBehaviour
             if (mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName &&
                 mi.GetCharacter.GetCharacterData.CharacterLevel != character.GetCharacterData.CharacterLevel)
             {
-                if (mi.GetIsSelected)
-                {
-                    mi.ShowLevelButtons();
-                }
                 if(mi.GetCharacterData.Count < monsterBook.GetMonsterLevelButtons.Length)
                 {
                     mi.GetCharacterData.Add(character.GetCharacterData);
                 }
+            }
+
+            if (mi.GetIsSelected)
+            {
+                mi.ShowLevelButtons();
             }
         }
     }

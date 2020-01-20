@@ -78,10 +78,7 @@ public class MonsterInformation : MonoBehaviour
 
     public void ShowMonsterInfo()
     {
-        if(GameManager.Instance.GetMonsterToggle)
-        {
-            IsSelected = true;
-        }
+        IsSelected = true;
 
         ShowLevelButtons();
 
@@ -89,7 +86,8 @@ public class MonsterInformation : MonoBehaviour
                                                                         characterData[0].CharacterLevel + "\n" + "HP: " + characterData[0].Health +
                                                                         "\n" + "Strength: " + characterData[0].Strength + "\n" + "Defense: " +
                                                                         characterData[0].Defense + "\n" + "Intelligence: " +
-                                                                        characterData[0].Intelligence + "\n\n" + GetWeaknesses() + GetResistances() + "\n\n" + "EXP: " +
+                                                                        characterData[0].Intelligence + "\n\n" + GetWeaknesses() + GetResistances() + 
+                                                                        GetImmunities() + GetAbsorbtions() + "\n" + "EXP: " +
                                                                         character.GetComponent<Enemy>().GetExperiencePoints + "\n" + "Coins: " +
                                                                         character.GetComponent<Enemy>().GetCoins;
     }
@@ -119,15 +117,13 @@ public class MonsterInformation : MonoBehaviour
         string weakness = "";
         string weak = "";
 
-        int i = 0;
-
         if(characterData[0].Weaknesses.Length > 0)
         {
-            for (i = 0; i < character.GetCharacterData.Weaknesses.Length; i++)
+            for (int i = 0; i < character.GetCharacterData.Weaknesses.Length; i++)
             {
                 weakness += "<#EFDFB8>" + character.GetCharacterData.Weaknesses[i] + "</color>" + " ";
             }
-            weak = "Weak: " + weakness;
+            weak = "Weak: " + weakness + "\n";
         }
         else
         {
@@ -142,15 +138,13 @@ public class MonsterInformation : MonoBehaviour
         string resistance = "";
         string resist = "";
 
-        int i = 0;
-
         if (characterData[0].Resistances.Length > 0)
         {
-            for (i = 0; i < character.GetCharacterData.Resistances.Length; i++)
+            for (int i = 0; i < character.GetCharacterData.Resistances.Length; i++)
             {
                 resistance += "<#EFDFB8>" + character.GetCharacterData.Resistances[i] + "</color>" + " ";
             }
-            resist = "Resist: " + resistance;
+            resist = "Resist: " + resistance + "\n";
         }
         else
         {
@@ -158,5 +152,47 @@ public class MonsterInformation : MonoBehaviour
         }
 
         return resist;
+    }
+
+    public string GetImmunities()
+    {
+        string immunities = "";
+        string immunity = "";
+
+        if (characterData[0].Immunities.Length > 0)
+        {
+            for (int i = 0; i < characterData[0].Immunities.Length; i++)
+            {
+                immunities += "<#EFDFB8>" + characterData[0].Immunities[i] + "</color>" + " ";
+            }
+            immunity = "Resist: " + immunities + "\n";
+        }
+        else
+        {
+            immunity = "";
+        }
+
+        return immunity;
+    }
+
+    public string GetAbsorbtions()
+    {
+        string absorbtions = "";
+        string absorb = "";
+
+        if (characterData[0].Absorbtions.Length > 0)
+        {
+            for (int i = 0; i < characterData[0].Absorbtions.Length; i++)
+            {
+                absorbtions += "<#EFDFB8>" + characterData[0].Absorbtions[i] + "</color>" + " ";
+            }
+            absorb = "Resist: " + absorbtions + "\n";
+        }
+        else
+        {
+            absorb = "";
+        }
+
+        return absorb;
     }
 }

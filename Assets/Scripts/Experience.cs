@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
@@ -156,7 +157,7 @@ public class Experience : MonoBehaviour
     {
         if(character.Level < MaxLevel)
         {
-            ExperienceText.text = ExperiencePoints + "/" + NextToLevel;
+            ExperienceText.text = ExperiencePoints + " / " + NextToLevel;
         }
         else
         {
@@ -192,7 +193,7 @@ public class Experience : MonoBehaviour
 
         StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
 
-        StatPointsTxt.text = "<u>Stat Points </u> \n" + "        " + StatPoints;
+        StatPointsTxt.text = "<u>Stat Points </u> \n" + StatPoints;
 
         StatConfirmButton.SetActive(true);
 
