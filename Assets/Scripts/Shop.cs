@@ -66,6 +66,9 @@ public class Shop : MonoBehaviour
     private ShopData shopData;
 
     [SerializeField]
+    private Animator ShopLevelAnim;
+
+    [SerializeField]
     private Transform WeaponTransform, ArmorTransform;
 
     [SerializeField]
@@ -118,6 +121,7 @@ public class Shop : MonoBehaviour
         switch(shopLevelRewards[shopData.ShopLevel - 1].GetShopRewards)
         {
             case (ShopRewards.Discount):
+                EquipmentDiscount();
                 break;
             case (ShopRewards.equipment):
                 if(shopLevelRewards[shopData.ShopLevel - 1].GetEquipment.GetEquipmentType == EquipmentType.Weapon)
@@ -149,6 +153,18 @@ public class Shop : MonoBehaviour
         }
     }
 
+    private void EquipmentDiscount()
+    {
+        foreach(Equipment equip in WeaponTransform.GetComponentsInChildren<Equipment>(true))
+        {
+            equip.GetBuyValue -= shopLevelRewards[shopData.ShopLevel - 1].GetDiscountAmount;
+        }
+        foreach (Equipment equip in ArmorTransform.GetComponentsInChildren<Equipment>(true))
+        {
+            equip.GetBuyValue -= shopLevelRewards[shopData.ShopLevel - 1].GetDiscountAmount;
+        }
+    }
+
     private void LevelUp()
     {
         GetReward();
@@ -165,6 +181,8 @@ public class Shop : MonoBehaviour
 
         ShopLevelText.text = "Level: " + shopData.ShopLevel;
         UpgradeShopLevelText.text = "Level: " + shopData.ShopLevel;
+
+        ShopLevelAnim.SetBool("Level", true);
 
         UpdateShopExperience();
 
