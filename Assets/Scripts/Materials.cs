@@ -1,6 +1,5 @@
 ﻿#pragma warning disable 0414
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Materials : MonoBehaviour
 {
@@ -8,16 +7,18 @@ public class Materials : MonoBehaviour
     private MaterialData materialData;
 
     [SerializeField]
-    private Image MaterialImage;
+    private Sprite MaterialSprite;
 
     [SerializeField]
     private string MaterialName;
 
     [SerializeField]
-    private int SellValue, ShopPoints;
+    private int SellValue, ShopPoints, Quantity;
 
     private void Awake()
     {
+        MaterialSprite = materialData.MaterialSprite;
+
         MaterialName = materialData.MaterialName;
 
         SellValue = materialData.SellValue;

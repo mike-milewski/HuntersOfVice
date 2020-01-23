@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5c466db5b592ca46a267ddb59ecbf44, type: 3}
-  m_Name: Rock
+  m_Name: Stone
   m_EditorClassIdentifier: 
-  MaterialName: Rock
-  MaterialImage: {fileID: 0}
+  MaterialSprite: {fileID: 0}
+  MaterialName: Stone
   ShopPoints: 5
-  SellValue: 14
+  SellValue: 10
