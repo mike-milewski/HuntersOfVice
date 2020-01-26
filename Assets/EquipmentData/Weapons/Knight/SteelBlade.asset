@@ -14,3 +14,4 @@ MonoBehaviour:
   EquipmentName: Steel Blade
   Element: 1
   StatIncrease: 5
+  BuyValue: 100

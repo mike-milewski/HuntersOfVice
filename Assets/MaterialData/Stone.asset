@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c466db5b592ca46a267ddb59ecbf44, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  MaterialSprite: {fileID: 0}
+  MaterialSprite: {fileID: 21300000, guid: e5aec484e95a5b14baf2d05cde2956dd, type: 3}
+  MaterialDescription: A basic stone found in the forest.
   MaterialName: Stone
   ShopPoints: 5
   SellValue: 10

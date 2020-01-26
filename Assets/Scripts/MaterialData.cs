@@ -8,4 +8,7 @@ public class MaterialData : ScriptableObject
     public string MaterialName;
 
     public int ShopPoints, SellValue;
+
+    [TextArea]
+    public string MaterialDescription;
 }

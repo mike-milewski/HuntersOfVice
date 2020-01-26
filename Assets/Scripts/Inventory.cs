@@ -10,6 +10,9 @@ public class Inventory : MonoBehaviour
     private Transform ShopMaterialTransform;
 
     [SerializeField]
+    private GameObject ItemDescriptionPanel;
+
+    [SerializeField]
     private TextMeshProUGUI CoinText;
 
     private bool InInventory;
@@ -52,6 +55,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public GameObject GetItemDescriptionPanel
+    {
+        get
+        {
+            return ItemDescriptionPanel;
+        }
+        set
+        {
+            ItemDescriptionPanel = value;
+        }
+    }
+
     public int AddCoins(int value)
     {
         Coins += value;
@@ -88,6 +103,11 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void CloseInformationPanel()
+    {
+        ItemDescriptionPanel.SetActive(false);
     }
 
     public void ToggleInInventory()

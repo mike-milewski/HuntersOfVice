@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Name: IronShield
   m_EditorClassIdentifier: 
   EquipmentName: Iron Shield
+  Element: 0
   StatIncrease: 2
+  BuyValue: 40

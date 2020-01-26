@@ -7,5 +7,5 @@ public class EquipmentData : ScriptableObject
 
     public PlayerElement Element;
 
-    public int StatIncrease;
+    public int StatIncrease, BuyValue;
 }

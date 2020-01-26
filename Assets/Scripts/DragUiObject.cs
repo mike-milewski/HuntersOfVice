@@ -187,7 +187,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 {
                     zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;
                 }
-                if(!GameManager.Instance.GetEquipmentToggle)
+                if (!GameManager.Instance.GetEquipmentToggle)
                 {
                     gameObject.SetActive(false);
                 }

@@ -8,6 +8,9 @@ public class UiDropZone : MonoBehaviour, IDropHandler
     [SerializeField]
     private DropType dropType;
 
+    [SerializeField]
+    private bool CanSell;
+
     public void OnDrop(PointerEventData eventData)
     {
         DragUiObject dragObject = eventData.pointerDrag.GetComponent<DragUiObject>();
@@ -23,19 +26,28 @@ public class UiDropZone : MonoBehaviour, IDropHandler
                 }
                 if(dragObject.GetComponent<Equipment>())
                 {
-                    if(!dragObject.GetDropZone.GetComponent<EquippedCheck>().GetIsEquipped)
+                    if(CanSell)
                     {
-                        dragObject.GetComponent<Equipment>().Equip();
+                        dragObject.GetComponent<Equipment>().ReceiveCoins();
+
+                        Destroy(eventData.pointerDrag);
                     }
                     else
                     {
-                        gameObject.GetComponentInChildren<Equipment>().UnEquip();
-                        gameObject.GetComponentInChildren<DragUiObject>().transform.SetParent(gameObject.GetComponentInChildren<DragUiObject>().GetMenuParent.transform, true);
+                        if (!dragObject.GetDropZone.GetComponent<EquippedCheck>().GetIsEquipped)
+                        {
+                            dragObject.GetComponent<Equipment>().Equip();
+                        }
+                        else
+                        {
+                            gameObject.GetComponentInChildren<Equipment>().UnEquip();
+                            gameObject.GetComponentInChildren<DragUiObject>().transform.SetParent(gameObject.GetComponentInChildren<DragUiObject>().GetMenuParent.transform, true);
 
-                        new Vector2(gameObject.GetComponentInChildren<DragUiObject>().GetMenuParent.transform.position.x,
-                                    gameObject.GetComponentInChildren<DragUiObject>().GetMenuParent.transform.position.y);
+                            new Vector2(gameObject.GetComponentInChildren<DragUiObject>().GetMenuParent.transform.position.x,
+                                        gameObject.GetComponentInChildren<DragUiObject>().GetMenuParent.transform.position.y);
 
-                        dragObject.GetComponent<Equipment>().Equip();
+                            dragObject.GetComponent<Equipment>().Equip();
+                        }
                     }
                 }
             }

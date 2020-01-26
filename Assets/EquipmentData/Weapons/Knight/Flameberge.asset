@@ -14,3 +14,4 @@ MonoBehaviour:
   EquipmentName: Flameberge
   Element: 2
   StatIncrease: 6
+  BuyValue: 300

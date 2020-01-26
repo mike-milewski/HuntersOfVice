@@ -56,21 +56,22 @@ public class Equipment : MonoBehaviour
     private BasicAttack basicAttack;
 
     [SerializeField]
+    private Inventory inventory;
+
+    [SerializeField]
+    private Shop shop;
+
+    [SerializeField]
     private Sprite EquipmentSprite;
 
     [SerializeField]
-    private TextMeshProUGUI EquipmentNameText, EquipmentInfoText, EquipmentPanelText;
+    private TextMeshProUGUI EquipmentNameText, EquipmentInfoText, EquipmentPanelText, ShopEquipmentPanelText;
 
     [SerializeField]
     private EquipmentType equipmentType;
 
     [SerializeField]
     private StatusType[] stattype;
-
-    [SerializeField]
-    private int BuyValue;
-
-    private int SellValue;
 
     public EquipmentData GetEquipmentData
     {
@@ -117,30 +118,6 @@ public class Equipment : MonoBehaviour
         set
         {
             stattype = value;
-        }
-    }
-
-    public int GetBuyValue
-    {
-        get
-        {
-            return BuyValue;
-        }
-        set
-        {
-            BuyValue = value;
-        }
-    }
-
-    public int GetSellValue
-    {
-        get
-        {
-            return SellValue;
-        }
-        set
-        {
-            SellValue = value;
         }
     }
 
@@ -260,7 +237,7 @@ public class Equipment : MonoBehaviour
     {
         EquipmentNameText.text = equipmentData.EquipmentName;
 
-        EquipmentInfoText.text = StatsText().text + "\n" + "Element: " + equipmentData.Element;
+        EquipmentInfoText.text = StatsText().text;
     }
 
     private void CurrentArmorEquippedText()
@@ -272,19 +249,33 @@ public class Equipment : MonoBehaviour
 
     public void PanelText(GameObject panel)
     {
-        panel.SetActive(true);
+        if(gameObject.transform.parent.GetComponent<EquipmentCheck>())
+        {
+            return;
+        }
+        else
+        {
+            panel.SetActive(true);
 
+            EquipmentStatsInEquipmentMenu();
+        }
+    }
+
+    private TextMeshProUGUI EquipmentStatsInEquipmentMenu()
+    {
         if (stattype.Length == 1)
         {
-            if(equipmentData.Element != PlayerElement.NONE)
+            if (equipmentData.Element != PlayerElement.NONE)
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                        "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease;
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease +
+                                        "\n\n" + "Sell Value: " + SellValue();
             }
         }
         if (stattype.Length == 2)
@@ -293,14 +284,16 @@ public class Equipment : MonoBehaviour
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
-                                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+                                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                                        "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
-                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease;
-            } 
+                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease +
+                                        "\n\n" + "Sell Value: " + SellValue();
+            }
         }
         if (stattype.Length == 3)
         {
@@ -309,14 +302,16 @@ public class Equipment : MonoBehaviour
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
-                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                       "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
-                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease;
+                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease +
+                                       "\n\n" + "Sell Value: " + SellValue();
             }
         }
         if (stattype.Length == 4)
@@ -327,7 +322,8 @@ public class Equipment : MonoBehaviour
                                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
-                                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+                                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                                        "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
@@ -335,10 +331,11 @@ public class Equipment : MonoBehaviour
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
-                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease;
+                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease +
+                                        "\n\n" + "Sell Value: " + SellValue();
             }
         }
-        if(stattype.Length == 5)
+        if (stattype.Length == 5)
         {
             if (equipmentData.Element != PlayerElement.NONE)
             {
@@ -347,7 +344,8 @@ public class Equipment : MonoBehaviour
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
-                                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + "\n" + "Element: " + equipmentData.Element;
+                                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                                        "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
@@ -356,9 +354,113 @@ public class Equipment : MonoBehaviour
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
-                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease;
+                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease +
+                                        "\n\n" + "Sell Value: " + SellValue();
             }
         }
+
+        return EquipmentPanelText;
+    }
+
+    private TextMeshProUGUI EquipmentStatsInShopMenu()
+    {
+        if (stattype.Length == 1)
+        {
+            if (equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease +
+                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+        }
+        if (stattype.Length == 2)
+        {
+            if (equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease +
+                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+        }
+        if (stattype.Length == 3)
+        {
+            if (equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                       stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                       stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                       "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                       stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                       stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease +
+                                       "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+        }
+        if (stattype.Length == 4)
+        {
+            if (equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" + "Element: " + equipmentData.Element
+                                                        + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease +
+                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+        }
+        if (stattype.Length == 5)
+        {
+            if (equipmentData.Element != PlayerElement.NONE)
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
+                                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+            else
+            {
+                EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
+                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
+                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
+                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
+                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease +
+                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+            }
+        }
+
+        return EquipmentPanelText;
     }
 
     private TextMeshProUGUI StatsText()
@@ -394,5 +496,53 @@ public class Equipment : MonoBehaviour
                                      stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease;
         }
         return EquipmentInfoText;
+    }
+
+    public void ShowEquipmentStatInfo()
+    {
+        if (gameObject.transform.parent.GetComponent<EquipmentCheck>())
+        {
+            ShopEquipmentPanelText.text = EquipmentStatsInShopMenu().text;
+        }   
+    }
+
+    public void HideEquipmentStatInfo()
+    {
+        if (gameObject.transform.parent.GetComponent<EquipmentCheck>())
+        {
+            ShopEquipmentPanelText.text = "";
+        }
+    }
+
+    public void Buy()
+    {
+        if(gameObject.transform.parent.GetComponent<EquipmentCheck>())
+        {
+            if(inventory.GetCoins >= equipmentData.BuyValue)
+            {
+                Debug.Log("Bought!");
+                inventory.GetCoins -= equipmentData.BuyValue;
+            }
+        }
+    }
+
+    private int SellValue()
+    {
+        int value = equipmentData.BuyValue / 2;
+
+        Mathf.Round(value);
+
+        return value;
+    }
+
+    public void ReceiveCoins()
+    {
+        int value = equipmentData.BuyValue / 2;
+
+        Mathf.Round(value);
+
+        inventory.AddCoins(value);
+
+        shop.UpdateCoins();
     }
 }

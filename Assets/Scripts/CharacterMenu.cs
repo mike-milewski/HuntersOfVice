@@ -62,8 +62,8 @@ public class CharacterMenu : MonoBehaviour
     {
         CharacterName.text = character.GetCharacterData.name;
         Level.text = "Level: " + character.Level.ToString();
-        HP.text = "HP: " + "<#5DFFB4>" + character.CurrentHealth + "</color>" + "/" + "<#5DFFB4>" + character.MaxHealth + "</color>";
-        MP.text = "MP: " + "<#41E6F3>" + character.CurrentMana + "</color>" + "/" + "<#41E6F3>" + character.MaxMana + "</color>";
+        HP.text = "HP: " + "<#5DFFB4>" + character.CurrentHealth + "</color>" + " / " + "<#5DFFB4>" + character.MaxHealth + "</color>";
+        MP.text = "MP: " + "<#41E6F3>" + character.CurrentMana + "</color>" + " / " + "<#41E6F3>" + character.MaxMana + "</color>";
         Strength.text = "Strength: " + StrengthStatColor + character.CharacterStrength;
         Defense.text = "Defense: " + DefenseStatColor + character.CharacterDefense;
         Intelligence.text = "Intelligence: " + IntelligenceStatColor + character.CharacterIntelligence;
