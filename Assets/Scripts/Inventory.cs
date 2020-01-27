@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
     private Transform ShopMaterialTransform;
 
     [SerializeField]
-    private GameObject ItemDescriptionPanel;
+    private GameObject ItemDescriptionPanel, MaterialPanelHolder;
 
     [SerializeField]
     private TextMeshProUGUI CoinText;
@@ -119,6 +119,18 @@ public class Inventory : MonoBehaviour
         else
         {
             InInventory = false;
+        }
+    }
+
+    public void ToggleMaterialPanel()
+    {
+        if(MaterialPanelHolder.activeInHierarchy)
+        {
+            MaterialPanelHolder.SetActive(false);
+        }
+        else
+        {
+            MaterialPanelHolder.SetActive(true);
         }
     }
 }
