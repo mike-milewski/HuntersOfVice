@@ -14,7 +14,7 @@ public class Materials : MonoBehaviour
     private string MaterialName;
 
     [SerializeField]
-    private int SellValue, ShopPoints, Quantity;
+    private int ShopPoints, Quantity;
 
     private void Awake()
     {
@@ -24,8 +24,6 @@ public class Materials : MonoBehaviour
 
         MaterialDescription = materialData.MaterialDescription;
 
-        SellValue = materialData.SellValue;
-
         ShopPoints = materialData.ShopPoints;
     }
 
@@ -33,9 +31,9 @@ public class Materials : MonoBehaviour
     {
         gameObject.transform.parent.parent.parent.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(true);
 
-        gameObject.transform.parent.parent.parent.GetComponent<Inventory>().GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text = 
+        gameObject.transform.parent.parent.parent.GetComponent<Inventory>().GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text =
                                                                "<size=12>" + "<u>" + MaterialName + "</u>" + "</size>" + "\n\n" +
-                                                               MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints + "\n" + "Sell Value: " + SellValue;
+                                                               MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints;
     }
 
     public void CloseInformationPanel()

@@ -12,6 +12,7 @@ public class ShopUpgrade : MonoBehaviour
 
     public void AddMaterials()
     {
+        /*
         if (inventory.GetShopMaterialTransform.childCount > 0)
         {
             foreach (Materials materials in inventory.GetShopMaterialTransform.GetComponentsInChildren<Materials>(true))
@@ -24,6 +25,7 @@ public class ShopUpgrade : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     public void ToggleMaterials()
