@@ -40,4 +40,14 @@ public class Materials : MonoBehaviour
     {
         gameObject.transform.parent.parent.parent.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(false);
     }
+
+    public void AddMaterialForUpgrade()
+    {
+
+    }
+
+    public void RemoveMaterialFromUpgrade()
+    {
+
+    }
 }

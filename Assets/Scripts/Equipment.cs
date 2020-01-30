@@ -237,7 +237,10 @@ public class Equipment : MonoBehaviour
     {
         EquipmentNameText.text = equipmentData.EquipmentName;
 
-        EquipmentInfoText.text = StatsText().text;
+        if(equipmentData.Element != PlayerElement.NONE)
+        {
+            EquipmentInfoText.text = StatsText().text + "\n" + equipmentData.Element;
+        }
     }
 
     private void CurrentArmorEquippedText()
