@@ -1,4 +1,4 @@
-﻿#pragma warning disable 0414
+﻿#pragma warning disable 0414, 0649
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -29,25 +29,27 @@ public class Materials : MonoBehaviour
 
     public void OpenInformationPanel()
     {
-        gameObject.transform.parent.parent.parent.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(true);
+        GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(true);
 
-        gameObject.transform.parent.parent.parent.GetComponent<Inventory>().GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text =
+        GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text =
                                                                "<size=12>" + "<u>" + MaterialName + "</u>" + "</size>" + "\n\n" +
-                                                               MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints;
+                                                               MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints + "\n\n" + "Quantity: " + Quantity;
     }
 
     public void CloseInformationPanel()
     {
-        gameObject.transform.parent.parent.parent.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(false);
+        GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(false);
     }
 
-    public void AddMaterialForUpgrade()
+    public void SetMaterialParent()
     {
-
-    }
-
-    public void RemoveMaterialFromUpgrade()
-    {
-
+        if(gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
+        {
+            gameObject.transform.SetParent(GameManager.Instance.GetShopUpgradePanel.transform);
+        }
+        else
+        {
+            gameObject.transform.SetParent(GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform);
+        }
     }
 }

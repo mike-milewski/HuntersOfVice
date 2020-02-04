@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     private Transform SpawnPoint;
 
     [SerializeField]
-    private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel;
+    private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel;
 
     private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating;
 
@@ -103,6 +103,30 @@ public class GameManager : MonoBehaviour
         set
         {
             LastEnemyObject = value;
+        }
+    }
+
+    public GameObject GetInventoryPanel
+    {
+        get
+        {
+            return InventoryPanel;
+        }
+        set
+        {
+            InventoryPanel = value;
+        }
+    }
+
+    public GameObject GetShopUpgradePanel
+    {
+        get
+        {
+            return ShopUpgradePanel;
+        }
+        set
+        {
+            ShopUpgradePanel = value;
         }
     }
 
