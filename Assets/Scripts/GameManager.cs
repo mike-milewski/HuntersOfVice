@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     private MonsterBook monsterbook;
 
     [SerializeField]
+    private Shop shop;
+
+    [SerializeField]
     private Camera cam;
 
     [SerializeField]
@@ -45,6 +48,18 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private EventSystem eventsystem;
+
+    public Shop GetShop
+    {
+        get
+        {
+            return shop;
+        }
+        set
+        {
+            shop = value;
+        }
+    }
 
     public Camera GetCamera
     {

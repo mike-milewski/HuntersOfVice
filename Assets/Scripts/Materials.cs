@@ -46,10 +46,26 @@ public class Materials : MonoBehaviour
         if(gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
         {
             gameObject.transform.SetParent(GameManager.Instance.GetShopUpgradePanel.transform);
+            AddExperience();
         }
         else
         {
             gameObject.transform.SetParent(GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform);
+            SubtractExperience();
         }
+    }
+
+    private void AddExperience()
+    {
+        GameManager.Instance.GetShop.GetExperiencePoints += ShopPoints;
+        //GameManager.Instance.GetShop.GetNextToLevel -= ShopPoints;
+        GameManager.Instance.GetShop.ShowPreviewExperience();
+    }
+
+    private void SubtractExperience()
+    {
+        GameManager.Instance.GetShop.GetExperiencePoints -= ShopPoints;
+        //GameManager.Instance.GetShop.GetNextToLevel += ShopPoints;
+        GameManager.Instance.GetShop.ShowPreviewExperience();
     }
 }

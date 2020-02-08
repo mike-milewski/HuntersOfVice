@@ -77,6 +77,33 @@ public class Shop : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI ShopLevelText, UpgradeShopLevelText, ShopExperienceText, CoinAmountText, DiscountText, EquipmentRewardInfoText;
 
+    [SerializeField]
+    private int ExperiencePoints, NextToLevel;
+
+    public int GetExperiencePoints
+    {
+        get
+        {
+            return ExperiencePoints;
+        }
+        set
+        {
+            ExperiencePoints = value;
+        }
+    }
+
+    public int GetNextToLevel
+    {
+        get
+        {
+            return NextToLevel;
+        }
+        set
+        {
+            NextToLevel = value;
+        }
+    }
+
     private void Awake()
     {
         ShopLevelText.text = "Level: " + shopData.ShopLevel;
@@ -99,11 +126,23 @@ public class Shop : MonoBehaviour
         UpdateShopExperience();
     }
 
+    public void ShowPreviewExperience()
+    {
+        UpdatePreviewShopExperience();
+    }
+
+    private void UpdatePreviewShopExperience()
+    {
+        FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
+
+        ShopExperienceText.text = "Next: " + NextToLevel;
+    }
+
     private void UpdateShopExperience()
     {
-        FillArea.fillAmount = shopData.ExperiencePoints / shopData.NextToLevel;
+        FillArea.fillAmount = ExperiencePoints / NextToLevel;
 
-        ShopExperienceText.text = "Next: " + shopData.NextToLevel;
+        ShopExperienceText.text = "Next: " + NextToLevel;
     }
 
     private void GetReward()
