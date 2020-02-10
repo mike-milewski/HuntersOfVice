@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MenuButtons : MonoBehaviour
 {
@@ -117,5 +118,35 @@ public class MenuButtons : MonoBehaviour
     public void ReverseMenuAnimation(Animator animator)
     {
         animator.SetBool("FadeIn", false);
+    }
+
+    public void ReverseShopLevelUpAnimation(GameObject go)
+    {
+        go.SetActive(false);
+    }
+
+    public void ShowArtCreditsText(TextMeshProUGUI ArtText)
+    {
+        ArtText.text = "Space Hydra \n\n StumpyStrust \n\n Lamoot";
+    }
+
+    public void ShowAudioCreditsText(TextMeshProUGUI AudioText)
+    {
+        AudioText.text = "Matthew Pablo \n\n HitCtrl \n\n HydroGene";
+    }
+
+    public void ShowFontsCreditsText(TextMeshProUGUI FontsText)
+    {
+        FontsText.text = "Jonathan S. Harris";
+    }
+
+    public void ShowWeaponsText(TextMeshProUGUI WeaponsText)
+    {
+        WeaponsText.text = "Weapons";
+    }
+
+    public void ShowArmorText(TextMeshProUGUI ArmorText)
+    {
+        ArmorText.text = "Armor";
     }
 }

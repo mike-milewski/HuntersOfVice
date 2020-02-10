@@ -16,6 +16,18 @@ public class Materials : MonoBehaviour
     [SerializeField]
     private int ShopPoints, Quantity;
 
+    public int GetShopPoints
+    {
+        get
+        {
+            return ShopPoints;
+        }
+        set
+        {
+            ShopPoints = value;
+        }
+    }
+
     private void Awake()
     {
         gameObject.GetComponent<Image>().sprite = materialData.MaterialSprite;
@@ -29,43 +41,64 @@ public class Materials : MonoBehaviour
 
     public void OpenInformationPanel()
     {
-        GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(true);
+        if (gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
+        {
+            GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(true);
 
-        GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text =
-                                                               "<size=12>" + "<u>" + MaterialName + "</u>" + "</size>" + "\n\n" +
-                                                               MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints + "\n\n" + "Quantity: " + Quantity;
+            GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text =
+                                                                   "<size=12>" + "<u>" + MaterialName + "</u>" + "</size>" + "\n\n" +
+                                                                   MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints + "\n\n" + "Quantity: " + Quantity;
+        }
+        else
+        {
+            GameManager.Instance.GetItemDescriptionPanel.SetActive(true);
+
+            GameManager.Instance.GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text =
+                                                                   "<size=12>" + "<u>" + MaterialName + "</u>" + "</size>" + "\n\n" +
+                                                                   MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints + "\n\n" + "Quantity: " + Quantity;
+        }
     }
 
     public void CloseInformationPanel()
     {
-        GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(false);
+        if (gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
+        {
+            GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(false);
+        }
+        else
+        {
+            GameManager.Instance.GetItemDescriptionPanel.SetActive(false);
+        }
     }
 
     public void SetMaterialParent()
     {
-        if(gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
+        if(GameManager.Instance.GetShopupgrade.GetCanUpgrade)
         {
-            gameObject.transform.SetParent(GameManager.Instance.GetShopUpgradePanel.transform);
-            AddExperience();
-        }
-        else
-        {
-            gameObject.transform.SetParent(GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform);
-            SubtractExperience();
+            if (gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
+            {
+                CloseInformationPanel();
+                gameObject.transform.SetParent(GameManager.Instance.GetShopUpgradePanel.transform);
+                AddExperience();
+            }
+            else
+            {
+                CloseInformationPanel();
+                gameObject.transform.SetParent(GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform);
+                SubtractExperience();
+            }
         }
     }
 
     private void AddExperience()
     {
         GameManager.Instance.GetShop.GetExperiencePoints += ShopPoints;
-        //GameManager.Instance.GetShop.GetNextToLevel -= ShopPoints;
         GameManager.Instance.GetShop.ShowPreviewExperience();
     }
 
     private void SubtractExperience()
     {
         GameManager.Instance.GetShop.GetExperiencePoints -= ShopPoints;
-        //GameManager.Instance.GetShop.GetNextToLevel += ShopPoints;
         GameManager.Instance.GetShop.ShowPreviewExperience();
     }
 }

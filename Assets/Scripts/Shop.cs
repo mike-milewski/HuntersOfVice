@@ -63,9 +63,6 @@ public class Shop : MonoBehaviour
     private Inventory inventory;
 
     [SerializeField]
-    private ShopData shopData;
-
-    [SerializeField]
     private Animator ShopLevelAnim;
 
     [SerializeField]
@@ -78,7 +75,7 @@ public class Shop : MonoBehaviour
     private TextMeshProUGUI ShopLevelText, UpgradeShopLevelText, ShopExperienceText, CoinAmountText, DiscountText, EquipmentRewardInfoText;
 
     [SerializeField]
-    private int ExperiencePoints, NextToLevel;
+    private int ShopLevel, ExperiencePoints, NextToLevel;
 
     public int GetExperiencePoints
     {
@@ -106,8 +103,8 @@ public class Shop : MonoBehaviour
 
     private void Awake()
     {
-        ShopLevelText.text = "Level: " + shopData.ShopLevel;
-        UpgradeShopLevelText.text = "Level: " + shopData.ShopLevel;
+        ShopLevelText.text = "Level: " + ShopLevel;
+        UpgradeShopLevelText.text = "Level: " + ShopLevel;
 
         UpdateCoins();
 
@@ -140,26 +137,33 @@ public class Shop : MonoBehaviour
 
     private void UpdateShopExperience()
     {
-        FillArea.fillAmount = ExperiencePoints / NextToLevel;
+        FillArea.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
+
+        if((float)ExperiencePoints >= (float)NextToLevel)
+        {
+            LevelUp();
+        }
 
         ShopExperienceText.text = "Next: " + NextToLevel;
     }
 
     private void GetReward()
     {
-        switch(shopLevelRewards[shopData.ShopLevel - 1].GetShopRewards)
+        switch(shopLevelRewards[ShopLevel].GetShopRewards)
         {
             case (ShopRewards.Discount):
                 EquipmentDiscount();
                 break;
             case (ShopRewards.equipment):
-                if(shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentType == EquipmentType.Weapon)
+                if(shopLevelRewards[ShopLevel].GetEquip.GetEquipmentType == EquipmentType.Weapon)
                 {
-                    shopLevelRewards[shopData.ShopLevel - 1].GetEquip.transform.SetParent(WeaponTransform);
+                    shopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                    shopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
                 }
                 else
                 {
-                    shopLevelRewards[shopData.ShopLevel - 1].GetEquip.transform.SetParent(ArmorTransform);
+                    shopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                    shopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
                 }
                 break;
         }
@@ -167,17 +171,17 @@ public class Shop : MonoBehaviour
 
     private void ShowNextReward()
     {
-        switch(shopLevelRewards[shopData.ShopLevel - 1].GetShopRewards)
+        switch(shopLevelRewards[ShopLevel].GetShopRewards)
         {
             case (ShopRewards.Discount):
                 DiscountText.gameObject.SetActive(true);
                 EquipmentImage.gameObject.SetActive(false);
-                DiscountText.text = "Item discount -" + shopLevelRewards[shopData.ShopLevel - 1].GetDiscountAmount + "%";
+                DiscountText.text = "Item discount -" + shopLevelRewards[ShopLevel].GetDiscountAmount + "%";
                 break;
             case (ShopRewards.equipment):
                 EquipmentImage.gameObject.SetActive(true);
                 DiscountText.gameObject.SetActive(false);
-                EquipmentImage.sprite = shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentSprite;
+                EquipmentImage.sprite = shopLevelRewards[ShopLevel].GetEquip.GetEquipmentSprite;
                 break;
         }
     }
@@ -186,11 +190,11 @@ public class Shop : MonoBehaviour
     {
         foreach(Equipment equip in WeaponTransform.GetComponentsInChildren<Equipment>(true))
         {
-            equip.GetEquipmentData.BuyValue -= shopLevelRewards[shopData.ShopLevel - 1].GetDiscountAmount;
+            equip.GetEquipmentData.BuyValue -= shopLevelRewards[ShopLevel].GetDiscountAmount;
         }
         foreach (Equipment equip in ArmorTransform.GetComponentsInChildren<Equipment>(true))
         {
-            equip.GetEquipmentData.BuyValue -= shopLevelRewards[shopData.ShopLevel - 1].GetDiscountAmount;
+            equip.GetEquipmentData.BuyValue -= shopLevelRewards[ShopLevel].GetDiscountAmount;
         }
     }
 
@@ -198,18 +202,18 @@ public class Shop : MonoBehaviour
     {
         GetReward();
 
-        shopData.ShopLevel++;
+        ShopLevel++;
 
-        int SurplusExperience = Mathf.Abs(shopData.ExperiencePoints - shopData.NextToLevel);
+        int SurplusExperience = Mathf.Abs(ExperiencePoints - NextToLevel);
 
-        int NextShopLevel = shopData.NextToLevel * (int)1.25f;
+        ExperiencePoints = SurplusExperience;
+
+        int NextShopLevel = NextToLevel * (int)1.25f;
 
         Mathf.Round(NextShopLevel);
 
-        shopData.ExperiencePoints = SurplusExperience;
-
-        ShopLevelText.text = "Level: " + shopData.ShopLevel;
-        UpgradeShopLevelText.text = "Level: " + shopData.ShopLevel;
+        ShopLevelText.text = "Level: " + ShopLevel;
+        UpgradeShopLevelText.text = "Level: " + ShopLevel;
 
         ShopLevelAnim.SetBool("Level", true);
 
@@ -220,126 +224,126 @@ public class Shop : MonoBehaviour
 
     public void ShowEquipmentRewardInfo()
     {
-        if(shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType.Length == 1)
+        if(shopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 1)
         {
-            if(shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+            if(shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            "Element: " + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                            "Element: " + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
             }
             else
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease;
             }
         }
-        if (shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType.Length == 2)
+        if (shopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 2)
         {
-            if(shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+            if(shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            "Element: " + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                            "Element: " + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
             }
             else
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatIncrease;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease;
             }
         }
-        if (shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType.Length == 3)
+        if (shopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 3)
         {
-            if(shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+            if(shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            "Element: " + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                            "Element: " + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
             }
             else
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatIncrease;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease;
             }
             
         }
-        if (shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType.Length == 4)
+        if (shopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 4)
         {
-            if(shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+            if(shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                            "Element: " + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                            "Element: " + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
             }
             else
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[3].GetStatIncrease;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease;
             }
             
         }
-        if (shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType.Length == 5)
+        if (shopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 5)
         {
-            if(shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+            if(shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
-                                            "Element: " + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.Element;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
+                                            "Element: " + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
             }
             else
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                            shopLevelRewards[shopData.ShopLevel - 1].GetEquip.GetStatusType[4].GetStatIncrease;
+                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + shopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                            shopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease;
             }
             
         }

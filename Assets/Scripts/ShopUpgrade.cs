@@ -10,22 +10,18 @@ public class ShopUpgrade : MonoBehaviour
     [SerializeField]
     private Transform UpgradeTransform, MaterialTransform;
 
-    public void AddMaterials()
+    private bool CanUpgrade;
+
+    public bool GetCanUpgrade
     {
-        /*
-        if (inventory.GetShopMaterialTransform.childCount > 0)
+        get
         {
-            foreach (Materials materials in inventory.GetShopMaterialTransform.GetComponentsInChildren<Materials>(true))
-            {
-                materials.transform.SetParent(UpgradeTransform, true);
-                if (!materials.gameObject.activeInHierarchy)
-                {
-                    materials.GetComponent<Image>().raycastTarget = true;
-                    materials.gameObject.SetActive(true);
-                }
-            }
+            return CanUpgrade;
         }
-        */
+        set
+        {
+            CanUpgrade = value;
+        }
     }
 
     public void ToggleMaterials()
@@ -43,7 +39,31 @@ public class ShopUpgrade : MonoBehaviour
                 {
                     materials.gameObject.SetActive(true);
                 }
+                GameManager.Instance.GetShop.GetExperiencePoints -= materials.GetShopPoints;
+                GameManager.Instance.GetShop.ShowPreviewExperience();
             }
         }
+    }
+
+    public void Confirm()
+    {
+        if (UpgradeTransform.childCount > 0)
+        {
+            foreach (Materials materials in UpgradeTransform.GetComponentsInChildren<Materials>(true))
+            {
+                GameManager.Instance.GetShop.GainExperience();
+                Destroy(materials.gameObject);
+            }
+        }
+    }
+
+    public void CanUpgradeShop()
+    {
+        CanUpgrade = true;
+    }
+
+    public void CannotUpgradeShop()
+    {
+        CanUpgrade = false;
     }
 }

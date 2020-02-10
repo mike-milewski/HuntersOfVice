@@ -39,9 +39,23 @@ public class CursorController : MonoBehaviour
 
     private void Update()
     {
-        ChangeCursor();
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if(Input.GetMouseButtonDown(0))
+        if (Physics.Raycast(ray, out hit, EnemyMouseRange))
+        {
+            if (hit.collider.GetComponent<Enemy>())
+            {
+                CursorController.Instance.SetAttackCursor();
+            }
+            else
+            {
+                SetDefaultCursor();
+            }
+        }
+
+        //ChangeCursor();
+
+        if (Input.GetMouseButtonDown(0))
         {
             OpenTreasureChest();
             OpenShopMenu();

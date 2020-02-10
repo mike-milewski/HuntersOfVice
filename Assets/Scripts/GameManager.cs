@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     private Shop shop;
 
     [SerializeField]
+    private ShopUpgrade shopUpgrade;
+
+    [SerializeField]
     private Camera cam;
 
     [SerializeField]
@@ -42,7 +45,7 @@ public class GameManager : MonoBehaviour
     private Transform SpawnPoint;
 
     [SerializeField]
-    private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel;
+    private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel, ItemDescriptionPanel;
 
     private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating;
 
@@ -58,6 +61,18 @@ public class GameManager : MonoBehaviour
         set
         {
             shop = value;
+        }
+    }
+
+    public ShopUpgrade GetShopupgrade
+    {
+        get
+        {
+            return shopUpgrade;
+        }
+        set
+        {
+            shopUpgrade = value;
         }
     }
 
@@ -142,6 +157,18 @@ public class GameManager : MonoBehaviour
         set
         {
             ShopUpgradePanel = value;
+        }
+    }
+
+    public GameObject GetItemDescriptionPanel
+    {
+        get
+        {
+            return ItemDescriptionPanel;
+        }
+        set
+        {
+            ItemDescriptionPanel = value;
         }
     }
 

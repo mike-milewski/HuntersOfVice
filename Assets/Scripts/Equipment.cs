@@ -252,11 +252,7 @@ public class Equipment : MonoBehaviour
 
     public void PanelText(GameObject panel)
     {
-        if(gameObject.transform.parent.GetComponent<EquipmentCheck>())
-        {
-            return;
-        }
-        else
+        if(!gameObject.transform.parent.GetComponent<EquipmentCheck>())
         {
             panel.SetActive(true);
 
@@ -523,7 +519,6 @@ public class Equipment : MonoBehaviour
         {
             if(inventory.GetCoins >= equipmentData.BuyValue)
             {
-                Debug.Log("Bought!");
                 inventory.GetCoins -= equipmentData.BuyValue;
             }
         }

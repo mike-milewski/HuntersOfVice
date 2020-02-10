@@ -193,7 +193,7 @@ public class Experience : MonoBehaviour
 
         StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
 
-        StatPointsTxt.text = "<u>Stat Points </u> \n" + StatPoints;
+        StatPointsTxt.text = StatPoints.ToString();
 
         StatConfirmButton.SetActive(true);
 
