@@ -63,10 +63,10 @@ public class Shop : MonoBehaviour
     private Inventory inventory;
 
     [SerializeField]
-    private Animator ShopLevelAnim;
+    private GameObject LevelUpObject;
 
     [SerializeField]
-    private Transform WeaponTransform, ArmorTransform;
+    private Transform WeaponTransform, ArmorTransform, LevelUpObjectTransform;
 
     [SerializeField]
     private Image FillArea, FillAreaTwo, EquipmentImage;
@@ -77,6 +77,8 @@ public class Shop : MonoBehaviour
     [SerializeField]
     private int ShopLevel, ExperiencePoints, NextToLevel;
 
+    private int NTL;
+
     public int GetExperiencePoints
     {
         get
@@ -86,6 +88,18 @@ public class Shop : MonoBehaviour
         set
         {
             ExperiencePoints = value;
+        }
+    }
+
+    public int GetNTL
+    {
+        get
+        {
+            return NTL;
+        }
+        set
+        {
+            NTL = value;
         }
     }
 
@@ -132,19 +146,22 @@ public class Shop : MonoBehaviour
     {
         FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
-        ShopExperienceText.text = "Next: " + NextToLevel;
+        ShopExperienceText.text = "Next: " + Mathf.Abs(NTL);
     }
 
     private void UpdateShopExperience()
     {
         FillArea.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
+        FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
-        if((float)ExperiencePoints >= (float)NextToLevel)
+        if ((float)ExperiencePoints >= (float)NextToLevel)
         {
             LevelUp();
         }
 
-        ShopExperienceText.text = "Next: " + NextToLevel;
+        NTL = Mathf.Abs(ExperiencePoints - NextToLevel);
+
+        ShopExperienceText.text = "Next: " + Mathf.Abs(NTL);
     }
 
     private void GetReward()
@@ -208,14 +225,16 @@ public class Shop : MonoBehaviour
 
         ExperiencePoints = SurplusExperience;
 
-        int NextShopLevel = NextToLevel * (int)1.25f;
+        int NextShopLevel = NextToLevel * 3;
 
         Mathf.Round(NextShopLevel);
+
+        NextToLevel = NextShopLevel;
 
         ShopLevelText.text = "Level: " + ShopLevel;
         UpgradeShopLevelText.text = "Level: " + ShopLevel;
 
-        ShopLevelAnim.SetBool("Level", true);
+        Instantiate(LevelUpObject, LevelUpObjectTransform);
 
         UpdateShopExperience();
 

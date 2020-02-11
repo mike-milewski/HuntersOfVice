@@ -93,12 +93,14 @@ public class Materials : MonoBehaviour
     private void AddExperience()
     {
         GameManager.Instance.GetShop.GetExperiencePoints += ShopPoints;
+        GameManager.Instance.GetShop.GetNTL -= ShopPoints;
         GameManager.Instance.GetShop.ShowPreviewExperience();
     }
 
     private void SubtractExperience()
     {
         GameManager.Instance.GetShop.GetExperiencePoints -= ShopPoints;
+        GameManager.Instance.GetShop.GetNTL += ShopPoints;
         GameManager.Instance.GetShop.ShowPreviewExperience();
     }
 }
