@@ -149,4 +149,14 @@ public class MenuButtons : MonoBehaviour
     {
         ArmorText.text = "Armor";
     }
+
+    public void ShowMonstersText(TextMeshProUGUI MonstersText)
+    {
+        MonstersText.text = "Monsters";
+    }
+
+    public void ShowBossesText(TextMeshProUGUI BossesText)
+    {
+        BossesText.text = "Bosses";
+    }
 }

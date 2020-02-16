@@ -92,7 +92,14 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             }
             if(zone.GetComponentInChildren<DragUiObject>())
             {
-                zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = false;
+                if(zone.GetComponent<GridLayoutGroup>())
+                {
+                    zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;
+                }
+                else
+                {
+                    zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = false;
+                }
             }
         }
         gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;

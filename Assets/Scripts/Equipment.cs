@@ -519,8 +519,42 @@ public class Equipment : MonoBehaviour
         {
             if(inventory.GetCoins >= equipmentData.BuyValue)
             {
-                inventory.GetCoins -= equipmentData.BuyValue;
+                Create(gameObject);
+                inventory.AddCoins(-equipmentData.BuyValue);
+                GameManager.Instance.GetShop.UpdateCoins();
             }
+        }
+    }
+
+    private void Create(GameObject obj)
+    {
+        var CreatedObj = Instantiate(obj);
+        switch(equipmentType)
+        {
+            case (EquipmentType.Weapon):
+                CreatedObj.GetComponent<DragUiObject>().enabled = true;
+                CreatedObj.transform.SetParent(GameManager.Instance.GetEquipmentMenu.GetWeaponPanel.transform, false);
+                if (GameManager.Instance.GetEquipmentMenu.GetIsOpened)
+                {
+                    CreatedObj.SetActive(true);
+                }
+                else
+                {
+                    CreatedObj.SetActive(false);
+                }
+                break;
+            case (EquipmentType.Armor):
+                CreatedObj.GetComponent<DragUiObject>().enabled = true;
+                CreatedObj.transform.SetParent(GameManager.Instance.GetEquipmentMenu.GetArmorPanel.transform, false);
+                if (GameManager.Instance.GetEquipmentMenu.GetIsOpened)
+                {
+                    CreatedObj.SetActive(true);
+                }
+                else
+                {
+                    CreatedObj.SetActive(false);
+                }
+                break;
         }
     }
 

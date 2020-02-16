@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EquipmentMenu : MonoBehaviour
 {
@@ -10,6 +11,44 @@ public class EquipmentMenu : MonoBehaviour
 
     [SerializeField]
     private GameObject WeaponPanel, ArmorPanel, WeaponSlot, ArmorSlot, EquipmentDescriptionPanel;
+
+    private bool IsOpened;
+
+    public GameObject GetWeaponPanel
+    {
+        get
+        {
+            return WeaponPanel;
+        }
+        set
+        {
+            WeaponPanel = value;
+        }
+    }
+
+    public GameObject GetArmorPanel
+    {
+        get
+        {
+            return ArmorPanel;
+        }
+        set
+        {
+            ArmorPanel = value;
+        }
+    }
+
+    public bool GetIsOpened
+    {
+        get
+        {
+            return IsOpened;
+        }
+        set
+        {
+            IsOpened = value;
+        }
+    }
 
     private void Start()
     {
@@ -109,8 +148,28 @@ public class EquipmentMenu : MonoBehaviour
         }
     }
 
+    public void SetEquipmentTypeTextW(TextMeshProUGUI WeaponsText)
+    {
+        WeaponsText.text = "Weapons";
+    }
+
+    public void SetEquipmentTypeTextA(TextMeshProUGUI ArmorText)
+    {
+        ArmorText.text = "Armor";
+    }
+
     public void DisableEquipmentPanel()
     {
         EquipmentDescriptionPanel.SetActive(false);
+    }
+
+    public void SetIsOpenedToTrue()
+    {
+        IsOpened = true;
+    }
+
+    public void SetIsOpenedToFalse()
+    {
+        IsOpened = false;
     }
 }

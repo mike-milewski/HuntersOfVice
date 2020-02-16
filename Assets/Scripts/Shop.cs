@@ -72,12 +72,16 @@ public class Shop : MonoBehaviour
     private Image FillArea, FillAreaTwo, EquipmentImage;
 
     [SerializeField]
-    private TextMeshProUGUI ShopLevelText, UpgradeShopLevelText, ShopExperienceText, CoinAmountText, DiscountText, EquipmentRewardInfoText;
+    private TextMeshProUGUI ShopLevelText, UpgradeShopLevelText, ShopExperienceText, CoinAmountText, DiscountText, EquipmentRewardInfoText, PreviewShopLevelText,
+                            PreviewShopExperienceText;
 
     [SerializeField]
     private int ShopLevel, ExperiencePoints, NextToLevel;
 
-    private int NTL;
+    [SerializeField]
+    private int[] ShopLevelExperiences;
+
+    private int NTL, ShopPreviewLevel;
 
     public int GetExperiencePoints
     {
@@ -120,8 +124,6 @@ public class Shop : MonoBehaviour
         ShopLevelText.text = "Level: " + ShopLevel;
         UpgradeShopLevelText.text = "Level: " + ShopLevel;
 
-        UpdateCoins();
-
         UpdateShopExperience();
 
         ShowNextReward();
@@ -146,7 +148,15 @@ public class Shop : MonoBehaviour
     {
         FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
-        ShopExperienceText.text = "Next: " + Mathf.Abs(NTL);
+        ShopExperienceText.text = "";
+
+        while((float)ExperiencePoints >= (float)NextToLevel)
+        {
+            PreviewLevelUp();
+        }
+        NTL = Mathf.Abs(ExperiencePoints - NextToLevel);
+
+        PreviewShopExperienceText.text = Mathf.Abs(NTL).ToString();
     }
 
     private void UpdateShopExperience()
@@ -154,14 +164,22 @@ public class Shop : MonoBehaviour
         FillArea.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
         FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
-        if ((float)ExperiencePoints >= (float)NextToLevel)
+        PreviewShopLevelText.text = "";
+        PreviewShopExperienceText.text = "";
+
+        if (ShopPreviewLevel > 0)
+        {
+            Instantiate(LevelUpObject, LevelUpObjectTransform);
+        }
+
+        while (ShopPreviewLevel > 0)
         {
             LevelUp();
         }
 
         NTL = Mathf.Abs(ExperiencePoints - NextToLevel);
 
-        ShopExperienceText.text = "Next: " + Mathf.Abs(NTL);
+        ShopExperienceText.text = Mathf.Abs(NTL).ToString();
     }
 
     private void GetReward()
@@ -205,14 +223,39 @@ public class Shop : MonoBehaviour
 
     private void EquipmentDiscount()
     {
-        foreach(Equipment equip in WeaponTransform.GetComponentsInChildren<Equipment>(true))
+        float Discount = shopLevelRewards[ShopLevel].GetDiscountAmount / 100f;
+
+        foreach (Equipment equip in WeaponTransform.GetComponentsInChildren<Equipment>(true))
         {
-            equip.GetEquipmentData.BuyValue -= shopLevelRewards[ShopLevel].GetDiscountAmount;
+            float DiscountAmount = equip.GetEquipmentData.BuyValue * Discount;
+            Mathf.Round(DiscountAmount);
+            equip.GetEquipmentData.BuyValue -= (int)DiscountAmount;
         }
         foreach (Equipment equip in ArmorTransform.GetComponentsInChildren<Equipment>(true))
         {
-            equip.GetEquipmentData.BuyValue -= shopLevelRewards[ShopLevel].GetDiscountAmount;
+            float DiscountAmount = equip.GetEquipmentData.BuyValue * Discount;
+            Mathf.Round(DiscountAmount);
+            equip.GetEquipmentData.BuyValue -= (int)DiscountAmount;
         }
+    }
+
+    private void PreviewLevelUp()
+    {
+        ShopPreviewLevel++;
+
+        FillArea.fillAmount = 0;
+
+        PreviewShopLevelText.text = "+" + ShopPreviewLevel;
+
+        int SurplusExperience = Mathf.Abs(ExperiencePoints - NextToLevel);
+
+        ExperiencePoints = SurplusExperience;
+
+        int NextShopLevel = ShopLevelExperiences[ShopLevel + ShopPreviewLevel];
+
+        NextToLevel = NextShopLevel;
+
+        FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
     }
 
     private void LevelUp()
@@ -221,20 +264,19 @@ public class Shop : MonoBehaviour
 
         ShopLevel++;
 
-        int SurplusExperience = Mathf.Abs(ExperiencePoints - NextToLevel);
+        ShopPreviewLevel--;
 
-        ExperiencePoints = SurplusExperience;
+        if(ShopPreviewLevel <= 0)
+        {
+            PreviewShopLevelText.text = "";
+        }
 
-        int NextShopLevel = NextToLevel * 3;
-
-        Mathf.Round(NextShopLevel);
+        int NextShopLevel = ShopLevelExperiences[ShopLevel];
 
         NextToLevel = NextShopLevel;
 
         ShopLevelText.text = "Level: " + ShopLevel;
         UpgradeShopLevelText.text = "Level: " + ShopLevel;
-
-        Instantiate(LevelUpObject, LevelUpObjectTransform);
 
         UpdateShopExperience();
 

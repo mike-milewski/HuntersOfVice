@@ -4,25 +4,26 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
-  m_Name: Mushroom2
+  m_Name: Bee
   m_EditorClassIdentifier: 
   Weaknesses: 
   Resistances: 
   Immunities: 
   Absorbtions: 
-  CharacterName: Mushroom Man
+  CharacterName: Giant Bee
   CharacterLevel: 2
-  Health: 500
+  Health: 1
   Mana: 0
-  Strength: 28
+  Strength: 38
   Defense: 17
-  Intelligence: 2
+  Intelligence: 4
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5
-  MoveSpeed: 0
+  MoveSpeed: 3

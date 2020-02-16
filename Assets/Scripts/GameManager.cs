@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     private ShopUpgrade shopUpgrade;
 
     [SerializeField]
+    private EquipmentMenu equipmentMenu;
+
+    [SerializeField]
     private Camera cam;
 
     [SerializeField]
@@ -30,7 +33,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private Animator animator, SkillPanelAnimator, CharacterPanelAnimator, EquipmentPanelAnimator, InventoryPanelAnimator, SettingsPanelAnimator, MonsterBookAnimator;
-                     //TipTomeAnimator;
 
     [SerializeField]
     private GameObject Player;
@@ -73,6 +75,18 @@ public class GameManager : MonoBehaviour
         set
         {
             shopUpgrade = value;
+        }
+    }
+
+    public EquipmentMenu GetEquipmentMenu
+    {
+        get
+        {
+            return equipmentMenu;
+        }
+        set
+        {
+            equipmentMenu = value;
         }
     }
 
@@ -467,7 +481,6 @@ public class GameManager : MonoBehaviour
         InventoryPanelAnimator.SetBool("FadeIn", false);
         SettingsPanelAnimator.SetBool("FadeIn", false);
         MonsterBookAnimator.SetBool("FadeIn", false);
-        //TipTomeAnimator.SetBool("FadeIn", false);
     }
 
     private void ToggleSkillsPanel()
@@ -485,7 +498,6 @@ public class GameManager : MonoBehaviour
         InventoryPanelAnimator.SetBool("FadeIn", false);
         SettingsPanelAnimator.SetBool("FadeIn", false);
         MonsterBookAnimator.SetBool("FadeIn", false);
-        //TipTomeAnimator.SetBool("FadeIn", false);
     }
 
     private void ToggleEquipmentPanel()
@@ -503,7 +515,6 @@ public class GameManager : MonoBehaviour
         MaskSkillsPanel();
         SettingsPanelAnimator.SetBool("FadeIn", false);
         MonsterBookAnimator.SetBool("FadeIn", false);
-        //TipTomeAnimator.SetBool("FadeIn", false);
     }
 
     private void ToggleInventoryPanel()
@@ -521,7 +532,6 @@ public class GameManager : MonoBehaviour
         MaskSkillsPanel();
         SettingsPanelAnimator.SetBool("FadeIn", false);
         MonsterBookAnimator.SetBool("FadeIn", false);
-        //TipTomeAnimator.SetBool("FadeIn", false);
     }
 
     private void ToggleSettingsPanel()
@@ -539,7 +549,6 @@ public class GameManager : MonoBehaviour
         MaskSkillsPanel();
         EquipmentPanelAnimator.SetBool("FadeIn", false);
         MonsterBookAnimator.SetBool("FadeIn", false);
-        //TipTomeAnimator.SetBool("FadeIn", false);
     }
 
     public void MaskSkillsPanel()
@@ -572,13 +581,11 @@ public class GameManager : MonoBehaviour
 
     public void OpenTipTome()
     {
-        //TipTomeAnimator.SetBool("FadeIn", true);
         TipToggle = true;
     }
 
     public void CloseTipTome()
     {
-        //TipTomeAnimator.SetBool("FadeIn", false);
         TipToggle = false;
     }
 

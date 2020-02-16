@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b4e2e784dfbaf94badedcf054aebda2, type: 3}
-  m_Name: IronSword
+  m_Script: {fileID: 11500000, guid: e5c466db5b592ca46a267ddb59ecbf44, type: 3}
+  m_Name: Wood
   m_EditorClassIdentifier: 
-  EquipmentName: Iron Sword
-  Element: 1
-  StatIncrease: 2
-  BuyValue: 50
+  MaterialSprite: {fileID: 21300000, guid: aa0eeb51ee20f8a4caffa4363a018320, type: 3}
+  MaterialName: Wood
+  ShopPoints: 300
+  MaterialDescription: A bundle of wood found in the forest.
