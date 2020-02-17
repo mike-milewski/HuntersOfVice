@@ -66,7 +66,7 @@ public class Shop : MonoBehaviour
     private GameObject LevelUpObject;
 
     [SerializeField]
-    private Transform WeaponTransform, ArmorTransform, LevelUpObjectTransform;
+    private Transform WeaponTransform, ArmorTransform, LevelUpObjectTransform, UpgradeTransform;
 
     [SerializeField]
     private Image FillArea, FillAreaTwo, EquipmentImage;
@@ -148,15 +148,40 @@ public class Shop : MonoBehaviour
     {
         FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
-        ShopExperienceText.text = "";
-
-        while((float)ExperiencePoints >= (float)NextToLevel)
+        while ((float)ExperiencePoints >= (float)NextToLevel)
         {
             PreviewLevelUp();
         }
+        if ((float)ExperiencePoints < 0)
+        {
+            ShopPreviewLevel--;
+            int shoplevel = Mathf.Abs(ShopLevelExperiences[ShopLevel + ShopPreviewLevel]);
+            NextToLevel = shoplevel;
+
+            ExperiencePoints = Mathf.Abs(ExperiencePoints + NextToLevel);
+
+            if (ShopPreviewLevel <= 0)
+            {
+                PreviewShopLevelText.text = "";
+            }
+            else
+            {
+                PreviewShopLevelText.text = "+" + ShopPreviewLevel;
+            }
+            FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
+        }
         NTL = Mathf.Abs(ExperiencePoints - NextToLevel);
 
-        PreviewShopExperienceText.text = Mathf.Abs(NTL).ToString();
+        if (UpgradeTransform.childCount <= 0)
+        {
+            PreviewShopExperienceText.text = "";
+            ShopExperienceText.text = Mathf.Abs(NTL).ToString();
+        }
+        else
+        {
+            PreviewShopExperienceText.text = Mathf.Abs(NTL).ToString();
+            ShopExperienceText.text = "";
+        }
     }
 
     private void UpdateShopExperience()

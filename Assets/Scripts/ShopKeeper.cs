@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0414
+using UnityEngine;
 
 public class ShopKeeper : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class ShopKeeper : MonoBehaviour
 
     [SerializeField]
     private float ShoppingDistance;
+
+    private Quaternion ShopRotation;
 
     private bool IsInShop;
 
@@ -40,6 +43,11 @@ public class ShopKeeper : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        ShopRotation = this.transform.rotation;
+    }
+
     private void Update()
     {
         if(IsInShop)
@@ -51,6 +59,17 @@ public class ShopKeeper : MonoBehaviour
                 BuyAnimator.SetBool("FadeIn", false);
                 IsInShop = false;
             }
+            TurnToPlayer();
         }
+    }
+
+    private void TurnToPlayer()
+    {
+        Vector3 TargetPosition = new Vector3(character.transform.position.x - this.transform.position.x, 0,
+                                             character.transform.position.z - this.transform.position.z).normalized;
+
+        Quaternion LookDir = Quaternion.LookRotation(TargetPosition);
+
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, 5 * Time.deltaTime);
     }
 }
