@@ -696,4 +696,15 @@ public class GameManager : MonoBehaviour
 
         return InvalidText;
     }
+
+    public TextMeshProUGUI NotEnoughCoinsText()
+    {
+        InvalidText.gameObject.SetActive(true);
+
+        animator.Play("InvalidText", -1, 0f);
+
+        InvalidText.text = "Not enough coins";
+
+        return InvalidText;
+    }
 }

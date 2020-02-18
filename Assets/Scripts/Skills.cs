@@ -16,9 +16,6 @@ public class Skills : StatusEffects
     private Settings settings;
 
     [SerializeField]
-    private Animator animator;
-
-    [SerializeField]
     private SkillBar skillbar;
 
     [SerializeField]
@@ -302,16 +299,6 @@ public class Skills : StatusEffects
             CoolDownText.text = Mathf.Clamp(CD, 0, CoolDown).ToString("F1");
         }
 
-        if (CoolDownImage.fillAmount > 0)
-        {
-            animator.SetBool("SkillReady", false);
-        }
-        else
-        {
-            animator.SetBool("SkillReady", true);
-        }
-
-
         if (StormThrustActivated)
         {
             StormThrustHit();
@@ -369,6 +356,24 @@ public class Skills : StatusEffects
     public void Tenacity()
     {
         if(settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
+
+            SkillParticle.transform.SetParent(GetCharacter.transform);
+        }
+
+        SkillsManager.Instance.GetActivatedSkill = true;
+
+        SkillCast();
+    }
+
+    public void Illumination()
+    {
+        if (settings.UseParticleEffects)
         {
             SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
 

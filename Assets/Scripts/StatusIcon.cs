@@ -742,7 +742,7 @@ public class StatusIcon : MonoBehaviour
                 DamageOverTime(RegenAndDOTCalculation());
                 break;
             case (EffectStatus.HealthRegen):
-                HealOverTime(RegenAndDOTCalculation());
+                HealOverTime(RegenCalculation());
                 break;
             case (EffectStatus.Stun):
                 Stun();
@@ -756,6 +756,17 @@ public class StatusIcon : MonoBehaviour
     private int RegenAndDOTCalculation()
     {
         float percent = Mathf.Round(0.05f * (float)SkillsManager.Instance.GetCharacter.MaxHealth);
+
+        int GetHealth = (int)percent;
+
+        Mathf.Round(GetHealth);
+
+        return GetHealth;
+    }
+
+    private int RegenCalculation()
+    {
+        float percent = Mathf.Round(0.10f * (float)SkillsManager.Instance.GetCharacter.MaxHealth);
 
         int GetHealth = (int)percent;
 

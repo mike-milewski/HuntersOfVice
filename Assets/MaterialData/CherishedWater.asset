@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5c466db5b592ca46a267ddb59ecbf44, type: 3}
-  m_Name: Wood
+  m_Name: CherishedWater
   m_EditorClassIdentifier: 
   MaterialSprite: {fileID: 21300000, guid: aa0eeb51ee20f8a4caffa4363a018320, type: 3}
-  MaterialName: Wood
+  MaterialName: Cherished Water
   ShopPoints: 29
-  MaterialDescription: A bundle of wood found in the forest.
+  MaterialDescription: Glistening water.

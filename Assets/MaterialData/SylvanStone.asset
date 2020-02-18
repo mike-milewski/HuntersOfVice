@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5c466db5b592ca46a267ddb59ecbf44, type: 3}
-  m_Name: Stone
+  m_Name: SylvanStone
   m_EditorClassIdentifier: 
   MaterialSprite: {fileID: 21300000, guid: e5aec484e95a5b14baf2d05cde2956dd, type: 3}
-  MaterialName: Stone
+  MaterialName: Sylvan Stone
   ShopPoints: 11
   MaterialDescription: A basic stone found in the forest.

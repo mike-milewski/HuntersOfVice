@@ -523,6 +523,10 @@ public class Equipment : MonoBehaviour
                 inventory.AddCoins(-equipmentData.BuyValue);
                 GameManager.Instance.GetShop.UpdateCoins();
             }
+            else
+            {
+                GameManager.Instance.NotEnoughCoinsText();
+            }
         }
     }
 
