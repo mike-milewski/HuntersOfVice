@@ -16,6 +16,9 @@ public class SkillMenu : MonoBehaviour
     private GameObject levelUp, levelUpParent;
 
     [SerializeField]
+    private Skills StormThrustSkill, IlluminationSkill, HealSkill;
+
+    [SerializeField]
     private Items[] items;
 
     [SerializeField]
@@ -661,9 +664,39 @@ public class SkillMenu : MonoBehaviour
         return character.GetCriticalChance;
     }
 
+    private void SwiftStrikeBonus()
+    {
+
+    }
+
+    private void TenacityBonus()
+    {
+
+    }
+
     private void StormThrustBonus()
     {
 
+    }
+
+    private void HealBonus()
+    {
+        HealSkill.GetCastTime -= 1;
+    }
+
+    private void WhirlwindSlashBonus()
+    {
+
+    }
+
+    private void EvilsEndBonus()
+    {
+
+    }
+
+    private void IlluminationBonus()
+    {
+        IlluminationSkill.GetStatusEffectPotency = 2;
     }
 
     private void ItemBonusHP()
