@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel, ItemDescriptionPanel;
 
-    private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating;
+    private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating, IsInInventory;
 
     [SerializeField]
     private EventSystem eventsystem;
@@ -234,6 +234,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool GetIsInInventory
+    {
+        get
+        {
+            return IsInInventory;
+        }
+        set
+        {
+            IsInInventory = value;
+        }
+    }
+
     [SerializeField]
     private float RespawnTime;
 
@@ -369,7 +381,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetMenuAnimationToFalse()
     {
-        float SetTime = 0.6f;
+        float SetTime = 0.57f;
         yield return new WaitForSeconds(SetTime);
         MenuAnimating = false;
     }
@@ -466,6 +478,43 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OpenInventoryMenu()
+    {
+        if(!InventoryToggle)
+        {
+            ToggleInventoryPanel();
+            StartCoroutine(SetMenuAnimationToFalse());
+        }
+    }
+
+    public void CloseInventoryMenu()
+    {
+        if(IsInInventory)
+        {
+            IsInInventory = false;
+            InventoryToggle = false;
+            MonsterToggle = false;
+
+            MonsterBookAnimator.SetBool("FadeIn", false);
+            InventoryPanelAnimator.SetBool("FadeIn", false);
+
+            StartCoroutine(SetMenuAnimationToFalse());
+        }
+    }
+
+    public void OpenInventory()
+    {
+        if(!IsInInventory)
+        {
+            IsInInventory = true;
+            if(!MenuAnimating)
+            {
+                MenuAnimating = true;
+                OpenInventoryMenu();
+            }
+        }
+    }
+
     private void ToggleCharacterPanel()
     {
         CharacterToggle = true;
@@ -474,6 +523,7 @@ public class GameManager : MonoBehaviour
         SettingsToggle = false;
         MonsterToggle = false;
         TipToggle = false;
+        IsInInventory = false;
 
         CharacterPanelAnimator.SetBool("FadeIn", true);
         MaskSkillsPanel();
@@ -491,6 +541,7 @@ public class GameManager : MonoBehaviour
         SettingsToggle = false;
         MonsterToggle = false;
         TipToggle = false;
+        IsInInventory = false;
 
         UnmaskSkillsPanel();
         CharacterPanelAnimator.SetBool("FadeIn", false);
@@ -508,6 +559,7 @@ public class GameManager : MonoBehaviour
         SettingsToggle = false;
         MonsterToggle = false;
         TipToggle = false;
+        IsInInventory = false;
 
         EquipmentPanelAnimator.SetBool("FadeIn", true);
         CharacterPanelAnimator.SetBool("FadeIn", false);
@@ -525,6 +577,7 @@ public class GameManager : MonoBehaviour
         SettingsToggle = false;
         MonsterToggle = false;
         TipToggle = false;
+        IsInInventory = true;
 
         EquipmentPanelAnimator.SetBool("FadeIn", false);
         InventoryPanelAnimator.SetBool("FadeIn", true);
@@ -542,6 +595,7 @@ public class GameManager : MonoBehaviour
         SettingsToggle = true;
         MonsterToggle = false;
         TipToggle = false;
+        IsInInventory = false;
 
         CharacterPanelAnimator.SetBool("FadeIn", false);
         InventoryPanelAnimator.SetBool("FadeIn", false);

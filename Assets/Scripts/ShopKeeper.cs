@@ -57,9 +57,14 @@ public class ShopKeeper : MonoBehaviour
                 ShopAnimator.SetBool("FadeIn", false);
                 UpgradeAnimator.SetBool("FadeIn", false);
                 BuyAnimator.SetBool("FadeIn", false);
+                GameManager.Instance.CloseInventoryMenu();
                 IsInShop = false;
             }
             TurnToPlayer();
+        }
+        else
+        {
+            ReturnToPosition();
         }
     }
 
@@ -71,5 +76,22 @@ public class ShopKeeper : MonoBehaviour
         Quaternion LookDir = Quaternion.LookRotation(TargetPosition);
 
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, 5 * Time.deltaTime);
+    }
+
+    private void ReturnToPosition()
+    {
+        if(this.transform.rotation == ShopRotation)
+        {
+            return;
+        }
+        else
+        {
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, ShopRotation, 5 * Time.deltaTime);
+        }
+    }
+
+    public void SetIsInShopToFalse()
+    {
+        IsInShop = false;
     }
 }
