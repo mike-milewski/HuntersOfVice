@@ -434,6 +434,8 @@ public class EnemyAI : MonoBehaviour
 
         Anim.DeathAni();
 
+        this.GetComponent<ItemDrop>().DropItem();
+
         CheckForInformation();
     }
 

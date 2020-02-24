@@ -16,6 +16,18 @@ public class Materials : MonoBehaviour
     [SerializeField]
     private int ShopPoints, Quantity;
 
+    public MaterialData GetMaterialData
+    {
+        get
+        {
+            return materialData;
+        }
+        set
+        {
+            materialData = value;
+        }
+    }
+
     public int GetShopPoints
     {
         get
@@ -25,6 +37,18 @@ public class Materials : MonoBehaviour
         set
         {
             ShopPoints = value;
+        }
+    }
+
+    public int GetQuantity
+    {
+        get
+        {
+            return Quantity;
+        }
+        set
+        {
+            Quantity = value;
         }
     }
 
