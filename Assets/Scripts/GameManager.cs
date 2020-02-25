@@ -49,7 +49,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel, ItemDescriptionPanel;
 
-    private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating, IsInInventory;
+    private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating;
+
+    public bool IsInInventory;
 
     [SerializeField]
     private EventSystem eventsystem;
@@ -315,6 +317,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    IsInInventory = false;
                     InventoryToggle = false;
                     InventoryPanelAnimator.SetBool("FadeIn", false);
                 }
@@ -480,6 +483,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                IsInInventory = false;
                 InventoryToggle = false;
                 MonsterToggle = false;
 

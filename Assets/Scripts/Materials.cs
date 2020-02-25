@@ -28,6 +28,18 @@ public class Materials : MonoBehaviour
         }
     }
 
+    public string GetMaterialName
+    {
+        get
+        {
+            return MaterialName;
+        }
+        set
+        {
+            MaterialName = value;
+        }
+    }
+
     public int GetShopPoints
     {
         get
@@ -52,7 +64,7 @@ public class Materials : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         gameObject.GetComponent<Image>().sprite = materialData.MaterialSprite;
 

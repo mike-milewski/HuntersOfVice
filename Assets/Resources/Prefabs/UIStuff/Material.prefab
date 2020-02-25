@@ -86,10 +86,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7456b1d451ddb47499cc5d46746fb951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  materialData: {fileID: 11400000, guid: b4811e09ed0a2c34caac46e4fc16ff24, type: 2}
+  materialData: {fileID: 0}
   MaterialName: 
   ShopPoints: 0
-  Quantity: 2
+  Quantity: 0
 --- !u!114 &114445970677904952
 MonoBehaviour:
   m_ObjectHideFlags: 0

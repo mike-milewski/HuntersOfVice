@@ -54,61 +54,79 @@ public class ItemDrop : MonoBehaviour
     [SerializeField]
     private ItemDrops[] itemDrops;
 
+    private int i;
+
     public void DropItem()
     {
-        for(int i = 0; i < itemDrops.Length; i++)
+        for(i = 0; i < itemDrops.Length; i++)
         {
             if (Random.value * 100 <= itemDrops[i].GetDropChance)
             {
-                Debug.Log("Dropped!");
-
                 Materials m = itemDrops[i].GetMaterials;
+
+                GameObject go = m.gameObject;
 
                 if (GameManager.Instance.GetInventoryMaterialTransform.childCount > 0)
                 {
-                    foreach (Materials mat in GameManager.Instance.GetInventoryMaterialTransform.GetComponentsInChildren<Materials>())
+                    if (CheckForSameMaterialName())
                     {
-                        if (mat.GetMaterialData.name == m.GetMaterialData.name)
+                        return;
+                    }
+                    else
+                    {
+                        GameObject g = Instantiate(go, GameManager.Instance.GetInventoryMaterialTransform);
+
+                        g.GetComponent<Materials>().GetMaterialData = itemDrops[i].GetMaterialData;
+
+                        g.GetComponent<Materials>().GetQuantity++;
+
+                        if (GameManager.Instance.GetIsInInventory)
                         {
-                            mat.GetQuantity++;
+                            g.gameObject.SetActive(true);
                         }
                         else
                         {
-                            Instantiate(m, GameManager.Instance.GetInventoryMaterialTransform);
-
-                            m.GetMaterialData = itemDrops[i].GetMaterialData;
-
-                            m.GetQuantity++;
-
-                            if (GameManager.Instance.GetIsInInventory)
-                            {
-                                m.gameObject.SetActive(true);
-                            }
-                            else
-                            {
-                                m.gameObject.SetActive(false);
-                            }
+                            g.gameObject.SetActive(false);
                         }
                     }
                 }
                 else
                 {
-                    Instantiate(m, GameManager.Instance.GetInventoryMaterialTransform);
+                    GameObject g = Instantiate(go, GameManager.Instance.GetInventoryMaterialTransform);
 
-                    itemDrops[i].GetMaterialData = m.GetMaterialData;
+                    g.GetComponent<Materials>().GetMaterialData = itemDrops[i].GetMaterialData;
 
-                    m.GetQuantity++;
+                    g.GetComponent<Materials>().GetQuantity++;
 
                     if (GameManager.Instance.GetIsInInventory)
                     {
-                        m.gameObject.SetActive(true);
+                        g.gameObject.SetActive(true);
                     }
                     else
                     {
-                        m.gameObject.SetActive(false);
+                        g.gameObject.SetActive(false);
                     }
                 }
             }
         }
+    }
+
+    private bool CheckForSameMaterialName()
+    {
+        bool SameName = false;
+
+        Materials m = itemDrops[i].GetMaterials;
+
+        foreach (Materials mat in GameManager.Instance.GetInventoryMaterialTransform.GetComponentsInChildren<Materials>(true))
+        {
+            if (mat.GetMaterialName == m.GetMaterialName)
+            {
+                SameName = true;
+
+                mat.GetQuantity++;
+            }
+        }
+
+        return SameName;
     }
 }
