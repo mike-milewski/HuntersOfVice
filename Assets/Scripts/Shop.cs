@@ -124,6 +124,8 @@ public class Shop : MonoBehaviour
         ShopLevelText.text = "Level: " + ShopLevel;
         UpgradeShopLevelText.text = "Level: " + ShopLevel;
 
+        NextToLevel = ShopLevelExperiences[ShopLevel];
+
         UpdateShopExperience();
 
         ShowNextReward();

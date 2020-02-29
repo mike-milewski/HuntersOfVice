@@ -10,12 +10,6 @@ public class TreasureChest : MonoBehaviour
     private Equipment equipment;
 
     [SerializeField]
-    private MeshRenderer[] meshrenderer;
-
-    [SerializeField]
-    private Material AlphaMaterial;
-
-    [SerializeField]
     private Transform ItemTransform, ItemMessageTransform;
 
     [SerializeField]
@@ -45,13 +39,6 @@ public class TreasureChest : MonoBehaviour
         {
             equipment.gameObject.SetActive(true);
         }
-        /*
-        for(int i = 0; i < meshrenderer.Length; i++)
-        {
-            meshrenderer[i].material = AlphaMaterial;
-        }
-        */
-        //StartCoroutine(Fade());
     }
 
     private void ItemMessageComponents()
@@ -66,26 +53,5 @@ public class TreasureChest : MonoBehaviour
         ItemMessage.GetComponentInChildren<TextMeshProUGUI>().text = equipment.GetEquipmentData.EquipmentName;
 
         ItemMessage.GetComponentInChildren<RawImage>().texture = equipment.GetEquipmentSprite.texture;
-    }
-
-    private IEnumerator Fade()
-    {
-        foreach(MeshRenderer mr in meshrenderer)
-        {
-            Color alpha = mr.material.color;
-            mr.material.color = alpha;
-            //yield return new WaitForSeconds(3f);
-            while (alpha.a > 0.1f)
-            {
-                alpha.a -= 11 * Time.deltaTime;
-                mr.material.color = alpha;
-                yield return new WaitForSeconds(0.1f);
-                alpha.a -= 11 * Time.deltaTime;
-                mr.material.color = alpha;
-                yield return new WaitForSeconds(0.1f);
-            }
-            //gameObject.SetActive(false);
-            yield return null;
-        }
     }
 }

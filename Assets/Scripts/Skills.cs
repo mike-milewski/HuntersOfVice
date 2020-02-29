@@ -758,7 +758,25 @@ public class Skills : StatusEffects
             }
             else
             {
-                GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+                if(GetStatusIcon.GetComponentInChildren<Image>().enabled)
+                {
+                    GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+                }
+                else
+                {
+                    GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+                    GetStatusIcon.SetActive(true);
+
+                    GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
+
+                    GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
+                    GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
+                    GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+                    GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+                    GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+                }
             }
         }
     }

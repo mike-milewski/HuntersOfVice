@@ -73,7 +73,6 @@ public class CursorController : MonoBehaviour
                 if (hit.collider.GetComponent<TreasureChest>())
                 {
                     hit.collider.GetComponent<TreasureChest>().GetAnimator.SetBool("OpenChest", true);
-                    hit.collider.GetComponent<BoxCollider>().enabled = false;
                 }
             }
         }

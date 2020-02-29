@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class ItemDrops
@@ -54,19 +56,41 @@ public class ItemDrop : MonoBehaviour
     [SerializeField]
     private ItemDrops[] itemDrops;
 
+    [SerializeField]
+    private Materials materials;
+
     private int i;
 
     public void DropItem()
     {
-        for(i = 0; i < itemDrops.Length; i++)
+        for (i = 0; i < itemDrops.Length; i++)
         {
             if (Random.value * 100 <= itemDrops[i].GetDropChance)
             {
-                Materials m = itemDrops[i].GetMaterials;
+                var mat = materials;
 
-                GameObject go = m.gameObject;
+                ItemMessageComponents();
 
-                if (GameManager.Instance.GetInventoryMaterialTransform.childCount > 0)
+                if (GameManager.Instance.GetInventoryMaterialTransform.childCount <= 0)
+                {
+                    mat = Instantiate(materials, GameManager.Instance.GetInventoryMaterialTransform);
+
+                    mat.GetComponent<Materials>().GetMaterialData = itemDrops[i].GetMaterialData;
+
+                    mat.GetComponent<Materials>().GetMaterialName = itemDrops[i].GetMaterialData.MaterialName;
+
+                    mat.GetComponent<Materials>().GetQuantity++;
+
+                    if (GameManager.Instance.GetIsInInventory)
+                    {
+                        mat.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        mat.gameObject.SetActive(false);
+                    }
+                }
+                else
                 {
                     if (CheckForSameMaterialName())
                     {
@@ -74,37 +98,22 @@ public class ItemDrop : MonoBehaviour
                     }
                     else
                     {
-                        GameObject g = Instantiate(go, GameManager.Instance.GetInventoryMaterialTransform);
+                        mat = Instantiate(materials, GameManager.Instance.GetInventoryMaterialTransform);
 
-                        g.GetComponent<Materials>().GetMaterialData = itemDrops[i].GetMaterialData;
+                        mat.GetComponent<Materials>().GetMaterialData = itemDrops[i].GetMaterialData;
 
-                        g.GetComponent<Materials>().GetQuantity++;
+                        mat.GetComponent<Materials>().GetMaterialName = itemDrops[i].GetMaterialData.MaterialName;
+
+                        mat.GetComponent<Materials>().GetQuantity++;
 
                         if (GameManager.Instance.GetIsInInventory)
                         {
-                            g.gameObject.SetActive(true);
+                            mat.gameObject.SetActive(true);
                         }
                         else
                         {
-                            g.gameObject.SetActive(false);
+                            mat.gameObject.SetActive(false);
                         }
-                    }
-                }
-                else
-                {
-                    GameObject g = Instantiate(go, GameManager.Instance.GetInventoryMaterialTransform);
-
-                    g.GetComponent<Materials>().GetMaterialData = itemDrops[i].GetMaterialData;
-
-                    g.GetComponent<Materials>().GetQuantity++;
-
-                    if (GameManager.Instance.GetIsInInventory)
-                    {
-                        g.gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        g.gameObject.SetActive(false);
                     }
                 }
             }
@@ -115,18 +124,29 @@ public class ItemDrop : MonoBehaviour
     {
         bool SameName = false;
 
-        Materials m = itemDrops[i].GetMaterials;
-
         foreach (Materials mat in GameManager.Instance.GetInventoryMaterialTransform.GetComponentsInChildren<Materials>(true))
         {
-            if (mat.GetMaterialName == m.GetMaterialName)
+            if (mat.GetMaterialName == itemDrops[i].GetMaterialData.MaterialName)
             {
                 SameName = true;
 
                 mat.GetQuantity++;
             }
         }
-
         return SameName;
+    }
+
+    private void ItemMessageComponents()
+    {
+        var ItemMessage = ObjectPooler.Instance.GetItemMessage();
+
+        ItemMessage.transform.SetParent(GameManager.Instance.GetItemMessageTransform, false);
+
+        ItemMessage.SetActive(true);
+
+        ItemMessage.GetComponent<Animator>().SetBool("Appear", true);
+        ItemMessage.GetComponentInChildren<TextMeshProUGUI>().text = itemDrops[i].GetMaterialData.MaterialName;
+
+        ItemMessage.GetComponentInChildren<RawImage>().texture = itemDrops[i].GetMaterialData.MaterialSprite.texture;
     }
 }

@@ -223,12 +223,18 @@ public class EnemyStatusIcon : MonoBehaviour
     {
         if (GameManager.Instance.GetEnemyObject == character.GetComponent<Enemy>().gameObject)
         {
-            this.GetComponentInChildren<Image>().enabled = true;
+            foreach(Image i in this.GetComponentsInChildren<Image>())
+            {
+                i.enabled = true;
+            }
             DurationText.enabled = true;
         }
         else if (GameManager.Instance.GetEnemyObject != character.GetComponent<Enemy>().gameObject)
         {
-            this.GetComponentInChildren<Image>().enabled = false;
+            foreach (Image i in this.GetComponentsInChildren<Image>())
+            {
+                i.enabled = false;
+            }
             DurationText.enabled = false;
         }
     }
