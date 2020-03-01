@@ -1,14 +1,25 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0219
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum Skill { //MushroomMan Skills
-                    FungiBump, HealingCap, PoisonSpore,
-                    Regen,
-                    //Bee Skills
-                    StunningStinger };
+public enum Skill
+{   //MushroomMan Skills
+    FungiBump, HealingCap, PoisonSpore,
+    Regen,
+    //Bee Skills
+    StunningStinger,
+    //Bunnykins Skill
+    Hop,
+    //MiniBosses:
+    //Puck skills
+    SylvanBlessing,
+    SylvanFury,
+    SylvanStorm,
+    Touche
+};
 
-public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom };
+public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP };
 
 public enum EnemyElement { NONE, Fire, Water, Wind, Earth, Light, Dark };
 
@@ -462,6 +473,23 @@ public class EnemySkills : MonoBehaviour
                         GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY), 
                         GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                     break;
+                #endregion
+
+                #region Bunnykins Skill
+                case (Skill.Hop):
+                    Hop(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                        new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                    break;
+                #endregion
+
+                #region Puck Skills
+                case (Skill.SylvanBlessing):
+                    SylvanBlessing(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusDuration,
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                    break;
                     #endregion
             }
         }
@@ -492,6 +520,34 @@ public class EnemySkills : MonoBehaviour
         ActiveSkill = false;
     }
 
+    public void SylvanBlessing(float Duration, string skillname)
+    {
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        MushroomSporeAnimation();
+
+        if (settings.UseParticleEffects)
+        {
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
+        }
+
+        Invoke("InvokeSylvanBlessing", ApplySkill);
+    }
+
+    public void InvokeSylvanBlessing()
+    {
+        EnemyStatus();
+
+        ActiveSkill = false;
+    }
+
     public void FungiBump(int potency, float attackRange, string skillname)
     {
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
@@ -501,10 +557,7 @@ public class EnemySkills : MonoBehaviour
 
         if (enemyAI.GetPlayerTarget != null)
         {
-            if(Distance <= attackRange)
-            {
-                FungiBumpAnimation();
-            }
+            FungiBumpAnimation();
         }
         ActiveSkill = false;
     }
@@ -577,6 +630,57 @@ public class EnemySkills : MonoBehaviour
 
             Invoke("InvokePoisonSpore", ApplySkill);
         }
+    }
+
+    public void Hop(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        SpellCastingAnimation();
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            MushroomSporeAnimation();
+
+            damageRadius.CheckIfPlayerIsInCircleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
+
+            DisableRadiusImage();
+
+            if (settings.UseParticleEffects)
+            {
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                    transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
+            }
+
+            Invoke("InvokeHop", ApplySkill);
+        }
+    }
+
+    private void InvokeHop()
+    {
+        DisableRadius();
+
+        ActiveSkill = false;
     }
 
     private void InvokePoisonSpore()
@@ -764,6 +868,8 @@ public class EnemySkills : MonoBehaviour
         {
             if (GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>())
             {
+                Debug.Log("Added player status!");
+
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.SetActive(true);
@@ -782,6 +888,8 @@ public class EnemySkills : MonoBehaviour
             }
             else
             {
+                Debug.Log("Added enemy status!");
+
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.SetActive(true);
@@ -794,6 +902,8 @@ public class EnemySkills : MonoBehaviour
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite = 
                     this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
             }
         }
         else
@@ -804,7 +914,7 @@ public class EnemySkills : MonoBehaviour
             }
             else
             {
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
             }
         }
     }

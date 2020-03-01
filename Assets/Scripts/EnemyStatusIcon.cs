@@ -99,7 +99,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
     public void RemoveEffect()
     {
-        if (player == null)
+        if (character.GetComponent<PlayerController>())
         {
             RemoveStatusEffectText();
             ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
@@ -191,6 +191,9 @@ public class EnemyStatusIcon : MonoBehaviour
                 CheckEnemyStates();
                 break;
             case (StatusEffect.DefenseDOWN):
+                SetDefenseToDefault();
+                break;
+            case (StatusEffect.DefenseUP):
                 SetDefenseToDefault();
                 break;
             case (StatusEffect.Doom):
@@ -313,6 +316,19 @@ public class EnemyStatusIcon : MonoBehaviour
         character.CharacterDefense = (int)TempDefense;
     }
 
+    private void DefenseUP(float value)
+    {
+        float Percentage = (float)value / 100;
+
+        float TempDefense = (float)character.CharacterDefense;
+
+        TempDefense += (float)character.CharacterDefense * Percentage;
+
+        Mathf.Round(TempDefense);
+
+        character.CharacterDefense = (int)TempDefense;
+    }
+
     private void SetDefenseToDefault()
     {
         int DefaultDefense = character.GetCharacterData.Defense;
@@ -329,6 +345,9 @@ public class EnemyStatusIcon : MonoBehaviour
                 break;
             case (StatusEffect.DamageOverTime):
                 DamageOverTime(RegenAndDOTCalculation());
+                break;
+            case (StatusEffect.DefenseUP):
+                DefenseUP(50);
                 break;
             case (StatusEffect.Stun):
                 Stun();

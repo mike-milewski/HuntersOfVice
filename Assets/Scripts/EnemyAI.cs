@@ -324,6 +324,24 @@ public class EnemyAI : MonoBehaviour
                 this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
                 this.transform.position += Distance * MoveSpeed * Time.deltaTime;
+
+                if (PlayerTarget.CurrentHealth > 0)
+                {
+                    AutoAttackTime += Time.deltaTime;
+                    if (AutoAttackTime >= AttackDelay)
+                    {
+                        states = aiStates[StateArrayIndex].GetState;
+                    }
+                }
+                else
+                {
+                    enemy.GetHealth.IncreaseHealth(character.MaxHealth);
+                    enemy.GetLocalHealthInfo();
+
+                    PlayerTarget = null;
+                    AutoAttackTime = 0;
+                    states = States.Patrol;
+                }
             }
             else
             {
@@ -374,7 +392,6 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            AutoAttackTime = 0;
             states = States.Chase;
         }
     }
@@ -518,7 +535,6 @@ public class EnemyAI : MonoBehaviour
                 SameName = true;
             }
         }
-
         return SameName;
     }
 

@@ -14914,6 +14914,11 @@ PrefabInstance:
       propertyPath: Waypoints.Array.data[1]
       value: 
       objectReference: {fileID: 199508331}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: ChaseRange
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: EXP
@@ -33770,6 +33775,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430584137}
   m_CullTransparentMesh: 0
+--- !u!1 &1440675751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1611568485607104, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 3}
+  m_PrefabInstance: {fileID: 1610019266}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1440675754 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224999922894932806, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 3}
+  m_PrefabInstance: {fileID: 1610019266}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1442246513
 GameObject:
   m_ObjectHideFlags: 0
@@ -38048,6 +38065,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4113946509398354, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.5964696e-31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4113946509398354, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -2.9973206e-25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4780469800579470, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -4.721852e-18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4780469800579470, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -8.865127e-12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4780469800579470, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.000030517576
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: skills.Array.data[0].TextHolder
@@ -38078,6 +38120,119 @@ PrefabInstance:
       propertyPath: skills.Array.data[1].StatusEffectHolder
       value: 
       objectReference: {fileID: 880701154}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].skills
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].status
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].shapes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].StatusSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c144ece9d040e1349bc5e660a04eb618,
+        type: 3}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].StatusIcon
+      value: 
+      objectReference: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf,
+        type: 3}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].TextHolder
+      value: 
+      objectReference: {fileID: 1440675754}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].StatusIconTrans
+      value: 
+      objectReference: {fileID: 2115496357}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].DamageORHealText
+      value: 
+      objectReference: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53,
+        type: 3}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].StatusEffectHolder
+      value: 
+      objectReference: {fileID: 1440675751}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].StatusEffectName
+      value: Sylvan Blessing
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].StatusDescription
+      value: Increased Defense
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].SkillName
+      value: Sylvan Blessing
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].StatusDuration
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].CastTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].SizeDeltaX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].SizeDeltaY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].ShapeSize.x
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].ShapeSize.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].ShapeSize.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].AttackRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[2].StatusEffectPotency
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: ApplySkill
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: monsterBook
@@ -38093,6 +38248,16 @@ PrefabInstance:
       propertyPath: Waypoints.Array.data[1]
       value: 
       objectReference: {fileID: 2095844031}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: ChaseRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: aiStates.Array.data[3].SkillIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: EXP
@@ -51830,6 +51995,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &2115496357 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224992860828033654, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 3}
+  m_PrefabInstance: {fileID: 1610019266}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2122115156 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224124259290144160, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
