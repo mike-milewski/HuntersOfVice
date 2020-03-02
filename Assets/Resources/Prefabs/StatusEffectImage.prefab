@@ -63,9 +63,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<#EFDFB8><size=16><u>Tenacity</u></color></size>
+  m_text: '<#EFDFB8><size=16><u>Illumination</u></color></size>
 
-    <size=15>Increased strength'
+    <size=15>Regenerating HP'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ec044cca9c03e9844bc2c99fa272415c, type: 2}
   m_sharedMaterial: {fileID: 21375117388996326, guid: ec044cca9c03e9844bc2c99fa272415c,
@@ -372,8 +372,9 @@ MonoBehaviour:
     type: 3}
   DoomParticle: {fileID: 19800004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
   status: 0
+  AppliedEffect: 0
   Duration: 15
-  KeyInput: 1
+  KeyInput: 2
 --- !u!1 &1716822811282474
 GameObject:
   m_ObjectHideFlags: 0

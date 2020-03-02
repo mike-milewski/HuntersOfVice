@@ -31,6 +31,16 @@ public class EnemyStatusIcon : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
 
+    [SerializeField]
+    private float Duration;
+
+    private float DamageOrHealTick, TempTick;
+
+    private int KeyInput;
+
+    [SerializeField]
+    private GameObject StatusPanel;
+
     public PlayerController GetPlayer
     {
         get
@@ -54,16 +64,6 @@ public class EnemyStatusIcon : MonoBehaviour
             effect = value;
         }
     }
-
-    [SerializeField]
-    private float Duration;
-
-    private float DamageOrHealTick, TempTick;
-
-    private int KeyInput;
-
-    [SerializeField]
-    private GameObject StatusPanel;
 
     public int GetKeyInput
     {

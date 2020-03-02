@@ -74,7 +74,7 @@ public class enemySkillManager
     private float CastTime;
 
     [SerializeField] [Tooltip("The values used for the shape size if its set to CIRCLE")]
-    private float SizeDeltaX, SizeDeltaY;
+    private float SizeDeltaX, SizeDeltaY, ApplySkill;
 
     [SerializeField]
     private Vector3 ShapeSize;
@@ -256,6 +256,18 @@ public class enemySkillManager
         }
     }
 
+    public float GetApplySkill
+    {
+        get
+        {
+            return ApplySkill;
+        }
+        set
+        {
+            ApplySkill = value;
+        }
+    }
+
     public GameObject GetSkillParticle
     {
         get
@@ -378,9 +390,6 @@ public class EnemySkills : MonoBehaviour
 
     [SerializeField]
     private Health health;
-
-    [SerializeField] [Tooltip("The amount of time it takes before the skill is applied.")]
-    private float ApplySkill;
 
     [SerializeField]
     private bool ActiveSkill, DisruptedSkill;
@@ -509,7 +518,7 @@ public class EnemySkills : MonoBehaviour
 
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
-            Invoke("InvokeRegen", ApplySkill);
+            Invoke("InvokeRegen", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
         }
     }
 
@@ -538,7 +547,7 @@ public class EnemySkills : MonoBehaviour
             GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
         }
 
-        Invoke("InvokeSylvanBlessing", ApplySkill);
+        Invoke("InvokeSylvanBlessing", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
     }
 
     public void InvokeSylvanBlessing()
@@ -578,7 +587,7 @@ public class EnemySkills : MonoBehaviour
 
         if(skillBar.GetFillImage.fillAmount >= 1)
         {
-            Invoke("SkillHealText", ApplySkill);
+            Invoke("SkillHealText", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
         }  
     }
 
@@ -628,7 +637,7 @@ public class EnemySkills : MonoBehaviour
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
             }
 
-            Invoke("InvokePoisonSpore", ApplySkill);
+            Invoke("InvokePoisonSpore", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
         }
     }
 
@@ -672,7 +681,7 @@ public class EnemySkills : MonoBehaviour
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
             }
 
-            Invoke("InvokeHop", ApplySkill);
+            Invoke("InvokeHop", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
         }
     }
 
@@ -721,7 +730,7 @@ public class EnemySkills : MonoBehaviour
 
             DisableRadiusImage();
 
-            Invoke("InvokeStunningStinger", ApplySkill);
+            Invoke("InvokeStunningStinger", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
         }
     }
     /*
@@ -868,8 +877,6 @@ public class EnemySkills : MonoBehaviour
         {
             if (GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>())
             {
-                Debug.Log("Added player status!");
-
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.SetActive(true);
@@ -888,8 +895,6 @@ public class EnemySkills : MonoBehaviour
             }
             else
             {
-                Debug.Log("Added enemy status!");
-
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.SetActive(true);
