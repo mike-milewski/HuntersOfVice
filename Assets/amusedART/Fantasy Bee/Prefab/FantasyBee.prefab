@@ -330,6 +330,7 @@ MonoBehaviour:
     CastTime: 3
     SizeDeltaX: 12
     SizeDeltaY: 30
+    ApplySkill: 1
     ShapeSize: {x: 0.85, y: 0.7, z: 0.7}
     AttackRange: 2.5
     StatusEffectPotency: 0
@@ -341,7 +342,6 @@ MonoBehaviour:
   skillBar: {fileID: 114493978846615074}
   damageRadius: {fileID: 114048631002934456}
   health: {fileID: 114858683076657210}
-  ApplySkill: 1
   ActiveSkill: 0
   DisruptedSkill: 0
 --- !u!111 &111726338691668954
@@ -2556,6 +2556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 114608563224863254}
+  CharacterTransform: {fileID: 4983713028428976}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114229555450686462}
   enemyAI: {fileID: 114880966079448276}

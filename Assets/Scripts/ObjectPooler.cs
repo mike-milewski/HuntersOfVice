@@ -113,6 +113,8 @@ public class ObjectPooler : MonoBehaviour
         AddItemMessage(poolcontroller[23].GetPoolAmount);
         AddPoisonEffectParticle(poolcontroller[24].GetPoolAmount);
         AddStunEffectParticle(poolcontroller[25].GetPoolAmount);
+        AddIlluminationEffectParticle(poolcontroller[26].GetPoolAmount);
+        AddHopParticle(poolcontroller[27].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -427,6 +429,30 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddIlluminationEffectParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[26].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[26].GetPoolParent.transform, false);
+            poolcontroller[26].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddHopParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[27].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[27].GetPoolParent.transform, false);
+            poolcontroller[27].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -555,6 +581,16 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetStunEffectParticle()
     {
         return poolcontroller[25].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetIlluminationEffectParticle()
+    {
+        return poolcontroller[26].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetHopParticle()
+    {
+        return poolcontroller[27].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -762,6 +798,22 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[25].GetPoolParent.transform, false);
 
         poolcontroller[25].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnIlluminationEffectParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[26].GetPoolParent.transform, false);
+
+        poolcontroller[26].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnHopParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[27].GetPoolParent.transform, false);
+
+        poolcontroller[27].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

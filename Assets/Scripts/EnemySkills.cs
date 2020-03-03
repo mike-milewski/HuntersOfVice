@@ -56,6 +56,7 @@ public class enemySkillManager
     [SerializeField] [Tooltip("The gameobject that will hold the status effect text.")]
     private GameObject StatusEffectHolder = null;
 
+    [SerializeField]
     private GameObject SkillParticle;
 
     [SerializeField]
@@ -635,6 +636,8 @@ public class EnemySkills : MonoBehaviour
                                                                     transform.position.x, transform.position.y + 0.2f, transform.position.z);
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
             }
 
             Invoke("InvokePoisonSpore", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
@@ -669,18 +672,6 @@ public class EnemySkills : MonoBehaviour
 
             DisableRadiusImage();
 
-            if (settings.UseParticleEffects)
-            {
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
-
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
-
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
-                                                                    transform.position.x, transform.position.y + 0.2f, transform.position.z);
-
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
-            }
-
             Invoke("InvokeHop", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
         }
     }
@@ -688,6 +679,20 @@ public class EnemySkills : MonoBehaviour
     private void InvokeHop()
     {
         DisableRadius();
+
+        if (settings.UseParticleEffects)
+        {
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHopParticle();
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
+        }
 
         ActiveSkill = false;
     }
@@ -753,6 +758,8 @@ public class EnemySkills : MonoBehaviour
             StingerParticle.transform.position = Trans + character.transform.forward * 1f;
 
             StingerParticle.transform.SetParent(character.transform);
+
+            StingerParticle.transform.localScale = new Vector3(1, 1, 1);
         }
 
         DisableRadius();

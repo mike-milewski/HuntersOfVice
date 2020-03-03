@@ -375,7 +375,7 @@ public class Skills : StatusEffects
     {
         if (settings.UseParticleEffects)
         {
-            SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
+            SkillParticle = ObjectPooler.Instance.GetIlluminationEffectParticle();
 
             SkillParticle.SetActive(true);
 

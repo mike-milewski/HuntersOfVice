@@ -106,7 +106,9 @@ public class EnemySkillBar : MonoBehaviour
 
             CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.6f, character.transform.position.z);
 
-            CastParticle.transform.SetParent(character.transform, false);
+            CastParticle.transform.SetParent(character.transform);
+
+            CastParticle.transform.localScale = new Vector3(1,1,1);
 
         }
         CastTime = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;

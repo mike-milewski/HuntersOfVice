@@ -2393,6 +2393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 114734743348568266}
+  CharacterTransform: {fileID: 4366026104794914}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114967195343370240}
   enemyAI: {fileID: 114981715383889750}

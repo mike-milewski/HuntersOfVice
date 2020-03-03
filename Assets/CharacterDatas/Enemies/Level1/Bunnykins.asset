@@ -18,9 +18,9 @@ MonoBehaviour:
   Absorbtions: 00000000
   CharacterName: Bunnykins
   CharacterLevel: 1
-  Health: 300
+  Health: 600
   Mana: 0
-  Strength: 33
+  Strength: 28
   Defense: 12
   Intelligence: 2
   HpIncrease: 0
