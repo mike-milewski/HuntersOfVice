@@ -682,16 +682,11 @@ public class EnemySkills : MonoBehaviour
 
         if (settings.UseParticleEffects)
         {
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHopParticle();
+            var HopParticle = ObjectPooler.Instance.GetHopParticle();
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+            HopParticle.gameObject.SetActive(true);
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
-                                                                transform.position.x, transform.position.y + 0.2f, transform.position.z);
-
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
-
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
+            HopParticle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
         }
 
         ActiveSkill = false;
@@ -758,8 +753,6 @@ public class EnemySkills : MonoBehaviour
             StingerParticle.transform.position = Trans + character.transform.forward * 1f;
 
             StingerParticle.transform.SetParent(character.transform);
-
-            StingerParticle.transform.localScale = new Vector3(1, 1, 1);
         }
 
         DisableRadius();

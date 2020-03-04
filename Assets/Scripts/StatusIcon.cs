@@ -323,7 +323,7 @@ public class StatusIcon : MonoBehaviour
         TempTick -= Time.deltaTime;
         if (TempTick <= 0)
         {
-            SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(value);
+            SkillsManager.Instance.GetCharacter.GetComponent<Health>().IncreaseHealth(value);
 
             var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
 

@@ -6,7 +6,7 @@ using System.Collections;
 
 public enum SkillType { Active, Passive };
 
-public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, StormThrust, ItemHP, ItemMana };
+public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, StormThrust, ItemHP, ItemMana, Heal, WhirlwindSlash };
 
 public class SkillMenu : MonoBehaviour
 {
@@ -16,7 +16,10 @@ public class SkillMenu : MonoBehaviour
     private GameObject levelUp, levelUpParent;
 
     [SerializeField]
-    private Skills StormThrustSkill, IlluminationSkill, HealSkill;
+    private Skills StormThrustSkill, IlluminationSkill, HealSkill, WhirlwindSlashSkill;
+
+    [SerializeField]
+    private Animator AC;
 
     [SerializeField]
     private Items[] items;
@@ -488,6 +491,12 @@ public class SkillMenu : MonoBehaviour
                 case (PassiveBonus.ItemMana):
                     ItemManaBonusPassiveText();
                     break;
+                case (PassiveBonus.Heal):
+                    HealBonusPassiveText();
+                    break;
+                case (PassiveBonus.WhirlwindSlash):
+                    WhirlwindSlashBonusPassiveText();
+                    break;
             }
         }
         #endregion
@@ -540,6 +549,18 @@ public class SkillMenu : MonoBehaviour
         SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases Ether's potency by " + PassiveBonusValue + "%";
     }
 
+    private void HealBonusPassiveText()
+    {
+        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Heal's cast time is reduced by 1 and power is increased by 50.";
+    }
+
+    private void WhirlwindSlashBonusPassiveText()
+    {
+        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Whirlwind Slash gains the following bonus:" + 
+                             "\n\n" + "<#EFDFB8>" + "Added Effect: " + "</color>" + "Bleeding" + "\n" + "<#EFDFB8>" +
+                             "Duration: " + "</color>" + "15s";
+    }
+
     private void GetPassiveBonus()
     {
         switch(passivebonus)
@@ -570,6 +591,12 @@ public class SkillMenu : MonoBehaviour
                 break;
             case (PassiveBonus.ItemMana):
                 ItemBonusMana();
+                break;
+            case (PassiveBonus.Heal):
+                HealBonus();
+                break;
+            case (PassiveBonus.WhirlwindSlash):
+                WhirlwindSlashBonus();
                 break;
         }
     }
@@ -682,11 +709,13 @@ public class SkillMenu : MonoBehaviour
     private void HealBonus()
     {
         HealSkill.GetCastTime -= 1;
+        HealSkill.GetPotency += 50;
     }
 
     private void WhirlwindSlashBonus()
     {
-
+        WhirlwindSlashSkill.GetGainedPassive = true;
+        WhirlwindSlashSkill.GetEnemyStatusEffect = StatusEffect.DamageOverTime;
     }
 
     private void EvilsEndBonus()

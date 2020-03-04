@@ -53,6 +53,9 @@ public class Skills : StatusEffects
     private bool StormThrustActivated, FacingEnemy;
 
     [SerializeField]
+    private bool GainedPassive;
+
+    [SerializeField]
     private int ManaCost, Potency;
     
     [SerializeField] [Tooltip("Skills that have a cast time greater than 0 will activate the skill casting bar.")]
@@ -188,6 +191,18 @@ public class Skills : StatusEffects
         set
         {
             IsBeingDragged = value;
+        }
+    }
+
+    public bool GetGainedPassive
+    {
+        get
+        {
+            return GainedPassive;
+        }
+        set
+        {
+            GainedPassive = value;
         }
     }
 
@@ -575,6 +590,11 @@ public class Skills : StatusEffects
     private void WhirlwindSlashHit()
     {
         GetCharacter.transform.Rotate(0, 420 * Time.deltaTime, 0);
+
+        if (GainedPassive)
+        {
+            EnemyStatus();
+        }
     }
 
     public void SetUpDamagePerimiter(Vector3 center, float radius)
@@ -598,6 +618,10 @@ public class Skills : StatusEffects
                 }
 
                 DamageSkillText(hitColliders[i].GetComponent<Enemy>());
+
+                GetStatusEffectIconTrans = hitColliders[i].GetComponent<Enemy>().GetDebuffTransform;
+
+                EnemyStatus();
             }
         }
         GetCharacter.transform.rotation = rot;
@@ -718,7 +742,7 @@ public class Skills : StatusEffects
 
     public void StatusEffectSkillText()
     {
-        if(!GetStatusIcon.activeInHierarchy)
+        if (!GetStatusIcon.activeInHierarchy)
         {
             if (GetStatusIcon.GetComponent<StatusIcon>())
             {
