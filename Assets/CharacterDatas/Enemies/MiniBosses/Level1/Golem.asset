@@ -18,9 +18,9 @@ MonoBehaviour:
   Absorbtions: 
   CharacterName: 
   CharacterLevel: 7
-  Health: 2500
+  Health: 3500
   Mana: 0
-  Strength: 50
+  Strength: 43
   Defense: 25
   Intelligence: 5
   HpIncrease: 0
