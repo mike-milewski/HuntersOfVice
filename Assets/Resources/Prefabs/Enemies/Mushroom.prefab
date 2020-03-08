@@ -1556,7 +1556,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 114979435669946942}
-  CharacterTransform: {fileID: 4731271516209256}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114492699656399902}
   enemyAI: {fileID: 114244275959761428}
@@ -1845,7 +1844,6 @@ GameObject:
   - component: {fileID: 114244275959761428}
   - component: {fileID: 114006354462489536}
   - component: {fileID: 1610019268}
-  - component: {fileID: 1153706784}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -2026,6 +2024,7 @@ MonoBehaviour:
     DamageORHealText: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53,
       type: 3}
     StatusEffectHolder: {fileID: 0}
+    SkillParticle: {fileID: 0}
     StatusEffectName: 
     StatusDescription: 
     SkillName: Fungal Cap
@@ -2050,6 +2049,7 @@ MonoBehaviour:
     DamageORHealText: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53,
       type: 3}
     StatusEffectHolder: {fileID: 0}
+    SkillParticle: {fileID: 0}
     StatusEffectName: Poison
     StatusDescription: Taking Damage
     SkillName: Poison Spore
@@ -2090,25 +2090,7 @@ MonoBehaviour:
     DropChance: 100
   materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
     type: 3}
---- !u!114 &1153706784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722958204252142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c33a32e953e4d454e8b303d0fab3c8d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemDrops:
-  - materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
-      type: 3}
-    materialData: {fileID: 11400000, guid: b4811e09ed0a2c34caac46e4fc16ff24, type: 2}
-    DropChance: 100
-  materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
-    type: 3}
+  CanDropThroughPass: 0
 --- !u!1 &1733891065060188
 GameObject:
   m_ObjectHideFlags: 0

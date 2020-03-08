@@ -5,18 +5,32 @@ using TMPro;
 
 public enum Skill
 {   //MushroomMan Skills
-    FungiBump, HealingCap, PoisonSpore,
+    FungiBump,
+    HealingCap,
+    PoisonSpore,
     Regen,
     //Bee Skills
     StunningStinger,
     //Bunnykins Skill
     Hop,
+    //GolemFragment Skills
+    Slam,
+    GaiasProwess,
+    //RockSpirit Skills
+    Gnaw,
     //MiniBosses:
-    //Puck skills
+    //Puck Skills
     SylvanBlessing,
     SylvanFury,
     SylvanStorm,
-    Touche
+    VicePlanter,
+    Touche,
+    //VineGolem Skills
+    EarthHammer,
+    //MainBoss:
+    //SylvanDiety Skills
+    MagicDreams,
+    Light
 };
 
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP };

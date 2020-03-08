@@ -16,7 +16,7 @@ MonoBehaviour:
   Resistances: 01000000
   Immunities: 
   Absorbtions: 
-  CharacterName: 
+  CharacterName: Vine Golem
   CharacterLevel: 7
   Health: 3500
   Mana: 0

@@ -18,10 +18,10 @@ MonoBehaviour:
   Absorbtions: 
   CharacterName: Golem Fragment
   CharacterLevel: 5
-  Health: 420
+  Health: 1
   Mana: 0
-  Strength: 35
-  Defense: 23
+  Strength: 2
+  Defense: 15
   Intelligence: 3
   HpIncrease: 0
   MpIncrease: 0

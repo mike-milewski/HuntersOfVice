@@ -4,7 +4,10 @@ using UnityEngine;
 public class EnemyAnimations : MonoBehaviour
 {
     [SerializeField]
-    private Animation anim;
+    private Animation anim = null;
+
+    [SerializeField]
+    private Animator EnemyAnimator = null;
 
     [SerializeField]
     private Animator animator;
@@ -65,6 +68,46 @@ public class EnemyAnimations : MonoBehaviour
         AI.TakeDamage();
     }
 
+    public void MoveAnimator()
+    {
+        EnemyAnimator.SetBool("Moving", true);
+    }
+
+    public void AttackAnimator()
+    {
+        EnemyAnimator.SetBool("Attacking", true);
+    }
+
+    public void DamagedAnimator()
+    {
+        EnemyAnimator.SetBool("Damaged", true);
+    }
+
+    public void SkillAnimator()
+    {
+        EnemyAnimator.SetBool("Skill", true);
+    }
+
+    public void Skill2Animator()
+    {
+        EnemyAnimator.SetBool("Skill2", true);
+    }
+
+    public void DeadAnimator()
+    {
+        EnemyAnimator.SetBool("Dead", true);
+        EnemyAnimator.SetBool("Attacking", false);
+        EnemyAnimator.SetBool("Moving", false);
+        EnemyAnimator.SetBool("Damaged", false);
+        EnemyAnimator.SetBool("Skill", false);
+        EnemyAnimator.SetBool("Skill2", false);
+    }
+
+    public void IdleAnimator()
+    {
+        EnemyAnimator.SetBool("Moving", false);
+    }
+
     public void SkillDamage()
     {
         enemyskills.SkillDamageText(enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
@@ -94,6 +137,10 @@ public class EnemyAnimations : MonoBehaviour
     {
         if(AI.GetStates != States.SkillAnimation)
         {
+            if(AI.GetIsUsingAnimator)
+            {
+                EnemyAnimator.SetBool("Attacking", false);
+            }
             AI.GetAutoAttack = 0;
             AI.GetStates = States.Attack;
         }
@@ -105,6 +152,11 @@ public class EnemyAnimations : MonoBehaviour
 
     public void EndDamaged()
     {
+        if(AI.GetIsUsingAnimator)
+        {
+            EnemyAnimator.SetBool("Damaged", false);
+        }
+        
         if(!AI.GetIsHostile)
         {
             AI.GetSphereTrigger.enabled = true;

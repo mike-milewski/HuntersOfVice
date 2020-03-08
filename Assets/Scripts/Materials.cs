@@ -8,13 +8,19 @@ public class Materials : MonoBehaviour
     [SerializeField]
     private MaterialData materialData;
 
+    [SerializeField]
+    private Image FadedImage;
+
+    [SerializeField]
+    private Materials InstancedObject, ParentMaterial;
+
     private string MaterialDescription;
 
     [SerializeField]
     private string MaterialName;
 
     [SerializeField]
-    private int ShopPoints, Quantity;
+    private int ShopPoints, Quantity, CommittedQuantity;
 
     public MaterialData GetMaterialData
     {
@@ -64,6 +70,18 @@ public class Materials : MonoBehaviour
         }
     }
 
+    public int GetCommittedQuantity
+    {
+        get
+        {
+            return CommittedQuantity;
+        }
+        set
+        {
+            CommittedQuantity = value;
+        }
+    }
+
     private void Start()
     {
         gameObject.GetComponent<Image>().sprite = materialData.MaterialSprite;
@@ -91,7 +109,8 @@ public class Materials : MonoBehaviour
 
             GameManager.Instance.GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text =
                                                                    "<size=12>" + "<u>" + MaterialName + "</u>" + "</size>" + "\n\n" +
-                                                                   MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints + "\n\n" + "Quantity: " + Quantity;
+                                                                   MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints + "\n\n" + "Committed Amount: "
+                                                                   + CommittedQuantity;
         }
     }
 
@@ -107,23 +126,95 @@ public class Materials : MonoBehaviour
         }
     }
 
+    private void UpdatePanel()
+    {
+        if (gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
+        {
+            GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(true);
+
+            GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text =
+                                                                   "<size=12>" + "<u>" + MaterialName + "</u>" + "</size>" + "\n\n" +
+                                                                   MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints + "\n\n" + "Quantity: " + Quantity;
+        }
+        else
+        {
+            GameManager.Instance.GetItemDescriptionPanel.SetActive(true);
+
+            GameManager.Instance.GetItemDescriptionPanel.GetComponentInChildren<TextMeshProUGUI>().text =
+                                                                   "<size=12>" + "<u>" + MaterialName + "</u>" + "</size>" + "\n\n" +
+                                                                   MaterialDescription + "\n\n" + "Shop Points: " + ShopPoints + "\n\n" + "Committed Amount: "
+                                                                   + CommittedQuantity;
+        }
+    }
+
     public void SetMaterialParent()
     {
         if(GameManager.Instance.GetShopupgrade.GetCanUpgrade)
         {
             if (gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
             {
-                CloseInformationPanel();
-                gameObject.transform.SetParent(GameManager.Instance.GetShopUpgradePanel.transform);
-                AddExperience();
+                if(Quantity > 0)
+                {
+                    Quantity--;
+                    //FadedImage.enabled = false;
+                    if(!CheckForSameMaterialName())
+                    {
+                        Materials mat = Instantiate(InstancedObject, GameManager.Instance.GetShopUpgradePanel.transform);
+                        mat.CommittedQuantity++;
+                    }
+                    AddExperience();
+                    UpdatePanel();
+                }
+                else
+                {
+                    //FadedImage.enabled = true;
+                }
             }
             else
             {
-                CloseInformationPanel();
-                gameObject.transform.SetParent(GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform);
+                CheckForSameMaterialNameInInventory();
                 SubtractExperience();
             }
         }
+    }
+
+    private bool CheckForSameMaterialName()
+    {
+        bool SameName = false;
+
+        foreach(Materials m in GameManager.Instance.GetShopUpgradePanel.transform.GetComponentsInChildren<Materials>())
+        {
+            if(m.GetMaterialData.MaterialName == this.GetMaterialData.MaterialName)
+            {
+                SameName = true;
+                m.CommittedQuantity++;
+            }
+        }
+
+        return SameName;
+    }
+
+    private bool CheckForSameMaterialNameInInventory()
+    {
+        bool SameName = false;
+
+        UpdatePanel();
+        foreach (Materials m in GameManager.Instance.GetInventoryMaterialTransform.GetComponentsInChildren<Materials>())
+        {
+            if (m.GetMaterialData.MaterialName == this.GetMaterialData.MaterialName)
+            {
+                SameName = true;
+                m.Quantity++;
+                this.CommittedQuantity--;
+                if(this.CommittedQuantity <= 0)
+                {
+                    CloseInformationPanel();
+                    this.gameObject.transform.SetParent(GameManager.Instance.transform);
+                    Destroy(this.gameObject);
+                }
+            }
+        }
+        return SameName;
     }
 
     private void AddExperience()

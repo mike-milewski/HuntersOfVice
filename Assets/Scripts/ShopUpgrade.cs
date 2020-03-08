@@ -28,21 +28,36 @@ public class ShopUpgrade : MonoBehaviour
     {
         if(UpgradeTransform.childCount > 0)
         {
-            foreach (Materials materials in UpgradeTransform.GetComponentsInChildren<Materials>(true))
+            foreach(Materials m in UpgradeTransform.GetComponentsInChildren<Materials>(true))
             {
-                materials.transform.SetParent(MaterialTransform, true);
-                if(!inventory.GetInInventory)
+                GameManager.Instance.GetShop.GetExperiencePoints -= m.GetShopPoints;
+            }
+            CheckForSameMaterialName();
+            GameManager.Instance.GetShop.ShowPreviewExperience();
+        }
+    }
+
+    private bool CheckForSameMaterialName()
+    {
+        bool SameName = false;
+
+        foreach (Materials mat in MaterialTransform.GetComponentsInChildren<Materials>(true))
+        {
+            foreach(Materials m in UpgradeTransform.GetComponentsInChildren<Materials>(true))
+            {
+                if (mat.GetMaterialData.MaterialName == m.GetMaterialData.MaterialName)
                 {
-                    materials.gameObject.SetActive(false);
+                    SameName = true;
+
+                    mat.GetQuantity += m.GetCommittedQuantity;
+
+                    m.transform.SetParent(GameManager.Instance.transform);
+
+                    Destroy(m.gameObject);
                 }
-                else
-                {
-                    materials.gameObject.SetActive(true);
-                }
-                GameManager.Instance.GetShop.GetExperiencePoints -= materials.GetShopPoints;
-                GameManager.Instance.GetShop.ShowPreviewExperience();
             }
         }
+        return SameName;
     }
 
     public void Confirm()

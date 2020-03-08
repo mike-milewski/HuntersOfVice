@@ -107,6 +107,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private bool IsHostile;
 
+    [SerializeField]
+    private bool IsUsingAnimator;
+
     private int StateArrayIndex;
 
     public int GetStateArrayIndex
@@ -142,6 +145,18 @@ public class EnemyAI : MonoBehaviour
         set
         {
             aiStates = value;
+        }
+    }
+
+    public bool GetIsUsingAnimator
+    {
+        get
+        {
+            return IsUsingAnimator;
+        }
+        set
+        {
+            IsUsingAnimator = value;
         }
     }
 
@@ -266,7 +281,14 @@ public class EnemyAI : MonoBehaviour
 
         if (!StandingStill)
         {
-            Anim.RunAni();
+            if(!IsUsingAnimator)
+            {
+                Anim.RunAni();
+            }
+            else
+            {
+                Anim.MoveAnimator();
+            }
 
             Vector3 Distance = new Vector3(Waypoints[WaypointIndex].position.x - this.transform.position.x, 0,
                                            Waypoints[WaypointIndex].position.z - this.transform.position.z).normalized;
@@ -279,7 +301,14 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Anim.IdleAni();
+            if(!IsUsingAnimator)
+            {
+                Anim.IdleAni();
+            }
+            else
+            {
+                Anim.IdleAnimator();
+            }
         }
 
         if (DistanceToWayPoint <= 0.1f)
@@ -303,7 +332,14 @@ public class EnemyAI : MonoBehaviour
     {
         StandingStill = false;
 
-        Anim.RunAni();
+        if (!IsUsingAnimator)
+        {
+            Anim.RunAni();
+        }
+        else
+        {
+            Anim.MoveAnimator();
+        }
 
         enemySkills.GetSkillBar.gameObject.SetActive(false);
 
@@ -356,7 +392,14 @@ public class EnemyAI : MonoBehaviour
 
     private void Attack()
     {
-        Anim.IdleAni();
+        if(!IsUsingAnimator)
+        {
+            Anim.IdleAni();
+        }
+        else
+        {
+            Anim.IdleAnimator();
+        }
 
         if (PlayerTarget != null)
         {
@@ -398,7 +441,14 @@ public class EnemyAI : MonoBehaviour
 
     private void ApplyingNormalAtk()
     {
-        Anim.AttackAni();
+        if(!IsUsingAnimator)
+        {
+            Anim.AttackAni();
+        }
+        else
+        {
+            Anim.AttackAnimator();
+        }
     }
 
     private void Skill()
@@ -409,12 +459,26 @@ public class EnemyAI : MonoBehaviour
     //Sets the enemy to this state if they are inflicted with the stun/sleep status effect.
     private void Immobile()
     {
-        Anim.IdleAni();
+        if(!IsUsingAnimator)
+        {
+            Anim.IdleAni();
+        }
+        else
+        {
+            Anim.IdleAnimator();
+        }
     }
 
     public void Damage()
     {
-        Anim.DamageAni();
+        if(!IsUsingAnimator)
+        {
+            Anim.DamageAni();
+        }
+        else
+        {
+            Anim.DamagedAnimator();
+        }
     }
 
     public void Dead()
@@ -449,7 +513,14 @@ public class EnemyAI : MonoBehaviour
 
         enemy.ReturnExperience();
 
-        Anim.DeathAni();
+        if(!IsUsingAnimator)
+        {
+            Anim.DeathAni();
+        }
+        else
+        {
+            Anim.DeadAnimator();
+        }
 
         if(this.GetComponent<ItemDrop>() != null)
         {

@@ -59,6 +59,9 @@ public class ItemDrop : MonoBehaviour
     [SerializeField]
     private Materials materials;
 
+    [SerializeField]
+    private bool CanDropThroughPass;
+
     private int i;
 
     public void DropItem()
@@ -148,5 +151,20 @@ public class ItemDrop : MonoBehaviour
         ItemMessage.GetComponentInChildren<TextMeshProUGUI>().text = itemDrops[i].GetMaterialData.MaterialName;
 
         ItemMessage.GetComponentInChildren<RawImage>().texture = itemDrops[i].GetMaterialData.MaterialSprite.texture;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(CanDropThroughPass)
+        {
+            if (other.GetComponent<PlayerController>())
+            {
+                DropItem();
+                this.GetComponent<BoxCollider>().enabled = false;
+
+                ParticleSystem ParticleObject = gameObject.transform.GetComponentInChildren<ParticleSystem>();
+                ParticleObject.gameObject.SetActive(false);
+            }
+        }
     }
 }
