@@ -33,7 +33,7 @@ public class Experience : MonoBehaviour
     private ParticleSystem LevelUpParticle;
 
     [SerializeField]
-    private int ExperiencePoints, NextToLevel, MaxLevel, StatPoints;
+    private int ExperiencePoints, NextToLevel, MaxLevel, StatPoints, StatPointIncrease;
 
     private int MaxStatPoints;
 
@@ -49,6 +49,18 @@ public class Experience : MonoBehaviour
         set
         {
             StatPoints = value;
+        }
+    }
+
+    public int GetStatPointIncrease
+    {
+        get
+        {
+            return StatPointIncrease;
+        }
+        set
+        {
+            StatPointIncrease = value;
         }
     }
 
@@ -184,16 +196,10 @@ public class Experience : MonoBehaviour
 
         StatPointsTxt.gameObject.SetActive(true);
 
-        StatPoints += 2;
-
-        MaxStatPoints += StatPoints;
-
         character.GetCharacterData.HpIncrease += 3;
         character.GetCharacterData.MpIncrease++;
 
         StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
-
-        StatPointsTxt.text = StatPoints.ToString();
 
         StatConfirmButton.SetActive(true);
 
@@ -214,6 +220,12 @@ public class Experience : MonoBehaviour
 
         character.GetComponent<Health>().IncreaseHealth(character.MaxHealth);
         character.GetComponent<Mana>().IncreaseMana(character.MaxMana);
+
+        StatPoints += StatPointIncrease;
+
+        MaxStatPoints += StatPoints;
+
+        StatPointsTxt.text = StatPoints.ToString();
     }
 
     public TextMeshProUGUI GetShowExperienceText()

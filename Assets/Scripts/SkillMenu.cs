@@ -6,7 +6,7 @@ using System.Collections;
 
 public enum SkillType { Active, Passive };
 
-public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, StormThrust, ItemHP, ItemMana, Heal, WhirlwindSlash };
+public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, StormThrust, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus };
 
 public class SkillMenu : MonoBehaviour
 {
@@ -497,6 +497,9 @@ public class SkillMenu : MonoBehaviour
                 case (PassiveBonus.WhirlwindSlash):
                     WhirlwindSlashBonusPassiveText();
                     break;
+                case (PassiveBonus.StatPointsBonus):
+                    StatPointBonusPassiveText();
+                    break;
             }
         }
         #endregion
@@ -561,6 +564,11 @@ public class SkillMenu : MonoBehaviour
                              "Duration: " + "</color>" + "15s";
     }
 
+    private void StatPointBonusPassiveText()
+    {
+        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases the amount of stat points received upon level up by 1.";
+    }
+
     private void GetPassiveBonus()
     {
         switch(passivebonus)
@@ -597,6 +605,9 @@ public class SkillMenu : MonoBehaviour
                 break;
             case (PassiveBonus.WhirlwindSlash):
                 WhirlwindSlashBonus();
+                break;
+            case (PassiveBonus.StatPointsBonus):
+                StatPointBonus();
                 break;
         }
     }
@@ -726,6 +737,11 @@ public class SkillMenu : MonoBehaviour
     private void IlluminationBonus()
     {
         IlluminationSkill.GetStatusEffectPotency = 2;
+    }
+
+    private void StatPointBonus()
+    {
+        character.GetComponent<Experience>().GetStatPointIncrease++;
     }
 
     private void ItemBonusHP()

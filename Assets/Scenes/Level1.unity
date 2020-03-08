@@ -558,7 +558,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 191.2, y: -167.0596}
+  m_AnchoredPosition: {x: 191.2, y: -165.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &10536763
@@ -6455,7 +6455,7 @@ MonoBehaviour:
   SkillInfoText: {fileID: 1524491717}
   PassiveSkillName: Biting Winds
   PassiveBonusValue: 5
-  LevelRequirement: 2
+  LevelRequirement: 7
   SkillImage: {fileID: 188036011}
   skill: {fileID: 188036005}
   skilltype: 1
@@ -9199,6 +9199,11 @@ PrefabInstance:
       propertyPath: Stats
       value: 
       objectReference: {fileID: 326764282}
+    - target: {fileID: 114884055767735502, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
+        type: 3}
+      propertyPath: StatPointIncrease
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 114926308544404342, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 3}
       propertyPath: characterMenu
@@ -9580,11 +9585,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1.0000108}
   m_Children: []
   m_Father: {fileID: 587770813}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 99.9, y: -167.0596}
+  m_AnchoredPosition: {x: 99.9, y: -165.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356400996
@@ -10657,14 +10662,14 @@ RectTransform:
   m_GameObject: {fileID: 427068199}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99999356, y: 0.99999356, z: 1.0000108}
+  m_LocalScale: {x: 1, y: 1, z: 1.0000108}
   m_Children: []
   m_Father: {fileID: 587770813}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 54.91973, y: -167.0596}
+  m_AnchoredPosition: {x: 54.91973, y: -165.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &427068201
@@ -14038,7 +14043,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 62.7, y: 72.8}
+  m_AnchoredPosition: {x: 62.7, y: 76.4}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &576140164
@@ -14492,11 +14497,11 @@ RectTransform:
   - {fileID: 856682571}
   - {fileID: 2085359600}
   - {fileID: 52301541}
+  - {fileID: 606688186}
   - {fileID: 863585602}
   - {fileID: 1413333632}
   - {fileID: 427068200}
   - {fileID: 356400995}
-  - {fileID: 606688186}
   - {fileID: 2011692417}
   - {fileID: 10536762}
   m_Father: {fileID: 1989243149}
@@ -14905,7 +14910,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 587770813}
-  m_RootOrder: 10
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21447,11 +21452,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 587770813}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -37.500103, y: -167.0599}
+  m_AnchoredPosition: {x: -37.500103, y: -165.2003}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &865455162
@@ -22157,7 +22162,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50.1, y: -103.9}
+  m_AnchoredPosition: {x: 50.1, y: -94.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &884896878
@@ -29852,13 +29857,13 @@ MonoBehaviour:
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 863585599}
   SkillInfoText: {fileID: 1524491717}
-  PassiveSkillName: Vitality
+  PassiveSkillName: Extend
   PassiveBonusValue: 5
-  LevelRequirement: 10
+  LevelRequirement: 2
   SkillImage: {fileID: 1232931364}
   skill: {fileID: 1232931358}
   skilltype: 1
-  passivebonus: 0
+  passivebonus: 11
 --- !u!114 &1232931362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29961,7 +29966,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2b894df0b3d09704d9cb33894c1d3669, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1cadd32d8645c284d9c743764ec943cf, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -32996,7 +33001,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.200012, y: -153.2}
+  m_AnchoredPosition: {x: 7.200012, y: -151.3404}
   m_SizeDelta: {x: 290.01, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1372479755
@@ -34309,11 +34314,11 @@ RectTransform:
   m_LocalScale: {x: 0.9999873, y: 0.9999873, z: 1}
   m_Children: []
   m_Father: {fileID: 587770813}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.499107, y: -167.0596}
+  m_AnchoredPosition: {x: 8.499107, y: -165.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1414773849
@@ -34812,7 +34817,7 @@ MonoBehaviour:
   SkillInfoText: {fileID: 1524491717}
   PassiveSkillName: Defense Tactics
   PassiveBonusValue: 5
-  LevelRequirement: 2
+  LevelRequirement: 10
   SkillImage: {fileID: 1429964595}
   skill: {fileID: 1429964589}
   skilltype: 1
@@ -40155,7 +40160,7 @@ MonoBehaviour:
   SkillInfoText: {fileID: 1524491717}
   PassiveSkillName: Invigoration
   PassiveBonusValue: 5
-  LevelRequirement: 2
+  LevelRequirement: 4
   SkillImage: {fileID: 1625870938}
   skill: {fileID: 1625870932}
   skilltype: 1
@@ -51531,7 +51536,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 146.9, y: -167.0596}
+  m_AnchoredPosition: {x: 146.9, y: -165.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2011692418
