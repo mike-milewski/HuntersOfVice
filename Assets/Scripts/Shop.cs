@@ -73,7 +73,7 @@ public class Shop : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI ShopLevelText, UpgradeShopLevelText, ShopExperienceText, CoinAmountText, DiscountText, EquipmentRewardInfoText, PreviewShopLevelText,
-                            PreviewShopExperienceText;
+                            PreviewShopExperienceText, NextLevelRewardText, PreviewNextLevelRewardText;
 
     [SerializeField]
     private int ShopLevel, ExperiencePoints, NextToLevel;
@@ -162,9 +162,13 @@ public class Shop : MonoBehaviour
 
             ExperiencePoints = Mathf.Abs(ExperiencePoints + NextToLevel);
 
+            ShowNextRewardPreview();
+
             if (ShopPreviewLevel <= 0)
             {
                 PreviewShopLevelText.text = "";
+                PreviewNextLevelRewardText.text = "";
+                NextLevelRewardText.text = "Next Level";
             }
             else
             {
@@ -248,6 +252,23 @@ public class Shop : MonoBehaviour
         }
     }
 
+    private void ShowNextRewardPreview()
+    {
+        switch (shopLevelRewards[ShopLevel].GetShopRewards)
+        {
+            case (ShopRewards.Discount):
+                DiscountText.gameObject.SetActive(true);
+                EquipmentImage.gameObject.SetActive(false);
+                DiscountText.text = "Item discount -" + shopLevelRewards[ShopLevel + ShopPreviewLevel].GetDiscountAmount + "%";
+                break;
+            case (ShopRewards.equipment):
+                EquipmentImage.gameObject.SetActive(true);
+                DiscountText.gameObject.SetActive(false);
+                EquipmentImage.sprite = shopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentSprite;
+                break;
+        }
+    }
+
     private void EquipmentDiscount()
     {
         float Discount = shopLevelRewards[ShopLevel].GetDiscountAmount / 100f;
@@ -283,6 +304,11 @@ public class Shop : MonoBehaviour
         NextToLevel = NextShopLevel;
 
         FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
+
+        ShowNextRewardPreview();
+
+        PreviewNextLevelRewardText.text = "Next Level";
+        NextLevelRewardText.text = "";
     }
 
     private void LevelUp()
@@ -308,6 +334,9 @@ public class Shop : MonoBehaviour
         UpdateShopExperience();
 
         ShowNextReward();
+
+        PreviewNextLevelRewardText.text = "";
+        NextLevelRewardText.text = "Next Level";
     }
 
     public void ShowEquipmentRewardInfo()
