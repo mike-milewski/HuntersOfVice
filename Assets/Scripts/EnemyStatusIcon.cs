@@ -89,6 +89,9 @@ public class EnemyStatusIcon : MonoBehaviour
             case (StatusEffect.DefenseDOWN):
                 DefenseDOWN(50);
                 break;
+            case (StatusEffect.DefenseUP):
+                DefenseUP(50);
+                break;
         }
     }
 
@@ -298,11 +301,6 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
-    private void Haste()
-    {
-
-    }
-
     private void DefenseDOWN(float value)
     {
         float Percentage = (float)value / 100;
@@ -346,17 +344,11 @@ public class EnemyStatusIcon : MonoBehaviour
             case (StatusEffect.DamageOverTime):
                 DamageOverTime(RegenAndDOTCalculation());
                 break;
-            case (StatusEffect.DefenseUP):
-                DefenseUP(50);
-                break;
             case (StatusEffect.Stun):
                 Stun();
                 break;
             case (StatusEffect.Sleep):
                 Sleep();
-                break;
-            case (StatusEffect.Haste):
-                Haste();
                 break;
         }
     }

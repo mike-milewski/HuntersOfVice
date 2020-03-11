@@ -224,6 +224,7 @@ MonoBehaviour:
   AttackRange: 2.5
   ApplySkill: 0
   StatusEffectPotency: 0
+  HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   ManaCost: 2
   Potency: 35
@@ -6615,7 +6616,7 @@ MonoBehaviour:
   SkillImage: {fileID: 188036011}
   skill: {fileID: 188036005}
   skilltype: 1
-  passivebonus: 10
+  passivebonus: 9
 --- !u!114 &188036009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6889,6 +6890,7 @@ MonoBehaviour:
   AttackRange: 2.5
   ApplySkill: 0
   StatusEffectPotency: 0
+  HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   ManaCost: 2
   Potency: 35
@@ -14472,6 +14474,7 @@ MonoBehaviour:
   AttackRange: 0
   ApplySkill: 0
   StatusEffectPotency: 0
+  HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   ManaCost: 0
   Potency: 0
@@ -17834,6 +17837,7 @@ MonoBehaviour:
   AttackRange: 0
   ApplySkill: 0.3
   StatusEffectPotency: 3
+  HpAndDamageOverTimeTick: 10
   GainedPassive: 0
   ManaCost: 0
   Potency: 0
@@ -30020,7 +30024,7 @@ MonoBehaviour:
   SkillImage: {fileID: 1232931364}
   skill: {fileID: 1232931358}
   skilltype: 1
-  passivebonus: 11
+  passivebonus: 10
 --- !u!114 &1232931362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34978,7 +34982,7 @@ MonoBehaviour:
   SkillImage: {fileID: 1429964595}
   skill: {fileID: 1429964589}
   skilltype: 1
-  passivebonus: 10
+  passivebonus: 2
 --- !u!114 &1429964593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39551,7 +39555,7 @@ PrefabInstance:
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: skills.Array.data[2].skills
-      value: 6
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
@@ -39660,6 +39664,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ApplySkill
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: skills.Array.data[0].StatusDuration
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
@@ -40321,7 +40330,7 @@ MonoBehaviour:
   SkillImage: {fileID: 1625870938}
   skill: {fileID: 1625870932}
   skilltype: 1
-  passivebonus: 9
+  passivebonus: 8
 --- !u!114 &1625870936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41303,6 +41312,7 @@ MonoBehaviour:
   AttackRange: 2.5
   ApplySkill: 0
   StatusEffectPotency: 0
+  HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   ManaCost: 0
   Potency: 200
@@ -42112,6 +42122,7 @@ MonoBehaviour:
   AttackRange: 2.5
   ApplySkill: 0
   StatusEffectPotency: 3
+  HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   ManaCost: 0
   Potency: 25
@@ -42593,12 +42604,12 @@ MonoBehaviour:
   LevelRequirementText: {fileID: 427068202}
   SkillInfoText: {fileID: 1524491717}
   PassiveSkillName: Potion Mastery
-  PassiveBonusValue: 5
+  PassiveBonusValue: 10
   LevelRequirement: 3
   SkillImage: {fileID: 1699668425}
   skill: {fileID: 1699668419}
   skilltype: 1
-  passivebonus: 7
+  passivebonus: 6
 --- !u!114 &1699668423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47651,6 +47662,7 @@ MonoBehaviour:
   AttackRange: 7
   ApplySkill: 0
   StatusEffectPotency: 0
+  HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   ManaCost: 0
   Potency: 25
@@ -48297,7 +48309,7 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   StormThrustSkill: {fileID: 0}
-  IlluminationSkill: {fileID: 0}
+  IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
   AC: {fileID: 0}
@@ -48305,13 +48317,13 @@ MonoBehaviour:
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1413333629}
   SkillInfoText: {fileID: 1524491717}
-  PassiveSkillName: Sonic Storm
+  PassiveSkillName: Divine Light
   PassiveBonusValue: 5
-  LevelRequirement: 5
+  LevelRequirement: 2
   SkillImage: {fileID: 1868289314}
   skill: {fileID: 1868289308}
   skilltype: 1
-  passivebonus: 6
+  passivebonus: 11
 --- !u!114 &1868289312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48414,7 +48426,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 94b0e873d745c1f458b1b2b03f92c2a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce7ce35077fa2bb42b7ae82999bb67e7, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -52302,6 +52314,7 @@ MonoBehaviour:
   AttackRange: 0
   ApplySkill: 0.3
   StatusEffectPotency: 0
+  HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   ManaCost: 5
   Potency: 25
@@ -53714,6 +53727,7 @@ MonoBehaviour:
   AttackRange: 0
   ApplySkill: 0.3
   StatusEffectPotency: 10
+  HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   ManaCost: 0
   Potency: 0

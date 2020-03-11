@@ -42,7 +42,7 @@ public class Skills : StatusEffects
     private Transform SkillParticleParent;
 
     [SerializeField]
-    private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency;
+    private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency, HpAndDamageOverTimeTick;
 
     private float AttackDistance;
 
@@ -167,6 +167,18 @@ public class Skills : StatusEffects
         set
         {
             StatusEffectPotency = value;
+        }
+    }
+
+    public float GetHpAndDamageOverTimeTick
+    {
+        get
+        {
+            return HpAndDamageOverTimeTick;
+        }
+        set
+        {
+            HpAndDamageOverTimeTick = value;
         }
     }
 

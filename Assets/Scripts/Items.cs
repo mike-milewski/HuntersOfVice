@@ -66,6 +66,18 @@ public class Items : MonoBehaviour
         }
     }
 
+    public Image GetCoolDownImage
+    {
+        get
+        {
+            return CooldownImage;
+        }
+        set
+        {
+            CooldownImage = value;
+        }
+    }
+
     public float GetCoolDown
     {
         get

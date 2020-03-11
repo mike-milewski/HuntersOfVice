@@ -6,7 +6,7 @@ using System.Collections;
 
 public enum SkillType { Active, Passive };
 
-public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, StormThrust, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus };
+public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination };
 
 public class SkillMenu : MonoBehaviour
 {
@@ -482,9 +482,6 @@ public class SkillMenu : MonoBehaviour
                 case (PassiveBonus.Critical):
                     CriticalBonusPassiveText();
                     break;
-                case (PassiveBonus.StormThrust):
-                    StormThrustBonusPassiveText();
-                    break;
                 case (PassiveBonus.ItemHP):
                     ItemHPBonusPassiveText();
                     break;
@@ -499,6 +496,9 @@ public class SkillMenu : MonoBehaviour
                     break;
                 case (PassiveBonus.StatPointsBonus):
                     StatPointBonusPassiveText();
+                    break;
+                case (PassiveBonus.Illumination):
+                    IlluminationBonusPassiveText();
                     break;
             }
         }
@@ -544,12 +544,14 @@ public class SkillMenu : MonoBehaviour
 
     private void ItemHPBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases Potion's potency by " + PassiveBonusValue + "%";
+        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases Potion's potency by " + PassiveBonusValue + "% " +
+                             "and reduces the cooldown by half.";
     }
 
     private void ItemManaBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases Ether's potency by " + PassiveBonusValue + "%";
+        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases Ether's potency by " + PassiveBonusValue + "% " +
+                             "and reduces the cooldown by half";
     }
 
     private void HealBonusPassiveText()
@@ -567,6 +569,12 @@ public class SkillMenu : MonoBehaviour
     private void StatPointBonusPassiveText()
     {
         SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases the amount of stat points received upon level up by 1.";
+    }
+
+    private void IlluminationBonusPassiveText()
+    {
+        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + 
+                             "HP regeneration from Illumination recovers faster and its potency is increased by 5%.";
     }
 
     private void GetPassiveBonus()
@@ -591,9 +599,6 @@ public class SkillMenu : MonoBehaviour
             case (PassiveBonus.Critical):
                 CriticalBonus();
                 break;
-            case (PassiveBonus.StormThrust):
-                StormThrustBonus();
-                break;
             case (PassiveBonus.ItemHP):
                 ItemBonusHP();
                 break;
@@ -608,6 +613,9 @@ public class SkillMenu : MonoBehaviour
                 break;
             case (PassiveBonus.StatPointsBonus):
                 StatPointBonus();
+                break;
+            case (PassiveBonus.Illumination):
+                IlluminationBonus();
                 break;
         }
     }
@@ -707,16 +715,6 @@ public class SkillMenu : MonoBehaviour
 
     }
 
-    private void TenacityBonus()
-    {
-
-    }
-
-    private void StormThrustBonus()
-    {
-
-    }
-
     private void HealBonus()
     {
         HealSkill.GetCastTime -= 1;
@@ -737,6 +735,9 @@ public class SkillMenu : MonoBehaviour
     private void IlluminationBonus()
     {
         IlluminationSkill.GetStatusEffectPotency = 2;
+        IlluminationSkill.GetHpAndDamageOverTimeTick += 5;
+
+        IlluminationSkill.GetSkillDescription = "Gradually restores HP by 15%.";
     }
 
     private void StatPointBonus()
@@ -747,10 +748,14 @@ public class SkillMenu : MonoBehaviour
     private void ItemBonusHP()
     {
         items[0].GetHealAmount += PassiveBonusValue;
+        items[0].GetCoolDown = items[0].GetCoolDown / 2;
+        items[0].GetCoolDownImage.fillAmount = 0;
     }
 
     private void ItemBonusMana()
     {
         items[1].GetHealAmount += PassiveBonusValue;
+        items[1].GetCoolDown = items[1].GetCoolDown / 2;
+        items[1].GetCoolDownImage.fillAmount = 0;
     }
 }

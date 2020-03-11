@@ -755,7 +755,7 @@ public class StatusIcon : MonoBehaviour
 
     private int RegenAndDOTCalculation()
     {
-        float percent = Mathf.Round(0.05f * (float)SkillsManager.Instance.GetCharacter.MaxHealth);
+        float percent = Mathf.Round(0.05f * SkillsManager.Instance.GetCharacter.MaxHealth);
 
         int GetHealth = (int)percent;
 
@@ -766,7 +766,9 @@ public class StatusIcon : MonoBehaviour
 
     private int RegenCalculation()
     {
-        float percent = Mathf.Round(0.10f * (float)SkillsManager.Instance.GetCharacter.MaxHealth);
+        float RegenTick = SkillsManager.Instance.GetSkills[KeyInput].GetHpAndDamageOverTimeTick / 100f;
+
+        float percent = Mathf.Round(RegenTick * SkillsManager.Instance.GetCharacter.MaxHealth);
 
         int GetHealth = (int)percent;
 

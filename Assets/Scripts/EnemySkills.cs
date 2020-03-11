@@ -570,6 +570,8 @@ public class EnemySkills : MonoBehaviour
         EnemyStatus();
 
         ActiveSkill = false;
+
+        enemyAI.IncreaseArray();
     }
 
     public void FungiBump(int potency, float attackRange, string skillname)
