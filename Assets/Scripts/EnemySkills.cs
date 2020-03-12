@@ -103,6 +103,9 @@ public class enemySkillManager
     [SerializeField]
     private int Potency;
 
+    [SerializeField]
+    private bool IsBuff;
+
     public string GetSkillName
     {
         get
@@ -280,6 +283,18 @@ public class enemySkillManager
         set
         {
             ApplySkill = value;
+        }
+    }
+
+    public bool GetIsBuff
+    {
+        get
+        {
+            return IsBuff;
+        }
+        set
+        {
+            IsBuff = value;
         }
     }
 

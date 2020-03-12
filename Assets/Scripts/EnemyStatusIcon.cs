@@ -179,7 +179,18 @@ public class EnemyStatusIcon : MonoBehaviour
 
         StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- " + skill.GetStatusEffectName;
+        if(player == null)
+        {
+            if(character.GetComponent<EnemySkills>().GetManager[KeyInput].GetIsBuff)
+            {
+                StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- " + 
+                                                                                  character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectName;
+            }
+        }
+        else
+        {
+            StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- " + skill.GetStatusEffectName;
+        }
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 

@@ -41,6 +41,8 @@ public class StatusIcon : MonoBehaviour
 
     private float TempTick;
 
+    private float RegenTick;
+
     [SerializeField]
     private int KeyInput;
 
@@ -192,6 +194,8 @@ public class StatusIcon : MonoBehaviour
         DamageOrHealTick = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency;
 
         TempTick = DamageOrHealTick;
+
+        RegenTick = SkillsManager.Instance.GetSkills[KeyInput].GetHpAndDamageOverTimeTick / 100f;
     }
 
     public void EnemyInput()
@@ -766,8 +770,6 @@ public class StatusIcon : MonoBehaviour
 
     private int RegenCalculation()
     {
-        float RegenTick = SkillsManager.Instance.GetSkills[KeyInput].GetHpAndDamageOverTimeTick / 100f;
-
         float percent = Mathf.Round(RegenTick * SkillsManager.Instance.GetCharacter.MaxHealth);
 
         int GetHealth = (int)percent;
