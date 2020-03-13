@@ -6,7 +6,7 @@ using System.Collections;
 
 public enum SkillType { Active, Passive };
 
-public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination };
+public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination, HunterOfVice };
 
 public class SkillMenu : MonoBehaviour
 {
@@ -16,10 +16,13 @@ public class SkillMenu : MonoBehaviour
     private GameObject levelUp, levelUpParent;
 
     [SerializeField]
-    private Skills StormThrustSkill, IlluminationSkill, HealSkill, WhirlwindSlashSkill;
+    private GameObject HunterGauge = null;
 
     [SerializeField]
-    private Animator AC;
+    private Skills StormThrustSkill, IlluminationSkill, HealSkill, WhirlwindSlashSkill;
+
+    //[SerializeField]
+    //private Animator AC;
 
     [SerializeField]
     private Items[] items;
@@ -500,6 +503,9 @@ public class SkillMenu : MonoBehaviour
                 case (PassiveBonus.Illumination):
                     IlluminationBonusPassiveText();
                     break;
+                case (PassiveBonus.HunterOfVice):
+                    HunterOfVicePassiveText();
+                    break;
             }
         }
         #endregion
@@ -577,6 +583,12 @@ public class SkillMenu : MonoBehaviour
                              "HP regeneration from Illumination recovers faster and its potency is increased by 5%.";
     }
 
+    private void HunterOfVicePassiveText()
+    {
+        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" +
+                             "Unlocks the Hunter Gauge, gaining access to powerful skills.";
+    }
+
     private void GetPassiveBonus()
     {
         switch(passivebonus)
@@ -616,6 +628,9 @@ public class SkillMenu : MonoBehaviour
                 break;
             case (PassiveBonus.Illumination):
                 IlluminationBonus();
+                break;
+            case (PassiveBonus.HunterOfVice):
+                HunterOfViceBonus();
                 break;
         }
     }
@@ -708,6 +723,11 @@ public class SkillMenu : MonoBehaviour
         character.GetCriticalChance = (int)Criticalbonus;
 
         return character.GetCriticalChance;
+    }
+
+    private void HunterOfViceBonus()
+    {
+        HunterGauge.SetActive(true);
     }
 
     private void SwiftStrikeBonus()

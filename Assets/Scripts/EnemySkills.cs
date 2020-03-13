@@ -563,7 +563,7 @@ public class EnemySkills : MonoBehaviour
     {
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
 
-        MushroomSporeAnimation();
+        //MushroomSporeAnimation();
 
         if (settings.UseParticleEffects)
         {

@@ -4223,11 +4223,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 52301538}
@@ -5735,11 +5735,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1776148964}
@@ -6599,11 +6599,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 1855502888}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
   WhirlwindSlashSkill: {fileID: 1678180697}
-  AC: {fileID: 7400000, guid: 064668a4bebb0894fac8c02c2b2ad018, type: 2}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -8032,7 +8032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4457827027645664, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4457827027645664, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8878,11 +8878,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1432222289}
@@ -8996,7 +8996,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a0329dd5264e7594ab54b5a639d53e7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 38a4e93ac4095f74180e683be2700832, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10924,11 +10924,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1344112391}
@@ -12012,11 +12012,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 606688188}
@@ -26294,11 +26294,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2101625062}
@@ -27398,11 +27398,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2085359601}
@@ -31206,11 +31206,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 863585599}
@@ -36217,12 +36217,7 @@ PrefabInstance:
       propertyPath: BuyAnimator
       value: 
       objectReference: {fileID: 6451804}
-    - target: {fileID: 1850604670, guid: cb2a63aa7e6bbda4b8127e31c18ef3e9, type: 3}
-      propertyPath: m_Radius
-      value: 0.72
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 14300000, guid: cb2a63aa7e6bbda4b8127e31c18ef3e9, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb2a63aa7e6bbda4b8127e31c18ef3e9, type: 3}
 --- !u!1 &1424494431
 GameObject:
@@ -36328,11 +36323,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1173410855}
@@ -36544,11 +36539,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 732303756}
   StormThrustSkill: {fileID: 1855502888}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
   WhirlwindSlashSkill: {fileID: 1678180697}
-  AC: {fileID: 7400000, guid: 064668a4bebb0894fac8c02c2b2ad018, type: 2}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -36557,11 +36552,11 @@ MonoBehaviour:
   SkillInfoText: {fileID: 1524491717}
   PassiveSkillName: Hunter of Vice
   PassiveBonusValue: 5
-  LevelRequirement: 10
+  LevelRequirement: 15
   SkillImage: {fileID: 1429964595}
   skill: {fileID: 1429964589}
   skilltype: 1
-  passivebonus: 2
+  passivebonus: 12
 --- !u!114 &1429964593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41459,7 +41454,7 @@ PrefabInstance:
     - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: aiStates.Array.data[3].SkillIndex
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
@@ -42078,11 +42073,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 1855502888}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 7400000, guid: 064668a4bebb0894fac8c02c2b2ad018, type: 2}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -44357,11 +44352,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 1855502888}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -50401,11 +50396,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1413333629}
@@ -53209,11 +53204,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 856682572}
@@ -56164,11 +56159,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
+  HunterGauge: {fileID: 0}
   StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   WhirlwindSlashSkill: {fileID: 0}
-  AC: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1708335705}
@@ -56282,7 +56277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4c025d9eb27f66d4f8d70e65d532b53a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1de015d2fdcf44b4595c865f2dff7f7b, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
