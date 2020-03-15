@@ -5,7 +5,7 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum PlayerElement { NONE, Physical, Fire, Water, Wind, Earth, Light, Dark };
+public enum PlayerElement { NONE, Physical, Magic, Fire, Water, Wind, Earth, Light, Dark };
 
 public class Skills : StatusEffects
 {

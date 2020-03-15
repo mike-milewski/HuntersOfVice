@@ -7,7 +7,13 @@ using TMPro;
 public class EquipmentMenu : MonoBehaviour
 {
     [SerializeField]
-    private Equipment[] equipment;
+    private Character character;
+
+    [SerializeField]
+    private Equipment[] KnightEquipment;
+
+    [SerializeField]
+    private Equipment[] ShadowPriestEquipment;
 
     [SerializeField]
     private GameObject WeaponPanel, ArmorPanel, WeaponSlot, ArmorSlot, EquipmentDescriptionPanel;
@@ -57,27 +63,60 @@ public class EquipmentMenu : MonoBehaviour
 
     private void SetStartingEquipment()
     {
-        if (equipment.Length > 0)
+        if (KnightEquipment.Length > 0)
         {
-            if (equipment[0].GetEquipmentType == EquipmentType.Weapon)
+            if (KnightEquipment[0].GetEquipmentType == EquipmentType.Weapon)
             {
-                equipment[0].transform.SetParent(WeaponSlot.transform, true);
-                equipment[0].Equip();
+                if(character.GetCharacterData.name == "Knight")
+                {
+                    KnightEquipment[0].transform.SetParent(WeaponSlot.transform, true);
+                    KnightEquipment[0].Equip();
+                }
+                else
+                {
+                    ShadowPriestEquipment[0].transform.SetParent(WeaponSlot.transform, true);
+                    ShadowPriestEquipment[0].Equip();
+                }
             }
             else
             {
-                equipment[0].transform.SetParent(ArmorSlot.transform, true);
-                equipment[0].Equip();
+                if (character.GetCharacterData.name == "Knight")
+                {
+                    KnightEquipment[0].transform.SetParent(ArmorSlot.transform, true);
+                    KnightEquipment[0].Equip();
+                }
+                else
+                {
+                    ShadowPriestEquipment[0].transform.SetParent(ArmorSlot.transform, true);
+                    ShadowPriestEquipment[0].Equip();
+                }
+                
             }
-            if (equipment[1].GetEquipmentType == EquipmentType.Armor)
+            if (KnightEquipment[1].GetEquipmentType == EquipmentType.Armor)
             {
-                equipment[1].transform.SetParent(ArmorSlot.transform, true);
-                equipment[1].Equip();
+                if (character.GetCharacterData.name == "Knight")
+                {
+                    KnightEquipment[1].transform.SetParent(ArmorSlot.transform, true);
+                    KnightEquipment[1].Equip();
+                }
+                else
+                {
+                    ShadowPriestEquipment[1].transform.SetParent(ArmorSlot.transform, true);
+                    ShadowPriestEquipment[1].Equip();
+                }
             }
             else
             {
-                equipment[1].transform.SetParent(WeaponSlot.transform, true);
-                equipment[1].Equip();
+                if (character.GetCharacterData.name == "Knight")
+                {
+                    KnightEquipment[1].transform.SetParent(WeaponSlot.transform, true);
+                    KnightEquipment[1].Equip();
+                }
+                else
+                {
+                    ShadowPriestEquipment[1].transform.SetParent(WeaponSlot.transform, true);
+                    ShadowPriestEquipment[1].Equip();
+                }
             }
         }
     }

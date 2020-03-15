@@ -150,7 +150,14 @@ public class Equipment : MonoBehaviour
         {
             case (EquipmentType.Weapon):
                 basicAttack.GetEquipment[0] = null;
-                basicAttack.GetPlayerElement = PlayerElement.Physical;
+                if(character.GetCharacterData.name == "Knight")
+                {
+                    basicAttack.GetPlayerElement = PlayerElement.Physical;
+                }
+                else
+                {
+                    basicAttack.GetPlayerElement = PlayerElement.Magic;
+                }
                 break;
             case (EquipmentType.Armor):
                 basicAttack.GetEquipment[1] = null;
