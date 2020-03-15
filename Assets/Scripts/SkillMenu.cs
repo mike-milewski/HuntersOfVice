@@ -6,7 +6,8 @@ using System.Collections;
 
 public enum SkillType { Active, Passive };
 
-public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination, HunterOfVice };
+public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination, HunterOfVice,
+                           EvilsEndBonus };
 
 public class SkillMenu : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class SkillMenu : MonoBehaviour
     private GameObject HunterGauge = null;
 
     [SerializeField]
-    private Skills StormThrustSkill, IlluminationSkill, HealSkill, WhirlwindSlashSkill;
+    private Skills IlluminationSkill, HealSkill, EvilsEndSkill;
 
     //[SerializeField]
     //private Animator AC;
@@ -506,6 +507,9 @@ public class SkillMenu : MonoBehaviour
                 case (PassiveBonus.HunterOfVice):
                     HunterOfVicePassiveText();
                     break;
+                case (PassiveBonus.EvilsEndBonus):
+                    EvilsEndBonusPassiveText();
+                    break;
             }
         }
         #endregion
@@ -589,6 +593,12 @@ public class SkillMenu : MonoBehaviour
                              "Unlocks the Hunter Gauge, gaining access to powerful skills.";
     }
 
+    private void EvilsEndBonusPassiveText()
+    {
+        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" +
+                             "The enemy HP condition for Evil's End is increased to 35%.";
+    }
+
     private void GetPassiveBonus()
     {
         switch(passivebonus)
@@ -631,6 +641,9 @@ public class SkillMenu : MonoBehaviour
                 break;
             case (PassiveBonus.HunterOfVice):
                 HunterOfViceBonus();
+                break;
+            case (PassiveBonus.EvilsEndBonus):
+                EvilsEndBonus();
                 break;
         }
     }
@@ -743,13 +756,14 @@ public class SkillMenu : MonoBehaviour
 
     private void WhirlwindSlashBonus()
     {
-        WhirlwindSlashSkill.GetGainedPassive = true;
-        WhirlwindSlashSkill.GetEnemyStatusEffect = StatusEffect.DamageOverTime;
+        //WhirlwindSlashSkill.GetGainedPassive = true;
+        //WhirlwindSlashSkill.GetEnemyStatusEffect = StatusEffect.DamageOverTime;
     }
 
     private void EvilsEndBonus()
     {
-
+        EvilsEndSkill.GetStatusEffectPotency = 35;
+        EvilsEndSkill.GetSkillDescription = "Delivers a punishing blow to the target. <#EFDFB8>Can only be executed while the target is at 35% HP or below.</color>";
     }
 
     private void IlluminationBonus()

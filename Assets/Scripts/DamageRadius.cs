@@ -104,11 +104,6 @@ public class DamageRadius : MonoBehaviour
                     DamageShape.GetComponent<Image>().sprite = Circle;
                     IncreaseCircle();
                     break;
-                case (Shapes.Cylinder):
-                    var Cylinder = DamageShapeCylinder;
-                    DamageShape.GetComponent<Image>().sprite = Cylinder;
-                    IncreaseCylinder();
-                    break;
                 case (Shapes.Rectangle):
                     var Rectangle = DamageShapeRectangle;
                     DamageShape.GetComponent<Image>().sprite = Rectangle;
@@ -133,19 +128,6 @@ public class DamageRadius : MonoBehaviour
                                                     enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
 
            DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
-    }
-
-    private void IncreaseCylinder()
-    {
-        /*
-        DamageShape.transform.localScale = new Vector3(
-            Mathf.Clamp(DamageShape.transform.localScale.x, 0, Radius),
-            Mathf.Clamp(DamageShape.transform.localScale.y, 0, Radius),
-            Mathf.Clamp(DamageShape.transform.localScale.z, 0, Radius));
-
-        if (DamageShape.transform.localScale.x < Radius && DamageShape.transform.localScale.y < Radius && DamageShape.transform.localScale.z < Radius)
-            DamageShape.transform.localScale += new Vector3(1.5f, 1.5f, 1.5f) * Time.deltaTime;
-            */
     }
 
     private void IncreaseRectangle()

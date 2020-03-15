@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
   m_Name: GolemFragment
   m_EditorClassIdentifier: 
-  Weaknesses: 
+  Weaknesses: 04000000
   Resistances: 01000000
   Immunities: 
   Absorbtions: 
   CharacterName: Golem Fragment
   CharacterLevel: 5
-  Health: 1
+  Health: 230
   Mana: 0
-  Strength: 2
+  Strength: 20
   Defense: 15
   Intelligence: 3
   HpIncrease: 0

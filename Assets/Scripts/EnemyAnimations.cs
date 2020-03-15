@@ -53,6 +53,15 @@ public class EnemyAnimations : MonoBehaviour
         anim.Play(CASTING);
     }
 
+    public void AnimatorCasting()
+    {
+        EnemyAnimator.SetBool("Attacking", false);
+        EnemyAnimator.SetBool("Moving", false);
+        EnemyAnimator.SetBool("Damaged", false);
+        EnemyAnimator.SetBool("Skill", false);
+        EnemyAnimator.SetBool("Skill2", false);
+    }
+
     public void DamageAni ()
     {
         anim.Play(DAMAGE);
@@ -91,6 +100,14 @@ public class EnemyAnimations : MonoBehaviour
     public void Skill2Animator()
     {
         EnemyAnimator.SetBool("Skill2", true);
+    }
+
+    public void ResetSkillAnimator()
+    {
+        EnemyAnimator.SetBool("Skill", false);
+        EnemyAnimator.SetBool("Skill2", false);
+
+        enemyskills.GetActiveSkill = false;
     }
 
     public void DeadAnimator()
@@ -133,6 +150,11 @@ public class EnemyAnimations : MonoBehaviour
         anim.Play(SKILLATTACK2);
     }
 
+    public void ResetSkillAnim()
+    {
+        ResetSkillAnimator();
+    }
+
     public void ResetAutoAttackTime()
     {
         if(AI.GetStates != States.SkillAnimation)
@@ -140,6 +162,7 @@ public class EnemyAnimations : MonoBehaviour
             if(AI.GetIsUsingAnimator)
             {
                 EnemyAnimator.SetBool("Attacking", false);
+                ResetSkillAnimator();
             }
             AI.GetAutoAttack = 0;
             AI.GetStates = States.Attack;

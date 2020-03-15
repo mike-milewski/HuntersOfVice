@@ -113,8 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinnedMeshRenderer: {fileID: 13700000}
-  AlphaMaterial: {fileID: 0}
-  OpaqueMaterial: {fileID: 0}
+  AlphaMaterial: {fileID: 2100000, guid: 304456594c803be45a497aa0db5e2cca, type: 2}
+  OpaqueMaterial: {fileID: 2100000, guid: 401a9aab91a8062408a149df3aa85ae8, type: 2}
   ParentObject: {fileID: 100002}
 --- !u!1 &100002
 GameObject:
@@ -150,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.1154363, y: 2.1154363, z: 2.1154363}
+  m_LocalScale: {x: 2.1154377, y: 2.1154363, z: 2.1154377}
   m_Children:
   - {fileID: 400078}
   - {fileID: 400000}
@@ -201,7 +201,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 6c201473984baf44aaf02848b7ad5437, type: 3}
   m_Controller: {fileID: 9100000, guid: f9d30fee6b78f1346a8cd1d628033f52, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -268,6 +268,10 @@ MonoBehaviour:
   aiStates:
   - state: 3
     SkillIndex: 0
+  - state: 3
+    SkillIndex: 0
+  - state: 4
+    SkillIndex: 1
   character: {fileID: 2025678288}
   monsterBook: {fileID: 0}
   monsterInformation: {fileID: 114702138956978278, guid: 3b5ed524b56ab30458a90b74aebc013e,
@@ -281,19 +285,19 @@ MonoBehaviour:
   - {fileID: 0}
   MoveSpeed: 3
   AttackRange: 2.5
-  AttackDelay: 1.5
+  AttackDelay: 1.2
   AutoAttackTime: 0
   LookSpeed: 3
   PlayerTarget: {fileID: 0}
   EnemyTriggerSphere: {fileID: 1736870529}
   HitParticle: {fileID: 198157547220164012, guid: 4961a16ba01e09547be3e1c9d16d5ad0,
     type: 3}
-  TimeToMoveAgain: 0
+  TimeToMoveAgain: 3
   ThreatPic: {fileID: 2125282171}
   DocileSprite: {fileID: 21300000, guid: 1e1e9c17372152a42a972ac8f0074e6a, type: 3}
   ThreatSprite: {fileID: 21300000, guid: 43a17ebdf749ab5499e13424f6a7b7fd, type: 3}
-  IsHostile: 0
-  IsUsingAnimator: 0
+  IsHostile: 1
+  IsUsingAnimator: 1
 --- !u!114 &2025678286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +340,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b798244cafc004291d6dec6e876e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skills: []
+  skills:
+  - skills: 7
+    enemyElement: 0
+    status: 13
+    shapes: 0
+    StatusSprite: {fileID: 21300000, guid: 41e56038f505d704d9d04d6a31c3f217, type: 3}
+    StatusIcon: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf,
+      type: 3}
+    TextHolder: {fileID: 341293833}
+    StatusIconTrans: {fileID: 1915029614}
+    DamageORHealText: {fileID: 0}
+    StatusEffectHolder: {fileID: 341293832}
+    SkillParticle: {fileID: 961455894312969201, guid: 28770c3be7249b94fa3054f566cceab1,
+      type: 3}
+    StatusEffectName: Gaia's Prowess
+    StatusDescription: Increased Strength & Critical hit chance.
+    SkillName: Gaia's Prowess
+    StatusDuration: 15
+    CastTime: 0
+    SizeDeltaX: 0
+    SizeDeltaY: 0
+    ApplySkill: 0
+    ShapeSize: {x: 0, y: 0, z: 0}
+    AttackRange: 2
+    StatusEffectPotency: 0
+    Potency: 0
+    IsBuff: 1
+  - skills: 6
+    enemyElement: 0
+    status: 0
+    shapes: 3
+    StatusSprite: {fileID: 21300000, guid: 41e56038f505d704d9d04d6a31c3f217, type: 3}
+    StatusIcon: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf,
+      type: 3}
+    TextHolder: {fileID: 0}
+    StatusIconTrans: {fileID: 1915029614}
+    DamageORHealText: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53,
+      type: 3}
+    StatusEffectHolder: {fileID: 341293832}
+    SkillParticle: {fileID: 961455894312969201, guid: 28770c3be7249b94fa3054f566cceab1,
+      type: 3}
+    StatusEffectName: 
+    StatusDescription: 
+    SkillName: Slam
+    StatusDuration: 0
+    CastTime: 2
+    SizeDeltaX: 12
+    SizeDeltaY: 30
+    ApplySkill: 0.4
+    ShapeSize: {x: 0.85, y: 0.7, z: 0.7}
+    AttackRange: 2
+    StatusEffectPotency: 0
+    Potency: 35
+    IsBuff: 0
   character: {fileID: 2025678288}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 2025678286}
@@ -1899,11 +1956,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574e3bf0092c2ed4faa12d6263f51d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  character: {fileID: 2025678288}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
-  enemy: {fileID: 0}
-  enemyAI: {fileID: 0}
-  enemySkills: {fileID: 0}
+  enemy: {fileID: 2025678286}
+  enemyAI: {fileID: 2025678287}
+  enemySkills: {fileID: 2025678285}
   SkillBarFillImage: {fileID: 1964987780}
   SkillName: {fileID: 1686151139}
   CastParticle: {fileID: 1391052643135982, guid: e09d4b33486bee040866beb6684238c1,
@@ -1936,9 +1993,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672263206}
-  m_LocalRotation: {x: -0.5127714, y: -0.48689374, z: 0.48689374, w: -0.5127714}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.08}
-  m_LocalScale: {x: 0.056725934, y: 0.056725938, z: 0.94543207}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 1}
   m_Children:
   - {fileID: 1399658224}
   m_Father: {fileID: 400002}
@@ -2135,7 +2192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961821574baa3954eb4c89ddbf474ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  character: {fileID: 2025678288}
   characterMenu: {fileID: 0}
   HealthBar: {fileID: 2131949930}
   FillBarTwo: {fileID: 1619011299}
@@ -2719,7 +2776,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1161388976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.242}
+  m_LocalPosition: {x: 0, y: 0, z: 0.243}
   m_LocalScale: {x: 0.009454318, y: 0.0018908627, z: 0.47271597}
   m_Children:
   - {fileID: 592505760}
@@ -2729,7 +2786,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.014, y: 0.931}
+  m_AnchoredPosition: {x: 0.017, y: 1.002}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1161388981
@@ -3060,7 +3117,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399658223}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.387}
+  m_LocalPosition: {x: 0, y: 0, z: 0.376}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 672263207}
@@ -3118,9 +3175,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89eb8e66b9abe2343a1a25b207871f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
-  enemyAI: {fileID: 0}
-  enemySkills: {fileID: 0}
+  character: {fileID: 2025678288}
+  enemyAI: {fileID: 2025678287}
+  enemySkills: {fileID: 2025678285}
   DamageShape: {fileID: 1399658226}
   DamageShapeCircle: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   DamageShapeCylinder: {fileID: 21300000, guid: 48624f05b683e4a4ab1a142e40fd6971,

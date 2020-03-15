@@ -6,7 +6,7 @@ using TMPro;
 using System.Collections.Generic;
 
 public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN};
+                           IntelligenceDOWN, StrengthAndCriticalUP };
 
 public class EnemyStatusIcon : MonoBehaviour
 {
@@ -91,6 +91,10 @@ public class EnemyStatusIcon : MonoBehaviour
                 break;
             case (StatusEffect.DefenseUP):
                 DefenseUP(50);
+                break;
+            case (StatusEffect.StrengthAndCriticalUP):
+                StrengthUP(50);
+                CriticalUP(5);
                 break;
         }
     }
@@ -210,6 +214,10 @@ public class EnemyStatusIcon : MonoBehaviour
             case (StatusEffect.DefenseUP):
                 SetDefenseToDefault();
                 break;
+            case (StatusEffect.StrengthAndCriticalUP):
+                SetStrengthToDefault();
+                SetCriticalToDefault();
+                break;
             case (StatusEffect.Doom):
                 character.GetComponentInChildren<Health>().ModifyHealth(-character.CurrentHealth);
                 break;
@@ -325,6 +333,19 @@ public class EnemyStatusIcon : MonoBehaviour
         character.CharacterDefense = (int)TempDefense;
     }
 
+    private void StrengthUP(float value)
+    {
+        float Percentage = (float)value / 100;
+
+        float TempStrength = (float)character.CharacterStrength;
+
+        TempStrength += (float)character.CharacterStrength * Percentage;
+
+        Mathf.Round(TempStrength);
+
+        character.CharacterStrength = (int)TempStrength;
+    }
+
     private void DefenseUP(float value)
     {
         float Percentage = (float)value / 100;
@@ -336,6 +357,25 @@ public class EnemyStatusIcon : MonoBehaviour
         Mathf.Round(TempDefense);
 
         character.CharacterDefense = (int)TempDefense;
+    }
+
+    private void CriticalUP(int value)
+    {
+        character.GetCriticalChance += value;
+    }
+
+    private void SetCriticalToDefault()
+    {
+        int DefaultCritical = character.GetCharacterData.CriticalHitChance;
+
+        character.GetCriticalChance = DefaultCritical;
+    }
+
+    private void SetStrengthToDefault()
+    {
+        int DefaultStrength = character.GetCharacterData.Strength;
+
+        character.CharacterStrength = DefaultStrength;
     }
 
     private void SetDefenseToDefault()

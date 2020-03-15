@@ -33,7 +33,8 @@ public enum Skill
     Light
 };
 
-public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP };
+public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
+                     IntelligenceDOWN, StrengthAndCriticalUP };
 
 public enum EnemyElement { NONE, Fire, Water, Wind, Earth, Light, Dark };
 
@@ -514,6 +515,19 @@ public class EnemySkills : MonoBehaviour
                     break;
                 #endregion
 
+                #region Golem Fragment Skills
+                case (Skill.GaiasProwess):
+                    AnimatorSkill1();
+                    break;
+                case (Skill.Slam):
+                    Slam(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                        new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                    break;
+                #endregion
+
                 #region Bunnykins Skill
                 case (Skill.Hop):
                     Hop(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
@@ -526,14 +540,14 @@ public class EnemySkills : MonoBehaviour
 
                 #region Puck Skills
                 case (Skill.SylvanBlessing):
-                    SylvanBlessing(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusDuration,
-                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                    AnimatorSkill1();
                     break;
                     #endregion
             }
         }
     }
 
+    #region HP Regen
     public void Regen(float castTime, float Duration, string skillname)
     {
         SpellCastingAnimation();
@@ -558,16 +572,16 @@ public class EnemySkills : MonoBehaviour
 
         ActiveSkill = false;
     }
+    #endregion
 
+    #region Sylvan Blessing
     public void SylvanBlessing(float Duration, string skillname)
     {
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
 
-        //MushroomSporeAnimation();
-
         if (settings.UseParticleEffects)
         {
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetPoisonSporeParticle();
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetSylvanBlessingParticle();
 
             GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
 
@@ -576,8 +590,12 @@ public class EnemySkills : MonoBehaviour
 
             GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
         }
+    }
 
-        Invoke("InvokeSylvanBlessing", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+    public void UseSylvanBlessing()
+    {
+        SylvanBlessing(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusDuration,
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
     }
 
     public void InvokeSylvanBlessing()
@@ -585,24 +603,40 @@ public class EnemySkills : MonoBehaviour
         EnemyStatus();
 
         ActiveSkill = false;
-
-        enemyAI.IncreaseArray();
     }
+    #endregion
 
-    public void FungiBump(int potency, float attackRange, string skillname)
+    #region Gaia's Prowess
+    public void GaiasProwess(float Duration, string skillname)
     {
-        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
 
-        float Distance = Vector3.Distance(character.transform.position, enemyAI.GetPlayerTarget.transform.position);
-
-        if (enemyAI.GetPlayerTarget != null)
+        if (settings.UseParticleEffects)
         {
-            FungiBumpAnimation();
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetGaiasProwessParticle();
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
         }
-        ActiveSkill = false;
     }
 
+    public void UseGaiasProwess()
+    {
+        GaiasProwess(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusDuration,
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+    }
+
+    public void InvokeGaiasProwess()
+    {
+        EnemyStatus();
+    }
+    #endregion
+
+    #region Healing Spell
     public void HealingCap(int potency, float castTime, string skillname)
     {
         SpellCastingAnimation();
@@ -628,7 +662,9 @@ public class EnemySkills : MonoBehaviour
         SkillHealText(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
                       skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
     }
+    #endregion
 
+    #region Poison Spore
     public void PoisonSpore(int potency, float castTime, Vector2 sizeDelta, string skillname)
     {
         SpellCastingAnimation();
@@ -675,6 +711,71 @@ public class EnemySkills : MonoBehaviour
         }
     }
 
+    private void InvokePoisonSpore()
+    {
+        DisableRadius();
+
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region Slam
+    public void Slam(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        AnimatorCastingAnimation();
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            enemyAI.GetAnimation.Skill2Animator();
+
+            damageRadius.CheckIfPlayerIsInRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(
+                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.x,
+                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 1.7f),
+                                                          character.transform.rotation);
+
+            DisableRadiusImage();
+
+            Invoke("InvokeSlam", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+        }
+    }
+
+    private void InvokeSlam()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var SlamParticle = ObjectPooler.Instance.GetSlamParticle();
+
+            SlamParticle.SetActive(true);
+
+            Vector3 Trans = new Vector3(character.transform.position.x, character.transform.position.y + 0.3f, character.transform.position.z);
+
+            SlamParticle.transform.position = Trans + character.transform.forward * 2.5f;
+
+            Quaternion rot = SlamParticle.transform.rotation;
+
+            rot.z = character.transform.rotation.y;
+        }
+        DisableRadius();
+    }
+    #endregion
+
+    #region Hop
     public void Hop(int potency, float castTime, Vector2 sizeDelta, string skillname)
     {
         SpellCastingAnimation();
@@ -722,14 +823,9 @@ public class EnemySkills : MonoBehaviour
 
         ActiveSkill = false;
     }
+    #endregion
 
-    private void InvokePoisonSpore()
-    {
-        DisableRadius();
-
-        ActiveSkill = false;
-    }
-
+    #region Stunning Stinger
     public void StunningStinger(int potency, float castTime, Vector2 sizeDelta, string skillname)
     {
         SpellCastingAnimation();
@@ -738,7 +834,7 @@ public class EnemySkills : MonoBehaviour
 
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
 
-        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX, 
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
                                 skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
 
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
@@ -756,7 +852,7 @@ public class EnemySkills : MonoBehaviour
 
             damageRadius.CheckIfPlayerIsInRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(
                                                           GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.x,
-                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 1.7f), 
+                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 1.7f),
                                                           character.transform.rotation);
 
             DisableRadiusImage();
@@ -764,16 +860,10 @@ public class EnemySkills : MonoBehaviour
             Invoke("InvokeStunningStinger", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
         }
     }
-    /*
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(damageRadius.GetDamageShape.transform.position, new Vector3(GetManager[RandomValue].GetShapeSize.x * 2, 1, GetManager[RandomValue].GetShapeSize.y * 2));
-    }
-    */
+
     private void InvokeStunningStinger()
     {
-        if(settings.UseParticleEffects)
+        if (settings.UseParticleEffects)
         {
             var StingerParticle = ObjectPooler.Instance.GetHitParticle();
 
@@ -790,6 +880,21 @@ public class EnemySkills : MonoBehaviour
 
         ActiveSkill = false;
     }
+    #endregion
+
+    public void FungiBump(int potency, float attackRange, string skillname)
+    {
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        float Distance = Vector3.Distance(character.transform.position, enemyAI.GetPlayerTarget.transform.position);
+
+        if (enemyAI.GetPlayerTarget != null)
+        {
+            FungiBumpAnimation();
+        }
+        ActiveSkill = false;
+    }
 
     private void UseSkillBar()
     {
@@ -802,6 +907,11 @@ public class EnemySkills : MonoBehaviour
         enemyAI.GetAnimation.CastingAni();
     }
 
+    private void AnimatorCastingAnimation()
+    {
+        enemyAI.GetAnimation.AnimatorCasting();
+    }
+
     private void FungiBumpAnimation()
     {
         enemyAI.GetAnimation.FungiBumpAnim();
@@ -810,6 +920,16 @@ public class EnemySkills : MonoBehaviour
     private void MushroomSporeAnimation()
     {
         enemyAI.GetAnimation.SkillAtk2();
+    }
+
+    private void AnimatorSkill1()
+    {
+        enemyAI.GetAnimation.SkillAnimator();
+    }
+
+    private void AnimatorSkill2()
+    {
+        enemyAI.GetAnimation.Skill2Animator();
     }
 
     public void DisableEnemySkillBar()

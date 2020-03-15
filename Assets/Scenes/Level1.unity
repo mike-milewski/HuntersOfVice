@@ -226,6 +226,7 @@ MonoBehaviour:
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 2
   Potency: 35
   CastTime: 0
@@ -993,7 +994,7 @@ RectTransform:
   - {fileID: 1995286067}
   - {fileID: 436865674}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4224,10 +4225,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 52301538}
@@ -5736,10 +5736,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1776148964}
@@ -6600,23 +6599,22 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 1855502888}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
-  WhirlwindSlashSkill: {fileID: 1678180697}
+  EvilsEndSkill: {fileID: 1657340425}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2011692419}
   SkillInfoText: {fileID: 1524491717}
-  PassiveSkillName: Biting Winds
+  PassiveSkillName: Vanquish The Wicked
   PassiveBonusValue: 5
   LevelRequirement: 7
   SkillImage: {fileID: 188036011}
   skill: {fileID: 188036005}
   skilltype: 1
-  passivebonus: 9
+  passivebonus: 13
 --- !u!114 &188036009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6892,6 +6890,7 @@ MonoBehaviour:
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 2
   Potency: 35
   CastTime: 0
@@ -8032,7 +8031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4457827027645664, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4457827027645664, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8879,10 +8878,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1432222289}
@@ -9449,7 +9447,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &315291417
 MonoBehaviour:
@@ -10925,10 +10923,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1344112391}
@@ -12013,10 +12010,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 606688188}
@@ -14658,7 +14654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4902482866808036, guid: 74453bbb82e7ee44ab759960b3624422, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74453bbb82e7ee44ab759960b3624422, type: 3}
@@ -15147,6 +15143,7 @@ MonoBehaviour:
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 0
   Potency: 0
   CastTime: 0
@@ -18023,7 +18020,7 @@ Transform:
   - {fileID: 1393207822}
   - {fileID: 2029125147}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &683633878
 GameObject:
@@ -18446,7 +18443,7 @@ Transform:
   m_Children:
   - {fileID: 593228420}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 25.023, y: 0, z: 0}
 --- !u!114 &696282352
 MonoBehaviour:
@@ -18668,6 +18665,7 @@ MonoBehaviour:
   StatusEffectPotency: 3
   HpAndDamageOverTimeTick: 10
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 0
   Potency: 0
   CastTime: 0
@@ -19822,6 +19820,7 @@ MonoBehaviour:
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 2
   Potency: 35
   CastTime: 0
@@ -21077,7 +21076,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805785023}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -178.2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 683001954}
@@ -26295,10 +26294,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2101625062}
@@ -27399,10 +27397,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2085359601}
@@ -27965,7 +27962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4027199962659632, guid: f3376ad85f9ee7b4a93eb957420a45fc, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4027199962659632, guid: f3376ad85f9ee7b4a93eb957420a45fc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -28751,7 +28748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4170244942082036, guid: 72cedd1dd243ab945822efaa45328cf9, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114763231012410038, guid: 72cedd1dd243ab945822efaa45328cf9,
         type: 3}
@@ -31207,10 +31204,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 863585599}
@@ -31650,167 +31646,6 @@ MonoBehaviour:
   monsterInformation: {fileID: 0}
   MonsterInfoText: {fileID: 936487059}
   Index: 0
---- !u!1001 &1256882874
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2109884925}
-    m_Modifications:
-    - target: {fileID: 1046869630431942, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_Name
-      value: Bee (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046869630431942, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1749180196469892, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 51.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 15.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 54700278166005676, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 114048631002934456, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114229555450686462, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: EXP
-      value: 
-      objectReference: {fileID: 1474654865}
-    - target: {fileID: 114229555450686462, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 1588835624}
-    - target: {fileID: 114265172899639790, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: skills.Array.data[0].TextHolder
-      value: 
-      objectReference: {fileID: 2019092555}
-    - target: {fileID: 114265172899639790, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: skills.Array.data[0].StatusIconTrans
-      value: 
-      objectReference: {fileID: 1886012712}
-    - target: {fileID: 114265172899639790, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: skills.Array.data[0].status
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114265172899639790, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: skills.Array.data[0].StatusEffectHolder
-      value: 
-      objectReference: {fileID: 880701154}
-    - target: {fileID: 114265172899639790, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: ActiveSkill
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114265172899639790, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: ApplySkill
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114487629168322208, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114487629168322208, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114632836939440404, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 696282350}
-    - target: {fileID: 114880966079448276, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: Waypoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 934354209}
-    - target: {fileID: 114880966079448276, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: Waypoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 1036532262}
-    - target: {fileID: 223381990437706384, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 696282350}
-    - target: {fileID: 223956249702470740, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 696282350}
-    - target: {fileID: 224757943082124008, guid: c717f817a496cf247a92b830b355a407,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c717f817a496cf247a92b830b355a407, type: 3}
---- !u!4 &1256882875 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4549644435828676, guid: c717f817a496cf247a92b830b355a407,
-    type: 3}
-  m_PrefabInstance: {fileID: 1256882874}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1263302504
 GameObject:
   m_ObjectHideFlags: 0
@@ -33981,6 +33816,7 @@ MonoBehaviour:
   StatusEffectPotency: 10
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 0
   Potency: 0
   CastTime: 0
@@ -34797,7 +34633,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!182 &1376441258
 WindZone:
@@ -36175,7 +36011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400116, guid: cb2a63aa7e6bbda4b8127e31c18ef3e9, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 400116, guid: cb2a63aa7e6bbda4b8127e31c18ef3e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -36324,10 +36160,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1173410855}
@@ -36540,10 +36375,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 732303756}
-  StormThrustSkill: {fileID: 1855502888}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
-  WhirlwindSlashSkill: {fileID: 1678180697}
+  EvilsEndSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -37544,6 +37378,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 323833236}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1482372276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1482372277}
+  m_Layer: 0
+  m_Name: GaiasProwessParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1482372277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482372276}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1557015306}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1482965017
 GameObject:
   m_ObjectHideFlags: 0
@@ -39465,8 +39329,11 @@ Transform:
   - {fileID: 1458284242}
   - {fileID: 849563093}
   - {fileID: 1326403794}
+  - {fileID: 1482372277}
+  - {fileID: 1699666621}
+  - {fileID: 1723487714}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1558431417
 GameObject:
@@ -40388,7 +40255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4820014529482432, guid: 22d40890b8666d440a07dc9f525ba55a, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22d40890b8666d440a07dc9f525ba55a, type: 3}
@@ -41239,7 +41106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -42074,10 +41941,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 1855502888}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -43071,9 +42937,10 @@ MonoBehaviour:
   CoolDown: 5
   AttackRange: 2.5
   ApplySkill: 0
-  StatusEffectPotency: 0
+  StatusEffectPotency: 25
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 0
   Potency: 200
   CastTime: 0
@@ -43308,6 +43175,14 @@ PrefabInstance:
       propertyPath: character
       value: 
       objectReference: {fileID: 1665829955}
+    - target: {fileID: 1665829958, guid: 0f8a471e5537f864ebdb454fe82308eb, type: 3}
+      propertyPath: skills.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665829958, guid: 0f8a471e5537f864ebdb454fe82308eb, type: 3}
+      propertyPath: skills.Array.data[0].skills
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1665829959, guid: 0f8a471e5537f864ebdb454fe82308eb, type: 3}
       propertyPath: monsterBook
       value: 
@@ -43857,7 +43732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStatusEffect: 0
-  EnemystatusEffect: 1
+  EnemystatusEffect: 0
   character: {fileID: 601881691}
   StatusIcon: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf, type: 3}
   StatusEffectIconTrans: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
@@ -43884,6 +43759,7 @@ MonoBehaviour:
   StatusEffectPotency: 3
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 0
   Potency: 25
   CastTime: 0
@@ -44118,7 +43994,7 @@ PrefabInstance:
     - target: {fileID: 6512852128182217094, guid: c157d19375457cc48a58f9515cefb92e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6512852128182217094, guid: c157d19375457cc48a58f9515cefb92e,
         type: 3}
@@ -44284,6 +44160,36 @@ MonoBehaviour:
   Stats: {fileID: 326764282}
   StatPointsText: {fileID: 1713903178}
   StatParent: {fileID: 41743866}
+--- !u!1 &1699666620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1699666621}
+  m_Layer: 0
+  m_Name: SylvanBlessingParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1699666621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699666620}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1557015306}
+  m_RootOrder: 29
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1699668419
 GameObject:
   m_ObjectHideFlags: 0
@@ -44353,10 +44259,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 1855502888}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -44682,12 +44587,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4804529681230462, guid: 3972055e75e892a4498a436ff7a9b50a, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
         type: 3}
       propertyPath: poolcontroller.Array.size
-      value: 28
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
         type: 3}
@@ -45030,6 +44935,54 @@ PrefabInstance:
         type: 3}
       propertyPath: poolcontroller.Array.data[27].PoolAmount
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[28].ObjectToPool
+      value: 
+      objectReference: {fileID: 961455894312969201, guid: 28770c3be7249b94fa3054f566cceab1,
+        type: 3}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[28].PoolParent
+      value: 
+      objectReference: {fileID: 1482372277}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[28].PoolAmount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[29].ObjectToPool
+      value: 
+      objectReference: {fileID: 4088688736100537281, guid: 689d135792d1d094489015dce8468542,
+        type: 3}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[29].PoolParent
+      value: 
+      objectReference: {fileID: 1699666621}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[29].PoolAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[30].ObjectToPool
+      value: 
+      objectReference: {fileID: 6080076980750741398, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[30].PoolParent
+      value: 
+      objectReference: {fileID: 1723487714}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[30].PoolAmount
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3972055e75e892a4498a436ff7a9b50a, type: 3}
@@ -46094,6 +46047,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721558645}
   m_CullTransparentMesh: 0
+--- !u!1 &1723487713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1723487714}
+  m_Layer: 0
+  m_Name: SlamParticleParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1723487714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723487713}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1557015306}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1724840110
 GameObject:
   m_ObjectHideFlags: 0
@@ -46435,6 +46418,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739541528}
   m_CullTransparentMesh: 0
+--- !u!4 &1742416223 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 5522c4efc4d320842b1d458c459f642e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2025678282}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1749527354
 GameObject:
   m_ObjectHideFlags: 0
@@ -47143,7 +47132,7 @@ Transform:
   - {fileID: 48946963}
   - {fileID: 1215095372}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1771585919
 GameObject:
@@ -47991,7 +47980,7 @@ Transform:
   - {fileID: 2128819967}
   - {fileID: 1353900378}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1791737385
 GameObject:
@@ -49752,6 +49741,7 @@ MonoBehaviour:
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 0
   Potency: 25
   CastTime: 0
@@ -50397,10 +50387,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1413333629}
@@ -52917,7 +52906,7 @@ Transform:
   m_LocalScale: {x: 14.962673, y: 2.2202418, z: 6.900164}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1984499398
 GameObject:
@@ -53205,10 +53194,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 856682572}
@@ -53841,7 +53829,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &2007637822 stripped
 Transform:
@@ -54102,11 +54090,11 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 2109884925}
     m_Modifications:
     - target: {fileID: 100002, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: m_Name
-      value: Chibi Golem
+      value: GolemFragment
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54138,7 +54126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -54152,30 +54140,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 661355890, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: character
-      value: 
-      objectReference: {fileID: 1749852234}
-    - target: {fileID: 661355890, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 1749852230}
-    - target: {fileID: 661355890, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: enemyAI
-      value: 
-      objectReference: {fileID: 1749852233}
-    - target: {fileID: 661355890, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: enemySkills
-      value: 
-      objectReference: {fileID: 1749852229}
     - target: {fileID: 672263210, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 696282350}
-    - target: {fileID: 882938545, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: character
-      value: 
-      objectReference: {fileID: 2025678288}
     - target: {fileID: 1161388978, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: cam
       value: 
@@ -54184,22 +54152,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 696282350}
-    - target: {fileID: 1399658225, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: character
+    - target: {fileID: 2025678285, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
+      propertyPath: skills.Array.data[1].TextHolder
       value: 
-      objectReference: {fileID: 1749852234}
-    - target: {fileID: 1399658225, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: enemyAI
-      value: 
-      objectReference: {fileID: 1749852233}
-    - target: {fileID: 1399658225, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: enemySkills
-      value: 
-      objectReference: {fileID: 1749852229}
-    - target: {fileID: 1459706308, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2019092555}
     - target: {fileID: 2025678286, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: EXP
       value: 
@@ -54220,50 +54176,8 @@ PrefabInstance:
       propertyPath: Waypoints.Array.data[1]
       value: 
       objectReference: {fileID: 1185145287}
-    - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: IsHostile
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: IsUsingAnimator
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: TimeToMoveAgain
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025678295, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: AlphaMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 304456594c803be45a497aa0db5e2cca, type: 2}
-    - target: {fileID: 2025678295, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
-      propertyPath: OpaqueMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 401a9aab91a8062408a149df3aa85ae8, type: 2}
-    - target: {fileID: 5876701035818405184, guid: 5522c4efc4d320842b1d458c459f642e,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5876701035818405184, guid: 5522c4efc4d320842b1d458c459f642e,
-        type: 3}
-      propertyPath: m_CullingMode
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
---- !u!114 &2025678288 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2025678288, guid: 5522c4efc4d320842b1d458c459f642e,
-    type: 3}
-  m_PrefabInstance: {fileID: 2025678282}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4507c4bc4e5af241851f9be26ef58ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2029125146
 GameObject:
   m_ObjectHideFlags: 0
@@ -54495,6 +54409,7 @@ MonoBehaviour:
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 5
   Potency: 25
   CastTime: 3
@@ -55501,8 +55416,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4286445550
+  m_fontColor: {r: 0.93404716, g: 0.9716981, b: 0.49043253, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -55908,6 +55823,7 @@ MonoBehaviour:
   StatusEffectPotency: 10
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
+  UsesHunterGauge: 0
   ManaCost: 0
   Potency: 0
   CastTime: 0
@@ -56160,10 +56076,9 @@ MonoBehaviour:
   levelUp: {fileID: 1989886444734332, guid: bb3484d8682fba648a5f98841d921914, type: 3}
   levelUpParent: {fileID: 748226851}
   HunterGauge: {fileID: 0}
-  StormThrustSkill: {fileID: 0}
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
-  WhirlwindSlashSkill: {fileID: 0}
+  EvilsEndSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1708335705}
@@ -57390,11 +57305,11 @@ Transform:
   - {fileID: 1957126179}
   - {fileID: 932230825}
   - {fileID: 278447371}
-  - {fileID: 1256882875}
   - {fileID: 1428589394}
+  - {fileID: 1742416223}
   - {fileID: 354133603}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2110418793
 GameObject:
@@ -58063,6 +57978,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144477511}
   m_CullTransparentMesh: 0
+--- !u!1001 &5257189368372837629
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6080076980750741398, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_Name
+      value: Slam
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080076980750741398, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 69.01917
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.546
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 80.0945
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085850373283218584, guid: 501c7dd1bac8efa45a0d27d489cf7bf0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 501c7dd1bac8efa45a0d27d489cf7bf0, type: 3}
 --- !u!1001 &6357218166223267297
 PrefabInstance:
   m_ObjectHideFlags: 0

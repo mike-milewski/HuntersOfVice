@@ -53,7 +53,7 @@ public class Skills : StatusEffects
     private bool StormThrustActivated, FacingEnemy;
 
     [SerializeField]
-    private bool GainedPassive;
+    private bool GainedPassive, UsesHunterGauge;
 
     [SerializeField]
     private int ManaCost, Potency;
@@ -602,11 +602,6 @@ public class Skills : StatusEffects
     private void WhirlwindSlashHit()
     {
         GetCharacter.transform.Rotate(0, 420 * Time.deltaTime, 0);
-
-        if (GainedPassive)
-        {
-            EnemyStatus();
-        }
     }
 
     public void SetUpDamagePerimiter(Vector3 center, float radius)
@@ -628,12 +623,7 @@ public class Skills : StatusEffects
 
                     SkillParticle.transform.SetParent(hitColliders[i].transform);
                 }
-
                 DamageSkillText(hitColliders[i].GetComponent<Enemy>());
-
-                GetStatusEffectIconTrans = hitColliders[i].GetComponent<Enemy>().GetDebuffTransform;
-
-                EnemyStatus();
             }
         }
         GetCharacter.transform.rotation = rot;
@@ -648,9 +638,11 @@ public class Skills : StatusEffects
             int TargetCurrentHP = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth;
             int TargetMaxHP = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.MaxHealth;
 
+            float HpCap = ((float)TargetCurrentHP / (float)TargetMaxHP) * 100f;
+
             if (DistanceToAttack() <= AttackRange)
             {
-                if(TargetCurrentHP <= TargetMaxHP / 4)
+                if(HpCap <= StatusEffectPotency)
                 {
                     GetCharacter.GetComponent<PlayerAnimations>().EvilsEndAnimation();
 

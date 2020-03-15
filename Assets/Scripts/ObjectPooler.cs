@@ -115,6 +115,9 @@ public class ObjectPooler : MonoBehaviour
         AddStunEffectParticle(poolcontroller[25].GetPoolAmount);
         AddIlluminationEffectParticle(poolcontroller[26].GetPoolAmount);
         AddHopParticle(poolcontroller[27].GetPoolAmount);
+        AddGaiasProwessParticle(poolcontroller[28].GetPoolAmount);
+        AddSylvanBlessingParticle(poolcontroller[29].GetPoolAmount);
+        AddSlamParticle(poolcontroller[30].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -453,6 +456,42 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddGaiasProwessParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[28].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[28].GetPoolParent.transform, false);
+            poolcontroller[28].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddSylvanBlessingParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[29].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[29].GetPoolParent.transform, false);
+            poolcontroller[29].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddSlamParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[30].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[30].GetPoolParent.transform, false);
+            poolcontroller[30].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -591,6 +630,21 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetHopParticle()
     {
         return poolcontroller[27].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetGaiasProwessParticle()
+    {
+        return poolcontroller[28].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetSylvanBlessingParticle()
+    {
+        return poolcontroller[29].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetSlamParticle()
+    {
+        return poolcontroller[30].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -814,6 +868,30 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[27].GetPoolParent.transform, false);
 
         poolcontroller[27].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnGaiasProwessParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[28].GetPoolParent.transform, false);
+
+        poolcontroller[28].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnSylvanBlessingParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[29].GetPoolParent.transform, false);
+
+        poolcontroller[29].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnSlamParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[30].GetPoolParent.transform, false);
+
+        poolcontroller[30].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }
