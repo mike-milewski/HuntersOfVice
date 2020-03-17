@@ -2207,7 +2207,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1763054608}
+    m_TransformParent: {fileID: 1863229792}
     m_Modifications:
     - target: {fileID: 1676797660453274, guid: 7f4fa264494242c4e8994fa571d3a211, type: 3}
       propertyPath: m_Name
@@ -13235,7 +13235,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1763054608}
+    m_TransformParent: {fileID: 1863229792}
     m_Modifications:
     - target: {fileID: 1676797660453274, guid: 7f4fa264494242c4e8994fa571d3a211, type: 3}
       propertyPath: m_Name
@@ -21500,6 +21500,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801016366}
   m_CullTransparentMesh: 0
+--- !u!1 &801882795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 801882796}
+  m_Layer: 0
+  m_Name: ShadowPriest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &801882796
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801882795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1763054608}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &805785023
 GameObject:
   m_ObjectHideFlags: 0
@@ -31189,7 +31219,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1763054608}
+    m_TransformParent: {fileID: 1863229792}
     m_Modifications:
     - target: {fileID: 1676797660453274, guid: 7f4fa264494242c4e8994fa571d3a211, type: 3}
       propertyPath: m_Name
@@ -47657,9 +47687,8 @@ Transform:
   m_LocalPosition: {x: 56.68, y: 0.997, z: 86.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 480117035}
-  - {fileID: 48946963}
-  - {fileID: 1215095372}
+  - {fileID: 1863229792}
+  - {fileID: 801882796}
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50622,6 +50651,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89e6b9ae156b16c42bd4da5aa094d1fc, type: 3}
+--- !u!1 &1863229791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1863229792}
+  m_Layer: 0
+  m_Name: Knight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1863229792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863229791}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 480117035}
+  - {fileID: 48946963}
+  - {fileID: 1215095372}
+  m_Father: {fileID: 1763054608}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1864847901
 GameObject:
   m_ObjectHideFlags: 0
@@ -58260,19 +58322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40de07fc0e374034bbde9896743aae8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopLevelRewards:
-  - shopRewards: 1
-    equip: {fileID: 48946964}
-    DiscountAmount: 0
-  - shopRewards: 1
-    equip: {fileID: 480117036}
-    DiscountAmount: 0
-  - shopRewards: 0
-    equip: {fileID: 480117036}
-    DiscountAmount: 5
-  - shopRewards: 1
-    equip: {fileID: 1215095373}
-    DiscountAmount: 0
+  character: {fileID: 601881691}
+  KnightShopLevelRewards: []
+  ShadowPriestShopLevelRewards: []
   inventory: {fileID: 1588835624}
   LevelUpObject: {fileID: 674808410906503740, guid: 24143789de3b7da40beceb57123bbf31,
     type: 3}
