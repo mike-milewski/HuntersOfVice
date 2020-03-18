@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     private GameObject LastEnemyObject = null;
 
     [SerializeField]
-    private Transform SpawnPoint, InventoryMaterialTransform, ItemMessageTransform;
+    private Transform SpawnPoint, InventoryMaterialTransform, ItemMessageTransform, MonsterEntryTransform;
 
     [SerializeField]
     private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel, ItemDescriptionPanel;
@@ -137,6 +137,18 @@ public class GameManager : MonoBehaviour
         set
         {
             ItemMessageTransform = value;
+        }
+    }
+
+    public Transform GetMonsterEntryTransform
+    {
+        get
+        {
+            return MonsterEntryTransform;
+        }
+        set
+        {
+            MonsterEntryTransform = value;
         }
     }
 

@@ -347,8 +347,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.5, y: -51.21}
-  m_SizeDelta: {x: 97.42999, y: 4.73}
+  m_AnchoredPosition: {x: 2.31, y: -69.1}
+  m_SizeDelta: {x: 105.04, y: 40.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222486971059612054
 CanvasRenderer:
@@ -522,8 +522,6 @@ MonoBehaviour:
   character: {fileID: 0}
   StatusRemovalParticle: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e,
     type: 3}
-  IconImage: {fileID: 114082864009470332}
-  BorderImage: {fileID: 7603521634131609394}
   effect: 0
   DurationText: {fileID: 114562803250083384}
   StatusDescriptionText: {fileID: 114722465076543506}

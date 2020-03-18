@@ -118,6 +118,7 @@ public class ObjectPooler : MonoBehaviour
         AddGaiasProwessParticle(poolcontroller[28].GetPoolAmount);
         AddSylvanBlessingParticle(poolcontroller[29].GetPoolAmount);
         AddSlamParticle(poolcontroller[30].GetPoolAmount);
+        AddMonsterEntryText(poolcontroller[31].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -492,6 +493,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddMonsterEntryText(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[31].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[31].GetPoolParent.transform, false);
+            poolcontroller[31].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -645,6 +658,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetSlamParticle()
     {
         return poolcontroller[30].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetMonsterEntryText()
+    {
+        return poolcontroller[31].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -892,6 +910,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[30].GetPoolParent.transform, false);
 
         poolcontroller[30].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnMonsterEntryTextToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[31].GetPoolParent.transform, false);
+
+        poolcontroller[31].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

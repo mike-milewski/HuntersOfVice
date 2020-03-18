@@ -536,6 +536,7 @@ public class EnemyAI : MonoBehaviour
 
         if (monsterBook.GetMonsterTransform.childCount <= 0)
         {
+            GetMonsterEntryText();
             monsterinfo = Instantiate(monsterInformation, EnemyTransform());
             if (!GameManager.Instance.GetMonsterToggle)
             {
@@ -562,6 +563,7 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
+                GetMonsterEntryText();
                 monsterinfo = Instantiate(monsterInformation, EnemyTransform());
                 if (!GameManager.Instance.GetMonsterToggle)
                 {
@@ -804,5 +806,14 @@ public class EnemyAI : MonoBehaviour
 
             Hitparticle.transform.SetParent(PlayerTarget.transform, true);
         }
+    }
+
+    private void GetMonsterEntryText()
+    {
+        var MonsterEntryTxt = ObjectPooler.Instance.GetMonsterEntryText();
+
+        MonsterEntryTxt.SetActive(true);
+
+        MonsterEntryTxt.transform.SetParent(GameManager.Instance.GetMonsterEntryTransform, false);
     }
 }

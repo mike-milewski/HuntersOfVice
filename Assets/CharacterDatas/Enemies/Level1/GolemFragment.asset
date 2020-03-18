@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weaknesses: 04000000
   Resistances: 01000000
-  Immunities: 
-  Absorbtions: 
+  Immunities: 00000000
+  Absorbtions: 00000000
   CharacterName: Golem Fragment
   CharacterLevel: 5
-  Health: 230
+  Health: 300
   Mana: 0
   Strength: 20
   Defense: 15
