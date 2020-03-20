@@ -22,9 +22,6 @@ public class SkillMenu : MonoBehaviour
     [SerializeField]
     private Skills IlluminationSkill, HealSkill, EvilsEndSkill;
 
-    //[SerializeField]
-    //private Animator AC;
-
     [SerializeField]
     private Items[] items;
 
@@ -34,7 +31,7 @@ public class SkillMenu : MonoBehaviour
     private Transform DropZoneTransform;
 
     [SerializeField]
-    private TextMeshProUGUI LevelRequirementText, SkillInfoText;
+    private TextMeshProUGUI LevelRequirementText, SkillInfoText, SkillNameText;
 
     [SerializeField]
     private string PassiveSkillName;
@@ -223,44 +220,42 @@ public class SkillMenu : MonoBehaviour
         Panel.SetActive(true);
 
         #region SkillInformation
-        if(skilltype == SkillType.Active)
+        if (skilltype == SkillType.Active)
         {
+            SkillNameText.text = skill.GetComponent<Skills>().GetSkillName;
+
             if (skill.GetComponent<Skills>().GetCastTime <= 0 && skill.GetComponent<Skills>().GetPotency <= 0 && skill.GetComponent<Skills>().GetManaCost <= 0)
             {
                 if (skill.GetComponent<Skills>().GetPlayerStatusEffect == EffectStatus.NONE && skill.GetComponent<Skills>().GetEnemyStatusEffect == StatusEffect.NONE)
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Cast Time: Instant" +
-                                           "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Cast Time: Instant" +
+                                             "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Cast Time: Instant" +
-                                           "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Cast Time: Instant" +
+                                             "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n";
                     }
                 }
                 else
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cast Time: Instant" +
-                                           "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cast Time: Instant" +
+                                             "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cast Time: Instant" +
-                                           "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cast Time: Instant" +
+                                             "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
             }
@@ -270,36 +265,32 @@ public class SkillMenu : MonoBehaviour
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" +
-                                           "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" +
+                                             "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" +
-                                           "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" +
+                                             "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s" + "\n";
                     }
                 }
                 else
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s"
-                                           + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s"
+                                             + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s"
-                                           + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s"
+                                             + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
             }
@@ -309,38 +300,34 @@ public class SkillMenu : MonoBehaviour
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: " +
-                                           skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: " +
+                                             skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: " +
-                                           skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: " +
+                                             skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
                 else
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " +
-                                           skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " +
-                                           skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " +
+                                             skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " +
+                                             skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " +
-                                           skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " +
-                                           skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " +
+                                             skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " +
+                                             skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
             }
@@ -350,38 +337,34 @@ public class SkillMenu : MonoBehaviour
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "MP Cost: " +
-                                           skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " +
-                                           skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "MP Cost: " +
+                                             skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " +
+                                             skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" +"Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "MP Cost: " +
-                                           skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " +
-                                           skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" +"Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "MP Cost: " +
+                                             skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " +
+                                             skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
                 else
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "<#EFDFB8>" +
-                                           "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " +
-                                           "</color>" + skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "MP Cost: " + skill.GetComponent<Skills>().GetManaCost +
-                                           "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "<#EFDFB8>" +
+                                             "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " +
+                                             "</color>" + skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "MP Cost: " + skill.GetComponent<Skills>().GetManaCost +
+                                             "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "<#EFDFB8>" +
-                                           "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " +
-                                           "</color>" + skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "MP Cost: " + skill.GetComponent<Skills>().GetManaCost +
-                                           "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "<#EFDFB8>" +
+                                             "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " +
+                                             "</color>" + skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "MP Cost: " + skill.GetComponent<Skills>().GetManaCost +
+                                             "\n\n" + "Cast Time: " + skill.GetComponent<Skills>().GetCastTime + "s" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
             }
@@ -391,36 +374,32 @@ public class SkillMenu : MonoBehaviour
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: Instant"
-                                           + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: Instant"
+                                             + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: Instant"
-                                           + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "Cast Time: Instant"
+                                             + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
                 else
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency +
-                                           "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency +
+                                             "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency +
-                                           "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency +
+                                             "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
             }
@@ -430,36 +409,32 @@ public class SkillMenu : MonoBehaviour
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "MP Cost: " +
-                                           skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "MP Cost: " +
+                                             skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "MP Cost: " +
-                                           skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n" + "MP Cost: " +
+                                             skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
                 else
                 {
                     if(skill.GetComponent<Skills>().GetPlayerElement == PlayerElement.NONE)
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "<#EFDFB8>" +
-                                           "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "MP Cost: " + skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: Instant"
-                                           + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "<#EFDFB8>" +
+                                             "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "MP Cost: " + skill.GetComponent<Skills>().GetManaCost + "\n\n" + "Cast Time: Instant"
+                                             + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                     else
                     {
-                        SkillInfoText.text = "<size=12>" + "<u>" + skill.GetComponent<Skills>().GetSkillName + "</u>" + "</size>" + "\n\n" +
-                                           skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
-                                           skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "<#EFDFB8>" + 
-                                           "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
-                                           skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "MP Cost: " + skill.GetComponent<Skills>().GetManaCost + "\n\n" + 
-                                           "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
+                        SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
+                                             skill.GetComponent<Skills>().GetPlayerElement + "\n\n" + "Power: " + skill.GetComponent<Skills>().GetPotency + "\n\n" + "<#EFDFB8>" + 
+                                             "Added effect: " + "</color>" + skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + "Status Duration: " + "</color>" +
+                                             skill.GetComponent<Skills>().GetStatusDuration + "s" + "\n\n" + "MP Cost: " + skill.GetComponent<Skills>().GetManaCost + "\n\n" + 
+                                             "Cast Time: Instant" + "\n" + "Cooldown: " + skill.GetComponent<Skills>().GetCoolDown + "s";
                     }
                 }
             }
@@ -517,86 +492,113 @@ public class SkillMenu : MonoBehaviour
 
     private void HpBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases Maximum HP by " + PassiveBonusValue + "%";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases Maximum HP by " + PassiveBonusValue + "%";
     }
 
     private void MpBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases Maximum MP by " + PassiveBonusValue + "%";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases Maximum MP by " + PassiveBonusValue + "%";
     }
 
     private void StrengthBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases Strength by " + PassiveBonusValue + "%";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases Strength by " + PassiveBonusValue + "%";
     }
 
     private void DefenseBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases Defense by " + PassiveBonusValue + "%";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases Defense by " + PassiveBonusValue + "%";
     }
 
     private void IntelligenceBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases Intelligence by " + PassiveBonusValue + "%";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases Intelligence by " + PassiveBonusValue + "%";
     }
 
     private void CriticalBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + PassiveSkillName + "</size>" + "\n\n" + "Increases critical hit chance by " + PassiveBonusValue + "%";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases critical hit chance by " + PassiveBonusValue + "%";
     }
 
     private void StormThrustBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Storm Thrust receives the following bonuses:" + 
-                               "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + "Wind" + "\n\n" + "<#EFDFB8>" + "Added Effect: " + "</color>" + "Stun" + "\n" + "<#EFDFB8>" + 
-                               "Duration: " + "</color>" + "4s";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Storm Thrust receives the following bonuses:" + 
+                             "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + "Wind" + "\n\n" + "<#EFDFB8>" + "Added Effect: " + "</color>" + "Stun" + "\n" + "<#EFDFB8>" + 
+                             "Duration: " + "</color>" + "4s";
     }
 
     private void ItemHPBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases Potion's potency by " + PassiveBonusValue + "% " +
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases Potion's potency by " + PassiveBonusValue + "% " +
                              "and reduces the cooldown by half.";
     }
 
     private void ItemManaBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases Ether's potency by " + PassiveBonusValue + "% " +
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases Ether's potency by " + PassiveBonusValue + "% " +
                              "and reduces the cooldown by half";
     }
 
     private void HealBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Heal's cast time is reduced by 1 and power is increased by 50.";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Heal's cast time is reduced by 1 and power is increased by 50.";
     }
 
     private void WhirlwindSlashBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Whirlwind Slash gains the following bonus:" + 
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Whirlwind Slash gains the following bonus:" + 
                              "\n\n" + "<#EFDFB8>" + "Added Effect: " + "</color>" + "Bleeding" + "\n" + "<#EFDFB8>" +
                              "Duration: " + "</color>" + "15s";
     }
 
     private void StatPointBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + "Increases the amount of stat points received upon level up by 1.";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases the amount of stat points received upon level up by 1.";
     }
 
     private void IlluminationBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" + 
-                             "HP regeneration from Illumination recovers faster and its potency is increased by 5%.";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "HP regeneration from Illumination recovers faster and its potency is increased by 5%.";
     }
 
     private void HunterOfVicePassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" +
-                             "Unlocks the Hunter Gauge, gaining access to powerful skills.";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Unlocks the Hunter Gauge, gaining access to powerful skills.";
     }
 
     private void EvilsEndBonusPassiveText()
     {
-        SkillInfoText.text = "<size=12>" + "<u>" + PassiveSkillName + "</u>" + "</size>" + "\n\n" +
-                             "The enemy HP condition for Evil's End is increased to 35%.";
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "The enemy HP condition for Evil's End is increased to 35%.";
     }
 
     private void GetPassiveBonus()
