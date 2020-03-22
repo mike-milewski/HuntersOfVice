@@ -23,7 +23,7 @@ public class PuckAnimations : MonoBehaviour
     private PuckDamageRadius damageradius;
 
     [SerializeField]
-    private ChangeEnemyMaterial changeEnemyMaterial;
+    private ChangeEnemyMaterial[] changeEnemyMaterial;
 
     private const string IDLE = "Idle";
     private const string MOVE = "Move";
@@ -160,11 +160,8 @@ public class PuckAnimations : MonoBehaviour
     {
         if (AI.GetStates != BossStates.SkillAnimation)
         {
-            if (AI.GetIsUsingAnimator)
-            {
-                EnemyAnimator.SetBool("Attacking", false);
-                ResetSkillAnimator();
-            }
+            EnemyAnimator.SetBool("Attacking", false);
+            ResetSkillAnimator();
             AI.GetAutoAttack = 0;
             AI.GetStates = BossStates.Attack;
         }
@@ -176,20 +173,9 @@ public class PuckAnimations : MonoBehaviour
 
     public void EndDamaged()
     {
-        if (AI.GetIsUsingAnimator)
-        {
-            EnemyAnimator.SetBool("Damaged", false);
-        }
+        EnemyAnimator.SetBool("Damaged", false);
 
-        if (!AI.GetIsHostile)
-        {
-            AI.GetSphereTrigger.enabled = true;
-            AI.GetStates = BossStates.Attack;
-        }
-        else
-        {
-            AI.GetStates = BossStates.Attack;
-        }
+        AI.GetStates = BossStates.Attack;
     }
 
     public void PlayHealthFade()
@@ -204,9 +190,21 @@ public class PuckAnimations : MonoBehaviour
 
     public void Fading()
     {
-        changeEnemyMaterial.ChangeToAlphaMaterial();
+        changeEnemyMaterial[0].ChangeToAlphaMaterial();
 
-        StartCoroutine(changeEnemyMaterial.Fade());
+        StartCoroutine(changeEnemyMaterial[0].Fade());
+
+        changeEnemyMaterial[1].ChangeToAlphaMaterial();
+
+        StartCoroutine(changeEnemyMaterial[1].Fade());
+
+        changeEnemyMaterial[2].ChangeEquipmentToAlphaMaterial();
+
+        StartCoroutine(changeEnemyMaterial[2].EquipmentFade());
+
+        changeEnemyMaterial[3].ChangeEquipmentToAlphaMaterial();
+
+        StartCoroutine(changeEnemyMaterial[3].EquipmentFade());
     }
 
     public void IncreaseAiArray()

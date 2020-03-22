@@ -198,10 +198,17 @@ public class BasicAttack : MonoBehaviour
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, 5 * Time.deltaTime);
 
                     playerAnimations.AttackAnimation();
-                    if(Target.GetAI.GetIsHostile == false)
+                    if(Target.GetAI != null)
                     {
-                        Target.GetAI.GetSphereTrigger.gameObject.SetActive(true);
-                        Target.GetAI.GetPlayerTarget = this.character;
+                        if (Target.GetAI.GetIsHostile == false)
+                        {
+                            Target.GetAI.GetSphereTrigger.gameObject.SetActive(true);
+                            Target.GetAI.GetPlayerTarget = this.character;
+                        }
+                    }
+                    else
+                    {
+                        Target.GetPuckAI.GetPlayerTarget = this.character;
                     }
                 }
             }

@@ -919,11 +919,22 @@ public class Skills : StatusEffects
             }
             #endregion
 
-            if (Target.GetAI.GetStates != States.Skill && Target.GetAI.GetStates != States.ApplyingAttack && Target.GetAI.GetStates != States.SkillAnimation &&
-                !CheckAbsorptions())
+            if(Target.GetAI != null)
             {
-                Target.GetAI.GetStates = States.Damaged;
-            }  
+                if (Target.GetAI.GetStates != States.Skill && Target.GetAI.GetStates != States.ApplyingAttack && Target.GetAI.GetStates != States.SkillAnimation &&
+                !CheckAbsorptions())
+                {
+                    Target.GetAI.GetStates = States.Damaged;
+                }
+            }
+            else
+            {
+                if (Target.GetPuckAI.GetStates != BossStates.Skill && Target.GetPuckAI.GetStates != BossStates.ApplyingAttack && 
+                    Target.GetPuckAI.GetStates != BossStates.SkillAnimation && !CheckAbsorptions())
+                {
+                    Target.GetPuckAI.GetStates = BossStates.Damaged;
+                }
+            }
         }
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }

@@ -5,7 +5,10 @@ using UnityEngine;
 public class ChangeEnemyMaterial : MonoBehaviour
 {
     [SerializeField]
-    private SkinnedMeshRenderer skinnedMeshRenderer;
+    private SkinnedMeshRenderer skinnedMeshRenderer = null;
+
+    [SerializeField]
+    private MeshRenderer meshRenderer = null;
 
     [SerializeField]
     private Material AlphaMaterial, OpaqueMaterial;
@@ -15,12 +18,36 @@ public class ChangeEnemyMaterial : MonoBehaviour
 
     private void Awake()
     {
-        skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+        if(skinnedMeshRenderer != null)
+        {
+            skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+        }
+        if(meshRenderer != null)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+        }
     }
 
     private void OnEnable()
     {
-        skinnedMeshRenderer.material = OpaqueMaterial;
+        if(skinnedMeshRenderer != null)
+        {
+            skinnedMeshRenderer.material = OpaqueMaterial;
+        }
+        if(meshRenderer != null)
+        {
+            meshRenderer.material = OpaqueMaterial;
+        }
+    }
+
+    public void ChangeEquipmentToAlphaMaterial()
+    {
+        meshRenderer.material = AlphaMaterial;
+
+        Color alpha = meshRenderer.material.color;
+        meshRenderer.material.color = alpha;
+        alpha.a = 1.0f;
+        meshRenderer.material.color = alpha;
     }
 
     public void ChangeToAlphaMaterial()
@@ -36,6 +63,24 @@ public class ChangeEnemyMaterial : MonoBehaviour
     private void ChangeToOpaqueMaterial()
     {
         skinnedMeshRenderer.material = OpaqueMaterial;
+    }
+
+    public IEnumerator EquipmentFade()
+    {
+        Color alpha = meshRenderer.material.color;
+        meshRenderer.material.color = alpha;
+        yield return new WaitForSeconds(3f);
+        while (alpha.a > 0.1f)
+        {
+            alpha.a -= 11 * Time.deltaTime;
+            meshRenderer.material.color = alpha;
+            yield return new WaitForSeconds(0.1f);
+            alpha.a -= 11 * Time.deltaTime;
+            meshRenderer.material.color = alpha;
+            yield return new WaitForSeconds(0.1f);
+        }
+        ParentObject.SetActive(false);
+        yield return null;
     }
 
     public IEnumerator Fade()

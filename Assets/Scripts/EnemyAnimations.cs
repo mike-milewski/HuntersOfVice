@@ -167,11 +167,8 @@ public class EnemyAnimations : MonoBehaviour
     {
         if (puckAI.GetStates != BossStates.SkillAnimation)
         {
-            if (puckAI.GetIsUsingAnimator)
-            {
-                EnemyAnimator.SetBool("Attacking", false);
-                ResetSkillAnimator();
-            }
+            EnemyAnimator.SetBool("Attacking", false);
+            ResetSkillAnimator();
             puckAI.GetAutoAttack = 0;
             puckAI.GetStates = BossStates.Attack;
         }
@@ -183,20 +180,9 @@ public class EnemyAnimations : MonoBehaviour
 
     public void PuckEndDamaged()
     {
-        if (puckAI.GetIsUsingAnimator)
-        {
-            EnemyAnimator.SetBool("Damaged", false);
-        }
+        EnemyAnimator.SetBool("Damaged", false);
 
-        if (!puckAI.GetIsHostile)
-        {
-            puckAI.GetSphereTrigger.enabled = true;
-            puckAI.GetStates = BossStates.Attack;
-        }
-        else
-        {
-            puckAI.GetStates = BossStates.Attack;
-        }
+        puckAI.GetStates = BossStates.Attack;
     }
 
     public void ResetAutoAttackTime()

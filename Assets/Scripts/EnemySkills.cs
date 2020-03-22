@@ -1197,7 +1197,10 @@ public class EnemySkills : MonoBehaviour
         }
         #endregion
 
-        enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+        if(!SkillsManager.Instance.GetActivatedSkill)
+        {
+            enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+        }
 
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }

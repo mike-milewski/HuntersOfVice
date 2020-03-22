@@ -18,9 +18,9 @@ MonoBehaviour:
   Absorbtions: 
   CharacterName: Sylvan's Chosen
   CharacterLevel: 5
-  Health: 1030
+  Health: 1000
   Mana: 0
-  Strength: 37
+  Strength: 50
   Defense: 22
   Intelligence: 17
   HpIncrease: 0

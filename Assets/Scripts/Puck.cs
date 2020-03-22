@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum BossStates { Patrol, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile }
+public enum BossStates { Idle, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile }
 
+[System.Serializable]
 public class BossAiStates
 {
     [SerializeField]
@@ -72,9 +73,6 @@ public class Puck : MonoBehaviour
     private PuckAnimations puckAnimations;
 
     [SerializeField]
-    private Transform[] Waypoints;
-
-    [SerializeField]
     private float MoveSpeed, AttackRange, AttackDelay, AutoAttackTime, LookSpeed;
 
     [SerializeField]
@@ -88,19 +86,14 @@ public class Puck : MonoBehaviour
     private ParticleSystem HitParticle;
 
     [SerializeField]
-    private float TimeToMoveAgain; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
-
-    private float TimeToMove, DistanceToTarget;
-
-    private bool StandingStill, PlayerEntry;
-
-    private int WaypointIndex;
+    private Transform BossPosition;
 
     [SerializeField]
-    private bool IsHostile;
+    private Quaternion BossRotation;
 
-    [SerializeField]
-    private bool IsUsingAnimator;
+    private float DistanceToTarget;
+
+    private bool PlayerEntry;
 
     private int StateArrayIndex;
 
@@ -140,18 +133,6 @@ public class Puck : MonoBehaviour
         }
     }
 
-    public bool GetIsUsingAnimator
-    {
-        get
-        {
-            return IsUsingAnimator;
-        }
-        set
-        {
-            IsUsingAnimator = value;
-        }
-    }
-
     public void IncreaseArray()
     {
         StateArrayIndex++;
@@ -163,9 +144,9 @@ public class Puck : MonoBehaviour
 
     private void Awake()
     {
-        states = BossStates.Patrol;
+        states = BossStates.Idle;
 
-        TimeToMove = TimeToMoveAgain;
+        Idle();
     }
 
     private void OnEnable()
@@ -179,9 +160,6 @@ public class Puck : MonoBehaviour
         {
             switch (states)
             {
-                case (BossStates.Patrol):
-                    Patrol();
-                    break;
                 case (BossStates.Chase):
                     Chase();
                     break;
@@ -230,18 +208,6 @@ public class Puck : MonoBehaviour
         }
     }
 
-    public bool GetIsHostile
-    {
-        get
-        {
-            return IsHostile;
-        }
-        set
-        {
-            IsHostile = value;
-        }
-    }
-
     public Character GetPlayerTarget
     {
         get
@@ -266,72 +232,14 @@ public class Puck : MonoBehaviour
         }
     }
 
-    private void Patrol()
+    private void Idle()
     {
-        float DistanceToWayPoint = Vector3.Distance(new Vector3(this.transform.position.x, 0, this.transform.position.z),
-                                                    new Vector3(Waypoints[WaypointIndex].position.x, 0, Waypoints[WaypointIndex].position.z));
-
-        if (!StandingStill)
-        {
-            if (!IsUsingAnimator)
-            {
-                puckAnimations.RunAni();
-            }
-            else
-            {
-                puckAnimations.MoveAnimator();
-            }
-
-            Vector3 Distance = new Vector3(Waypoints[WaypointIndex].position.x - this.transform.position.x, 0,
-                                           Waypoints[WaypointIndex].position.z - this.transform.position.z).normalized;
-
-            Quaternion LookDir = Quaternion.LookRotation(Distance);
-
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
-
-            this.transform.position += Distance * MoveSpeed * Time.deltaTime;
-        }
-        else
-        {
-            if (!IsUsingAnimator)
-            {
-                puckAnimations.IdleAni();
-            }
-            else
-            {
-                puckAnimations.IdleAnimator();
-            }
-        }
-
-        if (DistanceToWayPoint <= 0.1f)
-        {
-            StandingStill = true;
-            TimeToMove -= Time.deltaTime;
-            if (TimeToMove <= 0)
-            {
-                WaypointIndex++;
-                if (WaypointIndex >= Waypoints.Length)
-                {
-                    WaypointIndex = 0;
-                }
-                TimeToMove = TimeToMoveAgain;
-                StandingStill = false;
-            }
-        }
+        puckAnimations.IdleAnimator();
     }
 
     private void Chase()
     {
-        StandingStill = false;
-
-        if (!IsUsingAnimator)
-        {
-            puckAnimations.RunAni();
-        }
-        else
-        {
-            puckAnimations.MoveAnimator();
-        }
+        puckAnimations.MoveAnimator();
 
         enemySkills.GetSkillBar.gameObject.SetActive(false);
 
@@ -368,7 +276,6 @@ public class Puck : MonoBehaviour
 
                     PlayerTarget = null;
                     AutoAttackTime = 0;
-                    states = BossStates.Patrol;
                 }
             }
             else
@@ -376,22 +283,11 @@ public class Puck : MonoBehaviour
                 states = BossStates.Attack;
             }
         }
-        else
-        {
-            states = BossStates.Patrol;
-        }
     }
 
     private void Attack()
     {
-        if (!IsUsingAnimator)
-        {
-            puckAnimations.IdleAni();
-        }
-        else
-        {
-            puckAnimations.IdleAnimator();
-        }
+        puckAnimations.IdleAnimator();
 
         if (PlayerTarget != null)
         {
@@ -417,12 +313,7 @@ public class Puck : MonoBehaviour
             }
             else
             {
-                enemy.GetHealth.IncreaseHealth(character.MaxHealth);
-                enemy.GetLocalHealthInfo();
-
-                PlayerTarget = null;
-                AutoAttackTime = 0;
-                states = BossStates.Patrol;
+                ResetStats();
             }
         }
         else
@@ -433,14 +324,7 @@ public class Puck : MonoBehaviour
 
     private void ApplyingNormalAtk()
     {
-        if (!IsUsingAnimator)
-        {
-            puckAnimations.AttackAni();
-        }
-        else
-        {
-            puckAnimations.AttackAnimator();
-        }
+        puckAnimations.AttackAnimator();
     }
 
     private void Skill()
@@ -451,31 +335,16 @@ public class Puck : MonoBehaviour
     //Sets the enemy to this state if they are inflicted with the stun/sleep status effect.
     private void Immobile()
     {
-        if (!IsUsingAnimator)
-        {
-            puckAnimations.IdleAni();
-        }
-        else
-        {
-            puckAnimations.IdleAnimator();
-        }
+        puckAnimations.IdleAnimator();
     }
 
     public void Damage()
     {
-        if (!IsUsingAnimator)
-        {
-            puckAnimations.DamageAni();
-        }
-        else
-        {
-            puckAnimations.DamagedAnimator();
-        }
+        puckAnimations.DamagedAnimator();
     }
 
     public void Dead()
     {
-        StandingStill = false;
         PlayerTarget = null;
         AutoAttackTime = 0;
         EnemyTriggerSphere.enabled = false;
@@ -501,18 +370,7 @@ public class Puck : MonoBehaviour
 
         enemy.ToggleHealthBar();
 
-        enemy.ReturnCoins();
-
-        enemy.ReturnExperience();
-
-        if (!IsUsingAnimator)
-        {
-            puckAnimations.DeathAni();
-        }
-        else
-        {
-            puckAnimations.DeadAnimator();
-        }
+        puckAnimations.DeadAnimator();
 
         if (this.GetComponent<ItemDrop>() != null)
         {
@@ -629,6 +487,10 @@ public class Puck : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     private void ResetStats()
     {
+        transform.position = BossPosition.position;
+
+        EnemyTriggerSphere.gameObject.SetActive(true);
+
         character.CurrentHealth = character.MaxHealth;
         enemy.GetFilledBar();
         enemy.GetLocalHealth.gameObject.SetActive(true);
@@ -637,7 +499,10 @@ public class Puck : MonoBehaviour
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
         character.GetRigidbody.useGravity = true;
 
-        states = BossStates.Patrol;
+        states = BossStates.Idle;
+        Idle();
+
+        transform.rotation = BossRotation;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -647,51 +512,7 @@ public class Puck : MonoBehaviour
         {
             PlayerTarget = other.GetComponent<Character>();
             states = BossStates.Chase;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.GetComponent<PlayerController>() && IsHostile)
-        {
-            PlayerEntry = false;
-            if (states != BossStates.SkillAnimation)
-            {
-                PlayerTarget = null;
-                states = BossStates.Patrol;
-                AutoAttackTime = 0;
-                if (enemySkills.GetManager.Length > 0)
-                {
-                    enemySkills.DisableRadiusImage();
-                    enemySkills.DisableRadius();
-                }
-                enemySkills.GetActiveSkill = false;
-                enemySkills.GetSkillBar.gameObject.SetActive(false);
-            }
-            enemy.GetHealth.IncreaseHealth(character.MaxHealth);
-            enemy.GetLocalHealthInfo();
-            StateArrayIndex = 0;
-        }
-        if (other.gameObject.GetComponent<PlayerController>() && !IsHostile)
-        {
-            PlayerEntry = false;
-            if (states != BossStates.SkillAnimation)
-            {
-                PlayerTarget = null;
-                states = BossStates.Patrol;
-                AutoAttackTime = 0;
-                EnemyTriggerSphere.gameObject.SetActive(false);
-                if (enemySkills.GetManager.Length > 0)
-                {
-                    enemySkills.DisableRadiusImage();
-                    enemySkills.DisableRadius();
-                }
-                enemySkills.GetActiveSkill = false;
-                enemySkills.GetSkillBar.gameObject.SetActive(false);
-            }
-            enemy.GetHealth.IncreaseHealth(character.MaxHealth);
-            enemy.GetLocalHealthInfo();
-            StateArrayIndex = 0;
+            EnemyTriggerSphere.gameObject.SetActive(false);
         }
     }
 
@@ -700,7 +521,8 @@ public class Puck : MonoBehaviour
         if (!PlayerEntry)
         {
             PlayerTarget = null;
-            states = BossStates.Patrol;
+            states = BossStates.Idle;
+            Idle();
             AutoAttackTime = 0;
             enemySkills.DisableRadiusImage();
             enemySkills.DisableRadius();
@@ -770,7 +592,10 @@ public class Puck : MonoBehaviour
             }
             #endregion
 
-            PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+            if(!SkillsManager.Instance.GetActivatedSkill)
+            {
+                PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+            }
         }
         return t.GetComponentInChildren<TextMeshProUGUI>();
     }
