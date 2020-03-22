@@ -1,4 +1,5 @@
 ﻿#pragma warning disable 0219
+#pragma warning disable 0414
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -18,6 +19,7 @@ public enum Skill
     GaiasProwess,
     //RockSpirit Skills
     Gnaw,
+    Slag,
     //MiniBosses:
     //Puck Skills
     SylvanBlessing,
@@ -411,13 +413,19 @@ public class EnemySkills : MonoBehaviour
     private Enemy enemy;
 
     [SerializeField]
-    private EnemyAI enemyAI;
+    private EnemyAI enemyAI = null;
+
+    [SerializeField]
+    private Puck puckAI = null;
 
     [SerializeField]
     private EnemySkillBar skillBar;
 
     [SerializeField]
-    private DamageRadius damageRadius;
+    private DamageRadius damageRadius = null;
+
+    [SerializeField]
+    private PuckDamageRadius puckDamageRadius = null;
 
     [SerializeField]
     private Health health;
@@ -528,6 +536,14 @@ public class EnemySkills : MonoBehaviour
                     break;
                 #endregion
 
+                #region Rock Spirit Skills
+                case (Skill.Slag):
+                    Slag(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                    break;
+                #endregion
+
                 #region Bunnykins Skill
                 case (Skill.Hop):
                     Hop(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
@@ -627,7 +643,7 @@ public class EnemySkills : MonoBehaviour
     public void UseGaiasProwess()
     {
         GaiasProwess(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusDuration,
-                        GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                     GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
     }
 
     public void InvokeGaiasProwess()
@@ -772,6 +788,51 @@ public class EnemySkills : MonoBehaviour
             rot.z = character.transform.rotation.y;
         }
         DisableRadius();
+    }
+    #endregion
+
+    #region Slag
+    public void Slag(int potency, float castTime, string skillname)
+    {
+        SpellCastingAnimation();
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1 && enemyAI.GetPlayerTarget != null)
+        {
+            enemyAI.GetAnimation.FungiBumpAnim();
+
+            if (settings.UseParticleEffects)
+            {
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetSlagParticle();
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                                                                     enemyAI.GetPlayerTarget.transform.position.x, 
+                                                                                                                     enemyAI.GetPlayerTarget.transform.position.y + 0.7f, 
+                                                                                                                     enemyAI.GetPlayerTarget.transform.position.z);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(enemyAI.GetPlayerTarget.transform);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
+            }
+            ActiveSkill = false;
+
+            SkillDamageText(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+        }
     }
     #endregion
 

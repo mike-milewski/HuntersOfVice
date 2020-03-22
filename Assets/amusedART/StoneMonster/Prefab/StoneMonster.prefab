@@ -1621,7 +1621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e53935b6eaaed54abf1bbccebb95a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  character: {fileID: 1665829955}
   _animator: {fileID: 1107997837}
 --- !u!1 &1221553633
 GameObject:
@@ -2649,7 +2649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961821574baa3954eb4c89ddbf474ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  character: {fileID: 1665829955}
   characterMenu: {fileID: 0}
   HealthBar: {fileID: 152798687}
   FillBarTwo: {fileID: 1717635118}
@@ -2877,11 +2877,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574e3bf0092c2ed4faa12d6263f51d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  character: {fileID: 1665829955}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
-  enemy: {fileID: 0}
-  enemyAI: {fileID: 0}
-  enemySkills: {fileID: 0}
+  enemy: {fileID: 1665829960}
+  enemyAI: {fileID: 1665829959}
+  enemySkills: {fileID: 1665829958}
   SkillBarFillImage: {fileID: 1344410886}
   SkillName: {fileID: 1675346858}
   CastParticle: {fileID: 1391052643135982, guid: e09d4b33486bee040866beb6684238c1,
@@ -2930,7 +2930,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2123347075
 GameObject:
@@ -3221,7 +3221,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4836351918659748}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!1 &1497842698705604
 GameObject:
   m_ObjectHideFlags: 0
@@ -3279,7 +3279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4788319935855200
 Transform:
   m_ObjectHideFlags: 0
@@ -3316,6 +3316,8 @@ Animation:
   - {fileID: 7400000, guid: ef4e818df6a7a8d4dba4610afebec270, type: 2}
   - {fileID: 7400000, guid: 0817b5ab7df086f419839b8d20073f14, type: 2}
   - {fileID: 7400000, guid: e1df6ce0ef5f1634295a20cc152dc90f, type: 2}
+  - {fileID: 7400000, guid: c8aea8e358b36534c9d53b99ebf4334c, type: 2}
+  - {fileID: 7400000, guid: 88270e16d516bf8428df5519a4a0ada8, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -3419,6 +3421,10 @@ MonoBehaviour:
   aiStates:
   - state: 3
     SkillIndex: 0
+  - state: 3
+    SkillIndex: 0
+  - state: 4
+    SkillIndex: 0
   character: {fileID: 1665829955}
   monsterBook: {fileID: 0}
   monsterInformation: {fileID: 114702138956978278, guid: 3b5ed524b56ab30458a90b74aebc013e,
@@ -3444,6 +3450,7 @@ MonoBehaviour:
   DocileSprite: {fileID: 21300000, guid: 1e1e9c17372152a42a972ac8f0074e6a, type: 3}
   ThreatSprite: {fileID: 21300000, guid: 43a17ebdf749ab5499e13424f6a7b7fd, type: 3}
   IsHostile: 1
+  IsUsingAnimator: 0
 --- !u!114 &1665829958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3456,7 +3463,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b798244cafc004291d6dec6e876e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skills: []
+  skills:
+  - skills: 9
+    enemyElement: 4
+    status: 0
+    shapes: 0
+    StatusSprite: {fileID: 0}
+    StatusIcon: {fileID: 0}
+    TextHolder: {fileID: 0}
+    StatusIconTrans: {fileID: 0}
+    DamageORHealText: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53,
+      type: 3}
+    StatusEffectHolder: {fileID: 0}
+    SkillParticle: {fileID: 0}
+    StatusEffectName: 
+    StatusDescription: 
+    SkillName: Slag
+    StatusDuration: 0
+    CastTime: 3
+    SizeDeltaX: 0
+    SizeDeltaY: 0
+    ApplySkill: 0
+    ShapeSize: {x: 0, y: 0, z: 0}
+    AttackRange: 5
+    StatusEffectPotency: 0
+    Potency: 45
+    IsBuff: 0
   character: {fileID: 1665829955}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 1665829960}
@@ -3479,6 +3511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 111495423891279680}
+  EnemyAnimator: {fileID: 0}
   animator: {fileID: 1711875300}
   AI: {fileID: 1665829959}
   enemyskills: {fileID: 1665829958}
@@ -3499,6 +3532,7 @@ MonoBehaviour:
   itemDrops: []
   materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
     type: 3}
+  CanDropThroughPass: 0
 --- !u!1 &1753159918419610
 GameObject:
   m_ObjectHideFlags: 0
@@ -3559,7 +3593,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4372769990449160}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!1 &1911034780301212
 GameObject:
   m_ObjectHideFlags: 0

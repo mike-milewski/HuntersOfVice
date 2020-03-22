@@ -9,10 +9,16 @@ public class Enemy : MonoBehaviour
     private Character character;
 
     [SerializeField]
-    private EnemyAnimations enemyAnimations;
+    private EnemyAnimations enemyAnimations = null;
 
     [SerializeField]
-    private EnemyAI enemyAI;
+    private PuckAnimations puckAnimations = null;
+
+    [SerializeField]
+    private EnemyAI enemyAI = null;
+
+    [SerializeField]
+    private Puck puckAI = null;
 
     [SerializeField]
     private Health health;
@@ -104,6 +110,18 @@ public class Enemy : MonoBehaviour
         set
         {
             enemyAI = value;
+        }
+    }
+
+    public Puck GetPuckAI
+    {
+        get
+        {
+            return puckAI;
+        }
+        set
+        {
+            puckAI = value;
         }
     }
 
@@ -201,19 +219,40 @@ public class Enemy : MonoBehaviour
     {
         if (GameManager.Instance.GetEnemyObject == enemy.gameObject)
         {
-            enemyAnimations.PlayHealthFade();
+            if(enemyAnimations != null)
+            {
+                enemyAnimations.PlayHealthFade();
+            }
+            if(puckAnimations != null)
+            {
+                puckAnimations.PlayHealthFade();
+            }
             TargetedImage.gameObject.SetActive(true);
         }
         else
         {
-            enemyAnimations.ReverseFadeHealth();
+            if(enemyAnimations != null)
+            {
+                enemyAnimations.ReverseFadeHealth();
+            }
+            if(puckAnimations != null)
+            {
+                puckAnimations.ReverseFadeHealth();
+            }
             TargetedImage.gameObject.SetActive(false);
         }
     }
 
     public void TurnOffHealthBar()
     {
-        enemyAnimations.ReverseFadeHealth();
+        if(enemyAnimations != null)
+        {
+            enemyAnimations.ReverseFadeHealth();
+        }
+        if(puckAnimations != null)
+        {
+            puckAnimations.ReverseFadeHealth();
+        }
         TargetedImage.gameObject.SetActive(false);
     }
 

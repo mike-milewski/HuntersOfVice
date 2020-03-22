@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Shapes { NONE, Circle, Cylinder, Rectangle }
+public enum PuckShapes { NONE, Circle, Cylinder, Rectangle }
 
-public class DamageRadius : MonoBehaviour
+public class PuckDamageRadius : MonoBehaviour
 {
     [SerializeField]
     private Character character;
 
     [SerializeField]
-    private EnemyAI enemyAI;
+    private Puck enemyAI;
 
     [SerializeField]
     private EnemySkills enemySkills;
@@ -71,7 +71,7 @@ public class DamageRadius : MonoBehaviour
 
             transform.position = Trans + character.transform.forward * 1.6f;
         }
-        if(shapes == Shapes.Circle)
+        if (shapes == Shapes.Circle)
         {
             DamageShape.transform.localScale = new Vector3(1, 1, 1);
 
@@ -95,7 +95,7 @@ public class DamageRadius : MonoBehaviour
 
     private void Update()
     {
-        if(enemyAI.GetStates != States.Immobile)
+        if (enemyAI.GetStates != BossStates.Immobile)
         {
             switch (shapes)
             {
@@ -124,10 +124,10 @@ public class DamageRadius : MonoBehaviour
             Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX),
             Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY));
 
-        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX && DamageShape.rectTransform.sizeDelta.y < 
+        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX && DamageShape.rectTransform.sizeDelta.y <
                                                     enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
 
-           DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
     }
 
     private void IncreaseRectangle()
@@ -140,7 +140,7 @@ public class DamageRadius : MonoBehaviour
         {
             DamageShape.rectTransform.sizeDelta += new Vector2(100, 0) * Time.deltaTime;
         }
-        if(DamageShape.rectTransform.sizeDelta.y < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
+        if (DamageShape.rectTransform.sizeDelta.y < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
         {
             DamageShape.rectTransform.sizeDelta += new Vector2(0, 100) * Time.deltaTime;
         }
@@ -189,7 +189,7 @@ public class DamageRadius : MonoBehaviour
             enemySkills.PlayerStatus();
         }
 
-        if(enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency > 0)
+        if (enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency > 0)
         {
             enemySkills.SkillDamageText(enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
                                     enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);

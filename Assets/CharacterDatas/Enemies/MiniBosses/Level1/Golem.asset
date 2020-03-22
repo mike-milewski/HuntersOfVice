@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
   m_Name: Golem
   m_EditorClassIdentifier: 
-  Weaknesses: 
+  Weaknesses: 04000000
   Resistances: 01000000
-  Immunities: 
-  Absorbtions: 
+  Immunities: 00000000
+  Absorbtions: 00000000
   CharacterName: Vine Golem
   CharacterLevel: 7
   Health: 3500

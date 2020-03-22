@@ -239,7 +239,14 @@ public class Health : MonoBehaviour
             }
             else
             {
-                character.GetComponent<EnemyAI>().Dead();
+                if(character.GetComponent<EnemyAI>())
+                {
+                    character.GetComponent<EnemyAI>().Dead();
+                }
+                if(character.GetComponent<Puck>())
+                {
+                    character.GetComponent<Puck>().Dead();
+                }
             }
         }
         SleepHit = true;

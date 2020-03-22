@@ -1,7 +1,8 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAnimations : MonoBehaviour
+public class PuckAnimations : MonoBehaviour
 {
     [SerializeField]
     private Animation anim = null;
@@ -13,43 +14,40 @@ public class EnemyAnimations : MonoBehaviour
     private Animator animator;
 
     [SerializeField]
-    private EnemyAI AI = null;
-
-    [SerializeField]
-    private Puck puckAI = null;
+    private Puck AI;
 
     [SerializeField]
     private EnemySkills enemyskills;
 
     [SerializeField]
-    private DamageRadius damageradius = null;
+    private PuckDamageRadius damageradius;
 
     [SerializeField]
     private ChangeEnemyMaterial changeEnemyMaterial;
 
-	private const string IDLE	= "Idle";
-	private const string MOVE	= "Move";
-	private const string ATTACK	= "Attack";
+    private const string IDLE = "Idle";
+    private const string MOVE = "Move";
+    private const string ATTACK = "Attack";
     private const string SKILLATTACK = "SkillAttack";
     private const string SKILLATTACK2 = "SkillAttack2";
     private const string CASTING = "Casting";
-    private const string DAMAGE	= "Damage";
-	private const string DEATH	= "Death";
+    private const string DAMAGE = "Damage";
+    private const string DEATH = "Death";
 
-    public void IdleAni ()
+    public void IdleAni()
     {
         anim.Play(IDLE);
-	}
+    }
 
-	public void RunAni ()
+    public void RunAni()
     {
         anim.Play(MOVE);
-	}
+    }
 
-	public void AttackAni ()
+    public void AttackAni()
     {
         anim.Play(ATTACK);
-	}
+    }
 
     public void CastingAni()
     {
@@ -65,24 +63,19 @@ public class EnemyAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill2", false);
     }
 
-    public void DamageAni ()
+    public void DamageAni()
     {
         anim.Play(DAMAGE);
-	}
+    }
 
-	public void DeathAni ()
+    public void DeathAni()
     {
         anim.Play(DEATH);
-	}
+    }
 
     public void DamagePlayer()
     {
         AI.TakeDamage();
-    }
-
-    public void PuckDamagePlayer()
-    {
-        puckAI.TakeDamage();
     }
 
     public void MoveAnimator()
@@ -135,13 +128,13 @@ public class EnemyAnimations : MonoBehaviour
 
     public void SkillDamage()
     {
-        enemyskills.SkillDamageText(enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
+        enemyskills.SkillDamageText(enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
                                     enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
     }
 
     public void SkillRadiusDamage()
     {
-        if(damageradius.GetIsInRadius)
+        if (damageradius.GetIsInRadius)
         {
             damageradius.TakeRadiusDamage();
         }
@@ -163,53 +156,17 @@ public class EnemyAnimations : MonoBehaviour
         ResetSkillAnimator();
     }
 
-    public void PuckResetAutoAttackTime()
-    {
-        if (puckAI.GetStates != BossStates.SkillAnimation)
-        {
-            if (puckAI.GetIsUsingAnimator)
-            {
-                EnemyAnimator.SetBool("Attacking", false);
-                ResetSkillAnimator();
-            }
-            puckAI.GetAutoAttack = 0;
-            puckAI.GetStates = BossStates.Attack;
-        }
-        else
-        {
-            puckAI.CheckTarget();
-        }
-    }
-
-    public void PuckEndDamaged()
-    {
-        if (puckAI.GetIsUsingAnimator)
-        {
-            EnemyAnimator.SetBool("Damaged", false);
-        }
-
-        if (!puckAI.GetIsHostile)
-        {
-            puckAI.GetSphereTrigger.enabled = true;
-            puckAI.GetStates = BossStates.Attack;
-        }
-        else
-        {
-            puckAI.GetStates = BossStates.Attack;
-        }
-    }
-
     public void ResetAutoAttackTime()
     {
-        if(AI.GetStates != States.SkillAnimation)
+        if (AI.GetStates != BossStates.SkillAnimation)
         {
-            if(AI.GetIsUsingAnimator)
+            if (AI.GetIsUsingAnimator)
             {
                 EnemyAnimator.SetBool("Attacking", false);
                 ResetSkillAnimator();
             }
             AI.GetAutoAttack = 0;
-            AI.GetStates = States.Attack;
+            AI.GetStates = BossStates.Attack;
         }
         else
         {
@@ -219,19 +176,19 @@ public class EnemyAnimations : MonoBehaviour
 
     public void EndDamaged()
     {
-        if(AI.GetIsUsingAnimator)
+        if (AI.GetIsUsingAnimator)
         {
             EnemyAnimator.SetBool("Damaged", false);
         }
-        
-        if(!AI.GetIsHostile)
+
+        if (!AI.GetIsHostile)
         {
             AI.GetSphereTrigger.enabled = true;
-            AI.GetStates = States.Attack;
+            AI.GetStates = BossStates.Attack;
         }
         else
         {
-            AI.GetStates = States.Attack;
+            AI.GetStates = BossStates.Attack;
         }
     }
 
