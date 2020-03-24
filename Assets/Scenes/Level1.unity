@@ -17317,6 +17317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom
       objectReference: {fileID: 0}
+    - target: {fileID: 1722958204252142, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 51.33
@@ -25821,6 +25825,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bunnykins (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1987585570241918, guid: f250cec63ecb8c44abab39daaf1acb30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4242709035527202, guid: f250cec63ecb8c44abab39daaf1acb30, type: 3}
       propertyPath: m_LocalPosition.x
       value: 48.57
@@ -28103,6 +28111,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 801016368}
           m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1127953856}
+        m_MethodName: DisplayMonsterButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -38812,6 +38831,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1127953856}
+        m_MethodName: DisplayBossButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1456837512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42795,6 +42825,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1722958204252142, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 53.54
@@ -46751,6 +46785,10 @@ PrefabInstance:
     - target: {fileID: 1046869630431942, guid: c717f817a496cf247a92b830b355a407, type: 3}
       propertyPath: m_Name
       value: Bee
+      objectReference: {fileID: 0}
+    - target: {fileID: 1046869630431942, guid: c717f817a496cf247a92b830b355a407, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1989477639907844, guid: c717f817a496cf247a92b830b355a407, type: 3}
       propertyPath: m_IsActive
@@ -52068,9 +52106,9 @@ RectTransform:
   m_Father: {fileID: 56042380}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 69.70985, y: -62.252644}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.054985, y: 51.816994}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1864847903
@@ -53965,6 +54003,10 @@ PrefabInstance:
     - target: {fileID: 1987585570241918, guid: f250cec63ecb8c44abab39daaf1acb30, type: 3}
       propertyPath: m_Name
       value: Bunnykins
+      objectReference: {fileID: 0}
+    - target: {fileID: 1987585570241918, guid: f250cec63ecb8c44abab39daaf1acb30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4165563422994194, guid: f250cec63ecb8c44abab39daaf1acb30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -59646,7 +59688,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2109884925
 Transform:
   m_ObjectHideFlags: 0
@@ -60539,14 +60581,19 @@ PrefabInstance:
       objectReference: {fileID: 1127953856}
     - target: {fileID: 5148129804296659929, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
-      propertyPath: BossRotation.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 5148129804296659929, guid: 0717d70c0de52434486d20a500d4f6c4,
-        type: 3}
       propertyPath: BossPosition
       value: 
       objectReference: {fileID: 1007678933}
+    - target: {fileID: 5148129804296659929, guid: 0717d70c0de52434486d20a500d4f6c4,
+        type: 3}
+      propertyPath: Walls.Array.data[0]
+      value: 
+      objectReference: {fileID: 420686137}
+    - target: {fileID: 5148129804296659929, guid: 0717d70c0de52434486d20a500d4f6c4,
+        type: 3}
+      propertyPath: Walls.Array.data[1]
+      value: 
+      objectReference: {fileID: 963196297}
     - target: {fileID: 8718885078731095356, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
       propertyPath: m_LocalPosition.z

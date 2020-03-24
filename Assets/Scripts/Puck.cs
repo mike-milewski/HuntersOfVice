@@ -89,6 +89,9 @@ public class Puck : MonoBehaviour
     private Transform BossPosition;
 
     [SerializeField]
+    private GameObject[] Walls;
+
+    [SerializeField]
     private Quaternion BossRotation;
 
     private float DistanceToTarget;
@@ -345,6 +348,9 @@ public class Puck : MonoBehaviour
 
     public void Dead()
     {
+        Walls[0].SetActive(false);
+        Walls[1].SetActive(false);
+
         PlayerTarget = null;
         AutoAttackTime = 0;
         EnemyTriggerSphere.enabled = false;
@@ -384,7 +390,7 @@ public class Puck : MonoBehaviour
     {
         var monsterinfo = monsterInformation;
 
-        if (monsterBook.GetMonsterTransform.childCount <= 0)
+        if (monsterBook.GetBossTransform.childCount <= 0)
         {
             GetMonsterEntryText();
             monsterinfo = Instantiate(monsterInformation, EnemyTransform());

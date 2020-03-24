@@ -117,13 +117,18 @@ public class MonsterInformation : MonoBehaviour
         string weakness = "";
         string weak = "";
 
+        int i = 0;
+
         if(characterData[0].Weaknesses.Length > 0)
         {
-            for (int i = 0; i < character.GetCharacterData.Weaknesses.Length; i++)
+            if(character.GetCharacterData.Weaknesses[i] != ElementalWeaknesses.NONE)
             {
-                weakness += "<#EFDFB8>" + character.GetCharacterData.Weaknesses[i] + "</color>" + " ";
+                for (i = 0; i < character.GetCharacterData.Weaknesses.Length; i++)
+                {
+                    weakness += "<#EFDFB8>" + character.GetCharacterData.Weaknesses[i] + "</color>" + " ";
+                }
+                weak = "Weak: " + weakness + "\n";
             }
-            weak = "Weak: " + weakness + "\n";
         }
         else
         {
@@ -138,13 +143,18 @@ public class MonsterInformation : MonoBehaviour
         string resistance = "";
         string resist = "";
 
+        int i = 0;
+
         if (characterData[0].Resistances.Length > 0)
         {
-            for (int i = 0; i < character.GetCharacterData.Resistances.Length; i++)
+            if(character.GetCharacterData.Resistances[i] != ElementalResistances.NONE)
             {
-                resistance += "<#EFDFB8>" + character.GetCharacterData.Resistances[i] + "</color>" + " ";
+                for (i = 0; i < character.GetCharacterData.Resistances.Length; i++)
+                {
+                    resistance += "<#EFDFB8>" + character.GetCharacterData.Resistances[i] + "</color>" + " ";
+                }
+                resist = "Resist: " + resistance + "\n";
             }
-            resist = "Resist: " + resistance + "\n";
         }
         else
         {
@@ -159,13 +169,18 @@ public class MonsterInformation : MonoBehaviour
         string immunities = "";
         string immunity = "";
 
+        int i = 0;
+
         if (characterData[0].Immunities.Length > 0)
         {
-            for (int i = 0; i < characterData[0].Immunities.Length; i++)
+            if(character.GetCharacterData.Immunities[i] != ElementalImmunities.NONE)
             {
-                immunities += "<#EFDFB8>" + characterData[0].Immunities[i] + "</color>" + " ";
+                for (i = 0; i < characterData[0].Immunities.Length; i++)
+                {
+                    immunities += "<#EFDFB8>" + character.GetCharacterData.Immunities[i] + "</color>" + " ";
+                }
+                immunity = "Immune: " + immunities + "\n";
             }
-            immunity = "Resist: " + immunities + "\n";
         }
         else
         {
@@ -180,13 +195,18 @@ public class MonsterInformation : MonoBehaviour
         string absorbtions = "";
         string absorb = "";
 
+        int i = 0;
+
         if (characterData[0].Absorbtions.Length > 0)
         {
-            for (int i = 0; i < characterData[0].Absorbtions.Length; i++)
+            if(character.GetCharacterData.Absorbtions[i] != ElementalAbsorbtion.NONE)
             {
-                absorbtions += "<#EFDFB8>" + characterData[0].Absorbtions[i] + "</color>" + " ";
+                for (i = 0; i < characterData[0].Absorbtions.Length; i++)
+                {
+                    absorbtions += "<#EFDFB8>" + character.GetCharacterData.Absorbtions[i] + "</color>" + " ";
+                }
+                absorb = "Absorb: " + absorbtions + "\n";
             }
-            absorb = "Resist: " + absorbtions + "\n";
         }
         else
         {
