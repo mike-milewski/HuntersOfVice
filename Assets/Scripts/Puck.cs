@@ -4,7 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum BossStates { Idle, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile }
+public enum BossStates { Idle, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile, MovingToPosition }
+
+[System.Serializable]
+public class Phases
+{
+    [SerializeField]
+    BossAiStates[] states;
+
+    public BossAiStates[] GetBossAiStates
+    {
+        get
+        {
+            return states;
+        }
+        set
+        {
+            states = value;
+        }
+    }
+}
 
 [System.Serializable]
 public class BossAiStates
@@ -49,7 +68,7 @@ public class Puck : MonoBehaviour
     private EnemyType enemyType;
 
     [SerializeField]
-    private BossAiStates[] aiStates;
+    private Phases[] phases;
 
     [SerializeField]
     private Character character;
@@ -92,6 +111,9 @@ public class Puck : MonoBehaviour
     private GameObject[] Walls;
 
     [SerializeField]
+    private GameObject[] TreasureChests;
+
+    [SerializeField]
     private Quaternion BossRotation;
 
     private float DistanceToTarget;
@@ -99,6 +121,24 @@ public class Puck : MonoBehaviour
     private bool PlayerEntry;
 
     private int StateArrayIndex;
+
+    [SerializeField]
+    private int PhaseIndex;
+
+    [SerializeField]
+    private int[] HpToChangePhase;
+
+    public Phases[] GetPhases
+    {
+        get
+        {
+            return phases;
+        }
+        set
+        {
+            phases = value;
+        }
+    }
 
     public int GetStateArrayIndex
     {
@@ -109,6 +149,18 @@ public class Puck : MonoBehaviour
         set
         {
             StateArrayIndex = value;
+        }
+    }
+
+    public int GetPhaseIndex
+    {
+        get
+        {
+            return PhaseIndex;
+        }
+        set
+        {
+            PhaseIndex = value;
         }
     }
 
@@ -124,22 +176,10 @@ public class Puck : MonoBehaviour
         }
     }
 
-    public BossAiStates[] GetAiStates
-    {
-        get
-        {
-            return aiStates;
-        }
-        set
-        {
-            aiStates = value;
-        }
-    }
-
     public void IncreaseArray()
     {
         StateArrayIndex++;
-        if (StateArrayIndex >= aiStates.Length)
+        if (StateArrayIndex >= phases[PhaseIndex].GetBossAiStates.Length)
         {
             StateArrayIndex = 0;
         }
@@ -182,6 +222,9 @@ public class Puck : MonoBehaviour
                     Immobile();
                     break;
                 case (BossStates.SkillAnimation):
+                    break;
+                case (BossStates.MovingToPosition):
+                    MoveToPosition();
                     break;
             }
         }
@@ -269,7 +312,7 @@ public class Puck : MonoBehaviour
                     AutoAttackTime += Time.deltaTime;
                     if (AutoAttackTime >= AttackDelay)
                     {
-                        states = aiStates[StateArrayIndex].GetState;
+                        states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
                     }
                 }
                 else
@@ -311,7 +354,7 @@ public class Puck : MonoBehaviour
                 AutoAttackTime += Time.deltaTime;
                 if (AutoAttackTime >= AttackDelay)
                 {
-                    states = aiStates[StateArrayIndex].GetState;
+                    states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
                 }
             }
             else
@@ -325,6 +368,37 @@ public class Puck : MonoBehaviour
         }
     }
 
+    private void MoveToPosition()
+    {
+        puckAnimations.MoveAnimator();
+
+        Vector3 Distance = new Vector3(BossPosition.position.x - this.transform.position.x, 0,
+                                       BossPosition.position.z - this.transform.position.z).normalized;
+
+        Quaternion LookDir = Quaternion.LookRotation(Distance);
+
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
+
+        this.transform.position += Distance * MoveSpeed * Time.deltaTime;
+
+        if(Vector3.Distance(this.transform.position, BossPosition.position) <= 0.1f)
+        {
+
+        }
+    }
+
+    public void CheckHP()
+    {
+        float HpCap = ((float)character.CurrentHealth / (float)character.MaxHealth) * 100f;
+
+        if(HpCap <= HpToChangePhase[PhaseIndex])
+        {
+            StateArrayIndex = 0;
+            PhaseIndex++;
+            Debug.Log(PhaseIndex);
+        }
+    }
+
     private void ApplyingNormalAtk()
     {
         puckAnimations.AttackAnimator();
@@ -332,7 +406,7 @@ public class Puck : MonoBehaviour
 
     private void Skill()
     {
-        enemySkills.ChooseSkill(aiStates[StateArrayIndex].GetSkillIndex);
+        enemySkills.ChooseSkill(phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetSkillIndex);
     }
 
     //Sets the enemy to this state if they are inflicted with the stun/sleep status effect.
@@ -350,6 +424,9 @@ public class Puck : MonoBehaviour
     {
         Walls[0].SetActive(false);
         Walls[1].SetActive(false);
+
+        TreasureChests[0].SetActive(true);
+        TreasureChests[1].SetActive(true);
 
         PlayerTarget = null;
         AutoAttackTime = 0;
@@ -493,6 +570,8 @@ public class Puck : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     private void ResetStats()
     {
+        PhaseIndex = 0;
+
         transform.position = BossPosition.position;
 
         EnemyTriggerSphere.gameObject.SetActive(true);

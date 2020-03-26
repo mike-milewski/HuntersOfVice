@@ -857,10 +857,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   states: 0
-  enemyType: 1
-  aiStates:
-  - state: 3
-    SkillIndex: 0
+  enemyType: 0
+  phases:
+  - states:
+    - state: 3
+      SkillIndex: 0
+  - states:
+    - state: 4
+      SkillIndex: 0
   character: {fileID: 5148129804296659930}
   monsterBook: {fileID: 0}
   monsterInformation: {fileID: 114702138956978278, guid: 3b5ed524b56ab30458a90b74aebc013e,
@@ -869,20 +873,24 @@ MonoBehaviour:
   enemy: {fileID: 5148129804296659928}
   enemySkills: {fileID: 5148129804296659927}
   puckAnimations: {fileID: 5148129804296659935}
-  MoveSpeed: 5
-  AttackRange: 2.5
-  AttackDelay: 1.3
+  MoveSpeed: 4
+  AttackRange: 1.5
+  AttackDelay: 2.5
   AutoAttackTime: 0
   LookSpeed: 3
   PlayerTarget: {fileID: 0}
   EnemyTriggerSphere: {fileID: 7702202692406411215}
-  HitParticle: {fileID: 198157547220164012, guid: 4961a16ba01e09547be3e1c9d16d5ad0,
-    type: 3}
+  HitParticle: {fileID: 0}
   BossPosition: {fileID: 0}
   Walls:
   - {fileID: 0}
   - {fileID: 0}
+  TreasureChests:
+  - {fileID: 0}
+  - {fileID: 0}
   BossRotation: {x: 0, y: 180, z: 0, w: 0}
+  PhaseIndex: 0
+  HpToChangePhase: 
 --- !u!114 &5148129804296659928
 MonoBehaviour:
   m_ObjectHideFlags: 0

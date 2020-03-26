@@ -128,8 +128,8 @@ public class PuckAnimations : MonoBehaviour
 
     public void SkillDamage()
     {
-        enemyskills.SkillDamageText(enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
-                                    enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+        enemyskills.SkillDamageText(enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                                    enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
     }
 
     public void SkillRadiusDamage()

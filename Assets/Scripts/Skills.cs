@@ -929,6 +929,8 @@ public class Skills : StatusEffects
             }
             else
             {
+                Target.GetPuckAI.CheckHP();
+
                 if (Target.GetPuckAI.GetStates != BossStates.Skill && Target.GetPuckAI.GetStates != BossStates.ApplyingAttack && 
                     Target.GetPuckAI.GetStates != BossStates.SkillAnimation && !CheckAbsorptions())
                 {

@@ -81,7 +81,7 @@ public class PuckDamageRadius : MonoBehaviour
 
     public float SetCircleColliderSize()
     {
-        float CircleRadius = (float)enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX / (float)40;
+        float CircleRadius = (float)enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX / (float)40;
 
         return CircleRadius;
     }
@@ -121,11 +121,11 @@ public class PuckDamageRadius : MonoBehaviour
     private void IncreaseCircle()
     {
         DamageShape.rectTransform.sizeDelta = new Vector2(
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX),
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY));
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX),
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY));
 
-        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX && DamageShape.rectTransform.sizeDelta.y <
-                                                    enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
+        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX && DamageShape.rectTransform.sizeDelta.y <
+                                                    enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
 
             DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
     }
@@ -133,14 +133,14 @@ public class PuckDamageRadius : MonoBehaviour
     private void IncreaseRectangle()
     {
         DamageShape.rectTransform.sizeDelta = new Vector2(
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX),
-            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY));
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.x, 0, enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX),
+            Mathf.Clamp(DamageShape.rectTransform.sizeDelta.y, 0, enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY));
 
-        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX)
+        if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX)
         {
             DamageShape.rectTransform.sizeDelta += new Vector2(100, 0) * Time.deltaTime;
         }
-        if (DamageShape.rectTransform.sizeDelta.y < enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
+        if (DamageShape.rectTransform.sizeDelta.y < enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
         {
             DamageShape.rectTransform.sizeDelta += new Vector2(0, 100) * Time.deltaTime;
         }
@@ -184,15 +184,15 @@ public class PuckDamageRadius : MonoBehaviour
 
     public void TakeRadiusDamage()
     {
-        if (enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus != Status.NONE)
+        if (enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus != Status.NONE)
         {
             enemySkills.PlayerStatus();
         }
 
-        if (enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency > 0)
+        if (enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency > 0)
         {
-            enemySkills.SkillDamageText(enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
-                                    enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+            enemySkills.SkillDamageText(enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                                    enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
 
             enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
         }
