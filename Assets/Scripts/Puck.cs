@@ -395,7 +395,6 @@ public class Puck : MonoBehaviour
         {
             StateArrayIndex = 0;
             PhaseIndex++;
-            Debug.Log(PhaseIndex);
         }
     }
 

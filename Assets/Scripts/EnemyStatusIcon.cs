@@ -124,11 +124,11 @@ public class EnemyStatusIcon : MonoBehaviour
 
         effect = (StatusEffect)character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatus;
 
-        if (character.GetComponent<Puck>() != null)
+        if (character.GetComponent<Puck>())
         {
             KeyInput = character.GetComponent<Puck>().GetPhases[character.GetComponent<Puck>().GetPhaseIndex].GetBossAiStates[character.GetComponent<Puck>().GetStateArrayIndex].GetSkillIndex;
         }
-        else
+        if(character.GetComponent<EnemyAI>())
         {
             KeyInput = character.GetComponent<EnemyAI>().GetAiStates[character.GetComponent<EnemyAI>().GetStateArrayIndex].GetSkillIndex;
         }
