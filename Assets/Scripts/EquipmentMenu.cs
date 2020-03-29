@@ -63,59 +63,73 @@ public class EquipmentMenu : MonoBehaviour
 
     private void SetStartingEquipment()
     {
-        if (KnightEquipment.Length > 0)
+        if(character.GetCharacterData.name == "Knight")
         {
-            if (KnightEquipment[0].GetEquipmentType == EquipmentType.Weapon)
+            if (KnightEquipment.Length > 0)
             {
-                if(character.GetCharacterData.name == "Knight")
+                if (KnightEquipment[0].GetEquipmentType == EquipmentType.Weapon)
                 {
                     KnightEquipment[0].transform.SetParent(WeaponSlot.transform, true);
                     KnightEquipment[0].Equip();
+
+                    KnightEquipment[0].transform.localScale = new Vector3(1, 1, 1);
                 }
                 else
                 {
-                    ShadowPriestEquipment[0].transform.SetParent(WeaponSlot.transform, true);
-                    ShadowPriestEquipment[0].Equip();
-                }
-            }
-            else
-            {
-                if (character.GetCharacterData.name == "Knight")
-                {
                     KnightEquipment[0].transform.SetParent(ArmorSlot.transform, true);
                     KnightEquipment[0].Equip();
+
+                    KnightEquipment[0].transform.localScale = new Vector3(1, 1, 1);
+                }
+
+                if (KnightEquipment[1].GetEquipmentType == EquipmentType.Armor)
+                {
+                    KnightEquipment[1].transform.SetParent(ArmorSlot.transform, true);
+                    KnightEquipment[1].Equip();
+
+                    KnightEquipment[1].transform.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    KnightEquipment[1].transform.SetParent(WeaponSlot.transform, true);
+                    KnightEquipment[1].Equip();
+
+                    KnightEquipment[1].transform.localScale = new Vector3(1, 1, 1);
+                }
+            }
+        }
+        else if(character.GetCharacterData.name == "ShadowPriest")
+        {
+            if (ShadowPriestEquipment.Length > 0)
+            {
+                if (ShadowPriestEquipment[0].GetEquipmentType == EquipmentType.Weapon)
+                {
+                    ShadowPriestEquipment[0].transform.SetParent(WeaponSlot.transform, true);
+                    ShadowPriestEquipment[0].Equip();
+
+                    ShadowPriestEquipment[0].transform.localScale = new Vector3(1, 1, 1);
                 }
                 else
                 {
                     ShadowPriestEquipment[0].transform.SetParent(ArmorSlot.transform, true);
                     ShadowPriestEquipment[0].Equip();
+
+                    ShadowPriestEquipment[0].transform.localScale = new Vector3(1, 1, 1);
                 }
-                
-            }
-            if (KnightEquipment[1].GetEquipmentType == EquipmentType.Armor)
-            {
-                if (character.GetCharacterData.name == "Knight")
-                {
-                    KnightEquipment[1].transform.SetParent(ArmorSlot.transform, true);
-                    KnightEquipment[1].Equip();
-                }
-                else
+
+                if (ShadowPriestEquipment[1].GetEquipmentType == EquipmentType.Armor)
                 {
                     ShadowPriestEquipment[1].transform.SetParent(ArmorSlot.transform, true);
                     ShadowPriestEquipment[1].Equip();
-                }
-            }
-            else
-            {
-                if (character.GetCharacterData.name == "Knight")
-                {
-                    KnightEquipment[1].transform.SetParent(WeaponSlot.transform, true);
-                    KnightEquipment[1].Equip();
+
+                    ShadowPriestEquipment[1].transform.localScale = new Vector3(1, 1, 1);
                 }
                 else
                 {
                     ShadowPriestEquipment[1].transform.SetParent(WeaponSlot.transform, true);
                     ShadowPriestEquipment[1].Equip();
+
+                    ShadowPriestEquipment[1].transform.localScale = new Vector3(1, 1, 1);
                 }
             }
         }

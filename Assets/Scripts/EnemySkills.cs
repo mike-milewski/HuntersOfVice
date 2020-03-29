@@ -1032,6 +1032,22 @@ public class EnemySkills : MonoBehaviour
         }
     }
 
+    public void DisablePuckRadiusImage()
+    {
+        foreach (Image r in puckDamageRadius.GetComponentsInChildren<Image>())
+        {
+            r.enabled = false;
+        }
+    }
+
+    public void EnablePuckRadiusImage()
+    {
+        foreach (Image r in puckDamageRadius.GetComponentsInChildren<Image>())
+        {
+            r.enabled = false;
+        }
+    }
+
     public void EnableRadiusImage()
     {
         foreach (Image r in damageRadius.GetComponentsInChildren<Image>())
@@ -1058,6 +1074,26 @@ public class EnemySkills : MonoBehaviour
     public void EnableRadius()
     {
         damageRadius.enabled = true;
+    }
+
+    public void DisablePuckRadius()
+    {
+        switch (skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetShapes)
+        {
+            case (Shapes.Circle):
+                puckDamageRadius.ResetLocalScale();
+                puckDamageRadius.ResetSizeDelta();
+                break;
+            case (Shapes.Rectangle):
+                puckDamageRadius.ResetSizeDelta();
+                break;
+        }
+        puckDamageRadius.enabled = false;
+    }
+
+    public void EnablePuckRadius()
+    {
+        puckDamageRadius.enabled = true;
     }
 
     public TextMeshProUGUI EnemyStatus()

@@ -88,4 +88,24 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[0].PlayOneShot(audioclips[11]);
     }
+
+    public void PuckRightFootStep()
+    {
+        audiosource[3].PlayOneShot(audioclips[1]);
+    }
+
+    public void PuckLeftFootStep()
+    {
+        audiosource[3].PlayOneShot(audioclips[2]);
+    }
+
+    public void PuckHit()
+    {
+        audiosource[3].PlayOneShot(audioclips[12]);
+    }
+
+    public void PuckFall()
+    {
+        audiosource[3].PlayOneShot(audioclips[0]);
+    }
 }

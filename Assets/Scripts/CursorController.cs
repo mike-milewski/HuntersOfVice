@@ -64,17 +64,19 @@ public class CursorController : MonoBehaviour
 
     private void OpenTreasureChest()
     {
-        if(!EventSystem.current.IsPointerOverGameObject())
-        {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, ActionMouseRange))
+        if (Physics.Raycast(ray, out hit, ActionMouseRange))
+        {
+            if (hit.collider.GetComponent<TreasureChest>())
             {
-                if (hit.collider.GetComponent<TreasureChest>())
-                {
-                    hit.collider.GetComponent<TreasureChest>().GetAnimator.SetBool("OpenChest", true);
-                }
+                hit.collider.GetComponent<TreasureChest>().GetAnimator.SetBool("OpenChest", true);
             }
+        }
+
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            
         }
     }
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
   m_Name: RockSpirit
   m_EditorClassIdentifier: 
-  Weaknesses: 00000000
+  Weaknesses: 04000000
   Resistances: 01000000
   Immunities: 00000000
   Absorbtions: 00000000

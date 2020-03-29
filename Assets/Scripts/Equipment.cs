@@ -220,10 +220,12 @@ public class Equipment : MonoBehaviour
             {
                 case (StatIncreaseType.HP):
                     character.MaxHealth -= stattype[i].GetStatIncrease;
+                    character.GetCharacterData.Health = character.MaxHealth;
                     character.GetComponent<Health>().GetFilledBar();
                     break;
                 case (StatIncreaseType.MP):
                     character.MaxMana -= stattype[i].GetStatIncrease;
+                    character.GetCharacterData.Mana = character.MaxMana;
                     character.GetComponent<Mana>().GetFilledBar();
                     break;
                 case (StatIncreaseType.Strength):
@@ -246,7 +248,7 @@ public class Equipment : MonoBehaviour
 
         if(equipmentData.Element != PlayerElement.NONE)
         {
-            EquipmentInfoText.text = StatsText().text + "\n" + equipmentData.Element;
+            EquipmentInfoText.text = StatsText().text + "\n" + "Element: " + equipmentData.Element;
         }
     }
 

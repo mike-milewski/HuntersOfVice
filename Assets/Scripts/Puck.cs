@@ -108,10 +108,13 @@ public class Puck : MonoBehaviour
     private Transform BossPosition;
 
     [SerializeField]
-    private GameObject[] Walls;
+    private ParticleSystem[] Walls;
 
     [SerializeField]
-    private GameObject[] TreasureChests;
+    private GameObject treasureChest, ChestSpawnParticle;
+
+    [SerializeField]
+    private AudioClip clip;
 
     [SerializeField]
     private Quaternion BossRotation;
@@ -383,7 +386,16 @@ public class Puck : MonoBehaviour
 
         if(Vector3.Distance(this.transform.position, BossPosition.position) <= 0.1f)
         {
+            Quaternion Rot = Quaternion.Euler(0, 180, 0);
 
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime);
+
+            Quaternion rot = transform.rotation;
+
+            if(rot.y == Rot.y)
+            {
+                PhaseIndex++;
+            }
         }
     }
 
@@ -419,13 +431,43 @@ public class Puck : MonoBehaviour
         puckAnimations.DamagedAnimator();
     }
 
+    public void DisableWalls()
+    {
+        Walls[0].gameObject.SetActive(false);
+        Walls[1].gameObject.SetActive(false);
+    }
+
+    public void EnableChestSpawnParticle()
+    {
+        ChestSpawnParticle.SetActive(true);
+    }
+
+    public void DisableChestSpawnParticle()
+    {
+        ChestSpawnParticle.SetActive(false);
+    }
+
+    public void SpawnTreasureChests()
+    {
+        treasureChest.SetActive(true);
+    }
+
+    private void DisableWall1()
+    {
+        var main = Walls[0].main;
+        main.loop = false;
+    }
+
+    private void DisableWall2()
+    {
+        var main2 = Walls[1].main;
+        main2.loop = false;
+    }
+
     public void Dead()
     {
-        Walls[0].SetActive(false);
-        Walls[1].SetActive(false);
-
-        TreasureChests[0].SetActive(true);
-        TreasureChests[1].SetActive(true);
+        DisableWall1();
+        DisableWall2();
 
         PlayerTarget = null;
         AutoAttackTime = 0;
@@ -442,8 +484,8 @@ public class Puck : MonoBehaviour
 
         if (enemySkills.GetManager.Length > 0)
         {
-            enemySkills.DisableRadiusImage();
-            enemySkills.DisableRadius();
+            enemySkills.DisablePuckRadiusImage();
+            enemySkills.DisablePuckRadius();
         }
 
         GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
@@ -705,5 +747,25 @@ public class Puck : MonoBehaviour
         MonsterEntryTxt.SetActive(true);
 
         MonsterEntryTxt.transform.SetParent(GameManager.Instance.GetMonsterEntryTransform, false);
+    }
+
+    public void PuckHitSE()
+    {
+        SoundManager.Instance.PuckHit();
+    }
+
+    public void RightMoveSE()
+    {
+        SoundManager.Instance.PuckRightFootStep();
+    }
+
+    public void LeftMoveSE()
+    {
+        SoundManager.Instance.PuckLeftFootStep();
+    }
+
+    public void PuckFall()
+    {
+        SoundManager.Instance.PuckFall();
     }
 }
