@@ -44,6 +44,8 @@ public class TreasureChest : MonoBehaviour
 
     public void GetItem()
     {
+        SoundManager.Instance.RecievedItem();
+
         if(Knight.gameObject.activeInHierarchy)
         {
             equipments[0].transform.SetParent(ItemTransform, true);

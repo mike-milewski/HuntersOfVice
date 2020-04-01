@@ -70,6 +70,8 @@ public class ItemDrop : MonoBehaviour
         {
             if (Random.value * 100 <= itemDrops[i].GetDropChance)
             {
+                SoundManager.Instance.RecievedItem();
+
                 var mat = materials;
 
                 ItemMessageComponents();

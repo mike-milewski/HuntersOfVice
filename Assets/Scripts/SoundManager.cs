@@ -108,4 +108,9 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[3].PlayOneShot(audioclips[0]);
     }
+
+    public void RecievedItem()
+    {
+        audiosource[0].PlayOneShot(audioclips[13]);
+    }
 }
