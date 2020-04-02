@@ -24,7 +24,7 @@ public class Mana : MonoBehaviour
     private float FillValue;
 
     [SerializeField]
-    private bool SpendingMana;
+    private bool SpendingMana, UnlockedPassive;
 
     public bool GetSpendingMana
     {
@@ -35,6 +35,18 @@ public class Mana : MonoBehaviour
         set
         {
             SpendingMana = value;
+        }
+    }
+
+    public bool GetUnlockedPassive
+    {
+        get
+        {
+            return UnlockedPassive;
+        }
+        set
+        {
+            UnlockedPassive = value;
         }
     }
 
@@ -136,5 +148,25 @@ public class Mana : MonoBehaviour
         ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana).ToString();
 
         ManaBar.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
+    }
+
+    public int RestoreMana()
+    {
+        if(character.CurrentMana >= character.MaxMana)
+        {
+            return 0;
+        }
+        else
+        {
+            float percent = Mathf.Round(0.05f * character.MaxMana);
+
+            int GetMana = (int)percent;
+
+            Mathf.Round(GetMana);
+
+            IncreaseMana(GetMana);
+
+            return GetMana;
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections;
 
 public enum SkillType { Active, Passive };
 
-public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination, HunterOfVice,
+public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination, ManaSiphon,
                            EvilsEndBonus };
 
 public class SkillMenu : MonoBehaviour
@@ -15,9 +15,6 @@ public class SkillMenu : MonoBehaviour
 
     [SerializeField]
     private GameObject levelUp, levelUpParent;
-
-    [SerializeField]
-    private GameObject HunterGauge = null;
 
     [SerializeField]
     private Skills IlluminationSkill, HealSkill, EvilsEndSkill;
@@ -470,17 +467,14 @@ public class SkillMenu : MonoBehaviour
                 case (PassiveBonus.Heal):
                     HealBonusPassiveText();
                     break;
-                case (PassiveBonus.WhirlwindSlash):
-                    WhirlwindSlashBonusPassiveText();
-                    break;
                 case (PassiveBonus.StatPointsBonus):
                     StatPointBonusPassiveText();
                     break;
                 case (PassiveBonus.Illumination):
                     IlluminationBonusPassiveText();
                     break;
-                case (PassiveBonus.HunterOfVice):
-                    HunterOfVicePassiveText();
+                case (PassiveBonus.ManaSiphon):
+                    ManaSiphonPassiveText();
                     break;
                 case (PassiveBonus.EvilsEndBonus):
                     EvilsEndBonusPassiveText();
@@ -564,15 +558,6 @@ public class SkillMenu : MonoBehaviour
         SkillInfoText.text = "Heal's cast time is reduced by 1 and power is increased by 50.";
     }
 
-    private void WhirlwindSlashBonusPassiveText()
-    {
-        SkillNameText.text = PassiveSkillName;
-
-        SkillInfoText.text = "Whirlwind Slash gains the following bonus:" + 
-                             "\n\n" + "<#EFDFB8>" + "Added Effect: " + "</color>" + "Bleeding" + "\n" + "<#EFDFB8>" +
-                             "Duration: " + "</color>" + "15s";
-    }
-
     private void StatPointBonusPassiveText()
     {
         SkillNameText.text = PassiveSkillName;
@@ -587,11 +572,11 @@ public class SkillMenu : MonoBehaviour
         SkillInfoText.text = "HP regeneration from Illumination recovers faster and its potency is increased by 5%.";
     }
 
-    private void HunterOfVicePassiveText()
+    private void ManaSiphonPassiveText()
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "Unlocks the Hunter Gauge, gaining access to powerful skills.";
+        SkillInfoText.text = "Mana is recovered by 5% every time damage is dealt to a target by auto-attacks";
     }
 
     private void EvilsEndBonusPassiveText()
@@ -632,17 +617,11 @@ public class SkillMenu : MonoBehaviour
             case (PassiveBonus.Heal):
                 HealBonus();
                 break;
-            case (PassiveBonus.WhirlwindSlash):
-                WhirlwindSlashBonus();
-                break;
             case (PassiveBonus.StatPointsBonus):
                 StatPointBonus();
                 break;
             case (PassiveBonus.Illumination):
                 IlluminationBonus();
-                break;
-            case (PassiveBonus.HunterOfVice):
-                HunterOfViceBonus();
                 break;
             case (PassiveBonus.EvilsEndBonus):
                 EvilsEndBonus();
@@ -740,26 +719,15 @@ public class SkillMenu : MonoBehaviour
         return character.GetCriticalChance;
     }
 
-    private void HunterOfViceBonus()
-    {
-        HunterGauge.SetActive(true);
-    }
-
-    private void SwiftStrikeBonus()
-    {
-
-    }
-
     private void HealBonus()
     {
         HealSkill.GetCastTime -= 1;
         HealSkill.GetPotency += 50;
     }
 
-    private void WhirlwindSlashBonus()
+    private void ManaSiphon()
     {
-        //WhirlwindSlashSkill.GetGainedPassive = true;
-        //WhirlwindSlashSkill.GetEnemyStatusEffect = StatusEffect.DamageOverTime;
+        character.GetComponent<Mana>().GetUnlockedPassive = true;
     }
 
     private void EvilsEndBonus()

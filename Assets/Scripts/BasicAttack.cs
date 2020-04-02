@@ -268,6 +268,11 @@ public class BasicAttack : MonoBehaviour
 
         Damagetext.transform.SetParent(Target.GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
 
+        if(character.GetComponent<Mana>().GetUnlockedPassive)
+        {
+            character.GetComponent<Mana>().RestoreMana();
+        }
+
         #region CriticalHitCalculation
         if (Random.value * 100 <= Critical)
         {
