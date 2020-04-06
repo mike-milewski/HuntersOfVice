@@ -148,7 +148,7 @@ public class EnemySkillBar : MonoBehaviour
                 SkillName.text = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
                 CastTime = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
             }
-            if(puckAI != null)
+            if (puckAI != null)
             {
                 SkillName.text = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
                 CastTime = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
@@ -200,12 +200,12 @@ public class EnemySkillBar : MonoBehaviour
             {
                 enemySkills.GetActiveSkill = false;
 
-                enemySkills.ChooseSkill(enemyAI.GetAiStates[puckAI.GetStateArrayIndex].GetSkillIndex);
+                enemySkills.ChooseSkill(puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex);
 
                 puckAI.GetStates = BossStates.SkillAnimation;
 
                 SkillBarFillImage.fillAmount = 0;
-                CastTime = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+                CastTime = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
 
                 gameObject.SetActive(false);
             }

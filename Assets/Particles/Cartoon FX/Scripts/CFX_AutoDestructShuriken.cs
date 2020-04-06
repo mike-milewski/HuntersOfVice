@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticle, Heal, CastParticle, EnemyCastParticle, PoisonSpore, HpItem, MpItem,
-                             StrengthUp, RemoveStatus, StunningStinger, Illumination, Hop, GaiasProwess, SylvanBlessing, Slam, Slag }
+                             StrengthUp, RemoveStatus, StunningStinger, Illumination, Hop, GaiasProwess, SylvanBlessing, Slam, Slag, SylvanStorm }
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -91,6 +91,9 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
                 break;
             case (ParticleEffect.Slag):
                 ObjectPooler.Instance.ReturnSlagParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.SylvanStorm):
+                ObjectPooler.Instance.ReturnSylvanStormParticleToPool(gameObject);
                 break;
         }
     }

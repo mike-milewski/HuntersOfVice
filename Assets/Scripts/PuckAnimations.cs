@@ -61,6 +61,7 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Damaged", false);
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
+        EnemyAnimator.SetBool("Skill3", false);
     }
 
     public void DamageAni()
@@ -103,10 +104,22 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill2", true);
     }
 
+    public void VicePlanterCast()
+    {
+        EnemyAnimator.SetBool("Skill3", true);
+    }
+
+    public void SylvanStormAnim()
+    {
+        EnemyAnimator.SetBool("SylvanStorm", true);
+    }
+
     public void ResetSkillAnimator()
     {
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
+        EnemyAnimator.SetBool("Skill3", false);
+        EnemyAnimator.SetBool("SylvanStorm", false);
 
         enemyskills.GetActiveSkill = false;
     }
@@ -119,6 +132,7 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Damaged", false);
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
+        EnemyAnimator.SetBool("Skill3", false);
     }
 
     public void IdleAnimator()
@@ -175,7 +189,7 @@ public class PuckAnimations : MonoBehaviour
     {
         EnemyAnimator.SetBool("Damaged", false);
 
-        AI.GetStates = BossStates.Attack;
+        AI.GetStates = AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetState;
     }
 
     public void PlayHealthFade()

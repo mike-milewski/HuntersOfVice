@@ -20,7 +20,7 @@ public enum Skill
     //RockSpirit Skills
     Gnaw,
     Slag,
-    //MiniBosses:
+    //MINI BOSSES:
     //Puck Skills
     SylvanBlessing,
     SylvanFury,
@@ -29,7 +29,7 @@ public enum Skill
     Touche,
     //VineGolem Skills
     EarthHammer,
-    //MainBoss:
+    //MAIN BOSS:
     //SylvanDiety Skills
     MagicDreams,
     Light
@@ -430,8 +430,12 @@ public class EnemySkills : MonoBehaviour
     [SerializeField]
     private Health health;
 
+    private Quaternion rotation;
+
     [SerializeField]
     private bool ActiveSkill, DisruptedSkill;
+
+    private bool IsRotating;
 
     public enemySkillManager[] GetManager
     {
@@ -481,6 +485,18 @@ public class EnemySkills : MonoBehaviour
         }
     }
 
+    public bool GetIsRotating
+    {
+        get
+        {
+            return IsRotating;
+        }
+        set
+        {
+            IsRotating = value;
+        }
+    }
+
     public void ChooseSkill(int value)
     {
         if(!ActiveSkill)
@@ -493,6 +509,17 @@ public class EnemySkills : MonoBehaviour
                     #region Puck Skills
                     case (Skill.SylvanBlessing):
                         PuckAnimatorSkill1();
+                        break;
+                    case (Skill.VicePlanter):
+                        VicePlanter(GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime, 
+                                    GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                    case (Skill.SylvanStorm):
+                        SylvanStorm(GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            new Vector2(GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                         break;
                         #endregion
                 }
@@ -951,6 +978,7 @@ public class EnemySkills : MonoBehaviour
     }
     #endregion
 
+    #region Fungi Bump
     public void FungiBump(int potency, float attackRange, string skillname)
     {
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
@@ -964,6 +992,108 @@ public class EnemySkills : MonoBehaviour
         }
         ActiveSkill = false;
     }
+    #endregion
+
+    #region Vice Planter
+    private void VicePlanter(float castTime, string skillname)
+    {
+        PuckSpellCastingAnimation();
+
+        skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            PuckAnimatorSkill3();
+        }
+    }
+
+    public void InvokeVicePlanter()
+    {
+        puckAI.SpawnAdds();
+        puckAI.DisableMushroomObjs();
+    }
+    #endregion
+
+    #region Sylvan Storm
+    public void SylvanStorm(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        PuckSpellCastingAnimation();
+
+        skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        sizeDelta = new Vector2(skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnablePuckRadius();
+        EnablePuckRadiusImage();
+
+        rotation = this.transform.rotation;
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            SylvanStormAnimation();
+
+            puckDamageRadius.CheckIfPlayerIsInCircleRadius(puckDamageRadius.GetDamageShape.transform.position, puckDamageRadius.SetCircleColliderSize());
+
+            DisablePuckRadiusImage();
+
+            if (settings.UseParticleEffects)
+            {
+                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = 
+                                                                                                ObjectPooler.Instance.GetSylvanStormParticle();
+
+                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = 
+                                                                            new Vector3(puckAI.GetSwordObj.transform.position.x, puckAI.GetSwordObj.transform.position.y +
+                                                                                        0.2f, puckAI.GetSwordObj.transform.position.z);
+
+                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(
+                                                                                                                        puckAI.GetSwordObj.gameObject.transform);
+
+                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = 
+                                                                                                                                                new Vector3(1, 1, 1);
+            }
+            Invoke("InvokeSylvanStorm", skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+        }
+    }
+
+    public void SetRotationToTrue()
+    {
+        IsRotating = true;
+    }
+
+    public void SylvanStormRotation()
+    {
+        this.transform.Rotate(0, 2500 * Time.deltaTime, 0);
+    }
+
+    public void EndRotation()
+    {
+        IsRotating = false;
+
+        this.transform.rotation = rotation;
+    }
+
+    private void InvokeSylvanStorm()
+    {
+        DisablePuckRadius();
+
+        ActiveSkill = false;
+    }
+    #endregion
 
     private void UseSkillBar()
     {
@@ -974,6 +1104,11 @@ public class EnemySkills : MonoBehaviour
     private void SpellCastingAnimation()
     {
         enemyAI.GetAnimation.CastingAni();
+    }
+
+    private void PuckSpellCastingAnimation()
+    {
+        puckAI.GetAnimation.AnimatorCasting();
     }
 
     private void AnimatorCastingAnimation()
@@ -1004,6 +1139,16 @@ public class EnemySkills : MonoBehaviour
     private void PuckAnimatorSkill1()
     {
         puckAI.GetAnimation.SkillAnimator();
+    }
+
+    private void PuckAnimatorSkill3()
+    {
+        puckAI.GetAnimation.VicePlanterCast();
+    }
+
+    private void SylvanStormAnimation()
+    {
+        puckAI.GetAnimation.SylvanStormAnim();
     }
 
     public void DisableEnemySkillBar()
@@ -1044,7 +1189,7 @@ public class EnemySkills : MonoBehaviour
     {
         foreach (Image r in puckDamageRadius.GetComponentsInChildren<Image>())
         {
-            r.enabled = false;
+            r.enabled = true;
         }
     }
 
@@ -1325,6 +1470,75 @@ public class EnemySkills : MonoBehaviour
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    public TextMeshProUGUI PuckSkillDamageText(int potency, string skillName)
+    {
+        if (puckAI.GetPlayerTarget == null)
+        {
+            return null;
+        }
+
+        skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillName;
+
+        var DamageTxt = ObjectPooler.Instance.GetPlayerDamageText();
+
+        DamageTxt.SetActive(true);
+
+        DamageTxt.transform.SetParent(GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetTextHolder.transform, false);
+
+        var Target = puckAI.GetPlayerTarget;
+
+        CreatePuckHitParticleEffect();
+
+        float Critical = character.GetCriticalChance;
+
+        #region CriticalHitCalculation
+        if (Random.value * 100 <= Critical)
+        {
+            float CritCalc = potency * 1.25f;
+
+            Mathf.Round(CritCalc);
+
+            if ((int)CritCalc - Target.GetComponent<Character>().CharacterDefense < 0)
+            {
+                Target.GetComponentInChildren<Health>().ModifyHealth(-1);
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
+            }
+            else
+            {
+                enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
+                                                         (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
+                                                                           Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+            }
+        }
+        else
+        {
+            if (potency - Target.GetComponent<Character>().CharacterDefense < 0)
+            {
+                Target.GetComponentInChildren<Health>().ModifyHealth(-1);
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1";
+            }
+            else
+            {
+                Target.GetComponentInChildren<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                                                                           (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+            }
+        }
+        #endregion
+
+        if (!SkillsManager.Instance.GetActivatedSkill)
+        {
+            puckAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+        }
+
+        return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     public TextMeshProUGUI SkillHealText(int potency, string skillName)
     {
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillName;
@@ -1382,6 +1596,25 @@ public class EnemySkills : MonoBehaviour
                                                                                 Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
 
             GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
+        }
+    }
+
+    private void CreatePuckHitParticleEffect()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var Target = puckAI.GetPlayerTarget;
+
+            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+
+            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
+
+            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                                Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
+
+            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
         }
     }
 }

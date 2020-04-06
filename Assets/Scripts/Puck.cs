@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum BossStates { Idle, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile, MovingToPosition }
+public enum BossStates { Idle, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile, MovingToPosition, RotateToPosition }
 
 [System.Serializable]
 public class Phases
@@ -114,7 +114,10 @@ public class Puck : MonoBehaviour
     private GameObject treasureChest, ChestSpawnParticle;
 
     [SerializeField]
-    private AudioClip clip;
+    private GameObject[] AddsToSpawn, MushroomObjs;
+
+    [SerializeField]
+    private GameObject SwordObj;
 
     [SerializeField]
     private Quaternion BossRotation;
@@ -179,6 +182,18 @@ public class Puck : MonoBehaviour
         }
     }
 
+    public GameObject GetSwordObj
+    {
+        get
+        {
+            return SwordObj;
+        }
+        set
+        {
+            SwordObj = value;
+        }
+    }
+
     public void IncreaseArray()
     {
         StateArrayIndex++;
@@ -202,6 +217,11 @@ public class Puck : MonoBehaviour
 
     private void Update()
     {
+        if(enemySkills.GetIsRotating)
+        {
+            enemySkills.SylvanStormRotation();
+        }
+
         if (this.character.CurrentHealth > 0)
         {
             switch (states)
@@ -228,6 +248,9 @@ public class Puck : MonoBehaviour
                     break;
                 case (BossStates.MovingToPosition):
                     MoveToPosition();
+                    break;
+                case (BossStates.RotateToPosition):
+                    RotateToPosition();
                     break;
             }
         }
@@ -386,16 +409,25 @@ public class Puck : MonoBehaviour
 
         if(Vector3.Distance(this.transform.position, BossPosition.position) <= 0.1f)
         {
-            Quaternion Rot = Quaternion.Euler(0, 180, 0);
+            StateArrayIndex = 0;
+            PhaseIndex++;
 
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime);
+            states = BossStates.RotateToPosition;
+        }
+    }
 
-            Quaternion rot = transform.rotation;
+    private void RotateToPosition()
+    {
+        Quaternion Rot = Quaternion.Euler(0, 180, 0);
 
-            if(rot.y == Rot.y)
-            {
-                PhaseIndex++;
-            }
+        transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime).normalized;
+
+        if (Quaternion.Angle(transform.rotation, Rot) <= 3.5f)
+        {
+            StateArrayIndex = 0;
+            PhaseIndex = 2;
+
+            states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
         }
     }
 
@@ -403,11 +435,26 @@ public class Puck : MonoBehaviour
     {
         float HpCap = ((float)character.CurrentHealth / (float)character.MaxHealth) * 100f;
 
-        if(HpCap <= HpToChangePhase[PhaseIndex])
+        if(PhaseIndex < HpToChangePhase.Length)
         {
-            StateArrayIndex = 0;
-            PhaseIndex++;
+            if (HpCap <= HpToChangePhase[PhaseIndex])
+            {
+                StateArrayIndex = 0;
+                PhaseIndex++;
+
+                states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+            }
         }
+        else
+        {
+            return;
+        }
+    }
+
+    public void IncrementPhase()
+    {
+        StateArrayIndex = 0;
+        PhaseIndex++;
     }
 
     private void ApplyingNormalAtk()
@@ -747,6 +794,22 @@ public class Puck : MonoBehaviour
         MonsterEntryTxt.SetActive(true);
 
         MonsterEntryTxt.transform.SetParent(GameManager.Instance.GetMonsterEntryTransform, false);
+    }
+
+    public void SpawnAdds()
+    {
+        for(int i = 0; i < AddsToSpawn.Length; i++)
+        {
+            AddsToSpawn[i].SetActive(true);
+        }
+    }
+
+    public void DisableMushroomObjs()
+    {
+        for (int i = 0; i < MushroomObjs.Length; i++)
+        {
+            MushroomObjs[i].SetActive(false);
+        }
     }
 
     public void PuckHitSE()

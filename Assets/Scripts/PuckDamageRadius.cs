@@ -191,7 +191,7 @@ public class PuckDamageRadius : MonoBehaviour
 
         if (enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency > 0)
         {
-            enemySkills.SkillDamageText(enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+            enemySkills.PuckSkillDamageText(enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
                                     enemySkills.GetManager[enemyAI.GetPhases[enemyAI.GetPhaseIndex].GetBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
 
             enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();

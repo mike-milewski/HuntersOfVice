@@ -105,7 +105,7 @@ public class EnemyAI : MonoBehaviour
     private int WaypointIndex;
 
     [SerializeField]
-    private bool IsHostile;
+    private bool IsHostile, IsAnAdd;
 
     [SerializeField]
     private bool IsUsingAnimator;
@@ -171,9 +171,18 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        states = States.Patrol;
+        if(IsAnAdd)
+        {
+            EnemyTriggerSphere.gameObject.SetActive(false);
 
-        TimeToMove = TimeToMoveAgain;
+            states = States.Chase;
+        }
+        else
+        {
+            states = States.Patrol;
+
+            TimeToMove = TimeToMoveAgain;
+        }
     }
 
     private void OnEnable()

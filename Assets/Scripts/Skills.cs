@@ -1010,7 +1010,8 @@ public class Skills : StatusEffects
                 Target.GetPuckAI.CheckHP();
 
                 if (Target.GetPuckAI.GetStates != BossStates.Skill && Target.GetPuckAI.GetStates != BossStates.ApplyingAttack && 
-                    Target.GetPuckAI.GetStates != BossStates.SkillAnimation && !CheckAbsorptions())
+                    Target.GetPuckAI.GetStates != BossStates.SkillAnimation && Target.GetPuckAI.GetStates != BossStates.MovingToPosition && 
+                    Target.GetPuckAI.GetStates != BossStates.RotateToPosition && !CheckAbsorptions())
                 {
                     Target.GetPuckAI.GetStates = BossStates.Damaged;
                 }

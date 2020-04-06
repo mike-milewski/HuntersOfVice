@@ -462,7 +462,8 @@ public class BasicAttack : MonoBehaviour
             Target.GetPuckAI.CheckHP();
 
             if (Target.GetPuckAI.GetStates != BossStates.Skill && Target.GetPuckAI.GetStates != BossStates.ApplyingAttack && Target.GetPuckAI.GetStates 
-                != BossStates.SkillAnimation && !CheckAbsorptions())
+                != BossStates.SkillAnimation && Target.GetPuckAI.GetStates != BossStates.MovingToPosition && Target.GetPuckAI.GetStates != BossStates.RotateToPosition 
+                && !CheckAbsorptions())
             {
                 Target.GetPuckAI.GetStates = BossStates.Damaged;
             }
