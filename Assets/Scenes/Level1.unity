@@ -20311,9 +20311,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5a4e547e8b6f01a47beab9831300ac70, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 568036caafde58049a16a5e759228aa4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -28241,7 +28241,7 @@ GameObject:
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1007678933
 Transform:
   m_ObjectHideFlags: 0
@@ -73049,7 +73049,7 @@ PrefabInstance:
     - target: {fileID: 5148129804296659927, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
       propertyPath: skills.Array.data[2].Potency
-      value: 40
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 5148129804296659927, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
