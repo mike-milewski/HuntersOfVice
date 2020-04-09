@@ -9781,15 +9781,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4785297684521944, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 75.79718
+      value: 82.50107
       objectReference: {fileID: 0}
     - target: {fileID: 4785297684521944, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -45.27074
+      value: -50.1429
       objectReference: {fileID: 0}
     - target: {fileID: 4785297684521944, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -49.06292
+      value: -43.985065
       objectReference: {fileID: 0}
     - target: {fileID: 4898162828388426, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9801,7 +9801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4898162828388426, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 54741623991925054, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 3}
@@ -16860,7 +16860,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -20311,15 +20311,15 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 568036caafde58049a16a5e759228aa4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 042243a3818151647949eeb8cbbf57f1, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -48116,6 +48116,21 @@ PrefabInstance:
       propertyPath: audioclips.Array.data[13]
       value: 
       objectReference: {fileID: 8300000, guid: 498a2a0450e22da4a8298a68db8de553, type: 3}
+    - target: {fileID: 114722964611269328, guid: 22d40890b8666d440a07dc9f525ba55a,
+        type: 3}
+      propertyPath: audioclips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: d384777ef4700c54bbfe3b51e591091d, type: 3}
+    - target: {fileID: 114722964611269328, guid: 22d40890b8666d440a07dc9f525ba55a,
+        type: 3}
+      propertyPath: audioclips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ca812541afca908479fea510267df78d, type: 3}
+    - target: {fileID: 114722964611269328, guid: 22d40890b8666d440a07dc9f525ba55a,
+        type: 3}
+      propertyPath: audioclips.Array.data[9]
+      value: 
+      objectReference: {fileID: 8300000, guid: 042243a3818151647949eeb8cbbf57f1, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22d40890b8666d440a07dc9f525ba55a, type: 3}
 --- !u!1 &1567042396
