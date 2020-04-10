@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2430946410611118195}
   - component: {fileID: 2430946410611118192}
   - component: {fileID: 82596521111073974}
+  - component: {fileID: 114337339761914768}
   m_Layer: 0
   m_Name: Illumination
   m_TagString: Untagged
@@ -4869,3 +4870,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114337339761914768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430946410611118196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

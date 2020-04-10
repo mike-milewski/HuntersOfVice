@@ -6,6 +6,21 @@ public class MenuButtons : MonoBehaviour
 {
     public static MenuButtons Instance = null;
 
+    [SerializeField]
+    private Slider slider = null;
+
+    public Slider GetSlider
+    {
+        get
+        {
+            return slider;
+        }
+        set
+        {
+            slider = value;
+        }
+    }
+
     private void Awake()
     {
         #region Singleton
@@ -54,7 +69,7 @@ public class MenuButtons : MonoBehaviour
         Panel.SetActive(true);
     }
 
-    public void Volume(Slider slider)
+    public void Volume()
     {
         var audio = SoundManager.Instance.GetAudioSource;
 

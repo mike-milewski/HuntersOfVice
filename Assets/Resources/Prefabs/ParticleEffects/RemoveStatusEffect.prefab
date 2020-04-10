@@ -9247,6 +9247,7 @@ GameObject:
   - component: {fileID: 199240645737875422}
   - component: {fileID: 114594946010413592}
   - component: {fileID: 82804957283804410}
+  - component: {fileID: 114854555884627902}
   m_Layer: 0
   m_Name: RemoveStatusEffect
   m_TagString: Untagged
@@ -14033,3 +14034,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114854555884627902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844191813266838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

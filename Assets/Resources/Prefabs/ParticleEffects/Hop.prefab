@@ -9146,6 +9146,7 @@ GameObject:
   - component: {fileID: 3340386013439825668}
   - component: {fileID: 3341411320599926764}
   - component: {fileID: 3246315861088659068}
+  - component: {fileID: 114962782089175270}
   m_Layer: 0
   m_Name: Hop
   m_TagString: FxTemporaire
@@ -13665,3 +13666,15 @@ MonoBehaviour:
   particleEffect: 13
   ps: {fileID: 3340386013439825668}
   Duration: 1
+--- !u!114 &114962782089175270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3215406727578642880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

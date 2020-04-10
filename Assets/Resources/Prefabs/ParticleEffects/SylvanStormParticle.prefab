@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7643381467466147189}
   - component: {fileID: 7588158011760398063}
   - component: {fileID: 82978831652864310}
+  - component: {fileID: 114108639727443200}
   m_Layer: 0
   m_Name: SylvanStormParticle
   m_TagString: Untagged
@@ -4725,7 +4726,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d3db9ef3eab4a584181dfc18b0f529d5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 384c1e35cdd41a3488b3b402cd23821d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 0.7
@@ -4811,3 +4812,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114108639727443200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7553540859921143753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
