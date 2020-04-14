@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 
-public enum States { Patrol, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile }
+public enum States { Idle, Patrol, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile }
 
 public enum EnemyType { Monster, Boss }
 
@@ -55,6 +55,9 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField]
     private Character character;
+
+    [SerializeField]
+    private Character Knight, ShadowPriest;
 
     [SerializeField]
     private MonsterBook monsterBook;
@@ -175,7 +178,16 @@ public class EnemyAI : MonoBehaviour
         {
             EnemyTriggerSphere.gameObject.SetActive(false);
 
-            states = States.Chase;
+            states = States.Idle;
+
+            if(Knight.gameObject.activeInHierarchy)
+            {
+                PlayerTarget = Knight;
+            }
+            else if(ShadowPriest.gameObject.activeInHierarchy)
+            {
+                PlayerTarget = ShadowPriest;
+            }
         }
         else
         {
@@ -531,11 +543,6 @@ public class EnemyAI : MonoBehaviour
             Anim.DeadAnimator();
         }
 
-        if(this.GetComponent<ItemDrop>() != null)
-        {
-            this.GetComponent<ItemDrop>().DropItem();
-        }
-
         CheckForInformation();
     }
 
@@ -646,26 +653,52 @@ public class EnemyAI : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     private void ResetStats()
     {
-        if (IsHostile)
+        if(!IsAnAdd)
         {
-            ThreatPic.sprite = ThreatSprite;
-            EnemyTriggerSphere.enabled = true;
+            if (IsHostile)
+            {
+                ThreatPic.sprite = ThreatSprite;
+                EnemyTriggerSphere.enabled = true;
+            }
+            else
+            {
+                ThreatPic.sprite = DocileSprite;
+                EnemyTriggerSphere.enabled = false;
+            }
+
+            character.CurrentHealth = character.MaxHealth;
+            enemy.GetFilledBar();
+            enemy.GetLocalHealth.gameObject.SetActive(true);
+            enemy.GetLocalHealthInfo();
+
+            this.gameObject.GetComponent<BoxCollider>().enabled = true;
+            character.GetRigidbody.useGravity = true;
+
+            states = States.Patrol;
         }
         else
         {
-            ThreatPic.sprite = DocileSprite;
-            EnemyTriggerSphere.enabled = false;
+            if (IsHostile)
+            {
+                ThreatPic.sprite = ThreatSprite;
+                EnemyTriggerSphere.enabled = true;
+            }
+            else
+            {
+                ThreatPic.sprite = DocileSprite;
+                EnemyTriggerSphere.enabled = false;
+            }
+
+            character.CurrentHealth = character.MaxHealth;
+            enemy.GetFilledBar();
+            enemy.GetLocalHealth.gameObject.SetActive(true);
+            enemy.GetLocalHealthInfo();
+
+            this.gameObject.GetComponent<BoxCollider>().enabled = true;
+            character.GetRigidbody.useGravity = true;
+
+            states = States.Idle;
         }
-
-        character.CurrentHealth = character.MaxHealth;
-        enemy.GetFilledBar();
-        enemy.GetLocalHealth.gameObject.SetActive(true);
-        enemy.GetLocalHealthInfo();
-
-        this.gameObject.GetComponent<BoxCollider>().enabled = true;
-        character.GetRigidbody.useGravity = true;
-
-        states = States.Patrol;
     }
 
     private void OnTriggerEnter(Collider other)

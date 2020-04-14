@@ -796,6 +796,7 @@ GameObject:
   - component: {fileID: 137832095060511232}
   - component: {fileID: 114256765670847670}
   - component: {fileID: 114916564609805402}
+  - component: {fileID: 744622599158114}
   m_Layer: 0
   m_Name: MushroomMonster
   m_TagString: Untagged
@@ -931,6 +932,26 @@ MonoBehaviour:
   AlphaMaterial: {fileID: 2100000, guid: 2867a33b330c4464e8e60091565a028f, type: 2}
   OpaqueMaterial: {fileID: 2100000, guid: 454cace436225a047a0236e67b95f9e7, type: 2}
   ParentObject: {fileID: 1722958204252142}
+--- !u!114 &744622599158114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272539182330930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33a32e953e4d454e8b303d0fab3c8d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDrops:
+  - materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
+      type: 3}
+    materialData: {fileID: 11400000, guid: b4811e09ed0a2c34caac46e4fc16ff24, type: 2}
+    DropChance: 0
+  materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
+    type: 3}
+  CanDropThroughPass: 0
 --- !u!1 &1346862380872226
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,7 +1868,6 @@ GameObject:
   - component: {fileID: 114492699656399902}
   - component: {fileID: 114244275959761428}
   - component: {fileID: 114006354462489536}
-  - component: {fileID: 1610019268}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -1956,7 +1976,7 @@ MonoBehaviour:
   TargetedImage: {fileID: 114677610278254228}
   EnemyInfo: {fileID: 114959006871186890}
   LocalEnemyInfo: {fileID: 114202159613561654}
-  ExperiencePoints: 50
+  ExperiencePoints: 100
   CoinAmount: 10
 --- !u!114 &114244275959761428
 MonoBehaviour:
@@ -1982,6 +2002,8 @@ MonoBehaviour:
   - state: 4
     SkillIndex: 1
   character: {fileID: 114979435669946942}
+  Knight: {fileID: 0}
+  ShadowPriest: {fileID: 0}
   monsterBook: {fileID: 0}
   monsterInformation: {fileID: 114702138956978278, guid: 3b5ed524b56ab30458a90b74aebc013e,
     type: 3}
@@ -2109,26 +2131,6 @@ MonoBehaviour:
   health: {fileID: 114272879539269974}
   ActiveSkill: 0
   DisruptedSkill: 0
---- !u!114 &1610019268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722958204252142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c33a32e953e4d454e8b303d0fab3c8d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemDrops:
-  - materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
-      type: 3}
-    materialData: {fileID: 11400000, guid: b4811e09ed0a2c34caac46e4fc16ff24, type: 2}
-    DropChance: 100
-  materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
-    type: 3}
-  CanDropThroughPass: 0
 --- !u!1 &1733891065060188
 GameObject:
   m_ObjectHideFlags: 0

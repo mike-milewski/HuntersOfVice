@@ -4259,7 +4259,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 1
+  LevelRequirement: 13
   SkillImage: {fileID: 97509288}
   skill: {fileID: 1657340420}
   skilltype: 0
@@ -6706,7 +6706,7 @@ MonoBehaviour:
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Vanquish The Wicked
-  PassiveBonusValue: 5
+  PassiveBonusValue: 15
   LevelRequirement: 7
   SkillImage: {fileID: 188036011}
   skill: {fileID: 188036005}
@@ -8949,7 +8949,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 1
+  LevelRequirement: 20
   SkillImage: {fileID: 283800963}
   skill: {fileID: 1340217386}
   skilltype: 0
@@ -9937,7 +9937,12 @@ PrefabInstance:
     - target: {fileID: 114884055767735502, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 3}
       propertyPath: NextToLevel
-      value: 150
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884055767735502, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
+        type: 3}
+      propertyPath: MaxLevel
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114926308544404342, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 3}
@@ -11242,7 +11247,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 1
+  LevelRequirement: 2
   SkillImage: {fileID: 398555372}
   skill: {fileID: 2066486661}
   skilltype: 0
@@ -12456,7 +12461,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 1
+  LevelRequirement: 16
   SkillImage: {fileID: 444730038}
   skill: {fileID: 699076234}
   skilltype: 0
@@ -20316,7 +20321,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ec2a200c9f6ff2b43932fbd906e75989, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 042243a3818151647949eeb8cbbf57f1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -28556,7 +28561,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 1
+  LevelRequirement: 4
   SkillImage: {fileID: 1022324356}
   skill: {fileID: 1855502884}
   skilltype: 0
@@ -29740,7 +29745,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 1
+  LevelRequirement: 10
   SkillImage: {fileID: 1093697945}
   skill: {fileID: 1678180693}
   skilltype: 0
@@ -38441,7 +38446,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Extend
   PassiveBonusValue: 5
-  LevelRequirement: 2
+  LevelRequirement: 6
   SkillImage: {fileID: 1232931364}
   skill: {fileID: 1232931358}
   skilltype: 1
@@ -44001,7 +44006,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Mana Siphon
   PassiveBonusValue: 5
-  LevelRequirement: 1
+  LevelRequirement: 4
   SkillImage: {fileID: 1429964595}
   skill: {fileID: 1429964589}
   skilltype: 1
@@ -49884,7 +49889,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Invigoration
   PassiveBonusValue: 5
-  LevelRequirement: 4
+  LevelRequirement: 13
   SkillImage: {fileID: 1625870938}
   skill: {fileID: 1625870932}
   skilltype: 1
@@ -50775,7 +50780,7 @@ MonoBehaviour:
   StatusEffectName: 
   StatusDescription: 
   StatusDuration: 0
-  playerElement: 1
+  playerElement: 7
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   skillbar: {fileID: 2122115158}
   CoolDownImage: {fileID: 920596546}
@@ -51698,7 +51703,7 @@ MonoBehaviour:
   StatusEffectName: Bleeding
   StatusDescription: Taking Damage
   StatusDuration: 15
-  playerElement: 4
+  playerElement: 5
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   skillbar: {fileID: 2122115158}
   CoolDownImage: {fileID: 886062030}
@@ -52229,7 +52234,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Potion Mastery
   PassiveBonusValue: 10
-  LevelRequirement: 3
+  LevelRequirement: 9
   SkillImage: {fileID: 1699668425}
   skill: {fileID: 1699668419}
   skilltype: 1
@@ -56060,13 +56065,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2109884925}
     m_Modifications:
+    - target: {fileID: 744622599158114, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: itemDrops.Array.data[0].DropChance
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1722958204252142, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_Name
       value: Mushroom (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1722958204252142, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 54.3
+      value: 60.57
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalPosition.y
@@ -56140,6 +56153,16 @@ PrefabInstance:
       objectReference: {fileID: 880701154}
     - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
+      propertyPath: Knight
+      value: 
+      objectReference: {fileID: 601881691}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: ShadowPriest
+      value: 
+      objectReference: {fileID: 1963535228}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
       propertyPath: monsterBook
       value: 
       objectReference: {fileID: 1127953856}
@@ -56153,6 +56176,31 @@ PrefabInstance:
       propertyPath: Waypoints.Array.data[1]
       value: 
       objectReference: {fileID: 2095844031}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: states
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: aiStates.Array.data[0].state
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: aiStates.Array.data[1].state
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: aiStates.Array.data[2].state
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: aiStates.Array.data[3].state
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: EXP
@@ -56163,6 +56211,16 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 1588835624}
+    - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: ExperiencePoints
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: CoinAmount
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 114647223435935730, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: cam
@@ -56178,6 +56236,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 696282350}
+    - target: {fileID: 224172724586066702, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
 --- !u!4 &1807588467 stripped
@@ -58450,7 +58513,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Sacred Light
   PassiveBonusValue: 5
-  LevelRequirement: 2
+  LevelRequirement: 18
   SkillImage: {fileID: 1868289314}
   skill: {fileID: 1868289308}
   skilltype: 1
@@ -66665,7 +66728,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 1
+  LevelRequirement: 7
   SkillImage: {fileID: 1987503003}
   skill: {fileID: 2031113376}
   skilltype: 0
@@ -68377,15 +68440,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: aiStates.Array.data[3].state
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: aiStates.Array.data[4].state
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: aiStates.Array.data[5].state
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: aiStates.Array.data[6].state
@@ -68398,6 +68461,18 @@ PrefabInstance:
     - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
       propertyPath: aiStates.Array.data[5].SkillIndex
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
+      propertyPath: aiStates.Array.data[0].state
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
+      propertyPath: aiStates.Array.data[1].state
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025678287, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
+      propertyPath: aiStates.Array.data[2].state
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5522c4efc4d320842b1d458c459f642e, type: 3}
@@ -70329,7 +70404,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 1
+  LevelRequirement: 20
   SkillImage: {fileID: 2068560839}
   skill: {fileID: 734095501}
   skilltype: 0
