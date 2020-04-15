@@ -149,6 +149,8 @@ public class Experience : MonoBehaviour
                                              Quaternion.identity);
 
                 LvParticle.transform.SetParent(Player.transform, true);
+
+                SoundManager.Instance.LevelUp();
             }
 
             //Loops through to check if the player's experience is enough to level them up

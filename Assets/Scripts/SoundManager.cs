@@ -113,4 +113,9 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[0].PlayOneShot(audioclips[13]);
     }
+
+    public void LevelUp()
+    {
+        audiosource[0].PlayOneShot(audioclips[14]);
+    }
 }

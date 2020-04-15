@@ -16914,7 +16914,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -17474,6 +17474,16 @@ PrefabInstance:
       propertyPath: IsAnAdd
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: Knight
+      value: 
+      objectReference: {fileID: 601881691}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: ShadowPriest
+      value: 
+      objectReference: {fileID: 1963535228}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: EXP
@@ -18969,6 +18979,16 @@ PrefabInstance:
       propertyPath: IsAnAdd
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: Knight
+      value: 
+      objectReference: {fileID: 601881691}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: ShadowPriest
+      value: 
+      objectReference: {fileID: 1963535228}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: EXP
@@ -20367,7 +20387,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -25526,7 +25546,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50.1, y: -94.2}
+  m_AnchoredPosition: {x: 50.1, y: -97.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &884896878
@@ -42190,8 +42210,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.200012, y: -151.3404}
-  m_SizeDelta: {x: 290.01, y: 100}
+  m_AnchoredPosition: {x: 7.200012, y: -120.38}
+  m_SizeDelta: {x: 286.8, y: 42.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1372479755
 MonoBehaviour:
@@ -48114,7 +48134,7 @@ PrefabInstance:
     - target: {fileID: 114722964611269328, guid: 22d40890b8666d440a07dc9f525ba55a,
         type: 3}
       propertyPath: audioclips.Array.size
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 114722964611269328, guid: 22d40890b8666d440a07dc9f525ba55a,
         type: 3}
@@ -48166,6 +48186,16 @@ PrefabInstance:
       propertyPath: audioclips.Array.data[6]
       value: 
       objectReference: {fileID: 8300000, guid: 3e0fb4f42af69d24b850f586d93ca945, type: 3}
+    - target: {fileID: 114722964611269328, guid: 22d40890b8666d440a07dc9f525ba55a,
+        type: 3}
+      propertyPath: audioclips.Array.data[14]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7fe779b6274701a4cbb20bff0c68075e, type: 3}
+    - target: {fileID: 114722964611269328, guid: 22d40890b8666d440a07dc9f525ba55a,
+        type: 3}
+      propertyPath: audioclips.Array.data[15]
+      value: 
+      objectReference: {fileID: 8300000, guid: 69fb9248b34f8fe46b064eba891cf781, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22d40890b8666d440a07dc9f525ba55a, type: 3}
 --- !u!1 &1567042396
@@ -49250,6 +49280,16 @@ PrefabInstance:
       propertyPath: IsAnAdd
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: Knight
+      value: 
+      objectReference: {fileID: 601881691}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: ShadowPriest
+      value: 
+      objectReference: {fileID: 1963535228}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: EXP
@@ -51724,7 +51764,7 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   UsesHunterGauge: 0
-  ManaCost: 0
+  ManaCost: 3
   Potency: 25
   CastTime: 0
   index: 0
@@ -56214,7 +56254,7 @@ PrefabInstance:
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: ExperiencePoints
-      value: 8
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
@@ -57649,7 +57689,7 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   UsesHunterGauge: 0
-  ManaCost: 0
+  ManaCost: 4
   Potency: 25
   CastTime: 0
   index: 0
@@ -67656,6 +67696,16 @@ PrefabInstance:
       propertyPath: IsAnAdd
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: Knight
+      value: 
+      objectReference: {fileID: 601881691}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: ShadowPriest
+      value: 
+      objectReference: {fileID: 1963535228}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: EXP
@@ -70136,7 +70186,7 @@ MonoBehaviour:
   StatusEffectText: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
     type: 3}
   SkillParticleParent: {fileID: 1474654874}
-  CoolDown: 2
+  CoolDown: 60
   AttackRange: 0
   ApplySkill: 0.3
   StatusEffectPotency: 10
