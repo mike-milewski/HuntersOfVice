@@ -118,4 +118,19 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[0].PlayOneShot(audioclips[14]);
     }
+
+    public void Error()
+    {
+        audiosource[0].PlayOneShot(audioclips[15]);
+    }
+
+    public void Menu()
+    {
+        audiosource[0].PlayOneShot(audioclips[16]);
+    }
+
+    public void ReverseMenu()
+    {
+        audiosource[0].PlayOneShot(audioclips[17]);
+    }
 }

@@ -54,6 +54,7 @@ public class ShopKeeper : MonoBehaviour
         {
             if(Vector3.Distance(this.transform.position, character.transform.position) > ShoppingDistance)
             {
+                SoundManager.Instance.ReverseMenu();
                 ShopAnimator.SetBool("FadeIn", false);
                 UpgradeAnimator.SetBool("FadeIn", false);
                 BuyAnimator.SetBool("FadeIn", false);

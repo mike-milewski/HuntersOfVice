@@ -90,6 +90,7 @@ public class CursorController : MonoBehaviour
             {
                 if (hit.collider.GetComponent<ShopKeeper>())
                 {
+                    SoundManager.Instance.Menu();
                     hit.collider.GetComponent<ShopKeeper>().GetIsInShop = true;
                     hit.collider.GetComponent<ShopKeeper>().GetAnimator.SetBool("FadeIn", true);
                 }
