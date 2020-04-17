@@ -190,6 +190,7 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             }
             if(objectType == ObjectType.Weapon || objectType == ObjectType.Armor)
             {
+                SoundManager.Instance.UnEquipItem();
                 if (zone.GetComponentInChildren<DragUiObject>())
                 {
                     zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;

@@ -85,6 +85,16 @@ public class MenuButtons : MonoBehaviour
         SoundManager.Instance.ButtonClick();
     }
 
+    public void PlayMenuSE()
+    {
+        SoundManager.Instance.Menu();
+    }
+
+    public void PlayReverseMenuSE()
+    {
+        SoundManager.Instance.ReverseMenu();
+    }
+
     public void ToggleSkillsPanel()
     {
         if(!GameManager.Instance.GetSkillPanel.GetComponent<Image>().enabled)

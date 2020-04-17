@@ -117,6 +117,8 @@ public class BasicAttack : MonoBehaviour
         {
             if (hit.collider.GetComponent<Enemy>())
             {
+                SoundManager.Instance.ButtonClick();
+
                 if (hit.collider.GetComponent<Character>().CurrentHealth > 0)
                 {
                     AutoAttackTime = 0;

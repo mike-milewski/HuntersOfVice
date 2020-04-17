@@ -442,10 +442,12 @@ public class GameManager : MonoBehaviour
             MenuAnimating = true;
             if (!EquipmentToggle)
             {
+                SoundManager.Instance.Menu();
                 ToggleEquipmentPanel();
             }
             else
             {
+                SoundManager.Instance.ReverseMenu();
                 EquipmentToggle = false;
                 EquipmentPanelAnimator.SetBool("FadeIn", false);
             }
@@ -460,10 +462,12 @@ public class GameManager : MonoBehaviour
             MenuAnimating = true;
             if (!CharacterToggle)
             {
+                SoundManager.Instance.Menu();
                 ToggleCharacterPanel();
             }
             else
             {
+                SoundManager.Instance.ReverseMenu();
                 CharacterToggle = false;
                 CharacterPanelAnimator.SetBool("FadeIn", false);
             }
@@ -478,10 +482,12 @@ public class GameManager : MonoBehaviour
             MenuAnimating = true;
             if (!SkillsToggle)
             {
+                SoundManager.Instance.Menu();
                 ToggleSkillsPanel();
             }
             else
             {
+                SoundManager.Instance.ReverseMenu();
                 MaskSkillsPanel();
             }
             StartCoroutine(SetMenuAnimationToFalse());
@@ -495,10 +501,12 @@ public class GameManager : MonoBehaviour
             MenuAnimating = true;
             if (!SettingsToggle)
             {
+                SoundManager.Instance.Menu();
                 ToggleSettingsPanel();
             }
             else
             {
+                SoundManager.Instance.ReverseMenu();
                 SettingsToggle = false;
                 SettingsPanelAnimator.SetBool("FadeIn", false);
             }
@@ -513,10 +521,13 @@ public class GameManager : MonoBehaviour
             MenuAnimating = true;
             if (!InventoryToggle)
             {
+                SoundManager.Instance.Menu();
                 ToggleInventoryPanel();
             }
             else
             {
+                SoundManager.Instance.ReverseMenu();
+
                 IsInInventory = false;
                 InventoryToggle = false;
                 MonsterToggle = false;
@@ -671,6 +682,8 @@ public class GameManager : MonoBehaviour
 
     public void OpenMonsterBook()
     {
+        SoundManager.Instance.Menu();
+
         monsterbook.GetMonsterInfoTxt.text = "";
 
         MonsterBookAnimator.SetBool("FadeIn", true);
@@ -679,6 +692,8 @@ public class GameManager : MonoBehaviour
 
     public void CloseMonsterBook()
     {
+        SoundManager.Instance.ReverseMenu();
+
         MonsterBookAnimator.SetBool("FadeIn", false);
         MonsterToggle = false;
     }

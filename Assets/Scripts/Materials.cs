@@ -128,6 +128,8 @@ public class Materials : MonoBehaviour
 
     private void UpdatePanel()
     {
+        SoundManager.Instance.ShopMaterials();
+
         if (gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
         {
             GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetItemDescriptionPanel.SetActive(true);

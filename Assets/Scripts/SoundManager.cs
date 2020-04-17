@@ -133,4 +133,24 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[0].PlayOneShot(audioclips[17]);
     }
+
+    public void ShopMaterials()
+    {
+        audiosource[0].PlayOneShot(audioclips[18]);
+    }
+
+    public void EquipItem()
+    {
+        audiosource[0].PlayOneShot(audioclips[19]);
+    }
+
+    public void UnEquipItem()
+    {
+        audiosource[0].PlayOneShot(audioclips[20]);
+    }
+
+    public void BuyItem()
+    {
+        audiosource[0].PlayOneShot(audioclips[21]);
+    }
 }

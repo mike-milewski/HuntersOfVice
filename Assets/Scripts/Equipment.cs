@@ -530,7 +530,9 @@ public class Equipment : MonoBehaviour
             {
                 Create(gameObject);
                 inventory.AddCoins(-equipmentData.BuyValue);
+
                 GameManager.Instance.GetShop.UpdateCoins();
+                SoundManager.Instance.BuyItem();
             }
             else
             {

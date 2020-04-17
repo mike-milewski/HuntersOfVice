@@ -30,6 +30,8 @@ public class UiDropZone : MonoBehaviour, IDropHandler
                     {
                         dragObject.GetComponent<Equipment>().ReceiveCoins();
 
+                        SoundManager.Instance.BuyItem();
+
                         Destroy(eventData.pointerDrag);
                     }
                     else
@@ -37,6 +39,8 @@ public class UiDropZone : MonoBehaviour, IDropHandler
                         if (!dragObject.GetDropZone.GetComponent<EquippedCheck>().GetIsEquipped)
                         {
                             dragObject.GetComponent<Equipment>().Equip();
+
+                            SoundManager.Instance.EquipItem();
                         }
                         else
                         {
@@ -47,6 +51,8 @@ public class UiDropZone : MonoBehaviour, IDropHandler
                                         gameObject.GetComponentInChildren<DragUiObject>().GetMenuParent.transform.position.y);
 
                             dragObject.GetComponent<Equipment>().Equip();
+
+                            SoundManager.Instance.EquipItem();
                         }
                     }
                 }
