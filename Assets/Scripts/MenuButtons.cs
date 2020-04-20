@@ -184,4 +184,29 @@ public class MenuButtons : MonoBehaviour
     {
         BossesText.text = "Bosses";
     }
+
+    public void ShowArtCreditType(TextMeshProUGUI ArtCredit)
+    {
+        ArtCredit.text = "ART";
+    }
+
+    public void ShowAudioCreditType(TextMeshProUGUI AudioCredit)
+    {
+        AudioCredit.text = "AUDIO";
+    }
+
+    public void ShowFontCreditType(TextMeshProUGUI FontCredit)
+    {
+        FontCredit.text = "FONTS";
+    }
+
+    public void HideAllCreditTypes(TextMeshProUGUI CreditType)
+    {
+        CreditType.text = "";
+    }
+
+    public void HideCreditsText(TextMeshProUGUI CreditsText)
+    {
+        CreditsText.text = "";
+    }
 }
