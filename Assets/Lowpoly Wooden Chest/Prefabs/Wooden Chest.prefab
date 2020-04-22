@@ -32,7 +32,7 @@ Transform:
   - {fileID: 4302379191424374}
   m_Father: {fileID: 4922331647626204}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3.087713e-10, y: 0, z: 0}
 --- !u!33 &33609948592031766
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4495446002708878}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 4.3923726e-11, y: 0, z: 0}
 --- !u!33 &33625983143538032
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -186,7 +186,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4612075213376068}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.13481946, z: 0}
 --- !u!33 &33657951590578048
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -270,7 +270,7 @@ Transform:
   - {fileID: 5369283461931744856}
   m_Father: {fileID: 4090485074951322}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.73681, y: -174.17151, z: 174.17291}
 --- !u!33 &33477892634079384
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -346,7 +346,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3, y: 1.11, z: 0.81}
+  m_Size: {x: 1.62, y: 1.61, z: 1}
   m_Center: {x: -0.00000002980233, y: -0.02, z: 0.39}
 --- !u!114 &1331687841
 MonoBehaviour:
@@ -367,6 +367,14 @@ MonoBehaviour:
   - {fileID: 5190658086338757916}
   ItemTransform: {fileID: 0}
   ItemMessageTransform: {fileID: 0}
+  meshRenderer:
+  - {fileID: 23044034382215672}
+  - {fileID: 23172618222647504}
+  - {fileID: 23749974487126636}
+  - {fileID: 23473552624965404}
+  - {fileID: 23457633136154308}
+  AlphaMaterial: {fileID: 2100000, guid: f12a9b487a5bcee4b9ba565b1e6168f2, type: 2}
+  ParentObject: {fileID: 1632052825836748}
   animator: {fileID: 95964531805101434}
 --- !u!1 &1632052825836748
 GameObject:
@@ -383,7 +391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4090485074951322
 Transform:
   m_ObjectHideFlags: 0
@@ -431,7 +439,7 @@ Transform:
   - {fileID: 4581575582285718}
   m_Father: {fileID: 4922331647626204}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.1127438, y: 0.18727346, z: 0.000184254}
 --- !u!33 &33982448297768522
 MeshFilter:
   m_ObjectHideFlags: 0

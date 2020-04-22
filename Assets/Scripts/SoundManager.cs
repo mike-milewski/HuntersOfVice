@@ -153,4 +153,9 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[0].PlayOneShot(audioclips[21]);
     }
+
+    public void TreasureChest()
+    {
+        audiosource[0].PlayOneShot(audioclips[22]);
+    }
 }

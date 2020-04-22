@@ -105,6 +105,11 @@ public class TreasureChest : MonoBehaviour
         }
     }
 
+    public void PlayTreasureChestSE()
+    {
+        SoundManager.Instance.TreasureChest();
+    }
+
     public void FadeMaterials()
     {
         ChangeMaterialsToAlpha();
