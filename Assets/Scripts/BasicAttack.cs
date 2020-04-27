@@ -147,6 +147,8 @@ public class BasicAttack : MonoBehaviour
                         GameManager.Instance.GetEnemyObject = null;
                         GameManager.Instance.GetLastEnemyObject = null;
 
+                        SoundManager.Instance.ReverseMenu();
+
                         Target.GetEnemySkillBar.ToggleCastBar();
                         Target.ToggleHealthBar();
                         Target = null;
@@ -245,6 +247,8 @@ public class BasicAttack : MonoBehaviour
 
                 GameManager.Instance.GetEnemyObject = null;
                 GameManager.Instance.GetLastEnemyObject = null;
+
+                SoundManager.Instance.ReverseMenu();
 
                 AutoAttackTime = 0;
             }

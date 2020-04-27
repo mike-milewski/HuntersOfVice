@@ -57,7 +57,7 @@ public class ShopLevelRewards
 public class Shop : MonoBehaviour
 {
     [SerializeField]
-    private Character character;
+    private Character Knight, ShadowPriest;
 
     [SerializeField]
     private ShopLevelRewards[] KnightShopLevelRewards;
@@ -221,40 +221,83 @@ public class Shop : MonoBehaviour
 
     private void GetReward()
     {
-        switch(KnightShopLevelRewards[ShopLevel].GetShopRewards)
+        if(Knight.gameObject.activeInHierarchy)
         {
-            case (ShopRewards.Discount):
-                EquipmentDiscount();
-                break;
-            case (ShopRewards.equipment):
-                if(KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentType == EquipmentType.Weapon)
-                {
-                    KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
-                    KnightShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
-                }
-                else
-                {
-                    KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
-                    KnightShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
-                }
-                break;
+            switch (KnightShopLevelRewards[ShopLevel].GetShopRewards)
+            {
+                case (ShopRewards.Discount):
+                    EquipmentDiscount();
+                    break;
+                case (ShopRewards.equipment):
+                    if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentType == EquipmentType.Weapon)
+                    {
+                        KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        KnightShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
+                    }
+                    else
+                    {
+                        KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        KnightShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
+                    }
+                    break;
+            }
+        }
+        else if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            switch (ShadowPriestShopLevelRewards[ShopLevel].GetShopRewards)
+            {
+                case (ShopRewards.Discount):
+                    EquipmentDiscount();
+                    break;
+                case (ShopRewards.equipment):
+                    if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentType == EquipmentType.Weapon)
+                    {
+                        ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        ShadowPriestShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
+                    }
+                    else
+                    {
+                        ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        ShadowPriestShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
+                    }
+                    break;
+            }
         }
     }
 
     private void ShowNextReward()
     {
-        switch(KnightShopLevelRewards[ShopLevel].GetShopRewards)
+        if(Knight.gameObject.activeInHierarchy)
         {
-            case (ShopRewards.Discount):
-                DiscountText.gameObject.SetActive(true);
-                EquipmentImage.gameObject.SetActive(false);
-                DiscountText.text = "Item discount -" + KnightShopLevelRewards[ShopLevel].GetDiscountAmount + "%";
-                break;
-            case (ShopRewards.equipment):
-                EquipmentImage.gameObject.SetActive(true);
-                DiscountText.gameObject.SetActive(false);
-                EquipmentImage.sprite = KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentSprite;
-                break;
+            switch (KnightShopLevelRewards[ShopLevel].GetShopRewards)
+            {
+                case (ShopRewards.Discount):
+                    DiscountText.gameObject.SetActive(true);
+                    EquipmentImage.gameObject.SetActive(false);
+                    DiscountText.text = "Item discount -" + KnightShopLevelRewards[ShopLevel].GetDiscountAmount + "%";
+                    break;
+                case (ShopRewards.equipment):
+                    EquipmentImage.gameObject.SetActive(true);
+                    DiscountText.gameObject.SetActive(false);
+                    EquipmentImage.sprite = KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentSprite;
+                    break;
+            }
+        }
+        else if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            switch (ShadowPriestShopLevelRewards[ShopLevel].GetShopRewards)
+            {
+                case (ShopRewards.Discount):
+                    DiscountText.gameObject.SetActive(true);
+                    EquipmentImage.gameObject.SetActive(false);
+                    DiscountText.text = "Item discount -" + ShadowPriestShopLevelRewards[ShopLevel].GetDiscountAmount + "%";
+                    break;
+                case (ShopRewards.equipment):
+                    EquipmentImage.gameObject.SetActive(true);
+                    DiscountText.gameObject.SetActive(false);
+                    EquipmentImage.sprite = ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentSprite;
+                    break;
+            }
         }
     }
 
