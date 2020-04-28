@@ -158,4 +158,9 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[0].PlayOneShot(audioclips[22]);
     }
+
+    public void ReverseMouseClick()
+    {
+        audiosource[0].PlayOneShot(audioclips[23]);
+    }
 }
