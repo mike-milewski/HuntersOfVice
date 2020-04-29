@@ -390,128 +390,255 @@ public class Shop : MonoBehaviour
 
     public void ShowEquipmentRewardInfo()
     {
-        if(KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 1)
+        if(Knight.gameObject.activeInHierarchy)
         {
-            if(KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 1)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease;
+                }
             }
-            else
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 2)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease;
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease;
+                }
+            }
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 3)
+            {
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease;
+                }
+
+            }
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 4)
+            {
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease;
+                }
+
+            }
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 5)
+            {
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease;
+                }
             }
         }
-        if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 2)
+        else if(ShadowPriest.gameObject.activeInHierarchy)
         {
-            if(KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 1)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease;
+                }
             }
-            else
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 2)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease;
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease;
+                }
             }
-        }
-        if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 3)
-        {
-            if(KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 3)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease;
+                }
+
             }
-            else
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 4)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease;
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease;
+                }
+
             }
-            
-        }
-        if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 4)
-        {
-            if(KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 5)
             {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                            "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease;
+                }
             }
-            else
-            {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease;
-            }
-            
-        }
-        if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 5)
-        {
-            if(KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
-            {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
-                                            "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
-            }
-            else
-            {
-                EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                            KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease;
-            }
-            
         }
     }
 }
