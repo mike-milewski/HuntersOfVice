@@ -187,7 +187,7 @@ public class EnemyAnimations : MonoBehaviour
 
     public void ResetAutoAttackTime()
     {
-        if(AI.GetStates != States.SkillAnimation)
+        if (AI.GetStates != States.SkillAnimation || AI.GetIsAnAdd)
         {
             if(AI.GetIsUsingAnimator)
             {

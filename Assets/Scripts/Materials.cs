@@ -157,19 +157,24 @@ public class Materials : MonoBehaviour
             {
                 if(Quantity > 0)
                 {
-                    Quantity--;
-                    //FadedImage.enabled = false;
-                    if(!CheckForSameMaterialName())
+                    if(GameManager.Instance.GetShop.GetShopLevel < GameManager.Instance.GetShop.GetMaxShopLevel ||
+                       GameManager.Instance.GetShop.GetShopPreviewLevel + GameManager.Instance.GetShop.GetShopLevel < GameManager.Instance.GetShop.GetMaxShopLevel)
                     {
-                        Materials mat = Instantiate(InstancedObject, GameManager.Instance.GetShopUpgradePanel.transform);
-                        mat.CommittedQuantity++;
+                        Quantity--;
+                        CheckQuantity();
+                        if (!CheckForSameMaterialName())
+                        {
+                            Materials mat = Instantiate(InstancedObject, GameManager.Instance.GetShopUpgradePanel.transform);
+                            mat.FadedImage.gameObject.SetActive(false);
+                            mat.CommittedQuantity++;
+                        }
+                        AddExperience();
+                        UpdatePanel();
                     }
-                    AddExperience();
-                    UpdatePanel();
-                }
-                else
-                {
-                    //FadedImage.enabled = true;
+                    else
+                    {
+                        GameManager.Instance.CannotExecuteText();
+                    }
                 }
             }
             else
@@ -177,6 +182,18 @@ public class Materials : MonoBehaviour
                 CheckForSameMaterialNameInInventory();
                 SubtractExperience();
             }
+        }
+    }
+
+    public void CheckQuantity()
+    {
+        if(Quantity <= 0)
+        {
+            FadedImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            FadedImage.gameObject.SetActive(false);
         }
     }
 
@@ -192,7 +209,6 @@ public class Materials : MonoBehaviour
                 m.CommittedQuantity++;
             }
         }
-
         return SameName;
     }
 
@@ -207,6 +223,7 @@ public class Materials : MonoBehaviour
             {
                 SameName = true;
                 m.Quantity++;
+                m.CheckQuantity();
                 this.CommittedQuantity--;
                 if(this.CommittedQuantity <= 0)
                 {

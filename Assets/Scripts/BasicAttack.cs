@@ -343,11 +343,11 @@ public class BasicAttack : MonoBehaviour
                 }
                 else
                 {
-                    Target.GetHealth.IncreaseHealth(((int)CriticalValue + DamageType) - Target.GetCharacter.CharacterDefense);
+                    Target.GetHealth.IncreaseHealth((int)CriticalValue - Target.GetCharacter.CharacterDefense);
 
                     Target.GetLocalHealthInfo();
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "<#4CFFAD>" + Mathf.Round((CriticalValue + DamageType) -
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "<#4CFFAD>" + Mathf.Round(CriticalValue -
                                                                                 Target.GetCharacter.CharacterDefense) + "!" + "</color>" + "\n" + "</size>" + "<size=12> " +
                                                                                 "<#EFDFB8>" + "(ABSORBED!)" + "</color> </size>";
                 }
@@ -362,10 +362,9 @@ public class BasicAttack : MonoBehaviour
                 }
                 else
                 {
-                    Target.GetHealth.ModifyHealth(-(((int)CriticalValue + DamageType) - Target.GetCharacter.CharacterDefense));
+                    Target.GetHealth.ModifyHealth(-((int)CriticalValue - Target.GetCharacter.CharacterDefense));
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round((CriticalValue + DamageType) -
-                                                                                Target.GetCharacter.CharacterDefense) + "!";
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(CriticalValue - Target.GetCharacter.CharacterDefense) + "!";
                 }
             }
         }
@@ -449,7 +448,7 @@ public class BasicAttack : MonoBehaviour
                 {
                     Target.GetHealth.ModifyHealth(-(DamageType - Target.GetCharacter.CharacterDefense));
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + (DamageType - Target.GetCharacter.CharacterDefense);
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(DamageType - Target.GetCharacter.CharacterDefense);
                 }
             }
         }

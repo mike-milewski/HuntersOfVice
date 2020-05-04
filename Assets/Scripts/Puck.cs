@@ -124,7 +124,7 @@ public class Puck : MonoBehaviour
 
     private float DistanceToTarget;
 
-    private bool PlayerEntry;
+    private bool PlayerEntry, MovingToPosition;
 
     private int StateArrayIndex;
 
@@ -191,6 +191,18 @@ public class Puck : MonoBehaviour
         set
         {
             SwordObj = value;
+        }
+    }
+
+    public bool GetIsMovingToPosition
+    {
+        get
+        {
+            return MovingToPosition;
+        }
+        set
+        {
+            MovingToPosition = value;
         }
     }
 
@@ -342,12 +354,8 @@ public class Puck : MonoBehaviour
                     }
                 }
                 else
-                {
-                    enemy.GetHealth.IncreaseHealth(character.MaxHealth);
-                    enemy.GetLocalHealthInfo();
-
-                    PlayerTarget = null;
-                    AutoAttackTime = 0;
+                { 
+                    ResetStats();
                 }
             }
             else
@@ -359,43 +367,48 @@ public class Puck : MonoBehaviour
 
     private void Attack()
     {
-        puckAnimations.IdleAnimator();
-
-        if (PlayerTarget != null)
+        if(!MovingToPosition)
         {
-            DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
-        }
+            puckAnimations.IdleAnimator();
 
-        if (PlayerTarget != null && DistanceToTarget <= AttackRange)
-        {
-            Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
-                                           PlayerTarget.transform.position.z - this.transform.position.z).normalized;
-
-            Quaternion LookDir = Quaternion.LookRotation(Distance);
-
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
-
-            if (PlayerTarget.CurrentHealth > 0)
+            if (PlayerTarget != null)
             {
-                AutoAttackTime += Time.deltaTime;
-                if (AutoAttackTime >= AttackDelay)
+                DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
+            }
+
+            if (PlayerTarget != null && DistanceToTarget <= AttackRange)
+            {
+                Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
+                                               PlayerTarget.transform.position.z - this.transform.position.z).normalized;
+
+                Quaternion LookDir = Quaternion.LookRotation(Distance);
+
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
+
+                if (PlayerTarget.CurrentHealth > 0)
                 {
-                    states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+                    AutoAttackTime += Time.deltaTime;
+                    if (AutoAttackTime >= AttackDelay)
+                    {
+                        states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+                    }
+                }
+                else
+                {
+                    ResetStats();
                 }
             }
             else
             {
-                ResetStats();
+                states = BossStates.Chase;
             }
-        }
-        else
-        {
-            states = BossStates.Chase;
         }
     }
 
     private void MoveToPosition()
     {
+        MovingToPosition = true;
+
         puckAnimations.MoveAnimator();
 
         Vector3 Distance = new Vector3(BossPosition.position.x - this.transform.position.x, 0,
@@ -428,6 +441,8 @@ public class Puck : MonoBehaviour
             PhaseIndex = 2;
 
             states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+
+            MovingToPosition = false;
         }
     }
 
@@ -659,6 +674,9 @@ public class Puck : MonoBehaviour
     private void ResetStats()
     {
         PhaseIndex = 0;
+        StateArrayIndex = 0;
+
+        AutoAttackTime = 0;
 
         transform.position = BossPosition.position;
 
@@ -676,6 +694,9 @@ public class Puck : MonoBehaviour
         Idle();
 
         transform.rotation = BossRotation;
+
+        DespawnAdds();
+        EnableMushroomObjs();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -809,6 +830,22 @@ public class Puck : MonoBehaviour
         for (int i = 0; i < MushroomObjs.Length; i++)
         {
             MushroomObjs[i].SetActive(false);
+        }
+    }
+
+    private void EnableMushroomObjs()
+    {
+        for (int i = 0; i < MushroomObjs.Length; i++)
+        {
+            MushroomObjs[i].SetActive(true);
+        }
+    }
+
+    private void DespawnAdds()
+    {
+        for (int i = 0; i < AddsToSpawn.Length; i++)
+        {
+            AddsToSpawn[i].SetActive(false);
         }
     }
 

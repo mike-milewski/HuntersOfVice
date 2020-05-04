@@ -121,6 +121,8 @@ public class ObjectPooler : MonoBehaviour
         AddMonsterEntryText(poolcontroller[31].GetPoolAmount);
         AddSlagParticle(poolcontroller[32].GetPoolAmount);
         AddSylvanStormParticle(poolcontroller[33].GetPoolAmount);
+        AddEnemyAppearParticle(poolcontroller[34].GetPoolAmount);
+        AddVicePlanterParticle(poolcontroller[35].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -531,6 +533,30 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddEnemyAppearParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[34].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[34].GetPoolParent.transform, false);
+            poolcontroller[34].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddVicePlanterParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[35].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[35].GetPoolParent.transform, false);
+            poolcontroller[35].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -699,6 +725,16 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetSylvanStormParticle()
     {
         return poolcontroller[33].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetEnemyAppearParticle()
+    {
+        return poolcontroller[34].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetVicePlanterParticle()
+    {
+        return poolcontroller[35].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -970,6 +1006,22 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[33].GetPoolParent.transform, false);
 
         poolcontroller[33].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnEnemyAppearParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[34].GetPoolParent.transform, false);
+
+        poolcontroller[34].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnVicePlanterParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[35].GetPoolParent.transform, false);
+
+        poolcontroller[35].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

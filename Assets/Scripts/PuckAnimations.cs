@@ -178,6 +178,15 @@ public class PuckAnimations : MonoBehaviour
             ResetSkillAnimator();
             AI.GetAutoAttack = 0;
             AI.GetStates = BossStates.Attack;
+
+            if(AI.GetIsMovingToPosition)
+            {
+                EnemyAnimator.SetBool("Attacking", false);
+                ResetSkillAnimator();
+                AI.GetAutoAttack = 0;
+
+                AI.GetStates = AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetState;
+            }
         }
         else
         {

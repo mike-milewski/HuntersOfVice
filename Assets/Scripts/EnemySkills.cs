@@ -1013,6 +1013,18 @@ public class EnemySkills : MonoBehaviour
         }
     }
 
+    public void VicePlanterParticle()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var VicePlanterParticles = ObjectPooler.Instance.GetVicePlanterParticle();
+
+            VicePlanterParticles.SetActive(true);
+
+            VicePlanterParticles.transform.position = new Vector3(character.transform.position.x, character.transform.position.y, character.transform.position.z);
+        }
+    }
+
     public void InvokeVicePlanter()
     {
         puckAI.SpawnAdds();

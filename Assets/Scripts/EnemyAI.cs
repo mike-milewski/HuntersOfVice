@@ -163,6 +163,18 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    public bool GetIsAnAdd
+    {
+        get
+        {
+            return IsAnAdd;
+        }
+        set
+        {
+            IsAnAdd = value;
+        }
+    }
+
     public void IncreaseArray()
     {
         StateArrayIndex++;
@@ -177,8 +189,6 @@ public class EnemyAI : MonoBehaviour
         if(IsAnAdd)
         {
             EnemyTriggerSphere.gameObject.SetActive(false);
-
-            states = States.Idle;
 
             if(Knight.gameObject.activeInHierarchy)
             {
@@ -697,7 +707,7 @@ public class EnemyAI : MonoBehaviour
             this.gameObject.GetComponent<BoxCollider>().enabled = true;
             character.GetRigidbody.useGravity = true;
 
-            states = States.Idle;
+            states = States.Chase;
         }
     }
 

@@ -96,6 +96,7 @@ public class Inventory : MonoBehaviour
                 if(!obj.gameObject.activeInHierarchy)
                 {
                     obj.gameObject.SetActive(true);
+                    obj.CheckQuantity();
                 }
                 else
                 {

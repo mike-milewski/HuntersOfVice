@@ -2031,14 +2031,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1
-    functionName: ResetAutoAttackTime
+    functionName: IncreaseAiArray
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1
-    functionName: IncreaseAiArray
+    functionName: ResetAutoAttackTime
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
