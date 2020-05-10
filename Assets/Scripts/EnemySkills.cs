@@ -38,7 +38,7 @@ public enum Skill
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
                      IntelligenceDOWN, StrengthAndCriticalUP };
 
-public enum EnemyElement { NONE, Fire, Water, Wind, Earth, Light, Dark };
+public enum EnemyElement { NONE, Fire, Water, Wind, Earth, Light, Dark, Magic };
 
 [System.Serializable]
 public class enemySkillManager
@@ -1150,6 +1150,7 @@ public class EnemySkills : MonoBehaviour
 
     private void PuckAnimatorSkill1()
     {
+        if(puckAI.GetPlayerTarget != null)
         puckAI.GetAnimation.SkillAnimator();
     }
 
@@ -1432,6 +1433,9 @@ public class EnemySkills : MonoBehaviour
 
         CreateHitParticleEffect();
 
+        potency = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetEnemyElement == EnemyElement.Magic ? 
+                  character.CharacterIntelligence : character.CharacterStrength;
+
         float Critical = character.GetCriticalChance;
 
         #region CriticalHitCalculation
@@ -1484,11 +1488,6 @@ public class EnemySkills : MonoBehaviour
 
     public TextMeshProUGUI PuckSkillDamageText(int potency, string skillName)
     {
-        if (puckAI.GetPlayerTarget == null)
-        {
-            return null;
-        }
-
         skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillName;
 
         var DamageTxt = ObjectPooler.Instance.GetPlayerDamageText();
@@ -1503,45 +1502,52 @@ public class EnemySkills : MonoBehaviour
 
         float Critical = character.GetCriticalChance;
 
-        #region CriticalHitCalculation
-        if (Random.value * 100 <= Critical)
+        if(puckAI.GetPlayerTarget == null)
         {
-            float CritCalc = potency * 1.25f;
-
-            Mathf.Round(CritCalc);
-
-            if ((int)CritCalc - Target.GetComponent<Character>().CharacterDefense < 0)
-            {
-                Target.GetComponentInChildren<Health>().ModifyHealth(-1);
-
-                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
-            }
-            else
-            {
-                enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
-                                                         (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
-
-                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
-                                                                           Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
-            }
+            return null;
         }
         else
         {
-            if (potency - Target.GetComponent<Character>().CharacterDefense < 0)
+            #region CriticalHitCalculation
+            if (Random.value * 100 <= Critical)
             {
-                Target.GetComponentInChildren<Health>().ModifyHealth(-1);
+                float CritCalc = potency * 1.25f;
 
-                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1";
+                Mathf.Round(CritCalc);
+
+                if ((int)CritCalc - Target.GetComponent<Character>().CharacterDefense < 0)
+                {
+                    Target.GetComponentInChildren<Health>().ModifyHealth(-1);
+
+                    DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
+                }
+                else
+                {
+                    enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
+                                                             (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
+
+                    DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
+                                                                               Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                }
             }
             else
             {
-                Target.GetComponentInChildren<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
+                if (potency - Target.GetComponent<Character>().CharacterDefense < 0)
+                {
+                    Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 
-                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
-                                                                           (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                    DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1";
+                }
+                else
+                {
+                    Target.GetComponentInChildren<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
+
+                    DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                                                                               (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                }
             }
+            #endregion
         }
-        #endregion
 
         if (!SkillsManager.Instance.GetActivatedSkill)
         {

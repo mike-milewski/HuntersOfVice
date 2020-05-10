@@ -18,11 +18,11 @@ MonoBehaviour:
   Absorbtions: 00000000
   CharacterName: Rock Spirit
   CharacterLevel: 3
-  Health: 1000
+  Health: 370
   Mana: 0
-  Strength: 30
+  Strength: 25
   Defense: 18
-  Intelligence: 4
+  Intelligence: 30
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5

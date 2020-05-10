@@ -158,11 +158,15 @@ public class Mana : MonoBehaviour
         }
         else
         {
-            float percent = Mathf.Round(0.05f * character.MaxMana);
+            float percent = Mathf.Round(0.01f * (float)character.MaxMana);
 
             int GetMana = (int)percent;
 
             Mathf.Round(GetMana);
+            if(GetMana < 1)
+            {
+                GetMana = 1;
+            }
 
             IncreaseMana(GetMana);
 

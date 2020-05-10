@@ -117,7 +117,7 @@ public class Puck : MonoBehaviour
     private GameObject[] AddsToSpawn, MushroomObjs;
 
     [SerializeField]
-    private GameObject SwordObj;
+    private GameObject SwordObj, WallTrigger;
 
     [SerializeField]
     private Quaternion BossRotation;
@@ -266,6 +266,13 @@ public class Puck : MonoBehaviour
                     break;
             }
         }
+        if(PlayerTarget != null)
+        {
+            if(PlayerTarget.CurrentHealth <= 0)
+            {
+                ResetStats();
+            }
+        }
     }
 
     public BossStates GetStates
@@ -353,10 +360,6 @@ public class Puck : MonoBehaviour
                         states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
                     }
                 }
-                else
-                { 
-                    ResetStats();
-                }
             }
             else
             {
@@ -392,10 +395,6 @@ public class Puck : MonoBehaviour
                     {
                         states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
                     }
-                }
-                else
-                {
-                    ResetStats();
                 }
             }
             else
@@ -479,7 +478,14 @@ public class Puck : MonoBehaviour
 
     private void Skill()
     {
-        enemySkills.ChooseSkill(phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetSkillIndex);
+        if (PlayerTarget.CurrentHealth <= 0)
+        {
+            states = BossStates.Idle;
+        }
+        else
+        {
+            enemySkills.ChooseSkill(phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetSkillIndex);
+        }
     }
 
     //Sets the enemy to this state if they are inflicted with the stun/sleep status effect.
@@ -512,6 +518,15 @@ public class Puck : MonoBehaviour
     public void SpawnTreasureChests()
     {
         treasureChest.SetActive(true);
+    }
+
+    private void EnableWall()
+    {
+        var main = Walls[0].main;
+        Walls[0].gameObject.SetActive(false);
+        main.loop = true;
+
+        WallTrigger.SetActive(true);
     }
 
     private void DisableWall1()
@@ -671,8 +686,17 @@ public class Puck : MonoBehaviour
     }
 
     //Resets the enemy's stats when enabled in the scene.
-    private void ResetStats()
+    public void ResetStats()
     {
+        PlayParticle();
+
+        PlayerTarget = null;
+
+        puckAnimations.ResetSkillAnimator();
+
+        states = BossStates.Idle;
+        Idle();
+
         PhaseIndex = 0;
         StateArrayIndex = 0;
 
@@ -690,13 +714,19 @@ public class Puck : MonoBehaviour
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
         character.GetRigidbody.useGravity = true;
 
-        states = BossStates.Idle;
-        Idle();
-
         transform.rotation = BossRotation;
+
+        EnableWall();
+
+        ReturnAddsToPositionAndRotation();
 
         DespawnAdds();
         EnableMushroomObjs();
+    }
+
+    private void PlayParticle()
+    {
+        SpawnParticleEffect(new Vector3(BossPosition.position.x, BossPosition.position.y, BossPosition.position.z));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -726,7 +756,17 @@ public class Puck : MonoBehaviour
         else
         {
             AutoAttackTime = 0;
-            states = BossStates.Attack;
+            if(PlayerTarget != null)
+            {
+                if(PlayerTarget.CurrentHealth <= 0)
+                {
+                    ResetStats();
+                }
+                else
+                {
+                    states = BossStates.Attack;
+                }
+            }
         }
     }
 
@@ -822,6 +862,18 @@ public class Puck : MonoBehaviour
         for(int i = 0; i < AddsToSpawn.Length; i++)
         {
             AddsToSpawn[i].SetActive(true);
+
+            SpawnParticleEffect(new Vector3(MushroomObjs[i].transform.position.x, MushroomObjs[i].transform.position.y, MushroomObjs[i].transform.position.z));
+        }
+    }
+
+    private void ReturnAddsToPositionAndRotation()
+    {
+        for(int i = 0; i < AddsToSpawn.Length; i++)
+        {
+            AddsToSpawn[i].transform.position = MushroomObjs[i].transform.position;
+
+            AddsToSpawn[i].transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 
@@ -838,6 +890,8 @@ public class Puck : MonoBehaviour
         for (int i = 0; i < MushroomObjs.Length; i++)
         {
             MushroomObjs[i].SetActive(true);
+
+            SpawnParticleEffect(new Vector3(MushroomObjs[i].transform.position.x, MushroomObjs[i].transform.position.y, MushroomObjs[i].transform.position.z));
         }
     }
 
@@ -847,6 +901,15 @@ public class Puck : MonoBehaviour
         {
             AddsToSpawn[i].SetActive(false);
         }
+    }
+
+    private void SpawnParticleEffect(Vector3 Pos)
+    {
+        var SpawnParticle = ObjectPooler.Instance.GetEnemyAppearParticle();
+
+        SpawnParticle.SetActive(true);
+
+        SpawnParticle.transform.position = new Vector3(Pos.x, Pos.y + 0.5f, Pos.z);
     }
 
     public void PuckHitSE()

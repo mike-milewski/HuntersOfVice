@@ -1011,16 +1011,12 @@ public class ObjectPooler : MonoBehaviour
 
     public void ReturnEnemyAppearParticleToPool(GameObject Object)
     {
-        Object.transform.SetParent(poolcontroller[34].GetPoolParent.transform, false);
-
         poolcontroller[34].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 
     public void ReturnVicePlanterParticleToPool(GameObject Object)
     {
-        Object.transform.SetParent(poolcontroller[35].GetPoolParent.transform, false);
-
         poolcontroller[35].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }

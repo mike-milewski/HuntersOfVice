@@ -14,6 +14,9 @@ public class BasicAttack : MonoBehaviour
     private Settings settings;
 
     [SerializeField]
+    private Transform HealTextTransform;
+
+    [SerializeField]
     private EquipmentMenu equipmentMenu;
 
     [SerializeField]
@@ -255,6 +258,19 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
+    private TextMeshProUGUI MpHealText()
+    {
+        var HealingText = ObjectPooler.Instance.GetPlayerHealText();
+
+        HealingText.SetActive(true);
+
+        HealingText.transform.SetParent(HealTextTransform, false);
+
+        HealingText.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + character.GetComponent<Mana>().RestoreMana() + "</size>" + "<size=20>" + " MP";
+
+        return HealingText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     public TextMeshProUGUI TakeDamage()
     {
         if(Target == null)
@@ -262,7 +278,7 @@ public class BasicAttack : MonoBehaviour
             return null;
         }
 
-        int DamageType = character.GetCharacterData.name == "Knight" ? character.CharacterStrength : character.CharacterIntelligence;
+        int DamageType = character.CharacterStrength;
 
         float Critical = character.GetCriticalChance;
 
@@ -276,7 +292,7 @@ public class BasicAttack : MonoBehaviour
 
         if(character.GetComponent<Mana>().GetUnlockedPassive)
         {
-            character.GetComponent<Mana>().RestoreMana();
+            MpHealText();
         }
 
         #region CriticalHitCalculation

@@ -172,25 +172,34 @@ public class PuckAnimations : MonoBehaviour
 
     public void ResetAutoAttackTime()
     {
-        if (AI.GetStates != BossStates.SkillAnimation)
+        if(AI.GetPlayerTarget != null)
         {
-            EnemyAnimator.SetBool("Attacking", false);
-            ResetSkillAnimator();
-            AI.GetAutoAttack = 0;
-            AI.GetStates = BossStates.Attack;
-
-            if(AI.GetIsMovingToPosition)
+            if (AI.GetStates != BossStates.SkillAnimation)
             {
                 EnemyAnimator.SetBool("Attacking", false);
                 ResetSkillAnimator();
                 AI.GetAutoAttack = 0;
+                AI.GetStates = BossStates.Attack;
 
-                AI.GetStates = AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetState;
+                if (AI.GetIsMovingToPosition)
+                {
+                    EnemyAnimator.SetBool("Attacking", false);
+                    ResetSkillAnimator();
+                    AI.GetAutoAttack = 0;
+
+                    AI.GetStates = AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetState;
+                }
+            }
+            else
+            {
+                AI.CheckTarget();
             }
         }
         else
         {
-            AI.CheckTarget();
+            AI.GetStates = BossStates.Idle;
+            EnemyAnimator.SetBool("Attacking", false);
+            ResetSkillAnimator();
         }
     }
 

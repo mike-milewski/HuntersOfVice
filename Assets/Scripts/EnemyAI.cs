@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 public enum States { Idle, Patrol, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile }
 
@@ -190,14 +191,9 @@ public class EnemyAI : MonoBehaviour
         {
             EnemyTriggerSphere.gameObject.SetActive(false);
 
-            if(Knight.gameObject.activeInHierarchy)
-            {
-                PlayerTarget = Knight;
-            }
-            else if(ShadowPriest.gameObject.activeInHierarchy)
-            {
-                PlayerTarget = ShadowPriest;
-            }
+            states = States.Idle;
+
+            StartCoroutine("WaitToTargetPlayer");
         }
         else
         {
@@ -210,6 +206,15 @@ public class EnemyAI : MonoBehaviour
     private void OnEnable()
     {
         ResetStats();
+
+        if(IsAnAdd)
+        {
+            EnemyTriggerSphere.gameObject.SetActive(false);
+
+            states = States.Idle;
+
+            StartCoroutine("WaitToTargetPlayer");
+        }
     }
 
     private void Update()
@@ -218,6 +223,9 @@ public class EnemyAI : MonoBehaviour
         {
             switch (states)
             {
+                case (States.Idle):
+                    Idle();
+                    break;
                 case (States.Patrol):
                     Patrol();
                     break;
@@ -302,6 +310,18 @@ public class EnemyAI : MonoBehaviour
         set
         {
             EnemyTriggerSphere = value;
+        }
+    }
+
+    private void Idle()
+    {
+        if (!IsUsingAnimator)
+        {
+            Anim.IdleAni();
+        }
+        else
+        {
+            Anim.IdleAnimator();
         }
     }
 
@@ -609,6 +629,25 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private IEnumerator WaitToTargetPlayer()
+    {
+        yield return new WaitForSeconds(1f);
+        SelectPlayerTarget();
+    }
+
+    private void SelectPlayerTarget()
+    {
+        if (Knight.gameObject.activeInHierarchy)
+        {
+            PlayerTarget = Knight;
+        }
+        else if (ShadowPriest.gameObject.activeInHierarchy)
+        {
+            PlayerTarget = ShadowPriest;
+        }
+        states = States.Chase;
+    }
+
     private Transform EnemyTransform()
     {
         Transform EnemyButtonTransform = null;
@@ -707,7 +746,9 @@ public class EnemyAI : MonoBehaviour
             this.gameObject.GetComponent<BoxCollider>().enabled = true;
             character.GetRigidbody.useGravity = true;
 
-            states = States.Chase;
+            AutoAttackTime = 0;
+
+            states = States.Idle;
         }
     }
 

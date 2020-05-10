@@ -750,6 +750,8 @@ public class GameManager : MonoBehaviour
 
         Player.transform.position = SpawnPoint.position;
 
+        Player.transform.rotation = Quaternion.Euler(0, 0, 0);
+
         Player.GetComponent<Health>().IncreaseHealth(Player.GetComponent<Character>().MaxHealth);
         Player.GetComponent<Mana>().IncreaseMana(Player.GetComponent<Character>().MaxMana);
 
