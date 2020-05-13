@@ -1,15 +1,23 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public enum ObstacleShapes { Circle, Rectangle }
 
+public enum ObstacleStatus { NONE, DamageOverTime, Stun }
+
 public class ObstacleDamageRadius : MonoBehaviour
 {
+    private Character PlayerTarget = null;
+
     [SerializeField]
     private string DamageName;
 
     [SerializeField]
     private int DamagePotency;
+
+    [SerializeField]
+    private ObstacleStatus obstacleStatus;
 
     [SerializeField]
     private float DamageTime, TimeToIncrease, SizeDeltaX, SizeDeltaY;
@@ -27,6 +35,18 @@ public class ObstacleDamageRadius : MonoBehaviour
 
     private void OnEnable()
     {
+        switch (shapes)
+        {
+            case (ObstacleShapes.Circle):
+                var Circle = DamageShapeCircle;
+                DamageShape.GetComponent<Image>().sprite = Circle;
+                break;
+            case (ObstacleShapes.Rectangle):
+                var Rectangle = DamageShapeRectangle;
+                DamageShape.GetComponent<Image>().sprite = Rectangle;
+                break;
+        }
+
         if (shapes == ObstacleShapes.Rectangle)
         {
             Vector3 Trans = new Vector3(gameObject.transform.position.x, transform.position.y, gameObject.transform.position.z);
@@ -65,13 +85,9 @@ public class ObstacleDamageRadius : MonoBehaviour
         switch (shapes)
         {
             case (ObstacleShapes.Circle):
-                var Circle = DamageShapeCircle;
-                DamageShape.GetComponent<Image>().sprite = Circle;
                 IncreaseCircle();
                 break;
             case (ObstacleShapes.Rectangle):
-                var Rectangle = DamageShapeRectangle;
-                DamageShape.GetComponent<Image>().sprite = Rectangle;
                 IncreaseRectangle();
                 break;
         }
@@ -79,7 +95,7 @@ public class ObstacleDamageRadius : MonoBehaviour
         TimeToIncrease += Time.deltaTime;
         if(TimeToIncrease >= DamageTime)
         {
-            //TakeRadiusEffects();
+            TakeRadiusEffects();
             TimeToIncrease = 0;
         }
     }
@@ -131,6 +147,7 @@ public class ObstacleDamageRadius : MonoBehaviour
             if (hitColliders[i].GetComponent<PlayerController>())
             {
                 IsInRadius = true;
+                PlayerTarget = hitColliders[i].GetComponent<Character>();
             }
         }
     }
@@ -144,24 +161,39 @@ public class ObstacleDamageRadius : MonoBehaviour
             if (hitColliders[i].GetComponent<PlayerController>())
             {
                 IsInRadius = true;
+                PlayerTarget = hitColliders[i].GetComponent<Character>();
             }
         }
     }
-    /*
+
     public void TakeRadiusEffects()
     {
-        if (enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus != Status.NONE)
+        if (obstacleStatus != ObstacleStatus.NONE)
         {
-            enemySkills.PlayerStatus();
+            PlayerStatus();
         }
 
         if (DamagePotency > 0)
         {
-            enemySkills.SkillDamageText(enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
-                                    enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+            DamageText(DamagePotency, DamageName);
 
-            enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+            PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
         }
     }
-    */
+
+    private void PlayerStatus()
+    {
+
+    }
+
+    private TextMeshProUGUI DamageText(int Damage, string Name)
+    {
+        var DamageTxt = ObjectPooler.Instance.GetPlayerDamageText();
+
+        DamageTxt.SetActive(true);
+
+        //DamageTxt.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetTextHolder.transform, false);
+
+        return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
 }
