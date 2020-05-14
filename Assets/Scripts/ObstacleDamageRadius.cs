@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿#pragma warning disable 0649, 0414
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class ObstacleDamageRadius : MonoBehaviour
     private Character PlayerTarget = null;
 
     [SerializeField]
-    private string DamageName;
+    private string DamageName, StatusEffectName;
 
     [SerializeField]
     private int DamagePotency;
@@ -23,10 +24,23 @@ public class ObstacleDamageRadius : MonoBehaviour
     private float DamageTime, TimeToIncrease, SizeDeltaX, SizeDeltaY;
 
     [SerializeField]
+    private Transform StatusEffectTextTransform, DamageTextTransform;
+
+    [SerializeField]
     private Image DamageShape;
 
     [SerializeField]
     private Sprite DamageShapeCircle, DamageShapeCylinder, DamageShapeRectangle;
+
+    [SerializeField]
+    [Tooltip("Image of the status effect inflicted. Only apply if the skill will have a status effect.")]
+    private Sprite StatusSprite = null;
+
+    [SerializeField]
+    private GameObject StatusIcon = null;
+
+    [SerializeField]
+    private GameObject Particle;
 
     private bool IsInRadius;
 
@@ -181,9 +195,43 @@ public class ObstacleDamageRadius : MonoBehaviour
         }
     }
 
-    private void PlayerStatus()
+    private TextMeshProUGUI PlayerStatus()
     {
+        var StatusEffectText = ObjectPooler.Instance.GetPlayerStatusText();
 
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(StatusEffectTextTransform, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + StatusEffectName;
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = StatusSprite;
+
+        StatusEffectSkillTextTransform();
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void StatusEffectSkillTextTransform()
+    {
+        if (!StatusIcon.activeInHierarchy)
+        {
+            StatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+            StatusIcon.SetActive(true);
+
+            StatusIcon.transform.SetParent(StatusEffectTextTransform, false);
+
+            StatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = (StatusEffect)obstacleStatus;
+
+            StatusIcon.GetComponent<Image>().sprite = StatusSprite;
+
+            StatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
+        }
+        else
+        {
+            StatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
+        }
     }
 
     private TextMeshProUGUI DamageText(int Damage, string Name)
@@ -192,7 +240,26 @@ public class ObstacleDamageRadius : MonoBehaviour
 
         DamageTxt.SetActive(true);
 
-        //DamageTxt.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetTextHolder.transform, false);
+        DamageTxt.transform.SetParent(DamageTextTransform, false);
+
+        if (Damage - PlayerTarget.GetComponent<Character>().CharacterDefense < 0)
+        {
+            PlayerTarget.GetComponentInChildren<Health>().ModifyHealth(-1);
+
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + Name + " " + "1";
+        }
+        else
+        {
+            PlayerTarget.GetComponentInChildren<Health>().ModifyHealth(-(Damage - PlayerTarget.GetComponent<Character>().CharacterDefense));
+
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + Name + " " +
+                                                                       (Damage - PlayerTarget.GetComponent<Character>().CharacterDefense).ToString();
+        }
+
+        if (!SkillsManager.Instance.GetActivatedSkill)
+        {
+            PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+        }
 
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
