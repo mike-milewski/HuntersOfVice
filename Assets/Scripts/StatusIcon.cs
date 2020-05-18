@@ -43,6 +43,8 @@ public class StatusIcon : MonoBehaviour
 
     private float RegenTick;
 
+    private bool ObstacleEffect;
+
     [SerializeField]
     private int KeyInput;
 
@@ -79,6 +81,66 @@ public class StatusIcon : MonoBehaviour
         set
         {
             KeyInput = value;
+        }
+    }
+
+    public bool GetObstacleEffect
+    {
+        get
+        {
+            return ObstacleEffect;
+        }
+        set
+        {
+            ObstacleEffect = value;
+        }
+    }
+
+    public float GetDuration
+    {
+        get
+        {
+            return Duration;
+        }
+        set
+        {
+            Duration = value;
+        }
+    }
+
+    public float GetDamageOrHealTick
+    {
+        get
+        {
+            return DamageOrHealTick;
+        }
+        set
+        {
+            DamageOrHealTick = value;
+        }
+    }
+
+    public float GetTempTick
+    {
+        get
+        {
+            return TempTick;
+        }
+        set
+        {
+            TempTick = value;
+        }
+    }
+
+    public TextMeshProUGUI GetStatusDescription
+    {
+        get
+        {
+            return StatusDescriptionText;
+        }
+        set
+        {
+            StatusDescriptionText = value;
         }
     }
 
@@ -143,7 +205,14 @@ public class StatusIcon : MonoBehaviour
         }
         else
         {
-            RemoveStatusEffectText();
+            if(!ObstacleEffect)
+            {
+                RemoveStatusEffectText();
+            }
+            else
+            {
+                RemoveStatusObstacleEffectText();
+            }
             CheckStatus();
             ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
         }
@@ -180,6 +249,8 @@ public class StatusIcon : MonoBehaviour
 
     public void PlayerInput()
     {
+        ObstacleEffect = false;
+
         KeyInput = SkillsManager.Instance.GetKeyInput;
 
         skill = SkillsManager.Instance.GetSkills[KeyInput];
@@ -200,6 +271,8 @@ public class StatusIcon : MonoBehaviour
 
     public void EnemyInput()
     {
+        ObstacleEffect = false;
+
         SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetSleepHit = false;
 
         KeyInput = enemyTarget.GetAI.GetAiStates[enemyTarget.GetAI.GetStateArrayIndex].GetSkillIndex;
@@ -301,6 +374,25 @@ public class StatusIcon : MonoBehaviour
                 break;
         }
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemoveStatusObstacleEffectText()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetPlayerStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(GameManager.Instance.GetStatusEffectTransform, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Poison";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        CreateParticleOnRemovePlayer();
+
+        ObstacleEffect = false;
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void DamageOverTime(int value)

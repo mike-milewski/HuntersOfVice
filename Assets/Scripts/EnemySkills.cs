@@ -1027,8 +1027,15 @@ public class EnemySkills : MonoBehaviour
 
     public void InvokeVicePlanter()
     {
-        puckAI.SpawnAdds();
-        puckAI.DisableMushroomObjs();
+        if(puckAI.GetPhaseIndex == 3)
+        {
+            puckAI.SpawnAdds();
+            puckAI.DisableMushroomObjs();
+        }
+        else
+        {
+            puckAI.EnlargePoisonMushrooms();
+        }
     }
     #endregion
 

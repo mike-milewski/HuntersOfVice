@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private Animator animator, SkillPanelAnimator, CharacterPanelAnimator, EquipmentPanelAnimator, InventoryPanelAnimator, SettingsPanelAnimator, MonsterBookAnimator;
 
     [SerializeField]
-    private GameObject Player;
+    private GameObject Knight, ShadowPriest;
 
     [SerializeField]
     private GameObject EnemyObject = null;
@@ -44,10 +44,13 @@ public class GameManager : MonoBehaviour
     private GameObject LastEnemyObject = null;
 
     [SerializeField]
-    private Transform SpawnPoint, InventoryMaterialTransform, ItemMessageTransform, MonsterEntryTransform;
+    private Transform SpawnPoint, InventoryMaterialTransform, ItemMessageTransform, MonsterEntryTransform, StatusEffectTextHolder;
 
     [SerializeField]
     private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel, ItemDescriptionPanel;
+
+    [SerializeField]
+    private float RespawnTime;
 
     private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating;
 
@@ -137,6 +140,18 @@ public class GameManager : MonoBehaviour
         set
         {
             ItemMessageTransform = value;
+        }
+    }
+
+    public Transform GetStatusEffectTransform
+    {
+        get
+        {
+            return StatusEffectTextHolder;
+        }
+        set
+        {
+            StatusEffectTextHolder = value;
         }
     }
 
@@ -283,9 +298,6 @@ public class GameManager : MonoBehaviour
             IsInInventory = value;
         }
     }
-
-    [SerializeField]
-    private float RespawnTime;
 
     private void Awake()
     {
@@ -721,17 +733,34 @@ public class GameManager : MonoBehaviour
 
         SkillsManager.Instance.GetActivatedSkill = false;
 
-        Player.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
-        Player.GetComponent<BasicAttack>().enabled = false;
+        if(Knight.activeInHierarchy)
+        {
+            Knight.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
+            Knight.GetComponent<BasicAttack>().enabled = false;
 
-        Player.GetComponent<CapsuleCollider>().enabled = false;
+            Knight.GetComponent<CapsuleCollider>().enabled = false;
 
-        Player.GetComponent<PlayerController>().enabled = false;
+            Knight.GetComponent<PlayerController>().enabled = false;
 
-        Player.GetComponent<PlayerAnimations>().DeathAnimation();
+            Knight.GetComponent<PlayerAnimations>().DeathAnimation();
 
-        Player.GetComponent<Character>().GetRigidbody.useGravity = false;
-        Player.GetComponent<Character>().GetRigidbody.isKinematic = true;
+            Knight.GetComponent<Character>().GetRigidbody.useGravity = false;
+            Knight.GetComponent<Character>().GetRigidbody.isKinematic = true;
+        }
+        else if(ShadowPriest.activeInHierarchy)
+        {
+            ShadowPriest.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
+            ShadowPriest.GetComponent<BasicAttack>().enabled = false;
+
+            ShadowPriest.GetComponent<CapsuleCollider>().enabled = false;
+
+            ShadowPriest.GetComponent<PlayerController>().enabled = false;
+
+            ShadowPriest.GetComponent<PlayerAnimations>().DeathAnimation();
+
+            ShadowPriest.GetComponent<Character>().GetRigidbody.useGravity = false;
+            ShadowPriest.GetComponent<Character>().GetRigidbody.isKinematic = true;
+        }
 
         StartCoroutine(Fade());
     }
@@ -748,30 +777,60 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(RespawnTime);
         FadeScreen.Instance.GetFadeState = FadeState.FADEIN;
 
-        Player.transform.position = SpawnPoint.position;
-
-        Player.transform.rotation = Quaternion.Euler(0, 0, 0);
-
-        Player.GetComponent<Health>().IncreaseHealth(Player.GetComponent<Character>().MaxHealth);
-        Player.GetComponent<Mana>().IncreaseMana(Player.GetComponent<Character>().MaxMana);
-
-        Player.GetComponent<BasicAttack>().enabled = true;
-        
-        if(Player.GetComponent<BasicAttack>().GetTarget != null)
+        if(Knight.activeInHierarchy)
         {
-            Player.GetComponent<BasicAttack>().GetTarget.TurnOffHealthBar();
-            Player.GetComponent<BasicAttack>().GetTarget = null;
-            EnemyObject = null;
-            LastEnemyObject = null;
+            Knight.transform.position = SpawnPoint.position;
+
+            Knight.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            Knight.GetComponent<Health>().IncreaseHealth(Knight.GetComponent<Character>().MaxHealth);
+            Knight.GetComponent<Mana>().IncreaseMana(Knight.GetComponent<Character>().MaxMana);
+
+            Knight.GetComponent<BasicAttack>().enabled = true;
+
+            if (Knight.GetComponent<BasicAttack>().GetTarget != null)
+            {
+                Knight.GetComponent<BasicAttack>().GetTarget.TurnOffHealthBar();
+                Knight.GetComponent<BasicAttack>().GetTarget = null;
+                EnemyObject = null;
+                LastEnemyObject = null;
+            }
+
+            Knight.GetComponent<CapsuleCollider>().enabled = true;
+
+            Knight.GetComponent<Character>().GetRigidbody.useGravity = true;
+            Knight.GetComponent<Character>().GetRigidbody.isKinematic = false;
+
+            Knight.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
+            Knight.GetComponent<PlayerAnimations>().GetAnimator.ResetTrigger("Damaged");
         }
+        else if(ShadowPriest.activeInHierarchy)
+        {
+            ShadowPriest.transform.position = SpawnPoint.position;
 
-        Player.GetComponent<CapsuleCollider>().enabled = true;
+            ShadowPriest.transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        Player.GetComponent<Character>().GetRigidbody.useGravity = true;
-        Player.GetComponent<Character>().GetRigidbody.isKinematic = false;
+            ShadowPriest.GetComponent<Health>().IncreaseHealth(ShadowPriest.GetComponent<Character>().MaxHealth);
+            ShadowPriest.GetComponent<Mana>().IncreaseMana(ShadowPriest.GetComponent<Character>().MaxMana);
 
-        Player.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
-        Player.GetComponent<PlayerAnimations>().GetAnimator.ResetTrigger("Damaged");
+            ShadowPriest.GetComponent<BasicAttack>().enabled = true;
+
+            if (ShadowPriest.GetComponent<BasicAttack>().GetTarget != null)
+            {
+                ShadowPriest.GetComponent<BasicAttack>().GetTarget.TurnOffHealthBar();
+                ShadowPriest.GetComponent<BasicAttack>().GetTarget = null;
+                EnemyObject = null;
+                LastEnemyObject = null;
+            }
+
+            ShadowPriest.GetComponent<CapsuleCollider>().enabled = true;
+
+            ShadowPriest.GetComponent<Character>().GetRigidbody.useGravity = true;
+            ShadowPriest.GetComponent<Character>().GetRigidbody.isKinematic = false;
+
+            ShadowPriest.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
+            ShadowPriest.GetComponent<PlayerAnimations>().GetAnimator.ResetTrigger("Damaged");
+        }
     }
 
     public TextMeshProUGUI ShowNotEnoughManaText()

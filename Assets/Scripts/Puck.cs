@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum BossStates { Idle, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile, MovingToPosition, RotateToPosition }
+public enum BossStates { Idle, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile, MovingToPosition, RotateToPosition, RotateToPositionTwo }
 
 [System.Serializable]
 public class Phases
@@ -114,7 +114,7 @@ public class Puck : MonoBehaviour
     private GameObject treasureChest, ChestSpawnParticle;
 
     [SerializeField]
-    private GameObject[] AddsToSpawn, MushroomObjs;
+    private GameObject[] AddsToSpawn, MushroomObjs, PoisonMushrooms;
 
     [SerializeField]
     private GameObject SwordObj, WallTrigger;
@@ -124,7 +124,7 @@ public class Puck : MonoBehaviour
 
     private float DistanceToTarget;
 
-    private bool PlayerEntry, MovingToPosition;
+    private bool PlayerEntry, MovingToPosition, PoisonMushroomsEnlarged;
 
     private int StateArrayIndex;
 
@@ -263,6 +263,9 @@ public class Puck : MonoBehaviour
                     break;
                 case (BossStates.RotateToPosition):
                     RotateToPosition();
+                    break;
+                case (BossStates.RotateToPositionTwo):
+                    RotateToPositionTwo();
                     break;
             }
         }
@@ -424,7 +427,14 @@ public class Puck : MonoBehaviour
             StateArrayIndex = 0;
             PhaseIndex++;
 
-            states = BossStates.RotateToPosition;
+            if(PhaseIndex == 2)
+            {
+                states = BossStates.RotateToPosition;
+            }
+            else
+            {
+                states = BossStates.RotateToPositionTwo;
+            }
         }
     }
 
@@ -438,6 +448,23 @@ public class Puck : MonoBehaviour
         {
             StateArrayIndex = 0;
             PhaseIndex = 2;
+
+            states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+
+            MovingToPosition = false;
+        }
+    }
+
+    private void RotateToPositionTwo()
+    {
+        Quaternion Rot = Quaternion.Euler(0, 180, 0);
+
+        transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime).normalized;
+
+        if (Quaternion.Angle(transform.rotation, Rot) <= 3.5f)
+        {
+            StateArrayIndex = 0;
+            PhaseIndex = 6;
 
             states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
 
@@ -721,6 +748,7 @@ public class Puck : MonoBehaviour
         ReturnAddsToPositionAndRotation();
 
         DespawnAdds();
+        ShrinkPoisonMushrooms();
         EnableMushroomObjs();
     }
 
@@ -889,10 +917,47 @@ public class Puck : MonoBehaviour
     {
         for (int i = 0; i < MushroomObjs.Length; i++)
         {
-            MushroomObjs[i].SetActive(true);
+            if (MushroomObjs[i].activeInHierarchy)
+            {
+                return;
+            }
+            else
+            {
+                MushroomObjs[i].SetActive(true);
 
-            SpawnParticleEffect(new Vector3(MushroomObjs[i].transform.position.x, MushroomObjs[i].transform.position.y, MushroomObjs[i].transform.position.z));
+                SpawnParticleEffect(new Vector3(MushroomObjs[i].transform.position.x, MushroomObjs[i].transform.position.y, MushroomObjs[i].transform.position.z));
+            }
         }
+    }
+
+    public void EnlargePoisonMushrooms()
+    {
+        PoisonMushroomsEnlarged = true;
+
+        for(int i = 0; i < PoisonMushrooms.Length; i++)
+        {
+            PoisonMushrooms[i].transform.localScale = new Vector3(3.6f, 3.6f, 3.6f);
+
+            SpawnParticleEffect(new Vector3(PoisonMushrooms[i].transform.position.x, PoisonMushrooms[i].transform.position.y, PoisonMushrooms[i].transform.position.z));
+
+            PoisonMushrooms[i].GetComponentInChildren<ObstacleDamageRadius>().enabled = true;
+        }
+    }
+
+    private void ShrinkPoisonMushrooms()
+    {
+        if(PoisonMushroomsEnlarged)
+        {
+            for (int i = 0; i < PoisonMushrooms.Length; i++)
+            {
+                PoisonMushrooms[i].transform.localScale = new Vector3(1, 1, 1);
+
+                SpawnParticleEffect(new Vector3(PoisonMushrooms[i].transform.position.x, PoisonMushrooms[i].transform.position.y, PoisonMushrooms[i].transform.position.z));
+
+                PoisonMushrooms[i].GetComponentInChildren<ObstacleDamageRadius>().enabled = false;
+            }
+        }
+        PoisonMushroomsEnlarged = false;
     }
 
     private void DespawnAdds()

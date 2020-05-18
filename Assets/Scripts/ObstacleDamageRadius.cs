@@ -9,10 +9,13 @@ public enum ObstacleStatus { NONE, DamageOverTime, Stun }
 
 public class ObstacleDamageRadius : MonoBehaviour
 {
+    [SerializeField]
+    private Settings settings;
+
     private Character PlayerTarget = null;
 
     [SerializeField]
-    private string DamageName, StatusEffectName;
+    private string DamageName, StatusEffectName, StatusEffectDescrption;
 
     [SerializeField]
     private int DamagePotency;
@@ -21,16 +24,19 @@ public class ObstacleDamageRadius : MonoBehaviour
     private ObstacleStatus obstacleStatus;
 
     [SerializeField]
-    private float DamageTime, TimeToIncrease, SizeDeltaX, SizeDeltaY;
+    private float DamageTime, TimeToIncrease, SizeDeltaX, SizeDeltaY, InvokeEffectTime, InvokeParticleEffectTime, StatusDuration, DamageTick;
 
     [SerializeField]
-    private Transform StatusEffectTextTransform, DamageTextTransform;
+    private Vector3 ShapeSize;
+
+    [SerializeField]
+    private Transform StatusEffectTextTransform, DamageTextTransform, StatusIconTransform;
 
     [SerializeField]
     private Image DamageShape;
 
     [SerializeField]
-    private Sprite DamageShapeCircle, DamageShapeCylinder, DamageShapeRectangle;
+    private Sprite DamageShapeCircle, DamageShapeRectangle;
 
     [SerializeField]
     [Tooltip("Image of the status effect inflicted. Only apply if the skill will have a status effect.")]
@@ -42,7 +48,7 @@ public class ObstacleDamageRadius : MonoBehaviour
     [SerializeField]
     private GameObject Particle;
 
-    private bool IsInRadius;
+    private bool IsInRadius, DisabledRadius;
 
     [SerializeField]
     private ObstacleShapes shapes;
@@ -75,6 +81,13 @@ public class ObstacleDamageRadius : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        ResetSizeDelta();
+
+        TimeToIncrease = 0;
+    }
+
     private float SetCircleColliderSize()
     {
         float CircleRadius = SizeDeltaX / (float)40;
@@ -91,6 +104,7 @@ public class ObstacleDamageRadius : MonoBehaviour
 
     private void Update()
     {
+        if(!DisabledRadius)
         IncreaseRadiusAndTime();
     }
 
@@ -109,8 +123,17 @@ public class ObstacleDamageRadius : MonoBehaviour
         TimeToIncrease += Time.deltaTime;
         if(TimeToIncrease >= DamageTime)
         {
-            TakeRadiusEffects();
-            TimeToIncrease = 0;
+            switch (shapes)
+            {
+                case (ObstacleShapes.Circle):
+                    CheckIfPlayerIsInCircleRadius(DamageShape.transform.position, SetCircleColliderSize());
+                    DisableRadius();
+                    break;
+                case (ObstacleShapes.Rectangle):
+                    CheckIfPlayerIsInRectangleRadius(DamageShape.transform.position, new Vector3(SizeDeltaX, SizeDeltaY, 1.7f), transform.rotation);
+                    DisableRadius();
+                    break;
+            }
         }
     }
 
@@ -142,17 +165,17 @@ public class ObstacleDamageRadius : MonoBehaviour
         }
     }
 
-    public void ResetLocalScale()
+    private void ResetLocalScale()
     {
         DamageShape.transform.localScale = new Vector3(0, 0, 0);
     }
 
-    public void ResetSizeDelta()
+    private void ResetSizeDelta()
     {
         DamageShape.rectTransform.sizeDelta = new Vector2(0, 0);
     }
 
-    public void CheckIfPlayerIsInRectangleRadius(Vector3 center, Vector3 radius, Quaternion rotation)
+    private void CheckIfPlayerIsInRectangleRadius(Vector3 center, Vector3 radius, Quaternion rotation)
     {
         Collider[] hitColliders = Physics.OverlapBox(center, radius, rotation);
 
@@ -162,13 +185,19 @@ public class ObstacleDamageRadius : MonoBehaviour
             {
                 IsInRadius = true;
                 PlayerTarget = hitColliders[i].GetComponent<Character>();
+                InvokeEffect();
             }
+            else return;
         }
+        InvokeParticle();
+        DisableRadius();
     }
 
-    public void CheckIfPlayerIsInCircleRadius(Vector3 center, float radius)
+    private void CheckIfPlayerIsInCircleRadius(Vector3 center, float radius)
     {
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+
+        InvokeParticle();
 
         for (int i = 0; i < hitColliders.Length; i++)
         {
@@ -176,22 +205,66 @@ public class ObstacleDamageRadius : MonoBehaviour
             {
                 IsInRadius = true;
                 PlayerTarget = hitColliders[i].GetComponent<Character>();
+                InvokeEffect();
             }
         }
     }
 
-    public void TakeRadiusEffects()
+    private void InvokeParticle()
     {
-        if (obstacleStatus != ObstacleStatus.NONE)
+        Invoke("CastParticleEffect", InvokeParticleEffectTime);
+    }
+
+    private void InvokeEffect()
+    {
+        Invoke("TakeRadiusEffects", InvokeEffectTime);
+    }
+
+    private void EnableRadius()
+    {
+        DisabledRadius = false;
+    }
+
+    private void DisableRadius()
+    {
+        ResetSizeDelta();
+
+        DisabledRadius = true;
+
+        TimeToIncrease = 0;
+
+        Invoke("EnableRadius", 1);
+    }
+
+    private void TakeRadiusEffects()
+    {
+        if(IsInRadius)
         {
-            PlayerStatus();
+            if (obstacleStatus != ObstacleStatus.NONE)
+            {
+                PlayerStatus();
+            }
+
+            if (DamagePotency > 0)
+            {
+                DamageText(DamagePotency, DamageName);
+
+                PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+            }
         }
+    }
 
-        if (DamagePotency > 0)
+    private void CastParticleEffect()
+    {
+        if (settings.UseParticleEffects)
         {
-            DamageText(DamagePotency, DamageName);
+            Particle = ObjectPooler.Instance.GetPoisonSporeParticle();
 
-            PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+            Particle.SetActive(true);
+
+            Particle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+            Particle.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
@@ -216,21 +289,39 @@ public class ObstacleDamageRadius : MonoBehaviour
     {
         if (!StatusIcon.activeInHierarchy)
         {
-            StatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+            StatusIcon = ObjectPooler.Instance.GetPlayerStatusIcon();
 
             StatusIcon.SetActive(true);
 
-            StatusIcon.transform.SetParent(StatusEffectTextTransform, false);
+            StatusIcon.transform.SetParent(StatusIconTransform, false);
 
-            StatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = (StatusEffect)obstacleStatus;
+            StatusIcon.GetComponent<StatusIcon>().GetObstacleEffect = true;
+
+            StatusIcon.GetComponent<StatusIcon>().GetDamageOrHealTick = DamageTick;
+
+            StatusIcon.GetComponent<StatusIcon>().GetTempTick = StatusIcon.GetComponent<StatusIcon>().GetDamageOrHealTick;
+
+            StatusIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)obstacleStatus;
 
             StatusIcon.GetComponent<Image>().sprite = StatusSprite;
 
-            StatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
+            StatusIcon.GetComponent<StatusIcon>().GetObstacleEffect = true;
+
+            StatusIcon.GetComponent<StatusIcon>().GetStatusDescription.text = StatusEffectDescrption;
+
+            StatusIcon.GetComponent<StatusIcon>().GetDuration = StatusDuration;
         }
         else
         {
-            StatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
+            StatusIcon.GetComponent<StatusIcon>().GetObstacleEffect = true;
+
+            StatusIcon.GetComponent<StatusIcon>().GetDamageOrHealTick = DamageTick;
+
+            StatusIcon.GetComponent<StatusIcon>().GetTempTick = StatusIcon.GetComponent<StatusIcon>().GetDamageOrHealTick;
+
+            StatusIcon.GetComponent<StatusIcon>().GetStatusDescription.text = StatusEffectDescrption;
+
+            StatusIcon.GetComponent<StatusIcon>().GetDuration = StatusDuration;
         }
     }
 

@@ -55740,14 +55740,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.8333334
-    functionName: ResetSkillAnimator
+    functionName: IncrementPhase
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.8333334
-    functionName: IncrementPhase
+    functionName: ResetSkillAnimator
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
