@@ -26,7 +26,7 @@ public enum Skill
     SylvanFury,
     SylvanStorm,
     VicePlanter,
-    Touche,
+    WoodishSire,
     //VineGolem Skills
     EarthHammer,
     //MAIN BOSS:
@@ -521,6 +521,10 @@ public class EnemySkills : MonoBehaviour
                             GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
                             GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                         break;
+                    case (Skill.WoodishSire):
+                        WoodishSire(GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                                    GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
                         #endregion
                 }
             }
@@ -984,8 +988,6 @@ public class EnemySkills : MonoBehaviour
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
 
-        float Distance = Vector3.Distance(character.transform.position, enemyAI.GetPlayerTarget.transform.position);
-
         if (enemyAI.GetPlayerTarget != null)
         {
             FungiBumpAnimation();
@@ -1027,7 +1029,7 @@ public class EnemySkills : MonoBehaviour
 
     public void InvokeVicePlanter()
     {
-        if(puckAI.GetPhaseIndex == 3)
+        if(puckAI.GetPhaseIndex == 2)
         {
             puckAI.SpawnAdds();
             puckAI.DisableMushroomObjs();
@@ -1114,6 +1116,17 @@ public class EnemySkills : MonoBehaviour
     }
     #endregion
 
+    #region WoodishSire
+    public void WoodishSire(int potency, string skillname)
+    {
+        skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        WoodishSireAnimation();
+    }
+    #endregion
+
     private void UseSkillBar()
     {
         skillBar.gameObject.SetActive(true);
@@ -1164,6 +1177,11 @@ public class EnemySkills : MonoBehaviour
     private void PuckAnimatorSkill3()
     {
         puckAI.GetAnimation.VicePlanterCast();
+    }
+
+    private void WoodishSireAnimation()
+    {
+        puckAI.GetAnimation.WoodishSireAnimator();
     }
 
     private void SylvanStormAnimation()

@@ -18,10 +18,10 @@ MonoBehaviour:
   Absorbtions: 00000000
   CharacterName: Mushroom Man
   CharacterLevel: 2
-  Health: 210
+  Health: 1
   Mana: 0
-  Strength: 30
-  Defense: 17
+  Strength: 1
+  Defense: 1
   Intelligence: 2
   HpIncrease: 0
   MpIncrease: 0

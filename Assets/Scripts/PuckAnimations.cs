@@ -99,6 +99,11 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill", true);
     }
 
+    public void WoodishSireAnimator()
+    {
+        EnemyAnimator.SetBool("WoodishSire", true);
+    }
+
     public void Skill2Animator()
     {
         EnemyAnimator.SetBool("Skill2", true);
@@ -133,6 +138,7 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
         EnemyAnimator.SetBool("Skill3", false);
+        EnemyAnimator.SetBool("WoodishSire", false);
     }
 
     public void IdleAnimator()
@@ -172,34 +178,43 @@ public class PuckAnimations : MonoBehaviour
 
     public void ResetAutoAttackTime()
     {
-        if(AI.GetPlayerTarget != null)
+        if(!AI.GetIsMovingToPosition || !AI.GetIsRotatingToPosition)
         {
-            if (AI.GetStates != BossStates.SkillAnimation)
+            if (AI.GetPlayerTarget != null)
             {
-                EnemyAnimator.SetBool("Attacking", false);
-                ResetSkillAnimator();
-                AI.GetAutoAttack = 0;
-                AI.GetStates = BossStates.Attack;
-
-                if (AI.GetIsMovingToPosition)
+                if (AI.GetStates != BossStates.SkillAnimation)
                 {
                     EnemyAnimator.SetBool("Attacking", false);
                     ResetSkillAnimator();
                     AI.GetAutoAttack = 0;
+                    AI.GetStates = BossStates.Attack;
 
-                    AI.GetStates = AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetState;
+                    if (AI.GetIsMovingToPosition || AI.GetIsRotatingToPosition)
+                    {
+                        EnemyAnimator.SetBool("Attacking", false);
+                        ResetSkillAnimator();
+                        AI.GetAutoAttack = 0;
+
+                        AI.GetStates = AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetState;
+                    }
+                }
+                else
+                {
+                    AI.CheckTarget();
                 }
             }
             else
             {
-                AI.CheckTarget();
+                AI.GetStates = BossStates.Idle;
+                EnemyAnimator.SetBool("Attacking", false);
+                ResetSkillAnimator();
             }
         }
         else
         {
-            AI.GetStates = BossStates.Idle;
             EnemyAnimator.SetBool("Attacking", false);
             ResetSkillAnimator();
+            AI.GetAutoAttack = 0;
         }
     }
 

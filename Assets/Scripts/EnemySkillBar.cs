@@ -200,9 +200,12 @@ public class EnemySkillBar : MonoBehaviour
             {
                 enemySkills.GetActiveSkill = false;
 
-                enemySkills.ChooseSkill(puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex);
+                if(!puckAI.GetChangingPhase)
+                {
+                    enemySkills.ChooseSkill(puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex);
 
-                puckAI.GetStates = BossStates.SkillAnimation;
+                    puckAI.GetStates = BossStates.SkillAnimation;
+                }
 
                 SkillBarFillImage.fillAmount = 0;
                 CastTime = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;

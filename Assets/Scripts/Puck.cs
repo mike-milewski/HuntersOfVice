@@ -124,12 +124,12 @@ public class Puck : MonoBehaviour
 
     private float DistanceToTarget;
 
-    private bool PlayerEntry, MovingToPosition, PoisonMushroomsEnlarged;
+    private bool PlayerEntry, MovingToPosition, RotatingToPosition, ChangingPhase, PoisonMushroomsEnlarged;
 
     private int StateArrayIndex;
 
     [SerializeField]
-    private int PhaseIndex;
+    private int PhaseIndex, HpPhaseIndex;
 
     [SerializeField]
     private int[] HpToChangePhase;
@@ -206,9 +206,34 @@ public class Puck : MonoBehaviour
         }
     }
 
+    public bool GetIsRotatingToPosition
+    {
+        get
+        {
+            return RotatingToPosition;
+        }
+        set
+        {
+            RotatingToPosition = value;
+        }
+    }
+
+    public bool GetChangingPhase
+    {
+        get
+        {
+            return ChangingPhase;
+        }
+        set
+        {
+            ChangingPhase = value;
+        }
+    }
+
     public void IncreaseArray()
     {
         StateArrayIndex++;
+
         if (StateArrayIndex >= phases[PhaseIndex].GetBossAiStates.Length)
         {
             StateArrayIndex = 0;
@@ -255,8 +280,6 @@ public class Puck : MonoBehaviour
                     break;
                 case (BossStates.Immobile):
                     Immobile();
-                    break;
-                case (BossStates.SkillAnimation):
                     break;
                 case (BossStates.MovingToPosition):
                     MoveToPosition();
@@ -373,7 +396,7 @@ public class Puck : MonoBehaviour
 
     private void Attack()
     {
-        if(!MovingToPosition)
+        if(!MovingToPosition || !RotatingToPosition)
         {
             puckAnimations.IdleAnimator();
 
@@ -440,9 +463,11 @@ public class Puck : MonoBehaviour
 
     private void RotateToPosition()
     {
+        RotatingToPosition = true;
+
         Quaternion Rot = Quaternion.Euler(0, 180, 0);
 
-        transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime).normalized;
+        transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime);
 
         if (Quaternion.Angle(transform.rotation, Rot) <= 3.5f)
         {
@@ -451,24 +476,30 @@ public class Puck : MonoBehaviour
 
             states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
 
+            ChangingPhase = false;
             MovingToPosition = false;
+            RotatingToPosition = false;
         }
     }
 
     private void RotateToPositionTwo()
     {
+        RotatingToPosition = true;
+
         Quaternion Rot = Quaternion.Euler(0, 180, 0);
 
-        transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime).normalized;
+        transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime);
 
         if (Quaternion.Angle(transform.rotation, Rot) <= 3.5f)
         {
             StateArrayIndex = 0;
-            PhaseIndex = 6;
+            PhaseIndex = 5;
 
             states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
 
+            ChangingPhase = false;
             MovingToPosition = false;
+            RotatingToPosition = false;
         }
     }
 
@@ -476,18 +507,28 @@ public class Puck : MonoBehaviour
     {
         float HpCap = ((float)character.CurrentHealth / (float)character.MaxHealth) * 100f;
 
-        if(PhaseIndex < HpToChangePhase.Length)
+        //Debug.Log(HpCap);
+
+        if(HpPhaseIndex < HpToChangePhase.Length)
         {
-            if (HpCap <= HpToChangePhase[PhaseIndex])
+            if (HpCap <= HpToChangePhase[HpPhaseIndex])
             {
-                StateArrayIndex = 0;
-                PhaseIndex++;
+                ChangingPhase = true;
+
+                if(HpPhaseIndex < HpToChangePhase.Length)
+                {
+                    HpPhaseIndex++;
+                }
+
+                IncrementPhase();
 
                 states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
             }
         }
         else
         {
+            ChangingPhase = false;
+
             return;
         }
     }
@@ -716,6 +757,8 @@ public class Puck : MonoBehaviour
     public void ResetStats()
     {
         PlayParticle();
+
+        ChangingPhase = false;
 
         PlayerTarget = null;
 
