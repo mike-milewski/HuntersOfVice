@@ -980,5 +980,17 @@ public class StatusIcon : MonoBehaviour
                 RemoveEffect();
             }
         }
+
+        if(enemyTarget != null)
+        {
+            if(enemyTarget.GetComponent<Puck>())
+            {
+                if(enemyTarget.GetComponent<Puck>().GetIsReseted)
+                {
+                    RemoveEffect();
+                    enemyTarget.GetComponent<Puck>().GetIsReseted = false;
+                }
+            }
+        }
     }
 }

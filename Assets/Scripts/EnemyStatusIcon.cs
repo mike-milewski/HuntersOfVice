@@ -470,5 +470,14 @@ public class EnemyStatusIcon : MonoBehaviour
                 RemoveEffect();
             }
         }
+
+        if (character.GetComponent<Puck>())
+        {
+            if (character.GetComponent<Puck>().GetIsReseted)
+            {
+                RemoveEffect();
+                character.GetComponent<Puck>().GetIsReseted = false;
+            }
+        }
     }
 }

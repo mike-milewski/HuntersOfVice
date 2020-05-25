@@ -702,6 +702,8 @@ public class EnemyAI : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     private void ResetStats()
     {
+        StateArrayIndex = 0;
+
         if(!IsAnAdd)
         {
             if (IsHostile)

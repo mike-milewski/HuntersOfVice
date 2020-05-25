@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 198012437085011244}
   - component: {fileID: 199325216362033084}
   - component: {fileID: 114866300426486822}
-  - component: {fileID: 82214788374009314}
   - component: {fileID: 114005283434197770}
+  - component: {fileID: 82214788374009314}
   m_Layer: 0
   m_Name: WhirlwindSlash_Particle
   m_TagString: Untagged
@@ -4716,6 +4716,18 @@ MonoBehaviour:
   particleEffect: 2
   ps: {fileID: 198012437085011244}
   Duration: 0.7
+--- !u!114 &114005283434197770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419112641813760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &82214788374009314
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4812,15 +4824,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114005283434197770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1419112641813760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

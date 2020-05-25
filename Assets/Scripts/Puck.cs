@@ -124,7 +124,7 @@ public class Puck : MonoBehaviour
 
     private float DistanceToTarget;
 
-    private bool PlayerEntry, MovingToPosition, RotatingToPosition, ChangingPhase, PoisonMushroomsEnlarged;
+    private bool PlayerEntry, MovingToPosition, RotatingToPosition, ChangingPhase, PoisonMushroomsEnlarged, IsReseted, OnEnabled;
 
     private int StateArrayIndex;
 
@@ -230,11 +230,23 @@ public class Puck : MonoBehaviour
         }
     }
 
+    public bool GetIsReseted
+    {
+        get
+        {
+            return IsReseted;
+        }
+        set
+        {
+            IsReseted = value;
+        }
+    }
+
     public void IncreaseArray()
     {
         StateArrayIndex++;
 
-        if (StateArrayIndex >= phases[PhaseIndex].GetBossAiStates.Length)
+        if (StateArrayIndex >= phases[PhaseIndex].GetBossAiStates.Length || OnEnabled)
         {
             StateArrayIndex = 0;
         }
@@ -507,8 +519,6 @@ public class Puck : MonoBehaviour
     {
         float HpCap = ((float)character.CurrentHealth / (float)character.MaxHealth) * 100f;
 
-        //Debug.Log(HpCap);
-
         if(HpPhaseIndex < HpToChangePhase.Length)
         {
             if (HpCap <= HpToChangePhase[HpPhaseIndex])
@@ -613,6 +623,8 @@ public class Puck : MonoBehaviour
     {
         DisableWall1();
         DisableWall2();
+
+        KillAdds();
 
         PlayerTarget = null;
         AutoAttackTime = 0;
@@ -758,6 +770,10 @@ public class Puck : MonoBehaviour
     {
         PlayParticle();
 
+        OnEnabled = true;
+
+        IsReseted = true;
+
         ChangingPhase = false;
 
         PlayerTarget = null;
@@ -768,8 +784,8 @@ public class Puck : MonoBehaviour
         Idle();
 
         PhaseIndex = 0;
+        HpPhaseIndex = 0;
         StateArrayIndex = 0;
-
         AutoAttackTime = 0;
 
         transform.position = BossPosition.position;
@@ -793,11 +809,23 @@ public class Puck : MonoBehaviour
         DespawnAdds();
         ShrinkPoisonMushrooms();
         EnableMushroomObjs();
+
+        InvokeOnEnabledFalse();
+    }
+
+    private void InvokeOnEnabledFalse()
+    {
+        Invoke("OnEnabledOff", 0.5f);
+    }
+
+    private void OnEnabledOff()
+    {
+        OnEnabled = false;
     }
 
     private void PlayParticle()
     {
-        SpawnParticleEffect(new Vector3(BossPosition.position.x, BossPosition.position.y, BossPosition.position.z));
+        SpawnParticleEffect(new Vector3(BossPosition.position.x, BossPosition.position.y, BossPosition.position.z - 0.3f));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -1008,6 +1036,19 @@ public class Puck : MonoBehaviour
         for (int i = 0; i < AddsToSpawn.Length; i++)
         {
             AddsToSpawn[i].SetActive(false);
+        }
+    }
+
+    //Kills all enemies spawned by the boss if the boss dies while the adds are still alive.
+    private void KillAdds()
+    {
+        for(int i = 0; i < AddsToSpawn.Length; i++)
+        {
+            if (AddsToSpawn[i].activeInHierarchy)
+            {
+                AddsToSpawn[i].GetComponentInChildren<Health>().ModifyHealth(-AddsToSpawn[i].GetComponent<Character>().MaxHealth);
+            }
+            else return;
         }
     }
 
