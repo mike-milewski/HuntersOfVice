@@ -62,6 +62,7 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
         EnemyAnimator.SetBool("Skill3", false);
+        EnemyAnimator.SetBool("Skill4", false);
     }
 
     public void DamageAni()
@@ -99,11 +100,6 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill", true);
     }
 
-    public void WoodishSireAnimator()
-    {
-        EnemyAnimator.SetBool("WoodishSire", true);
-    }
-
     public void Skill2Animator()
     {
         EnemyAnimator.SetBool("Skill2", true);
@@ -112,6 +108,11 @@ public class PuckAnimations : MonoBehaviour
     public void VicePlanterCast()
     {
         EnemyAnimator.SetBool("Skill3", true);
+    }
+
+    public void WoodishSireAnimator()
+    {
+        EnemyAnimator.SetBool("Skill4", true);
     }
 
     public void SylvanStormAnim()
@@ -124,6 +125,7 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
         EnemyAnimator.SetBool("Skill3", false);
+        EnemyAnimator.SetBool("Skill4", false);
         EnemyAnimator.SetBool("SylvanStorm", false);
 
         enemyskills.GetActiveSkill = false;
@@ -138,7 +140,7 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
         EnemyAnimator.SetBool("Skill3", false);
-        EnemyAnimator.SetBool("WoodishSire", false);
+        EnemyAnimator.SetBool("Skill4", false);
     }
 
     public void IdleAnimator()
@@ -146,10 +148,10 @@ public class PuckAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Moving", false);
     }
 
-    public void SkillDamage()
+    public void PuckSkillDamage()
     {
-        enemyskills.SkillDamageText(enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
-                                    enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+        enemyskills.PuckSkillDamageText(enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                                        enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
     }
 
     public void SkillRadiusDamage()

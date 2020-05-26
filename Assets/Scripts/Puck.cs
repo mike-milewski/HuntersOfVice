@@ -973,6 +973,9 @@ public class Puck : MonoBehaviour
             AddsToSpawn[i].transform.position = MushroomObjs[i].transform.position;
 
             AddsToSpawn[i].transform.rotation = Quaternion.Euler(0, 180, 0);
+
+            AddsToSpawn[i].GetComponent<EnemySkills>().DisableRadiusImage();
+            AddsToSpawn[i].GetComponent<EnemySkills>().DisableRadius();
         }
     }
 

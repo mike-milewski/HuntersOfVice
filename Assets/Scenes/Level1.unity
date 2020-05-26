@@ -18600,6 +18600,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4113946509398354, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -3.1397776e-25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4113946509398354, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.6723467e-31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4780469800579470, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -6.8887084e-18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4780469800579470, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -1.2933311e-11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4780469800579470, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.021335857
+      objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: skills.Array.size
@@ -73075,12 +73095,32 @@ PrefabInstance:
       objectReference: {fileID: 593228419}
     - target: {fileID: 5148129804296659927, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
+      propertyPath: skills.Array.data[1].TextHolder
+      value: 
+      objectReference: {fileID: 2019092555}
+    - target: {fileID: 5148129804296659927, guid: 0717d70c0de52434486d20a500d4f6c4,
+        type: 3}
+      propertyPath: skills.Array.data[1].StatusEffectHolder
+      value: 
+      objectReference: {fileID: 2019092554}
+    - target: {fileID: 5148129804296659927, guid: 0717d70c0de52434486d20a500d4f6c4,
+        type: 3}
       propertyPath: skills.Array.data[2].TextHolder
       value: 
       objectReference: {fileID: 2019092555}
     - target: {fileID: 5148129804296659927, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
       propertyPath: skills.Array.data[2].StatusEffectHolder
+      value: 
+      objectReference: {fileID: 2019092554}
+    - target: {fileID: 5148129804296659927, guid: 0717d70c0de52434486d20a500d4f6c4,
+        type: 3}
+      propertyPath: skills.Array.data[3].TextHolder
+      value: 
+      objectReference: {fileID: 2019092555}
+    - target: {fileID: 5148129804296659927, guid: 0717d70c0de52434486d20a500d4f6c4,
+        type: 3}
+      propertyPath: skills.Array.data[3].StatusEffectHolder
       value: 
       objectReference: {fileID: 2019092554}
     - target: {fileID: 5148129804296659928, guid: 0717d70c0de52434486d20a500d4f6c4,
@@ -73188,11 +73228,6 @@ PrefabInstance:
       propertyPath: WallTrigger
       value: 
       objectReference: {fileID: 1085739650}
-    - target: {fileID: 8718885078731095356, guid: 0717d70c0de52434486d20a500d4f6c4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8880557281620605257, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
       propertyPath: cam
