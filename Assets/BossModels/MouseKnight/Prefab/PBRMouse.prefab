@@ -861,18 +861,18 @@ MonoBehaviour:
   enemyType: 1
   phases:
   - states:
+    - state: 3
+      SkillIndex: 0
+    - state: 3
+      SkillIndex: 0
+    - state: 4
+      SkillIndex: 0
+    - state: 3
+      SkillIndex: 0
+    - state: 3
+      SkillIndex: 0
     - state: 4
       SkillIndex: 3
-    - state: 3
-      SkillIndex: 0
-    - state: 3
-      SkillIndex: 0
-    - state: 4
-      SkillIndex: 0
-    - state: 3
-      SkillIndex: 0
-    - state: 3
-      SkillIndex: 0
     - state: 3
       SkillIndex: 0
     - state: 3
@@ -898,7 +898,7 @@ MonoBehaviour:
       SkillIndex: 0
   - states:
     - state: 8
-      SkillIndex: 0
+      SkillIndex: 3
   - states:
     - state: 4
       SkillIndex: 1
@@ -911,6 +911,12 @@ MonoBehaviour:
       SkillIndex: 0
     - state: 4
       SkillIndex: 2
+    - state: 3
+      SkillIndex: 0
+    - state: 3
+      SkillIndex: 0
+    - state: 4
+      SkillIndex: 3
   character: {fileID: 5148129804296659930}
   monsterBook: {fileID: 0}
   monsterInformation: {fileID: 114702138956978278, guid: 3b5ed524b56ab30458a90b74aebc013e,

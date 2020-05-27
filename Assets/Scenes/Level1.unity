@@ -8215,7 +8215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1990947038607044, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4065354233176234, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -8495,6 +8495,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
+--- !u!95 &247743962 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95413576933903280, guid: 4dcb2cf86daec2f49a5b6d63d254161a,
+    type: 3}
+  m_PrefabInstance: {fileID: 247743961}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &247743963 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4457827027645664, guid: 4dcb2cf86daec2f49a5b6d63d254161a,
+    type: 3}
+  m_PrefabInstance: {fileID: 247743961}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &248532431
 GameObject:
   m_ObjectHideFlags: 0
@@ -66426,7 +66438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e66154a214624e043a9333014e57babf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 247743962}
 --- !u!114 &1963535223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66439,27 +66451,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9442b4ad235a994f81bf749d8578ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelUpAnimation: {fileID: 0}
-  skillMenu: {fileID: 0}
-  Player: {fileID: 0}
-  ExperienceBar: {fileID: 0}
-  FillBarTwo: {fileID: 0}
+  levelUpAnimation: {fileID: 908207707}
+  skillMenu: {fileID: 1989243148}
+  Player: {fileID: 247743963}
+  ExperienceBar: {fileID: 914944553}
+  FillBarTwo: {fileID: 16141352}
   character: {fileID: 1963535228}
-  ExperienceText: {fileID: 0}
-  CharacterLevelText: {fileID: 0}
-  StatPointsTxt: {fileID: 0}
-  ExperienceTextParent: {fileID: 0}
-  ExperienceTextHolder: {fileID: 0}
-  StatusButton: {fileID: 0}
-  StatConfirmButton: {fileID: 0}
-  Stats: {fileID: 0}
-  LevelUpParticle: {fileID: 0}
+  ExperienceText: {fileID: 1560106077}
+  CharacterLevelText: {fileID: 2059034538}
+  StatPointsTxt: {fileID: 1332293474}
+  ExperienceTextParent: {fileID: 42236275}
+  ExperienceTextHolder: {fileID: 1973221308264212, guid: a92bfa09ac536724babad9c112ad28d0,
+    type: 3}
+  StatusButton: {fileID: 1871859370}
+  StatConfirmButton: {fileID: 1689971503}
+  Stats: {fileID: 326764282}
+  LevelUpParticle: {fileID: 198159274938206214, guid: 9e4577abe56a95f4a91d29a0473cd30c,
+    type: 3}
   ExperiencePoints: 0
-  NextToLevel: 0
-  MaxLevel: 0
+  NextToLevel: 100
+  MaxLevel: 20
   StatPoints: 0
-  StatPointIncrease: 0
-  FillValue: 0
+  StatPointIncrease: 2
+  FillValue: 0.04
 --- !u!114 &1963535224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66472,21 +66486,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e3b9a75e4a792d499824aaeb27ad83c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
-  settings: {fileID: 0}
-  HealTextTransform: {fileID: 0}
-  equipmentMenu: {fileID: 0}
-  equipment: []
-  cam: {fileID: 0}
-  playerAnimations: {fileID: 0}
+  character: {fileID: 1963535228}
+  settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
+  HealTextTransform: {fileID: 2019092555}
+  equipmentMenu: {fileID: 248532436}
+  equipment:
+  - {fileID: 0}
+  - {fileID: 0}
+  cam: {fileID: 696282350}
+  playerAnimations: {fileID: 1963535222}
   Target: {fileID: 0}
-  HitParticle: {fileID: 0}
+  HitParticle: {fileID: 198157547220164012, guid: 4961a16ba01e09547be3e1c9d16d5ad0,
+    type: 3}
   playerElement: 0
-  MouseRange: 0
-  AttackRange: 0
-  AttackDelay: 0
+  MouseRange: 23
+  AttackRange: 3
+  AttackDelay: 1
   AutoAttackTime: 0
-  HideStatsDistance: 0
+  HideStatsDistance: 14
 --- !u!114 &1963535225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66499,12 +66516,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f4c3555323a1df49b2b85acd602912e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ManaBar: {fileID: 0}
-  FillBarTwo: {fileID: 0}
+  ManaBar: {fileID: 1427971676}
+  FillBarTwo: {fileID: 749921530}
   character: {fileID: 1963535228}
-  characterMenu: {fileID: 0}
-  ManaText: {fileID: 0}
-  FillValue: 0
+  characterMenu: {fileID: 1850621120}
+  ManaText: {fileID: 1969840240}
+  FillValue: 0.04
   SpendingMana: 0
   UnlockedPassive: 0
 --- !u!114 &1963535226
@@ -66520,16 +66537,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 1963535228}
-  characterMenu: {fileID: 0}
-  HealthBar: {fileID: 0}
-  FillBarTwo: {fileID: 0}
-  DamageTextParent: {fileID: 0}
-  HealthText: {fileID: 0}
-  DamageTextHolder: {fileID: 0}
-  HealTextHolder: {fileID: 0}
-  HealthAnimationObj: {fileID: 0}
+  characterMenu: {fileID: 1850621120}
+  HealthBar: {fileID: 1809036571}
+  FillBarTwo: {fileID: 2049743752}
+  DamageTextParent: {fileID: 2019092554}
+  HealthText: {fileID: 642539363}
+  DamageTextHolder: {fileID: 1750289363352162, guid: 114998f983acadd4693d0842ae4c8ffd,
+    type: 3}
+  HealTextHolder: {fileID: 1750289363352162, guid: 114998f983acadd4693d0842ae4c8ffd,
+    type: 3}
+  HealthAnimationObj: {fileID: 1993174201}
   SleepHit: 0
-  FillValue: 0
+  FillValue: 0.04
 --- !u!114 &1963535227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66542,11 +66561,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef992a99fe86fce4ab23de8fa2147e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  animator: {fileID: 0}
+  cam: {fileID: 696282350}
+  animator: {fileID: 247743962}
   character: {fileID: 1963535228}
-  Speed: 0
-  LookRotation: 0
+  Speed: 4
+  LookRotation: 4
 --- !u!114 &1963535228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66559,7 +66578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4507c4bc4e5af241851f9be26ef58ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharData: {fileID: 0}
+  CharData: {fileID: 11400000, guid: 7c1c57dd76902ff4c985f00bd9401b4f, type: 2}
   _rigidBody: {fileID: 1963535230}
   CharacterLevel: 0
   Health: 0
