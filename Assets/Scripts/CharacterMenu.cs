@@ -6,7 +6,7 @@ using TMPro;
 public class CharacterMenu : MonoBehaviour
 {
     [SerializeField]
-    private Character character;
+    private Character character, Knight, ShadowPriest;
 
     [SerializeField]
     private TextMeshProUGUI CharacterName, Level, HP, MP, Strength, Defense, Intelligence;
@@ -55,12 +55,21 @@ public class CharacterMenu : MonoBehaviour
 
     private void OnEnable()
     {
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            character = Knight;
+        }
+        else if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            character = ShadowPriest;
+        }
+
         SetCharacterInfoText();
     }
 
     public void SetCharacterInfoText()
     {
-        CharacterName.text = character.GetCharacterData.name;
+        CharacterName.text = character.GetCharacterData.CharacterName;
         Level.text = "Level: " + character.Level.ToString();
         HP.text = "HP: " + "<#5DFFB4>" + character.CurrentHealth + "</color>" + " / " + "<#5DFFB4>" + character.MaxHealth + "</color>";
         MP.text = "MP: " + "<#41E6F3>" + character.CurrentMana + "</color>" + " / " + "<#41E6F3>" + character.MaxMana + "</color>";

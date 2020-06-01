@@ -16,7 +16,7 @@ MonoBehaviour:
   Resistances: 
   Immunities: 
   Absorbtions: 
-  CharacterName: 
+  CharacterName: Knight
   CharacterLevel: 1
   Health: 105
   Mana: 25

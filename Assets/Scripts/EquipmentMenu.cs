@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ using TMPro;
 public class EquipmentMenu : MonoBehaviour
 {
     [SerializeField]
-    private Character character;
+    private Character character, Knight, ShadowPriest;
 
     [SerializeField]
     private Equipment[] KnightEquipment;
@@ -54,6 +55,18 @@ public class EquipmentMenu : MonoBehaviour
         {
             IsOpened = value;
         }
+    }
+
+    private void OnEnable()
+    {
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            character = Knight;
+        }
+        else if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            character = ShadowPriest;
+        }       
     }
 
     private void Start()

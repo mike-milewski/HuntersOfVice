@@ -13,7 +13,7 @@ public class Experience : MonoBehaviour
     private GameObject skillMenu;
 
     [SerializeField]
-    private Transform Player;
+    private Transform Player, Knight, ShadowPriest;
 
     [SerializeField]
     private Image ExperienceBar, FillBarTwo;
@@ -100,6 +100,24 @@ public class Experience : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            Player = Knight;
+        }
+        else if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            Player = ShadowPriest;
+        }
+
+        character = GetComponent<Character>();
+
+        UpdateExperienceText();
+
+        UpdateCharacterLevel();
+    }
+
     private void Reset()
     {
         character = GetComponent<Character>();
@@ -107,13 +125,7 @@ public class Experience : MonoBehaviour
 
     private void Awake()
     {
-        character = GetComponent<Character>();
-
         ExperienceText.gameObject.SetActive(false);
-
-        UpdateExperienceText();
-
-        UpdateCharacterLevel();
     }
 
     public IEnumerator FillExperienceBar()

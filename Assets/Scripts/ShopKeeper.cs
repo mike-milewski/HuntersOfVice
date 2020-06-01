@@ -1,10 +1,10 @@
-﻿#pragma warning disable 0414
+﻿#pragma warning disable 0414, 0649
 using UnityEngine;
 
 public class ShopKeeper : MonoBehaviour
 {
     [SerializeField]
-    private Character character;
+    private Character character, Knight, ShadowPriest;
 
     [SerializeField]
     private Animator animator;
@@ -40,6 +40,18 @@ public class ShopKeeper : MonoBehaviour
         set
         {
             animator = value;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            character = Knight;
+        }
+        else if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            character = ShadowPriest;
         }
     }
 

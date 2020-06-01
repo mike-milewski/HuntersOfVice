@@ -3,7 +3,7 @@
 public class CamFollow : MonoBehaviour
 {
     [SerializeField]
-    private Transform Player;
+    private Transform Knight, ShadowPriest;
 
     [SerializeField]
     private Vector3 Offset;
@@ -20,10 +20,41 @@ public class CamFollow : MonoBehaviour
             Offset = CamTurn * Offset;
         }
 
-        Vector3 newpos = Player.position + Offset;
+        if(CheckKnightActive())
+        {
+            KnightPos();
+
+            transform.LookAt(Knight);
+        }
+        else if(CheckShadowPriestActive())
+        {
+            ShadowPriestPos();
+
+            transform.LookAt(ShadowPriest);
+        }
+    }
+
+    private bool CheckKnightActive()
+    {
+        return Knight.gameObject.activeInHierarchy;
+    }
+
+    private bool CheckShadowPriestActive()
+    {
+        return ShadowPriest.gameObject.activeInHierarchy;
+    }
+
+    private void KnightPos()
+    {
+        Vector3 newpos = Knight.position + Offset;
 
         transform.position = Vector3.Slerp(transform.position, newpos, SmoothFactor);
+    }
 
-        transform.LookAt(Player);
+    private void ShadowPriestPos()
+    {
+        Vector3 newpos = ShadowPriest.position + Offset;
+
+        transform.position = Vector3.Slerp(transform.position, newpos, SmoothFactor);
     }
 }
