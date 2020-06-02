@@ -87,11 +87,11 @@ public class ToggleSkillsMask : MonoBehaviour
         {
             foreach (Mask m in ShadowPriestSkills[i].GetComponentsInChildren<Mask>())
             {
-                m.showMaskGraphic = true;
+                m.showMaskGraphic = false;
             }
             foreach (Image img in ShadowPriestSkills[i].GetComponentsInChildren<Image>())
             {
-                img.raycastTarget = true;
+                img.raycastTarget = false;
             }
         }
     }

@@ -761,6 +761,8 @@ public class EnemyAI : MonoBehaviour
         {
             PlayerTarget = other.GetComponent<Character>();
             states = States.Chase;
+
+            enemy.GetExperience = other.gameObject.GetComponent<Experience>();
         }
     }
 

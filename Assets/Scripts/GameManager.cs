@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
     private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel, ItemDescriptionPanel;
 
     [SerializeField]
+    private GameObject[] KnightSkills, ShadowPriestSkills;
+
+    [SerializeField]
     private float RespawnTime;
 
     private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating;
@@ -296,6 +299,24 @@ public class GameManager : MonoBehaviour
         set
         {
             IsInInventory = value;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if(Knight.activeInHierarchy)
+        {
+            for(int i = 0; i < KnightSkills.Length; i++)
+            {
+                KnightSkills[i].SetActive(true);
+            }
+        }
+        else if(ShadowPriest.activeInHierarchy)
+        {
+            for (int i = 0; i < ShadowPriestSkills.Length; i++)
+            {
+                ShadowPriestSkills[i].SetActive(true);
+            }
         }
     }
 

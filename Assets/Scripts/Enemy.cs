@@ -161,6 +161,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public Experience GetExperience
+    {
+        get
+        {
+            return EXP;
+        }
+        set
+        {
+            EXP = value;
+        }
+    }
+
     public GameObject GetLocalHealth
     {
         get
