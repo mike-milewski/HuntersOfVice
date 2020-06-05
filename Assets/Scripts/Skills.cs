@@ -342,6 +342,74 @@ public class Skills : StatusEffects
         }
     }
 
+    public void Shatter()
+    {
+        SkillsManager.Instance.GetActivatedSkill = true;
+
+        if (skillbar.GetSkillBar.fillAmount < 1)
+        {
+            skillbar.gameObject.SetActive(true);
+
+            skillbar.GetSkill = this.button.GetComponent<Skills>();
+
+            GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+        }
+        if (skillbar.GetSkillBar.fillAmount >= 1)
+        {
+            SkillsManager.Instance.GetActivatedSkill = false;
+
+            SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+            if (settings.UseParticleEffects)
+            {
+                SkillParticle = ObjectPooler.Instance.GetHealParticle();
+
+                SkillParticle.SetActive(true);
+
+                SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z);
+
+                SkillParticle.transform.SetParent(GetCharacter.transform, true);
+            }
+            SoundManager.Instance.Heal();
+
+            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
+            GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+
+            Invoke("InvokeShatter", ApplySkill);
+        }
+    }
+
+    private void InvokeShatter()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            if (DistanceToAttack() <= AttackRange)
+            {
+                FacingEnemy = true;
+
+                TextHolder = Target.GetUI;
+
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                this.CoolDownImage.fillAmount = 1;
+
+                SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
+    }
+
     public void Heal()
     {
         SkillsManager.Instance.GetActivatedSkill = true;
@@ -383,6 +451,24 @@ public class Skills : StatusEffects
     public void Tenacity()
     {
         if(settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
+
+            SkillParticle.transform.SetParent(GetCharacter.transform);
+        }
+
+        SkillsManager.Instance.GetActivatedSkill = true;
+
+        SkillCast();
+    }
+
+    public void Contract()
+    {
+        if (settings.UseParticleEffects)
         {
             SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
 

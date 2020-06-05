@@ -270,4 +270,9 @@ public class PlayerAnimations : MonoBehaviour
     {
         SoundManager.Instance.SwordHit();
     }
+
+    public void PlayStaffHit()
+    {
+        SoundManager.Instance.StaffHit();
+    }
 }
