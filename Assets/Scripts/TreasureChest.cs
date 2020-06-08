@@ -89,7 +89,7 @@ public class TreasureChest : MonoBehaviour
 
             ItemMessage.GetComponentInChildren<RawImage>().texture = equipments[0].GetEquipmentSprite.texture;
         }
-        else if(ShadowPriest.gameObject.activeInHierarchy)
+        if(ShadowPriest.gameObject.activeInHierarchy)
         {
             ItemMessage.GetComponentInChildren<TextMeshProUGUI>().text = equipments[1].GetEquipmentData.EquipmentName;
 

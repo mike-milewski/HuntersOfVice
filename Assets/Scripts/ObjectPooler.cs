@@ -123,6 +123,7 @@ public class ObjectPooler : MonoBehaviour
         AddSylvanStormParticle(poolcontroller[33].GetPoolAmount);
         AddEnemyAppearParticle(poolcontroller[34].GetPoolAmount);
         AddVicePlanterParticle(poolcontroller[35].GetPoolAmount);
+        AddShatterParticle(poolcontroller[36].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -557,6 +558,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddShatterParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[36].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[36].GetPoolParent.transform, false);
+            poolcontroller[36].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -735,6 +748,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetVicePlanterParticle()
     {
         return poolcontroller[35].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetShatterParticle()
+    {
+        return poolcontroller[36].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1018,6 +1036,12 @@ public class ObjectPooler : MonoBehaviour
     public void ReturnVicePlanterParticleToPool(GameObject Object)
     {
         poolcontroller[35].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnShatterParticleToPool(GameObject Object)
+    {
+        poolcontroller[36].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

@@ -148,6 +148,8 @@ public class Mana : MonoBehaviour
         ManaText.text = Mathf.Clamp(character.CurrentMana, 0, character.MaxMana).ToString();
 
         ManaBar.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
+
+        FillBarTwo.fillAmount = (float)character.CurrentMana / (float)character.MaxMana;
     }
 
     public int RestoreMana()

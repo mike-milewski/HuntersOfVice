@@ -3,10 +3,22 @@
 public class ConfirmStat : MonoBehaviour
 {
     [SerializeField]
-    private GameObject StatusButton, Stats, StatPointsText, StatParent;
+    private Character Knight, ShadowPriest;
+
+    [SerializeField]
+    private GameObject StatusButton, Stats, StatParent;
 
     public void ConfirmStatus(Experience experience)
     {
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            experience = Knight.GetComponent<Experience>();
+        }
+        else if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            experience = ShadowPriest.GetComponent<Experience>();
+        }
+
         if(!GameManager.Instance.GetIsDead)
         {
             experience.GetMaxStatPoints = experience.GetStatPoints;
@@ -16,7 +28,6 @@ public class ConfirmStat : MonoBehaviour
             if (experience.GetStatPoints <= 0)
             {
                 Stats.SetActive(false);
-                StatPointsText.SetActive(false);
 
                 StatusButton.GetComponent<Animator>().SetBool("StatPoints", false);
                 gameObject.SetActive(false);

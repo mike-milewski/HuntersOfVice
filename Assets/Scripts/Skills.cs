@@ -344,44 +344,6 @@ public class Skills : StatusEffects
 
     public void Shatter()
     {
-        SkillsManager.Instance.GetActivatedSkill = true;
-
-        if (skillbar.GetSkillBar.fillAmount < 1)
-        {
-            skillbar.gameObject.SetActive(true);
-
-            skillbar.GetSkill = this.button.GetComponent<Skills>();
-
-            GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
-        }
-        if (skillbar.GetSkillBar.fillAmount >= 1)
-        {
-            SkillsManager.Instance.GetActivatedSkill = false;
-
-            SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
-
-            if (settings.UseParticleEffects)
-            {
-                SkillParticle = ObjectPooler.Instance.GetHealParticle();
-
-                SkillParticle.SetActive(true);
-
-                SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z);
-
-                SkillParticle.transform.SetParent(GetCharacter.transform, true);
-            }
-            SoundManager.Instance.Heal();
-
-            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
-
-            GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
-
-            Invoke("InvokeShatter", ApplySkill);
-        }
-    }
-
-    private void InvokeShatter()
-    {
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
         if (Target != null)
@@ -394,9 +356,28 @@ public class Skills : StatusEffects
 
                 SkillsManager.Instance.GetActivatedSkill = true;
 
-                this.CoolDownImage.fillAmount = 1;
+                if (skillbar.GetSkillBar.fillAmount < 1)
+                {
+                    skillbar.gameObject.SetActive(true);
 
-                SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+                    skillbar.GetSkill = this.button.GetComponent<Skills>();
+
+                    GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                }
+                if (skillbar.GetSkillBar.fillAmount >= 1)
+                {
+                    this.CoolDownImage.fillAmount = 1;
+
+                    SkillsManager.Instance.GetActivatedSkill = false;
+
+                    SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                    GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
+                    GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+
+                    Invoke("InvokeShatter", ApplySkill);
+                }
             }
             else
             {
@@ -407,6 +388,39 @@ public class Skills : StatusEffects
         {
             GameManager.Instance.InvalidTargetText();
             TextHolder = null;
+        }
+    }
+
+    private void InvokeShatter()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetShatterParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z);
+
+            SkillParticle.transform.SetParent(GetCharacter.transform, true);
+        }
+
+        if(Target.GetComponent<Puck>())
+        {
+            if (Target.GetPuckAI.GetPlayerTarget == null)
+            {
+                Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+            }
+            else return;
+        }
+        else
+        {
+            if (Target.GetAI.GetPlayerTarget == null)
+            {
+                Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+            }
+            else return;
         }
     }
 

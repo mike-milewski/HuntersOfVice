@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+using UnityEngine;
 
 public class LowHpAnimation : MonoBehaviour
 {
@@ -7,6 +8,18 @@ public class LowHpAnimation : MonoBehaviour
 
     [SerializeField]
     private Animator _animator;
+
+    public Character GetCharacter
+    {
+        get
+        {
+            return character;
+        }
+        set
+        {
+            character = value;
+        }
+    }
 
     public Animator GetAnimator
     {

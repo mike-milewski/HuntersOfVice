@@ -220,12 +220,26 @@ public class Equipment : MonoBehaviour
             {
                 case (StatIncreaseType.HP):
                     character.MaxHealth -= stattype[i].GetStatIncrease;
-                    character.GetCharacterData.Health = character.MaxHealth;
+                    if (character.CurrentHealth > character.MaxHealth)
+                    {
+                        character.CurrentHealth = character.MaxHealth;
+                    }
+                    else
+                    {
+                        character.GetCharacterData.Health = character.MaxHealth;
+                    }
                     character.GetComponent<Health>().GetFilledBar();
                     break;
                 case (StatIncreaseType.MP):
                     character.MaxMana -= stattype[i].GetStatIncrease;
-                    character.GetCharacterData.Mana = character.MaxMana;
+                    if(character.CurrentMana > character.MaxMana)
+                    {
+                        character.CurrentMana = character.MaxMana;
+                    }
+                    else
+                    {
+                        character.GetCharacterData.Mana = character.MaxMana;
+                    }
                     character.GetComponent<Mana>().GetFilledBar();
                     break;
                 case (StatIncreaseType.Strength):

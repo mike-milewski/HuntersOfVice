@@ -6,7 +6,7 @@ public enum StatType { HP, MP, Strength, Defense, Intelligence }
 public class StatUpgrade : MonoBehaviour
 {
     [SerializeField]
-    private Character character;
+    private Character character = null, Knight, ShadowPriest;
 
     [SerializeField]
     private Experience experience;
@@ -43,6 +43,20 @@ public class StatUpgrade : MonoBehaviour
         set
         {
             character = value;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            character = Knight;
+            experience = Knight.GetComponent<Experience>();
+        }
+        if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            character = ShadowPriest;
+            experience = ShadowPriest.GetComponent<Experience>();
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable 0649
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,7 @@ public class SkillsManager : MonoBehaviour
     public static SkillsManager Instance = null;
 
     [SerializeField]
-    private Character character;
+    private Character character, Knight, ShadowPriest;
 
     [SerializeField]
     private CharacterMenu characterMenu;
@@ -136,6 +137,18 @@ public class SkillsManager : MonoBehaviour
         set
         {
             enemystatusIcon = value;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            character = Knight;
+        }
+        else if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            character = ShadowPriest;
         }
     }
 

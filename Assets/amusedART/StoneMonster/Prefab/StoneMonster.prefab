@@ -2881,6 +2881,7 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 1665829960}
   enemyAI: {fileID: 1665829959}
+  puckAI: {fileID: 0}
   enemySkills: {fileID: 1665829958}
   SkillBarFillImage: {fileID: 1344410886}
   SkillName: {fileID: 1675346858}
@@ -3159,6 +3160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinnedMeshRenderer: {fileID: 137944918822585846}
+  meshRenderer: {fileID: 0}
   AlphaMaterial: {fileID: 2100000, guid: 1e77fe9a9a66b534fa60c4c04cc5ad6d, type: 2}
   OpaqueMaterial: {fileID: 2100000, guid: 76efd4c3dc867d841b0a4c3eccc81a15, type: 2}
   ParentObject: {fileID: 1713781036754730}
@@ -3388,7 +3390,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 1665829955}
   enemyAnimations: {fileID: 1665829957}
+  puckAnimations: {fileID: 0}
   enemyAI: {fileID: 1665829959}
+  puckAI: {fileID: 0}
   health: {fileID: 1711875301}
   enemySkills: {fileID: 1665829958}
   enemy: {fileID: 1665829960}
@@ -3419,13 +3423,17 @@ MonoBehaviour:
   states: 0
   enemyType: 0
   aiStates:
-  - state: 3
-    SkillIndex: 0
-  - state: 3
+  - state: 4
     SkillIndex: 0
   - state: 4
     SkillIndex: 0
+  - state: 4
+    SkillIndex: 0
+  - state: 5
+    SkillIndex: 0
   character: {fileID: 1665829955}
+  Knight: {fileID: 0}
+  ShadowPriest: {fileID: 0}
   monsterBook: {fileID: 0}
   monsterInformation: {fileID: 114702138956978278, guid: 3b5ed524b56ab30458a90b74aebc013e,
     type: 3}
@@ -3450,6 +3458,7 @@ MonoBehaviour:
   DocileSprite: {fileID: 21300000, guid: 1e1e9c17372152a42a972ac8f0074e6a, type: 3}
   ThreatSprite: {fileID: 21300000, guid: 43a17ebdf749ab5499e13424f6a7b7fd, type: 3}
   IsHostile: 1
+  IsAnAdd: 0
   IsUsingAnimator: 0
 --- !u!114 &1665829958
 MonoBehaviour:
@@ -3465,7 +3474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skills:
   - skills: 9
-    enemyElement: 4
+    enemyElement: 7
     status: 0
     shapes: 0
     StatusSprite: {fileID: 0}
@@ -3493,8 +3502,10 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 1665829960}
   enemyAI: {fileID: 1665829959}
+  puckAI: {fileID: 0}
   skillBar: {fileID: 1739909697}
   damageRadius: {fileID: 2123347077}
+  puckDamageRadius: {fileID: 0}
   health: {fileID: 1711875301}
   ActiveSkill: 0
   DisruptedSkill: 0
@@ -3514,6 +3525,7 @@ MonoBehaviour:
   EnemyAnimator: {fileID: 0}
   animator: {fileID: 1711875300}
   AI: {fileID: 1665829959}
+  puckAI: {fileID: 0}
   enemyskills: {fileID: 1665829958}
   damageradius: {fileID: 2123347077}
   changeEnemyMaterial: {fileID: 1665829965}

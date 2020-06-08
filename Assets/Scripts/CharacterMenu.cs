@@ -59,7 +59,7 @@ public class CharacterMenu : MonoBehaviour
         {
             character = Knight;
         }
-        else if(ShadowPriest.gameObject.activeInHierarchy)
+        if(ShadowPriest.gameObject.activeInHierarchy)
         {
             character = ShadowPriest;
         }

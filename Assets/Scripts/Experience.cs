@@ -106,7 +106,7 @@ public class Experience : MonoBehaviour
         {
             Player = Knight;
         }
-        else if(ShadowPriest.gameObject.activeInHierarchy)
+        if(ShadowPriest.gameObject.activeInHierarchy)
         {
             Player = ShadowPriest;
         }

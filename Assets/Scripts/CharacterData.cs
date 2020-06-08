@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-public enum ElementalWeaknesses { NONE, Physical, Fire, Water, Wind, Earth, Light, Dark }
+public enum ElementalWeaknesses { NONE, Physical, Magic, Fire, Water, Wind, Earth, Light, Dark }
 
-public enum ElementalResistances { NONE, Physical, Fire, Water, Wind, Earth, Light, Dark }
+public enum ElementalResistances { NONE, Physical, Magic, Fire, Water, Wind, Earth, Light, Dark }
 
-public enum ElementalImmunities { NONE, Physical, Fire, Water, Wind, Earth, Light, Dark }
+public enum ElementalImmunities { NONE, Physical, Magic, Fire, Water, Wind, Earth, Light, Dark }
 
-public enum ElementalAbsorbtion { NONE, Physical, Fire, Water, Wind, Earth, Light, Dark }
+public enum ElementalAbsorbtion { NONE, Physical, Magic, Fire, Water, Wind, Earth, Light, Dark }
 
 [CreateAssetMenu(fileName = "CharacterStats", menuName = "Character Class")]
 public class CharacterData : ScriptableObject

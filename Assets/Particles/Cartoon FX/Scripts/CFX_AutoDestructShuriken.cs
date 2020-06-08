@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticle, Heal, CastParticle, EnemyCastParticle, PoisonSpore, HpItem, MpItem,
                              StrengthUp, RemoveStatus, StunningStinger, Illumination, Hop, GaiasProwess, SylvanBlessing, Slam, Slag, SylvanStorm, EnemyAppear,
-                             VicePlanter }
+                             VicePlanter, Shatter }
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -101,6 +101,9 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
                 break;
             case (ParticleEffect.VicePlanter):
                 ObjectPooler.Instance.ReturnVicePlanterParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.Shatter):
+                ObjectPooler.Instance.ReturnShatterParticleToPool(gameObject);
                 break;
         }
     }

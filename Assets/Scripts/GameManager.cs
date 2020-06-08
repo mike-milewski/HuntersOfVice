@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     private EquipmentMenu equipmentMenu;
 
     [SerializeField]
+    private LowHpAnimation lowHpAnimation;
+
+    [SerializeField]
     private Camera cam;
 
     [SerializeField]
@@ -309,6 +312,7 @@ public class GameManager : MonoBehaviour
             for(int i = 0; i < KnightSkills.Length; i++)
             {
                 KnightSkills[i].SetActive(true);
+                lowHpAnimation.GetCharacter = Knight.GetComponent<Character>();
             }
         }
         else if(ShadowPriest.activeInHierarchy)
@@ -316,6 +320,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < ShadowPriestSkills.Length; i++)
             {
                 ShadowPriestSkills[i].SetActive(true);
+                lowHpAnimation.GetCharacter = ShadowPriest.GetComponent<Character>();
             }
         }
     }

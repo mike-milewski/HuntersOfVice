@@ -6,16 +6,16 @@ using TMPro;
 public class SkillBar : MonoBehaviour
 {
     [SerializeField]
-    private Character character;
+    private Character character, Knight, ShadowPriest;
 
     [SerializeField]
     private Settings settings;
 
     [SerializeField]
-    private PlayerController playerController;
+    private PlayerController playerController, KnightController, ShadowPriestController;
 
     [SerializeField]
-    private PlayerAnimations playerAnimations;
+    private PlayerAnimations playerAnimations, KnightAnimations, ShadowPriestAnimations;
 
     private Skills skills;
 
@@ -58,6 +58,19 @@ public class SkillBar : MonoBehaviour
 
     private void OnEnable()
     {
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            character = Knight;
+            playerController = KnightController;
+            playerAnimations = KnightAnimations;
+        }
+        else if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            character = ShadowPriest;
+            playerController = ShadowPriestController;
+            playerAnimations = ShadowPriestAnimations;
+        }
+
         if(settings.UseParticleEffects)
         {
             CastParticle = ObjectPooler.Instance.GetPlayerCastParticle();
