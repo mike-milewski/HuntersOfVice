@@ -1042,13 +1042,13 @@ MonoBehaviour:
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
   items: []
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 2101625062}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 4
+  LevelRequirement: 1
   SkillImage: {fileID: 15300174}
   skill: {fileID: 1435469172}
   skilltype: 0
@@ -1155,7 +1155,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 94b0e873d745c1f458b1b2b03f92c2a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6758a70896742dd4fb277ae7d3c72a4a, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2828,14 +2828,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c056b96c10bed429285bf87eeab52d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerStatusEffect: 7
+  PlayerStatusEffect: 13
   EnemystatusEffect: 0
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
   StatusEffectIconTrans: {fileID: 1486375004}
-  StatusEffectName: Tenacity
-  StatusDescription: Increased strength
-  StatusDuration: 15
+  StatusEffectName: Contract With Evil
+  StatusDescription: Increased intelligence, decreased defense
+  StatusDuration: -1
   playerElement: 0
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   skillbar: {fileID: 2122115158}
@@ -2848,8 +2848,8 @@ MonoBehaviour:
   CoolDownText: {fileID: 1115316478}
   StatusEffectText: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
     type: 3}
-  SkillParticleParent: {fileID: 1474654874}
-  CoolDown: 60
+  SkillParticleParent: {fileID: 247743963}
+  CoolDown: 0
   AttackRange: 0
   ApplySkill: 0.3
   StatusEffectPotency: 10
@@ -2860,8 +2860,8 @@ MonoBehaviour:
   Potency: 0
   CastTime: 0
   index: 0
-  SkillName: Tenacity
-  SkillDescription: Increases strength by 10%.
+  SkillName: Contract With Evil
+  SkillDescription: Increases intelligence by 10% and decreases defense by 15%.
 --- !u!114 &46906085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2980,7 +2980,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 46906084}
-        m_MethodName: Tenacity
+        m_MethodName: Contract
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3008,7 +3008,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a0329dd5264e7594ab54b5a639d53e7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bc6a36db79d6d2a4c83617fffe311a7c, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -24676,7 +24676,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 2
+  LevelRequirement: 1
   SkillImage: {fileID: 692324949}
   skill: {fileID: 46906079}
   skilltype: 0
@@ -24783,7 +24783,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a0329dd5264e7594ab54b5a639d53e7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bc6a36db79d6d2a4c83617fffe311a7c, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -52568,15 +52568,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStatusEffect: 0
-  EnemystatusEffect: 11
-  character: {fileID: 601881691}
+  EnemystatusEffect: 0
+  character: {fileID: 1963535228}
   StatusIcon: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf, type: 3}
   StatusEffectIconTrans: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
     type: 3}
   StatusEffectName: Defense Down
   StatusDescription: Lowered Defense
   StatusDuration: 15
-  playerElement: 1
+  playerElement: 5
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   skillbar: {fileID: 2122115158}
   CoolDownImage: {fileID: 1263388596}
@@ -52590,19 +52590,19 @@ MonoBehaviour:
   StatusEffectText: {fileID: 1839082241841786, guid: 56933e54bfcaab94ba68a71bdd8393d1,
     type: 3}
   SkillParticleParent: {fileID: 0}
-  CoolDown: 3
-  AttackRange: 7
+  CoolDown: 10
+  AttackRange: 3
   ApplySkill: 0
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
   GainedPassive: 0
   UsesHunterGauge: 0
-  ManaCost: 4
-  Potency: 25
+  ManaCost: 5
+  Potency: 40
   CastTime: 0
   index: 0
-  SkillName: Storm Thrust
-  SkillDescription: Strike a target from a distance.
+  SkillName: Diabolic Lightning
+  SkillDescription: Elecrify all targets in range with malicious lightning.
 --- !u!114 &1435469178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52721,7 +52721,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1435469177}
-        m_MethodName: StormThrust
+        m_MethodName: DiabolicLightning
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -52749,7 +52749,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 94b0e873d745c1f458b1b2b03f92c2a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6758a70896742dd4fb277ae7d3c72a4a, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

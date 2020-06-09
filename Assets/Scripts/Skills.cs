@@ -424,6 +424,26 @@ public class Skills : StatusEffects
         }
     }
 
+    public void Alleviate()
+    {
+
+    }
+
+    private void InvokeAlleviate()
+    {
+
+    }
+
+    public void DiabolicLightning()
+    {
+        Invoke("InvokeDiabolocLightning", ApplySkill);
+    }
+
+    private void InvokeDiabolicLightning()
+    {
+        SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 3f);
+    }
+
     public void Heal()
     {
         SkillsManager.Instance.GetActivatedSkill = true;

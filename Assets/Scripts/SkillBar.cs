@@ -123,6 +123,7 @@ public class SkillBar : MonoBehaviour
             SkillBarImage.fillAmount = 0;
             CastTime = skills.GetCastTime;
             SkillsManager.Instance.GetActivatedSkill = false;
+            skills.GetFacingEnemy = false;
             gameObject.SetActive(false);
         }
     }

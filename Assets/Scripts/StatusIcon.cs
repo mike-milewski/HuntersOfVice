@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, BloodAndSinew }
+                           IntelligenceDOWN, ContractWithEvil }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -178,6 +178,13 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#FA2900>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
+            case (EffectStatus.ContractWithEvil):
+                IntelligenceUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
+                DefenseDOWN(15);
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FA2900>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
             case (EffectStatus.Haste):
                 Haste((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
                 break;
@@ -317,6 +324,13 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.IntelligenceUP):
                 SetIntelligenceToDefault();
                 SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.ContractWithEvil):
+                SetIntelligenceToDefault();
+                SetDefenseToDefault();
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FFFFFF>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.Haste):
