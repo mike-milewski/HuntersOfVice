@@ -960,7 +960,7 @@ MonoBehaviour:
   BossRotation: {x: 0, y: 180, z: 0, w: 0}
   PhaseIndex: 0
   HpPhaseIndex: 0
-  HpToChangePhase: 6300000050000000
+  HpToChangePhase: 460000001e000000
 --- !u!114 &5148129804296659928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1010,7 +1010,7 @@ MonoBehaviour:
     enemyElement: 0
     status: 8
     shapes: 0
-    StatusSprite: {fileID: 21300000, guid: c144ece9d040e1349bc5e660a04eb618, type: 3}
+    StatusSprite: {fileID: 21300000, guid: 7128eab6eed758142bec7ac1e77fe953, type: 3}
     StatusIcon: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf,
       type: 3}
     TextHolder: {fileID: 5904983751166596068}

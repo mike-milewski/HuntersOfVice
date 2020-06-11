@@ -42,7 +42,7 @@ public class Skills : StatusEffects
     private Transform SkillParticleParent;
 
     [SerializeField]
-    private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency, HpAndDamageOverTimeTick;
+    private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency, HpAndDamageOverTimeTick, AreaOfEffectRange, InstantKnockOutValue;
 
     private float AttackDistance;
 
@@ -53,7 +53,7 @@ public class Skills : StatusEffects
     private bool StormThrustActivated, FacingEnemy;
 
     [SerializeField]
-    private bool GainedPassive, UsesHunterGauge;
+    private bool GainedPassive, UsesHunterGauge, UnlockedBonus;
 
     [SerializeField]
     private int ManaCost, Potency;
@@ -170,6 +170,18 @@ public class Skills : StatusEffects
         }
     }
 
+    public float GetInstantKnockOutValue
+    {
+        get
+        {
+            return InstantKnockOutValue;
+        }
+        set
+        {
+            InstantKnockOutValue = value;
+        }
+    }
+
     public float GetHpAndDamageOverTimeTick
     {
         get
@@ -191,6 +203,18 @@ public class Skills : StatusEffects
         set
         {
             CoolDown = value;
+        }
+    }
+
+    public float GetAreaOfEffectRange
+    {
+        get
+        {
+            return AreaOfEffectRange;
+        }
+        set
+        {
+            AreaOfEffectRange = value;
         }
     }
 
@@ -368,12 +392,15 @@ public class Skills : StatusEffects
                 {
                     this.CoolDownImage.fillAmount = 1;
 
+                    FacingEnemy = false;
+
                     SkillsManager.Instance.GetActivatedSkill = false;
 
                     SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
                     GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
+                    GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
                     GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
 
                     Invoke("InvokeShatter", ApplySkill);
@@ -403,24 +430,75 @@ public class Skills : StatusEffects
 
             SkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z);
 
-            SkillParticle.transform.SetParent(GetCharacter.transform, true);
+            SkillParticle.transform.SetParent(Target.transform, true);
         }
 
-        if(Target.GetComponent<Puck>())
+        if(Target != null)
         {
-            if (Target.GetPuckAI.GetPlayerTarget == null)
+            if (GainedPassive)
             {
-                Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                if (Random.value * 100 <= InstantKnockOutValue)
+                {
+                    if(!Target.GetComponent<Puck>() && !Target.GetComponent<VineGolem>() && !Target.GetComponent<SylvanDiety>())
+                    {
+                        Target.GetHealth.ModifyHealth(-Target.GetCharacter.MaxHealth);
+                    }
+                    else
+                    {
+                        if (Target.GetComponent<Puck>())
+                        {
+                            if (Target.GetPuckAI.GetPlayerTarget == null)
+                            {
+                                Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                                Target.GetPuckAI.GetStates = BossStates.Chase;
+                            }
+                            else return;
+                        }
+                    }
+                }
+                else
+                {
+                    if (Target.GetComponent<Puck>())
+                    {
+                        if (Target.GetPuckAI.GetPlayerTarget == null)
+                        {
+                            Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                            Target.GetPuckAI.GetStates = BossStates.Chase;
+                        }
+                        else return;
+                    }
+                    else
+                    {
+                        if (Target.GetAI.GetPlayerTarget == null)
+                        {
+                            Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                            Target.GetAI.GetStates = States.Chase;
+                        }
+                        else return;
+                    }
+                }
             }
-            else return;
-        }
-        else
-        {
-            if (Target.GetAI.GetPlayerTarget == null)
+            else
             {
-                Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                if (Target.GetComponent<Puck>())
+                {
+                    if (Target.GetPuckAI.GetPlayerTarget == null)
+                    {
+                        Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                        Target.GetPuckAI.GetStates = BossStates.Chase;
+                    }
+                    else return;
+                }
+                else
+                {
+                    if (Target.GetAI.GetPlayerTarget == null)
+                    {
+                        Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                        Target.GetAI.GetStates = States.Chase;
+                    }
+                    else return;
+                }
             }
-            else return;
         }
     }
 
@@ -441,7 +519,7 @@ public class Skills : StatusEffects
 
     private void InvokeDiabolicLightning()
     {
-        SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 3f);
+        SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, AreaOfEffectRange);
     }
 
     public void Heal()
@@ -502,20 +580,27 @@ public class Skills : StatusEffects
 
     public void Contract()
     {
-        if (settings.UseParticleEffects)
+        if(GetStatusIcon.activeInHierarchy)
         {
-            SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
-
-            SkillParticle.SetActive(true);
-
-            SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
-
-            SkillParticle.transform.SetParent(GetCharacter.transform);
+            GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
         }
+        else
+        {
+            if (settings.UseParticleEffects)
+            {
+                SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
 
-        SkillsManager.Instance.GetActivatedSkill = true;
+                SkillParticle.SetActive(true);
 
-        SkillCast();
+                SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
+
+                SkillParticle.transform.SetParent(GetCharacter.transform);
+            }
+
+            SkillsManager.Instance.GetActivatedSkill = true;
+
+            SkillCast();
+        }
     }
 
     public void Illumination()
@@ -941,6 +1026,8 @@ public class Skills : StatusEffects
 
             DamageTxt.transform.SetParent(TextHolder.transform, false);
 
+            int DamageType = GetCharacter.GetCharacterData.CharacterName == "Knight" ? GetCharacter.CharacterStrength : GetCharacter.CharacterIntelligence;
+
             var Critical = GetCharacter.GetCriticalChance;
 
             #region CriticalHitChance
@@ -952,7 +1039,7 @@ public class Skills : StatusEffects
 
                 if(CheckWeaknesses())
                 {
-                    int WeakDamage = (GetCharacter.CharacterStrength * 2) + (int)CritValue;
+                    int WeakDamage = (DamageType * 2) + (int)CritValue;
 
                     if(WeakDamage - Target.GetCharacter.CharacterDefense < 0)
                     {
@@ -972,7 +1059,7 @@ public class Skills : StatusEffects
                 }
                 else if(CheckResistances())
                 {
-                    float ResistValue = (GetCharacter.CharacterStrength + (int)CritValue) / 1.25f;
+                    float ResistValue = (DamageType + (int)CritValue) / 1.25f;
 
                     Mathf.RoundToInt(ResistValue);
 
@@ -999,7 +1086,7 @@ public class Skills : StatusEffects
                 }
                 else if(CheckAbsorptions())
                 {
-                    if((GetCharacter.CharacterStrength + (int)CritValue) - Target.GetCharacter.CharacterDefense < 0)
+                    if((DamageType + (int)CritValue) - Target.GetCharacter.CharacterDefense < 0)
                     {
                         Target.GetHealth.IncreaseHealth(1);
 
@@ -1011,13 +1098,13 @@ public class Skills : StatusEffects
                         Target.GetHealth.IncreaseHealth((GetCharacter.CharacterStrength + (int)CritValue) - Target.GetCharacter.CharacterDefense);
 
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<size=20>" + "<#4CFFAD>" +
-                                                                                   ((GetCharacter.CharacterStrength + (int)CritValue) - Target.GetCharacter.CharacterDefense)
+                                                                                   ((DamageType + (int)CritValue) - Target.GetCharacter.CharacterDefense)
                                                                                    + "!" + "</size>" + "\n" + "</color>" + "<size=12> <#EFDFB8>" + "(ABSORBED!)";
                     }
                 }
                 else
                 {
-                    if((GetCharacter.CharacterStrength + (int)CritValue) - Target.GetCharacter.CharacterDefense < 0)
+                    if((DamageType + (int)CritValue) - Target.GetCharacter.CharacterDefense < 0)
                     {
                         Target.GetHealth.ModifyHealth(-1);
 
@@ -1027,7 +1114,7 @@ public class Skills : StatusEffects
                     {
                         Target.GetHealth.ModifyHealth(-((GetCharacter.CharacterStrength + (int)CritValue) - Target.GetCharacter.CharacterDefense));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=20>" + Mathf.RoundToInt((CritValue + GetCharacter.CharacterStrength) -
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=20>" + Mathf.RoundToInt((CritValue + DamageType) -
                                                                                    Target.GetCharacter.CharacterDefense) + "!";
                     }
                 }
@@ -1036,7 +1123,7 @@ public class Skills : StatusEffects
             {
                 if(CheckWeaknesses())
                 {
-                    int WeakDamage = (Potency + GetCharacter.CharacterStrength) * 2;
+                    int WeakDamage = (Potency + DamageType) * 2;
 
                     if(WeakDamage - Target.GetCharacter.CharacterDefense < 0)
                     {
@@ -1055,7 +1142,7 @@ public class Skills : StatusEffects
                 }
                 else if(CheckResistances())
                 {
-                    float ResistDamage = (Potency + GetCharacter.CharacterStrength) / 1.25f;
+                    float ResistDamage = (Potency + DamageType) / 1.25f;
 
                     Mathf.RoundToInt(ResistDamage);
 
@@ -1082,7 +1169,7 @@ public class Skills : StatusEffects
                 }
                 else if(CheckAbsorptions())
                 {
-                    if((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense < 0)
+                    if((Potency + DamageType) - Target.GetCharacter.CharacterDefense < 0)
                     {
                         Target.GetHealth.IncreaseHealth(1);
 
@@ -1093,14 +1180,14 @@ public class Skills : StatusEffects
                     {
                         Target.GetHealth.IncreaseHealth((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense);
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<#4CFFAD>" + ((Potency + GetCharacter.CharacterStrength) -
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<#4CFFAD>" + ((Potency + DamageType) -
                                                                                    Target.GetCharacter.CharacterDefense) + "\n" + "</color> <size=12>" + "<#EFDFB8>" +
                                                                                    "(ABSORBED!)";
                     }
                 }
                 else
                 {
-                    if((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense < 0)
+                    if((Potency + DamageType) - Target.GetCharacter.CharacterDefense < 0)
                     {
                         Target.GetHealth.ModifyHealth(-1);
 
@@ -1110,7 +1197,7 @@ public class Skills : StatusEffects
                     {
                         Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + GetCharacter.CharacterStrength) -
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + DamageType) -
                                                                                    Target.GetCharacter.CharacterDefense);
                     }
                 }
@@ -1128,13 +1215,6 @@ public class Skills : StatusEffects
             else
             {
                 Target.GetPuckAI.CheckHP();
-
-                if (Target.GetPuckAI.GetStates != BossStates.Skill && Target.GetPuckAI.GetStates != BossStates.ApplyingAttack && 
-                    Target.GetPuckAI.GetStates != BossStates.SkillAnimation && Target.GetPuckAI.GetStates != BossStates.MovingToPosition && 
-                    Target.GetPuckAI.GetStates != BossStates.RotateToPosition && !CheckAbsorptions())
-                {
-                    Target.GetPuckAI.GetStates = BossStates.Damaged;
-                }
             }
         }
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();

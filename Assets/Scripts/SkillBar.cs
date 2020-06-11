@@ -118,6 +118,7 @@ public class SkillBar : MonoBehaviour
         else
         {
             playerAnimations.EndAllSpellcastingBools();
+            playerAnimations.EndSpellCast();
 
             SkillsManager.Instance.ReactivateSkillButtons();
             SkillBarImage.fillAmount = 0;

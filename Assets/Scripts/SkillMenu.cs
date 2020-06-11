@@ -7,7 +7,7 @@ using System.Collections;
 public enum SkillType { Active, Passive };
 
 public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination, ManaSiphon,
-                           EvilsEndBonus };
+                           EvilsEndBonus, DiabolicLightningBonus, ShatterBonus, DiabolicTour, DualDeal };
 
 public class SkillMenu : MonoBehaviour
 {
@@ -17,7 +17,7 @@ public class SkillMenu : MonoBehaviour
     private GameObject levelUp, levelUpParent;
 
     [SerializeField]
-    private Skills IlluminationSkill, HealSkill, EvilsEndSkill;
+    private Skills IlluminationSkill, HealSkill, EvilsEndSkill, DiabolicLightningSkill, ShatterSkill;
 
     [SerializeField]
     private Items[] items;
@@ -114,6 +114,7 @@ public class SkillMenu : MonoBehaviour
             else
             {
                 skill.GetComponent<Button>().interactable = true;
+                GetPassiveBonus();
             }
         }
     }
@@ -479,6 +480,12 @@ public class SkillMenu : MonoBehaviour
                 case (PassiveBonus.EvilsEndBonus):
                     EvilsEndBonusPassiveText();
                     break;
+                case (PassiveBonus.DiabolicLightningBonus):
+                    DiabolicLightningBonusPassiveText();
+                    break;
+                case (PassiveBonus.ShatterBonus):
+                    ShatterBonusPassiveText();
+                    break;
             }
         }
         #endregion
@@ -583,7 +590,21 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "The enemy HP condition for Evil's End is increased to 35%.";
+        SkillInfoText.text = "The enemy HP condition for Evil's End is increased to 35% and halves the cooldown.";
+    }
+
+    private void DiabolicLightningBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Increases the damage area of Diabolic Lightning and halves the cooldown.";
+    }
+
+    private void ShatterBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Shatter has a 5% chance of instantly defeating a target. \n <#EFDFB8>Does not work on bosses.</color>";
     }
 
     private void GetPassiveBonus()
@@ -617,6 +638,9 @@ public class SkillMenu : MonoBehaviour
             case (PassiveBonus.Heal):
                 HealBonus();
                 break;
+            case (PassiveBonus.ManaSiphon):
+                ManaSiphon();
+                break;
             case (PassiveBonus.StatPointsBonus):
                 StatPointBonus();
                 break;
@@ -625,6 +649,12 @@ public class SkillMenu : MonoBehaviour
                 break;
             case (PassiveBonus.EvilsEndBonus):
                 EvilsEndBonus();
+                break;
+            case (PassiveBonus.DiabolicLightningBonus):
+                DiabolicLightningBonus();
+                break;
+            case (PassiveBonus.ShatterBonus):
+                ShatterBonus();
                 break;
         }
     }
@@ -733,6 +763,8 @@ public class SkillMenu : MonoBehaviour
     private void EvilsEndBonus()
     {
         EvilsEndSkill.GetStatusEffectPotency = 35;
+        EvilsEndSkill.GetCoolDown = EvilsEndSkill.GetCoolDown / 2;
+
         EvilsEndSkill.GetSkillDescription = "Delivers a punishing blow to the target. <#EFDFB8>Can only be executed while the target is at 35% HP or below.</color>";
     }
 
@@ -742,6 +774,27 @@ public class SkillMenu : MonoBehaviour
         IlluminationSkill.GetHpAndDamageOverTimeTick += 5;
 
         IlluminationSkill.GetSkillDescription = "Gradually restores HP by 15%.";
+    }
+
+    private void DiabolicLightningBonus()
+    {
+        DiabolicLightningSkill.GetCoolDown -= DiabolicLightningSkill.GetCoolDown / 2;
+        DiabolicLightningSkill.GetAreaOfEffectRange += 2;
+    }
+
+    private void ShatterBonus()
+    {
+        ShatterSkill.GetGainedPassive = true;
+    }
+
+    private void DiabolicTourBonus()
+    {
+
+    }
+
+    private void DualDealBonus()
+    {
+
     }
 
     private void StatPointBonus()

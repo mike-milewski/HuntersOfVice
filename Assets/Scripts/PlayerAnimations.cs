@@ -114,6 +114,16 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void SpellCast()
+    {
+        animator.SetBool("SpellFinish", true);
+    }
+
+    public void EndSpellCast()
+    {
+        animator.SetBool("SpellFinish", false);
+    }
+
     public void EndSpellCastingAnimation()
     {
         animator.SetBool("ContinueCasting", false);

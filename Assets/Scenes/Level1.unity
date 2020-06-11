@@ -183,14 +183,16 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 843182297}
   HealSkill: {fileID: 555591879}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
-  character: {fileID: 601881691}
-  LevelRequirementText: {fileID: 427068202}
+  character: {fileID: 1963535228}
+  LevelRequirementText: {fileID: 356400997}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
-  PassiveSkillName: Mana Mastery
+  PassiveSkillName: Ether Mastery
   PassiveBonusValue: 10
   LevelRequirement: 9
   SkillImage: {fileID: 2339144}
@@ -299,7 +301,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e5aec484e95a5b14baf2d05cde2956dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aa0eeb51ee20f8a4caffa4363a018320, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -496,8 +498,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 2
   Potency: 35
   CastTime: 0
@@ -1041,14 +1046,16 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
-  LevelRequirementText: {fileID: 2101625062}
+  LevelRequirementText: {fileID: 856682572}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 1
+  LevelRequirement: 7
   SkillImage: {fileID: 15300174}
   skill: {fileID: 1435469172}
   skilltype: 0
@@ -1155,7 +1162,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6758a70896742dd4fb277ae7d3c72a4a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff42a689ad961fd4b9da0a00643acce7, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2852,16 +2859,19 @@ MonoBehaviour:
   CoolDown: 0
   AttackRange: 0
   ApplySkill: 0.3
-  StatusEffectPotency: 10
+  StatusEffectPotency: 15
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 0
   Potency: 0
   CastTime: 0
   index: 0
   SkillName: Contract With Evil
-  SkillDescription: Increases intelligence by 10% and decreases defense by 15%.
+  SkillDescription: Increases intelligence by 15% and decreases defense by 15%.
 --- !u!114 &46906085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5165,6 +5175,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 52301538}
@@ -5742,7 +5754,7 @@ RectTransform:
   m_Children:
   - {fileID: 194587730}
   m_Father: {fileID: 1184143664}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -6105,8 +6117,11 @@ MonoBehaviour:
   ApplySkill: 0.3
   StatusEffectPotency: 10
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 0
   Potency: 300
   CastTime: 0
@@ -7299,6 +7314,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1776148964}
@@ -8083,11 +8100,13 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 843182297}
   HealSkill: {fileID: 555591879}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
-  character: {fileID: 601881691}
-  LevelRequirementText: {fileID: 10536764}
+  character: {fileID: 1963535228}
+  LevelRequirementText: {fileID: 863585599}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Mana Siphon
@@ -8199,7 +8218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fbedbf7cc84c8b4bbf33808d2f423a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6592b916f86b19e428db6f6847c7b6dd, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8605,6 +8624,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
   EvilsEndSkill: {fileID: 1657340425}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -8981,8 +9002,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 2
   Potency: 35
   CastTime: 0
@@ -11235,6 +11259,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1432222289}
@@ -11467,11 +11493,13 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 843182297}
   HealSkill: {fileID: 555591879}
   EvilsEndSkill: {fileID: 1868996149}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
-  character: {fileID: 601881691}
-  LevelRequirementText: {fileID: 2011692419}
+  character: {fileID: 1963535228}
+  LevelRequirementText: {fileID: 10536764}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Vanquish The Wicked
@@ -12356,27 +12384,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4303148511327192, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 50.863544
+      value: 39.271255
       objectReference: {fileID: 0}
     - target: {fileID: 4303148511327192, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -86.90303
+      value: -100.42453
       objectReference: {fileID: 0}
     - target: {fileID: 4303148511327192, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 85.52255
+      value: 81.37458
       objectReference: {fileID: 0}
     - target: {fileID: 4399478751721212, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -40.76938
+      value: -8.600666
       objectReference: {fileID: 0}
     - target: {fileID: 4399478751721212, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -4.4529305
+      value: -12.655118
       objectReference: {fileID: 0}
     - target: {fileID: 4399478751721212, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 22.39383
+      value: -2.5958328
       objectReference: {fileID: 0}
     - target: {fileID: 4639550596504440, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12384,15 +12412,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4731582313359526, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 36.14975
+      value: 0.7582479
       objectReference: {fileID: 0}
     - target: {fileID: 4731582313359526, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -171.9094
+      value: 170.75923
       objectReference: {fileID: 0}
     - target: {fileID: 4731582313359526, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 146.5782
+      value: -167.12192
       objectReference: {fileID: 0}
     - target: {fileID: 4739670478079544, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12428,27 +12456,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4785297684521944, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -14.200409
+      value: 75.79718
       objectReference: {fileID: 0}
     - target: {fileID: 4785297684521944, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 57.72687
+      value: -45.27074
       objectReference: {fileID: 0}
     - target: {fileID: 4785297684521944, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -2.304409
+      value: -49.06292
       objectReference: {fileID: 0}
     - target: {fileID: 4898162828388426, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 8.028536e-16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4898162828388426, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 4.630626e-16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4898162828388426, guid: 6777c2b20da85b34ca35c9fca4b0fa05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 6.587228
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 54741623991925054, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 3}
@@ -13994,6 +14022,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1344112391}
@@ -15306,6 +15336,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 606688188}
@@ -17332,52 +17364,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 1486375004}
     m_Modifications:
     - target: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
+      propertyPath: m_Name
+      value: StatusEffectImage
+      objectReference: {fileID: 0}
+    - target: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382150169196584, guid: b67c014625f00f14aa3ea33a3f92e0db,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382150169196584, guid: b67c014625f00f14aa3ea33a3f92e0db,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114909423992531630, guid: b67c014625f00f14aa3ea33a3f92e0db,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114909423992531630, guid: b67c014625f00f14aa3ea33a3f92e0db,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114909423992531630, guid: b67c014625f00f14aa3ea33a3f92e0db,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114909423992531630, guid: b67c014625f00f14aa3ea33a3f92e0db,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114909423992531630, guid: b67c014625f00f14aa3ea33a3f92e0db,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114909423992531630, guid: b67c014625f00f14aa3ea33a3f92e0db,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114909423992531630, guid: b67c014625f00f14aa3ea33a3f92e0db,
-        type: 3}
-      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
@@ -17418,6 +17409,21 @@ PrefabInstance:
     - target: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
         type: 3}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
@@ -18758,7 +18764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerStatusEffect: 0
   EnemystatusEffect: 0
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
   StatusEffectIconTrans: {fileID: 1486375004}
   StatusEffectName: Regen
@@ -18778,19 +18784,22 @@ MonoBehaviour:
   StatusEffectText: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
     type: 3}
   SkillParticleParent: {fileID: 0}
-  CoolDown: 3
+  CoolDown: 60
   AttackRange: 0
   ApplySkill: 0.3
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
-  ManaCost: 5
-  Potency: 25
-  CastTime: 3
+  UnlockedBonus: 0
+  ManaCost: 0
+  Potency: 0
+  CastTime: 0
   index: 0
-  SkillName: Heal
-  SkillDescription: A novice spell that restores a small amount of HP.
+  SkillName: Alleviate
+  SkillDescription: Removes all status ailments.
 --- !u!114 &555591880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18937,7 +18946,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce7ce35077fa2bb42b7ae82999bb67e7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6758a70896742dd4fb277ae7d3c72a4a, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19530,8 +19539,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 0
   Potency: 0
   CastTime: 0
@@ -21572,8 +21584,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 2
   Potency: 35
   CastTime: 0
@@ -24669,9 +24684,11 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
-  LevelRequirementText: {fileID: 1344112391}
+  LevelRequirementText: {fileID: 2101625062}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
@@ -25294,8 +25311,11 @@ MonoBehaviour:
   ApplySkill: 0.3
   StatusEffectPotency: 3
   HpAndDamageOverTimeTick: 10
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 0
   Potency: 0
   CastTime: 0
@@ -25764,18 +25784,20 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 843182297}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 1435469177}
+  ShatterSkill: {fileID: 0}
   items: []
-  character: {fileID: 601881691}
-  LevelRequirementText: {fileID: 1413333629}
+  character: {fileID: 1963535228}
+  LevelRequirementText: {fileID: 427068202}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
-  PassiveSkillName: Sacred Light
+  PassiveSkillName: Malevolent Bolts
   PassiveBonusValue: 5
   LevelRequirement: 18
   SkillImage: {fileID: 707564036}
   skill: {fileID: 707564030}
   skilltype: 1
-  passivebonus: 11
+  passivebonus: 14
 --- !u!114 &707564034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25878,7 +25900,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce7ce35077fa2bb42b7ae82999bb67e7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 495b165e4f96ef14fb23cd71fa625a47, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -26579,8 +26601,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 2
   Potency: 35
   CastTime: 0
@@ -27522,6 +27547,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 606688188}
@@ -27768,11 +27795,11 @@ RectTransform:
   m_GameObject: {fileID: 785320766}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000029, y: 1.0000029, z: 0.99999505}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 573125509}
   m_Father: {fileID: 1184143664}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -28055,6 +28082,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1432222289}
@@ -29366,8 +29395,11 @@ MonoBehaviour:
   ApplySkill: 0.3
   StatusEffectPotency: 3
   HpAndDamageOverTimeTick: 10
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 0
   Potency: 0
   CastTime: 0
@@ -32832,20 +32864,20 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 843182297}
   HealSkill: {fileID: 555591879}
   EvilsEndSkill: {fileID: 0}
-  items:
-  - {fileID: 478636425}
-  - {fileID: 169804614}
-  character: {fileID: 601881691}
-  LevelRequirementText: {fileID: 356400997}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 1485537117}
+  items: []
+  character: {fileID: 1963535228}
+  LevelRequirementText: {fileID: 2011692419}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
-  PassiveSkillName: Invigoration
-  PassiveBonusValue: 5
-  LevelRequirement: 13
+  PassiveSkillName: Eviscerate
+  PassiveBonusValue: 15
+  LevelRequirement: 1
   SkillImage: {fileID: 928103525}
   skill: {fileID: 928103519}
   skilltype: 1
-  passivebonus: 8
+  passivebonus: 15
 --- !u!114 &928103523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32948,7 +32980,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce7ce35077fa2bb42b7ae82999bb67e7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d67a14baaeceb1a44b6acb4ccae5468f, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -35034,6 +35066,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2101625062}
@@ -36391,6 +36425,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2085359601}
@@ -44698,9 +44734,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1397425507}
+  - {fileID: 785320767}
   - {fileID: 1609318927}
   - {fileID: 127584394}
-  - {fileID: 785320767}
   - {fileID: 142941550}
   - {fileID: 431753991}
   m_Father: {fileID: 1989243149}
@@ -45799,6 +45835,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 863585599}
@@ -48846,8 +48884,11 @@ MonoBehaviour:
   ApplySkill: 0.3
   StatusEffectPotency: 10
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 0
   Potency: 300
   CastTime: 0
@@ -51791,6 +51832,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1173410855}
@@ -52006,6 +52049,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -52015,7 +52060,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Mana Siphon
   PassiveBonusValue: 5
-  LevelRequirement: 5
+  LevelRequirement: 1
   SkillImage: {fileID: 1429964595}
   skill: {fileID: 1429964589}
   skilltype: 1
@@ -52122,7 +52167,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fbedbf7cc84c8b4bbf33808d2f423a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6592b916f86b19e428db6f6847c7b6dd, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -52573,9 +52618,9 @@ MonoBehaviour:
   StatusIcon: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf, type: 3}
   StatusEffectIconTrans: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
     type: 3}
-  StatusEffectName: Defense Down
-  StatusDescription: Lowered Defense
-  StatusDuration: 15
+  StatusEffectName: 
+  StatusDescription: 
+  StatusDuration: 0
   playerElement: 5
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   skillbar: {fileID: 2122115158}
@@ -52595,8 +52640,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 5
   Potency: 40
   CastTime: 0
@@ -52749,7 +52797,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6758a70896742dd4fb277ae7d3c72a4a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff42a689ad961fd4b9da0a00643acce7, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -53874,8 +53922,11 @@ MonoBehaviour:
   ApplySkill: 0.5
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 5
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 3
   Potency: 50
   CastTime: 3
@@ -54528,9 +54579,11 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
-  character: {fileID: 601881691}
-  LevelRequirementText: {fileID: 863585599}
+  character: {fileID: 1963535228}
+  LevelRequirementText: {fileID: 1413333629}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Extend
@@ -56171,6 +56224,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1708335705}
@@ -58448,7 +58503,7 @@ RectTransform:
   m_Children:
   - {fileID: 1596368093}
   m_Father: {fileID: 1184143664}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -59463,6 +59518,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 52301538}
@@ -59738,6 +59795,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -60667,8 +60726,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 25
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 0
   Potency: 200
   CastTime: 0
@@ -61551,8 +61613,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 3
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 3
   Potency: 25
   CastTime: 0
@@ -61814,6 +61879,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2085359601}
@@ -62356,6 +62423,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 2031113380}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -66579,6 +66648,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 1173410855}
@@ -68315,8 +68386,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 4
   Potency: 25
   CastTime: 0
@@ -69185,6 +69259,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 699076239}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1413333629}
@@ -69442,8 +69518,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 25
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 0
   Potency: 200
   CastTime: 0
@@ -75274,14 +75353,16 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
-  character: {fileID: 601881691}
-  LevelRequirementText: {fileID: 856682572}
+  character: {fileID: 1963535228}
+  LevelRequirementText: {fileID: 1344112391}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 7
+  LevelRequirement: 2
   SkillImage: {fileID: 1910359654}
   skill: {fileID: 555591874}
   skilltype: 0
@@ -75388,7 +75469,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce7ce35077fa2bb42b7ae82999bb67e7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6758a70896742dd4fb277ae7d3c72a4a, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -75849,8 +75930,11 @@ MonoBehaviour:
   ApplySkill: 0
   StatusEffectPotency: 3
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 3
   Potency: 25
   CastTime: 0
@@ -78029,6 +78113,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 856682572}
@@ -79741,8 +79827,11 @@ MonoBehaviour:
   ApplySkill: 0.3
   StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 5
   Potency: 25
   CastTime: 3
@@ -81349,8 +81438,11 @@ MonoBehaviour:
   ApplySkill: 0.3
   StatusEffectPotency: 10
   HpAndDamageOverTimeTick: 0
+  AreaOfEffectRange: 0
+  InstantKnockOutValue: 0
   GainedPassive: 0
   UsesHunterGauge: 0
+  UnlockedBonus: 0
   ManaCost: 0
   Potency: 0
   CastTime: 0
@@ -81605,6 +81697,8 @@ MonoBehaviour:
   IlluminationSkill: {fileID: 0}
   HealSkill: {fileID: 0}
   EvilsEndSkill: {fileID: 0}
+  DiabolicLightningSkill: {fileID: 0}
+  ShatterSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1708335705}
@@ -83698,11 +83792,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 696282350}
-    - target: {fileID: 2344554661958046869, guid: 0717d70c0de52434486d20a500d4f6c4,
-        type: 3}
-      propertyPath: Knight
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3730147435478298580, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
       propertyPath: m_Camera

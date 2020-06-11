@@ -1527,7 +1527,7 @@ public class EnemySkills : MonoBehaviour
 
         float Critical = character.GetCriticalChance;
 
-        if(puckAI.GetPlayerTarget == null)
+        if(Target == null)
         {
             return null;
         }
@@ -1548,7 +1548,7 @@ public class EnemySkills : MonoBehaviour
                 }
                 else
                 {
-                    enemyAI.GetPlayerTarget.GetComponent<Health>().ModifyHealth
+                    Target.GetComponent<Health>().ModifyHealth
                                                              (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
 
                     DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
