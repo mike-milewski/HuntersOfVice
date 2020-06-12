@@ -436,6 +436,13 @@ public class SkillMenu : MonoBehaviour
                     }
                 }
             }
+            if (skill.GetComponent<Skills>().GetCastTime <= 0 && skill.GetComponent<Skills>().GetManaCost <= 0 && skill.GetComponent<Skills>().GetCoolDown <= 0 && 
+                skill.GetComponent<Skills>().GetPotency <= 0)
+            {
+                SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
+                                     skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + 
+                                     "Status Duration: " + "</color> Infinite" + "\n\n" + "Cast Time: Instant";
+            }
         }
         else
         {

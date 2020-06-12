@@ -500,6 +500,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -2863,6 +2865,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -6119,6 +6123,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -8629,7 +8635,7 @@ MonoBehaviour:
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 2011692419}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
@@ -9004,6 +9010,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -10232,6 +10240,10 @@ PrefabInstance:
     - target: {fileID: 1963535223, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963535223, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
+      propertyPath: MaxLevel
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1963535224, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: HealTextTransform
@@ -11502,7 +11514,7 @@ MonoBehaviour:
   LevelRequirementText: {fileID: 10536764}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
-  PassiveSkillName: Vanquish The Wicked
+  PassiveSkillName: Dual Deal
   PassiveBonusValue: 15
   LevelRequirement: 7
   SkillImage: {fileID: 295053224}
@@ -11611,7 +11623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fbedbf7cc84c8b4bbf33808d2f423a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: db427fab3e94daf4caa704d9314a77a1, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12633,7 +12645,7 @@ PrefabInstance:
     - target: {fileID: 114884055767735502, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 3}
       propertyPath: MaxLevel
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 114884055767735502, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 3}
@@ -15345,7 +15357,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 16
+  LevelRequirement: 1
   SkillImage: {fileID: 444730038}
   skill: {fileID: 699076234}
   skilltype: 0
@@ -18791,6 +18803,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -19541,6 +19555,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -21586,6 +21602,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -25313,6 +25331,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 10
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -26603,6 +26623,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -29397,6 +29419,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 10
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -48886,6 +48910,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -52642,6 +52668,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -53924,6 +53952,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 5
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -59521,13 +59551,13 @@ MonoBehaviour:
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
   items: []
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 52301538}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 13
+  LevelRequirement: 1
   SkillImage: {fileID: 1619141058}
   skill: {fileID: 1868996144}
   skilltype: 0
@@ -59634,7 +59664,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a2d76e7d7dbf9e94cb7fb63c0849380f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 69af24b7bd1956f4397ff46c8c7a9efd, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -59800,7 +59830,7 @@ MonoBehaviour:
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 356400997}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
@@ -60728,6 +60758,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -61615,6 +61647,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -68388,6 +68422,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -69492,45 +69528,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c056b96c10bed429285bf87eeab52d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerStatusEffect: 0
+  PlayerStatusEffect: 14
   EnemystatusEffect: 0
-  character: {fileID: 601881691}
-  StatusIcon: {fileID: 0}
-  StatusEffectIconTrans: {fileID: 0}
-  StatusEffectName: 
-  StatusDescription: 
-  StatusDuration: 0
-  playerElement: 7
+  character: {fileID: 1963535228}
+  StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
+  StatusEffectIconTrans: {fileID: 1486375004}
+  StatusEffectName: Contract With The Vile
+  StatusDescription: Restoring MP over time, taking damage over time
+  StatusDuration: -1
+  playerElement: 0
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   skillbar: {fileID: 2122115158}
   CoolDownImage: {fileID: 226791510}
   button: {fileID: 1868996151}
-  TextHolder: {fileID: 2019092555}
-  DamageORHealText: {fileID: 1509009448252176, guid: fc6877a7be1781e4dbc38c1eed7ecb78,
-    type: 3}
+  TextHolder: {fileID: 880701155}
+  DamageORHealText: {fileID: 0}
   SkillPanelText: {fileID: 834340804}
   SkillNameText: {fileID: 324266260}
-  CoolDownText: {fileID: 817270010}
-  StatusEffectText: {fileID: 0}
-  SkillParticleParent: {fileID: 0}
-  CoolDown: 5
-  AttackRange: 2.5
-  ApplySkill: 0
-  StatusEffectPotency: 25
+  CoolDownText: {fileID: 1115316478}
+  StatusEffectText: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
+    type: 3}
+  SkillParticleParent: {fileID: 247743963}
+  CoolDown: 0
+  AttackRange: 0
+  ApplySkill: 0.3
+  StatusEffectPotency: 0
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 5
+  ContractMp: 3
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
   ManaCost: 0
-  Potency: 200
+  Potency: 0
   CastTime: 0
   index: 0
-  SkillName: Evil's End
-  SkillDescription: 'Delivers a punishing blow to the target.
-
-    <#EFDFB8>Can only be executed while the target is at 25% HP or below.</color>'
+  SkillName: Contract With The Vile
+  SkillDescription: Restores 5% MP over 3 seconds and reduces HP by 1% over 5 seconds.
 --- !u!114 &1868996150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69649,7 +69685,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1868996149}
-        m_MethodName: EvilsEnd
+        m_MethodName: Contract
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -69677,7 +69713,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a2d76e7d7dbf9e94cb7fb63c0849380f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 69af24b7bd1956f4397ff46c8c7a9efd, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -75932,6 +75968,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -79829,6 +79867,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
@@ -81440,6 +81480,8 @@ MonoBehaviour:
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
+  ContractHp: 0
+  ContractMp: 0
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0

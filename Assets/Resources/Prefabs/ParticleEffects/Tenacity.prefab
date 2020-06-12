@@ -4773,7 +4773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleEffect: 9
   ps: {fileID: 198547813047381990}
-  Duration: 3
+  Duration: 1
 --- !u!114 &114882203506899710
 MonoBehaviour:
   m_ObjectHideFlags: 0

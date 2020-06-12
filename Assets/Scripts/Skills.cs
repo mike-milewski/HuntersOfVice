@@ -42,7 +42,7 @@ public class Skills : StatusEffects
     private Transform SkillParticleParent;
 
     [SerializeField]
-    private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency, HpAndDamageOverTimeTick, AreaOfEffectRange, InstantKnockOutValue;
+    private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency, HpAndDamageOverTimeTick, AreaOfEffectRange, InstantKnockOutValue, ContractHp, ContractMp;
 
     private float AttackDistance;
 
@@ -191,6 +191,30 @@ public class Skills : StatusEffects
         set
         {
             HpAndDamageOverTimeTick = value;
+        }
+    }
+
+    public float GetContractHp
+    {
+        get
+        {
+            return ContractHp;
+        }
+        set
+        {
+            ContractHp = value;
+        }
+    }
+
+    public float GetContractMp
+    {
+        get
+        {
+            return ContractMp;
+        }
+        set
+        {
+            ContractMp = value;
         }
     }
 
@@ -1475,6 +1499,11 @@ public class Skills : StatusEffects
                                           "Cooldown: " + CoolDown + "s";
                 }
             }
+        }
+        if(CastTime <= 0 && ManaCost <= 0 && CoolDown <= 0 && Potency <= 0)
+        {
+            SkillPanelText.text = SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + 
+                                                     "Status Duration: " + "</color> Infinite" + "\n\n" + "Cast Time: Instant";
         }
     }
 

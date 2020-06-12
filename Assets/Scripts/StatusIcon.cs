@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, ContractWithEvil }
+                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -37,9 +37,9 @@ public class StatusIcon : MonoBehaviour
     [SerializeField]
     private float Duration;
 
-    private float DamageOrHealTick; //The amount of seconds that passes before taking damage from poison effects or healing from regen effects.
+    private float DamageOrHealTick, ContractHpTick, ContractMpTick; //The amount of seconds that passes before taking damage from poison effects or healing from regen effects.
 
-    private float TempTick;
+    private float TempTick, ContractHpTempTick, ContractMpTempTick;
 
     private float RegenTick;
 
@@ -271,7 +271,12 @@ public class StatusIcon : MonoBehaviour
 
         DamageOrHealTick = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency;
 
+        ContractHpTick = SkillsManager.Instance.GetSkills[KeyInput].GetContractHp;
+        ContractMpTick = SkillsManager.Instance.GetSkills[KeyInput].GetContractMp;
+
         TempTick = DamageOrHealTick;
+        ContractHpTempTick = ContractHpTick;
+        ContractMpTempTick = ContractMpTick;
 
         RegenTick = SkillsManager.Instance.GetSkills[KeyInput].GetHpAndDamageOverTimeTick / 100f;
     }
@@ -425,6 +430,44 @@ public class StatusIcon : MonoBehaviour
             Damagetxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + value.ToString();
 
             TempTick = DamageOrHealTick;
+        }
+    }
+
+    private void ContractDamageOverTime(int value)
+    {
+        ContractHpTempTick -= Time.deltaTime;
+        if (ContractHpTempTick <= 0)
+        {
+            SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(-value);
+
+            var Damagetxt = ObjectPooler.Instance.GetPlayerDamageText();
+
+            Damagetxt.SetActive(true);
+
+            Damagetxt.transform.SetParent(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageTextParent.transform, false);
+
+            Damagetxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + value.ToString();
+
+            ContractHpTempTick = ContractHpTick;
+        }
+    }
+
+    private void HealMpOverTime(int value)
+    {
+        ContractMpTempTick -= Time.deltaTime;
+        if (ContractMpTempTick <= 0)
+        {
+            SkillsManager.Instance.GetCharacter.GetComponent<Mana>().IncreaseMana(value);
+
+            var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
+
+            HealTxt.SetActive(true);
+
+            HealTxt.transform.SetParent(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageTextParent.transform, false);
+
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + value.ToString() + "</size>" + "<size=20>" + " MP";
+
+            ContractMpTempTick = ContractMpTick;
         }
     }
 
@@ -854,6 +897,10 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.HealthRegen):
                 HealOverTime(RegenCalculation());
                 break;
+            case (EffectStatus.ContractWithTheVile):
+                ContractDamageOverTime(ContractWithTheVileDamageOverTime());
+                HealMpOverTime(ContractWithTheVileMpRestore());
+                break;
             case (EffectStatus.Stun):
                 Stun();
                 break;
@@ -861,6 +908,28 @@ public class StatusIcon : MonoBehaviour
                 Sleep();
                 break;
         }
+    }
+
+    private int ContractWithTheVileDamageOverTime()
+    {
+        float percent = Mathf.Round(0.01f * SkillsManager.Instance.GetCharacter.MaxHealth);
+
+        int GetHealth = (int)percent;
+
+        Mathf.Round(GetHealth);
+
+        return GetHealth;
+    }
+
+    private int ContractWithTheVileMpRestore()
+    {
+        float percent = Mathf.Round(0.05f * SkillsManager.Instance.GetCharacter.MaxMana);
+
+        int GetMana = (int)percent;
+
+        Mathf.Round(GetMana);
+
+        return GetMana;
     }
 
     private int RegenAndDOTCalculation()
