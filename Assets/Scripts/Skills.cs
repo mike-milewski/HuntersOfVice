@@ -528,7 +528,21 @@ public class Skills : StatusEffects
 
     public void Alleviate()
     {
+        SkillsManager.Instance.GetActivatedSkill = true;
 
+        if (settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetHealParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z);
+
+            SkillParticle.transform.SetParent(GetCharacter.transform, true);
+        }
+        SoundManager.Instance.Heal();
+
+        Invoke("AlleviateHealSkillText", ApplySkill);
     }
 
     private void InvokeAlleviate()
@@ -902,6 +916,32 @@ public class Skills : StatusEffects
             GameManager.Instance.InvalidTargetText();
             TextHolder = null;
         }
+    }
+
+    private TextMeshProUGUI AlleviateHealSkillText()
+    {
+        var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
+
+        HealTxt.SetActive(true);
+
+        HealTxt.transform.SetParent(TextHolder.transform, false);
+
+        var Critical = GetCharacter.GetCriticalChance;
+
+        #region CriticalHealChance
+        if (GetCharacter.CurrentHealth > 0)
+        {
+            float AlleviatePercentage = 0.10f * GetCharacter.MaxHealth;
+
+            Mathf.Round(AlleviatePercentage);
+
+            GetCharacter.GetComponent<Health>().IncreaseHealth((int)AlleviatePercentage);
+
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + SkillName + " " + AlleviatePercentage;
+        }
+        #endregion
+
+        return HealTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private TextMeshProUGUI HealSkillText()

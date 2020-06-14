@@ -28,6 +28,9 @@ public class SkillsManager : MonoBehaviour
 
     private bool ActivatedSkill, DisruptedSkill, WhirlWindSlashAbility;
 
+    [SerializeField]
+    private int ContractStack;
+
     private int KeyInput;
 
     private int input;
@@ -77,6 +80,18 @@ public class SkillsManager : MonoBehaviour
         set
         {
             KeyInput = value;
+        }
+    }
+
+    public int GetContractStack
+    {
+        get
+        {
+            return ContractStack;
+        }
+        set
+        {
+            ContractStack = value;
         }
     }
 

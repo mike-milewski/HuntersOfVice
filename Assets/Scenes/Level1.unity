@@ -185,11 +185,14 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
   character: {fileID: 1963535228}
-  LevelRequirementText: {fileID: 356400997}
+  LevelRequirementText: {fileID: 427068202}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Ether Mastery
@@ -346,11 +349,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1476540784}
   - {fileID: 460789624}
   - {fileID: 1334998269}
   - {fileID: 53466084}
   - {fileID: 1690430021}
+  - {fileID: 1476540784}
   - {fileID: 680367028}
   m_Father: {fileID: 1989243149}
   m_RootOrder: 12
@@ -1050,6 +1053,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 856682572}
@@ -3752,7 +3758,7 @@ RectTransform:
   m_Children:
   - {fileID: 1966715297}
   m_Father: {fileID: 2450656}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -5181,6 +5187,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 52301538}
@@ -6097,7 +6106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerStatusEffect: 0
   EnemystatusEffect: 0
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
   StatusEffectIconTrans: {fileID: 1486375004}
   StatusEffectName: Tenacity
@@ -7322,6 +7331,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1776148964}
@@ -8108,20 +8120,23 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 46906084}
+  ContractWithTheVileSkill: {fileID: 1868996149}
+  ContractWithNefariousnessSkill: {fileID: 632422407}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
   character: {fileID: 1963535228}
-  LevelRequirementText: {fileID: 863585599}
+  LevelRequirementText: {fileID: 2011692419}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
-  PassiveSkillName: Mana Siphon
+  PassiveSkillName: Diabolic Tour
   PassiveBonusValue: 5
   LevelRequirement: 5
   SkillImage: {fileID: 178385603}
   skill: {fileID: 178385597}
   skilltype: 1
-  passivebonus: 12
+  passivebonus: 16
 --- !u!114 &178385601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8224,7 +8239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6592b916f86b19e428db6f6847c7b6dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6bb0ac75e3c8c3a468afda5365a5cd37, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8632,6 +8647,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 1657340425}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -11273,6 +11291,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1432222289}
@@ -11507,6 +11528,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 1868996149}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 46906084}
+  ContractWithTheVileSkill: {fileID: 1868996149}
+  ContractWithNefariousnessSkill: {fileID: 632422407}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -11516,11 +11540,11 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Dual Deal
   PassiveBonusValue: 15
-  LevelRequirement: 7
+  LevelRequirement: 30
   SkillImage: {fileID: 295053224}
   skill: {fileID: 295053218}
   skilltype: 1
-  passivebonus: 13
+  passivebonus: 17
 --- !u!114 &295053222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14036,6 +14060,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1344112391}
@@ -15350,6 +15377,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 606688188}
@@ -16295,7 +16325,7 @@ RectTransform:
   m_Children:
   - {fileID: 2040706484}
   m_Father: {fileID: 2450656}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -18813,7 +18843,7 @@ MonoBehaviour:
   CastTime: 0
   index: 0
   SkillName: Alleviate
-  SkillDescription: Removes all status ailments.
+  SkillDescription: Removes all status ailments and restores HP by 20%.
 --- !u!114 &555591880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21573,32 +21603,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c056b96c10bed429285bf87eeab52d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerStatusEffect: 0
+  PlayerStatusEffect: 13
   EnemystatusEffect: 0
-  character: {fileID: 601881691}
-  StatusIcon: {fileID: 0}
+  character: {fileID: 1963535228}
+  StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
   StatusEffectIconTrans: {fileID: 1486375004}
-  StatusEffectName: 
-  StatusDescription: 
-  StatusDuration: 0
-  playerElement: 1
+  StatusEffectName: Contract With Evil
+  StatusDescription: Skill cast and cost halved, HP halved
+  StatusDuration: -1
+  playerElement: 0
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   skillbar: {fileID: 2122115158}
-  CoolDownImage: {fileID: 1569433161}
-  button: {fileID: 632422409}
-  TextHolder: {fileID: 0}
-  DamageORHealText: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091,
-    type: 3}
+  CoolDownImage: {fileID: 176506932}
+  button: {fileID: 46906086}
+  TextHolder: {fileID: 880701155}
+  DamageORHealText: {fileID: 0}
   SkillPanelText: {fileID: 834340804}
   SkillNameText: {fileID: 324266260}
-  CoolDownText: {fileID: 1144778472}
+  CoolDownText: {fileID: 1115316478}
   StatusEffectText: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
     type: 3}
-  SkillParticleParent: {fileID: 0}
-  CoolDown: 4
-  AttackRange: 2.5
-  ApplySkill: 0
-  StatusEffectPotency: 0
+  SkillParticleParent: {fileID: 247743963}
+  CoolDown: 0
+  AttackRange: 0
+  ApplySkill: 0.3
+  StatusEffectPotency: 15
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
@@ -21607,12 +21636,13 @@ MonoBehaviour:
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
-  ManaCost: 2
-  Potency: 35
+  ManaCost: 0
+  Potency: 0
   CastTime: 0
   index: 0
-  SkillName: Swift Strike
-  SkillDescription: Slash a target with precision.
+  SkillName: Contract With Nefariousness
+  SkillDescription: Reduces the casting time and MP cost of all skills by 1 / 4 and
+    reduces maximum HP by half.
 --- !u!114 &632422408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21731,7 +21761,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 632422407}
-        m_MethodName: SwiftStrike
+        m_MethodName: Contract
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21759,7 +21789,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1de015d2fdcf44b4595c865f2dff7f7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f46ec242f296f52468a6f7db16fd2f56, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -22246,10 +22276,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom
       objectReference: {fileID: 0}
-    - target: {fileID: 1722958204252142, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.3
@@ -22293,31 +22319,6 @@ PrefabInstance:
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4113946509398354, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -3.1397776e-25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4113946509398354, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 1.6723467e-31
-      objectReference: {fileID: 0}
-    - target: {fileID: 4780469800579470, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -6.8887084e-18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4780469800579470, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -1.2933311e-11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4780469800579470, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0.021335857
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 3}
-      propertyPath: skills.Array.size
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114006354462489536, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
@@ -22389,11 +22390,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 696282350}
-    - target: {fileID: 224172724586066702, guid: d1b40f4cedbe929489899902c0b8de32,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
 --- !u!1 &644603833
@@ -24704,6 +24700,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 2101625062}
@@ -25806,9 +25805,12 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 1435469177}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
-  LevelRequirementText: {fileID: 427068202}
+  LevelRequirementText: {fileID: 1413333629}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Malevolent Bolts
@@ -27571,8 +27573,11 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 606688188}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
@@ -27685,7 +27690,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 42f6c722ead369b4b934a116b4324a4d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d70dd1b9c6ae54448923db5c4924edd5, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -28106,8 +28111,11 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 1432222289}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
@@ -29391,32 +29399,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c056b96c10bed429285bf87eeab52d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerStatusEffect: 2
+  PlayerStatusEffect: 0
   EnemystatusEffect: 0
-  character: {fileID: 601881691}
-  StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
+  character: {fileID: 1963535228}
+  StatusIcon: {fileID: 0}
   StatusEffectIconTrans: {fileID: 1486375004}
-  StatusEffectName: Illumination
-  StatusDescription: Regenerating HP
-  StatusDuration: 15
-  playerElement: 0
+  StatusEffectName: 
+  StatusDescription: 
+  StatusDuration: 0
+  playerElement: 8
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   skillbar: {fileID: 2122115158}
-  CoolDownImage: {fileID: 1777861786}
-  button: {fileID: 843182299}
-  TextHolder: {fileID: 880701155}
-  DamageORHealText: {fileID: 0}
+  CoolDownImage: {fileID: 1569433161}
+  button: {fileID: 632422409}
+  TextHolder: {fileID: 0}
+  DamageORHealText: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091,
+    type: 3}
   SkillPanelText: {fileID: 834340804}
   SkillNameText: {fileID: 324266260}
-  CoolDownText: {fileID: 981634223}
+  CoolDownText: {fileID: 1144778472}
   StatusEffectText: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
     type: 3}
-  SkillParticleParent: {fileID: 1474654874}
-  CoolDown: 40
-  AttackRange: 0
-  ApplySkill: 0.3
-  StatusEffectPotency: 3
-  HpAndDamageOverTimeTick: 10
+  SkillParticleParent: {fileID: 0}
+  CoolDown: 30
+  AttackRange: 14
+  ApplySkill: 0.5
+  StatusEffectPotency: 0
+  HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
   ContractHp: 0
@@ -29424,12 +29433,12 @@ MonoBehaviour:
   GainedPassive: 0
   UsesHunterGauge: 0
   UnlockedBonus: 0
-  ManaCost: 0
-  Potency: 0
-  CastTime: 0
+  ManaCost: 25
+  Potency: 100
+  CastTime: 6
   index: 0
-  SkillName: Illumination
-  SkillDescription: Gradually restores HP by 10%.
+  SkillName: Underworld Star
+  SkillDescription: Strike all targets in range with a comet.
 --- !u!114 &843182298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29548,7 +29557,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 843182297}
-        m_MethodName: Illumination
+        m_MethodName: Contract
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29576,7 +29585,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 42f6c722ead369b4b934a116b4324a4d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d70dd1b9c6ae54448923db5c4924edd5, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -32890,9 +32899,12 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 1485537117}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
-  LevelRequirementText: {fileID: 2011692419}
+  LevelRequirementText: {fileID: 356400997}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Eviscerate
@@ -35092,6 +35104,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2101625062}
@@ -35330,21 +35345,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1990034087}
     m_Modifications:
+    - target: {fileID: 1894373646748536, guid: 16a8da0e93fa734429b7dd04b9ff6edc, type: 3}
+      propertyPath: m_Name
+      value: CastBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1894373646748536, guid: 16a8da0e93fa734429b7dd04b9ff6edc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114968256959312660, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
         type: 3}
       propertyPath: character
       value: 
       objectReference: {fileID: 601881691}
-    - target: {fileID: 114968256959312660, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
-        type: 3}
-      propertyPath: playerController
-      value: 
-      objectReference: {fileID: 601881697}
-    - target: {fileID: 114968256959312660, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
-        type: 3}
-      propertyPath: playerAnimations
-      value: 
-      objectReference: {fileID: 601881694}
     - target: {fileID: 114968256959312660, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
         type: 3}
       propertyPath: Knight
@@ -35357,6 +35370,11 @@ PrefabInstance:
       objectReference: {fileID: 1963535228}
     - target: {fileID: 114968256959312660, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
         type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 601881697}
+    - target: {fileID: 114968256959312660, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
+        type: 3}
       propertyPath: KnightController
       value: 
       objectReference: {fileID: 601881697}
@@ -35365,6 +35383,11 @@ PrefabInstance:
       propertyPath: ShadowPriestController
       value: 
       objectReference: {fileID: 1963535227}
+    - target: {fileID: 114968256959312660, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
+        type: 3}
+      propertyPath: playerAnimations
+      value: 
+      objectReference: {fileID: 601881694}
     - target: {fileID: 114968256959312660, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
         type: 3}
       propertyPath: KnightAnimations
@@ -35414,6 +35437,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224124259290144160, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224124259290144160, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224124259290144160, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224124259290144160, guid: 16a8da0e93fa734429b7dd04b9ff6edc,
         type: 3}
@@ -36451,6 +36489,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2085359601}
@@ -45861,6 +45902,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 863585599}
@@ -48571,7 +48615,7 @@ RectTransform:
   m_Children:
   - {fileID: 394063831}
   m_Father: {fileID: 2450656}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -51860,6 +51904,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1173410855}
@@ -52077,6 +52124,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -53046,6 +53096,7 @@ MonoBehaviour:
   enemystatusIcon: {fileID: 114642851624478784, guid: 4f30b12cb74f0364bbe4643058eefecf,
     type: 3}
   skills: []
+  ContractStack: 0
 --- !u!114 &1450060824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53521,7 +53572,7 @@ RectTransform:
   m_Children:
   - {fileID: 761673790}
   m_Father: {fileID: 2450656}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -54611,9 +54662,12 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
-  LevelRequirementText: {fileID: 1413333629}
+  LevelRequirementText: {fileID: 863585599}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: Extend
@@ -56256,8 +56310,11 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
-  character: {fileID: 601881691}
+  character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 1708335705}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
@@ -56370,7 +56427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1de015d2fdcf44b4595c865f2dff7f7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f46ec242f296f52468a6f7db16fd2f56, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -59550,6 +59607,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 52301538}
@@ -59827,6 +59887,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -61915,6 +61978,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 2085359601}
@@ -62029,7 +62095,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fbedbf7cc84c8b4bbf33808d2f423a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06fd18faa147f3e4dbf4d6206ff581a6, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -62301,7 +62367,7 @@ RectTransform:
   m_Children:
   - {fileID: 1271556583}
   m_Father: {fileID: 2450656}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -62459,6 +62525,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items:
   - {fileID: 478636425}
   - {fileID: 169804614}
@@ -66684,6 +66753,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 1173410855}
@@ -68428,7 +68500,7 @@ MonoBehaviour:
   UsesHunterGauge: 0
   UnlockedBonus: 0
   ManaCost: 4
-  Potency: 25
+  Potency: 40
   CastTime: 0
   index: 0
   SkillName: Storm Thrust
@@ -68883,8 +68955,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -69297,6 +69369,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1413333629}
@@ -69534,7 +69609,7 @@ MonoBehaviour:
   StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
   StatusEffectIconTrans: {fileID: 1486375004}
   StatusEffectName: Contract With The Vile
-  StatusDescription: Restoring MP over time, taking damage over time
+  StatusDescription: Restoring MP, Taking damage
   StatusDuration: -1
   playerElement: 0
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
@@ -69552,7 +69627,7 @@ MonoBehaviour:
   CoolDown: 0
   AttackRange: 0
   ApplySkill: 0.3
-  StatusEffectPotency: 0
+  StatusEffectPotency: 0.05
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
   InstantKnockOutValue: 0
@@ -69566,7 +69641,7 @@ MonoBehaviour:
   CastTime: 0
   index: 0
   SkillName: Contract With The Vile
-  SkillDescription: Restores 5% MP over 3 seconds and reduces HP by 1% over 5 seconds.
+  SkillDescription: Restores 3% MP over 3 seconds and reduces HP by 1% over 5 seconds.
 --- !u!114 &1868996150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75391,6 +75466,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 1963535228}
   LevelRequirementText: {fileID: 1344112391}
@@ -75939,15 +76017,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStatusEffect: 0
-  EnemystatusEffect: 0
-  character: {fileID: 601881691}
+  EnemystatusEffect: 1
+  character: {fileID: 1963535228}
   StatusIcon: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf, type: 3}
   StatusEffectIconTrans: {fileID: 224218732151604570, guid: b67c014625f00f14aa3ea33a3f92e0db,
     type: 3}
   StatusEffectName: Bleeding
   StatusDescription: Taking Damage
-  StatusDuration: 15
-  playerElement: 5
+  StatusDuration: 10
+  playerElement: 2
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   skillbar: {fileID: 2122115158}
   CoolDownImage: {fileID: 628310213}
@@ -75962,8 +76040,8 @@ MonoBehaviour:
     type: 3}
   SkillParticleParent: {fileID: 954378440}
   CoolDown: 4
-  AttackRange: 2.5
-  ApplySkill: 0
+  AttackRange: 14
+  ApplySkill: 0.5
   StatusEffectPotency: 3
   HpAndDamageOverTimeTick: 0
   AreaOfEffectRange: 0
@@ -76126,7 +76204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fbedbf7cc84c8b4bbf33808d2f423a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06fd18faa147f3e4dbf4d6206ff581a6, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -78153,6 +78231,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 856682572}
@@ -81741,6 +81822,9 @@ MonoBehaviour:
   EvilsEndSkill: {fileID: 0}
   DiabolicLightningSkill: {fileID: 0}
   ShatterSkill: {fileID: 0}
+  ContractWithEvilSkill: {fileID: 0}
+  ContractWithTheVileSkill: {fileID: 0}
+  ContractWithNefariousnessSkill: {fileID: 0}
   items: []
   character: {fileID: 601881691}
   LevelRequirementText: {fileID: 1708335705}
@@ -84066,10 +84150,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StatusEffectText
       objectReference: {fileID: 0}
-    - target: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 224306162315940456, guid: cb1e213e41972f94f817bd89912f710e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -84153,7 +84233,7 @@ PrefabInstance:
     - target: {fileID: 224306162315940456, guid: cb1e213e41972f94f817bd89912f710e,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224306162315940456, guid: cb1e213e41972f94f817bd89912f710e,
         type: 3}
@@ -84163,7 +84243,7 @@ PrefabInstance:
     - target: {fileID: 224306162315940456, guid: cb1e213e41972f94f817bd89912f710e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224306162315940456, guid: cb1e213e41972f94f817bd89912f710e,
         type: 3}

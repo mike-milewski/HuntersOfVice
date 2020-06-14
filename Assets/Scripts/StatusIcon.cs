@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile }
+                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -32,12 +32,12 @@ public class StatusIcon : MonoBehaviour
 
     private int TempSkillIndex;
 
-    private int index;
+    private int index, PlayerMaxHealth;
 
     [SerializeField]
     private float Duration;
 
-    private float DamageOrHealTick, ContractHpTick, ContractMpTick; //The amount of seconds that passes before taking damage from poison effects or healing from regen effects.
+    private float DamageOrHealTick, ContractHpTick, ContractMpTick, ContractValue; //The amount of seconds that passes before taking damage from poison effects or healing from regen effects.
 
     private float TempTick, ContractHpTempTick, ContractMpTempTick;
 
@@ -278,6 +278,10 @@ public class StatusIcon : MonoBehaviour
         ContractHpTempTick = ContractHpTick;
         ContractMpTempTick = ContractMpTick;
 
+        ContractValue = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency;
+
+        PlayerMaxHealth = SkillsManager.Instance.GetCharacter.GetCharacterData.Health;
+
         RegenTick = SkillsManager.Instance.GetSkills[KeyInput].GetHpAndDamageOverTimeTick / 100f;
     }
 
@@ -512,6 +516,27 @@ public class StatusIcon : MonoBehaviour
         {
             Duration = 0;
         }
+    }
+
+    private void HalfHealth()
+    {
+        int MaxHealth = PlayerMaxHealth / 2;
+
+        Mathf.Round(MaxHealth);
+
+        SkillsManager.Instance.GetCharacter.GetCharacterData.Health = MaxHealth;
+
+        SkillsManager.Instance.GetCharacter.MaxHealth = SkillsManager.Instance.GetCharacter.GetCharacterData.Health;
+
+        if(SkillsManager.Instance.GetCharacter.CurrentHealth > SkillsManager.Instance.GetCharacter.MaxHealth)
+        {
+            SkillsManager.Instance.GetCharacter.CurrentHealth = SkillsManager.Instance.GetCharacter.MaxHealth;
+        }
+    }
+
+    private void RestoreMaxHealth()
+    {
+        SkillsManager.Instance.GetCharacter.GetCharacterData.Health = PlayerMaxHealth;
     }
 
     private void Haste(int value)
@@ -923,7 +948,7 @@ public class StatusIcon : MonoBehaviour
 
     private int ContractWithTheVileMpRestore()
     {
-        float percent = Mathf.Round(0.05f * SkillsManager.Instance.GetCharacter.MaxMana);
+        float percent = Mathf.Round(ContractValue * SkillsManager.Instance.GetCharacter.MaxMana);
 
         int GetMana = (int)percent;
 

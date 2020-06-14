@@ -17,7 +17,8 @@ public class SkillMenu : MonoBehaviour
     private GameObject levelUp, levelUpParent;
 
     [SerializeField]
-    private Skills IlluminationSkill, HealSkill, EvilsEndSkill, DiabolicLightningSkill, ShatterSkill;
+    private Skills IlluminationSkill, HealSkill, EvilsEndSkill, DiabolicLightningSkill, ShatterSkill, ContractWithEvilSkill, ContractWithTheVileSkill, 
+                   ContractWithNefariousnessSkill;
 
     [SerializeField]
     private Items[] items;
@@ -493,6 +494,12 @@ public class SkillMenu : MonoBehaviour
                 case (PassiveBonus.ShatterBonus):
                     ShatterBonusPassiveText();
                     break;
+                case (PassiveBonus.DiabolicTour):
+                    DiabolicTourBonusPassiveText();
+                    break;
+                case (PassiveBonus.DualDeal):
+                    DualDealBonusPassiveText();
+                    break;
             }
         }
         #endregion
@@ -614,6 +621,21 @@ public class SkillMenu : MonoBehaviour
         SkillInfoText.text = "Shatter has a 5% chance of instantly defeating a target. \n <#EFDFB8>Does not work on bosses.</color>";
     }
 
+    private void DiabolicTourBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Contract With Evil's Intelligence boost is increased to 20%. \n\n Contract With The Vile's MP regeneration is increased to 5%. \n\n" +
+                             "Contract With Nefariousness' skill cast time and MP cost is reduced to half.";
+    }
+
+    private void DualDealBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Allows the stacking of two contracts.";
+    }
+
     private void GetPassiveBonus()
     {
         switch(passivebonus)
@@ -662,6 +684,12 @@ public class SkillMenu : MonoBehaviour
                 break;
             case (PassiveBonus.ShatterBonus):
                 ShatterBonus();
+                break;
+            case (PassiveBonus.DiabolicTour):
+                DiabolicTourBonus();
+                break;
+            case (PassiveBonus.DualDeal):
+                DualDealBonus();
                 break;
         }
     }
@@ -796,12 +824,13 @@ public class SkillMenu : MonoBehaviour
 
     private void DiabolicTourBonus()
     {
-
+        ContractWithEvilSkill.GetStatusEffectPotency = 20;
+        ContractWithTheVileSkill.GetStatusEffectPotency = 0.05f;
     }
 
     private void DualDealBonus()
     {
-
+        SkillsManager.Instance.GetContractStack = 2;
     }
 
     private void StatPointBonus()

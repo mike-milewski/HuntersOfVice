@@ -1451,7 +1451,7 @@ Transform:
   - {fileID: 4694296390926014}
   m_Father: {fileID: 4780469800579470}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 1.5964696e-31, y: -2.9973206e-25, z: 0.000030517576}
+  m_LocalEulerAnglesHint: {x: 1.6723467e-31, y: -3.1397776e-25, z: 0.000030517576}
 --- !u!1 &1611568485607104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,7 +1874,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4022279343204790
 Transform:
   m_ObjectHideFlags: 0
@@ -2082,7 +2082,7 @@ MonoBehaviour:
     StatusEffectHolder: {fileID: 0}
     SkillParticle: {fileID: 0}
     StatusEffectName: Poison
-    StatusDescription: Taking Damage
+    StatusDescription: Taking damage
     SkillName: Poison Spore
     StatusDuration: 10
     CastTime: 3
@@ -2094,32 +2094,6 @@ MonoBehaviour:
     StatusEffectPotency: 3
     Potency: 0
     IsBuff: 0
-  - skills: 9
-    enemyElement: 0
-    status: 8
-    shapes: 0
-    StatusSprite: {fileID: 21300000, guid: c144ece9d040e1349bc5e660a04eb618, type: 3}
-    StatusIcon: {fileID: 1821925353600490, guid: 4f30b12cb74f0364bbe4643058eefecf,
-      type: 3}
-    TextHolder: {fileID: 224999922894932806}
-    StatusIconTrans: {fileID: 224992860828033654}
-    DamageORHealText: {fileID: 1483910531824998, guid: ed727312de49e5d4fad0bd9191894a53,
-      type: 3}
-    StatusEffectHolder: {fileID: 1611568485607104}
-    SkillParticle: {fileID: 0}
-    StatusEffectName: Sylvan Blessing
-    StatusDescription: Increased Defense
-    SkillName: Sylvan Blessing
-    StatusDuration: 15
-    CastTime: 0
-    SizeDeltaX: 0
-    SizeDeltaY: 0
-    ApplySkill: 0
-    ShapeSize: {x: 1.28, y: 2.5, z: 2.5}
-    AttackRange: 2
-    StatusEffectPotency: 0
-    Potency: 0
-    IsBuff: 1
   character: {fileID: 114979435669946942}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114492699656399902}
@@ -2578,7 +2552,7 @@ Transform:
   - {fileID: 4113946509398354}
   m_Father: {fileID: 4534415339494238}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -4.721852e-18, y: -8.865127e-12, z: -0.000030517576}
+  m_LocalEulerAnglesHint: {x: -6.8887084e-18, y: -1.2933311e-11, z: 0.021335857}
 --- !u!1 &1793706999833420
 GameObject:
   m_ObjectHideFlags: 0
