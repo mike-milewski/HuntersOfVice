@@ -2082,7 +2082,7 @@ MonoBehaviour:
     StatusEffectHolder: {fileID: 0}
     SkillParticle: {fileID: 0}
     StatusEffectName: Poison
-    StatusDescription: Taking damage
+    StatusDescription: Taking Damage
     SkillName: Poison Spore
     StatusDuration: 10
     CastTime: 3

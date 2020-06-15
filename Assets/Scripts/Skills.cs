@@ -541,13 +541,20 @@ public class Skills : StatusEffects
             SkillParticle.transform.SetParent(GetCharacter.transform, true);
         }
         SoundManager.Instance.Heal();
-
-        Invoke("AlleviateHealSkillText", ApplySkill);
     }
 
-    private void InvokeAlleviate()
+    public void InvokeAlleviate()
     {
+        AlleviateHealSkillText();
 
+        if (GameManager.Instance.GetDebuffStatusIconHolder.childCount > 0)
+        {
+            foreach (EnemyStatusIcon esi in GameManager.Instance.GetDebuffStatusIconHolder.GetComponentsInChildren<EnemyStatusIcon>())
+            {
+                esi.RemoveEffect();
+            }
+        }
+        else return;
     }
 
     public void DiabolicLightning()
@@ -931,7 +938,7 @@ public class Skills : StatusEffects
         #region CriticalHealChance
         if (GetCharacter.CurrentHealth > 0)
         {
-            float AlleviatePercentage = 0.10f * GetCharacter.MaxHealth;
+            float AlleviatePercentage = 0.20f * GetCharacter.MaxHealth;
 
             Mathf.Round(AlleviatePercentage);
 

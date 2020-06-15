@@ -25,6 +25,8 @@ public class Health : MonoBehaviour
 
     private Coroutine routine = null;
 
+    private bool IsImmune;
+
     //This variable is used to check and uncheck a hit while under the effect of the sleep status.
     [SerializeField]
     private bool SleepHit;
@@ -41,6 +43,18 @@ public class Health : MonoBehaviour
         set
         {
             HealthAnimationObj = value;
+        }
+    }
+
+    public bool GetIsImmune
+    {
+        get
+        {
+            return IsImmune;
+        }
+        set
+        {
+            IsImmune = value;
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness }
+                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, UltimateDefense }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -185,6 +185,12 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FA2900>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
+            case (EffectStatus.MaliciousPossession):
+                MaliciousPossessionBuff();
+                break;
+            case (EffectStatus.UltimateDefense):
+                UltimateDefensesBuff();
+                break;
             case (EffectStatus.Haste):
                 Haste((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
                 break;
@@ -341,6 +347,9 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#FFFFFF>";
                 SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FFFFFF>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.UltimateDefense):
+                SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetIsImmune = false;
                 break;
             case (EffectStatus.Haste):
                 ResetSpeedAndCoolDowns();
@@ -537,6 +546,11 @@ public class StatusIcon : MonoBehaviour
     private void RestoreMaxHealth()
     {
         SkillsManager.Instance.GetCharacter.GetCharacterData.Health = PlayerMaxHealth;
+    }
+
+    private void UltimateDefensesBuff()
+    {
+        SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetIsImmune = true;
     }
 
     private void Haste(int value)
@@ -932,6 +946,15 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.Sleep):
                 Sleep();
                 break;
+        }
+    }
+
+    private void MaliciousPossessionBuff()
+    {
+        foreach (Skills s in SkillsManager.Instance.GetSkills)
+        {
+            s.GetCoolDown = 0;
+            s.GetManaCost = 0;
         }
     }
 
