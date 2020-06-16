@@ -124,6 +124,8 @@ public class BasicAttack : MonoBehaviour
 
                 if (hit.collider.GetComponent<Character>().CurrentHealth > 0)
                 {
+                    hit.collider.GetComponent<Enemy>().GetExperience = this.gameObject.GetComponent<Experience>();
+
                     AutoAttackTime = 0;
                     Target = hit.collider.GetComponent<Enemy>();
 

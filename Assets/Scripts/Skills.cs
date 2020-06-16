@@ -540,16 +540,22 @@ public class Skills : StatusEffects
 
             SkillParticle.transform.SetParent(GetCharacter.transform, true);
         }
+        Invoke("InvokeAlleviate", ApplySkill);
+
         SoundManager.Instance.Heal();
     }
 
     public void InvokeAlleviate()
     {
+        SkillsManager.Instance.GetActivatedSkill = false;
+
+        this.CoolDownImage.fillAmount = 1;
+
         AlleviateHealSkillText();
 
         if (GameManager.Instance.GetDebuffStatusIconHolder.childCount > 0)
         {
-            foreach (EnemyStatusIcon esi in GameManager.Instance.GetDebuffStatusIconHolder.GetComponentsInChildren<EnemyStatusIcon>())
+            foreach (StatusIcon esi in GameManager.Instance.GetDebuffStatusIconHolder.GetComponentsInChildren<StatusIcon>())
             {
                 esi.RemoveEffect();
             }
@@ -727,6 +733,45 @@ public class Skills : StatusEffects
             GameManager.Instance.InvalidTargetText();
             TextHolder = null;
         }
+    }
+
+    public void BraveWing()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            if (DistanceToAttack() <= AttackRange)
+            {
+                FacingEnemy = true;
+
+                TextHolder = Target.GetUI;
+
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                this.CoolDownImage.fillAmount = 1;
+
+                SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>()); 
+
+                GetCharacter.GetComponent<PlayerAnimations>().PlaySkillAnimation();
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
+    }
+
+    public void SetBraveWingTextHolder()
+    {
+        TextHolder = GameManager.Instance.GetStatusEffectTransform;
+
+        PlayerStatusEffectSkill();
     }
 
     private void FaceEnemy()
@@ -933,18 +978,16 @@ public class Skills : StatusEffects
 
         HealTxt.transform.SetParent(TextHolder.transform, false);
 
-        var Critical = GetCharacter.GetCriticalChance;
-
         #region CriticalHealChance
         if (GetCharacter.CurrentHealth > 0)
         {
             float AlleviatePercentage = 0.20f * GetCharacter.MaxHealth;
 
-            Mathf.Round(AlleviatePercentage);
+            Mathf.RoundToInt(AlleviatePercentage);
 
             GetCharacter.GetComponent<Health>().IncreaseHealth((int)AlleviatePercentage);
 
-            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + SkillName + " " + AlleviatePercentage;
+            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + SkillName + " " + (int)AlleviatePercentage;
         }
         #endregion
 
@@ -1363,12 +1406,12 @@ public class Skills : StatusEffects
                 if(GetPlayerElement == PlayerElement.NONE)
                 {
                     SkillPanelText.text = SkillDescription + "\n\n" + "Cast Time: Instant" + "\n" +
-                                          "Cooldown" + CoolDown + "s";
+                                          "Cooldown: " + CoolDown + "s";
                 }
                 else
                 {
                     SkillPanelText.text = SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" 
-                                          + GetPlayerElement + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown" + CoolDown + "s";
+                                          + GetPlayerElement + "\n\n" + "Cast Time: Instant" + "\n" + "Cooldown: " + CoolDown + "s";
                 }
             }
             else
@@ -1549,8 +1592,15 @@ public class Skills : StatusEffects
         }
         if(CastTime <= 0 && ManaCost <= 0 && CoolDown <= 0 && Potency <= 0)
         {
-            SkillPanelText.text = SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" + 
-                                                     "Status Duration: " + "</color> Infinite" + "\n\n" + "Cast Time: Instant";
+            if (GetPlayerStatusEffect == EffectStatus.NONE && GetEnemyStatusEffect == StatusEffect.NONE)
+            {
+                SkillPanelText.text = SkillDescription + "\n\n" + "Cast Time: Instant";
+            }
+            else
+            {
+                SkillPanelText.text = SkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + "<#EFDFB8>" +
+                                      "Status Duration: " + "</color> Infinite" + "\n\n" + "Cast Time: Instant";
+            }   
         }
     }
 

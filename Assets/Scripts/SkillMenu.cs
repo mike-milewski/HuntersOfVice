@@ -625,7 +625,7 @@ public class SkillMenu : MonoBehaviour
         SkillNameText.text = PassiveSkillName;
 
         SkillInfoText.text = "Contract With Evil's Intelligence boost is increased to 20%. \n\n Contract With The Vile's MP regeneration is increased to 5%. \n\n" +
-                             "Contract With Nefariousness' skill cast time and MP cost is reduced to half.";
+                             "Contract With Nefariousness' skill cast time and MP cost is reduced by half.";
     }
 
     private void DualDealBonusPassiveText()
@@ -824,7 +824,12 @@ public class SkillMenu : MonoBehaviour
     private void DiabolicTourBonus()
     {
         ContractWithEvilSkill.GetStatusEffectPotency = 20;
+        ContractWithEvilSkill.GetSkillDescription = "Increases intelligence by 20% and decreases defense by 15%.";
+
         ContractWithTheVileSkill.GetStatusEffectPotency = 0.05f;
+        ContractWithTheVileSkill.GetSkillDescription = "Restores 5% MP over 3 seconds and reduces HP by 1% over 5 seconds.";
+
+        ContractWithNefariousnessSkill.GetSkillDescription = "Reduces the casting time and MP cost of all skills by 1 / 2 and reduces maximum HP by half.";
     }
 
     private void DualDealBonus()

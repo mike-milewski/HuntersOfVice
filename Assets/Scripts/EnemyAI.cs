@@ -706,6 +706,10 @@ public class EnemyAI : MonoBehaviour
 
         if(!IsAnAdd)
         {
+            WaypointIndex = 0;
+
+            transform.position = Waypoints[WaypointIndex].position;
+
             if (IsHostile)
             {
                 ThreatPic.sprite = ThreatSprite;

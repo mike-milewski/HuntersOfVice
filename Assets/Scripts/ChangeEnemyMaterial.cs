@@ -11,6 +11,9 @@ public class ChangeEnemyMaterial : MonoBehaviour
     private MeshRenderer meshRenderer = null;
 
     [SerializeField]
+    private EnemyRespawn enemyRespawn = null;
+
+    [SerializeField]
     private Material AlphaMaterial, OpaqueMaterial;
 
     [SerializeField]
@@ -97,6 +100,7 @@ public class ChangeEnemyMaterial : MonoBehaviour
             skinnedMeshRenderer.material.color = alpha;
             yield return new WaitForSeconds(0.1f);
         }
+        enemyRespawn.enabled = true;
         ParentObject.SetActive(false);
         yield return null;
     }

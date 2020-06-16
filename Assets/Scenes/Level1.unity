@@ -2546,8 +2546,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 601881691}
-  Knight: {fileID: 0}
-  ShadowPriest: {fileID: 0}
+  Knight: {fileID: 601881691}
+  ShadowPriest: {fileID: 1963535228}
   experience: {fileID: 1474654865}
   stattype: 3
   StatText: {fileID: 656385386}
@@ -6143,7 +6143,7 @@ MonoBehaviour:
   index: 0
   SkillName: Malicious Possession
   SkillDescription: Imbues the powers of the underworld, removing the casting cost
-    and the MP cost of all skills.
+    and the MP cost of all skills. <#EFDFB8>Does not affect this skill.</color>
 --- !u!114 &132423423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14076,6 +14076,53 @@ Transform:
   m_Father: {fileID: 2128819967}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &210228355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 210228356}
+  - component: {fileID: 210228357}
+  m_Layer: 0
+  m_Name: RespawnObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &210228356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210228355}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 278447371}
+  m_Father: {fileID: 2109884925}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &210228357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210228355}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72aae8ec5df2314890ab9efe2634059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyToRespawn: {fileID: 1391037853}
+  RespawnTime: 20
+  RespawnTimer: 0
 --- !u!1 &213740369
 GameObject:
   m_ObjectHideFlags: 0
@@ -15014,7 +15061,7 @@ PrefabInstance:
       objectReference: {fileID: 326764282}
     - target: {fileID: 1963535223, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1963535223, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: MaxLevel
@@ -16058,7 +16105,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 20
+  LevelRequirement: 30
   SkillImage: {fileID: 283800963}
   skill: {fileID: 1340217386}
   skilltype: 0
@@ -22564,8 +22611,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 601881691}
-  Knight: {fileID: 0}
-  ShadowPriest: {fileID: 0}
+  Knight: {fileID: 601881691}
+  ShadowPriest: {fileID: 1963535228}
   experience: {fileID: 1474654865}
   stattype: 1
   StatText: {fileID: 1115638449}
@@ -23583,7 +23630,7 @@ MonoBehaviour:
   StatusEffectText: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
     type: 3}
   SkillParticleParent: {fileID: 0}
-  CoolDown: 60
+  CoolDown: 0
   AttackRange: 0
   ApplySkill: 0.3
   StatusEffectPotency: 0
@@ -23719,7 +23766,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 555591879}
-        m_MethodName: Heal
+        m_MethodName: Alleviate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27027,11 +27074,15 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2109884925}
+    m_TransformParent: {fileID: 210228356}
     m_Modifications:
     - target: {fileID: 1722958204252142, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_Name
       value: Mushroom
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722958204252142, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27047,7 +27098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalRotation.y
@@ -27055,7 +27106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalRotation.w
@@ -27063,7 +27114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4022279343204790, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -27122,6 +27173,26 @@ PrefabInstance:
       propertyPath: Waypoints.Array.data[1]
       value: 
       objectReference: {fileID: 199508331}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: aiStates.Array.data[0].state
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: aiStates.Array.data[1].state
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: aiStates.Array.data[2].state
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: aiStates.Array.data[3].state
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 114492699656399902, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: EXP
@@ -27137,6 +27208,11 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 696282350}
+    - target: {fileID: 114916564609805402, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: enemyRespawn
+      value: 
+      objectReference: {fileID: 210228357}
     - target: {fileID: 223028387731617080, guid: d1b40f4cedbe929489899902c0b8de32,
         type: 3}
       propertyPath: m_Camera
@@ -27147,6 +27223,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 696282350}
+    - target: {fileID: 224172724586066702, guid: d1b40f4cedbe929489899902c0b8de32,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b40f4cedbe929489899902c0b8de32, type: 3}
 --- !u!1 &644603833
@@ -31539,7 +31620,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1de015d2fdcf44b4595c865f2dff7f7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 95025979e9fff8c45a767b6af0ab299c, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -41314,12 +41395,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.34117648, g: 0.9254902, b: 0.30980393, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fbedbf7cc84c8b4bbf33808d2f423a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eced15bb959edc54c8457ab75f9a45b5, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -49895,8 +49976,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 601881691}
-  Knight: {fileID: 0}
-  ShadowPriest: {fileID: 0}
+  Knight: {fileID: 601881691}
+  ShadowPriest: {fileID: 1963535228}
   experience: {fileID: 1474654865}
   stattype: 4
   StatText: {fileID: 1405254323}
@@ -53693,7 +53774,7 @@ MonoBehaviour:
   character: {fileID: 601881691}
   StatusIcon: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db, type: 3}
   StatusEffectIconTrans: {fileID: 1486375004}
-  StatusEffectName: Ultimate Defenses
+  StatusEffectName: Consecrated Defenses
   StatusDescription: Immune to all attacks.
   StatusDuration: 15
   playerElement: 7
@@ -53701,14 +53782,15 @@ MonoBehaviour:
   skillbar: {fileID: 2122115158}
   CoolDownImage: {fileID: 2096422863}
   button: {fileID: 1340217393}
-  TextHolder: {fileID: 880701155}
-  DamageORHealText: {fileID: 0}
+  TextHolder: {fileID: 0}
+  DamageORHealText: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091,
+    type: 3}
   SkillPanelText: {fileID: 834340804}
   SkillNameText: {fileID: 324266260}
   CoolDownText: {fileID: 1701166570}
   StatusEffectText: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
     type: 3}
-  SkillParticleParent: {fileID: 1474654874}
+  SkillParticleParent: {fileID: 0}
   CoolDown: 360
   AttackRange: 3
   ApplySkill: 0.3
@@ -53722,7 +53804,7 @@ MonoBehaviour:
   UsesHunterGauge: 0
   UnlockedBonus: 0
   ManaCost: 0
-  Potency: 300
+  Potency: 800
   CastTime: 0
   index: 0
   SkillName: Brave Wing
@@ -53845,7 +53927,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1340217391}
-        m_MethodName: Tenacity
+        m_MethodName: BraveWing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -55667,6 +55749,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1385243544}
   m_CullTransparentMesh: 0
+--- !u!114 &1391037853 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114244275959761428, guid: d1b40f4cedbe929489899902c0b8de32,
+    type: 3}
+  m_PrefabInstance: {fileID: 644521478}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561b9be865b0b974c8f878c215ceb929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1393207821
 GameObject:
   m_ObjectHideFlags: 0
@@ -64659,7 +64753,7 @@ MonoBehaviour:
   LevelRequirementText: {fileID: 2011692419}
   SkillInfoText: {fileID: 1524491717}
   SkillNameText: {fileID: 1861908743}
-  PassiveSkillName: Invigoration
+  PassiveSkillName: Invigorate
   PassiveBonusValue: 5
   LevelRequirement: 13
   SkillImage: {fileID: 1625870938}
@@ -64768,7 +64862,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce7ce35077fa2bb42b7ae82999bb67e7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 411f88b287eb8504aa08edb04c1443c6, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -65576,7 +65670,7 @@ MonoBehaviour:
   CoolDownText: {fileID: 181432961}
   StatusEffectText: {fileID: 0}
   SkillParticleParent: {fileID: 0}
-  CoolDown: 5
+  CoolDown: 15
   AttackRange: 2.5
   ApplySkill: 0
   StatusEffectPotency: 25
@@ -66625,12 +66719,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3393319, g: 0.9245283, b: 0.30962977, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fbedbf7cc84c8b4bbf33808d2f423a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eced15bb959edc54c8457ab75f9a45b5, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -67844,6 +67938,21 @@ PrefabInstance:
         type: 3}
       propertyPath: poolcontroller.Array.data[36].PoolAmount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[14].PoolAmount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[4].PoolAmount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114547043723728064, guid: 3972055e75e892a4498a436ff7a9b50a,
+        type: 3}
+      propertyPath: poolcontroller.Array.data[2].PoolAmount
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3972055e75e892a4498a436ff7a9b50a, type: 3}
@@ -77763,8 +77872,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 601881691}
-  Knight: {fileID: 0}
-  ShadowPriest: {fileID: 0}
+  Knight: {fileID: 601881691}
+  ShadowPriest: {fileID: 1963535228}
   experience: {fileID: 1474654865}
   stattype: 2
   StatText: {fileID: 302567014}
@@ -78947,7 +79056,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce7ce35077fa2bb42b7ae82999bb67e7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 42f6c722ead369b4b934a116b4324a4d, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -84937,7 +85046,7 @@ MonoBehaviour:
   SkillNameText: {fileID: 1861908743}
   PassiveSkillName: 
   PassiveBonusValue: 0
-  LevelRequirement: 2
+  LevelRequirement: 1
   SkillImage: {fileID: 1910359654}
   skill: {fileID: 555591874}
   skilltype: 0
@@ -91399,7 +91508,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1de015d2fdcf44b4595c865f2dff7f7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 95025979e9fff8c45a767b6af0ab299c, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -92511,7 +92620,7 @@ Transform:
   - {fileID: 733458842}
   - {fileID: 1957126179}
   - {fileID: 932230825}
-  - {fileID: 278447371}
+  - {fileID: 210228356}
   - {fileID: 354133603}
   - {fileID: 1377821048}
   - {fileID: 1807588467}

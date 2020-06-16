@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, UltimateDefense }
+                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -188,8 +188,8 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.MaliciousPossession):
                 MaliciousPossessionBuff();
                 break;
-            case (EffectStatus.UltimateDefense):
-                UltimateDefensesBuff();
+            case (EffectStatus.ConsecratedDefense):
+                ConsecratedDefenses();
                 break;
             case (EffectStatus.Haste):
                 Haste((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
@@ -348,7 +348,7 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FFFFFF>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
-            case (EffectStatus.UltimateDefense):
+            case (EffectStatus.ConsecratedDefense):
                 SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetIsImmune = false;
                 break;
             case (EffectStatus.Haste):
@@ -548,7 +548,7 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetCharacter.GetCharacterData.Health = PlayerMaxHealth;
     }
 
-    private void UltimateDefensesBuff()
+    private void ConsecratedDefenses()
     {
         SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetIsImmune = true;
     }
