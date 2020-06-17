@@ -170,8 +170,37 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                     m.showMaskGraphic = false;
                 }
             }
-            gameObject.transform.SetParent(MenuParent, true);
-            gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+            if(objectType == ObjectType.Weapon)
+            {
+                if(MenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxWeapons)
+                {
+                    gameObject.transform.SetParent(zone.transform, true);
+                    gameObject.GetComponent<Equipment>().Equip();
+                }
+                else
+                {
+                    gameObject.transform.SetParent(MenuParent, true);
+                    gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+                }
+            }
+            if(objectType == ObjectType.Armor)
+            {
+                if (MenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxArmor)
+                {
+                    gameObject.transform.SetParent(zone.transform, true);
+                    gameObject.GetComponent<Equipment>().Equip();
+                }
+                else
+                {
+                    gameObject.transform.SetParent(MenuParent, true);
+                    gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+                }
+            }
+            if(objectType == ObjectType.Skill)
+            {
+                gameObject.transform.SetParent(MenuParent, true);
+                gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+            }
 
             ResetRectTransform();
 

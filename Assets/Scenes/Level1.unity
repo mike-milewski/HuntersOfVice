@@ -15519,6 +15519,8 @@ MonoBehaviour:
   WeaponSlot: {fileID: 1760785267}
   ArmorSlot: {fileID: 842876556}
   EquipmentDescriptionPanel: {fileID: 1622074585}
+  MaxWeapons: 3
+  MaxArmor: 3
 --- !u!1 &253804825
 GameObject:
   m_ObjectHideFlags: 0

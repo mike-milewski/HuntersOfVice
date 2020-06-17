@@ -21,6 +21,9 @@ public class EquipmentMenu : MonoBehaviour
 
     private bool IsOpened;
 
+    [SerializeField]
+    private int MaxWeapons, MaxArmor;
+
     public GameObject GetWeaponPanel
     {
         get
@@ -42,6 +45,30 @@ public class EquipmentMenu : MonoBehaviour
         set
         {
             ArmorPanel = value;
+        }
+    }
+
+    public int GetMaxWeapons
+    {
+        get
+        {
+            return MaxWeapons;
+        }
+        set
+        {
+            MaxWeapons = value;
+        }
+    }
+
+    public int GetMaxArmor
+    {
+        get
+        {
+            return MaxArmor;
+        }
+        set
+        {
+            MaxArmor = value;
         }
     }
 
