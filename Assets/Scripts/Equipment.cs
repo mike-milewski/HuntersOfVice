@@ -73,6 +73,18 @@ public class Equipment : MonoBehaviour
     [SerializeField]
     private StatusType[] stattype;
 
+    public Character GetCharacter
+    {
+        get
+        {
+            return character;
+        }
+        set
+        {
+            character = value;
+        }
+    }
+
     public EquipmentData GetEquipmentData
     {
         get
@@ -542,11 +554,36 @@ public class Equipment : MonoBehaviour
         {
             if(inventory.GetCoins >= equipmentData.BuyValue)
             {
-                Create(gameObject);
-                inventory.AddCoins(-equipmentData.BuyValue);
+                if(equipmentType == EquipmentType.Weapon)
+                {
+                    if(gameObject.GetComponent<DragUiObject>().GetMenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxWeapons)
+                    {
+                        GameManager.Instance.MaxWeaponsReachedText();
+                    }
+                    else
+                    {
+                        Create(gameObject);
+                        inventory.AddCoins(-equipmentData.BuyValue);
 
-                GameManager.Instance.GetShop.UpdateCoins();
-                SoundManager.Instance.BuyItem();
+                        GameManager.Instance.GetShop.UpdateCoins();
+                        SoundManager.Instance.BuyItem();
+                    }
+                }
+                if (equipmentType == EquipmentType.Armor)
+                {
+                    if (gameObject.GetComponent<DragUiObject>().GetMenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxArmor)
+                    {
+                        GameManager.Instance.MaxArmorReachedText();
+                    }
+                    else
+                    {
+                        Create(gameObject);
+                        inventory.AddCoins(-equipmentData.BuyValue);
+
+                        GameManager.Instance.GetShop.UpdateCoins();
+                        SoundManager.Instance.BuyItem();
+                    }
+                }
             }
             else
             {

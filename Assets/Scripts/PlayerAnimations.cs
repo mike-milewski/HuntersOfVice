@@ -63,6 +63,9 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("StormThrust", false);
         animator.SetBool("WhirlwindSlash", false);
         animator.SetBool("Skill", false);
+        animator.SetBool("SkillCast", false);
+        animator.SetBool("EvilsEnd", false);
+        animator.SetBool("SpellFinish", false);
 
         animator.SetBool("Damaged", false);
 

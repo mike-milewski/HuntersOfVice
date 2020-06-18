@@ -2026,6 +2026,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1411011579175090, guid: 74453bbb82e7ee44ab759960b3624422, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4902482866808036, guid: 74453bbb82e7ee44ab759960b3624422, type: 3}
       propertyPath: m_LocalPosition.x
       value: 506.94543
@@ -2067,6 +2071,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1931190641201460, guid: f3376ad85f9ee7b4a93eb957420a45fc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4027199962659632, guid: f3376ad85f9ee7b4a93eb957420a45fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 489.15744
@@ -2595,6 +2603,10 @@ PrefabInstance:
     - target: {fileID: 1046307902136542, guid: 22d40890b8666d440a07dc9f525ba55a, type: 3}
       propertyPath: m_Name
       value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1046307902136542, guid: 22d40890b8666d440a07dc9f525ba55a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4820014529482432, guid: 22d40890b8666d440a07dc9f525ba55a, type: 3}
       propertyPath: m_LocalPosition.x

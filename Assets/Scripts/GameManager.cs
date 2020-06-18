@@ -185,6 +185,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public GameObject GetKnight
+    {
+        get
+        {
+            return Knight;
+        }
+        set
+        {
+            Knight = value;
+        }
+    }
+
+    public GameObject GetShadowPriest
+    {
+        get
+        {
+            return ShadowPriest;
+        }
+        set
+        {
+            ShadowPriest = value;
+        }
+    }
+
     public GameObject GetSkillPanel
     {
         get
@@ -930,6 +954,32 @@ public class GameManager : MonoBehaviour
         animator.Play("InvalidText", -1, 0f);
 
         InvalidText.text = "Not enough coins";
+
+        SoundManager.Instance.Error();
+
+        return InvalidText;
+    }
+
+    public TextMeshProUGUI MaxWeaponsReachedText()
+    {
+        InvalidText.gameObject.SetActive(true);
+
+        animator.Play("InvalidText", -1, 0f);
+
+        InvalidText.text = "Weapon slot full";
+
+        SoundManager.Instance.Error();
+
+        return InvalidText;
+    }
+
+    public TextMeshProUGUI MaxArmorReachedText()
+    {
+        InvalidText.gameObject.SetActive(true);
+
+        animator.Play("InvalidText", -1, 0f);
+
+        InvalidText.text = "Armor slot full";
 
         SoundManager.Instance.Error();
 

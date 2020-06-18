@@ -30,6 +30,18 @@ public class TreasureChest : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
+    public Equipment[] GetEquipment
+    {
+        get
+        {
+            return equipments;
+        }
+        set
+        {
+            equipments = value;
+        }
+    }
+
     public Animator GetAnimator
     {
         get
