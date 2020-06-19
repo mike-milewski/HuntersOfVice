@@ -50,23 +50,10 @@ public class SelectedCharacter : MonoBehaviour
 
     private void OnEnable()
     {
-        if(scene.buildIndex == 0)
+        if(scene.buildIndex == 1)
         {
             KnightSelected = false;
             ShadowPriestSelected = false;
-        }
-        else
-        {
-            if(KnightSelected)
-            {
-                GameManager.Instance.GetKnight.SetActive(true);
-                GameManager.Instance.GetShadowPriest.SetActive(false);
-            }
-            else if(ShadowPriestSelected)
-            {
-                GameManager.Instance.GetShadowPriest.SetActive(true);
-                GameManager.Instance.GetKnight.SetActive(false);
-            }
         }
     }
 }

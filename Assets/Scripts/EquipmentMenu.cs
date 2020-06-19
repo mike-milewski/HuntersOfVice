@@ -84,20 +84,17 @@ public class EquipmentMenu : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        if(Knight.gameObject.activeInHierarchy)
+        if(GameManager.Instance.GetKnight.activeInHierarchy)
         {
             character = Knight;
         }
-        else if(ShadowPriest.gameObject.activeInHierarchy)
+        else if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
         {
             character = ShadowPriest;
-        }       
-    }
+        }
 
-    private void Start()
-    {
         SetStartingEquipment();
     }
 

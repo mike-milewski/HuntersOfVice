@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class CursorController : MonoBehaviour
 {
@@ -19,6 +20,18 @@ public class CursorController : MonoBehaviour
 
     [SerializeField]
     private float EnemyMouseRange, ActionMouseRange, SpeechMouseRange;
+
+    [SerializeField]
+    private int SceneIndex;
+
+    private Scene scene;
+
+    private void OnEnable()
+    {
+        SceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        Debug.Log(SceneIndex);
+    }
 
     private void Awake()
     {
@@ -53,9 +66,43 @@ public class CursorController : MonoBehaviour
             }
         }
 
-        //ChangeCursor();
-
         if (Input.GetMouseButtonDown(0))
+        {
+            CheckScene();
+        }
+    }
+
+    private void CheckScene()
+    {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            if (hit.collider.GetComponent<Animator>())
+            {
+                Debug.Log("Character");
+                if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "Knight")
+                {
+                    Debug.Log("Knight");
+                    hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = true;
+                    hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = false;
+                }
+                else if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "ShadowPriest")
+                {
+                    Debug.Log("ShadowPriest");
+                    hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = true;
+                    hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = false;
+                }
+            }
+        }
+
+        if (SceneIndex == 1)
+        {
+            Debug.Log("Scene index 1");
+
+            
+        }
+        else
         {
             OpenTreasureChest();
             OpenShopMenu();

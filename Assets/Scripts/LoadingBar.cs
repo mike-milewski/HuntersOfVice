@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -8,12 +9,17 @@ public class LoadingBar : MonoBehaviour
     [SerializeField]
     private Image LoadingImage;
 
+    [SerializeField]
+    private int BuildIndex;
+
+    private Scene scene;
+
     private void OnEnable()
     {
-        StartCoroutine(Async("Level1"));
+        StartCoroutine(Async(BuildIndex));
     }
 
-    public IEnumerator Async(string Level)
+    public IEnumerator Async(int Level)
     {
         yield return new WaitForSeconds(1.0f);
         AsyncOperation async = SceneManager.LoadSceneAsync(Level);
