@@ -35,18 +35,6 @@ public class CursorController : MonoBehaviour
 
     private void Awake()
     {
-        #region Singleton
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else if(Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
-        #endregion
-
         SetDefaultCursor();
     }
 
@@ -74,33 +62,26 @@ public class CursorController : MonoBehaviour
 
     private void CheckScene()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            if (hit.collider.GetComponent<Animator>())
-            {
-                Debug.Log("Character");
-                if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "Knight")
-                {
-                    Debug.Log("Knight");
-                    hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = true;
-                    hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = false;
-                }
-                else if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "ShadowPriest")
-                {
-                    Debug.Log("ShadowPriest");
-                    hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = true;
-                    hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = false;
-                }
-            }
-        }
-
         if (SceneIndex == 1)
         {
-            Debug.Log("Scene index 1");
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                if (hit.collider.GetComponent<Animator>())
+                {
+                    if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "Knight")
+                    {
+                        hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = true;
+                        hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = false;
+                    }
+                    else if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "ShadowPriest")
+                    {
+                        hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = true;
+                        hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = false;
+                    }
+                }
+            }
         }
         else
         {
