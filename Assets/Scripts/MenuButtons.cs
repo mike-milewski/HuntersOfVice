@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour
 {
@@ -33,6 +34,11 @@ public class MenuButtons : MonoBehaviour
         Loadingbar.SetActive(true);
     }
 
+    public void LoadSceneByIndex(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+
     public void DisableButtons(GameObject ButtonPanel)
     {
         foreach(Button button in ButtonPanel.GetComponentsInChildren<Button>())
@@ -62,6 +68,11 @@ public class MenuButtons : MonoBehaviour
         {
             Panel.SetActive(false);
         }
+    }
+
+    public void DisableBoxCollider(BoxCollider boxCollider)
+    {
+        boxCollider.enabled = false;
     }
 
     public void EnableMenuPanel(GameObject Panel)
@@ -128,6 +139,16 @@ public class MenuButtons : MonoBehaviour
     {
         panel.SetActive(true);
         panel.GetComponent<Animator>().SetBool("OpenMenu", true);
+    }
+
+    public void DisableStartButton(Button button)
+    {
+        button.interactable = false;
+    }
+
+    public void DisableMainMenuButton(Button button)
+    {
+        button.interactable = false;
     }
 
     public void ClosePanelAnimation(GameObject panel)

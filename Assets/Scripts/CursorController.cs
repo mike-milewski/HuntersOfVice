@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class CursorController : MonoBehaviour
 {
-    public static CursorController Instance = null;
-
     private Ray ray;
 
     private RaycastHit hit;
@@ -29,8 +27,6 @@ public class CursorController : MonoBehaviour
     private void OnEnable()
     {
         SceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-        Debug.Log(SceneIndex);
     }
 
     private void Awake()
@@ -46,7 +42,7 @@ public class CursorController : MonoBehaviour
         {
             if (hit.collider.GetComponent<Enemy>())
             {
-                CursorController.Instance.SetAttackCursor();
+                SetAttackCursor();
             }
             else
             {
@@ -74,11 +70,25 @@ public class CursorController : MonoBehaviour
                     {
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = true;
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = false;
+
+                        hit.collider.GetComponent<Animator>().SetBool("CharacterSelection", true);
+
+                        hit.collider.GetComponent<CharacterSelector>().PlayPanelAndButtonAnimations();
+                        hit.collider.GetComponent<CharacterSelector>().ShowCharacterInformation();
+
+                        hit.collider.GetComponent<CharacterSelector>().ShowCharacterSkills();
                     }
-                    else if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "ShadowPriest")
+                    else if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "Shadow Priest")
                     {
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = true;
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = false;
+
+                        hit.collider.GetComponent<Animator>().SetBool("CharacterSelection", true);
+
+                        hit.collider.GetComponent<CharacterSelector>().PlayPanelAndButtonAnimations();
+                        hit.collider.GetComponent<CharacterSelector>().ShowCharacterInformation();
+
+                        hit.collider.GetComponent<CharacterSelector>().ShowCharacterSkills();
                     }
                 }
             }
@@ -192,7 +202,7 @@ public class CursorController : MonoBehaviour
             {
                 if (hit.collider.GetComponent<Enemy>())
                 {
-                    CursorController.Instance.SetAttackCursor();
+                    SetAttackCursor();
                 }
                 else
                 {
@@ -203,7 +213,7 @@ public class CursorController : MonoBehaviour
             {
                 if (hit.collider.GetComponent<TreasureChest>())
                 {
-                    CursorController.Instance.SetActionCursor();
+                    SetActionCursor();
                 }
                 else
                 {
@@ -214,7 +224,7 @@ public class CursorController : MonoBehaviour
             {
                 if (hit.collider.GetComponent<ShopKeeper>())
                 {
-                    CursorController.Instance.SetSpeechCursor();
+                    SetSpeechCursor();
                 }
                 else
                 {

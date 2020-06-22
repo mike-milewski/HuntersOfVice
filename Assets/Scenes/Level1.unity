@@ -15126,6 +15126,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 696282350}
+    - target: {fileID: 1963535224, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
+      propertyPath: cursorController
+      value: 
+      objectReference: {fileID: 1104299818}
     - target: {fileID: 1963535225, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       propertyPath: ManaBar
       value: 
@@ -17438,6 +17442,11 @@ PrefabInstance:
       propertyPath: HealTextTransform
       value: 
       objectReference: {fileID: 2019092555}
+    - target: {fileID: 114238346711748636, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
+        type: 3}
+      propertyPath: cursorController
+      value: 
+      objectReference: {fileID: 1104299818}
     - target: {fileID: 114392228500413548, guid: 6777c2b20da85b34ca35c9fca4b0fa05,
         type: 3}
       propertyPath: CharData
@@ -41856,6 +41865,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3376ad85f9ee7b4a93eb957420a45fc, type: 3}
+--- !u!114 &1104299818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114897917861350746, guid: f3376ad85f9ee7b4a93eb957420a45fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1104299817}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43af9aa22a416e24285552b8eb9cb95a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1114801326
 GameObject:
   m_ObjectHideFlags: 0

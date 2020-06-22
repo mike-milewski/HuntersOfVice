@@ -11,6 +11,9 @@ public class BasicAttack : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private CursorController cursorController;
+
+    [SerializeField]
     private Settings settings;
 
     [SerializeField]
@@ -244,7 +247,7 @@ public class BasicAttack : MonoBehaviour
         {
             if(Vector3.Distance(this.transform.position, Target.transform.position) >= HideStatsDistance)
             {
-                CursorController.Instance.SetDefaultCursor();
+                cursorController.SetDefaultCursor();
 
                 Target.GetSkills.DisableEnemySkillBar();
                 Target.TurnOffHealthBar();
