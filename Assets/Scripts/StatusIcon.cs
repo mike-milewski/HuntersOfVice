@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense }
+                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense, Aegis }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -191,6 +191,9 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.ConsecratedDefense):
                 ConsecratedDefenses();
                 break;
+            case (EffectStatus.Aegis):
+                Aegis();
+                break;
             case (EffectStatus.Haste):
                 Haste((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
                 break;
@@ -350,6 +353,9 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.ConsecratedDefense):
                 SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetIsImmune = false;
+                break;
+            case (EffectStatus.Aegis):
+                SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetReflectingDamage = false;
                 break;
             case (EffectStatus.Haste):
                 ResetSpeedAndCoolDowns();
@@ -551,6 +557,11 @@ public class StatusIcon : MonoBehaviour
     private void ConsecratedDefenses()
     {
         SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetIsImmune = true;
+    }
+
+    private void Aegis()
+    {
+        SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetReflectingDamage = true;
     }
 
     private void Haste(int value)

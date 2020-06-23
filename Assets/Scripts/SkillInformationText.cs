@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+using UnityEngine;
 using TMPro;
 
 public class SkillInformationText : MonoBehaviour
@@ -14,6 +15,13 @@ public class SkillInformationText : MonoBehaviour
 
     [SerializeField][TextArea]
     private string KnightSkillInfo, ShadowPriestSkillInfo;
+
+    private void OnEnable()
+    {
+        SelectedCharacter SC = FindObjectOfType<SelectedCharacter>();
+
+        selectedCharacter = SC;
+    }
 
     public void ShowSkillNameAndInfo()
     {

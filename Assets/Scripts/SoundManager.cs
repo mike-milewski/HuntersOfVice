@@ -164,8 +164,18 @@ public class SoundManager : MonoBehaviour
         audiosource[0].PlayOneShot(audioclips[23]);
     }
 
+    public void ContractCast()
+    {
+        audiosource[1].PlayOneShot(audioclips[24]);
+    }
+
     public void StaffHit()
     {
         audiosource[1].PlayOneShot(audioclips[25]);
+    }
+
+    public void SwordSwing()
+    {
+        audiosource[1].PlayOneShot(audioclips[26]);
     }
 }

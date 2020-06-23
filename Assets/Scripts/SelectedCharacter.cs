@@ -47,13 +47,4 @@ public class SelectedCharacter : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
-
-    private void OnEnable()
-    {
-        if(scene.buildIndex == 1)
-        {
-            KnightSelected = false;
-            ShadowPriestSelected = false;
-        }
-    }
 }

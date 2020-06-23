@@ -834,6 +834,23 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private TextMeshProUGUI ReflectedDamage()
+    {
+        float RelectedValue = 0.10f * PlayerTarget.GetComponent<Character>().MaxHealth;
+
+        var Damagetext = ObjectPooler.Instance.GetEnemyDamageText();
+
+        Damagetext.SetActive(true);
+
+        Damagetext.transform.SetParent(GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
+
+        GetComponentInChildren<Health>().ModifyHealth(-(int)RelectedValue);
+
+        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(RelectedValue);
+
+        return Damagetext.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     public TextMeshProUGUI TakeDamage()
     {
         if(PlayerTarget == null)
@@ -853,7 +870,7 @@ public class EnemyAI : MonoBehaviour
 
             t.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
 
-            if(PlayerTarget.GetComponent<Health>().GetIsImmune)
+            if (PlayerTarget.GetComponent<Health>().GetIsImmune)
             {
                 t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + "0";
             }
@@ -897,6 +914,11 @@ public class EnemyAI : MonoBehaviour
                 #endregion
 
                 PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+            }
+
+            if (PlayerTarget.GetComponent<Health>().GetReflectingDamage)
+            {
+                ReflectedDamage();
             }
         }
         return t.GetComponentInChildren<TextMeshProUGUI>();

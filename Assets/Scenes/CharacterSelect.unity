@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18129928, g: 0.22285593, b: 0.28387412, a: 1}
+  m_IndirectSpecularColor: {r: 0.18374611, g: 0.22822604, b: 0.29931635, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -297,6 +297,8 @@ MonoBehaviour:
   selectedCharacter: {fileID: 1349239368}
   CharacterInfoPanel: {fileID: 497436873}
   StartButton: {fileID: 2135812092}
+  Knight: {fileID: 104230689}
+  ShadowPriest: {fileID: 928756271}
   SkillExamples:
   - {fileID: 111486630}
   - {fileID: 1950597067}
@@ -307,7 +309,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 94b0e873d745c1f458b1b2b03f92c2a7, type: 3}
   CharacterInformationText: {fileID: 1622403781}
   CharacterNameText: {fileID: 604502234}
-  CharacterInformaion: Knight character class.
+  CharacterInformaion: The Knight bears his sword and shield to swiftly cast evil
+    asunder with offensive and defensive abilities while also providing self with
+    healing powers.
   CharacterClass: Knight
 --- !u!1 &111486630
 GameObject:
@@ -453,10 +457,10 @@ MonoBehaviour:
   selectedCharacter: {fileID: 1349239368}
   SkillNameText: {fileID: 772650575}
   SkillInfoText: {fileID: 1971399959}
-  KnightSkillName: Knight Skill
-  ShadowPriestSkillName: Shadow Priest Skill
-  KnightSkillInfo: Knight Skill
-  ShadowPriestSkillInfo: Shadow Priest Skill
+  KnightSkillName: Aegis
+  ShadowPriestSkillName: Diabolic Lightning
+  KnightSkillInfo: Reflects damage back to a target based on 10% of your maximum HP.
+  ShadowPriestSkillInfo: 'Char all enemies in a range with dark bolts from the netherworld. '
 --- !u!1 &118986112
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +472,7 @@ GameObject:
   - component: {fileID: 118986115}
   - component: {fileID: 118986114}
   - component: {fileID: 118986113}
+  - component: {fileID: 118986116}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -493,7 +498,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.216457, b: 0.5566038, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -539,6 +544,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &118986116
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118986112}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 61e614a24cee24347925426fc8aabfb4, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &155873820
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,10 +1015,12 @@ MonoBehaviour:
   selectedCharacter: {fileID: 1349239368}
   SkillNameText: {fileID: 772650575}
   SkillInfoText: {fileID: 1971399959}
-  KnightSkillName: Knight Skill 3
-  ShadowPriestSkillName: Shadow Priest Skill 3
-  KnightSkillInfo: Knight Skill 3
-  ShadowPriestSkillInfo: Shadow Priest Skill 3
+  KnightSkillName: Storm Thrust
+  ShadowPriestSkillName: Contract With Evil
+  KnightSkillInfo: Strike a target from a long distance and shatter their defense
+    for a time.
+  ShadowPriestSkillInfo: A powerful, dark deal that magnifies magical prowess while
+    sacrificing defense in return.
 --- !u!1 &440621478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,6 +1106,7 @@ GameObject:
   - component: {fileID: 497436872}
   - component: {fileID: 497436871}
   - component: {fileID: 497436873}
+  - component: {fileID: 497436874}
   m_Layer: 5
   m_Name: CharacterInfoPanel
   m_TagString: Untagged
@@ -1087,6 +1191,102 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!82 &497436874
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497436869}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 6bff489ff41b16c4fa04735fed764f34, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!224 &530524011 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
@@ -3603,17 +3803,21 @@ MonoBehaviour:
   selectedCharacter: {fileID: 1349239368}
   CharacterInfoPanel: {fileID: 497436873}
   StartButton: {fileID: 2135812092}
+  Knight: {fileID: 104230689}
+  ShadowPriest: {fileID: 928756271}
   SkillExamples:
   - {fileID: 111486630}
   - {fileID: 1950597067}
   - {fileID: 420579248}
   SkillImages:
   - {fileID: 21300000, guid: ff42a689ad961fd4b9da0a00643acce7, type: 3}
-  - {fileID: 21300000, guid: 6758a70896742dd4fb277ae7d3c72a4a, type: 3}
+  - {fileID: 21300000, guid: 06fd18faa147f3e4dbf4d6206ff581a6, type: 3}
   - {fileID: 21300000, guid: bc6a36db79d6d2a4c83617fffe311a7c, type: 3}
   CharacterInformationText: {fileID: 1622403781}
   CharacterNameText: {fileID: 604502234}
-  CharacterInformaion: Shadow Priest character class.
+  CharacterInformaion: The Shadow Priest employs unholy magicks to devastate foes
+    while also receiving influence from the underworld to amplify the dark cleric's
+    powers.
   CharacterClass: Shadow Priest
 --- !u!1 &1297359061
 GameObject:
@@ -4329,7 +4533,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -5.1}
+  m_AnchoredPosition: {x: 0, y: -25.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1622403781
@@ -4379,8 +4583,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 13
-  m_fontSizeBase: 13
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4537,8 +4741,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1299880877}
-        m_MethodName: ReturnToMenu
-        m_Mode: 1
+        m_MethodName: LoadSceneByIndex
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4564,6 +4768,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 928756272}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.BoxCollider, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1299880877}
+        m_MethodName: PlayButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4666,13 +4881,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719567411}
-  m_LocalRotation: {x: 0.1564345, y: 0, z: 0, w: 0.98768836}
+  m_LocalRotation: {x: 0.22503605, y: 0, z: 0, w: 0.9743504}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 18, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 26.01, y: 0, z: 0}
 --- !u!1 &1754195507
 GameObject:
   m_ObjectHideFlags: 0
@@ -5110,10 +5325,11 @@ MonoBehaviour:
   selectedCharacter: {fileID: 1349239368}
   SkillNameText: {fileID: 772650575}
   SkillInfoText: {fileID: 1971399959}
-  KnightSkillName: Knight Skill 2
-  ShadowPriestSkillName: Shadow Priest Skill 2
-  KnightSkillInfo: Knight Skill 2
-  ShadowPriestSkillInfo: Shadow Priest Skill 2
+  KnightSkillName: Illumination
+  ShadowPriestSkillName: Soul Piercer
+  KnightSkillInfo: Bathes in prominent light, healing wounds over a period of time.
+  ShadowPriestSkillInfo: Calls tormented souls onto an enemy, eating away at the target's
+    spirit gradually.
 --- !u!1 &1958630583
 GameObject:
   m_ObjectHideFlags: 0
@@ -5264,8 +5480,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 9
-  m_fontSizeBase: 9
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5421,7 +5637,7 @@ GameObject:
   - component: {fileID: 2062613933}
   - component: {fileID: 2062613932}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: PanelCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5639,6 +5855,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 1701079745}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1299880877}
+        m_MethodName: PlayButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

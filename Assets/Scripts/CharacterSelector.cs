@@ -12,6 +12,9 @@ public class CharacterSelector : MonoBehaviour
     private Animator CharacterInfoPanel, StartButton;
 
     [SerializeField]
+    private GameObject Knight, ShadowPriest;
+
+    [SerializeField]
     private GameObject[] SkillExamples;
 
     [SerializeField]
@@ -57,13 +60,41 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
+    public void DisableKnightCollider()
+    {
+        Knight.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void DisableShadowPriestCollider()
+    {
+        ShadowPriest.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void EnableKnightCollider()
+    {
+        Knight.GetComponent<BoxCollider>().enabled = true;
+    }
+
+    public void EnableShadowPriestCollider()
+    {
+        ShadowPriest.GetComponent<BoxCollider>().enabled = true;
+    }
+
     public void EndCharacterSelectionAnimation()
     {
         gameObject.GetComponent<Animator>().SetBool("CharacterSelection", false);
+
+        EnableKnightCollider();
+        EnableShadowPriestCollider();
     }
 
     public void PlayPanelAndButtonAnimations()
     {
+        if(!CharacterInfoPanel.GetBool("OpenMenu"))
+        {
+            CharacterInfoPanel.GetComponent<AudioSource>().Play();
+        }
+
         CharacterInfoPanel.SetBool("OpenMenu", true);
         StartButton.SetBool("ShowButton", true);
     }
@@ -79,6 +110,18 @@ public class CharacterSelector : MonoBehaviour
         for(int i = 0; i < SkillExamples.Length; i++)
         {
             SkillExamples[i].GetComponent<Image>().sprite = SkillImages[i];
+        }
+    }
+
+    public void PlayPoseSoundEffect()
+    {
+        if(selectedCharacter.GetKnightSelected)
+        {
+            SoundManager.Instance.SwordSwing();
+        }
+        else if(selectedCharacter.GetShadowPriestSelected)
+        {
+            SoundManager.Instance.ContractCast();
         }
     }
 }
