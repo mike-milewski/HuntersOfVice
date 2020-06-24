@@ -7,7 +7,7 @@ using System.Collections;
 public enum SkillType { Active, Passive };
 
 public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination, ManaSiphon,
-                           EvilsEndBonus, DiabolicLightningBonus, ShatterBonus, DiabolicTour, DualDeal };
+                           EvilsEndBonus, DiabolicLightningBonus, ShatterBonus, DiabolicTour, DualDeal, MightyValor };
 
 public class SkillMenu : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class SkillMenu : MonoBehaviour
 
     [SerializeField]
     private Skills IlluminationSkill, HealSkill, EvilsEndSkill, DiabolicLightningSkill, ShatterSkill, ContractWithEvilSkill, ContractWithTheVileSkill, 
-                   ContractWithNefariousnessSkill;
+                   ContractWithNefariousnessSkill, TenacitySkill, AegisSkill;
 
     [SerializeField]
     private Items[] items;
@@ -439,9 +439,16 @@ public class SkillMenu : MonoBehaviour
             if (skill.GetComponent<Skills>().GetCastTime <= 0 && skill.GetComponent<Skills>().GetManaCost <= 0 && skill.GetComponent<Skills>().GetCoolDown <= 0 && 
                 skill.GetComponent<Skills>().GetPotency <= 0)
             {
-                SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + 
-                                     skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" + 
-                                     "Status Duration: " + "</color> Infinite" + "\n\n" + "Cast Time: Instant";
+                if (skill.GetComponent<Skills>().GetPlayerStatusEffect == EffectStatus.NONE && skill.GetComponent<Skills>().GetEnemyStatusEffect == StatusEffect.NONE)
+                {
+                    SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "Cast Time: Instant";
+                }
+                else
+                {
+                    SkillInfoText.text = skill.GetComponent<Skills>().GetSkillDescription + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" +
+                                         skill.GetComponent<Skills>().GetStatusEffectName + "\n" + "<#EFDFB8>" +
+                                         "Status Duration: " + "</color> Infinite" + "\n\n" + "Cast Time: Instant";
+                }  
             }
         }
         else
@@ -498,6 +505,9 @@ public class SkillMenu : MonoBehaviour
                     break;
                 case (PassiveBonus.DualDeal):
                     DualDealBonusPassiveText();
+                    break;
+                case (PassiveBonus.MightyValor):
+                    MightyValorBonusPassiveText();
                     break;
             }
         }
@@ -575,7 +585,7 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "Heal's cast time is reduced by 1 and power is increased by 50.";
+        SkillInfoText.text = "Heal's cast time is reduced by 1 and its power is increased by 50.";
     }
 
     private void StatPointBonusPassiveText()
@@ -596,7 +606,7 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "Mana is recovered by 5% every time damage is dealt to a target by auto-attacks";
+        SkillInfoText.text = "Mana is recovered by 5% every time damage is dealt to a target by basic attack.";
     }
 
     private void EvilsEndBonusPassiveText()
@@ -610,7 +620,7 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "Increases the damage area of Diabolic Lightning and halves the cooldown.";
+        SkillInfoText.text = "Increases the damage area of Diabolic Lightning and increases its power by 25.";
     }
 
     private void ShatterBonusPassiveText()
@@ -633,6 +643,13 @@ public class SkillMenu : MonoBehaviour
         SkillNameText.text = PassiveSkillName;
 
         SkillInfoText.text = "Allows the stacking of two contracts.";
+    }
+
+    private void MightyValorBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Doubles the duration of Tenacity and Aegis.";
     }
 
     private void GetPassiveBonus()
@@ -689,6 +706,9 @@ public class SkillMenu : MonoBehaviour
                 break;
             case (PassiveBonus.DualDeal):
                 DualDealBonus();
+                break;
+            case (PassiveBonus.MightyValor):
+                MightyValorBonus();
                 break;
         }
     }
@@ -812,7 +832,7 @@ public class SkillMenu : MonoBehaviour
 
     private void DiabolicLightningBonus()
     {
-        DiabolicLightningSkill.GetCoolDown -= DiabolicLightningSkill.GetCoolDown / 2;
+        DiabolicLightningSkill.GetPotency += 25;
         DiabolicLightningSkill.GetAreaOfEffectRange += 2;
     }
 
@@ -835,6 +855,12 @@ public class SkillMenu : MonoBehaviour
     private void DualDealBonus()
     {
         SkillsManager.Instance.GetContractStack = 2;
+    }
+
+    private void MightyValorBonus()
+    {
+        TenacitySkill.GetStatusDuration *= 2;
+        AegisSkill.GetStatusDuration *= 2;
     }
 
     private void StatPointBonus()

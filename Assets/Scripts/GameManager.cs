@@ -343,6 +343,7 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        /*
         SelectedCharacter selectedCharacter = FindObjectOfType<SelectedCharacter>();
 
         if(selectedCharacter.GetKnightSelected)
@@ -355,7 +356,7 @@ public class GameManager : MonoBehaviour
             ShadowPriest.SetActive(true);
             Knight.SetActive(false);
         }
-
+        */
         if(Knight.activeInHierarchy)
         {
             for(int i = 0; i < KnightSkills.Length; i++)
