@@ -53,7 +53,7 @@ public class Skills : StatusEffects
     private bool StormThrustActivated, FacingEnemy;
 
     [SerializeField]
-    private bool GainedPassive, UsesHunterGauge, UnlockedBonus;
+    private bool GainedPassive, OffensiveSpell, UnlockedBonus;
 
     [SerializeField]
     private int ManaCost, Potency;
@@ -239,6 +239,18 @@ public class Skills : StatusEffects
         set
         {
             AreaOfEffectRange = value;
+        }
+    }
+
+    public bool GetOffensiveSpell
+    {
+        get
+        {
+            return OffensiveSpell;
+        }
+        set
+        {
+            OffensiveSpell = value;
         }
     }
 
@@ -446,19 +458,19 @@ public class Skills : StatusEffects
     {
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
-        if (settings.UseParticleEffects)
-        {
-            SkillParticle = ObjectPooler.Instance.GetShatterParticle();
-
-            SkillParticle.SetActive(true);
-
-            SkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z);
-
-            SkillParticle.transform.SetParent(Target.transform, true);
-        }
-
         if(Target != null)
         {
+            if (settings.UseParticleEffects)
+            {
+                SkillParticle = ObjectPooler.Instance.GetShatterParticle();
+
+                SkillParticle.SetActive(true);
+
+                SkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z);
+
+                SkillParticle.transform.SetParent(Target.transform, true);
+            }
+
             if (GainedPassive)
             {
                 if (Random.value * 100 <= InstantKnockOutValue)
@@ -532,11 +544,11 @@ public class Skills : StatusEffects
 
         if (settings.UseParticleEffects)
         {
-            SkillParticle = ObjectPooler.Instance.GetHealParticle();
+            SkillParticle = ObjectPooler.Instance.GetAlleviateParticle();
 
             SkillParticle.SetActive(true);
 
-            SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z);
+            SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y, GetCharacter.transform.position.z);
 
             SkillParticle.transform.SetParent(GetCharacter.transform, true);
         }
@@ -637,20 +649,25 @@ public class Skills : StatusEffects
         }
         else
         {
-            if (settings.UseParticleEffects)
-            {
-                SkillParticle = ObjectPooler.Instance.GetStrengthUpParticle();
-
-                SkillParticle.SetActive(true);
-
-                SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
-
-                SkillParticle.transform.SetParent(GetCharacter.transform);
-            }
+            Invoke("InvokeContract", ApplySkill);
 
             SkillsManager.Instance.GetActivatedSkill = true;
 
             SkillCast();
+        }
+    }
+
+    private void InvokeContract()
+    {
+        if (settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetContractParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y, SkillParticleParent.position.z);
+
+            SkillParticle.transform.SetParent(GetCharacter.transform);
         }
     }
 
@@ -1320,6 +1337,11 @@ public class Skills : StatusEffects
 
             if(Target.GetAI != null)
             {
+                if(Target.GetAI.GetPlayerTarget == null)
+                {
+                    Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                }
+
                 if (Target.GetAI.GetStates != States.Skill && Target.GetAI.GetStates != States.ApplyingAttack && Target.GetAI.GetStates != States.SkillAnimation &&
                 !CheckAbsorptions())
                 {
@@ -1328,6 +1350,12 @@ public class Skills : StatusEffects
             }
             else
             {
+                if(Target.GetPuckAI.GetPlayerTarget == null)
+                {
+                    Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                    Target.GetPuckAI.GetStates = BossStates.Chase;
+                }
+
                 Target.GetPuckAI.CheckHP();
             }
         }

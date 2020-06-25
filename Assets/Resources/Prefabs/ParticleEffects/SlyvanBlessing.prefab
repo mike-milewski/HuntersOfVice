@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4088688736100537311}
   - component: {fileID: 4088688736100537310}
   - component: {fileID: 4088688736100537309}
-  - component: {fileID: 114465348382156144}
   - component: {fileID: 82930978351124336}
+  - component: {fileID: 114465348382156144}
   m_Layer: 0
   m_Name: SlyvanBlessing
   m_TagString: Untagged
@@ -4774,18 +4774,6 @@ MonoBehaviour:
   particleEffect: 15
   ps: {fileID: 4088688736100537311}
   Duration: 2
---- !u!114 &114465348382156144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4088688736100537281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &82930978351124336
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4882,3 +4870,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114465348382156144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4088688736100537281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

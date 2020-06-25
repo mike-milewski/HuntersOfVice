@@ -625,6 +625,7 @@ public class Puck : MonoBehaviour
         DisableWall2();
 
         KillAdds();
+        DisablePoisonMushroomDamageRadius();
 
         PlayerTarget = null;
         AutoAttackTime = 0;
@@ -1015,6 +1016,14 @@ public class Puck : MonoBehaviour
             SpawnParticleEffect(new Vector3(PoisonMushrooms[i].transform.position.x, PoisonMushrooms[i].transform.position.y, PoisonMushrooms[i].transform.position.z));
 
             PoisonMushrooms[i].GetComponentInChildren<ObstacleDamageRadius>().enabled = true;
+        }
+    }
+
+    private void DisablePoisonMushroomDamageRadius()
+    {
+        for(int i = 0; i < PoisonMushrooms.Length; i++)
+        {
+            PoisonMushrooms[i].GetComponentInChildren<ObstacleDamageRadius>().enabled = false;
         }
     }
 

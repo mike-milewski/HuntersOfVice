@@ -100,32 +100,50 @@ public class SkillBar : MonoBehaviour
     {
         if(playerController.GetMovement == Vector3.zero && character.CurrentHealth > 0 && !SkillsManager.Instance.GetDisruptedSkill && !skills.GetIsBeingDragged)
         {
-            playerAnimations.EndAttackAnimation();
-            SkillBarImage.fillAmount += Time.deltaTime / skills.GetCastTime;
-            CastTime -= Time.deltaTime;
-            SkillName.text = skills.GetSkillName + " " + Mathf.Clamp(CastTime, 0, skills.GetCastTime).ToString("F2");
-            if (SkillBarImage.fillAmount >= 1)
+            if(skills.GetOffensiveSpell)
             {
-                ObjectPooler.Instance.ReturnPlayerCastParticleToPool(CastParticle);
-
-                skills.GetButton.onClick.Invoke();
-                SkillBarImage.fillAmount = 0;
-                CastTime = skills.GetCastTime;
-                CastParticle.gameObject.SetActive(false);
-                gameObject.SetActive(false);
+                if (character.GetComponent<BasicAttack>().GetTarget == null)
+                {
+                    EndSpell();
+                }
             }
+
+            Cast();
         }
         else
         {
-            playerAnimations.EndAllSpellcastingBools();
-            playerAnimations.EndSpellCast();
+            EndSpell();
+        }
+    }
 
-            SkillsManager.Instance.ReactivateSkillButtons();
+    private void Cast()
+    {
+        playerAnimations.EndAttackAnimation();
+        SkillBarImage.fillAmount += Time.deltaTime / skills.GetCastTime;
+        CastTime -= Time.deltaTime;
+        SkillName.text = skills.GetSkillName + " " + Mathf.Clamp(CastTime, 0, skills.GetCastTime).ToString("F2");
+        if (SkillBarImage.fillAmount >= 1)
+        {
+            ObjectPooler.Instance.ReturnPlayerCastParticleToPool(CastParticle);
+
+            skills.GetButton.onClick.Invoke();
             SkillBarImage.fillAmount = 0;
             CastTime = skills.GetCastTime;
-            SkillsManager.Instance.GetActivatedSkill = false;
-            skills.GetFacingEnemy = false;
+            CastParticle.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
+    }
+
+    private void EndSpell()
+    {
+        playerAnimations.EndAllSpellcastingBools();
+        playerAnimations.EndSpellCast();
+
+        SkillsManager.Instance.ReactivateSkillButtons();
+        SkillBarImage.fillAmount = 0;
+        CastTime = skills.GetCastTime;
+        SkillsManager.Instance.GetActivatedSkill = false;
+        skills.GetFacingEnemy = false;
+        gameObject.SetActive(false);
     }
 }

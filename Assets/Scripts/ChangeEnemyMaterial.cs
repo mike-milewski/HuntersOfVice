@@ -100,7 +100,10 @@ public class ChangeEnemyMaterial : MonoBehaviour
             skinnedMeshRenderer.material.color = alpha;
             yield return new WaitForSeconds(0.1f);
         }
-        enemyRespawn.enabled = true;
+        if(enemyRespawn != null)
+        {
+            enemyRespawn.enabled = true;
+        }
         ParentObject.SetActive(false);
         yield return null;
     }

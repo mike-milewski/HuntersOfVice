@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6243328067890516306}
   - component: {fileID: 6242197206473331130}
   - component: {fileID: 6193177082641735722}
-  - component: {fileID: 114567465612906516}
   - component: {fileID: 82057048569301592}
+  - component: {fileID: 114567465612906516}
   m_Layer: 0
   m_Name: Slam
   m_TagString: FxTemporaire
@@ -4533,18 +4533,6 @@ MonoBehaviour:
   particleEffect: 16
   ps: {fileID: 6243328067890516306}
   Duration: 1
---- !u!114 &114567465612906516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6080076980750741398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &82057048569301592
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4641,6 +4629,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114567465612906516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080076980750741398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6080254167433948558
 GameObject:
   m_ObjectHideFlags: 0

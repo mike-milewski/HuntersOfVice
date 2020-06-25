@@ -78079,8 +78079,8 @@ GameObject:
   - component: {fileID: 198681264470032530}
   - component: {fileID: 199223780631540688}
   - component: {fileID: 114551767184087894}
-  - component: {fileID: 114632527656144908}
   - component: {fileID: 82199943145121574}
+  - component: {fileID: 114632527656144908}
   m_Layer: 0
   m_Name: EnemyAppearParticle
   m_TagString: Untagged
@@ -82698,18 +82698,6 @@ MonoBehaviour:
   particleEffect: 19
   ps: {fileID: 198681264470032530}
   Duration: 2
---- !u!114 &114632527656144908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1965343156803978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &82199943145121574
 AudioSource:
   m_ObjectHideFlags: 0
@@ -82806,6 +82794,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114632527656144908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965343156803978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1972699721817900
 GameObject:
   m_ObjectHideFlags: 0

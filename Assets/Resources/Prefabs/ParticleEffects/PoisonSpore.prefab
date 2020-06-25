@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 198901221676843928}
   - component: {fileID: 199209648567126184}
   - component: {fileID: 114711305975888554}
-  - component: {fileID: 114426384619156246}
   - component: {fileID: 82246277677279450}
+  - component: {fileID: 114426384619156246}
   m_Layer: 0
   m_Name: PoisonSpore
   m_TagString: Untagged
@@ -4774,18 +4774,6 @@ MonoBehaviour:
   particleEffect: 6
   ps: {fileID: 198901221676843928}
   Duration: 2
---- !u!114 &114426384619156246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951564860555310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &82246277677279450
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4882,3 +4870,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114426384619156246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951564860555310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
