@@ -166,7 +166,14 @@ public class Shop : MonoBehaviour
         ShopLevelText.text = "Level: " + ShopLevel;
         UpgradeShopLevelText.text = "Level: " + ShopLevel;
 
-        NextToLevel = ShopLevelExperiences[ShopLevel];
+        if(ShopLevel < MaxShopLevel)
+        {
+            NextToLevel = ShopLevelExperiences[ShopLevel];
+        }
+        else
+        {
+            NextToLevel = 0;
+        }
 
         UpdateShopExperience();
 
@@ -185,17 +192,14 @@ public class Shop : MonoBehaviour
 
     public void ShowPreviewExperience()
     {
-        if(ShopLevel < MaxShopLevel)
-        {
-            UpdatePreviewShopExperience();
-        }
+        UpdatePreviewShopExperience();
     }
 
     private void UpdatePreviewShopExperience()
     {
         FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
-        while ((float)ExperiencePoints >= (float)NextToLevel)
+        if ((float)ExperiencePoints >= (float)NextToLevel)
         {
             PreviewLevelUp();
         }
@@ -230,8 +234,16 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            PreviewShopExperienceText.text = Mathf.Abs(NTL).ToString();
-            ShopExperienceText.text = "";
+            if(ShopLevel + ShopPreviewLevel == MaxShopLevel)
+            {
+                PreviewShopExperienceText.text = "---";
+                ShopExperienceText.text = "";
+            }
+            else
+            {
+                PreviewShopExperienceText.text = Mathf.Abs(NTL).ToString();
+                ShopExperienceText.text = "";
+            }
         }
     }
 
@@ -253,56 +265,60 @@ public class Shop : MonoBehaviour
             LevelUp();
         }
 
-        NTL = Mathf.Abs(ExperiencePoints - NextToLevel);
+        if(ShopLevel == MaxShopLevel)
+        {
+            ShopExperienceText.text = "---";
+        }
+        else
+        {
+            NTL = Mathf.Abs(ExperiencePoints - NextToLevel);
 
-        ShopExperienceText.text = Mathf.Abs(NTL).ToString();
+            ShopExperienceText.text = Mathf.Abs(NTL).ToString();
+        }
     }
 
     private void GetReward()
     {
-        if(ShopLevel < MaxShopLevel)
+        if (Knight.gameObject.activeInHierarchy)
         {
-            if (Knight.gameObject.activeInHierarchy)
+            switch (KnightShopLevelRewards[ShopLevel].GetShopRewards)
             {
-                switch (KnightShopLevelRewards[ShopLevel].GetShopRewards)
-                {
-                    case (ShopRewards.Discount):
-                        KnightEquipmentDiscount();
-                        break;
-                    case (ShopRewards.equipment):
-                        if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentType == EquipmentType.Weapon)
-                        {
-                            KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
-                            KnightShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
-                        }
-                        else
-                        {
-                            KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
-                            KnightShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
-                        }
-                        break;
-                }
+                case (ShopRewards.Discount):
+                    KnightEquipmentDiscount();
+                    break;
+                case (ShopRewards.equipment):
+                    if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentType == EquipmentType.Weapon)
+                    {
+                        KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        KnightShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
+                    }
+                    else
+                    {
+                        KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        KnightShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
+                    }
+                    break;
             }
-            else if (ShadowPriest.gameObject.activeInHierarchy)
+        }
+        else if (ShadowPriest.gameObject.activeInHierarchy)
+        {
+            switch (ShadowPriestShopLevelRewards[ShopLevel].GetShopRewards)
             {
-                switch (ShadowPriestShopLevelRewards[ShopLevel].GetShopRewards)
-                {
-                    case (ShopRewards.Discount):
-                        ShadowPriestEquipmentDiscount();
-                        break;
-                    case (ShopRewards.equipment):
-                        if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentType == EquipmentType.Weapon)
-                        {
-                            ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
-                            ShadowPriestShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
-                        }
-                        else
-                        {
-                            ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
-                            ShadowPriestShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
-                        }
-                        break;
-                }
+                case (ShopRewards.Discount):
+                    ShadowPriestEquipmentDiscount();
+                    break;
+                case (ShopRewards.equipment):
+                    if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentType == EquipmentType.Weapon)
+                    {
+                        ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        ShadowPriestShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
+                    }
+                    else
+                    {
+                        ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        ShadowPriestShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
+                    }
+                    break;
             }
         }
     }
@@ -348,7 +364,7 @@ public class Shop : MonoBehaviour
 
     private void ShowNextRewardPreview()
     {
-        if(ShopLevel < MaxShopLevel)
+        if(ShopLevel + ShopPreviewLevel < MaxShopLevel)
         {
             if (Knight.gameObject.activeInHierarchy)
             {
@@ -382,6 +398,10 @@ public class Shop : MonoBehaviour
                         break;
                 }
             }
+        }
+        else
+        {
+            EquipmentImage.gameObject.SetActive(false);
         }
     }
 
@@ -431,18 +451,32 @@ public class Shop : MonoBehaviour
 
         int SurplusExperience = Mathf.Abs(ExperiencePoints - NextToLevel);
 
-        ExperiencePoints = SurplusExperience;
+        if (ShopLevel + ShopPreviewLevel < MaxShopLevel)
+        {
+            ExperiencePoints = SurplusExperience;
 
-        int NextShopLevel = ShopLevelExperiences[ShopLevel + ShopPreviewLevel];
+            int NextShopLevel = ShopLevelExperiences[ShopLevel + ShopPreviewLevel];
 
-        NextToLevel = NextShopLevel;
+            NextToLevel = NextShopLevel;
 
-        FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
+            FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
-        ShowNextRewardPreview();
+            ShowNextRewardPreview();
 
-        PreviewNextLevelRewardText.text = "Next Level";
-        NextLevelRewardText.text = "";
+            PreviewNextLevelRewardText.text = "Next Level";
+            NextLevelRewardText.text = "";
+        }
+        else
+        {
+            ExperiencePoints = SurplusExperience;
+
+            PreviewNextLevelRewardText.text = "Max Level";
+            NextLevelRewardText.text = "";
+
+            ShowNextRewardPreview();
+
+            NextToLevel = 0;
+        }
     }
 
     private void LevelUp()
@@ -453,24 +487,43 @@ public class Shop : MonoBehaviour
 
         ShopPreviewLevel--;
 
-        if(ShopPreviewLevel <= 0)
-        {
-            PreviewShopLevelText.text = "";
-        }
-
-        int NextShopLevel = ShopLevelExperiences[ShopLevel];
-
-        NextToLevel = NextShopLevel;
-
-        ShopLevelText.text = "Level: " + ShopLevel;
-        UpgradeShopLevelText.text = "Level: " + ShopLevel;
-
-        UpdateShopExperience();
-
         ShowNextReward();
 
-        PreviewNextLevelRewardText.text = "";
-        NextLevelRewardText.text = "Next Level";
+        if(ShopLevel < MaxShopLevel)
+        {
+            if (ShopPreviewLevel <= 0)
+            {
+                PreviewShopLevelText.text = "";
+            }
+
+            int NextShopLevel = ShopLevelExperiences[ShopLevel];
+
+            NextToLevel = NextShopLevel;
+
+            ShopLevelText.text = "Level: " + ShopLevel;
+            UpgradeShopLevelText.text = "Level: " + ShopLevel;
+
+            UpdateShopExperience();
+
+            PreviewNextLevelRewardText.text = "";
+            NextLevelRewardText.text = "Next Level";
+        }
+        else
+        {
+            ShopLevelText.text = "Level: " + ShopLevel;
+            UpgradeShopLevelText.text = "Level: " + ShopLevel;
+
+            PreviewNextLevelRewardText.text = "";
+            NextLevelRewardText.text = "Max Level";
+
+            FillArea.fillAmount = 1;
+            FillAreaTwo.fillAmount = 0;
+
+            PreviewShopExperienceText.text = "";
+            ShopExperienceText.text = "---";
+
+            NextToLevel = 0;
+        }
     }
 
     public void ShowEquipmentRewardInfo()

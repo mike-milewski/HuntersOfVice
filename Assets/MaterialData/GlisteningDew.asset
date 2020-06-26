@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaterialSprite: {fileID: 21300000, guid: e5aec484e95a5b14baf2d05cde2956dd, type: 3}
   MaterialName: Glistening Dew
-  ShopPoints: 60
+  ShopPoints: 100
   MaterialDescription: Pure mildew that shines with a mystic glow.
