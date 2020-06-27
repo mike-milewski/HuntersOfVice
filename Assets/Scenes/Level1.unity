@@ -1358,6 +1358,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18773667}
   m_CullTransparentMesh: 0
+--- !u!1 &22809056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 22809058}
+  - component: {fileID: 22809057}
+  m_Layer: 0
+  m_Name: AudioChanger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &22809057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22809056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23351f4408ab6df409b7ca15df7aff4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 696282347}
+  LevelTheme: {fileID: 8300000, guid: 042243a3818151647949eeb8cbbf57f1, type: 3}
+  MiniBossTheme: {fileID: 8300000, guid: ec2a200c9f6ff2b43932fbd906e75989, type: 3}
+  MainBossTheme: {fileID: 8300000, guid: 40edaf1c2329d5e44bd9b4eca7f5ba7c, type: 3}
+  ChangeToLevelTheme: 0
+  ChangeToMiniBossTheme: 0
+  ChangeToMainBossTheme: 0
+--- !u!4 &22809058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22809056}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &26678614
 GameObject:
   m_ObjectHideFlags: 0
@@ -29568,7 +29618,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ec2a200c9f6ff2b43932fbd906e75989, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 042243a3818151647949eeb8cbbf57f1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -40824,7 +40874,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a33fc01eb7566f4a93335fa5250ed5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioChanger: {fileID: 22809057}
   WallParticle: {fileID: 420686137}
+  ChangeToMiniBossTheme: 1
+  ChangeToBossTheme: 0
 --- !u!65 &1085739653
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -93297,6 +93350,11 @@ PrefabInstance:
       propertyPath: WallTrigger
       value: 
       objectReference: {fileID: 1085739650}
+    - target: {fileID: 5148129804296659929, guid: 0717d70c0de52434486d20a500d4f6c4,
+        type: 3}
+      propertyPath: audioChanger
+      value: 
+      objectReference: {fileID: 22809057}
     - target: {fileID: 8718885078731095356, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
       propertyPath: m_LocalPosition.z

@@ -86,6 +86,9 @@ public class Puck : MonoBehaviour
     private Enemy enemy;
 
     [SerializeField]
+    private AudioChanger audioChanger;
+
+    [SerializeField]
     private EnemySkills enemySkills;
 
     [SerializeField]
@@ -621,6 +624,8 @@ public class Puck : MonoBehaviour
 
     public void Dead()
     {
+        EnableAudioChanger();
+
         DisableWall1();
         DisableWall2();
 
@@ -660,6 +665,14 @@ public class Puck : MonoBehaviour
         }
 
         CheckForInformation();
+    }
+
+    private void EnableAudioChanger()
+    {
+        audioChanger.gameObject.SetActive(true);
+
+        audioChanger.GetChangeToMiniBossTheme = false;
+        audioChanger.GetChangeToLevelTheme = true;
     }
 
     private void CheckForInformation()
