@@ -124,6 +124,7 @@ public class AudioChanger : MonoBehaviour
                 source.volume += Time.deltaTime;
                 if (source.volume >= 1)
                 {
+                    ChangeToLevelTheme = false;
                     gameObject.SetActive(false);
                 }
             }
@@ -153,6 +154,7 @@ public class AudioChanger : MonoBehaviour
                 source.volume += Time.deltaTime;
                 if (source.volume >= 1)
                 {
+                    ChangeToMiniBossTheme = false;
                     gameObject.SetActive(false);
                 }
             }
@@ -182,6 +184,7 @@ public class AudioChanger : MonoBehaviour
                 source.volume += Time.deltaTime;
                 if (source.volume >= 1)
                 {
+                    ChangeToMainBossTheme = false;
                     gameObject.SetActive(false);
                 }
             }

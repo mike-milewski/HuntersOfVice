@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
 
     [SerializeField]
+    private AudioChanger audioChanger;
+
+    [SerializeField]
     private Settings settings;
 
     [SerializeField]
@@ -357,6 +360,7 @@ public class GameManager : MonoBehaviour
             Knight.SetActive(false);
         }
         */
+
         if(Knight.activeInHierarchy)
         {
             for(int i = 0; i < KnightSkills.Length; i++)
@@ -841,10 +845,31 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Fade());
     }
 
+    private void ChangeAudioToLevelTheme()
+    {
+        if (!audioChanger.GetChangeToLevelTheme)
+        {
+            if (audioChanger.GetChangeToMiniBossTheme || audioChanger.GetChangeToMainBossTheme)
+            {
+                audioChanger.GetChangeToMiniBossTheme = false;
+                audioChanger.GetChangeToMainBossTheme = false;
+            }
+            audioChanger.GetChangeToLevelTheme = true;
+        }
+        else
+        {
+            audioChanger.gameObject.SetActive(false);
+        }
+    }
+
     private IEnumerator Fade()
     {
         yield return new WaitForSeconds(2);
         FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
+        audioChanger.gameObject.SetActive(true);
+
+        ChangeAudioToLevelTheme();
+        
         StartCoroutine(Respawn());
     }
 
@@ -853,7 +878,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(RespawnTime);
         FadeScreen.Instance.GetFadeState = FadeState.FADEIN;
 
-        if(Knight.activeInHierarchy)
+        if (Knight.activeInHierarchy)
         {
             Knight.transform.position = SpawnPoint.position;
 

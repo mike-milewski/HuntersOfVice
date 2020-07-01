@@ -12,6 +12,9 @@ public class Phases
     [SerializeField]
     BossAiStates[] states;
 
+    [SerializeField][TextArea]
+    private string SpeechText;
+
     public BossAiStates[] GetBossAiStates
     {
         get
@@ -21,6 +24,18 @@ public class Phases
         set
         {
             states = value;
+        }
+    }
+
+    public string GetSpeechText
+    {
+        get
+        {
+            return SpeechText;
+        }
+        set
+        {
+            SpeechText = value;
         }
     }
 }
@@ -100,6 +115,12 @@ public class Puck : MonoBehaviour
     [SerializeField]
     [Tooltip("Current targeted Player. Keep this empty!")]
     private Character PlayerTarget = null;
+
+    [SerializeField]
+    private TextMeshProUGUI SpeechText;
+
+    [SerializeField]
+    private Animator SpeechBox;
 
     [SerializeField]
     private SphereCollider EnemyTriggerSphere;
@@ -491,6 +512,8 @@ public class Puck : MonoBehaviour
 
             states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
 
+            EnableSpeech();
+
             ChangingPhase = false;
             MovingToPosition = false;
             RotatingToPosition = false;
@@ -511,6 +534,8 @@ public class Puck : MonoBehaviour
             PhaseIndex = 5;
 
             states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+
+            EnableSpeech();
 
             ChangingPhase = false;
             MovingToPosition = false;
@@ -625,6 +650,8 @@ public class Puck : MonoBehaviour
     public void Dead()
     {
         EnableAudioChanger();
+
+        EnableSpeechDead();
 
         DisableWall1();
         DisableWall2();
@@ -782,6 +809,8 @@ public class Puck : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     public void ResetStats()
     {
+        DisableSpeech();
+
         PlayParticle();
 
         OnEnabled = true;
@@ -847,10 +876,37 @@ public class Puck : MonoBehaviour
         PlayerEntry = true;
         if (other.gameObject.GetComponent<PlayerController>())
         {
+            EnableSpeech();
+
             PlayerTarget = other.GetComponent<Character>();
             states = BossStates.Chase;
             EnemyTriggerSphere.gameObject.SetActive(false);
         }
+    }
+
+    public void EnableSpeech()
+    {
+        if(phases[PhaseIndex].GetSpeechText != "")
+        {
+            SpeechBox.SetBool("Fade", true);
+
+            SpeechText.text = phases[PhaseIndex].GetSpeechText;
+        }
+        Invoke("DisableSpeech", 3.0f);
+    }
+
+    private void EnableSpeechDead()
+    {
+        SpeechBox.SetBool("Fade", true);
+
+        SpeechText.text = "I've...let everybody down...";
+
+        Invoke("DisableSpeech", 3.0f);
+    }
+
+    private void DisableSpeech()
+    {
+        SpeechBox.SetBool("Fade", false);
     }
 
     public void CheckTarget()
@@ -881,6 +937,23 @@ public class Puck : MonoBehaviour
                 }
             }
         }
+    }
+
+    private TextMeshProUGUI ReflectedDamage()
+    {
+        float RelectedValue = 0.10f * PlayerTarget.GetComponent<Character>().MaxHealth;
+
+        var Damagetext = ObjectPooler.Instance.GetEnemyDamageText();
+
+        Damagetext.SetActive(true);
+
+        Damagetext.transform.SetParent(GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
+
+        GetComponentInChildren<Health>().ModifyHealth(-(int)RelectedValue);
+
+        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(RelectedValue);
+
+        return Damagetext.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public TextMeshProUGUI TakeDamage()
@@ -942,6 +1015,11 @@ public class Puck : MonoBehaviour
             if(!SkillsManager.Instance.GetActivatedSkill)
             {
                 PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+            }
+
+            if (PlayerTarget.GetComponent<Health>().GetReflectingDamage)
+            {
+                ReflectedDamage();
             }
         }
         return t.GetComponentInChildren<TextMeshProUGUI>();

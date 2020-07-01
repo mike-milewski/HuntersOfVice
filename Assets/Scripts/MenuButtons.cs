@@ -54,8 +54,12 @@ public class MenuButtons : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        FadeScreen.Instance.GetReturnToMenu = true;
-        FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
+        if (!GameManager.Instance.GetIsDead)
+        {
+            FadeScreen.Instance.GetReturnToMenu = true;
+            FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
+        }
+        else return;
     }
 
     public void ToggleMenuPanel(GameObject Panel)

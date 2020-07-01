@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
+    [SerializeField]
+    private Character Knight, ShadowPriest;
+
     [SerializeField]
     private Animator animator;
 
@@ -60,15 +64,23 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Attacking", false);
         animator.SetBool("SpellCasting", false);
         animator.SetBool("ContinueCasting", false);
-        animator.SetBool("StormThrust", false);
-        animator.SetBool("WhirlwindSlash", false);
+
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            animator.SetBool("StormThrust", false);
+            animator.SetBool("WhirlwindSlash", false);
+            animator.SetBool("EvilsEnd", false);
+        }
+
         animator.SetBool("Skill", false);
         animator.SetBool("SkillCast", false);
-        animator.SetBool("EvilsEnd", false);
-        animator.SetBool("SpellFinish", false);
+
+        if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            animator.SetBool("SpellFinish", false);
+        }
 
         animator.SetBool("Damaged", false);
-
         animator.SetBool("Dead", true);
 
         SkillsManager.Instance.GetWhirlwind = false;
@@ -186,8 +198,12 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("SkillCast", true);
         animator.SetBool("Skill", false);
 
-        animator.SetBool("StormThrust", false);
-        animator.SetBool("WhirlwindSlash", false);
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            animator.SetBool("StormThrust", false);
+            animator.SetBool("WhirlwindSlash", false);
+        }
+
         animator.SetBool("SpellCasting", false);
         animator.SetBool("ContinueCasting", false);
 

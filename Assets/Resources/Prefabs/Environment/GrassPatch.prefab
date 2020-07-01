@@ -4747,7 +4747,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 0.52, z: 0.5}
+  m_Size: {x: 1.14, y: 0.52, z: 0.82}
   m_Center: {x: 0.22, y: 0.22, z: -0.1}
 --- !u!114 &6357218166223267299
 MonoBehaviour:
@@ -4764,7 +4764,7 @@ MonoBehaviour:
   itemDrops:
   - materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
       type: 3}
-    materialData: {fileID: 11400000, guid: f122ba787eb66da45be83c4ff834fe3c, type: 2}
+    materialData: {fileID: 11400000, guid: 5a17d6c3adb8f094587e6b4e04aa9528, type: 2}
     DropChance: 100
   materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
     type: 3}

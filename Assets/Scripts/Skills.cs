@@ -434,8 +434,6 @@ public class Skills : StatusEffects
 
                     SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
-                    GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
-
                     GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
                     GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
 
@@ -460,6 +458,8 @@ public class Skills : StatusEffects
 
         if(Target != null)
         {
+            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
             if (settings.UseParticleEffects)
             {
                 SkillParticle = ObjectPooler.Instance.GetShatterParticle();
@@ -705,19 +705,6 @@ public class Skills : StatusEffects
         PlayerStatus();  
     }
 
-    public void Poison()
-    {
-        TextHolder = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetUI;
-
-        GetStatusEffectIconTrans = GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform;
-
-        this.CoolDownImage.fillAmount = 1;
-
-        SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
-
-        EnemyStatus();
-    }
-
     public void SwiftStrike()
     {
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
@@ -752,7 +739,7 @@ public class Skills : StatusEffects
         }
     }
 
-    public void BraveWing()
+    public void BraveLight()
     {
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
@@ -784,7 +771,7 @@ public class Skills : StatusEffects
         }
     }
 
-    public void SetBraveWingTextHolder()
+    public void SetBraveLightTextHolder()
     {
         TextHolder = GameManager.Instance.GetStatusEffectTransform;
 
@@ -848,24 +835,37 @@ public class Skills : StatusEffects
 
         GetCharacter.GetComponent<PlayerAnimations>().StormThrustAnimation();
 
-        Vector3 Distance = new Vector3(Target.transform.position.x - GetCharacter.transform.position.x, 0,
-                                       Target.transform.position.z - GetCharacter.transform.position.z).normalized;
-
-        Quaternion Look = Quaternion.LookRotation(Distance);
-
-        GetCharacter.transform.rotation = Quaternion.Slerp(GetCharacter.transform.rotation, Look, 10 * Time.deltaTime);
-        GetCharacter.GetRigidbody.transform.position += Distance * 30 * Time.deltaTime;
-
-        if(DistanceToAttack() <= 2)
+        if(Target != null)
         {
-            GetCharacter.GetComponent<BasicAttack>().HitParticleEffect();
+            Vector3 Distance = new Vector3(Target.transform.position.x - GetCharacter.transform.position.x, 0,
+                                           Target.transform.position.z - GetCharacter.transform.position.z).normalized;
 
-            DamageSkillText(Target);
+            Quaternion Look = Quaternion.LookRotation(Distance);
 
-            GetStatusEffectIconTrans = Target.GetDebuffTransform;
+            GetCharacter.transform.rotation = Quaternion.Slerp(GetCharacter.transform.rotation, Look, 10 * Time.deltaTime);
+            GetCharacter.GetRigidbody.transform.position += Distance * 30 * Time.deltaTime;
 
-            EnemyStatus();
+            if (DistanceToAttack() <= 2)
+            {
+                GetCharacter.GetComponent<BasicAttack>().HitParticleEffect();
 
+                DamageSkillText(Target);
+
+                GetStatusEffectIconTrans = Target.GetDebuffTransform;
+
+                EnemyStatus();
+
+                StormThrustActivated = false;
+
+                SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
+
+                SkillsManager.Instance.GetActivatedSkill = false;
+
+                GetCharacter.GetComponent<PlayerAnimations>().EndStormThrustAnimation();
+            }
+        }
+        else
+        {
             StormThrustActivated = false;
 
             SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
@@ -1354,6 +1354,7 @@ public class Skills : StatusEffects
                 {
                     Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
                     Target.GetPuckAI.GetStates = BossStates.Chase;
+                    Target.GetPuckAI.EnableSpeech();
                 }
 
                 Target.GetPuckAI.CheckHP();
@@ -1612,8 +1613,9 @@ public class Skills : StatusEffects
                 else
                 {
                     SkillPanelText.text = SkillDescription + "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + 
-                                          GetPlayerElement + "\n\n" + "Power: " + Potency + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + 
-                                          "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "MP Cost: " + ManaCost + "\n\n" + "Cast Time: Instant" + "\n" + 
+                                          GetPlayerElement + "\n\n" + "<#EFDFB8>" + "Added effect: " + "</color>" + GetStatusEffectName + "\n" + 
+                                          "<#EFDFB8>" + "Status Duration: " + "</color>" + GetStatusDuration + "s" + "\n\n" + "Power: " + Potency + "\n" + 
+                                          "MP Cost: " + ManaCost + "\n\n" + "Cast Time: Instant" + "\n" + 
                                           "Cooldown: " + CoolDown + "s";
                 }
             }

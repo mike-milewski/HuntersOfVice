@@ -49,6 +49,13 @@ public class CursorController : MonoBehaviour
                 SetDefaultCursor();
             }
         }
+        else if(Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            if (!hit.collider.GetComponent<Enemy>())
+            {
+                SetDefaultCursor();
+            }  
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -166,11 +173,6 @@ public class CursorController : MonoBehaviour
                     }
                 }
             }
-        }
-
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            
         }
     }
 

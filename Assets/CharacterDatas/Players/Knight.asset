@@ -18,7 +18,7 @@ MonoBehaviour:
   Absorbtions: 
   CharacterName: Knight
   CharacterLevel: 1
-  Health: 105
+  Health: 150
   Mana: 25
   Strength: 27
   Defense: 19

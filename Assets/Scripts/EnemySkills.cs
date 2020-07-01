@@ -1439,6 +1439,23 @@ public class EnemySkills : MonoBehaviour
         }
     }
 
+    private TextMeshProUGUI ReflectedDamage()
+    {
+        float RelectedValue = 0.10f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+
+        var Damagetext = ObjectPooler.Instance.GetEnemyDamageText();
+
+        Damagetext.SetActive(true);
+
+        Damagetext.transform.SetParent(GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
+
+        GetComponentInChildren<Health>().ModifyHealth(-(int)RelectedValue);
+
+        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(RelectedValue);
+
+        return Damagetext.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     public TextMeshProUGUI SkillDamageText(int potency, string skillName)
     {
         var Target = enemyAI.GetPlayerTarget;
@@ -1512,6 +1529,11 @@ public class EnemySkills : MonoBehaviour
             {
                 enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
             }
+        }
+
+        if (Target.GetComponent<Health>().GetReflectingDamage)
+        {
+            ReflectedDamage();
         }
 
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
@@ -1590,6 +1612,11 @@ public class EnemySkills : MonoBehaviour
             {
                 puckAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
             }
+        }
+
+        if(Target.GetComponent<Health>().GetReflectingDamage)
+        {
+            ReflectedDamage();
         }
 
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();

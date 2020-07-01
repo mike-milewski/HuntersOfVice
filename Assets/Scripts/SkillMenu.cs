@@ -649,7 +649,7 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "Doubles the duration of Tenacity and Aegis.";
+        SkillInfoText.text = "Doubles the duration of Tenacity, Illumination, and Aegis.";
     }
 
     private void GetPassiveBonus()
@@ -861,6 +861,7 @@ public class SkillMenu : MonoBehaviour
     {
         TenacitySkill.GetStatusDuration *= 2;
         AegisSkill.GetStatusDuration *= 2;
+        IlluminationSkill.GetStatusDuration *= 2;
     }
 
     private void StatPointBonus()

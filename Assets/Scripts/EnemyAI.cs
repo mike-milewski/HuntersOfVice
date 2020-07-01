@@ -94,7 +94,7 @@ public class EnemyAI : MonoBehaviour
     private ParticleSystem HitParticle;
 
     [SerializeField]
-    private float TimeToMoveAgain; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
+    private float TimeToMoveAgain, WayPointDistance, OuterAttackDistance; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
 
     private float TimeToMove, DistanceToTarget;
 
@@ -383,6 +383,8 @@ public class EnemyAI : MonoBehaviour
     {
         StandingStill = false;
 
+        CheckDistanceBetweenWaypoints();
+
         if (!IsUsingAnimator)
         {
             Anim.RunAni();
@@ -415,9 +417,12 @@ public class EnemyAI : MonoBehaviour
                 if (PlayerTarget.CurrentHealth > 0)
                 {
                     AutoAttackTime += Time.deltaTime;
-                    if (AutoAttackTime >= AttackDelay)
+                    if(DistanceToTarget <= OuterAttackDistance)
                     {
-                        states = aiStates[StateArrayIndex].GetState;
+                        if (AutoAttackTime >= AttackDelay)
+                        {
+                            states = aiStates[StateArrayIndex].GetState;
+                        }
                     }
                 }
                 else
@@ -758,6 +763,17 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void CheckDistanceBetweenWaypoints()
+    { 
+        if(!IsAnAdd)
+        {
+            if (Vector3.Distance(transform.position, Waypoints[WaypointIndex].position) >= WayPointDistance)
+            {
+                EndBattle();
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         PlayerEntry = true;
@@ -772,15 +788,63 @@ public class EnemyAI : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<PlayerController>() && IsHostile)
+        if(states != States.Patrol)
+        {
+            if (other.gameObject.GetComponent<PlayerController>() && IsHostile)
+            {
+                PlayerEntry = false;
+                if (states != States.SkillAnimation)
+                {
+                    PlayerTarget = null;
+                    states = States.Patrol;
+                    AutoAttackTime = 0;
+                    if (enemySkills.GetManager.Length > 0)
+                    {
+                        enemySkills.DisableRadiusImage();
+                        enemySkills.DisableRadius();
+                    }
+                    enemySkills.GetActiveSkill = false;
+                    enemySkills.GetSkillBar.gameObject.SetActive(false);
+                }
+                enemy.GetHealth.IncreaseHealth(character.MaxHealth);
+                enemy.GetLocalHealthInfo();
+                StateArrayIndex = 0;
+            }
+            if (other.gameObject.GetComponent<PlayerController>() && !IsHostile)
+            {
+                PlayerEntry = false;
+                if (states != States.SkillAnimation)
+                {
+                    PlayerTarget = null;
+                    states = States.Patrol;
+                    AutoAttackTime = 0;
+                    EnemyTriggerSphere.gameObject.SetActive(false);
+                    if (enemySkills.GetManager.Length > 0)
+                    {
+                        enemySkills.DisableRadiusImage();
+                        enemySkills.DisableRadius();
+                    }
+                    enemySkills.GetActiveSkill = false;
+                    enemySkills.GetSkillBar.gameObject.SetActive(false);
+                }
+                enemy.GetHealth.IncreaseHealth(character.MaxHealth);
+                enemy.GetLocalHealthInfo();
+                StateArrayIndex = 0;
+            }
+        }
+    }
+
+    private void EndBattle()
+    {
+        if (IsHostile)
         {
             PlayerEntry = false;
-            if(states != States.SkillAnimation)
+            if (states != States.SkillAnimation)
             {
                 PlayerTarget = null;
                 states = States.Patrol;
                 AutoAttackTime = 0;
-                if(enemySkills.GetManager.Length > 0)
+                if (enemySkills.GetManager.Length > 0)
                 {
                     enemySkills.DisableRadiusImage();
                     enemySkills.DisableRadius();
@@ -792,10 +856,10 @@ public class EnemyAI : MonoBehaviour
             enemy.GetLocalHealthInfo();
             StateArrayIndex = 0;
         }
-        if (other.gameObject.GetComponent<PlayerController>() && !IsHostile)
+        if (!IsHostile)
         {
             PlayerEntry = false;
-            if(states != States.SkillAnimation)
+            if (states != States.SkillAnimation)
             {
                 PlayerTarget = null;
                 states = States.Patrol;

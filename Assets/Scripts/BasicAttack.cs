@@ -45,6 +45,10 @@ public class BasicAttack : MonoBehaviour
 
     private float AttackDistance;
 
+    private Vector3 MousePos;
+
+    private RaycastHit hit;
+
     public float GetAutoAttackTime
     {
         get
@@ -113,13 +117,11 @@ public class BasicAttack : MonoBehaviour
 
     private void MousePoint()
     {
-        Vector3 MousePos = Input.mousePosition;
+        MousePos = Input.mousePosition;
 
         Ray ray = cam.ScreenPointToRay(MousePos);
 
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, MouseRange))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             if (hit.collider.GetComponent<Enemy>())
             {
