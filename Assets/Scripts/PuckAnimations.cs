@@ -150,17 +150,23 @@ public class PuckAnimations : MonoBehaviour
 
     public void PuckSkillDamage()
     {
-        enemyskills.PuckSkillDamageText(enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
-                                        enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+        if(AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex > -1)
+        {
+            enemyskills.PuckSkillDamageText(enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                                                    enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+        }
     }
 
     public void SkillRadiusDamage()
     {
-        if (damageradius.GetIsInRadius)
+        if (AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex > -1)
         {
-            damageradius.TakeRadiusDamage();
+            if (damageradius.GetIsInRadius)
+            {
+                damageradius.TakeRadiusDamage();
+            }
+            damageradius.GetIsInRadius = false;
         }
-        damageradius.GetIsInRadius = false;
     }
 
     public void FungiBumpAnim()

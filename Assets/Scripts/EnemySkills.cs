@@ -649,15 +649,21 @@ public class EnemySkills : MonoBehaviour
 
     public void UseSylvanBlessing()
     {
-        SylvanBlessing(GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusDuration,
-                       GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+        if(puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex > -1)
+        {
+            SylvanBlessing(GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusDuration,
+                           GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+        }
     }
 
     public void InvokeSylvanBlessing()
     {
-        BossStatus();
+        if (puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex > -1)
+        {
+            BossStatus();
 
-        ActiveSkill = false;
+            ActiveSkill = false;
+        }
     }
     #endregion
 

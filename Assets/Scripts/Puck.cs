@@ -590,7 +590,11 @@ public class Puck : MonoBehaviour
         }
         else
         {
-            enemySkills.ChooseSkill(phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetSkillIndex);
+            if (phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetSkillIndex > -1)
+            {
+                enemySkills.ChooseSkill(phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetSkillIndex);
+            }
+            else return;
         }
     }
 

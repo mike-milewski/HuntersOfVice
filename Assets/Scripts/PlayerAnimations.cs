@@ -137,6 +137,7 @@ public class PlayerAnimations : MonoBehaviour
     public void EndSpellCast()
     {
         animator.SetBool("SpellFinish", false);
+        animator.SetBool("Damaged", false);
     }
 
     public void EndSpellCastingAnimation()
