@@ -15,6 +15,9 @@ public class Phases
     [SerializeField][TextArea]
     private string SpeechText;
 
+    [SerializeField]
+    private bool IsImmuneToDamage;
+
     public BossAiStates[] GetBossAiStates
     {
         get
@@ -36,6 +39,18 @@ public class Phases
         set
         {
             SpeechText = value;
+        }
+    }
+
+    public bool GetIsImmuneToDamage
+    {
+        get
+        {
+            return IsImmuneToDamage;
+        }
+        set
+        {
+            IsImmuneToDamage = value;
         }
     }
 }
@@ -472,6 +487,8 @@ public class Puck : MonoBehaviour
 
         puckAnimations.MoveAnimator();
 
+        this.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+
         Vector3 Distance = new Vector3(BossPosition.position.x - this.transform.position.x, 0,
                                        BossPosition.position.z - this.transform.position.z).normalized;
 
@@ -483,6 +500,8 @@ public class Puck : MonoBehaviour
 
         if(Vector3.Distance(this.transform.position, BossPosition.position) <= 0.1f)
         {
+            this.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+
             StateArrayIndex = 0;
             PhaseIndex++;
 
@@ -653,6 +672,8 @@ public class Puck : MonoBehaviour
 
     public void Dead()
     {
+        enemySkills.SetRotationToFalse();
+
         EnableAudioChanger();
 
         EnableSpeechDead();
@@ -817,6 +838,8 @@ public class Puck : MonoBehaviour
 
         PlayParticle();
 
+        enemySkills.SetRotationToFalse();
+
         OnEnabled = true;
 
         IsReseted = true;
@@ -880,7 +903,10 @@ public class Puck : MonoBehaviour
         PlayerEntry = true;
         if (other.gameObject.GetComponent<PlayerController>())
         {
-            EnableSpeech();
+            if(PhaseIndex == 0)
+            {
+                EnableSpeech();
+            }
 
             PlayerTarget = other.GetComponent<Character>();
             states = BossStates.Chase;
@@ -890,20 +916,23 @@ public class Puck : MonoBehaviour
 
     public void EnableSpeech()
     {
-        if(phases[PhaseIndex].GetSpeechText != "")
+        if(character.CurrentHealth > 0)
         {
-            SpeechBox.SetBool("Fade", true);
+            if (phases[PhaseIndex].GetSpeechText != "")
+            {
+                SpeechBox.SetBool("Fade", true);
 
-            SpeechText.text = phases[PhaseIndex].GetSpeechText;
+                SpeechText.text = phases[PhaseIndex].GetSpeechText;
+            }
+            Invoke("DisableSpeech", 3.0f);
         }
-        Invoke("DisableSpeech", 3.0f);
     }
 
     private void EnableSpeechDead()
     {
         SpeechBox.SetBool("Fade", true);
 
-        SpeechText.text = "I've...let everybody down...";
+        SpeechText.text = "I've...let everybody...down...";
 
         Invoke("DisableSpeech", 3.0f);
     }

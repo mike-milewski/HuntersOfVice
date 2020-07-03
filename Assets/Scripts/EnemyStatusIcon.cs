@@ -6,7 +6,7 @@ using TMPro;
 using System.Collections.Generic;
 
 public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, StrengthAndCriticalUP };
+                           IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP };
 
 public class EnemyStatusIcon : MonoBehaviour
 {
@@ -90,6 +90,10 @@ public class EnemyStatusIcon : MonoBehaviour
                 DefenseDOWN(50);
                 break;
             case (StatusEffect.DefenseUP):
+                DefenseUP(50);
+                break;
+            case (StatusEffect.DefenseAndIntelligenceUP):
+                IntelligenceUP(50);
                 DefenseUP(50);
                 break;
             case (StatusEffect.StrengthAndCriticalUP):
@@ -224,6 +228,10 @@ public class EnemyStatusIcon : MonoBehaviour
             case (StatusEffect.StrengthAndCriticalUP):
                 SetStrengthToDefault();
                 SetCriticalToDefault();
+                break;
+            case (StatusEffect.DefenseAndIntelligenceUP):
+                SetDefenseToDefault();
+                SetIntelligenceToDefault();
                 break;
             case (StatusEffect.Doom):
                 character.GetComponentInChildren<Health>().ModifyHealth(-character.CurrentHealth);
@@ -366,6 +374,19 @@ public class EnemyStatusIcon : MonoBehaviour
         character.CharacterDefense = (int)TempDefense;
     }
 
+    private void IntelligenceUP(float value)
+    {
+        float Percentage = (float)value / 100;
+
+        float TempIntelligence = (float)character.CharacterIntelligence;
+
+        TempIntelligence += (float)character.CharacterIntelligence * Percentage;
+
+        Mathf.Round(TempIntelligence);
+
+        character.CharacterIntelligence = (int)TempIntelligence;
+    }
+
     private void CriticalUP(int value)
     {
         character.GetCriticalChance += value;
@@ -390,6 +411,13 @@ public class EnemyStatusIcon : MonoBehaviour
         int DefaultDefense = character.GetCharacterData.Defense;
 
         character.CharacterDefense = DefaultDefense;
+    }
+
+    private void SetIntelligenceToDefault()
+    {
+        int DefaultIntelligence = character.GetCharacterData.Intelligence;
+
+        character.CharacterIntelligence = DefaultIntelligence;
     }
 
     private void CheckStatusEffect()

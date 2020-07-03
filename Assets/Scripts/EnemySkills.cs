@@ -36,7 +36,7 @@ public enum Skill
 };
 
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                     IntelligenceDOWN, StrengthAndCriticalUP };
+                     IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP };
 
 public enum EnemyElement { NONE, Fire, Water, Wind, Earth, Light, Dark, Magic };
 
@@ -1070,36 +1070,44 @@ public class EnemySkills : MonoBehaviour
 
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
-            SylvanStormAnimation();
-
-            puckDamageRadius.CheckIfPlayerIsInCircleRadius(puckDamageRadius.GetDamageShape.transform.position, puckDamageRadius.SetCircleColliderSize());
-
-            DisablePuckRadiusImage();
-
-            if (settings.UseParticleEffects)
+            if (puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex > -1)
             {
-                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = 
-                                                                                                ObjectPooler.Instance.GetSylvanStormParticle();
+                SylvanStormAnimation();
 
-                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+                puckDamageRadius.CheckIfPlayerIsInCircleRadius(puckDamageRadius.GetDamageShape.transform.position, puckDamageRadius.SetCircleColliderSize());
 
-                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = 
-                                                                            new Vector3(puckAI.GetSwordObj.transform.position.x, puckAI.GetSwordObj.transform.position.y +
-                                                                                        0.2f, puckAI.GetSwordObj.transform.position.z);
+                DisablePuckRadiusImage();
 
-                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(
-                                                                                                                        puckAI.GetSwordObj.gameObject.transform);
+                if (settings.UseParticleEffects)
+                {
+                    GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle =
+                                                                                                    ObjectPooler.Instance.GetSylvanStormParticle();
 
-                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = 
-                                                                                                                                                new Vector3(1, 1, 1);
+                    GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                    GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position =
+                                                                                new Vector3(puckAI.GetSwordObj.transform.position.x, puckAI.GetSwordObj.transform.position.y +
+                                                                                            0.2f, puckAI.GetSwordObj.transform.position.z);
+
+                    GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(
+                                                                                                                            puckAI.GetSwordObj.gameObject.transform);
+
+                    GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale =
+                                                                                                                                                    new Vector3(1, 1, 1);
+                }
+                Invoke("InvokeSylvanStorm", skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
             }
-            Invoke("InvokeSylvanStorm", skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
         }
     }
 
     public void SetRotationToTrue()
     {
         IsRotating = true;
+    }
+
+    public void SetRotationToFalse()
+    {
+        IsRotating = false;
     }
 
     public void SylvanStormRotation()
@@ -1267,16 +1275,9 @@ public class EnemySkills : MonoBehaviour
 
     public void DisablePuckRadius()
     {
-        switch (skills[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetShapes)
-        {
-            case (Shapes.Circle):
-                puckDamageRadius.ResetLocalScale();
-                puckDamageRadius.ResetSizeDelta();
-                break;
-            case (Shapes.Rectangle):
-                puckDamageRadius.ResetSizeDelta();
-                break;
-        }
+        puckDamageRadius.ResetLocalScale();
+        puckDamageRadius.ResetSizeDelta();
+
         puckDamageRadius.enabled = false;
     }
 

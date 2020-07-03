@@ -1159,6 +1159,8 @@ public class Skills : StatusEffects
 
             int DamageType = GetCharacter.GetCharacterData.CharacterName == "Knight" ? GetCharacter.CharacterStrength : GetCharacter.CharacterIntelligence;
 
+            int DefenseType = GetCharacter.GetCharacterData.CharacterName == "Knight" ? Target.GetCharacter.CharacterDefense : Target.GetCharacter.CharacterIntelligence;
+
             var Critical = GetCharacter.GetCriticalChance;
 
             #region CriticalHitChance
@@ -1172,7 +1174,7 @@ public class Skills : StatusEffects
                 {
                     int WeakDamage = (DamageType * 2) + (int)CritValue;
 
-                    if(WeakDamage - Target.GetCharacter.CharacterDefense < 0)
+                    if(WeakDamage - DefenseType < 0)
                     {
                         Target.GetHealth.ModifyHealth(-1);
 
@@ -1181,10 +1183,10 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        Target.GetHealth.ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
+                        Target.GetHealth.ModifyHealth(-(WeakDamage - DefenseType));
 
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<size=20>" +
-                                                                                   (WeakDamage - Target.GetCharacter.CharacterDefense) + "!" + "</size>" +
+                                                                                   (WeakDamage - DefenseType) + "!" + "</size>" +
                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
                     }
                 }
@@ -1194,7 +1196,7 @@ public class Skills : StatusEffects
 
                     Mathf.RoundToInt(ResistValue);
 
-                    if((int)ResistValue - Target.GetCharacter.CharacterDefense < 0)
+                    if((int)ResistValue - DefenseType < 0)
                     {
                         Target.GetHealth.ModifyHealth(-1);
 
@@ -1203,10 +1205,10 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        Target.GetHealth.ModifyHealth(-((int)ResistValue - Target.GetCharacter.CharacterDefense));
+                        Target.GetHealth.ModifyHealth(-((int)ResistValue - DefenseType));
 
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<size=20>" +
-                                                                                   ((int)ResistValue - Target.GetCharacter.CharacterDefense) + "!" + "</size>" +
+                                                                                   ((int)ResistValue - DefenseType) + "!" + "</size>" +
                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
                     }
                 }
@@ -1217,7 +1219,7 @@ public class Skills : StatusEffects
                 }
                 else if(CheckAbsorptions())
                 {
-                    if((DamageType + (int)CritValue) - Target.GetCharacter.CharacterDefense < 0)
+                    if((DamageType + (int)CritValue) - DefenseType < 0)
                     {
                         Target.GetHealth.IncreaseHealth(1);
 
@@ -1226,16 +1228,16 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        Target.GetHealth.IncreaseHealth((GetCharacter.CharacterStrength + (int)CritValue) - Target.GetCharacter.CharacterDefense);
+                        Target.GetHealth.IncreaseHealth((DamageType + (int)CritValue) - DefenseType);
 
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<size=20>" + "<#4CFFAD>" +
-                                                                                   ((DamageType + (int)CritValue) - Target.GetCharacter.CharacterDefense)
+                                                                                   ((DamageType + (int)CritValue) - DefenseType)
                                                                                    + "!" + "</size>" + "\n" + "</color>" + "<size=12> <#EFDFB8>" + "(ABSORBED!)";
                     }
                 }
                 else
                 {
-                    if((DamageType + (int)CritValue) - Target.GetCharacter.CharacterDefense < 0)
+                    if((DamageType + (int)CritValue) - DefenseType < 0)
                     {
                         Target.GetHealth.ModifyHealth(-1);
 
@@ -1243,10 +1245,10 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        Target.GetHealth.ModifyHealth(-((GetCharacter.CharacterStrength + (int)CritValue) - Target.GetCharacter.CharacterDefense));
+                        Target.GetHealth.ModifyHealth(-((DamageType + (int)CritValue) - DefenseType));
 
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = SkillName + " " + "<size=20>" + Mathf.RoundToInt((CritValue + DamageType) -
-                                                                                   Target.GetCharacter.CharacterDefense) + "!";
+                                                                                   DefenseType) + "!";
                     }
                 }
             }
@@ -1256,7 +1258,7 @@ public class Skills : StatusEffects
                 {
                     int WeakDamage = (Potency + DamageType) * 2;
 
-                    if(WeakDamage - Target.GetCharacter.CharacterDefense < 0)
+                    if(WeakDamage - DefenseType < 0)
                     {
                         Target.GetHealth.ModifyHealth(-1);
 
@@ -1265,9 +1267,9 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        Target.GetHealth.ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
+                        Target.GetHealth.ModifyHealth(-(WeakDamage - DefenseType));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + (WeakDamage - Target.GetCharacter.CharacterDefense)
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + (WeakDamage - DefenseType)
                                                                                    + "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
                     }
                 }
@@ -1277,7 +1279,7 @@ public class Skills : StatusEffects
 
                     Mathf.RoundToInt(ResistDamage);
 
-                    if(ResistDamage - Target.GetCharacter.CharacterDefense < 0)
+                    if(ResistDamage - DefenseType < 0)
                     {
                         Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 
@@ -1286,11 +1288,10 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        Target.GetComponentInChildren<Health>().ModifyHealth(-((int)ResistDamage - Target.GetCharacter.CharacterDefense));
+                        Target.GetComponentInChildren<Health>().ModifyHealth(-((int)ResistDamage - DefenseType));
 
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + Mathf.Round(ResistDamage -
-                                                                                    Target.GetCharacter.CharacterDefense) + "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" +
-                                                                                    "</color> </size>";
+                                                                                    DefenseType) + "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
                     }
                 }
                 else if(CheckImmunities())
@@ -1300,7 +1301,7 @@ public class Skills : StatusEffects
                 }
                 else if(CheckAbsorptions())
                 {
-                    if((Potency + DamageType) - Target.GetCharacter.CharacterDefense < 0)
+                    if((Potency + DamageType) - DefenseType < 0)
                     {
                         Target.GetHealth.IncreaseHealth(1);
 
@@ -1309,16 +1310,15 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        Target.GetHealth.IncreaseHealth((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense);
+                        Target.GetHealth.IncreaseHealth((Potency + DamageType) - DefenseType);
 
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<#4CFFAD>" + ((Potency + DamageType) -
-                                                                                   Target.GetCharacter.CharacterDefense) + "\n" + "</color> <size=12>" + "<#EFDFB8>" +
-                                                                                   "(ABSORBED!)";
+                                                                                   DefenseType) + "\n" + "</color> <size=12>" + "<#EFDFB8>" + "(ABSORBED!)";
                     }
                 }
                 else
                 {
-                    if((Potency + DamageType) - Target.GetCharacter.CharacterDefense < 0)
+                    if((Potency + DamageType) - DefenseType < 0)
                     {
                         Target.GetHealth.ModifyHealth(-1);
 
@@ -1326,10 +1326,9 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        Target.GetHealth.ModifyHealth(-((Potency + GetCharacter.CharacterStrength) - Target.GetCharacter.CharacterDefense));
+                        Target.GetHealth.ModifyHealth(-((Potency + DamageType) - DefenseType));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + DamageType) -
-                                                                                   Target.GetCharacter.CharacterDefense);
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + ((Potency + DamageType) - DefenseType);
                     }
                 }
             }
@@ -1353,6 +1352,7 @@ public class Skills : StatusEffects
                 if(Target.GetPuckAI.GetPlayerTarget == null)
                 {
                     Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                    Target.GetPuckAI.GetSphereTrigger.gameObject.SetActive(false);
                     Target.GetPuckAI.GetStates = BossStates.Chase;
                     Target.GetPuckAI.EnableSpeech();
                 }
@@ -1394,6 +1394,15 @@ public class Skills : StatusEffects
     private bool CheckImmunities()
     {
         bool Immunity = false;
+
+        if(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetPuckAI != null)
+        {
+            if(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetPuckAI.GetPhases[GetCharacter.GetComponent<BasicAttack>().GetTarget.GetPuckAI.GetPhaseIndex].
+               GetIsImmuneToDamage)
+            {
+                Immunity = true;
+            }
+        }
 
         for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Immunities.Length; i++)
         {

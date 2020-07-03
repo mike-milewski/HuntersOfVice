@@ -525,6 +525,14 @@ public class BasicAttack : MonoBehaviour
     {
         bool Immunity = false;
 
+        if (Target.GetPuckAI != null)
+        {
+            if (Target.GetPuckAI.GetPhases[Target.GetPuckAI.GetPhaseIndex].GetIsImmuneToDamage)
+            {
+                Immunity = true;
+            }
+        }
+
         for (int i = 0; i < Target.GetCharacter.GetCharacterData.Immunities.Length; i++)
         {
             if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i])

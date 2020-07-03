@@ -22861,13 +22861,6 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.33333334
-    functionName: IncreaseAiArray
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.33333334
     functionName: ResetAutoAttackTime
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -22883,6 +22876,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.33333334
     functionName: EndRotation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.33333334
+    functionName: IncreaseAiArray
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
