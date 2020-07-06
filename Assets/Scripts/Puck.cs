@@ -125,7 +125,7 @@ public class Puck : MonoBehaviour
     private PuckAnimations puckAnimations;
 
     [SerializeField]
-    private float MoveSpeed, AttackRange, AttackDelay, AutoAttackTime, LookSpeed;
+    private float MoveSpeed, AttackRange, AttackDelay, AutoAttackTime, LookSpeed, OuterAttackDistance;
 
     [SerializeField]
     [Tooltip("Current targeted Player. Keep this empty!")]
@@ -432,9 +432,12 @@ public class Puck : MonoBehaviour
                 if (PlayerTarget.CurrentHealth > 0)
                 {
                     AutoAttackTime += Time.deltaTime;
-                    if (AutoAttackTime >= AttackDelay)
+                    if (DistanceToTarget <= OuterAttackDistance)
                     {
-                        states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+                        if (AutoAttackTime >= AttackDelay)
+                        {
+                            states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+                        }
                     }
                 }
             }
