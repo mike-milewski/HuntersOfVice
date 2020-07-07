@@ -129,6 +129,7 @@ public class ObjectPooler : MonoBehaviour
         AddBraveWingParticle(poolcontroller[39].GetPoolAmount);
         AddSinisterPossessionParticle(poolcontroller[40].GetPoolAmount);
         AddContractParticle(poolcontroller[41].GetPoolAmount);
+        AddDiabolicLightningParticle(poolcontroller[42].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -635,6 +636,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddDiabolicLightningParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[42].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[42].GetPoolParent.transform, false);
+            poolcontroller[42].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -843,6 +856,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetContractParticle()
     {
         return poolcontroller[41].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetDiabolicLightningParticle()
+    {
+        return poolcontroller[42].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1119,49 +1137,73 @@ public class ObjectPooler : MonoBehaviour
 
     public void ReturnEnemyAppearParticleToPool(GameObject Object)
     {
+        Object.transform.SetParent(poolcontroller[34].GetPoolParent.transform, false);
+
         poolcontroller[34].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 
     public void ReturnVicePlanterParticleToPool(GameObject Object)
     {
+        Object.transform.SetParent(poolcontroller[35].GetPoolParent.transform, false);
+
         poolcontroller[35].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 
     public void ReturnShatterParticleToPool(GameObject Object)
     {
+        Object.transform.SetParent(poolcontroller[36].GetPoolParent.transform, false);
+
         poolcontroller[36].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 
     public void ReturnAlleviateParticleToPool(GameObject Object)
     {
+        Object.transform.SetParent(poolcontroller[37].GetPoolParent.transform, false);
+
         poolcontroller[37].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 
     public void ReturnAegisParticleToPool(GameObject Object)
     {
+        Object.transform.SetParent(poolcontroller[38].GetPoolParent.transform, false);
+
         poolcontroller[38].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 
     public void ReturnBraveWingParticleToPool(GameObject Object)
     {
+        Object.transform.SetParent(poolcontroller[39].GetPoolParent.transform, false);
+
         poolcontroller[39].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 
     public void ReturnSinisterPossessionParticleToPool(GameObject Object)
     {
+        Object.transform.SetParent(poolcontroller[40].GetPoolParent.transform, false);
+
         poolcontroller[40].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 
     public void ReturnContractParticleToPool(GameObject Object)
     {
+        Object.transform.SetParent(poolcontroller[41].GetPoolParent.transform, false);
+
         poolcontroller[41].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnDiabolicLightningParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[42].GetPoolParent.transform, false);
+
+        poolcontroller[42].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

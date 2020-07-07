@@ -55,7 +55,7 @@ MonoBehaviour:
   - ObjectToPool: {fileID: 1509009448252176, guid: fc6877a7be1781e4dbc38c1eed7ecb78,
       type: 3}
     PoolParent: {fileID: 0}
-    PoolAmount: 5
+    PoolAmount: 10
   - ObjectToPool: {fileID: 1048886397437244, guid: cb1e213e41972f94f817bd89912f710e,
       type: 3}
     PoolParent: {fileID: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
   - ObjectToPool: {fileID: 1522704258827516, guid: 6c45e0610fe491144a94837c5a382f50,
       type: 3}
     PoolParent: {fileID: 0}
-    PoolAmount: 5
+    PoolAmount: 10
   - ObjectToPool: {fileID: 1839082241841786, guid: 56933e54bfcaab94ba68a71bdd8393d1,
       type: 3}
     PoolParent: {fileID: 0}
@@ -141,7 +141,7 @@ MonoBehaviour:
   - ObjectToPool: {fileID: 1245967876904112, guid: 61beb2e484ebe7f41a4c154133238d73,
       type: 3}
     PoolParent: {fileID: 0}
-    PoolAmount: 3
+    PoolAmount: 4
   - ObjectToPool: {fileID: 1300210614616816, guid: d06009fffb71551449c1c3e55fbac0a8,
       type: 3}
     PoolParent: {fileID: 0}
@@ -181,8 +181,35 @@ MonoBehaviour:
   - ObjectToPool: {fileID: 1965343156803978, guid: aa8d6482d70a23445b4b2a928ed1b845,
       type: 3}
     PoolParent: {fileID: 0}
-    PoolAmount: 5
+    PoolAmount: 8
   - ObjectToPool: {fileID: 6948885073506640556, guid: 869ca09c34eedfc46b7f536edd6dcd2a,
       type: 3}
     PoolParent: {fileID: 0}
     PoolAmount: 1
+  - ObjectToPool: {fileID: 8899318678929699841, guid: 3cb06ce8e7620da4db3339882ebd839d,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10
+  - ObjectToPool: {fileID: 3081095286383837477, guid: f29485f330eb62f4999cefda14cfcaa5,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10
+  - ObjectToPool: {fileID: 3081095286383837477, guid: f29485f330eb62f4999cefda14cfcaa5,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10
+  - ObjectToPool: {fileID: 3081095286383837477, guid: f29485f330eb62f4999cefda14cfcaa5,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10
+  - ObjectToPool: {fileID: 3081095286383837477, guid: f29485f330eb62f4999cefda14cfcaa5,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10
+  - ObjectToPool: {fileID: 5015799778932187460, guid: 18f56dbbec31a644c948a56e78428e8f,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 2
+  - ObjectToPool: {fileID: 0}
+    PoolParent: {fileID: 0}
+    PoolAmount: 5

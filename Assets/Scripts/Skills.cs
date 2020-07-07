@@ -577,11 +577,46 @@ public class Skills : StatusEffects
 
     public void DiabolicLightning()
     {
-        Invoke("InvokeDiabolocLightning", ApplySkill);
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if(Target != null)
+        {
+            if (DistanceToAttack() <= AttackRange)
+            {
+                TextHolder = Target.GetUI;
+
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                if (settings.UseParticleEffects)
+                {
+                    SkillParticle = ObjectPooler.Instance.GetDiabolicLightningParticle();
+
+                    SkillParticle.SetActive(true);
+
+                    SkillParticle.transform.SetParent(GetCharacter.transform, true);
+
+                    SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, 4f, GetCharacter.transform.position.z);
+                }
+                Invoke("InvokeDiabolicLightning", ApplySkill);
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
     }
 
     private void InvokeDiabolicLightning()
     {
+        SkillsManager.Instance.GetActivatedSkill = false;
+
+        this.CoolDownImage.fillAmount = 1;
+
         SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, AreaOfEffectRange);
     }
 

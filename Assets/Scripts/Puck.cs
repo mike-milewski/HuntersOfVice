@@ -300,7 +300,7 @@ public class Puck : MonoBehaviour
 
     private void OnEnable()
     {
-        ResetStats();
+        PlayParticle();
     }
 
     private void Update()

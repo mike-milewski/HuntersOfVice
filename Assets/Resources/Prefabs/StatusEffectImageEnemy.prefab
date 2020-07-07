@@ -525,7 +525,7 @@ MonoBehaviour:
   effect: 0
   DurationText: {fileID: 114562803250083384}
   StatusDescriptionText: {fileID: 114722465076543506}
-  Duration: 0
+  Duration: 15
   StatusPanel: {fileID: 1717151578348814}
 --- !u!1 &4783483870674734884
 GameObject:
