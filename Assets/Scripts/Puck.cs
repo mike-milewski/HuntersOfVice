@@ -865,8 +865,7 @@ public class Puck : MonoBehaviour
 
         EnemyTriggerSphere.gameObject.SetActive(true);
 
-        character.CurrentHealth = character.MaxHealth;
-        enemy.GetFilledBar();
+        enemy.GetHealth.IncreaseHealth(character.MaxHealth);
         enemy.GetLocalHealth.gameObject.SetActive(true);
         enemy.GetLocalHealthInfo();
 
@@ -914,6 +913,7 @@ public class Puck : MonoBehaviour
             PlayerTarget = other.GetComponent<Character>();
             states = BossStates.Chase;
             EnemyTriggerSphere.gameObject.SetActive(false);
+            IsReseted = false;
         }
     }
 

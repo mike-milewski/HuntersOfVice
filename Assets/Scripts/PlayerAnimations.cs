@@ -78,6 +78,7 @@ public class PlayerAnimations : MonoBehaviour
         if(ShadowPriest.gameObject.activeInHierarchy)
         {
             animator.SetBool("SpellFinish", false);
+            animator.SetBool("SkillMotion", false);
         }
 
         animator.SetBool("Damaged", false);
@@ -212,9 +213,19 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Damaged", false);
     }
 
+    public void SkillMotionAnimation()
+    {
+        animator.SetBool("SkillMotion", true);
+    }
+
     public void EndSkillCast()
     {
         animator.SetBool("SkillCast", false);
+
+        if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            animator.SetBool("SkillMotion", false);
+        }
 
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);

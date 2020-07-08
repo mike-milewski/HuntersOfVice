@@ -542,6 +542,8 @@ public class Skills : StatusEffects
     {
         SkillsManager.Instance.GetActivatedSkill = true;
 
+        GetCharacter.GetComponent<PlayerAnimations>().SkillMotionAnimation();
+
         if (settings.UseParticleEffects)
         {
             SkillParticle = ObjectPooler.Instance.GetAlleviateParticle();
@@ -577,6 +579,16 @@ public class Skills : StatusEffects
 
     public void DiabolicLightning()
     {
+        GetCharacter.GetComponent<PlayerAnimations>().SkillMotionAnimation();
+
+        SkillParticle = ObjectPooler.Instance.GetDiabolicLightningParticle();
+
+        SkillParticle.SetActive(true);
+
+        SkillParticle.transform.SetParent(GetCharacter.transform, true);
+
+        SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 4f, GetCharacter.transform.position.z);
+        /*
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
         if(Target != null)
@@ -595,7 +607,7 @@ public class Skills : StatusEffects
 
                     SkillParticle.transform.SetParent(GetCharacter.transform, true);
 
-                    SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, 4f, GetCharacter.transform.position.z);
+                    SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 4f, GetCharacter.transform.position.z);
                 }
                 Invoke("InvokeDiabolicLightning", ApplySkill);
             }
@@ -609,6 +621,7 @@ public class Skills : StatusEffects
             GameManager.Instance.InvalidTargetText();
             TextHolder = null;
         }
+        */
     }
 
     private void InvokeDiabolicLightning()

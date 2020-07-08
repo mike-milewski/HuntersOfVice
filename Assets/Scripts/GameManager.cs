@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float RespawnTime;
 
-    private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating;
+    private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating, IsTargeting;
 
     public bool IsInInventory;
 
@@ -341,6 +341,18 @@ public class GameManager : MonoBehaviour
         set
         {
             IsInInventory = value;
+        }
+    }
+
+    public bool GetIsTargeting
+    {
+        get
+        {
+            return IsTargeting;
+        }
+        set
+        {
+            IsTargeting = value;
         }
     }
 

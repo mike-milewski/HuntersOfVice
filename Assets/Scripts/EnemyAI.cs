@@ -559,9 +559,12 @@ public class EnemyAI : MonoBehaviour
             enemySkills.DisableRadius();
         }
 
-        GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
-        GameManager.Instance.GetEnemyObject = null;
-        GameManager.Instance.GetLastEnemyObject = null;
+        if(!GameManager.Instance.GetIsTargeting)
+        {
+            GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
+            GameManager.Instance.GetEnemyObject = null;
+            GameManager.Instance.GetLastEnemyObject = null;
+        }
 
         enemy.ToggleHealthBar();
 

@@ -125,6 +125,8 @@ public class BasicAttack : MonoBehaviour
         {
             if (hit.collider.GetComponent<Enemy>())
             {
+                GameManager.Instance.GetIsTargeting = true;
+
                 SoundManager.Instance.ButtonClick();
 
                 if (hit.collider.GetComponent<Character>().CurrentHealth > 0)
@@ -154,6 +156,8 @@ public class BasicAttack : MonoBehaviour
                 {
                     if(Target != null)
                     {
+                        GameManager.Instance.GetIsTargeting = false;
+
                         GameManager.Instance.GetEnemyObject = null;
                         GameManager.Instance.GetLastEnemyObject = null;
 
