@@ -579,16 +579,6 @@ public class Skills : StatusEffects
 
     public void DiabolicLightning()
     {
-        GetCharacter.GetComponent<PlayerAnimations>().SkillMotionAnimation();
-
-        SkillParticle = ObjectPooler.Instance.GetDiabolicLightningParticle();
-
-        SkillParticle.SetActive(true);
-
-        SkillParticle.transform.SetParent(GetCharacter.transform, true);
-
-        SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 4f, GetCharacter.transform.position.z);
-        /*
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
         if(Target != null)
@@ -597,19 +587,11 @@ public class Skills : StatusEffects
             {
                 TextHolder = Target.GetUI;
 
+                GetCharacter.GetComponent<PlayerAnimations>().SkillMotionAnimation();
+
+                Invoke("InvokeDiabolicLightningParticle", 0.4f);
+
                 SkillsManager.Instance.GetActivatedSkill = true;
-
-                if (settings.UseParticleEffects)
-                {
-                    SkillParticle = ObjectPooler.Instance.GetDiabolicLightningParticle();
-
-                    SkillParticle.SetActive(true);
-
-                    SkillParticle.transform.SetParent(GetCharacter.transform, true);
-
-                    SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 4f, GetCharacter.transform.position.z);
-                }
-                Invoke("InvokeDiabolicLightning", ApplySkill);
             }
             else
             {
@@ -621,7 +603,21 @@ public class Skills : StatusEffects
             GameManager.Instance.InvalidTargetText();
             TextHolder = null;
         }
-        */
+    }
+
+    private void InvokeDiabolicLightningParticle()
+    {
+        if (settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetDiabolicLightningParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.SetParent(GetCharacter.transform, true);
+
+            SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 4f, GetCharacter.transform.position.z);
+        }
+        Invoke("InvokeDiabolicLightning", ApplySkill);
     }
 
     private void InvokeDiabolicLightning()
@@ -986,7 +982,10 @@ public class Skills : StatusEffects
                 DamageSkillText(hitColliders[i].GetComponent<Enemy>());
             }
         }
-        GetCharacter.transform.rotation = rot;
+        if(GameManager.Instance.GetKnight.activeInHierarchy)
+        {
+            GetCharacter.transform.rotation = rot;
+        }
     }
 
     public void EvilsEnd()
