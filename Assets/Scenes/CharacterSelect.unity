@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -925,10 +925,10 @@ MonoBehaviour:
   SkillInfoText: {fileID: 1971399959}
   KnightSkillName: Storm Thrust
   ShadowPriestSkillName: Contract With Evil
-  KnightSkillInfo: Strike a target from a long distance and shatter their defense
-    for a time.
-  ShadowPriestSkillInfo: A powerful, dark deal that magnifies magical prowess while
-    sacrificing defense in return.
+  KnightSkillInfo: Strike a target from a long distance and shatter a portion of their
+    defense for a time.
+  ShadowPriestSkillInfo: A powerful, dark deal that magnifies magic while sacrificing
+    a fraction of defense in return.
 --- !u!1 &440621478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3724,8 +3724,8 @@ MonoBehaviour:
   CharacterInformationText: {fileID: 1622403781}
   CharacterNameText: {fileID: 604502234}
   CharacterInformaion: The Shadow Priest employs unholy magicks to devastate foes
-    while also receiving influence from the underworld to amplify the dark cleric's
-    powers.
+    while also receiving influence from the underworld to amplify his powers for a
+    price.
   CharacterClass: Shadow Priest
 --- !u!1 &1297359061
 GameObject:
@@ -4283,7 +4283,7 @@ GameObject:
   - component: {fileID: 1550490420}
   - component: {fileID: 1550490419}
   m_Layer: 0
-  m_Name: Plane (1)
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4320,7 +4320,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5327,9 +5327,10 @@ MonoBehaviour:
   SkillInfoText: {fileID: 1971399959}
   KnightSkillName: Illumination
   ShadowPriestSkillName: Soul Piercer
-  KnightSkillInfo: Bathes in prominent light, healing wounds over a period of time.
+  KnightSkillInfo: Surrounds yourself in prominent light, healing wounds over a period
+    of time.
   ShadowPriestSkillInfo: Calls tormented souls onto an enemy, eating away at the target's
-    spirit gradually.
+    soul gradually.
 --- !u!1 &1958630583
 GameObject:
   m_ObjectHideFlags: 0
@@ -5762,7 +5763,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.4, y: -263}
+  m_AnchoredPosition: {x: -0.5, y: -263}
   m_SizeDelta: {x: 166.94, y: 67.01001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2135812089

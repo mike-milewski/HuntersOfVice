@@ -845,7 +845,7 @@ public class Puck : MonoBehaviour
 
         OnEnabled = true;
 
-        IsReseted = true;
+        IsReseted = false;
 
         ChangingPhase = false;
 

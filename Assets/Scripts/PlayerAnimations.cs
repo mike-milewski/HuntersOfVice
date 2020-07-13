@@ -216,6 +216,9 @@ public class PlayerAnimations : MonoBehaviour
     public void SkillMotionAnimation()
     {
         animator.SetBool("SkillMotion", true);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
     }
 
     public void EndSkillCast()

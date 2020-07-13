@@ -161,7 +161,7 @@ public class SkillsManager : MonoBehaviour
         {
             character = Knight;
         }
-        else if(ShadowPriest.gameObject.activeInHierarchy)
+        if(ShadowPriest.gameObject.activeInHierarchy)
         {
             character = ShadowPriest;
         }

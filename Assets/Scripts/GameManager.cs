@@ -372,7 +372,6 @@ public class GameManager : MonoBehaviour
             Knight.SetActive(false);
         }
         */
-
         if(Knight.activeInHierarchy)
         {
             for(int i = 0; i < KnightSkills.Length; i++)
@@ -419,6 +418,15 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         cam.gameObject.SetActive(true);
+
+        if (Knight.activeInHierarchy)
+        {
+            Knight.GetComponent<Experience>().UpdateCharacterLevel();
+        }
+        else if (ShadowPriest.activeInHierarchy)
+        {
+            ShadowPriest.GetComponent<Experience>().UpdateCharacterLevel();
+        }
     }
 
     public void SetMenuAnimatingToTrue()

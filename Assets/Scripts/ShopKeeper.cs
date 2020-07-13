@@ -17,7 +17,7 @@ public class ShopKeeper : MonoBehaviour
 
     private Quaternion ShopRotation;
 
-    private bool IsInShop;
+    private bool IsInShop = false;
 
     public bool GetIsInShop
     {
@@ -55,7 +55,7 @@ public class ShopKeeper : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         ShopRotation = this.transform.rotation;
     }

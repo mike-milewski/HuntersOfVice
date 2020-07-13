@@ -17,13 +17,13 @@ MonoBehaviour:
   Immunities: 
   Absorbtions: 
   CharacterName: Shadow Priest
-  CharacterLevel: 1
+  CharacterLevel: 7
   Health: 105
-  Mana: 40
+  Mana: 65
   Strength: 12
   Defense: 15
   Intelligence: 27
-  HpIncrease: 39
-  MpIncrease: 17
-  CriticalHitChance: 0
+  HpIncrease: 0
+  MpIncrease: 1
+  CriticalHitChance: 5
   MoveSpeed: 4.5

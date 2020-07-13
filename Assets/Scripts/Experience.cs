@@ -191,7 +191,7 @@ public class Experience : MonoBehaviour
         }
     }
 
-    private void UpdateCharacterLevel()
+    public void UpdateCharacterLevel()
     {
         CharacterLevelText.text = character.Level.ToString();
     }
@@ -210,7 +210,7 @@ public class Experience : MonoBehaviour
 
         StatPointsTxt.gameObject.SetActive(true);
 
-        character.GetCharacterData.HpIncrease += 3;
+        character.GetCharacterData.HpIncrease++;
         character.GetCharacterData.MpIncrease++;
 
         StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);

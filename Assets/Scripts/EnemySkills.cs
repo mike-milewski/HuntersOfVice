@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 0219
 #pragma warning disable 0414
+#pragma warning disable 0649
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;

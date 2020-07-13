@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public enum DropType { Skill, Weapon, Armor}

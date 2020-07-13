@@ -489,7 +489,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 RemoveEffect();
             }
         }
-        else if(Duration > -1)
+        if(Duration > -1)
         {
             DurationText.text = Duration.ToString("F0");
             Duration -= Time.deltaTime;
