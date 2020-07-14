@@ -544,6 +544,11 @@ public class Skills : StatusEffects
 
         GetCharacter.GetComponent<PlayerAnimations>().SkillMotionAnimation();
 
+        Invoke("InvokeAlleviateAnimation", ApplySkill);
+    }
+
+    private void InvokeAlleviateAnimation()
+    {
         if (settings.UseParticleEffects)
         {
             SkillParticle = ObjectPooler.Instance.GetAlleviateParticle();
@@ -555,8 +560,6 @@ public class Skills : StatusEffects
             SkillParticle.transform.SetParent(GetCharacter.transform, true);
         }
         Invoke("InvokeAlleviate", ApplySkill);
-
-        SoundManager.Instance.Heal();
     }
 
     public void InvokeAlleviate()

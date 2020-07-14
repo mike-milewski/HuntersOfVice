@@ -18,10 +18,7 @@ public class StatUpgrade : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI StatText;
 
-    [SerializeField]
-    private int StatValue;
-
-    private int StatIncrease;
+    private int StatIncrease, StrengthValue, IntelligenceValue;
 
     public int GetStatIncrease
     {
@@ -53,11 +50,17 @@ public class StatUpgrade : MonoBehaviour
         {
             character = Knight;
             experience = Knight.GetComponent<Experience>();
+
+            StrengthValue = 2;
+            IntelligenceValue = 1;
         }
         if(ShadowPriest.gameObject.activeInHierarchy)
         {
             character = ShadowPriest;
             experience = ShadowPriest.GetComponent<Experience>();
+
+            StrengthValue = 1;
+            IntelligenceValue = 2;
         }
     }
 
@@ -92,7 +95,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints--;
             experience.GetStatPointsTxt.text = experience.GetStatPoints.ToString();
 
-            StatIncrease += StatValue;
+            StatIncrease += StrengthValue;
             StatText.text = StatIncrease.ToString();
         }
     }
@@ -104,7 +107,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints--;
             experience.GetStatPointsTxt.text = experience.GetStatPoints.ToString();
 
-            StatIncrease += StatValue;
+            StatIncrease++;
             StatText.text = StatIncrease.ToString();
         }
     }
@@ -116,7 +119,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints--;
             experience.GetStatPointsTxt.text = experience.GetStatPoints.ToString();
 
-            StatIncrease += StatValue;
+            StatIncrease += IntelligenceValue;
             StatText.text = StatIncrease.ToString();
         }
     }
@@ -152,7 +155,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints++;
             experience.GetStatPointsTxt.text = experience.GetStatPoints.ToString();
 
-            StatIncrease -= StatValue;
+            StatIncrease -= StrengthValue;
             StatText.text = StatIncrease.ToString();
         }
     }
@@ -164,7 +167,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints++;
             experience.GetStatPointsTxt.text = experience.GetStatPoints.ToString();
 
-            StatIncrease -= StatValue;
+            StatIncrease--;
             StatText.text = StatIncrease.ToString();
         }
     }
@@ -176,7 +179,7 @@ public class StatUpgrade : MonoBehaviour
             experience.GetStatPoints++;
             experience.GetStatPointsTxt.text = experience.GetStatPoints.ToString();
 
-            StatIncrease -= StatValue;
+            StatIncrease -= IntelligenceValue;
             StatText.text = StatIncrease.ToString();
         }
     }
