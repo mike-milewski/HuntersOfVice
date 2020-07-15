@@ -588,6 +588,8 @@ public class Skills : StatusEffects
         {
             if (DistanceToAttack() <= AttackRange)
             {
+                FacingEnemy = false;
+
                 TextHolder = Target.GetUI;
 
                 GetCharacter.GetComponent<PlayerAnimations>().SkillMotionAnimation();
