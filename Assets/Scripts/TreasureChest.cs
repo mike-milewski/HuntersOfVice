@@ -63,12 +63,16 @@ public class TreasureChest : MonoBehaviour
             equipments[0].transform.SetParent(ItemTransform, true);
             equipments[0].transform.localScale = new Vector3(1, 1, 1);
             equipments[0].transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            equipments[0].transform.position = new Vector3(equipments[0].transform.position.x, equipments[0].transform.position.y, 0);
         }
         else if(ShadowPriest.gameObject.activeInHierarchy)
         {
             equipments[1].transform.SetParent(ItemTransform, true);
             equipments[1].transform.localScale = new Vector3(1, 1, 1);
             equipments[1].transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            equipments[1].transform.position = new Vector3(equipments[1].transform.position.x, equipments[1].transform.position.y, 0);
         }
 
         ItemMessageComponents();

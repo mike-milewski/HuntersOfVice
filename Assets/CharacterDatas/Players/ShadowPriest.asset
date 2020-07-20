@@ -19,7 +19,7 @@ MonoBehaviour:
   CharacterName: Shadow Priest
   CharacterLevel: 7
   Health: 105
-  Mana: 65
+  Mana: 50
   Strength: 12
   Defense: 15
   Intelligence: 27
