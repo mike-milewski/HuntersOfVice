@@ -16,7 +16,7 @@ public class Phases
     private string SpeechText;
 
     [SerializeField]
-    private bool IsImmuneToDamage;
+    private bool DontCheckHP;
 
     public BossAiStates[] GetBossAiStates
     {
@@ -42,15 +42,15 @@ public class Phases
         }
     }
 
-    public bool GetIsImmuneToDamage
+    public bool GetDontCheckHP
     {
         get
         {
-            return IsImmuneToDamage;
+            return DontCheckHP;
         }
         set
         {
-            IsImmuneToDamage = value;
+            DontCheckHP = value;
         }
     }
 }
@@ -569,27 +569,30 @@ public class Puck : MonoBehaviour
     {
         float HpCap = ((float)character.CurrentHealth / (float)character.MaxHealth) * 100f;
 
-        if(HpPhaseIndex < HpToChangePhase.Length)
+        if(!phases[PhaseIndex].GetDontCheckHP)
         {
-            if (HpCap <= HpToChangePhase[HpPhaseIndex])
+            if (HpPhaseIndex < HpToChangePhase.Length)
             {
-                ChangingPhase = true;
-
-                if(HpPhaseIndex < HpToChangePhase.Length)
+                if (HpCap <= HpToChangePhase[HpPhaseIndex])
                 {
-                    HpPhaseIndex++;
+                    ChangingPhase = true;
+
+                    if (HpPhaseIndex < HpToChangePhase.Length)
+                    {
+                        HpPhaseIndex++;
+                    }
+
+                    IncrementPhase();
+
+                    states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
                 }
-
-                IncrementPhase();
-
-                states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
             }
-        }
-        else
-        {
-            ChangingPhase = false;
+            else
+            {
+                ChangingPhase = false;
 
-            return;
+                return;
+            }
         }
     }
 

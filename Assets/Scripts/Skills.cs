@@ -1447,15 +1447,6 @@ public class Skills : StatusEffects
     {
         bool Immunity = false;
 
-        if(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetPuckAI != null)
-        {
-            if(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetPuckAI.GetPhases[GetCharacter.GetComponent<BasicAttack>().GetTarget.GetPuckAI.GetPhaseIndex].
-               GetIsImmuneToDamage)
-            {
-                Immunity = true;
-            }
-        }
-
         for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Immunities.Length; i++)
         {
             if (playerElement == (PlayerElement)GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Immunities[i])
