@@ -190,6 +190,11 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Damaged", false);
     }
 
+    public void ShatterSkill()
+    {
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].InvokeShatter();
+    }
+
     public void DealSkillDamage()
     {
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);

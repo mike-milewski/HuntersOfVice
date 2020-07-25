@@ -1053,7 +1053,10 @@ public class Puck : MonoBehaviour
 
             if(!SkillsManager.Instance.GetActivatedSkill)
             {
-                PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                if (PlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1)
+                {
+                    PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                }
             }
 
             if (PlayerTarget.GetComponent<Health>().GetReflectingDamage)

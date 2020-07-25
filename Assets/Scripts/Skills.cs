@@ -436,8 +436,6 @@ public class Skills : StatusEffects
 
                     GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
                     GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
-
-                    Invoke("InvokeShatter", ApplySkill);
                 }
             }
             else
@@ -452,7 +450,7 @@ public class Skills : StatusEffects
         }
     }
 
-    private void InvokeShatter()
+    public void InvokeShatter()
     {
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
 

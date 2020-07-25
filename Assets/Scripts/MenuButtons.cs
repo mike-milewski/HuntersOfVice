@@ -182,7 +182,7 @@ public class MenuButtons : MonoBehaviour
 
     public void ShowAudioCreditsText(TextMeshProUGUI AudioText)
     {
-        AudioText.text = "Matthew Pablo \n\n HitCtrl \n\n HydroGene \n\n NenadSimic";
+        AudioText.text = "Music by Matthew Pablo http://www.matthewpablo.com \n\n HitCtrl \n\n HydroGene \n\n NenadSimic";
     }
 
     public void ShowFontsCreditsText(TextMeshProUGUI FontsText)

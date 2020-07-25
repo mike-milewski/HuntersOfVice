@@ -213,7 +213,10 @@ public class BasicAttack : MonoBehaviour
 
                     Quaternion LookDir = Quaternion.LookRotation(TargetPosition);
 
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, 5 * Time.deltaTime);
+                    if(this.GetComponent<Animator>().GetFloat("Speed") < 1)
+                    {
+                        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, 5 * Time.deltaTime);
+                    }
 
                     playerAnimations.AttackAnimation();
                     if(Target.GetAI != null)

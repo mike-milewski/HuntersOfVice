@@ -1535,7 +1535,10 @@ public class EnemySkills : MonoBehaviour
 
             if (!SkillsManager.Instance.GetActivatedSkill)
             {
-                enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                if (enemyAI.GetPlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1)
+                {
+                    enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                }
             }
         }
 
@@ -1618,7 +1621,10 @@ public class EnemySkills : MonoBehaviour
 
             if (!SkillsManager.Instance.GetActivatedSkill)
             {
-                puckAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                if (puckAI.GetPlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1)
+                {
+                    puckAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                }
             }
         }
 
