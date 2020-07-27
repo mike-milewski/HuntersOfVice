@@ -131,6 +131,7 @@ public class ObjectPooler : MonoBehaviour
         AddSinisterPossessionParticle(poolcontroller[40].GetPoolAmount);
         AddContractParticle(poolcontroller[41].GetPoolAmount);
         AddDiabolicLightningParticle(poolcontroller[42].GetPoolAmount);
+        AddSoulPierceParticle(poolcontroller[43].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -649,6 +650,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddSoulPierceParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[43].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[43].GetPoolParent.transform, false);
+            poolcontroller[43].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -862,6 +875,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetDiabolicLightningParticle()
     {
         return poolcontroller[42].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetSoulPierceParticle()
+    {
+        return poolcontroller[43].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1205,6 +1223,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[42].GetPoolParent.transform, false);
 
         poolcontroller[42].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnSoulPierceParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[43].GetPoolParent.transform, false);
+
+        poolcontroller[43].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

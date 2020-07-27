@@ -106,6 +106,11 @@ public class PlayerAnimations : MonoBehaviour
     {
         animator.SetBool("SpellCasting", true);
 
+        if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            animator.SetBool("SkillMotion", false);
+        }
+
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);
     }
@@ -190,9 +195,16 @@ public class PlayerAnimations : MonoBehaviour
         animator.SetBool("Damaged", false);
     }
 
-    public void ShatterSkill()
+    public void ShatterSkillOrSoulPierceSkill()
     {
-        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].InvokeShatter();
+        if(SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetShatterSkill)
+        {
+            SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].InvokeShatter();
+        }
+        else if(SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetSoulPierceSkill)
+        {
+            SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].InvokeSoulPierce();
+        }
     }
 
     public void DealSkillDamage()

@@ -154,6 +154,11 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                         if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>())
                         {
                             gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                            if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
+                            {
+                                SkillsManager.Instance.GetContractSkill = null;
+                                SkillsManager.Instance.GetContractStack--;
+                            }
 
                         }
                         else if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>())

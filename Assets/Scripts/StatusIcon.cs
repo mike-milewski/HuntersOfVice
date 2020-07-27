@@ -185,6 +185,10 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FA2900>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
+            case (EffectStatus.ContractWithNefariousness):
+                HalfHealth();
+                ContractWithNefariousnessMpAndCastCostReduction();
+                break;
             case (EffectStatus.MaliciousPossession):
                 MaliciousPossessionBuff();
                 break;
@@ -193,9 +197,6 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.Aegis):
                 Aegis();
-                break;
-            case (EffectStatus.Haste):
-                Haste((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
                 break;
             case (EffectStatus.DamageOverTime):
                 CreatePoisonEffectParticle();
@@ -349,6 +350,10 @@ public class StatusIcon : MonoBehaviour
                 SetDefenseToDefault();
                 SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#FFFFFF>";
                 SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.ContractWithNefariousness):
+                ReturnHealthToNormalValue();
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.ConsecratedDefense):
@@ -533,9 +538,20 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
+    private void ReturnHealthToNormalValue()
+    {
+        SkillsManager.Instance.GetCharacter.MaxHealth = PlayerMaxHealth;
+
+        SkillsManager.Instance.GetCharacter.GetCharacterData.Health = PlayerMaxHealth;
+
+        SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetFilledBar();
+    }
+
     private void HalfHealth()
     {
-        int MaxHealth = PlayerMaxHealth / 2;
+        PlayerMaxHealth = SkillsManager.Instance.GetCharacter.GetCharacterData.Health;
+
+        int MaxHealth = SkillsManager.Instance.GetCharacter.MaxHealth / 2;
 
         Mathf.Round(MaxHealth);
 
@@ -547,6 +563,10 @@ public class StatusIcon : MonoBehaviour
         {
             SkillsManager.Instance.GetCharacter.CurrentHealth = SkillsManager.Instance.GetCharacter.MaxHealth;
         }
+
+        SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+
+        SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetFilledBar();
     }
 
     private void RestoreMaxHealth()
@@ -564,24 +584,18 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetReflectingDamage = true;
     }
 
-    private void Haste(int value)
+    private void ContractWithNefariousnessMpAndCastCostReduction()
     {
-        float Percentage = (float)value / 100;
-
-        float TempSpeed = (float)SkillsManager.Instance.GetCharacter.GetMoveSpeed;
-
-        TempSpeed += (float)SkillsManager.Instance.GetCharacter.GetMoveSpeed * Percentage;
-
-        Mathf.Round(TempSpeed);
-
-        SkillsManager.Instance.GetCharacter.GetMoveSpeed = (int)TempSpeed;
-
         foreach (Skills s in SkillsManager.Instance.GetSkills)
         {
-            float TempCoolDown = s.GetCoolDown;
-            TempCoolDown -= s.GetCoolDown * Percentage;
-            Mathf.Round(TempCoolDown);
-            s.GetCoolDown = (int)TempCoolDown;
+            int TempCoolDown = (int)s.GetCoolDown / 4;
+            int TempCastCost = s.GetCastTime / 4;
+
+            Mathf.CeilToInt(TempCastCost);
+            Mathf.CeilToInt(TempCoolDown);
+
+            s.GetCastTime = TempCastCost;
+            s.GetCoolDown = TempCoolDown;
         }
     }
 

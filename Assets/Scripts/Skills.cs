@@ -53,7 +53,7 @@ public class Skills : StatusEffects
     private bool StormThrustActivated, FacingEnemy;
 
     [SerializeField]
-    private bool GainedPassive, OffensiveSpell, UnlockedBonus;
+    private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill;
 
     [SerializeField]
     private int ManaCost, Potency;
@@ -275,6 +275,30 @@ public class Skills : StatusEffects
         set
         {
             GainedPassive = value;
+        }
+    }
+
+    public bool GetShatterSkill
+    {
+        get
+        {
+            return ShatterSkill;
+        }
+        set
+        {
+            ShatterSkill = value;
+        }
+    }
+
+    public bool GetSoulPierceSkill
+    {
+        get
+        {
+            return SoulPierceSkill;
+        }
+        set
+        {
+            SoulPierceSkill = value;
         }
     }
 
@@ -632,6 +656,79 @@ public class Skills : StatusEffects
         SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, AreaOfEffectRange);
     }
 
+    public void SoulPierce()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            if (DistanceToAttack() <= AttackRange)
+            {
+                FacingEnemy = true;
+
+                TextHolder = Target.GetUI;
+
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                if (skillbar.GetSkillBar.fillAmount < 1)
+                {
+                    skillbar.gameObject.SetActive(true);
+
+                    skillbar.GetSkill = this.button.GetComponent<Skills>();
+
+                    GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                }
+                if (skillbar.GetSkillBar.fillAmount >= 1)
+                {
+                    this.CoolDownImage.fillAmount = 1;
+
+                    FacingEnemy = false;
+
+                    SkillsManager.Instance.GetActivatedSkill = false;
+
+                    SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                    GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
+                    GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+                }
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
+    }
+
+    public void InvokeSoulPierce()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
+            if (settings.UseParticleEffects)
+            {
+                SkillParticle = ObjectPooler.Instance.GetSoulPierceParticle();
+
+                SkillParticle.SetActive(true);
+
+                SkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z);
+
+                SkillParticle.transform.SetParent(Target.transform, true);
+            }
+
+            GetStatusEffectIconTrans = Target.GetDebuffTransform;
+
+            EnemyStatus();
+        }
+    }
+
     public void Heal()
     {
         SkillsManager.Instance.GetActivatedSkill = true;
@@ -693,6 +790,7 @@ public class Skills : StatusEffects
         if(GetStatusIcon.activeInHierarchy)
         {
             GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+            SkillsManager.Instance.GetContractStack--;
         }
         else
         {
@@ -700,7 +798,7 @@ public class Skills : StatusEffects
 
             SkillsManager.Instance.GetActivatedSkill = true;
 
-            SkillCast();
+            ContractSkillCast();
         }
     }
 
@@ -736,11 +834,43 @@ public class Skills : StatusEffects
         SkillCast();
     }
 
+    private void ContractSkillCast()
+    {
+        GetCharacter.GetComponent<PlayerAnimations>().SkillCastAnimation();
+
+        Invoke("ContractStatusEffectSkill", ApplySkill);
+    }
+
     private void SkillCast()
     {
         GetCharacter.GetComponent<PlayerAnimations>().SkillCastAnimation();
 
         Invoke("PlayerStatusEffectSkill", ApplySkill);
+    }
+
+    private void ContractStatusEffectSkill()
+    {
+        SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+        if (SkillsManager.Instance.GetContractStack < SkillsManager.Instance.GetMaxContractStack)
+        {
+            SkillsManager.Instance.GetContractSkill = this;
+            SkillsManager.Instance.GetContractStack++;
+
+            SkillsManager.Instance.GetStatusIcon.PlayerInput();
+
+            PlayerStatus();
+        }
+        else if (SkillsManager.Instance.GetContractStack >= SkillsManager.Instance.GetMaxContractStack)
+        {
+            SkillsManager.Instance.GetContractSkill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+
+            SkillsManager.Instance.GetContractSkill = this;
+
+            SkillsManager.Instance.GetStatusIcon.PlayerInput();
+
+            PlayerStatus();
+        }
     }
 
     private void PlayerStatusEffectSkill()

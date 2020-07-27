@@ -854,7 +854,7 @@ public class SkillMenu : MonoBehaviour
 
     private void DualDealBonus()
     {
-        SkillsManager.Instance.GetContractStack = 2;
+        SkillsManager.Instance.GetMaxContractStack++;
     }
 
     private void MightyValorBonus()

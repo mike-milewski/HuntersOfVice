@@ -26,10 +26,13 @@ public class SkillsManager : MonoBehaviour
     [SerializeField]
     private List<Skills> skills = new List<Skills>();
 
+    [SerializeField]
+    private Skills ContractSkill = null;
+
     private bool ActivatedSkill, DisruptedSkill, WhirlWindSlashAbility;
 
     [SerializeField]
-    private int ContractStack;
+    private int ContractStack, MaxContractStack;
 
     private int KeyInput;
 
@@ -95,6 +98,18 @@ public class SkillsManager : MonoBehaviour
         }
     }
 
+    public int GetMaxContractStack
+    {
+        get
+        {
+            return MaxContractStack;
+        }
+        set
+        {
+            MaxContractStack = value;
+        }
+    }
+
     public Character GetCharacter
     {
         get
@@ -128,6 +143,18 @@ public class SkillsManager : MonoBehaviour
         set
         {
             skills = value;
+        }
+    }
+
+    public Skills GetContractSkill
+    {
+        get
+        {
+            return ContractSkill;
+        }
+        set
+        {
+            ContractSkill = value;
         }
     }
 
