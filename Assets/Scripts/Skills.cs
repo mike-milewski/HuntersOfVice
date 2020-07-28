@@ -44,7 +44,9 @@ public class Skills : StatusEffects
     [SerializeField]
     private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency, HpAndDamageOverTimeTick, AreaOfEffectRange, InstantKnockOutValue, ContractHp, ContractMp;
 
-    private float AttackDistance;
+    private float AttackDistance, SinisterCoolDown;
+
+    private int SinisterManaCost;
 
     private bool StatusIconCreated;
 
@@ -377,6 +379,9 @@ public class Skills : StatusEffects
     private void Start()
     {
         CD = CoolDown;
+
+        SinisterCoolDown = CoolDown;
+        SinisterManaCost = ManaCost;
     }
 
     private void Update()
@@ -424,6 +429,16 @@ public class Skills : StatusEffects
         {
             FaceEnemy();
         }
+    }
+
+    public float ReturnCoolDown()
+    {
+        return SinisterCoolDown;
+    }
+
+    public int ReturnManaCost()
+    {
+        return SinisterManaCost;
     }
 
     public void Shatter()
@@ -640,8 +655,6 @@ public class Skills : StatusEffects
 
             SkillParticle.SetActive(true);
 
-            SkillParticle.transform.SetParent(GetCharacter.transform, true);
-
             SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 4f, GetCharacter.transform.position.z);
         }
         Invoke("InvokeDiabolicLightning", ApplySkill);
@@ -727,6 +740,13 @@ public class Skills : StatusEffects
 
             EnemyStatus();
         }
+    }
+
+    public void SinisterPossession()
+    {
+        GetCharacter.GetComponent<PlayerAnimations>().SkillCastAnimation();
+
+        Invoke("PlayerStatusEffectSkill", ApplySkill);
     }
 
     public void Heal()

@@ -356,6 +356,9 @@ public class StatusIcon : MonoBehaviour
                 ReturnHealthToNormalValue();
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
+            case (EffectStatus.MaliciousPossession):
+                ReturnSkillCostAndCastToNormal();
+                break;
             case (EffectStatus.ConsecratedDefense):
                 SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetIsImmune = false;
                 break;
@@ -535,6 +538,15 @@ public class StatusIcon : MonoBehaviour
         if (SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetSleepHit)
         {
             Duration = 0;
+        }
+    }
+
+    private void ReturnSkillCostAndCastToNormal()
+    {
+        foreach (Skills s in SkillsManager.Instance.GetSkills)
+        {
+            s.GetCoolDown = s.ReturnCoolDown();
+            s.GetManaCost = s.ReturnManaCost();
         }
     }
 
