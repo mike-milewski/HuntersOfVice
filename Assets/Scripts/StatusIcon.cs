@@ -354,6 +354,7 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.ContractWithNefariousness):
                 ReturnHealthToNormalValue();
+                ReturnCastTimeToNormal();
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.MaliciousPossession):
@@ -600,14 +601,19 @@ public class StatusIcon : MonoBehaviour
     {
         foreach (Skills s in SkillsManager.Instance.GetSkills)
         {
-            int TempCoolDown = (int)s.GetCoolDown / 4;
             int TempCastCost = s.GetCastTime / 4;
 
             Mathf.CeilToInt(TempCastCost);
-            Mathf.CeilToInt(TempCoolDown);
 
             s.GetCastTime = TempCastCost;
-            s.GetCoolDown = TempCoolDown;
+        }
+    }
+
+    private void ReturnCastTimeToNormal()
+    {
+        foreach (Skills s in SkillsManager.Instance.GetSkills)
+        {
+            s.GetCastTime = s.GetNefariousCastTime;
         }
     }
 

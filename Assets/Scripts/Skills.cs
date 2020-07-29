@@ -46,7 +46,7 @@ public class Skills : StatusEffects
 
     private float AttackDistance, SinisterCoolDown;
 
-    private int SinisterManaCost;
+    private int SinisterManaCost, NefariousCastTime;
 
     private bool StatusIconCreated;
 
@@ -121,6 +121,18 @@ public class Skills : StatusEffects
         set
         {
             CastTime = value;
+        }
+    }
+
+    public int GetNefariousCastTime
+    {
+        get
+        {
+            return NefariousCastTime;
+        }
+        set
+        {
+            NefariousCastTime = value;
         }
     }
 
@@ -382,6 +394,7 @@ public class Skills : StatusEffects
 
         SinisterCoolDown = CoolDown;
         SinisterManaCost = ManaCost;
+        NefariousCastTime = CastTime;
     }
 
     private void Update()
