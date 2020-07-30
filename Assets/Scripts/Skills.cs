@@ -46,6 +46,7 @@ public class Skills : StatusEffects
 
     private float AttackDistance, SinisterCoolDown;
 
+    [SerializeField]
     private int SinisterManaCost, NefariousCastTime;
 
     private bool StatusIconCreated;
