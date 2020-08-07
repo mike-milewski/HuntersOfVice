@@ -1,1 +1,1 @@
-An RPG game in the making with Unity3D.
+An RPG game made with Unity3D.
