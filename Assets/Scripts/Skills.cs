@@ -958,17 +958,15 @@ public class Skills : StatusEffects
         {
             if (DistanceToAttack() <= AttackRange)
             {
-                FacingEnemy = true;
-
                 TextHolder = Target.GetUI;
 
                 SkillsManager.Instance.GetActivatedSkill = true;
 
                 this.CoolDownImage.fillAmount = 1;
 
-                SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>()); 
+                SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
-                GetCharacter.GetComponent<PlayerAnimations>().PlaySkillAnimation();
+                GetCharacter.GetComponent<PlayerAnimations>().UltimateSkillAnimation();
             }
             else
             {

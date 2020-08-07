@@ -1449,7 +1449,16 @@ public class EnemySkills : MonoBehaviour
 
     private TextMeshProUGUI ReflectedDamage()
     {
-        float RelectedValue = 0.10f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+        float ReflectedValue = 0;
+
+        if(puckAI != null)
+        {
+            ReflectedValue = 0.10f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+        }
+        if(enemyAI != null)
+        {
+            ReflectedValue = 0.10f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+        }
 
         var Damagetext = ObjectPooler.Instance.GetEnemyDamageText();
 
@@ -1457,9 +1466,9 @@ public class EnemySkills : MonoBehaviour
 
         Damagetext.transform.SetParent(GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
 
-        GetComponentInChildren<Health>().ModifyHealth(-(int)RelectedValue);
+        GetComponentInChildren<Health>().ModifyHealth(-(int)ReflectedValue);
 
-        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(RelectedValue);
+        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(ReflectedValue);
 
         return Damagetext.GetComponentInChildren<TextMeshProUGUI>();
     }

@@ -212,6 +212,26 @@ public class PlayerAnimations : MonoBehaviour
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
     }
 
+    public void UltimateSkillAnimation()
+    {
+        animator.SetBool("UltimateSkill", true);
+
+        animator.SetBool("SkillCast", false);
+        animator.SetBool("Skill", false);
+
+        if (Knight.gameObject.activeInHierarchy)
+        {
+            animator.SetBool("StormThrust", false);
+            animator.SetBool("WhirlwindSlash", false);
+        }
+
+        animator.SetBool("SpellCasting", false);
+        animator.SetBool("ContinueCasting", false);
+
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
+    }
+
     public void SkillCastAnimation()
     {
         animator.SetBool("SkillCast", true);
@@ -236,6 +256,11 @@ public class PlayerAnimations : MonoBehaviour
 
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);
+    }
+
+    public void EndUltimateSkillAnimation()
+    {
+        animator.SetBool("UltimateSkill", false);
     }
 
     public void EndSkillCast()
@@ -284,6 +309,17 @@ public class PlayerAnimations : MonoBehaviour
         SkillsManager.Instance.GetActivatedSkill = false;
 
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
+    }
+
+    public void BraveLightHitAndStaus()
+    {
+        animator.ResetTrigger("Damaged");
+        animator.SetBool("Damaged", false);
+
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 10);
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetBraveLightTextHolder();
+
+        SkillsManager.Instance.GetActivatedSkill = false;
     }
 
     public void EvilsEndAnimation()
