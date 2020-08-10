@@ -33,9 +33,12 @@ public class Experience : MonoBehaviour
     private ParticleSystem LevelUpParticle;
 
     [SerializeField]
-    private int ExperiencePoints, NextToLevel, MaxLevel, StatPoints, StatPointIncrease;
+    private int ExperiencePoints, MaxLevel, StatPoints, StatPointIncrease;
 
-    private int MaxStatPoints;
+    [SerializeField]
+    private int[] NextToLevel;
+
+    private int MaxStatPoints, ToNextLevelIndex;
 
     [SerializeField]
     private float FillValue;
@@ -76,7 +79,19 @@ public class Experience : MonoBehaviour
         }
     }
 
-    public int GetNextToLevel
+    public int GetNextToLevelIndex
+    {
+        get
+        {
+            return ToNextLevelIndex;
+        }
+        set
+        {
+            ToNextLevelIndex = value;
+        }
+    }
+
+    public int[] GetNextToLevel
     {
         get
         {
@@ -155,7 +170,7 @@ public class Experience : MonoBehaviour
 
             //Creates a level up particle effect when the player levels up. 
             //We put this in a separate conditional so that multiple particles don't spawn.
-            if(ExperiencePoints >= NextToLevel)
+            if(ExperiencePoints >= NextToLevel[ToNextLevelIndex])
             {
                 var LvParticle = Instantiate(LevelUpParticle, new Vector3(Player.transform.position.x, Player.transform.position.y + 1.0f, Player.transform.position.z), 
                                              Quaternion.identity);
@@ -167,12 +182,12 @@ public class Experience : MonoBehaviour
 
             //Loops through to check if the player's experience is enough to level them up
             //and continues as long as that's true.
-            while (ExperiencePoints >= NextToLevel && character.Level < MaxLevel)
+            while (ExperiencePoints >= NextToLevel[ToNextLevelIndex] && character.Level < MaxLevel)
             {
                 LevelUp();
             }
         }
-        FillBarTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
+        FillBarTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel[ToNextLevelIndex];
 
         UpdateExperienceText();
 
@@ -183,7 +198,7 @@ public class Experience : MonoBehaviour
     {
         if(character.Level < MaxLevel)
         {
-            ExperienceText.text = ExperiencePoints + " / " + NextToLevel;
+            ExperienceText.text = ExperiencePoints + " / " + NextToLevel[ToNextLevelIndex];
         }
         else
         {
@@ -220,11 +235,11 @@ public class Experience : MonoBehaviour
         if(character.Level < MaxLevel)
         {
             //Adds the extra experience left over after leveling up onto the current experience points.
-            int SurplusExperience = Mathf.Abs(ExperiencePoints - NextToLevel);
+            int SurplusExperience = Mathf.Abs(ExperiencePoints - NextToLevel[ToNextLevelIndex]);
+
+            ToNextLevelIndex++;
 
             ExperiencePoints = SurplusExperience;
-
-            NextToLevel += character.Level * 11;
         }
 
         foreach(SkillMenu s in skillMenu.GetComponentsInChildren<SkillMenu>())
