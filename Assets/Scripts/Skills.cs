@@ -518,8 +518,6 @@ public class Skills : StatusEffects
                 SkillParticle.SetActive(true);
 
                 SkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z);
-
-                SkillParticle.transform.SetParent(Target.transform, true);
             }
 
             if (GainedPassive)
@@ -746,8 +744,6 @@ public class Skills : StatusEffects
                 SkillParticle.SetActive(true);
 
                 SkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 1.0f, Target.transform.position.z);
-
-                SkillParticle.transform.SetParent(Target.transform, true);
             }
 
             GetStatusEffectIconTrans = Target.GetDebuffTransform;

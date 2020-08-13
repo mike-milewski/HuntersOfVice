@@ -94,7 +94,7 @@ public class EnemyAI : MonoBehaviour
     private ParticleSystem HitParticle;
 
     [SerializeField]
-    private float TimeToMoveAgain, WayPointDistance, OuterAttackDistance; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
+    private float TimeToMoveAgain, WayPointDistance, PlayerDistance, OuterAttackDistance; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
 
     private float TimeToMove, DistanceToTarget;
 
@@ -383,7 +383,7 @@ public class EnemyAI : MonoBehaviour
     {
         StandingStill = false;
 
-        CheckDistanceBetweenWaypoints();
+        CheckDistanceBetweenPlayerOrWaypoints();
 
         if (!IsUsingAnimator)
         {
@@ -766,13 +766,20 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void CheckDistanceBetweenWaypoints()
+    private void CheckDistanceBetweenPlayerOrWaypoints()
     { 
         if(!IsAnAdd)
         {
             if (Vector3.Distance(transform.position, Waypoints[WaypointIndex].position) >= WayPointDistance)
             {
                 EndBattle();
+            }
+            if(PlayerTarget != null)
+            {
+                if (Vector3.Distance(transform.position, PlayerTarget.transform.position) >= PlayerDistance)
+                {
+                    EndBattle();
+                }
             }
         }
     }
@@ -791,6 +798,8 @@ public class EnemyAI : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        RemoveNegativeStatusEffects();
+
         if(states != States.Patrol)
         {
             if (other.gameObject.GetComponent<PlayerController>() && IsHostile)
@@ -839,6 +848,8 @@ public class EnemyAI : MonoBehaviour
 
     private void EndBattle()
     {
+        RemoveNegativeStatusEffects();
+
         if (IsHostile)
         {
             PlayerEntry = false;
@@ -879,6 +890,17 @@ public class EnemyAI : MonoBehaviour
             enemy.GetHealth.IncreaseHealth(character.MaxHealth);
             enemy.GetLocalHealthInfo();
             StateArrayIndex = 0;
+        }
+    }
+
+    private void RemoveNegativeStatusEffects()
+    {
+        foreach(EnemyStatusIcon esi in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if(enemy.GetDebuffTransform.childCount > 0)
+            {
+                esi.RemoveEffect();
+            }
         }
     }
 
