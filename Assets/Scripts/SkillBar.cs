@@ -56,9 +56,33 @@ public class SkillBar : MonoBehaviour
         }
     }
 
+    public Image GetSkillImage
+    {
+        get
+        {
+            return SkillImage;
+        }
+        set
+        {
+            SkillImage = value;
+        }
+    }
+
+    public float GetCastTime
+    {
+        get
+        {
+            return CastTime;
+        }
+        set
+        {
+            CastTime = value;
+        }
+    }
+
     private void OnEnable()
     {
-        if(Knight.gameObject.activeInHierarchy)
+        if (Knight.gameObject.activeInHierarchy)
         {
             character = Knight;
             playerController = KnightController;
@@ -83,17 +107,17 @@ public class SkillBar : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        if(settings.UseParticleEffects || CastParticle.activeInHierarchy)
-        ObjectPooler.Instance.ReturnPlayerCastParticleToPool(CastParticle);
-    }
-
     private void Start()
     {
         CastTime = skills.GetCastTime;
 
         SkillImage.sprite = skills.GetComponent<Image>().sprite;
+    }
+
+    private void OnDisable()
+    {
+        if (settings.UseParticleEffects || CastParticle.activeInHierarchy)
+        ObjectPooler.Instance.ReturnPlayerCastParticleToPool(CastParticle);
     }
 
     private void Update()
@@ -131,6 +155,11 @@ public class SkillBar : MonoBehaviour
             CastTime = skills.GetCastTime;
             CastParticle.gameObject.SetActive(false);
             gameObject.SetActive(false);
+
+            if (character.GetComponent<BasicAttack>().GetTarget == null)
+            {
+                EndSpell();
+            }
         }
     }
 

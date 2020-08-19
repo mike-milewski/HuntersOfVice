@@ -1544,7 +1544,7 @@ public class EnemySkills : MonoBehaviour
 
             if (!SkillsManager.Instance.GetActivatedSkill)
             {
-                if (enemyAI.GetPlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1)
+                if (enemyAI.GetPlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1 && !enemyAI.GetPlayerTarget.GetComponent<Animator>().GetBool("Attacking"))
                 {
                     enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
                 }

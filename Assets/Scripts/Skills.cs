@@ -475,6 +475,10 @@ public class Skills : StatusEffects
 
                     skillbar.GetSkill = this.button.GetComponent<Skills>();
 
+                    skillbar.GetCastTime = this.CastTime;
+
+                    skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
+
                     GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
                 }
                 if (skillbar.GetSkillBar.fillAmount >= 1)
@@ -701,6 +705,10 @@ public class Skills : StatusEffects
 
                     skillbar.GetSkill = this.button.GetComponent<Skills>();
 
+                    skillbar.GetCastTime = this.CastTime;
+
+                    skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
+
                     GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
                 }
                 if (skillbar.GetSkillBar.fillAmount >= 1)
@@ -768,6 +776,10 @@ public class Skills : StatusEffects
             skillbar.gameObject.SetActive(true);
 
             skillbar.GetSkill = this.button.GetComponent<Skills>();
+
+            skillbar.GetCastTime = this.CastTime;
+
+            skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
 
             GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
         }
@@ -1544,7 +1556,17 @@ public class Skills : StatusEffects
 
             if(Target.GetAI != null)
             {
-                if(Target.GetAI.GetPlayerTarget == null)
+                if (Target.GetAI.GetComponent<EnemyConnection>())
+                {
+                    if (Target.GetAI.GetComponent<EnemyConnection>().GetEnemyAI.GetPlayerTarget == null)
+                    {
+                        Target.GetAI.GetComponent<EnemyConnection>().GetEnemyAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                    }
+
+                    Target.GetAI.GetComponent<EnemyConnection>().GetEnemyAI.GetStates = States.Chase;
+                }
+
+                if (Target.GetAI.GetPlayerTarget == null)
                 {
                     Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
                 }

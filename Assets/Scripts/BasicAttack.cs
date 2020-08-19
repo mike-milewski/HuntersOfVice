@@ -61,6 +61,18 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
+    public float GetAttackRange
+    {
+        get
+        {
+            return AttackRange;
+        }
+        set
+        {
+            AttackRange = value;
+        }
+    }
+
     public Enemy GetTarget
     {
         get
@@ -235,16 +247,7 @@ public class BasicAttack : MonoBehaviour
             }
             else
             {
-                playerAnimations.EndAttackAnimation();
-
-                Target.GetSkills.DisableEnemySkillBar();
-                Target.TurnOffHealthBar();
-                Target = null;
-
-                GameManager.Instance.GetEnemyObject = null;
-                GameManager.Instance.GetLastEnemyObject = null;
-                
-                AutoAttackTime = 0;
+                RemoveTarget();
             }
         }
         else
@@ -270,6 +273,20 @@ public class BasicAttack : MonoBehaviour
                 AutoAttackTime = 0;
             }
         }
+    }
+
+    public void RemoveTarget()
+    {
+        playerAnimations.EndAttackAnimation();
+
+        Target.GetSkills.DisableEnemySkillBar();
+        Target.TurnOffHealthBar();
+        Target = null;
+
+        GameManager.Instance.GetEnemyObject = null;
+        GameManager.Instance.GetLastEnemyObject = null;
+
+        AutoAttackTime = 0;
     }
 
     private TextMeshProUGUI MpHealText()

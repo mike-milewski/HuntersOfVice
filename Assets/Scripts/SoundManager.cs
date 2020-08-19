@@ -179,4 +179,9 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[1].PlayOneShot(audioclips[26]);
     }
+
+    public void WoodStep()
+    {
+        audiosource[1].PlayOneShot(audioclips[27]);
+    }
 }

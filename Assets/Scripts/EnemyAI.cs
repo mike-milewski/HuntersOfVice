@@ -109,7 +109,7 @@ public class EnemyAI : MonoBehaviour
     private int WaypointIndex;
 
     [SerializeField]
-    private bool IsHostile, IsAnAdd;
+    private bool IsHostile, IsAnAdd, IsAPuzzleComponent;
 
     [SerializeField]
     private bool IsUsingAnimator;
@@ -173,6 +173,18 @@ public class EnemyAI : MonoBehaviour
         set
         {
             IsAnAdd = value;
+        }
+    }
+
+    public bool GetIsAPuzzleComponent
+    {
+        get
+        {
+            return IsAPuzzleComponent;
+        }
+        set
+        {
+            IsAPuzzleComponent = value;
         }
     }
 
@@ -559,11 +571,12 @@ public class EnemyAI : MonoBehaviour
             enemySkills.DisableRadius();
         }
 
-        if(!GameManager.Instance.GetIsTargeting)
+        if (!GameManager.Instance.GetIsTargeting)
         {
-            GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
             GameManager.Instance.GetEnemyObject = null;
             GameManager.Instance.GetLastEnemyObject = null;
+
+            GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
         }
 
         enemy.ToggleHealthBar();
@@ -793,55 +806,33 @@ public class EnemyAI : MonoBehaviour
             states = States.Chase;
 
             enemy.GetExperience = other.gameObject.GetComponent<Experience>();
+
+            if (gameObject.GetComponent<EnemyConnection>())
+            {
+                EnemyConnection ec = gameObject.GetComponent<EnemyConnection>();
+
+                EnemyTriggerSphere.gameObject.SetActive(false);
+
+                ec.GetEnemyAI.enemy.GetExperience = other.gameObject.GetComponent<Experience>();
+
+                ec.GetEnemyAI.GetSphereTrigger.gameObject.SetActive(false);
+                ec.GetEnemyAI.GetPlayerTarget = this.PlayerTarget;
+                ec.GetEnemyAI.GetStates = States.Chase;
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        RemoveNegativeStatusEffects();
-
-        if(states != States.Patrol)
+        if (states != States.Patrol)
         {
             if (other.gameObject.GetComponent<PlayerController>() && IsHostile)
             {
-                PlayerEntry = false;
-                if (states != States.SkillAnimation)
-                {
-                    PlayerTarget = null;
-                    states = States.Patrol;
-                    AutoAttackTime = 0;
-                    if (enemySkills.GetManager.Length > 0)
-                    {
-                        enemySkills.DisableRadiusImage();
-                        enemySkills.DisableRadius();
-                    }
-                    enemySkills.GetActiveSkill = false;
-                    enemySkills.GetSkillBar.gameObject.SetActive(false);
-                }
-                enemy.GetHealth.IncreaseHealth(character.MaxHealth);
-                enemy.GetLocalHealthInfo();
-                StateArrayIndex = 0;
+                EndBattle();
             }
             if (other.gameObject.GetComponent<PlayerController>() && !IsHostile)
             {
-                PlayerEntry = false;
-                if (states != States.SkillAnimation)
-                {
-                    PlayerTarget = null;
-                    states = States.Patrol;
-                    AutoAttackTime = 0;
-                    EnemyTriggerSphere.gameObject.SetActive(false);
-                    if (enemySkills.GetManager.Length > 0)
-                    {
-                        enemySkills.DisableRadiusImage();
-                        enemySkills.DisableRadius();
-                    }
-                    enemySkills.GetActiveSkill = false;
-                    enemySkills.GetSkillBar.gameObject.SetActive(false);
-                }
-                enemy.GetHealth.IncreaseHealth(character.MaxHealth);
-                enemy.GetLocalHealthInfo();
-                StateArrayIndex = 0;
+                EndBattle();
             }
         }
     }
@@ -849,6 +840,13 @@ public class EnemyAI : MonoBehaviour
     private void EndBattle()
     {
         RemoveNegativeStatusEffects();
+
+        if (gameObject.GetComponent<EnemyConnection>())
+        {
+            EnemyTriggerSphere.gameObject.SetActive(true);
+
+            gameObject.GetComponent<EnemyConnection>().GetEnemyAI.GetSphereTrigger.gameObject.SetActive(true);
+        }
 
         if (IsHostile)
         {
@@ -1002,7 +1000,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 #endregion
 
-                if(PlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1)
+                if(PlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1 && !PlayerTarget.GetComponent<Animator>().GetBool("Attacking"))
                 {
                     PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
                 }

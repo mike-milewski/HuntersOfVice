@@ -46,6 +46,8 @@ public class PlayerAnimations : MonoBehaviour
 
         animator.ResetTrigger("Attacking");
         animator.SetBool("Attacking", false);
+
+        animator.SetBool("Damaged", false);
     }
 
     public void DamagedAnimation()
@@ -210,6 +212,14 @@ public class PlayerAnimations : MonoBehaviour
     public void DealSkillDamage()
     {
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
+
+        if(gameObject.GetComponent<BasicAttack>().DistanceToTarget() >= gameObject.GetComponent<BasicAttack>().GetAttackRange)
+        {
+            if (gameObject.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <= 0)
+            {
+                gameObject.GetComponent<BasicAttack>().RemoveTarget();
+            }
+        }
     }
 
     public void UltimateSkillAnimation()
@@ -355,12 +365,36 @@ public class PlayerAnimations : MonoBehaviour
 
     public void PlayRightFootSE()
     {
-        SoundManager.Instance.RightFootStep();
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
+        {
+            if (hit.collider.tag == "Grass")
+            {
+                SoundManager.Instance.RightFootStep();
+            }
+            else
+            {
+                SoundManager.Instance.WoodStep();
+            }
+        }
     }
 
     public void PlayLeftFootSE()
     {
-        SoundManager.Instance.LeftFootStep();
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
+        {
+            if (hit.collider.tag == "Grass")
+            {
+                SoundManager.Instance.LeftFootStep();
+            }
+            else
+            {
+                SoundManager.Instance.WoodStep();
+            }
+        }
     }
 
     public void PlaySwordHit()

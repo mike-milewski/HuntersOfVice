@@ -14,6 +14,9 @@ public class EnemyAnimations : MonoBehaviour
     private Animator animator;
 
     [SerializeField]
+    private Puzzle puzzle = null;
+
+    [SerializeField]
     private EnemyAI AI = null;
 
     [SerializeField]
@@ -247,5 +250,11 @@ public class EnemyAnimations : MonoBehaviour
     public void PlayHitSE()
     {
         SoundManager.Instance.EnemyHit();
+    }
+
+    public void IncrementEnemyPuzzleCount()
+    {
+        if(AI.GetIsAPuzzleComponent)
+        puzzle.EnemyPuzzleType();
     }
 }
