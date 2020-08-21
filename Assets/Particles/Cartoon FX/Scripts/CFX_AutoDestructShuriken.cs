@@ -4,7 +4,7 @@ using System.Collections;
 
 public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticle, Heal, CastParticle, EnemyCastParticle, PoisonSpore, HpItem, MpItem,
                              StrengthUp, RemoveStatus, StunningStinger, Illumination, Hop, GaiasProwess, SylvanBlessing, Slam, Slag, SylvanStorm, EnemyAppear,
-                             VicePlanter, Shatter, Alleviate, Contract, Aegis, BraveWing, SinisterPossession, DiabolicLightning, SoulPierce }
+                             VicePlanter, Shatter, Alleviate, Contract, Aegis, BraveLight, SinisterPossession, DiabolicLightning, SoulPierce }
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -112,7 +112,7 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
             case (ParticleEffect.Aegis):
                 ObjectPooler.Instance.ReturnAegisParticleToPool(gameObject);
                 break;
-            case (ParticleEffect.BraveWing):
+            case (ParticleEffect.BraveLight):
                 ObjectPooler.Instance.ReturnBraveWingParticleToPool(gameObject);
                 break;
             case (ParticleEffect.SinisterPossession):

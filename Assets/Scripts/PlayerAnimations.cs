@@ -144,7 +144,10 @@ public class PlayerAnimations : MonoBehaviour
 
     public void EndSpellCast()
     {
-        animator.SetBool("SpellFinish", false);
+        if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            animator.SetBool("SpellFinish", false);
+        }
         animator.SetBool("Damaged", false);
     }
 
@@ -321,12 +324,18 @@ public class PlayerAnimations : MonoBehaviour
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
     }
 
-    public void BraveLightHitAndStaus()
+    public void BraveLightHit()
     {
         animator.ResetTrigger("Damaged");
         animator.SetBool("Damaged", false);
 
-        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 10);
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].BraveLightAnimation();
+
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 20);
+    }
+
+    public void BraveLightStatus()
+    {
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetBraveLightTextHolder();
 
         SkillsManager.Instance.GetActivatedSkill = false;

@@ -988,6 +988,18 @@ public class Skills : StatusEffects
         }
     }
 
+    public void BraveLightAnimation()
+    {
+        if (settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetBraveWingParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 4f, GetCharacter.transform.position.z);
+        }
+    }
+
     public void SetBraveLightTextHolder()
     {
         TextHolder = GameManager.Instance.GetStatusEffectTransform;
