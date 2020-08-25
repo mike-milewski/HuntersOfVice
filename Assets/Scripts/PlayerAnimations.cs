@@ -206,17 +206,33 @@ public class PlayerAnimations : MonoBehaviour
         {
             SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].InvokeShatter();
         }
-        else if(SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetSoulPierceSkill)
+
+        if(SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetSoulPierceSkill)
         {
             SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].InvokeSoulPierce();
         }
     }
 
+    public void NetherStarSkill()
+    {
+        if (SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetNetherStarSkill)
+        {
+            SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].InvokeNetherStar();
+        }
+    }
+
     public void DealSkillDamage()
     {
-        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
+        if(SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetNetherStarSkill)
+        {
+            NetherStarSkill();
+        }
+        else
+        {
+            SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
+        }
 
-        if(gameObject.GetComponent<BasicAttack>().DistanceToTarget() >= gameObject.GetComponent<BasicAttack>().GetAttackRange)
+        if (gameObject.GetComponent<BasicAttack>().DistanceToTarget() >= gameObject.GetComponent<BasicAttack>().GetAttackRange)
         {
             if (gameObject.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <= 0)
             {
@@ -322,6 +338,8 @@ public class PlayerAnimations : MonoBehaviour
         SkillsManager.Instance.GetActivatedSkill = false;
 
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
+
+        SkillsManager.Instance.GetCharacter.transform.rotation = SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetRotation;
     }
 
     public void BraveLightHit()
@@ -332,6 +350,14 @@ public class PlayerAnimations : MonoBehaviour
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].BraveLightAnimation();
 
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 20);
+
+        if (gameObject.GetComponent<BasicAttack>().DistanceToTarget() >= gameObject.GetComponent<BasicAttack>().GetAttackRange)
+        {
+            if (gameObject.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <= 0)
+            {
+                gameObject.GetComponent<BasicAttack>().RemoveTarget();
+            }
+        }
     }
 
     public void BraveLightStatus()

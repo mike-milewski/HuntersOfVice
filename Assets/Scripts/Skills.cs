@@ -56,7 +56,7 @@ public class Skills : StatusEffects
     private bool StormThrustActivated, FacingEnemy;
 
     [SerializeField]
-    private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill;
+    private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill, NetherStarSkill;
 
     [SerializeField]
     private int ManaCost, Potency;
@@ -317,6 +317,18 @@ public class Skills : StatusEffects
         }
     }
 
+    public bool GetNetherStarSkill
+    {
+        get
+        {
+            return NetherStarSkill;
+        }
+        set
+        {
+            NetherStarSkill = value;
+        }
+    }
+
     public bool GetFacingEnemy
     {
         get
@@ -386,6 +398,18 @@ public class Skills : StatusEffects
         set
         {
             TextHolder = value;
+        }
+    }
+
+    public Quaternion GetRotation
+    {
+        get
+        {
+            return rot;
+        }
+        set
+        {
+            rot = value;
         }
     }
 
@@ -876,6 +900,24 @@ public class Skills : StatusEffects
         SkillCast();
     }
 
+    public void Aegis()
+    {
+        if (settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetAegisParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
+
+            SkillParticle.transform.SetParent(GetCharacter.transform);
+        }
+
+        SkillsManager.Instance.GetActivatedSkill = true;
+
+        SkillCast();
+    }
+
     private void ContractSkillCast()
     {
         GetCharacter.GetComponent<PlayerAnimations>().SkillCastAnimation();
@@ -956,6 +998,86 @@ public class Skills : StatusEffects
             GameManager.Instance.InvalidTargetText();
             TextHolder = null;
         }
+    }
+
+    public void NetherStar()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            if (DistanceToAttack() <= AttackRange)
+            {
+                FacingEnemy = true;
+
+                TextHolder = Target.GetUI;
+
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                if (skillbar.GetSkillBar.fillAmount < 1)
+                {
+                    skillbar.gameObject.SetActive(true);
+
+                    skillbar.GetSkill = this.button.GetComponent<Skills>();
+
+                    skillbar.GetCastTime = this.CastTime;
+
+                    skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
+
+                    GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                }
+                if (skillbar.GetSkillBar.fillAmount >= 1)
+                {
+                    this.CoolDownImage.fillAmount = 1;
+
+                    FacingEnemy = false;
+
+                    SkillsManager.Instance.GetActivatedSkill = false;
+
+                    SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                    GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
+                    GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+                }
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
+    }
+
+    public void InvokeNetherStar()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
+            if (settings.UseParticleEffects)
+            {
+                SkillParticle = ObjectPooler.Instance.GetNetherStarParticle();
+
+                SkillParticle.SetActive(true);
+
+                SkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 10f, Target.transform.position.z);
+            }
+
+            Invoke("InvokeNetherStarDamage", .3f);
+        }
+    }
+
+    private void InvokeNetherStarDamage()
+    {
+        var EnemyTarget = SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        SetUpDamagePerimiter(EnemyTarget.transform.position, 20f);
     }
 
     public void BraveLight()
@@ -1166,10 +1288,6 @@ public class Skills : StatusEffects
                 }
                 DamageSkillText(hitColliders[i].GetComponent<Enemy>());
             }
-        }
-        if(GameManager.Instance.GetKnight.activeInHierarchy)
-        {
-            GetCharacter.transform.rotation = rot;
         }
     }
 
