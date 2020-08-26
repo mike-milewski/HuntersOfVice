@@ -1069,7 +1069,7 @@ public class Skills : StatusEffects
                 SkillParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 10f, Target.transform.position.z);
             }
 
-            Invoke("InvokeNetherStarDamage", .3f);
+            Invoke("InvokeNetherStarDamage", 0.2f);
         }
     }
 
@@ -1078,6 +1078,15 @@ public class Skills : StatusEffects
         var EnemyTarget = SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget;
 
         SetUpDamagePerimiter(EnemyTarget.transform.position, 20f);
+
+        if (settings.UseParticleEffects)
+        {
+            var Particle = ObjectPooler.Instance.GetNetherStarExplosionParticle();
+
+            Particle.SetActive(true);
+
+            Particle.transform.position = new Vector3(EnemyTarget.transform.position.x, EnemyTarget.transform.position.y + .5f, EnemyTarget.transform.position.z);
+        }
     }
 
     public void BraveLight()

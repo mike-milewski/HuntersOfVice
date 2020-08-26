@@ -133,6 +133,7 @@ public class ObjectPooler : MonoBehaviour
         AddDiabolicLightningParticle(poolcontroller[42].GetPoolAmount);
         AddSoulPierceParticle(poolcontroller[43].GetPoolAmount);
         AddNetherStarParticle(poolcontroller[44].GetPoolAmount);
+        AddNetherStarExplosionParticle(poolcontroller[45].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -675,6 +676,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddNetherStarExplosionParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[45].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[45].GetPoolParent.transform, false);
+            poolcontroller[45].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -898,6 +911,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetNetherStarParticle()
     {
         return poolcontroller[44].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetNetherStarExplosionParticle()
+    {
+        return poolcontroller[45].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1257,6 +1275,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[44].GetPoolParent.transform, false);
 
         poolcontroller[44].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnNetherStarExplosionParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[45].GetPoolParent.transform, false);
+
+        poolcontroller[45].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

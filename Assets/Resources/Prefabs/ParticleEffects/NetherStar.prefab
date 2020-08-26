@@ -4711,6 +4711,7 @@ GameObject:
   - component: {fileID: 7288467064624075540}
   - component: {fileID: 7288467064624075539}
   - component: {fileID: 7288467064624075541}
+  - component: {fileID: 7619240868564377770}
   m_Layer: 0
   m_Name: NetherStar
   m_TagString: Untagged
@@ -9428,6 +9429,18 @@ MonoBehaviour:
   particleEffect: 29
   ps: {fileID: 7288467064624075540}
   Duration: 2
+--- !u!114 &7619240868564377770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7288467064624075537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b082edce8153b47ac2fa3ed48df025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7288467064936995871
 GameObject:
   m_ObjectHideFlags: 0
