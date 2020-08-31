@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
 public enum PlayerElement { NONE, Physical, Magic, Fire, Water, Wind, Earth, Light, Dark };
 
@@ -41,13 +42,15 @@ public class Skills : StatusEffects
     [SerializeField]
     private Transform SkillParticleParent;
 
+    private Transform EnemyTransform = null;
+
     [SerializeField]
     private float CoolDown, AttackRange, ApplySkill, StatusEffectPotency, HpAndDamageOverTimeTick, AreaOfEffectRange, InstantKnockOutValue, ContractHp, ContractMp;
 
     private float AttackDistance, SinisterCoolDown;
 
     [SerializeField]
-    private int SinisterManaCost, NefariousCastTime;
+    private int SinisterManaCost, NefariousManaCostReduction;
 
     private bool StatusIconCreated;
 
@@ -56,13 +59,13 @@ public class Skills : StatusEffects
     private bool StormThrustActivated, FacingEnemy;
 
     [SerializeField]
-    private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill, NetherStarSkill;
+    private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill, NetherStarSkill, SinisterPossessionSkill;
 
     [SerializeField]
     private int ManaCost, Potency;
     
     [SerializeField] [Tooltip("Skills that have a cast time greater than 0 will activate the skill casting bar.")]
-    private int CastTime;
+    private float CastTime;
 
     [SerializeField]
     private int index;
@@ -73,7 +76,7 @@ public class Skills : StatusEffects
     [SerializeField][TextArea]
     private string SkillDescription;
 
-    private float CD;
+    private float CD, NefariousCastTime;
 
     private Quaternion rot;
 
@@ -113,7 +116,7 @@ public class Skills : StatusEffects
         }
     }
 
-    public int GetCastTime
+    public float GetCastTime
     {
         get
         {
@@ -125,7 +128,7 @@ public class Skills : StatusEffects
         }
     }
 
-    public int GetNefariousCastTime
+    public float GetNefariousCastTime
     {
         get
         {
@@ -245,6 +248,42 @@ public class Skills : StatusEffects
         }
     }
 
+    public float GetSinisterPossessionCoolDown
+    {
+        get
+        {
+            return SinisterCoolDown;
+        }
+        set
+        {
+            SinisterCoolDown = value;
+        }
+    }
+
+    public int GetSinisterPossessionManaCost
+    {
+        get
+        {
+            return SinisterManaCost;
+        }
+        set
+        {
+            SinisterManaCost = value;
+        }
+    }
+
+    public int GetNefariousManaCostReduction
+    {
+        get
+        {
+            return NefariousManaCostReduction;
+        }
+        set
+        {
+            NefariousManaCostReduction = value;
+        }
+    }
+
     public float GetAreaOfEffectRange
     {
         get
@@ -329,6 +368,18 @@ public class Skills : StatusEffects
         }
     }
 
+    public bool GetSinisterPossessionSkill
+    {
+        get
+        {
+            return SinisterPossessionSkill;
+        }
+        set
+        {
+            SinisterPossessionSkill = value;
+        }
+    }
+
     public bool GetFacingEnemy
     {
         get
@@ -398,6 +449,18 @@ public class Skills : StatusEffects
         set
         {
             TextHolder = value;
+        }
+    }
+
+    public Transform GetEnemyTransform
+    {
+        get
+        {
+            return EnemyTransform;
+        }
+        set
+        {
+            EnemyTransform = value;
         }
     }
 
@@ -493,22 +556,36 @@ public class Skills : StatusEffects
 
                 SkillsManager.Instance.GetActivatedSkill = true;
 
-                if (skillbar.GetSkillBar.fillAmount < 1)
+                if(this.CastTime > 0.0f)
                 {
-                    skillbar.gameObject.SetActive(true);
+                    if (skillbar.GetSkillBar.fillAmount < 1)
+                    {
+                        skillbar.gameObject.SetActive(true);
 
-                    skillbar.GetSkill = this.button.GetComponent<Skills>();
+                        skillbar.GetSkill = this.button.GetComponent<Skills>();
 
-                    skillbar.GetCastTime = this.CastTime;
+                        skillbar.GetCastTime = this.CastTime;
 
-                    skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
+                        skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
 
-                    GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                        GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                    }
+                    if (skillbar.GetSkillBar.fillAmount >= 1)
+                    {
+                        this.CoolDownImage.fillAmount = 1;
+
+                        FacingEnemy = false;
+
+                        SkillsManager.Instance.GetActivatedSkill = false;
+
+                        SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                        GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
+                        GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+                    }
                 }
-                if (skillbar.GetSkillBar.fillAmount >= 1)
+                else
                 {
-                    this.CoolDownImage.fillAmount = 1;
-
                     FacingEnemy = false;
 
                     SkillsManager.Instance.GetActivatedSkill = false;
@@ -723,22 +800,36 @@ public class Skills : StatusEffects
 
                 SkillsManager.Instance.GetActivatedSkill = true;
 
-                if (skillbar.GetSkillBar.fillAmount < 1)
+                if (this.CastTime > 0.0f)
                 {
-                    skillbar.gameObject.SetActive(true);
+                    if (skillbar.GetSkillBar.fillAmount < 1)
+                    {
+                        skillbar.gameObject.SetActive(true);
 
-                    skillbar.GetSkill = this.button.GetComponent<Skills>();
+                        skillbar.GetSkill = this.button.GetComponent<Skills>();
 
-                    skillbar.GetCastTime = this.CastTime;
+                        skillbar.GetCastTime = this.CastTime;
 
-                    skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
+                        skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
 
-                    GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                        GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                    }
+                    if (skillbar.GetSkillBar.fillAmount >= 1)
+                    {
+                        this.CoolDownImage.fillAmount = 1;
+
+                        FacingEnemy = false;
+
+                        SkillsManager.Instance.GetActivatedSkill = false;
+
+                        SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                        GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
+                        GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+                    }
                 }
-                if (skillbar.GetSkillBar.fillAmount >= 1)
+                else
                 {
-                    this.CoolDownImage.fillAmount = 1;
-
                     FacingEnemy = false;
 
                     SkillsManager.Instance.GetActivatedSkill = false;
@@ -787,6 +878,8 @@ public class Skills : StatusEffects
     public void SinisterPossession()
     {
         GetCharacter.GetComponent<PlayerAnimations>().SkillCastAnimation();
+
+        Invoke("InvokeSinisterPossession", ApplySkill);
 
         Invoke("PlayerStatusEffectSkill", ApplySkill);
     }
@@ -879,6 +972,18 @@ public class Skills : StatusEffects
             SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y, SkillParticleParent.position.z);
 
             SkillParticle.transform.SetParent(GetCharacter.transform);
+        }
+    }
+
+    private void InvokeSinisterPossession()
+    {
+        if (settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetSinisterPossessionParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
         }
     }
 
@@ -1014,22 +1119,36 @@ public class Skills : StatusEffects
 
                 SkillsManager.Instance.GetActivatedSkill = true;
 
-                if (skillbar.GetSkillBar.fillAmount < 1)
+                if (this.CastTime > 0.0f)
                 {
-                    skillbar.gameObject.SetActive(true);
+                    if (skillbar.GetSkillBar.fillAmount < 1)
+                    {
+                        skillbar.gameObject.SetActive(true);
 
-                    skillbar.GetSkill = this.button.GetComponent<Skills>();
+                        skillbar.GetSkill = this.button.GetComponent<Skills>();
 
-                    skillbar.GetCastTime = this.CastTime;
+                        skillbar.GetCastTime = this.CastTime;
 
-                    skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
+                        skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
 
-                    GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                        GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                    }
+                    if (skillbar.GetSkillBar.fillAmount >= 1)
+                    {
+                        this.CoolDownImage.fillAmount = 1;
+
+                        FacingEnemy = false;
+
+                        SkillsManager.Instance.GetActivatedSkill = false;
+
+                        SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                        GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
+                        GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+                    }
                 }
-                if (skillbar.GetSkillBar.fillAmount >= 1)
+                else
                 {
-                    this.CoolDownImage.fillAmount = 1;
-
                     FacingEnemy = false;
 
                     SkillsManager.Instance.GetActivatedSkill = false;
@@ -1058,6 +1177,8 @@ public class Skills : StatusEffects
 
         if (Target != null)
         {
+            this.CoolDownImage.fillAmount = 1;
+
             GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
             if (settings.UseParticleEffects)
@@ -1075,9 +1196,12 @@ public class Skills : StatusEffects
 
     private void InvokeNetherStarDamage()
     {
-        var EnemyTarget = SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget;
+        SetUpDamagePerimiter(EnemyTransform.position, 20f);
 
-        SetUpDamagePerimiter(EnemyTarget.transform.position, 20f);
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <= 0)
+        {
+            SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveTarget();
+        }
 
         if (settings.UseParticleEffects)
         {
@@ -1085,7 +1209,7 @@ public class Skills : StatusEffects
 
             Particle.SetActive(true);
 
-            Particle.transform.position = new Vector3(EnemyTarget.transform.position.x, EnemyTarget.transform.position.y + .5f, EnemyTarget.transform.position.z);
+            Particle.transform.position = new Vector3(EnemyTransform.position.x, EnemyTransform.position.y + .5f, EnemyTransform.position.z);
         }
     }
 

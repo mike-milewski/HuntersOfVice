@@ -101,10 +101,12 @@ public class SkillBar : MonoBehaviour
 
             CastParticle.SetActive(true);
 
-            CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.15f, character.transform.position.z);
+            CastParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.17f, character.transform.position.z);
 
             CastParticle.transform.SetParent(character.transform);
         }
+
+        GetEnemyPosition();
     }
 
     private void Start()
@@ -120,6 +122,14 @@ public class SkillBar : MonoBehaviour
         ObjectPooler.Instance.ReturnPlayerCastParticleToPool(CastParticle);
     }
 
+    private void GetEnemyPosition()
+    {
+        if(character.GetComponent<BasicAttack>().GetTarget != null)
+        {
+            SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].GetEnemyTransform = character.GetComponent<BasicAttack>().GetTarget.transform;
+        }
+    }
+
     private void Update()
     {
         if(playerController.GetMovement == Vector3.zero && character.CurrentHealth > 0 && !SkillsManager.Instance.GetDisruptedSkill && !skills.GetIsBeingDragged)
@@ -130,9 +140,15 @@ public class SkillBar : MonoBehaviour
                 {
                     EndSpell();
                 }
+                else
+                {
+                    Cast();
+                }
             }
-
-            Cast();
+            else
+            {
+                Cast();
+            }
         }
         else
         {

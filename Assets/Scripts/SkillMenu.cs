@@ -849,7 +849,8 @@ public class SkillMenu : MonoBehaviour
         ContractWithTheVileSkill.GetStatusEffectPotency = 0.05f;
         ContractWithTheVileSkill.GetSkillDescription = "Restores 5% MP over 3 seconds and reduces HP by 1% over 5 seconds.";
 
-        ContractWithNefariousnessSkill.GetSkillDescription = "Reduces the casting time and the MP cost of all skills by 50% and reduces maximum HP by 50%.";
+        ContractWithNefariousnessSkill.GetNefariousManaCostReduction = 2;
+        ContractWithNefariousnessSkill.GetSkillDescription = "Reduces the casting time and the MP cost of all skills by 50%.";
     }
 
     private void DualDealBonus()

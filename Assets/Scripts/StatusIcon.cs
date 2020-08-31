@@ -186,7 +186,7 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.ContractWithNefariousness):
-                HalfHealth();
+                CutHealthByAQuarter();
                 ContractWithNefariousnessMpAndCastCostReduction();
                 break;
             case (EffectStatus.MaliciousPossession):
@@ -546,8 +546,8 @@ public class StatusIcon : MonoBehaviour
     {
         foreach (Skills s in SkillsManager.Instance.GetSkills)
         {
-            s.GetCoolDown = s.ReturnCoolDown();
-            s.GetManaCost = s.ReturnManaCost();
+            s.GetCoolDown = s.GetSinisterPossessionCoolDown;
+            s.GetManaCost = s.GetSinisterPossessionManaCost;
         }
     }
 
@@ -560,15 +560,15 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetFilledBar();
     }
 
-    private void HalfHealth()
+    private void CutHealthByAQuarter()
     {
         PlayerMaxHealth = SkillsManager.Instance.GetCharacter.GetCharacterData.Health;
 
-        int MaxHealth = SkillsManager.Instance.GetCharacter.MaxHealth / 2;
+        float MaxHealth = SkillsManager.Instance.GetCharacter.MaxHealth * 0.75f;
 
         Mathf.Round(MaxHealth);
 
-        SkillsManager.Instance.GetCharacter.GetCharacterData.Health = MaxHealth;
+        SkillsManager.Instance.GetCharacter.GetCharacterData.Health = (int)MaxHealth;
 
         SkillsManager.Instance.GetCharacter.MaxHealth = SkillsManager.Instance.GetCharacter.GetCharacterData.Health;
 
@@ -601,9 +601,7 @@ public class StatusIcon : MonoBehaviour
     {
         foreach (Skills s in SkillsManager.Instance.GetSkills)
         {
-            int TempCastCost = s.GetCastTime / 4;
-
-            Mathf.CeilToInt(TempCastCost);
+            float TempCastCost = s.GetCastTime / SkillsManager.Instance.GetSkills[KeyInput].GetNefariousManaCostReduction;
 
             s.GetCastTime = TempCastCost;
         }
@@ -996,8 +994,11 @@ public class StatusIcon : MonoBehaviour
     {
         foreach (Skills s in SkillsManager.Instance.GetSkills)
         {
-            s.GetCoolDown = 0;
-            s.GetManaCost = 0;
+            if(!s.GetSinisterPossessionSkill)
+            {
+                s.GetCoolDown = 0.0f;
+                s.GetManaCost = 0;
+            }
         }
     }
 

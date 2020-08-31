@@ -50,7 +50,8 @@ public class GameManager : MonoBehaviour
     private GameObject LastEnemyObject = null;
 
     [SerializeField]
-    private Transform SpawnPoint, InventoryMaterialTransform, ItemMessageTransform, MonsterEntryTransform, StatusEffectTextHolder, DebuffStatusIconHolder;
+    private Transform SpawnPoint, InventoryMaterialTransform, ItemMessageTransform, MonsterEntryTransform, StatusEffectTextHolder, DebuffStatusIconHolder, 
+                      BuffStatusIconHolder;
 
     [SerializeField]
     private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel, ItemDescriptionPanel;
@@ -63,7 +64,8 @@ public class GameManager : MonoBehaviour
 
     private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating, IsTargeting;
 
-    public bool IsInInventory;
+    [SerializeField]
+    private bool IsInInventory;
 
     [SerializeField]
     private EventSystem eventsystem;
@@ -149,6 +151,18 @@ public class GameManager : MonoBehaviour
         set
         {
             DebuffStatusIconHolder = value;
+        }
+    }
+
+    public Transform GetBuffStatusIconHolder
+    {
+        get
+        {
+            return BuffStatusIconHolder;
+        }
+        set
+        {
+            BuffStatusIconHolder = value;
         }
     }
 

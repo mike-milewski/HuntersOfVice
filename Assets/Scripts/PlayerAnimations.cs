@@ -232,12 +232,9 @@ public class PlayerAnimations : MonoBehaviour
             SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
         }
 
-        if (gameObject.GetComponent<BasicAttack>().DistanceToTarget() >= gameObject.GetComponent<BasicAttack>().GetAttackRange)
+        if (gameObject.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <= 0)
         {
-            if (gameObject.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <= 0)
-            {
-                gameObject.GetComponent<BasicAttack>().RemoveTarget();
-            }
+            gameObject.GetComponent<BasicAttack>().RemoveTarget();
         }
     }
 

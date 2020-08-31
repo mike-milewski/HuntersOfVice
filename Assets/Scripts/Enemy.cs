@@ -292,8 +292,22 @@ public class Enemy : MonoBehaviour
     {
         if(ExperiencePoints > 0)
         {
+            CheckExperienceHolder();
+
             EXP.GainEXP(ExperiencePoints);
             EXP.GetShowExperienceText().text = ExperiencePoints + "<size=20>" + " EXP";
+        }
+    }
+
+    private void CheckExperienceHolder()
+    {
+        if(GameManager.Instance.GetKnight.activeInHierarchy)
+        {
+            EXP = GameManager.Instance.GetKnight.GetComponent<Experience>();
+        }
+        else if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
+        {
+            EXP = GameManager.Instance.GetShadowPriest.GetComponent<Experience>();
         }
     }
 }
