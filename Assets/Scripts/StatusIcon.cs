@@ -186,8 +186,8 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.ContractWithNefariousness):
-                CutHealthByAQuarter();
-                ContractWithNefariousnessMpAndCastCostReduction();
+                ContractWithNefariousnessHealthCut();
+                ContractWithNefariousnessCastTimeReduction();
                 break;
             case (EffectStatus.MaliciousPossession):
                 MaliciousPossessionBuff();
@@ -480,7 +480,7 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
-    private void HealMpOverTime(int value)
+    public void HealMpOverTime(int value)
     {
         ContractMpTempTick -= Time.deltaTime;
         if (ContractMpTempTick <= 0)
@@ -560,15 +560,17 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetFilledBar();
     }
 
-    private void CutHealthByAQuarter()
+    private void ContractWithNefariousnessHealthCut()
     {
         PlayerMaxHealth = SkillsManager.Instance.GetCharacter.GetCharacterData.Health;
 
-        float MaxHealth = SkillsManager.Instance.GetCharacter.MaxHealth * 0.75f;
+        float Percentage = SkillsManager.Instance.GetSkills[KeyInput].GetNefariousHealthReduction / 100;
+
+        float MaxHealth = SkillsManager.Instance.GetCharacter.MaxHealth * Percentage;
+
+        SkillsManager.Instance.GetCharacter.GetCharacterData.Health -= (int)MaxHealth;
 
         Mathf.Round(MaxHealth);
-
-        SkillsManager.Instance.GetCharacter.GetCharacterData.Health = (int)MaxHealth;
 
         SkillsManager.Instance.GetCharacter.MaxHealth = SkillsManager.Instance.GetCharacter.GetCharacterData.Health;
 
@@ -597,17 +599,19 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetReflectingDamage = true;
     }
 
-    private void ContractWithNefariousnessMpAndCastCostReduction()
+    public void ContractWithNefariousnessCastTimeReduction()
     {
+        float Percentage = SkillsManager.Instance.GetSkills[KeyInput].GetNefariousManaCostReduction / 100;
+
         foreach (Skills s in SkillsManager.Instance.GetSkills)
         {
-            float TempCastCost = s.GetCastTime / SkillsManager.Instance.GetSkills[KeyInput].GetNefariousManaCostReduction;
+            float TempCastCost = s.GetCastTime * Percentage;
 
-            s.GetCastTime = TempCastCost;
+            s.GetCastTime -= TempCastCost;
         }
     }
 
-    private void ReturnCastTimeToNormal()
+    public void ReturnCastTimeToNormal()
     {
         foreach (Skills s in SkillsManager.Instance.GetSkills)
         {
@@ -641,7 +645,7 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetCharacter.CharacterDefense = (int)TempDefense;
     }
 
-    private void IntelligenceUP(int value)
+    public void IntelligenceUP(int value)
     {
         float Percentage = (float)value / 100;
 
@@ -667,7 +671,7 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetCharacter.CharacterStrength = (int)TempStrength;
     }
 
-    private void DefenseDOWN(int value)
+    public void DefenseDOWN(int value)
     {
         float Percentage = (float)value / 100;
 
@@ -878,7 +882,7 @@ public class StatusIcon : MonoBehaviour
         SkillsManager.Instance.GetCharacter.CharacterDefense = TempDefense;
     }
 
-    private void SetIntelligenceToDefault()
+    public void SetIntelligenceToDefault()
     {
         int DefaultIntelligence = 0;
         int TempIntelligence = 0;

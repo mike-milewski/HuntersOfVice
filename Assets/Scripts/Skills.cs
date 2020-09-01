@@ -50,7 +50,7 @@ public class Skills : StatusEffects
     private float AttackDistance, SinisterCoolDown;
 
     [SerializeField]
-    private int SinisterManaCost, NefariousManaCostReduction;
+    private int SinisterManaCost;
 
     private bool StatusIconCreated;
 
@@ -66,6 +66,9 @@ public class Skills : StatusEffects
     
     [SerializeField] [Tooltip("Skills that have a cast time greater than 0 will activate the skill casting bar.")]
     private float CastTime;
+
+    [SerializeField]
+    private float NefariousManaCostReduction, NefariousHealthReduction;
 
     [SerializeField]
     private int index;
@@ -272,7 +275,7 @@ public class Skills : StatusEffects
         }
     }
 
-    public int GetNefariousManaCostReduction
+    public float GetNefariousManaCostReduction
     {
         get
         {
@@ -281,6 +284,18 @@ public class Skills : StatusEffects
         set
         {
             NefariousManaCostReduction = value;
+        }
+    }
+
+    public float GetNefariousHealthReduction
+    {
+        get
+        {
+            return NefariousHealthReduction;
+        }
+        set
+        {
+            NefariousHealthReduction = value;
         }
     }
 

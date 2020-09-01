@@ -635,7 +635,7 @@ public class SkillMenu : MonoBehaviour
         SkillNameText.text = PassiveSkillName;
 
         SkillInfoText.text = "Contract With Evil's Intelligence boost is increased to 20%. \n\n Contract With The Vile's MP regeneration is increased to 5%. \n\n" +
-                             "Contract With Nefariousness' skill cast time and MP cost is reduced by half.";
+                             "Contract With Nefariousness's skill cast time is reduced by 50%.";
     }
 
     private void DualDealBonusPassiveText()
@@ -847,10 +847,33 @@ public class SkillMenu : MonoBehaviour
         ContractWithEvilSkill.GetSkillDescription = "Increases intelligence by 20% and decreases defense by 15%.";
 
         ContractWithTheVileSkill.GetStatusEffectPotency = 0.05f;
-        ContractWithTheVileSkill.GetSkillDescription = "Restores 5% MP over 3 seconds and reduces HP by 1% over 5 seconds.";
+        ContractWithTheVileSkill.GetSkillDescription = "Restores 5% of MP over 3 seconds and reduces HP by 1% over 5 seconds.";
 
-        ContractWithNefariousnessSkill.GetNefariousManaCostReduction = 2;
-        ContractWithNefariousnessSkill.GetSkillDescription = "Reduces the casting time and the MP cost of all skills by 50%.";
+        ContractWithNefariousnessSkill.GetNefariousManaCostReduction = 50;
+        ContractWithNefariousnessSkill.GetSkillDescription = "Reduces the casting time of all skills by 50% and reduces HP by 25%.";
+
+        CheckContractStatusEffects();
+    }
+
+    private void CheckContractStatusEffects()
+    {
+        foreach(StatusIcon s in GameManager.Instance.GetBuffStatusIconHolder.GetComponentsInChildren<StatusIcon>())
+        {
+            if(s.GetEffectStatus == EffectStatus.ContractWithEvil)
+            {
+                s.SetIntelligenceToDefault();
+                s.IntelligenceUP((int)ContractWithEvilSkill.GetStatusEffectPotency);
+            }
+            if(s.GetEffectStatus == EffectStatus.ContractWithTheVile)
+            {
+                s.HealMpOverTime((int)ContractWithTheVileSkill.GetStatusEffectPotency);
+            }
+            if(s.GetEffectStatus == EffectStatus.ContractWithNefariousness)
+            {
+                s.ReturnCastTimeToNormal();
+                s.ContractWithNefariousnessCastTimeReduction();
+            }
+        }
     }
 
     private void DualDealBonus()
