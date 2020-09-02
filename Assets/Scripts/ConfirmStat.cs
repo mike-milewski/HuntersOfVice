@@ -28,6 +28,8 @@ public class ConfirmStat : MonoBehaviour
 
             if (experience.GetStatPoints <= 0)
             {
+                experience.GetRespecButton.interactable = true;
+
                 Stats.SetActive(false);
 
                 StatusButton.GetComponent<Animator>().SetBool("StatPoints", false);

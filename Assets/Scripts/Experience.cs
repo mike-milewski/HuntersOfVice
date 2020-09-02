@@ -30,6 +30,9 @@ public class Experience : MonoBehaviour
     private GameObject ExperienceTextParent, ExperienceTextHolder, StatusButton, StatConfirmButton, Stats;
 
     [SerializeField]
+    private Button RespecButton;
+
+    [SerializeField]
     private ParticleSystem LevelUpParticle;
 
     [SerializeField]
@@ -38,10 +41,22 @@ public class Experience : MonoBehaviour
     [SerializeField]
     private int[] NextToLevel;
 
-    private int MaxStatPoints, ToNextLevelIndex;
+    private int MaxStatPoints, CumulativeStatPoints, ToNextLevelIndex;
 
     [SerializeField]
     private float FillValue;
+
+    public Button GetRespecButton
+    {
+        get
+        {
+            return RespecButton;
+        }
+        set
+        {
+            RespecButton = value;
+        }
+    }
 
     public int GetStatPoints
     {
@@ -76,6 +91,18 @@ public class Experience : MonoBehaviour
         set
         {
             MaxStatPoints = value;
+        }
+    }
+
+    public int GetCumulativeStatPoints
+    {
+        get
+        {
+            return CumulativeStatPoints;
+        }
+        set
+        {
+            CumulativeStatPoints = value;
         }
     }
 
@@ -221,6 +248,8 @@ public class Experience : MonoBehaviour
 
         UpdateCharacterLevel();
 
+        RespecButton.interactable = false;
+
         Stats.gameObject.SetActive(true);
 
         StatPointsTxt.gameObject.SetActive(true);
@@ -254,7 +283,25 @@ public class Experience : MonoBehaviour
 
         MaxStatPoints += StatPoints;
 
+        CumulativeStatPoints = StatPoints;
+
         StatPointsTxt.text = StatPoints.ToString();
+    }
+
+    public void SetStatPointsText()
+    {
+        if(!Stats.gameObject.activeInHierarchy)
+        {
+            StatPoints = CumulativeStatPoints;
+
+            StatPointsTxt.text = StatPoints.ToString();
+
+            Stats.gameObject.SetActive(true);
+
+            StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
+
+            StatConfirmButton.SetActive(true);
+        }
     }
 
     public TextMeshProUGUI GetShowExperienceText()

@@ -13,6 +13,8 @@ public class Character : MonoBehaviour
     [SerializeField]
     private int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, CriticalHitChance;
 
+    private int DefaultHealth, DefaultMana, DefaultStrength, DefaultDefense, DefaultIntelligence;
+
     [SerializeField]
     private float MoveSpeed;
 
