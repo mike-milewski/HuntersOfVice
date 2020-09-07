@@ -290,9 +290,11 @@ public class Experience : MonoBehaviour
 
     public void SetStatPointsText()
     {
-        if(!Stats.gameObject.activeInHierarchy)
+        if(!Stats.gameObject.activeInHierarchy && CumulativeStatPoints > 0)
         {
             StatPoints = CumulativeStatPoints;
+
+            MaxStatPoints = CumulativeStatPoints;
 
             StatPointsTxt.text = StatPoints.ToString();
 
@@ -301,6 +303,40 @@ public class Experience : MonoBehaviour
             StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
 
             StatConfirmButton.SetActive(true);
+
+            character.DefaultStats();
+
+            character.CharacterStrength = character.GetCharacterData.Strength;
+            character.CharacterDefense = character.GetCharacterData.Defense;
+            character.CharacterIntelligence = character.GetCharacterData.Intelligence;
+
+            GetEquipmentStatIncrease();
+
+            if (character.CurrentHealth > character.MaxHealth)
+            {
+                character.CurrentHealth = character.MaxHealth;
+            }
+            if(character.CurrentMana > character.MaxMana)
+            {
+                character.CurrentMana = character.MaxMana;
+            }
+
+            character.GetComponent<Health>().GetFilledBar();
+            character.GetComponent<Mana>().GetFilledBar();
+
+            SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+        }
+    }
+
+    private void GetEquipmentStatIncrease()
+    {
+        if(character.GetComponent<BasicAttack>().GetEquipment[0] != null)
+        {
+            character.GetComponent<BasicAttack>().GetEquipment[0].GetEquipmentStats();
+        }
+        if(character.GetComponent<BasicAttack>().GetEquipment[1] != null)
+        {
+            character.GetComponent<BasicAttack>().GetEquipment[1].GetEquipmentStats();
         }
     }
 

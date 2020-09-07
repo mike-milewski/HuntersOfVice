@@ -23,7 +23,7 @@ MonoBehaviour:
   Strength: 12
   Defense: 17
   Intelligence: 27
-  HpIncrease: 6
-  MpIncrease: 7
+  HpIncrease: 25
+  MpIncrease: 26
   CriticalHitChance: 5
   MoveSpeed: 4.5

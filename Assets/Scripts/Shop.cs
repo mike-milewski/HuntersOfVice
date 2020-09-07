@@ -530,251 +530,250 @@ public class Shop : MonoBehaviour
     {
         if(Knight.gameObject.activeInHierarchy)
         {
-            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 1)
+            if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 1)
             {
-                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease;
                 }
             }
-            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 2)
+            if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 2)
             {
-                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease;
                 }
             }
-            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 3)
+            if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 3)
             {
-                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease;
                 }
 
             }
-            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 4)
+            if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 4)
             {
-                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease;
                 }
 
             }
-            if (KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 5)
+            if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 5)
             {
-                if (KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease;
                 }
             }
         }
         else if(ShadowPriest.gameObject.activeInHierarchy)
         {
-            if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 1)
+            if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 1)
             {
-                if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease;
                 }
             }
-            if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 2)
+            if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 2)
             {
-                if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease;
                 }
             }
-            if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 3)
+            if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 3)
             {
-                if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease;
                 }
 
             }
-            if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 4)
+            if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 4)
             {
-                if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease;
                 }
 
             }
-            if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType.Length == 5)
+            if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 5)
             {
-                if (ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.Element;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
                 }
                 else
                 {
-                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetStatusType[4].GetStatIncrease;
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease;
                 }
             }
         }

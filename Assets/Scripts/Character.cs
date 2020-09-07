@@ -211,5 +211,20 @@ public class Character : MonoBehaviour
         resistances = cData.Resistances;
         immunities = cData.Immunities;
         absorbtions = cData.Absorbtions;
+
+        DefaultHealth = Health;
+        DefaultMana = Mana;
+        DefaultStrength = Strength;
+        DefaultDefense = Defense;
+        DefaultIntelligence = Intelligence;
+    }
+
+    public void DefaultStats()
+    {
+        CharData.Health = DefaultHealth;
+        CharData.Mana = DefaultMana;
+        CharData.Strength = DefaultStrength;
+        CharData.Defense = DefaultDefense;
+        CharData.Intelligence = DefaultIntelligence;
     }
 }

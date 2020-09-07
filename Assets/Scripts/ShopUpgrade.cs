@@ -30,7 +30,7 @@ public class ShopUpgrade : MonoBehaviour
         {
             foreach(Materials m in UpgradeTransform.GetComponentsInChildren<Materials>(true))
             {
-                GameManager.Instance.GetShop.GetExperiencePoints -= m.GetShopPoints;
+                GameManager.Instance.GetShop.GetExperiencePoints -= m.GetShopPoints * m.GetCommittedQuantity;
             }
             CheckForSameMaterialName();
             GameManager.Instance.GetShop.ShowPreviewExperience();

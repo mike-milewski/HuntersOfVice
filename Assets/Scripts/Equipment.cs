@@ -268,6 +268,11 @@ public class Equipment : MonoBehaviour
         SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
     }
 
+    public void GetEquipmentStats()
+    {
+        IncreaseStats();
+    }
+
     private void CurrentWeaponEquippedText()
     {
         EquipmentNameText.text = equipmentData.EquipmentName;
