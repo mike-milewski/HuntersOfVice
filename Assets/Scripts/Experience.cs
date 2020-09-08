@@ -248,7 +248,7 @@ public class Experience : MonoBehaviour
 
         UpdateCharacterLevel();
 
-        RespecButton.interactable = false;
+        //RespecButton.interactable = false;
 
         Stats.gameObject.SetActive(true);
 
