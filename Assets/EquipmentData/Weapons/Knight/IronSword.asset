@@ -15,4 +15,4 @@ MonoBehaviour:
   EquipmentName: Iron Sword
   Element: 1
   StatIncrease: 2
-  BuyValue: 50
+  BuyValue: 15

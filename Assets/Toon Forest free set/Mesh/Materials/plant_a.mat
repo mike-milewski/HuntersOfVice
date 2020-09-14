@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: plant_a
   m_Shader: {fileID: 4800000, guid: 3ac7079fcd3ff6941833ee77a23a245d, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
@@ -66,8 +67,8 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _ShakeBending: 1
-    - _ShakeDisplacement: 1
-    - _ShakeTime: 1
+    - _ShakeDisplacement: 0
+    - _ShakeTime: 0
     - _ShakeWindspeed: 1
     - _SrcBlend: 1
     - _UVSec: 0
