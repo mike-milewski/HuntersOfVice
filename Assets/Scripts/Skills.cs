@@ -1661,6 +1661,11 @@ public class Skills : StatusEffects
 
             var Critical = GetCharacter.GetCriticalChance;
 
+            if(playerElement == PlayerElement.Physical)
+            {
+                playerElement = GetCharacter.GetComponent<BasicAttack>().GetPlayerElement;
+            }
+
             #region CriticalHitChance
             if (Random.value * 100 <= Critical)
             {

@@ -68,11 +68,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        AddCoins(15);
-    }
-
     public int AddCoins(int value)
     {
         Coins += value;

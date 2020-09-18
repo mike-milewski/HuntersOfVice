@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Long Sword
   Element: 1
-  StatIncrease: 1
+  StatIncrease: 5
   BuyValue: 10

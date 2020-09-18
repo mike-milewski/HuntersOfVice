@@ -19,8 +19,8 @@ MonoBehaviour:
   CharacterName: Knight
   CharacterLevel: 1
   Health: 150
-  Mana: 25
-  Strength: 27
+  Mana: 30
+  Strength: 24
   Defense: 19
   Intelligence: 10
   HpIncrease: 1
