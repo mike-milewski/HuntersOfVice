@@ -1306,6 +1306,8 @@ MonoBehaviour:
   StartButton: {fileID: 2135812092}
   Knight: {fileID: 104230689}
   ShadowPriest: {fileID: 928756271}
+  ShadowPriestParticleEffect: {fileID: 6644494615108651639, guid: 6a69f830e1491174da964e1b1e939079,
+    type: 3}
   SkillExamples:
   - {fileID: 111486630}
   - {fileID: 1950597067}
@@ -1317,7 +1319,7 @@ MonoBehaviour:
   CharacterInformationText: {fileID: 1622403781}
   CharacterNameText: {fileID: 604502234}
   CharacterInformaion: The Knight bears his sword and shield to swiftly cast evil
-    asunder with offensive and defensive abilities while also providing self with
+    asunder with offensive and defensive abilities while also providing himself with
     healing powers.
   CharacterClass: Knight
 --- !u!1001 &108119370
@@ -1610,7 +1612,7 @@ MonoBehaviour:
   SkillInfoText: {fileID: 1971399959}
   KnightSkillName: Aegis
   ShadowPriestSkillName: Diabolic Lightning
-  KnightSkillInfo: Reflects damage back to a target based on 10% of your maximum HP.
+  KnightSkillInfo: Reflects damage back to an enemy based on 10% of your maximum HP.
   ShadowPriestSkillInfo: 'Char all enemies in a range with dark bolts from the netherworld. '
 --- !u!1001 &113916346
 PrefabInstance:
@@ -5720,7 +5722,7 @@ MonoBehaviour:
   KnightSkillInfo: Strike a target from a long distance and shatter a portion of their
     defense for a time.
   ShadowPriestSkillInfo: A powerful, dark deal that magnifies magic while sacrificing
-    a fraction of defense in return.
+    a fraction of defense in exchange.
 --- !u!1001 &425580351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14347,6 +14349,8 @@ MonoBehaviour:
   StartButton: {fileID: 2135812092}
   Knight: {fileID: 104230689}
   ShadowPriest: {fileID: 928756271}
+  ShadowPriestParticleEffect: {fileID: 6644494615108651639, guid: 6a69f830e1491174da964e1b1e939079,
+    type: 3}
   SkillExamples:
   - {fileID: 111486630}
   - {fileID: 1950597067}
@@ -30462,3 +30466,77 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17c6ca175b4aadc458a04dd37daa772a, type: 3}
+--- !u!1001 &5160861864455932614
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 44.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -42.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 111.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651634, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651639, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_Name
+      value: ShadowPriestPoseParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644494615108651639, guid: 6a69f830e1491174da964e1b1e939079,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6a69f830e1491174da964e1b1e939079, type: 3}

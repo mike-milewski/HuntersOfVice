@@ -60744,6 +60744,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.50666666
+    functionName: PlayShadowPriestParticleEffect
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.61333334
     functionName: PlayPoseSoundEffect
     data: 

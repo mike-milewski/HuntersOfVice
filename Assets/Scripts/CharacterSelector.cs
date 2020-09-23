@@ -12,7 +12,7 @@ public class CharacterSelector : MonoBehaviour
     private Animator CharacterInfoPanel, StartButton;
 
     [SerializeField]
-    private GameObject Knight, ShadowPriest;
+    private GameObject Knight, ShadowPriest, ShadowPriestParticleEffect;
 
     [SerializeField]
     private GameObject[] SkillExamples;
@@ -123,5 +123,16 @@ public class CharacterSelector : MonoBehaviour
         {
             SoundManager.Instance.ContractCast();
         }
+    }
+
+    public void PlayShadowPriestParticleEffect()
+    {
+        GameObject PE = Instantiate(ShadowPriestParticleEffect);
+
+        PE.transform.position = ShadowPriest.transform.position;
+
+        PE.transform.SetParent(ShadowPriest.transform, true);
+
+        Destroy(PE, 1.5f);
     }
 }

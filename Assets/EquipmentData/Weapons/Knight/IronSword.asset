@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Iron Sword
   Element: 1
-  StatIncrease: 12
+  StatIncrease: 10
   BuyValue: 15

@@ -291,7 +291,6 @@ public class Shop : MonoBehaviour
                     {
                         KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
                         KnightShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
-                        KnightShopLevelRewards[ShopLevel].GetEquip.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 30);
                     }
                     else
                     {

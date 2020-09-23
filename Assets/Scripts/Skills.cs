@@ -644,7 +644,7 @@ public class Skills : StatusEffects
             {
                 if (Random.value * 100 <= InstantKnockOutValue)
                 {
-                    if(!Target.GetComponent<Puck>() && !Target.GetComponent<VineGolem>() && !Target.GetComponent<SylvanDiety>())
+                    if(!Target.GetComponent<Puck>() && !Target.GetComponent<RuneGolem>() && !Target.GetComponent<SylvanDiety>())
                     {
                         Target.GetHealth.ModifyHealth(-Target.GetCharacter.MaxHealth);
                     }
