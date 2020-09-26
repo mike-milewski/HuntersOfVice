@@ -1,18 +1,89 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum RuneGolemStates { Idle, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile, MovingToPosition, RotateToPosition, RotateToPositionTwo }
+
+[System.Serializable]
+public class RuneGolemPhases
+{
+    [SerializeField]
+    RuneGolemAiStates[] states;
+
+    [SerializeField]
+    private bool DontCheckHP;
+
+    public RuneGolemAiStates[] GetRuneGolemAiStates
+    {
+        get
+        {
+            return states;
+        }
+        set
+        {
+            states = value;
+        }
+    }
+
+    public bool GetDontCheckHP
+    {
+        get
+        {
+            return DontCheckHP;
+        }
+        set
+        {
+            DontCheckHP = value;
+        }
+    }
+}
+
+[System.Serializable]
+public class RuneGolemAiStates
+{
+    [SerializeField]
+    private RuneGolemStates state;
+
+    [SerializeField]
+    private int SkillIndex;
+
+    public RuneGolemStates GetState
+    {
+        get
+        {
+            return state;
+        }
+        set
+        {
+            state = value;
+        }
+    }
+
+    public int GetSkillIndex
+    {
+        get
+        {
+            return SkillIndex;
+        }
+        set
+        {
+            SkillIndex = value;
+        }
+    }
+}
+
 public class RuneGolem : MonoBehaviour
 {
     [SerializeField]
-    private BossStates states;
+    private RuneGolemStates states;
 
     [SerializeField]
     private EnemyType enemyType;
 
     [SerializeField]
-    private Phases[] phases;
+    private RuneGolemPhases[] phases;
 
     [SerializeField]
     private Character character;
@@ -46,12 +117,6 @@ public class RuneGolem : MonoBehaviour
     private Character PlayerTarget = null;
 
     [SerializeField]
-    private TextMeshProUGUI SpeechText;
-
-    [SerializeField]
-    private Animator SpeechBox;
-
-    [SerializeField]
     private SphereCollider EnemyTriggerSphere;
 
     [SerializeField]
@@ -67,7 +132,7 @@ public class RuneGolem : MonoBehaviour
     private GameObject treasureChest, ChestSpawnParticle;
 
     [SerializeField]
-    private GameObject[] AddsToSpawn, MushroomObjs, PoisonMushrooms;
+    private GameObject[] TreeObjects;
 
     [SerializeField]
     private GameObject WallTrigger;
@@ -77,7 +142,7 @@ public class RuneGolem : MonoBehaviour
 
     private float DistanceToTarget;
 
-    private bool PlayerEntry, MovingToPosition, RotatingToPosition, ChangingPhase, PoisonMushroomsEnlarged, IsReseted, OnEnabled;
+    private bool PlayerEntry, ChangingPhase, IsReseted, OnEnabled;
 
     private int StateArrayIndex;
 
@@ -87,7 +152,7 @@ public class RuneGolem : MonoBehaviour
     [SerializeField]
     private int[] HpToChangePhase;
 
-    public Phases[] GetPhases
+    public RuneGolemPhases[] GetRuneGolemPhases
     {
         get
         {
@@ -135,30 +200,6 @@ public class RuneGolem : MonoBehaviour
         }
     }
 
-    public bool GetIsMovingToPosition
-    {
-        get
-        {
-            return MovingToPosition;
-        }
-        set
-        {
-            MovingToPosition = value;
-        }
-    }
-
-    public bool GetIsRotatingToPosition
-    {
-        get
-        {
-            return RotatingToPosition;
-        }
-        set
-        {
-            RotatingToPosition = value;
-        }
-    }
-
     public bool GetChangingPhase
     {
         get
@@ -187,7 +228,7 @@ public class RuneGolem : MonoBehaviour
     {
         StateArrayIndex++;
 
-        if (StateArrayIndex >= phases[PhaseIndex].GetBossAiStates.Length || OnEnabled)
+        if (StateArrayIndex >= phases[PhaseIndex].GetRuneGolemAiStates.Length || OnEnabled)
         {
             StateArrayIndex = 0;
         }
@@ -195,7 +236,7 @@ public class RuneGolem : MonoBehaviour
 
     private void Awake()
     {
-        states = BossStates.Idle;
+        states = RuneGolemStates.Idle;
 
         Idle();
     }
@@ -216,32 +257,23 @@ public class RuneGolem : MonoBehaviour
         {
             switch (states)
             {
-                case (BossStates.Chase):
+                case (RuneGolemStates.Chase):
                     Chase();
                     break;
-                case (BossStates.Attack):
+                case (RuneGolemStates.Attack):
                     Attack();
                     break;
-                case (BossStates.ApplyingAttack):
+                case (RuneGolemStates.ApplyingAttack):
                     ApplyingNormalAtk();
                     break;
-                case (BossStates.Skill):
+                case (RuneGolemStates.Skill):
                     Skill();
                     break;
-                case (BossStates.Damaged):
+                case (RuneGolemStates.Damaged):
                     Damage();
                     break;
-                case (BossStates.Immobile):
+                case (RuneGolemStates.Immobile):
                     Immobile();
-                    break;
-                case (BossStates.MovingToPosition):
-                    MoveToPosition();
-                    break;
-                case (BossStates.RotateToPosition):
-                    RotateToPosition();
-                    break;
-                case (BossStates.RotateToPositionTwo):
-                    RotateToPositionTwo();
                     break;
             }
         }
@@ -254,7 +286,7 @@ public class RuneGolem : MonoBehaviour
         }
     }
 
-    public BossStates GetStates
+    public RuneGolemStates GetStates
     {
         get
         {
@@ -338,132 +370,48 @@ public class RuneGolem : MonoBehaviour
                     {
                         if (AutoAttackTime >= AttackDelay)
                         {
-                            states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+                            states = phases[PhaseIndex].GetRuneGolemAiStates[StateArrayIndex].GetState;
                         }
                     }
                 }
             }
             else
             {
-                states = BossStates.Attack;
+                states = RuneGolemStates.Attack;
             }
         }
     }
 
     private void Attack()
     {
-        if (!MovingToPosition || !RotatingToPosition)
+        runeGolemAnimations.IdleAnimator();
+
+        if (PlayerTarget != null)
         {
-            runeGolemAnimations.IdleAnimator();
+            DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
+        }
 
-            if (PlayerTarget != null)
+        if (PlayerTarget != null && DistanceToTarget <= AttackRange)
+        {
+            Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
+                                           PlayerTarget.transform.position.z - this.transform.position.z).normalized;
+
+            Quaternion LookDir = Quaternion.LookRotation(Distance);
+
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
+
+            if (PlayerTarget.CurrentHealth > 0)
             {
-                DistanceToTarget = Vector3.Distance(this.transform.position, PlayerTarget.transform.position);
-            }
-
-            if (PlayerTarget != null && DistanceToTarget <= AttackRange)
-            {
-                Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
-                                               PlayerTarget.transform.position.z - this.transform.position.z).normalized;
-
-                Quaternion LookDir = Quaternion.LookRotation(Distance);
-
-                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
-
-                if (PlayerTarget.CurrentHealth > 0)
+                AutoAttackTime += Time.deltaTime;
+                if (AutoAttackTime >= AttackDelay)
                 {
-                    AutoAttackTime += Time.deltaTime;
-                    if (AutoAttackTime >= AttackDelay)
-                    {
-                        states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
-                    }
+                    states = phases[PhaseIndex].GetRuneGolemAiStates[StateArrayIndex].GetState;
                 }
             }
-            else
-            {
-                states = BossStates.Chase;
-            }
         }
-    }
-
-    private void MoveToPosition()
-    {
-        MovingToPosition = true;
-
-        runeGolemAnimations.MoveAnimator();
-
-        this.gameObject.GetComponent<BoxCollider>().isTrigger = true;
-
-        Vector3 Distance = new Vector3(BossPosition.position.x - this.transform.position.x, 0,
-                                       BossPosition.position.z - this.transform.position.z).normalized;
-
-        Quaternion LookDir = Quaternion.LookRotation(Distance);
-
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
-
-        this.transform.position += Distance * MoveSpeed * Time.deltaTime;
-
-        if (Vector3.Distance(this.transform.position, BossPosition.position) <= 0.1f)
+        else
         {
-            this.gameObject.GetComponent<BoxCollider>().isTrigger = false;
-
-            StateArrayIndex = 0;
-            PhaseIndex++;
-
-            if (PhaseIndex == 2)
-            {
-                states = BossStates.RotateToPosition;
-            }
-            else
-            {
-                states = BossStates.RotateToPositionTwo;
-            }
-        }
-    }
-
-    private void RotateToPosition()
-    {
-        RotatingToPosition = true;
-
-        Quaternion Rot = Quaternion.Euler(0, 180, 0);
-
-        transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime);
-
-        if (Quaternion.Angle(transform.rotation, Rot) <= 3.5f)
-        {
-            StateArrayIndex = 0;
-            PhaseIndex = 2;
-
-            states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
-
-            EnableSpeech();
-
-            ChangingPhase = false;
-            MovingToPosition = false;
-            RotatingToPosition = false;
-        }
-    }
-
-    private void RotateToPositionTwo()
-    {
-        RotatingToPosition = true;
-
-        Quaternion Rot = Quaternion.Euler(0, 180, 0);
-
-        transform.rotation = Quaternion.Slerp(this.transform.rotation, Rot, LookSpeed * Time.deltaTime);
-
-        if (Quaternion.Angle(transform.rotation, Rot) <= 3.5f)
-        {
-            StateArrayIndex = 0;
-            PhaseIndex = 5;
-
-            states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
-
-            EnableSpeech();
-
-            ChangingPhase = false;
-            MovingToPosition = false;
-            RotatingToPosition = false;
+            states = RuneGolemStates.Chase;
         }
     }
 
@@ -486,7 +434,7 @@ public class RuneGolem : MonoBehaviour
 
                     IncrementPhase();
 
-                    states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
+                    states = phases[PhaseIndex].GetRuneGolemAiStates[StateArrayIndex].GetState;
                 }
             }
             else
@@ -513,13 +461,13 @@ public class RuneGolem : MonoBehaviour
     {
         if (PlayerTarget.CurrentHealth <= 0)
         {
-            states = BossStates.Idle;
+            states = RuneGolemStates.Idle;
         }
         else
         {
-            if (phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetSkillIndex > -1)
+            if (phases[PhaseIndex].GetRuneGolemAiStates[StateArrayIndex].GetSkillIndex > -1)
             {
-                enemySkills.ChooseSkill(phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetSkillIndex);
+                enemySkills.ChooseSkill(phases[PhaseIndex].GetRuneGolemAiStates[StateArrayIndex].GetSkillIndex);
             }
             else return;
         }
@@ -584,13 +532,8 @@ public class RuneGolem : MonoBehaviour
 
         EnableAudioChanger();
 
-        EnableSpeechDead();
-
         DisableWall1();
         DisableWall2();
-
-        KillAdds();
-        DisablePoisonMushroomDamageRadius();
 
         PlayerTarget = null;
         AutoAttackTime = 0;
@@ -742,8 +685,6 @@ public class RuneGolem : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     public void ResetStats()
     {
-        DisableSpeech();
-
         PlayParticle();
 
         enemySkills.SetRotationToFalse();
@@ -758,7 +699,7 @@ public class RuneGolem : MonoBehaviour
 
         runeGolemAnimations.ResetSkillAnimator();
 
-        states = BossStates.Idle;
+        states = RuneGolemStates.Idle;
         Idle();
 
         PhaseIndex = 0;
@@ -780,12 +721,6 @@ public class RuneGolem : MonoBehaviour
         transform.rotation = BossRotation;
 
         EnableWall();
-
-        ReturnAddsToPositionAndRotation();
-
-        DespawnAdds();
-        ShrinkPoisonMushrooms();
-        EnableMushroomObjs();
 
         InvokeOnEnabledFalse();
     }
@@ -810,44 +745,11 @@ public class RuneGolem : MonoBehaviour
         PlayerEntry = true;
         if (other.gameObject.GetComponent<PlayerController>())
         {
-            if (PhaseIndex == 0)
-            {
-                EnableSpeech();
-            }
-
             PlayerTarget = other.GetComponent<Character>();
-            states = BossStates.Chase;
+            states = RuneGolemStates.Chase;
             EnemyTriggerSphere.gameObject.SetActive(false);
             IsReseted = false;
         }
-    }
-
-    public void EnableSpeech()
-    {
-        if (character.CurrentHealth > 0)
-        {
-            if (phases[PhaseIndex].GetSpeechText != "")
-            {
-                SpeechBox.SetBool("Fade", true);
-
-                SpeechText.text = phases[PhaseIndex].GetSpeechText;
-            }
-            Invoke("DisableSpeech", 3.0f);
-        }
-    }
-
-    private void EnableSpeechDead()
-    {
-        SpeechBox.SetBool("Fade", true);
-
-        SpeechText.text = "I've...let everybody...down...";
-
-        Invoke("DisableSpeech", 3.0f);
-    }
-
-    private void DisableSpeech()
-    {
-        SpeechBox.SetBool("Fade", false);
     }
 
     public void CheckTarget()
@@ -855,7 +757,7 @@ public class RuneGolem : MonoBehaviour
         if (!PlayerEntry)
         {
             PlayerTarget = null;
-            states = BossStates.Idle;
+            states = RuneGolemStates.Idle;
             Idle();
             AutoAttackTime = 0;
             enemySkills.DisableRadiusImage();
@@ -874,7 +776,7 @@ public class RuneGolem : MonoBehaviour
                 }
                 else
                 {
-                    states = BossStates.Attack;
+                    states = RuneGolemStates.Attack;
                 }
             }
         }
@@ -990,113 +892,6 @@ public class RuneGolem : MonoBehaviour
         MonsterEntryTxt.SetActive(true);
 
         MonsterEntryTxt.transform.SetParent(GameManager.Instance.GetMonsterEntryTransform, false);
-    }
-
-    public void SpawnAdds()
-    {
-        for (int i = 0; i < AddsToSpawn.Length; i++)
-        {
-            AddsToSpawn[i].SetActive(true);
-
-            SpawnParticleEffect(new Vector3(MushroomObjs[i].transform.position.x, MushroomObjs[i].transform.position.y, MushroomObjs[i].transform.position.z));
-        }
-    }
-
-    private void ReturnAddsToPositionAndRotation()
-    {
-        for (int i = 0; i < AddsToSpawn.Length; i++)
-        {
-            AddsToSpawn[i].transform.position = MushroomObjs[i].transform.position;
-
-            AddsToSpawn[i].transform.rotation = Quaternion.Euler(0, 180, 0);
-
-            AddsToSpawn[i].GetComponent<EnemySkills>().DisableRadiusImage();
-            AddsToSpawn[i].GetComponent<EnemySkills>().DisableRadius();
-        }
-    }
-
-    public void DisableMushroomObjs()
-    {
-        for (int i = 0; i < MushroomObjs.Length; i++)
-        {
-            MushroomObjs[i].SetActive(false);
-        }
-    }
-
-    private void EnableMushroomObjs()
-    {
-        for (int i = 0; i < MushroomObjs.Length; i++)
-        {
-            if (MushroomObjs[i].activeInHierarchy)
-            {
-                return;
-            }
-            else
-            {
-                MushroomObjs[i].SetActive(true);
-
-                SpawnParticleEffect(new Vector3(MushroomObjs[i].transform.position.x, MushroomObjs[i].transform.position.y, MushroomObjs[i].transform.position.z));
-            }
-        }
-    }
-
-    public void EnlargePoisonMushrooms()
-    {
-        PoisonMushroomsEnlarged = true;
-
-        for (int i = 0; i < PoisonMushrooms.Length; i++)
-        {
-            PoisonMushrooms[i].transform.localScale = new Vector3(3.6f, 3.6f, 3.6f);
-
-            SpawnParticleEffect(new Vector3(PoisonMushrooms[i].transform.position.x, PoisonMushrooms[i].transform.position.y, PoisonMushrooms[i].transform.position.z));
-
-            PoisonMushrooms[i].GetComponentInChildren<ObstacleDamageRadius>().enabled = true;
-        }
-    }
-
-    private void DisablePoisonMushroomDamageRadius()
-    {
-        for (int i = 0; i < PoisonMushrooms.Length; i++)
-        {
-            PoisonMushrooms[i].GetComponentInChildren<ObstacleDamageRadius>().enabled = false;
-        }
-    }
-
-    private void ShrinkPoisonMushrooms()
-    {
-        if (PoisonMushroomsEnlarged)
-        {
-            for (int i = 0; i < PoisonMushrooms.Length; i++)
-            {
-                PoisonMushrooms[i].transform.localScale = new Vector3(1, 1, 1);
-
-                SpawnParticleEffect(new Vector3(PoisonMushrooms[i].transform.position.x, PoisonMushrooms[i].transform.position.y, PoisonMushrooms[i].transform.position.z));
-
-                PoisonMushrooms[i].GetComponentInChildren<ObstacleDamageRadius>().enabled = false;
-            }
-        }
-        PoisonMushroomsEnlarged = false;
-    }
-
-    private void DespawnAdds()
-    {
-        for (int i = 0; i < AddsToSpawn.Length; i++)
-        {
-            AddsToSpawn[i].SetActive(false);
-        }
-    }
-
-    //Kills all enemies spawned by the boss if the boss dies while the adds are still alive.
-    private void KillAdds()
-    {
-        for (int i = 0; i < AddsToSpawn.Length; i++)
-        {
-            if (AddsToSpawn[i].activeInHierarchy)
-            {
-                AddsToSpawn[i].GetComponentInChildren<Health>().ModifyHealth(-AddsToSpawn[i].GetComponent<Character>().MaxHealth);
-            }
-            else return;
-        }
     }
 
     private void SpawnParticleEffect(Vector3 Pos)

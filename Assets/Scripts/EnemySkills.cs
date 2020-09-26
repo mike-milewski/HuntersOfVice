@@ -28,8 +28,10 @@ public enum Skill
     SylvanStorm,
     VicePlanter,
     WoodishSire,
-    //VineGolem Skills
+    //RuneGolem Skills
+    Uplift,
     EarthHammer,
+    SmashWave,
     //MAIN BOSS:
     //SylvanDiety Skills
     MagicDreams,
@@ -420,6 +422,9 @@ public class EnemySkills : MonoBehaviour
     private Puck puckAI = null;
 
     [SerializeField]
+    private RuneGolem runeGolemAI = null;
+
+    [SerializeField]
     private EnemySkillBar skillBar;
 
     [SerializeField]
@@ -427,6 +432,9 @@ public class EnemySkills : MonoBehaviour
 
     [SerializeField]
     private PuckDamageRadius puckDamageRadius = null;
+
+    [SerializeField]
+    private RuneGolemDamageRadius runeGolemDamageRadius = null;
 
     [SerializeField]
     private Health health;

@@ -1312,6 +1312,8 @@ public class Skills : StatusEffects
         }
         else if (DistanceToAttack() >= AttackRange)
         {
+            SoundManager.Instance.StormThrustSE();
+
             StormThrustActivated = true;
 
             TextHolder = Target.GetUI;
@@ -1347,6 +1349,8 @@ public class Skills : StatusEffects
             if (DistanceToAttack() <= 2)
             {
                 GetCharacter.GetComponent<BasicAttack>().HitParticleEffect();
+
+                SoundManager.Instance.SwordHit();
 
                 DamageSkillText(Target);
 

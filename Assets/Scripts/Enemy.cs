@@ -1,4 +1,5 @@
 ﻿#pragma warning disable 0649
+#pragma warning disable 0414
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -15,10 +16,16 @@ public class Enemy : MonoBehaviour
     private PuckAnimations puckAnimations = null;
 
     [SerializeField]
+    private RuneGolemAnimations runeGolemAnimations = null;
+
+    [SerializeField]
     private EnemyAI enemyAI = null;
 
     [SerializeField]
     private Puck puckAI = null;
+
+    [SerializeField]
+    private RuneGolem runeGolemAI = null;
 
     [SerializeField]
     private Health health;
@@ -122,6 +129,18 @@ public class Enemy : MonoBehaviour
         set
         {
             puckAI = value;
+        }
+    }
+
+    public RuneGolem GetRuneGolemAI
+    {
+        get
+        {
+            return runeGolemAI;
+        }
+        set
+        {
+            runeGolemAI = value;
         }
     }
 

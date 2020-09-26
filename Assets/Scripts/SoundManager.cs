@@ -184,4 +184,9 @@ public class SoundManager : MonoBehaviour
     {
         audiosource[1].PlayOneShot(audioclips[27]);
     }
+
+    public void StormThrustSE()
+    {
+        audiosource[1].PlayOneShot(audioclips[28]);
+    }
 }

@@ -21,6 +21,9 @@ public class EnemySkillBar : MonoBehaviour
     private Puck puckAI = null;
 
     [SerializeField]
+    private RuneGolem runeGolemAI = null;
+
+    [SerializeField]
     private EnemySkills enemySkills;
 
     [SerializeField]
@@ -124,6 +127,11 @@ public class EnemySkillBar : MonoBehaviour
         {
             CastTime = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
             character.GetComponentInChildren<PuckDamageRadius>().GetShapes = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetShapes;
+        }
+        if(runeGolemAI != null)
+        {
+            CastTime = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+            character.GetComponentInChildren<RuneGolemDamageRadius>().GetShapes = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetShapes;
         }
         Casting = true;
         SkillBarFillImage.fillAmount = 0;

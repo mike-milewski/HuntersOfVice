@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+#pragma warning disable 0414
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,13 +16,13 @@ public class RuneGolemAnimations : MonoBehaviour
     private Animator animator;
 
     [SerializeField]
-    private Puck AI;
+    private RuneGolem AI;
 
     [SerializeField]
     private EnemySkills enemyskills;
 
     [SerializeField]
-    private PuckDamageRadius damageradius;
+    private RuneGolemDamageRadius damageradius;
 
     [SerializeField]
     private ChangeEnemyMaterial[] changeEnemyMaterial;
@@ -148,18 +150,18 @@ public class RuneGolemAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Moving", false);
     }
 
-    public void PuckSkillDamage()
+    public void RuneGolemSkillDamage()
     {
-        if (AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex > -1)
+        if (AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetSkillIndex > -1)
         {
-            enemyskills.PuckSkillDamageText(enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
-                                                    enemyskills.GetManager[AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+            enemyskills.PuckSkillDamageText(enemyskills.GetManager[AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                                                    enemyskills.GetManager[AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
         }
     }
 
     public void SkillRadiusDamage()
     {
-        if (AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetSkillIndex > -1)
+        if (AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetSkillIndex > -1)
         {
             if (damageradius.GetIsInRadius)
             {
@@ -186,43 +188,25 @@ public class RuneGolemAnimations : MonoBehaviour
 
     public void ResetAutoAttackTime()
     {
-        if (!AI.GetIsMovingToPosition || !AI.GetIsRotatingToPosition)
+        if (AI.GetPlayerTarget != null)
         {
-            if (AI.GetPlayerTarget != null)
+            if (AI.GetStates != RuneGolemStates.SkillAnimation)
             {
-                if (AI.GetStates != BossStates.SkillAnimation)
-                {
-                    EnemyAnimator.SetBool("Attacking", false);
-                    ResetSkillAnimator();
-                    AI.GetAutoAttack = 0;
-                    AI.GetStates = BossStates.Attack;
-
-                    if (AI.GetIsMovingToPosition || AI.GetIsRotatingToPosition)
-                    {
-                        EnemyAnimator.SetBool("Attacking", false);
-                        ResetSkillAnimator();
-                        AI.GetAutoAttack = 0;
-
-                        AI.GetStates = AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetState;
-                    }
-                }
-                else
-                {
-                    AI.CheckTarget();
-                }
+                EnemyAnimator.SetBool("Attacking", false);
+                ResetSkillAnimator();
+                AI.GetAutoAttack = 0;
+                AI.GetStates = RuneGolemStates.Attack;
             }
             else
             {
-                AI.GetStates = BossStates.Idle;
-                EnemyAnimator.SetBool("Attacking", false);
-                ResetSkillAnimator();
+                AI.CheckTarget();
             }
         }
         else
         {
+            AI.GetStates = RuneGolemStates.Idle;
             EnemyAnimator.SetBool("Attacking", false);
             ResetSkillAnimator();
-            AI.GetAutoAttack = 0;
         }
     }
 
@@ -230,7 +214,7 @@ public class RuneGolemAnimations : MonoBehaviour
     {
         EnemyAnimator.SetBool("Damaged", false);
 
-        AI.GetStates = AI.GetPhases[AI.GetPhaseIndex].GetBossAiStates[AI.GetStateArrayIndex].GetState;
+        AI.GetStates = AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetState;
     }
 
     public void PlayHealthFade()
