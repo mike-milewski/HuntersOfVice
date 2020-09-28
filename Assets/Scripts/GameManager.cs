@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     private LowHpAnimation lowHpAnimation;
 
     [SerializeField]
-    private Camera cam;
+    private Camera cam, AudioCamera;
 
     [SerializeField]
     private TextMeshProUGUI InvalidText;
@@ -103,6 +103,18 @@ public class GameManager : MonoBehaviour
         set
         {
             equipmentMenu = value;
+        }
+    }
+
+    public Camera GetAudioCamera
+    {
+        get
+        {
+            return AudioCamera;
+        }
+        set
+        {
+            AudioCamera = value;
         }
     }
 

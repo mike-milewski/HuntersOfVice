@@ -237,9 +237,13 @@ public class BasicAttack : MonoBehaviour
                             Target.GetAI.GetPlayerTarget = this.character;
                         }
                     }
-                    else
+                    if(Target.GetPuckAI != null)
                     {
                         Target.GetPuckAI.GetPlayerTarget = this.character;
+                    }
+                    if(Target.GetRuneGolemAI != null)
+                    {
+                        Target.GetRuneGolemAI.GetPlayerTarget = this.character;
                     }
                 }
             }
@@ -507,9 +511,13 @@ public class BasicAttack : MonoBehaviour
                 Target.GetAI.GetStates = States.Damaged;
             }
         }
-        else
+        if(Target.GetPuckAI != null)
         {
             Target.GetPuckAI.CheckHP();
+        }
+        if(Target.GetRuneGolemAI != null)
+        {
+            Target.GetRuneGolemAI.CheckHP();
         }
 
         return Damagetext.GetComponentInChildren<TextMeshProUGUI>();

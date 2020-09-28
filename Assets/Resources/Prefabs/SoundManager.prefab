@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba9abaefc20f3fa4f97be2d2a65dce55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   audioclips:
   - {fileID: 8300000, guid: cd8781b5884eaab49a11963bb6fadf5d, type: 3}
   - {fileID: 8300000, guid: d384777ef4700c54bbfe3b51e591091d, type: 3}
@@ -74,6 +75,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 947daf39b3a2dc9439a0c9701d2c366d, type: 3}
   - {fileID: 8300000, guid: ef4743a933d694c498efb701a822952d, type: 3}
   - {fileID: 8300000, guid: 6451e0a3558ff0f469570dc598bbd891, type: 3}
+  - {fileID: 8300000, guid: 3ce4b36087586b740bd70c4997c09f76, type: 3}
   audiosource:
   - {fileID: 82406116136772232}
   - {fileID: 82406116136772232}

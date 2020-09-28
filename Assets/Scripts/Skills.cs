@@ -694,14 +694,26 @@ public class Skills : StatusEffects
                     }
                     else return;
                 }
-                else
+                else if(Target.GetComponent<RuneGolem>())
                 {
-                    if (Target.GetAI.GetPlayerTarget == null)
+                    if (Target.GetRuneGolemAI.GetPlayerTarget == null)
                     {
-                        Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
-                        Target.GetAI.GetStates = States.Chase;
+                        Target.GetRuneGolemAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                        Target.GetRuneGolemAI.GetStates = RuneGolemStates.Chase;
                     }
                     else return;
+                }
+                else
+                {
+                    if(!Target.GetIsInanimateEnemy)
+                    {
+                        if (Target.GetAI.GetPlayerTarget == null)
+                        {
+                            Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                            Target.GetAI.GetStates = States.Chase;
+                        }
+                        else return;
+                    }
                 }
             }
         }
@@ -1864,7 +1876,7 @@ public class Skills : StatusEffects
                     Target.GetAI.GetStates = States.Damaged;
                 }
             }
-            else
+            if(Target.GetPuckAI != null)
             {
                 if(Target.GetPuckAI.GetPlayerTarget == null)
                 {
@@ -1875,6 +1887,17 @@ public class Skills : StatusEffects
                 }
 
                 Target.GetPuckAI.CheckHP();
+            }
+            if(Target.GetRuneGolemAI != null)
+            {
+                if(Target.GetRuneGolemAI.GetPlayerTarget == null)
+                {
+                    Target.GetRuneGolemAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                    Target.GetRuneGolemAI.GetSphereTrigger.gameObject.SetActive(false);
+                    Target.GetRuneGolemAI.GetStates = RuneGolemStates.Chase;
+                }
+
+                Target.GetRuneGolemAI.CheckHP();
             }
         }
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();

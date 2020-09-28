@@ -23,13 +23,13 @@ public class EnemyAnimations : MonoBehaviour
     private Puck puckAI = null;
 
     [SerializeField]
-    private EnemySkills enemyskills;
+    private EnemySkills enemyskills = null;
 
     [SerializeField]
     private DamageRadius damageradius = null;
 
     [SerializeField]
-    private ChangeEnemyMaterial changeEnemyMaterial;
+    private ChangeEnemyMaterial changeEnemyMaterial = null;
 
 	private const string IDLE	= "Idle";
 	private const string MOVE	= "Move";

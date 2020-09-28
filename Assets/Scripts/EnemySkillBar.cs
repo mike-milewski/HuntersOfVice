@@ -24,7 +24,7 @@ public class EnemySkillBar : MonoBehaviour
     private RuneGolem runeGolemAI = null;
 
     [SerializeField]
-    private EnemySkills enemySkills;
+    private EnemySkills enemySkills = null;
 
     [SerializeField]
     private Image SkillBarFillImage;
@@ -150,17 +150,25 @@ public class EnemySkillBar : MonoBehaviour
 
     public void GetEnemySkill()
     {
-        if(enemySkills.GetManager.Length > 0)
+        if(enemySkills != null)
         {
-            if (enemyAI != null)
+            if (enemySkills.GetManager.Length > 0)
             {
-                SkillName.text = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
-                CastTime = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
-            }
-            if (puckAI != null)
-            {
-                SkillName.text = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
-                CastTime = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+                if (enemyAI != null)
+                {
+                    SkillName.text = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
+                    CastTime = enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+                }
+                if (puckAI != null)
+                {
+                    SkillName.text = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
+                    CastTime = enemySkills.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+                }
+                if (runeGolemAI != null)
+                {
+                    SkillName.text = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
+                    CastTime = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+                }
             }
         }
     }
@@ -169,13 +177,19 @@ public class EnemySkillBar : MonoBehaviour
     {
         if (GameManager.Instance.GetEnemyObject == enemy.gameObject)
         {
-            GetEnemySkill();
-            enemySkills.EnableEnemySkillBar();
+            if(enemySkills != null)
+            {
+                GetEnemySkill();
+                enemySkills.EnableEnemySkillBar();
+            }
         }
         else if (GameManager.Instance.GetEnemyObject != enemy.gameObject)
         {
-            GetEnemySkill();
-            enemySkills.DisableEnemySkillBar();
+            if(enemySkills != null)
+            {
+                GetEnemySkill();
+                enemySkills.DisableEnemySkillBar();
+            }
         }
     }
 
@@ -233,8 +247,41 @@ public class EnemySkillBar : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-        
-        else if(enemySkills.GetDisruptedSkill)
+        if (runeGolemAI != null)
+        {
+            if (runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex != -1)
+            {
+                SkillBarFillImage.fillAmount += Time.deltaTime / enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+                CastTime -= Time.deltaTime;
+                SkillName.text = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
+                if (SkillBarFillImage.fillAmount >= 1)
+                {
+                    enemySkills.GetActiveSkill = false;
+
+                    if (!runeGolemAI.GetChangingPhase)
+                    {
+                        enemySkills.ChooseSkill(runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex);
+
+                        runeGolemAI.GetStates = RuneGolemStates.SkillAnimation;
+                    }
+
+                    SkillBarFillImage.fillAmount = 0;
+                    CastTime = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+
+                    gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                enemySkills.GetActiveSkill = false;
+
+                SkillBarFillImage.fillAmount = 0;
+
+                gameObject.SetActive(false);
+            }
+        }
+
+        if(enemySkills.GetDisruptedSkill)
         {  
             enemySkills.GetActiveSkill = false;
 

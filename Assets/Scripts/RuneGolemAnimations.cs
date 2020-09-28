@@ -63,8 +63,6 @@ public class RuneGolemAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Damaged", false);
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
-        EnemyAnimator.SetBool("Skill3", false);
-        EnemyAnimator.SetBool("Skill4", false);
     }
 
     public void DamageAni()
@@ -107,28 +105,10 @@ public class RuneGolemAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill2", true);
     }
 
-    public void VicePlanterCast()
-    {
-        EnemyAnimator.SetBool("Skill3", true);
-    }
-
-    public void WoodishSireAnimator()
-    {
-        EnemyAnimator.SetBool("Skill4", true);
-    }
-
-    public void SylvanStormAnim()
-    {
-        EnemyAnimator.SetBool("SylvanStorm", true);
-    }
-
     public void ResetSkillAnimator()
     {
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
-        EnemyAnimator.SetBool("Skill3", false);
-        EnemyAnimator.SetBool("Skill4", false);
-        EnemyAnimator.SetBool("SylvanStorm", false);
 
         enemyskills.GetActiveSkill = false;
     }
@@ -141,8 +121,6 @@ public class RuneGolemAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Damaged", false);
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
-        EnemyAnimator.SetBool("Skill3", false);
-        EnemyAnimator.SetBool("Skill4", false);
     }
 
     public void IdleAnimator()
@@ -154,8 +132,8 @@ public class RuneGolemAnimations : MonoBehaviour
     {
         if (AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetSkillIndex > -1)
         {
-            enemyskills.PuckSkillDamageText(enemyskills.GetManager[AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
-                                                    enemyskills.GetManager[AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+            enemyskills.RuneGolemSkillDamageText(enemyskills.GetManager[AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                                            enemyskills.GetManager[AI.GetRuneGolemPhases[AI.GetPhaseIndex].GetRuneGolemAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
         }
     }
 
@@ -229,21 +207,30 @@ public class RuneGolemAnimations : MonoBehaviour
 
     public void Fading()
     {
-        changeEnemyMaterial[0].ChangeToAlphaMaterial();
+        if(changeEnemyMaterial.Length > 1)
+        {
+            changeEnemyMaterial[0].ChangeToAlphaMaterial();
 
-        StartCoroutine(changeEnemyMaterial[0].Fade());
+            StartCoroutine(changeEnemyMaterial[0].Fade());
 
-        changeEnemyMaterial[1].ChangeToAlphaMaterial();
+            changeEnemyMaterial[1].ChangeToAlphaMaterial();
 
-        StartCoroutine(changeEnemyMaterial[1].Fade());
+            StartCoroutine(changeEnemyMaterial[1].Fade());
 
-        changeEnemyMaterial[2].ChangeEquipmentToAlphaMaterial();
+            changeEnemyMaterial[2].ChangeEquipmentToAlphaMaterial();
 
-        StartCoroutine(changeEnemyMaterial[2].EquipmentFade());
+            StartCoroutine(changeEnemyMaterial[2].EquipmentFade());
 
-        changeEnemyMaterial[3].ChangeEquipmentToAlphaMaterial();
+            changeEnemyMaterial[3].ChangeEquipmentToAlphaMaterial();
 
-        StartCoroutine(changeEnemyMaterial[3].EquipmentFade());
+            StartCoroutine(changeEnemyMaterial[3].EquipmentFade());
+        }
+        else
+        {
+            changeEnemyMaterial[0].ChangeToAlphaMaterial();
+
+            StartCoroutine(changeEnemyMaterial[0].Fade());
+        }
     }
 
     public void IncreaseAiArray()

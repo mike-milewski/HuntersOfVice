@@ -111,8 +111,8 @@ public class RuneGolemDamageRadius : MonoBehaviour
         }
         else
         {
-            enemySkills.DisableRadiusImage();
-            enemySkills.DisableRadius();
+            enemySkills.DisableRuneGolemRadiusImage();
+            enemySkills.DisableRuneGolemRadius();
         }
     }
 
@@ -131,8 +131,8 @@ public class RuneGolemDamageRadius : MonoBehaviour
         }
         else
         {
-            enemySkills.DisablePuckRadiusImage();
-            enemySkills.DisablePuckRadius();
+            enemySkills.DisableRuneGolemRadiusImage();
+            enemySkills.DisableRuneGolemRadius();
         }
     }
 
@@ -197,7 +197,7 @@ public class RuneGolemDamageRadius : MonoBehaviour
 
         if (enemySkills.GetManager[enemyAI.GetRuneGolemPhases[enemyAI.GetPhaseIndex].GetRuneGolemAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency > 0)
         {
-            enemySkills.PuckSkillDamageText(enemySkills.GetManager[enemyAI.GetRuneGolemPhases[enemyAI.GetPhaseIndex].GetRuneGolemAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+            enemySkills.RuneGolemSkillDamageText(enemySkills.GetManager[enemyAI.GetRuneGolemPhases[enemyAI.GetPhaseIndex].GetRuneGolemAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
                                     enemySkills.GetManager[enemyAI.GetRuneGolemPhases[enemyAI.GetPhaseIndex].GetRuneGolemAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
 
             enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();

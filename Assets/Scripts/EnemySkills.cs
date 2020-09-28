@@ -537,6 +537,33 @@ public class EnemySkills : MonoBehaviour
                         #endregion
                 }
             }
+            else if(runeGolemAI != null)
+            {
+                switch (skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkills)
+                {
+                    #region Rune Golem Skills
+                    case (Skill.Uplift):
+                        Uplift(GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            new Vector2(GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                    case (Skill.SmashWave):
+                        SmashWave(GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            new Vector2(GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                    case (Skill.EarthHammer):
+                        EarthHammer(GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                        #endregion
+                }
+            }
             else
             {
                 switch (skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkills)
@@ -1150,6 +1177,148 @@ public class EnemySkills : MonoBehaviour
     }
     #endregion
 
+    #region Uplift
+    private void Uplift(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        RuneGolemSpellCastingAnimation();
+
+        skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        sizeDelta = new Vector2(skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        EnableRuneGolemRadius();
+        EnableRuneGolemRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            if (runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex > -1)
+            {
+                RuneGolemUpliftSkillAnimation();
+
+                runeGolemDamageRadius.CheckIfPlayerIsInCircleRadius(runeGolemDamageRadius.GetDamageShape.transform.position, runeGolemDamageRadius.SetCircleColliderSize());
+
+                DisableRuneGolemRadiusImage();
+                DisableRuneGolemRadius();
+            }
+        }
+    }
+
+    public void InvokeUpliftAnimation()
+    {
+        if (settings.UseParticleEffects)
+        {
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle =
+                                                                                                                              ObjectPooler.Instance.GetUpliftParticle();
+
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = 
+                                                       new Vector3(character.transform.position.x, character.transform.position.y + 0.3f, character.transform.position.z);
+        }
+
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region EarthHammer
+    private void EarthHammer(int potency, float castTime, string skillname)
+    {
+        RuneGolemSpellCastingAnimation();
+
+        skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            if (runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex > -1)
+            {
+                RuneGolemUpliftSkillAnimation();
+            }
+        }
+    }
+
+    public void InvokeEarthHammerAnimation()
+    {
+        if (settings.UseParticleEffects)
+        {
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle =
+                                                                                                                              ObjectPooler.Instance.GetUpliftParticle();
+
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position =
+                                                       new Vector3(character.transform.position.x, character.transform.position.y + 0.3f, character.transform.position.z);
+        }
+
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region SmashWave
+    private void SmashWave(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        RuneGolemSpellCastingAnimation();
+
+        skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        sizeDelta = new Vector2(skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        EnableRuneGolemRadius();
+        EnableRuneGolemRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            RuneGolemSmashWaveSkillAnimation();
+
+            runeGolemDamageRadius.CheckIfPlayerIsInRectangleRadius(runeGolemDamageRadius.GetDamageShape.transform.position, new Vector3(
+                                                          GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.x,
+                                                          GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 1.7f),
+                                                          character.transform.rotation);
+
+            DisableRuneGolemRadiusImage();
+
+            Invoke("InvokeSmashWave", skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+        }
+    }
+
+    public void InvokeSmashWave()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var SmashWaveParticle = ObjectPooler.Instance.GetHitParticle();
+
+            SmashWaveParticle.SetActive(true);
+
+            Vector3 Trans = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f, character.transform.position.z);
+
+            SmashWaveParticle.transform.position = Trans + character.transform.forward * 1f;
+        }
+
+        DisableRuneGolemRadius();
+
+        ActiveSkill = false;
+    }
+    #endregion
+
     private void UseSkillBar()
     {
         skillBar.gameObject.SetActive(true);
@@ -1164,6 +1333,11 @@ public class EnemySkills : MonoBehaviour
     private void PuckSpellCastingAnimation()
     {
         puckAI.GetAnimation.AnimatorCasting();
+    }
+
+    private void RuneGolemSpellCastingAnimation()
+    {
+        runeGolemAI.GetAnimation.AnimatorCasting();
     }
 
     private void AnimatorCastingAnimation()
@@ -1212,6 +1386,16 @@ public class EnemySkills : MonoBehaviour
         puckAI.GetAnimation.SylvanStormAnim();
     }
 
+    private void RuneGolemUpliftSkillAnimation()
+    {
+        runeGolemAI.GetAnimation.SkillAnimator();
+    }
+
+    private void RuneGolemSmashWaveSkillAnimation()
+    {
+        runeGolemAI.GetAnimation.Skill2Animator();
+    }
+
     public void DisableEnemySkillBar()
     {
         foreach (Image image in skillBar.GetComponentsInChildren<Image>())
@@ -1249,6 +1433,22 @@ public class EnemySkills : MonoBehaviour
     public void EnablePuckRadiusImage()
     {
         foreach (Image r in puckDamageRadius.GetComponentsInChildren<Image>())
+        {
+            r.enabled = true;
+        }
+    }
+
+    public void DisableRuneGolemRadiusImage()
+    {
+        foreach (Image r in runeGolemDamageRadius.GetComponentsInChildren<Image>())
+        {
+            r.enabled = false;
+        }
+    }
+
+    public void EnableRuneGolemRadiusImage()
+    {
+        foreach (Image r in runeGolemDamageRadius.GetComponentsInChildren<Image>())
         {
             r.enabled = true;
         }
@@ -1293,6 +1493,19 @@ public class EnemySkills : MonoBehaviour
     public void EnablePuckRadius()
     {
         puckDamageRadius.enabled = true;
+    }
+
+    public void DisableRuneGolemRadius()
+    {
+        runeGolemDamageRadius.ResetLocalScale();
+        runeGolemDamageRadius.ResetSizeDelta();
+
+        runeGolemDamageRadius.enabled = false;
+    }
+
+    public void EnableRuneGolemRadius()
+    {
+        runeGolemDamageRadius.enabled = true;
     }
 
     public TextMeshProUGUI EnemyStatus()
@@ -1464,6 +1677,10 @@ public class EnemySkills : MonoBehaviour
             ReflectedValue = 0.10f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
         }
         if(enemyAI != null)
+        {
+            ReflectedValue = 0.10f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+        }
+        if(runeGolemAI != null)
         {
             ReflectedValue = 0.10f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
         }
@@ -1653,6 +1870,92 @@ public class EnemySkills : MonoBehaviour
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    public TextMeshProUGUI RuneGolemSkillDamageText(int potency, string skillName)
+    {
+        skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillName;
+
+        var DamageTxt = ObjectPooler.Instance.GetPlayerDamageText();
+
+        DamageTxt.SetActive(true);
+
+        DamageTxt.transform.SetParent(GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetTextHolder.transform, false);
+
+        var Target = runeGolemAI.GetPlayerTarget;
+
+        CreateRuneGolemHitParticleEffect();
+
+        float Critical = character.GetCriticalChance;
+
+        if (Target == null)
+        {
+            return null;
+        }
+        else
+        {
+            if (Target.GetComponent<Health>().GetIsImmune)
+            {
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=25>" + "0";
+            }
+            else
+            {
+                #region CriticalHitCalculation
+                if (Random.value * 100 <= Critical)
+                {
+                    float CritCalc = potency * 1.25f;
+
+                    Mathf.Round(CritCalc);
+
+                    if ((int)CritCalc - Target.GetComponent<Character>().CharacterDefense < 0)
+                    {
+                        Target.GetComponent<Health>().ModifyHealth(-1);
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
+                    }
+                    else
+                    {
+                        Target.GetComponent<Health>().ModifyHealth
+                                                                 (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
+                                                                                   Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                    }
+                }
+                else
+                {
+                    if (potency - Target.GetComponent<Character>().CharacterDefense < 0)
+                    {
+                        Target.GetComponent<Health>().ModifyHealth(-1);
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1";
+                    }
+                    else
+                    {
+                        Target.GetComponent<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                                                                                   (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                    }
+                }
+                #endregion
+            }
+
+            if (!SkillsManager.Instance.GetActivatedSkill)
+            {
+                if (runeGolemAI.GetPlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1)
+                {
+                    runeGolemAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                }
+            }
+        }
+
+        if (Target.GetComponent<Health>().GetReflectingDamage)
+        {
+            ReflectedDamage();
+        }
+
+        return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     public TextMeshProUGUI SkillHealText(int potency, string skillName)
     {
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillName;
@@ -1729,6 +2032,25 @@ public class EnemySkills : MonoBehaviour
                                                                                 Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
 
             GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
+        }
+    }
+
+    private void CreateRuneGolemHitParticleEffect()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var Target = runeGolemAI.GetPlayerTarget;
+
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
+
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                                Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
+
+            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
         }
     }
 }

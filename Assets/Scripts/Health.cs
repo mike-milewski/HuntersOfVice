@@ -273,6 +273,10 @@ public class Health : MonoBehaviour
                 {
                     character.GetComponent<Puck>().Dead();
                 }
+                if(character.GetComponent<RuneGolem>())
+                {
+                    character.GetComponent<RuneGolem>().Dead();
+                }
             }
         }
         SleepHit = true;

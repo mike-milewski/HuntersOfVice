@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
     private Health health;
 
     [SerializeField]
-    private EnemySkills enemySkills;
+    private EnemySkills enemySkills = null;
 
     [SerializeField]
     private Enemy enemy;
@@ -60,6 +60,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int ExperiencePoints, CoinAmount;
 
+    [SerializeField]
+    private bool IsInanimateEnemy;
+
     public EnemyAnimations GetEnemyAnimations
     {
         get
@@ -69,6 +72,18 @@ public class Enemy : MonoBehaviour
         set
         {
             enemyAnimations = value;
+        }
+    }
+
+    public bool GetIsInanimateEnemy
+    {
+        get
+        {
+            return IsInanimateEnemy;
+        }
+        set
+        {
+            IsInanimateEnemy = value;
         }
     }
 
@@ -258,6 +273,10 @@ public class Enemy : MonoBehaviour
             {
                 puckAnimations.PlayHealthFade();
             }
+            if(runeGolemAnimations != null)
+            {
+                runeGolemAnimations.PlayHealthFade();
+            }
             TargetedImage.gameObject.SetActive(true);
         }
         else
@@ -269,6 +288,10 @@ public class Enemy : MonoBehaviour
             if(puckAnimations != null)
             {
                 puckAnimations.ReverseFadeHealth();
+            }
+            if (runeGolemAnimations != null)
+            {
+                runeGolemAnimations.ReverseFadeHealth();
             }
             TargetedImage.gameObject.SetActive(false);
         }

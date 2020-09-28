@@ -900,6 +900,7 @@ public class Puck : MonoBehaviour
 
     private void PlayParticle()
     {
+        if(settings.UseParticleEffects)
         SpawnParticleEffect(new Vector3(BossPosition.position.x, BossPosition.position.y, BossPosition.position.z - 0.3f));
     }
 
@@ -956,8 +957,8 @@ public class Puck : MonoBehaviour
             states = BossStates.Idle;
             Idle();
             AutoAttackTime = 0;
-            enemySkills.DisableRadiusImage();
-            enemySkills.DisableRadius();
+            enemySkills.DisablePuckRadiusImage();
+            enemySkills.DisablePuckRadius();
             enemySkills.GetActiveSkill = false;
             enemySkills.GetSkillBar.gameObject.SetActive(false);
         }
@@ -1096,6 +1097,7 @@ public class Puck : MonoBehaviour
         {
             AddsToSpawn[i].SetActive(true);
 
+            if(settings.UseParticleEffects)
             SpawnParticleEffect(new Vector3(MushroomObjs[i].transform.position.x, MushroomObjs[i].transform.position.y, MushroomObjs[i].transform.position.z));
         }
     }
@@ -1133,6 +1135,7 @@ public class Puck : MonoBehaviour
             {
                 MushroomObjs[i].SetActive(true);
 
+                if(settings.UseParticleEffects)
                 SpawnParticleEffect(new Vector3(MushroomObjs[i].transform.position.x, MushroomObjs[i].transform.position.y, MushroomObjs[i].transform.position.z));
             }
         }
@@ -1146,7 +1149,10 @@ public class Puck : MonoBehaviour
         {
             PoisonMushrooms[i].transform.localScale = new Vector3(3.6f, 3.6f, 3.6f);
 
-            SpawnParticleEffect(new Vector3(PoisonMushrooms[i].transform.position.x, PoisonMushrooms[i].transform.position.y, PoisonMushrooms[i].transform.position.z));
+            if(settings.UseParticleEffects)
+            {
+                SpawnParticleEffect(new Vector3(PoisonMushrooms[i].transform.position.x, PoisonMushrooms[i].transform.position.y, PoisonMushrooms[i].transform.position.z));
+            }
 
             PoisonMushrooms[i].GetComponentInChildren<ObstacleDamageRadius>().enabled = true;
         }
@@ -1168,7 +1174,10 @@ public class Puck : MonoBehaviour
             {
                 PoisonMushrooms[i].transform.localScale = new Vector3(1, 1, 1);
 
-                SpawnParticleEffect(new Vector3(PoisonMushrooms[i].transform.position.x, PoisonMushrooms[i].transform.position.y, PoisonMushrooms[i].transform.position.z));
+                if(settings.UseParticleEffects)
+                {
+                    SpawnParticleEffect(new Vector3(PoisonMushrooms[i].transform.position.x, PoisonMushrooms[i].transform.position.y, PoisonMushrooms[i].transform.position.z));
+                }
 
                 PoisonMushrooms[i].GetComponentInChildren<ObstacleDamageRadius>().enabled = false;
             }
@@ -1199,11 +1208,14 @@ public class Puck : MonoBehaviour
 
     private void SpawnParticleEffect(Vector3 Pos)
     {
-        var SpawnParticle = ObjectPooler.Instance.GetEnemyAppearParticle();
+        if(settings.UseParticleEffects)
+        {
+            var SpawnParticle = ObjectPooler.Instance.GetEnemyAppearParticle();
 
-        SpawnParticle.SetActive(true);
+            SpawnParticle.SetActive(true);
 
-        SpawnParticle.transform.position = new Vector3(Pos.x, Pos.y + 0.5f, Pos.z);
+            SpawnParticle.transform.position = new Vector3(Pos.x, Pos.y + 0.5f, Pos.z);
+        }
     }
 
     public void PuckHitSE()

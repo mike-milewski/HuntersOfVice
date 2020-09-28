@@ -139,6 +139,20 @@ public class MenuButtons : MonoBehaviour
         }
     }
 
+    public void ToggleAudio(Settings setting)
+    {
+        if (!setting.MuteAudio)
+        {
+            setting.MuteAudio = true;
+            GameManager.Instance.GetAudioCamera.GetComponent<AudioSource>().volume = 0;
+        }
+        else
+        {
+            setting.MuteAudio = false;
+            GameManager.Instance.GetAudioCamera.GetComponent<AudioSource>().volume = 1;
+        }
+    }
+
     public void PlayPanelAnimation(GameObject panel)
     {
         panel.SetActive(true);

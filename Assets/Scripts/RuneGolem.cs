@@ -13,7 +13,7 @@ public class RuneGolemPhases
     RuneGolemAiStates[] states;
 
     [SerializeField]
-    private bool DontCheckHP;
+    private bool DontCheckHP, SpawnEarthEffigy;
 
     public RuneGolemAiStates[] GetRuneGolemAiStates
     {
@@ -36,6 +36,18 @@ public class RuneGolemPhases
         set
         {
             DontCheckHP = value;
+        }
+    }
+
+    public bool GetSpawnEarthEffigy
+    {
+        get
+        {
+            return SpawnEarthEffigy;
+        }
+        set
+        {
+            SpawnEarthEffigy = value;
         }
     }
 }
@@ -129,7 +141,7 @@ public class RuneGolem : MonoBehaviour
     private ParticleSystem[] Walls;
 
     [SerializeField]
-    private GameObject treasureChest, ChestSpawnParticle;
+    private GameObject treasureChest, ChestSpawnParticle, EarthEffigy;
 
     [SerializeField]
     private GameObject[] TreeObjects;
@@ -248,11 +260,6 @@ public class RuneGolem : MonoBehaviour
 
     private void Update()
     {
-        if (enemySkills.GetIsRotating)
-        {
-            enemySkills.SylvanStormRotation();
-        }
-
         if (this.character.CurrentHealth > 0)
         {
             switch (states)
@@ -435,6 +442,11 @@ public class RuneGolem : MonoBehaviour
                     IncrementPhase();
 
                     states = phases[PhaseIndex].GetRuneGolemAiStates[StateArrayIndex].GetState;
+
+                    if(phases[PhaseIndex].GetSpawnEarthEffigy)
+                    {
+                        EnableEarthEffigy();
+                    }
                 }
             }
             else
@@ -528,12 +540,12 @@ public class RuneGolem : MonoBehaviour
 
     public void Dead()
     {
-        enemySkills.SetRotationToFalse();
-
         EnableAudioChanger();
 
-        DisableWall1();
-        DisableWall2();
+        DisableEarthEffigy();
+
+        //DisableWall1();
+        //DisableWall2();
 
         PlayerTarget = null;
         AutoAttackTime = 0;
@@ -550,8 +562,8 @@ public class RuneGolem : MonoBehaviour
 
         if (enemySkills.GetManager.Length > 0)
         {
-            enemySkills.DisablePuckRadiusImage();
-            enemySkills.DisablePuckRadius();
+            enemySkills.DisableRuneGolemRadiusImage();
+            enemySkills.DisableRuneGolemRadius();
         }
 
         GameManager.Instance.GetEventSystem.SetSelectedGameObject(null);
@@ -685,6 +697,8 @@ public class RuneGolem : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     public void ResetStats()
     {
+        DisableEarthEffigy();
+
         PlayParticle();
 
         enemySkills.SetRotationToFalse();
@@ -730,6 +744,24 @@ public class RuneGolem : MonoBehaviour
         Invoke("OnEnabledOff", 0.5f);
     }
 
+    private void EnableEarthEffigy()
+    {
+        EarthEffigy.SetActive(true);
+
+        if(settings.UseParticleEffects)
+        SpawnParticleEffect(new Vector3(EarthEffigy.transform.position.x, EarthEffigy.transform.position.y, EarthEffigy.transform.position.z - 0.3f));
+    }
+
+    private void DisableEarthEffigy()
+    {
+        if(settings.UseParticleEffects)
+        {
+            SpawnParticleEffect(new Vector3(EarthEffigy.transform.position.x, EarthEffigy.transform.position.y, EarthEffigy.transform.position.z - 0.3f));
+        }
+        
+        EarthEffigy.SetActive(false);
+    }
+
     private void OnEnabledOff()
     {
         OnEnabled = false;
@@ -737,6 +769,7 @@ public class RuneGolem : MonoBehaviour
 
     private void PlayParticle()
     {
+        if(settings.UseParticleEffects)
         SpawnParticleEffect(new Vector3(BossPosition.position.x, BossPosition.position.y, BossPosition.position.z - 0.3f));
     }
 
@@ -760,8 +793,8 @@ public class RuneGolem : MonoBehaviour
             states = RuneGolemStates.Idle;
             Idle();
             AutoAttackTime = 0;
-            enemySkills.DisableRadiusImage();
-            enemySkills.DisableRadius();
+            enemySkills.DisableRuneGolemRadiusImage();
+            enemySkills.DisableRuneGolemRadius();
             enemySkills.GetActiveSkill = false;
             enemySkills.GetSkillBar.gameObject.SetActive(false);
         }
@@ -896,29 +929,22 @@ public class RuneGolem : MonoBehaviour
 
     private void SpawnParticleEffect(Vector3 Pos)
     {
-        var SpawnParticle = ObjectPooler.Instance.GetEnemyAppearParticle();
+        if (settings.UseParticleEffects)
+        {
+            var SpawnParticle = ObjectPooler.Instance.GetEnemyAppearParticle();
 
-        SpawnParticle.SetActive(true);
+            SpawnParticle.SetActive(true);
 
-        SpawnParticle.transform.position = new Vector3(Pos.x, Pos.y + 0.5f, Pos.z);
+            SpawnParticle.transform.position = new Vector3(Pos.x, Pos.y + 0.5f, Pos.z);
+        }
     }
 
-    public void PuckHitSE()
+    public void RuneGolemMove()
     {
-        SoundManager.Instance.PuckHit();
+        SoundManager.Instance.RuneGolemWalk();
     }
 
-    public void RightMoveSE()
-    {
-        SoundManager.Instance.PuckRightFootStep();
-    }
-
-    public void LeftMoveSE()
-    {
-        SoundManager.Instance.PuckLeftFootStep();
-    }
-
-    public void PuckFall()
+    public void RuneGolemFall()
     {
         SoundManager.Instance.PuckFall();
     }
