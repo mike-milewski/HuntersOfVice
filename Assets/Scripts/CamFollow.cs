@@ -9,14 +9,18 @@ public class CamFollow : MonoBehaviour
     [SerializeField]
     private Vector3 Offset;
 
+    private Vector3 NewPosition;
+
     [SerializeField]
     private float SmoothFactor, offsetY, offsetZ;
+
+    private Quaternion CamTurn;
 
     private void LateUpdate()
     {
         if(Input.GetMouseButton(1))
         {
-            Quaternion CamTurn = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * 5, Vector3.up);
+            CamTurn = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * 5, Vector3.up);
 
             Offset = CamTurn * Offset;
         }
@@ -47,15 +51,15 @@ public class CamFollow : MonoBehaviour
 
     private void KnightPos()
     {
-        Vector3 newpos = Knight.position + Offset;
+        NewPosition = Knight.position + Offset;
 
-        transform.position = Vector3.Slerp(transform.position, newpos, SmoothFactor);
+        transform.position = Vector3.Slerp(transform.position, NewPosition, SmoothFactor);
     }
 
     private void ShadowPriestPos()
     {
-        Vector3 newpos = ShadowPriest.position + Offset;
+        NewPosition = ShadowPriest.position + Offset;
 
-        transform.position = Vector3.Slerp(transform.position, newpos, SmoothFactor);
+        transform.position = Vector3.Slerp(transform.position, NewPosition, SmoothFactor);
     }
 }

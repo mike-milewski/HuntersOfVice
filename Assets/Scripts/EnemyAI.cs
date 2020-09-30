@@ -82,6 +82,9 @@ public class EnemyAI : MonoBehaviour
     private Transform[] Waypoints;
 
     [SerializeField]
+    private Transform OriginPoint;
+
+    [SerializeField]
     private float MoveSpeed, AttackRange, AttackDelay, AutoAttackTime, LookSpeed;
 
     [SerializeField] [Tooltip("Current targeted Player. Keep this empty!")]
@@ -115,6 +118,10 @@ public class EnemyAI : MonoBehaviour
     private bool IsUsingAnimator;
 
     private int StateArrayIndex;
+
+    private Vector3 Distance;
+
+    private Quaternion LookDir;
 
     public int GetStateArrayIndex
     {
@@ -339,8 +346,8 @@ public class EnemyAI : MonoBehaviour
 
     private void Patrol()
     {
-        float DistanceToWayPoint = Vector3.Distance(new Vector3(this.transform.position.x, 0, this.transform.position.z),
-                                                    new Vector3(Waypoints[WaypointIndex].position.x, 0, Waypoints[WaypointIndex].position.z));
+        DistanceToTarget = Vector3.Distance(new Vector3(this.transform.position.x, 0, this.transform.position.z),
+                                            new Vector3(Waypoints[WaypointIndex].position.x, 0, Waypoints[WaypointIndex].position.z));
 
         if (!StandingStill)
         {
@@ -353,10 +360,10 @@ public class EnemyAI : MonoBehaviour
                 Anim.MoveAnimator();
             }
 
-            Vector3 Distance = new Vector3(Waypoints[WaypointIndex].position.x - this.transform.position.x, 0,
-                                           Waypoints[WaypointIndex].position.z - this.transform.position.z).normalized;
+            Distance = new Vector3(Waypoints[WaypointIndex].position.x - this.transform.position.x, 0,
+                                   Waypoints[WaypointIndex].position.z - this.transform.position.z).normalized;
 
-            Quaternion LookDir = Quaternion.LookRotation(Distance);
+            LookDir = Quaternion.LookRotation(Distance);
 
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
@@ -374,7 +381,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        if (DistanceToWayPoint <= 0.1f)
+        if (DistanceToTarget <= 0.1f)
         {
             StandingStill = true;
             TimeToMove -= Time.deltaTime;
@@ -417,10 +424,10 @@ public class EnemyAI : MonoBehaviour
 
             if (DistanceToTarget >= AttackRange)
             {
-                Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
-                                               PlayerTarget.transform.position.z - this.transform.position.z).normalized;
+                Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
+                                       PlayerTarget.transform.position.z - this.transform.position.z).normalized;
 
-                Quaternion LookDir = Quaternion.LookRotation(Distance);
+                LookDir = Quaternion.LookRotation(Distance);
 
                 this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
@@ -476,10 +483,10 @@ public class EnemyAI : MonoBehaviour
 
         if (PlayerTarget != null && DistanceToTarget <= AttackRange)
         {
-            Vector3 Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
+            Distance = new Vector3(PlayerTarget.transform.position.x - this.transform.position.x, 0,
                                            PlayerTarget.transform.position.z - this.transform.position.z).normalized;
 
-            Quaternion LookDir = Quaternion.LookRotation(Distance);
+            LookDir = Quaternion.LookRotation(Distance);
 
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
@@ -781,7 +788,7 @@ public class EnemyAI : MonoBehaviour
     { 
         if(!IsAnAdd)
         {
-            if (Vector3.Distance(transform.position, Waypoints[WaypointIndex].position) >= WayPointDistance)
+            if (Vector3.Distance(transform.position, OriginPoint.position) >= WayPointDistance)
             {
                 EndBattle();
             }
