@@ -15,8 +15,6 @@ public class ShopKeeper : MonoBehaviour
     [SerializeField]
     private float ShoppingDistance;
 
-    private Quaternion ShopRotation;
-
     private bool IsInShop = false;
 
     public bool GetIsInShop
@@ -55,11 +53,6 @@ public class ShopKeeper : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        ShopRotation = this.transform.rotation;
-    }
-
     private void Update()
     {
         if(IsInShop)
@@ -73,33 +66,6 @@ public class ShopKeeper : MonoBehaviour
                 GameManager.Instance.CloseInventoryMenu();
                 IsInShop = false;
             }
-            TurnToPlayer();
-        }
-        else
-        {
-            ReturnToPosition();
-        }
-    }
-
-    private void TurnToPlayer()
-    {
-        Vector3 TargetPosition = new Vector3(character.transform.position.x - this.transform.position.x, 0,
-                                             character.transform.position.z - this.transform.position.z).normalized;
-
-        Quaternion LookDir = Quaternion.LookRotation(TargetPosition);
-
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, 5 * Time.deltaTime);
-    }
-
-    private void ReturnToPosition()
-    {
-        if(this.transform.rotation == ShopRotation)
-        {
-            return;
-        }
-        else
-        {
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, ShopRotation, 5 * Time.deltaTime);
         }
     }
 

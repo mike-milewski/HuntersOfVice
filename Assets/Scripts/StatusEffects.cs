@@ -104,8 +104,7 @@ public class StatusEffects : MonoBehaviour
         }
         set
         {
-            PlayerStatusEffect
- = value;
+            PlayerStatusEffect = value;
         }
     }
 

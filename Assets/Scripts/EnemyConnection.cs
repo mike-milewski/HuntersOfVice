@@ -4,17 +4,28 @@ using UnityEngine;
 public class EnemyConnection : MonoBehaviour
 {
     [SerializeField]
-    private EnemyAI enemyAI;
+    private EnemyAI[] enemyAI;
 
-    public EnemyAI GetEnemyAI
+    private void OnTriggerEnter(Collider other)
     {
-        get
+        if(other.GetComponent<PlayerController>())
         {
-            return enemyAI;
+            foreach(EnemyAI enemyai in enemyAI)
+            {
+                enemyai.GetPlayerEntry = true;
+                enemyai.GetPlayerTarget = other.GetComponent<Character>();
+                enemyai.GetStates = States.Chase;
+                enemyai.GetEnemy.GetExperience = other.GetComponent<Experience>();
+            }
         }
-        set
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        foreach(EnemyAI enemyai in enemyAI)
         {
-            enemyAI = value;
+            if(enemyai.GetEnemy.GetCharacter.CurrentHealth > 0)
+            enemyai.EndBattle();
         }
     }
 }

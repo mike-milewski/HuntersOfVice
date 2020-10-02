@@ -28,6 +28,8 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private int TempSkillIndex;
 
+    private bool HasBurnStatus;
+
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
 
@@ -40,6 +42,8 @@ public class EnemyStatusIcon : MonoBehaviour
 
     [SerializeField]
     private GameObject StatusPanel;
+
+    private GameObject StunParticle = null;
 
     public PlayerController GetPlayer
     {
@@ -77,6 +81,18 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    public bool GetHasBurnStatus
+    {
+        get
+        {
+            return HasBurnStatus;
+        }
+        set
+        {
+            HasBurnStatus = value;
+        }
+    }
+
     private void Start()
     {
         if(player == null)
@@ -100,6 +116,9 @@ public class EnemyStatusIcon : MonoBehaviour
                 StrengthUP(50);
                 CriticalUP(5);
                 break;
+            case (StatusEffect.Stun):
+                CreateStunEffectParticle();
+                break;
         }
     }
 
@@ -117,8 +136,16 @@ public class EnemyStatusIcon : MonoBehaviour
         }
         else
         {
-            RemoveEnemyStatusEffectText();
-            ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            if(HasBurnStatus)
+            {
+                RemoveBurnStatusEffectText();
+                ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            }
+            else
+            {
+                RemoveEnemyStatusEffectText();
+                ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            }
         }
     }
 
@@ -169,6 +196,22 @@ public class EnemyStatusIcon : MonoBehaviour
         TempTick = DamageOrHealTick;
     }
 
+    public void BurnStatus()
+    {
+        character = GetComponentInParent<Character>();
+
+        character.GetComponentInChildren<Health>().GetSleepHit = false;
+
+        Duration = 10.0f;
+
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Burning </u>" + "</color>" +
+                                     "</size>" + "\n" + "<size=10> Taking damage over time.";
+
+        DamageOrHealTick = 3.0f;
+
+        TempTick = DamageOrHealTick;
+    }
+
     public TextMeshProUGUI RemoveStatusEffectText()
     {
         var StatusEffectText = ObjectPooler.Instance.GetPlayerStatusText();
@@ -215,6 +258,7 @@ public class EnemyStatusIcon : MonoBehaviour
         {
             case (StatusEffect.Stun):
                 CheckEnemyStates();
+                CheckStunParticleActive();
                 break;
             case (StatusEffect.Sleep):
                 CheckEnemyStates();
@@ -237,6 +281,23 @@ public class EnemyStatusIcon : MonoBehaviour
                 character.GetComponentInChildren<Health>().ModifyHealth(-character.CurrentHealth);
                 break;
         }
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemoveBurnStatusEffectText()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Burning";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        CreateParticleOnRemoveEnemy();
+
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -473,6 +534,32 @@ public class EnemyStatusIcon : MonoBehaviour
             StatusParticle.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 1.0f, character.transform.position.z);
 
             StatusParticle.transform.SetParent(character.transform, true);
+        }
+    }
+
+    private void CheckStunParticleActive()
+    {
+        if (StunParticle.activeInHierarchy)
+        {
+            ObjectPooler.Instance.ReturnStunEffectParticleToPool(StunParticle);
+        }
+    }
+
+    private void CreateStunEffectParticle()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var cHARACTER = character;
+
+            var SP = ObjectPooler.Instance.GetStunEffectParticle();
+
+            StunParticle = SP;
+
+            SP.SetActive(true);
+
+            SP.transform.position = new Vector3(cHARACTER.transform.position.x, cHARACTER.transform.position.y + 0.8f, cHARACTER.transform.position.z);
+
+            SP.transform.SetParent(cHARACTER.transform, true);
         }
     }
 

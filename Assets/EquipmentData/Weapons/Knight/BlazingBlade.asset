@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Blazing Blade
   Element: 3
-  StatIncrease: 30
+  StatIncrease: 25
   BuyValue: 300

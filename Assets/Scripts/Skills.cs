@@ -1622,6 +1622,8 @@ public class Skills : StatusEffects
 
                 GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
+                GetStatusIcon.GetComponent<EnemyStatusIcon>().GetHasBurnStatus = false;
+
                 GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
                 GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
                 GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
@@ -1855,16 +1857,6 @@ public class Skills : StatusEffects
 
             if(Target.GetAI != null)
             {
-                if (Target.GetAI.GetComponent<EnemyConnection>())
-                {
-                    if (Target.GetAI.GetComponent<EnemyConnection>().GetEnemyAI.GetPlayerTarget == null)
-                    {
-                        Target.GetAI.GetComponent<EnemyConnection>().GetEnemyAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
-                    }
-
-                    Target.GetAI.GetComponent<EnemyConnection>().GetEnemyAI.GetStates = States.Chase;
-                }
-
                 if (Target.GetAI.GetPlayerTarget == null)
                 {
                     Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;

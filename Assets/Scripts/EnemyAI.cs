@@ -82,7 +82,7 @@ public class EnemyAI : MonoBehaviour
     private Transform[] Waypoints;
 
     [SerializeField]
-    private Transform OriginPoint;
+    private Transform OriginPoint = null;
 
     [SerializeField]
     private float MoveSpeed, AttackRange, AttackDelay, AutoAttackTime, LookSpeed;
@@ -91,7 +91,7 @@ public class EnemyAI : MonoBehaviour
     private Character PlayerTarget = null;
 
     [SerializeField]
-    private SphereCollider EnemyTriggerSphere;
+    private SphereCollider EnemyTriggerSphere = null;
 
     [SerializeField]
     private ParticleSystem HitParticle;
@@ -132,6 +132,14 @@ public class EnemyAI : MonoBehaviour
         set
         {
             StateArrayIndex = value;
+        }
+    }
+
+    public Enemy GetEnemy
+    {
+        get
+        {
+            return enemy;
         }
     }
 
@@ -180,6 +188,18 @@ public class EnemyAI : MonoBehaviour
         set
         {
             IsAnAdd = value;
+        }
+    }
+
+    public bool GetPlayerEntry
+    {
+        get
+        {
+            return PlayerEntry;
+        }
+        set
+        {
+            PlayerEntry = value;
         }
     }
 
@@ -788,15 +808,18 @@ public class EnemyAI : MonoBehaviour
     { 
         if(!IsAnAdd)
         {
-            if (Vector3.Distance(transform.position, OriginPoint.position) >= WayPointDistance)
+            if(OriginPoint != null)
             {
-                EndBattle();
-            }
-            if(PlayerTarget != null)
-            {
-                if (Vector3.Distance(transform.position, PlayerTarget.transform.position) >= PlayerDistance)
+                if (Vector3.Distance(transform.position, OriginPoint.position) >= WayPointDistance)
                 {
                     EndBattle();
+                }
+                if (PlayerTarget != null)
+                {
+                    if (Vector3.Distance(transform.position, PlayerTarget.transform.position) >= PlayerDistance)
+                    {
+                        EndBattle();
+                    }
                 }
             }
         }
@@ -805,25 +828,12 @@ public class EnemyAI : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         PlayerEntry = true;
-        if(other.gameObject.GetComponent<PlayerController>())
+        if (other.gameObject.GetComponent<PlayerController>())
         {
             PlayerTarget = other.GetComponent<Character>();
             states = States.Chase;
 
             enemy.GetExperience = other.gameObject.GetComponent<Experience>();
-
-            if (gameObject.GetComponent<EnemyConnection>())
-            {
-                EnemyConnection ec = gameObject.GetComponent<EnemyConnection>();
-
-                EnemyTriggerSphere.gameObject.SetActive(false);
-
-                ec.GetEnemyAI.enemy.GetExperience = other.gameObject.GetComponent<Experience>();
-
-                ec.GetEnemyAI.GetSphereTrigger.gameObject.SetActive(false);
-                ec.GetEnemyAI.GetPlayerTarget = this.PlayerTarget;
-                ec.GetEnemyAI.GetStates = States.Chase;
-            }
         }
     }
 
@@ -842,16 +852,9 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void EndBattle()
+    public void EndBattle()
     {
         RemoveNegativeStatusEffects();
-
-        if (gameObject.GetComponent<EnemyConnection>())
-        {
-            EnemyTriggerSphere.gameObject.SetActive(true);
-
-            gameObject.GetComponent<EnemyConnection>().GetEnemyAI.GetSphereTrigger.gameObject.SetActive(true);
-        }
 
         if (IsHostile)
         {

@@ -1,4 +1,4 @@
-﻿#pragma warning disable 0649
+﻿#pragma warning disable 0649, 0414
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -6,6 +6,8 @@ using TMPro;
 public enum EquipmentType { Weapon, Armor }
 
 public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
+
+public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack }
 
 [System.Serializable]
 public class StatusType
@@ -68,7 +70,13 @@ public class Equipment : MonoBehaviour
     private TextMeshProUGUI EquipmentNameText, EquipmentInfoText, EquipmentPanelText, ShopEquipmentPanelText;
 
     [SerializeField]
+    private Skills skill = null;
+
+    [SerializeField]
     private EquipmentType equipmentType;
+
+    [SerializeField]
+    private Ability equipmentAbility;
 
     [SerializeField]
     private StatusType[] stattype;
@@ -106,6 +114,18 @@ public class Equipment : MonoBehaviour
         set
         {
             equipmentType = value;
+        }
+    }
+
+    public Ability GetSkillAbility
+    {
+        get
+        {
+            return equipmentAbility;
+        }
+        set
+        {
+            equipmentAbility = value;
         }
     }
 
@@ -158,6 +178,7 @@ public class Equipment : MonoBehaviour
     public void UnEquip()
     {
         DecreaseStats();
+        LoseEquipmentAbility();
         switch(equipmentType)
         {
             case (EquipmentType.Weapon):
@@ -186,12 +207,16 @@ public class Equipment : MonoBehaviour
     {
         IncreaseStats();
 
+        GainEquipmentAbility();
+
         CurrentWeaponEquippedText();
     }
 
     private void ArmorEquip()
     {
         IncreaseStats();
+
+        GainEquipmentAbility();
 
         CurrentArmorEquippedText();
     }
@@ -279,7 +304,7 @@ public class Equipment : MonoBehaviour
 
         if(equipmentData.Element != PlayerElement.NONE)
         {
-            EquipmentInfoText.text = StatsText().text + "\n" + "Element: " + equipmentData.Element;
+            EquipmentInfoText.text = StatsText().text + "\n" + "Element: " + equipmentData.Element + EquipmentAbilityText();
         }
     }
 
@@ -287,7 +312,7 @@ public class Equipment : MonoBehaviour
     {
         EquipmentNameText.text = equipmentData.EquipmentName;
 
-        EquipmentInfoText.text = StatsText().text;
+        EquipmentInfoText.text = StatsText().text + EquipmentAbilityText();
     }
 
     public void PanelText(GameObject panel)
@@ -307,13 +332,13 @@ public class Equipment : MonoBehaviour
             if (equipmentData.Element != PlayerElement.NONE)
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                        "\n\n" + "Sell Value: " + SellValue();
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element + 
+                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + EquipmentAbilityText() + EquipmentAbilityText() +
                                         "\n\n" + "Sell Value: " + SellValue();
             }
         }
@@ -324,13 +349,13 @@ public class Equipment : MonoBehaviour
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        "\n\n" + "Sell Value: " + SellValue();
+                                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
-                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease +
+                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + EquipmentAbilityText() +
                                         "\n\n" + "Sell Value: " + SellValue();
             }
         }
@@ -342,14 +367,14 @@ public class Equipment : MonoBehaviour
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                       "\n\n" + "Sell Value: " + SellValue();
+                                       EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
-                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease +
+                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + EquipmentAbilityText() +
                                        "\n\n" + "Sell Value: " + SellValue();
             }
         }
@@ -362,7 +387,7 @@ public class Equipment : MonoBehaviour
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        "\n\n" + "Sell Value: " + SellValue();
+                                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
@@ -370,7 +395,7 @@ public class Equipment : MonoBehaviour
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
-                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease +
+                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + EquipmentAbilityText() +
                                         "\n\n" + "Sell Value: " + SellValue();
             }
         }
@@ -384,7 +409,7 @@ public class Equipment : MonoBehaviour
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
                                                         stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        "\n\n" + "Sell Value: " + SellValue();
+                                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
             }
             else
             {
@@ -393,7 +418,7 @@ public class Equipment : MonoBehaviour
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
-                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease +
+                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + EquipmentAbilityText() +
                                         "\n\n" + "Sell Value: " + SellValue();
             }
         }
@@ -409,12 +434,12 @@ public class Equipment : MonoBehaviour
             {
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
             else
             {
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + EquipmentAbilityText() +
                                         "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
         }
@@ -425,13 +450,13 @@ public class Equipment : MonoBehaviour
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
             else
             {
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
-                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease +
+                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + EquipmentAbilityText() +
                                         "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
         }
@@ -442,7 +467,7 @@ public class Equipment : MonoBehaviour
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
-                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" + "Element: " + equipmentData.Element + EquipmentAbilityText() +
                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
             else
@@ -450,7 +475,7 @@ public class Equipment : MonoBehaviour
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
-                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease +
+                                       stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + EquipmentAbilityText() +
                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
         }
@@ -462,8 +487,8 @@ public class Equipment : MonoBehaviour
                                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
-                                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" + "Element: " + equipmentData.Element
-                                                        + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
+                                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
             else
             {
@@ -471,7 +496,7 @@ public class Equipment : MonoBehaviour
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
-                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease +
+                                        stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + EquipmentAbilityText() +
                                         "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
         }
@@ -485,7 +510,7 @@ public class Equipment : MonoBehaviour
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
                                                         stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
             else
             {
@@ -494,7 +519,7 @@ public class Equipment : MonoBehaviour
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
-                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease +
+                                        stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + EquipmentAbilityText() +
                                         "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
         }
@@ -535,6 +560,77 @@ public class Equipment : MonoBehaviour
                                      stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease;
         }
         return EquipmentInfoText;
+    }
+
+    private string EquipmentAbilityText()
+    {
+        string skillText = "";
+
+        switch(equipmentAbility)
+        {
+            case (Ability.SwiftStrike):
+                skillText = "\n\n" + "<#EFDFB8>" + "Removes the MP cost of Swift Strike." + "</color> ";
+                break;
+            case (Ability.StormThrust):
+                skillText = "\n\n" + "<#EFDFB8>" + "Storm Thrust now applies the Stun status effect instead with a 5 second duration." + "</color> ";
+                break;
+            case (Ability.BurnStatus):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack has a 10% of inflicting the Burning status effect." + "</color> ";
+                break;
+            case (Ability.ReducedAutoAttack):
+                skillText = "\n\n" + "<#EFDFB8>" + "Reduces auto-attack time by 1 second." + "</color> ";
+                break;
+        }
+
+        return skillText;
+    }
+
+    private void GainEquipmentAbility()
+    {
+        switch (equipmentAbility)
+        {
+            case (Ability.NONE):
+                return;
+            case (Ability.SwiftStrike):
+                skill.GetManaCost = 0;
+                break;
+            case (Ability.StormThrust):
+                skill.GetEnemyStatusEffect = StatusEffect.Stun;
+                skill.GetStatusEffectName = "Stun";
+                skill.GetStatusDescription = "Unable to act.";
+                skill.GetStatusDuration = 5.0f;
+                break;
+            case (Ability.BurnStatus):
+                basicAttack.GetHasBurnStatus = true;
+                break;
+            case (Ability.ReducedAutoAttack):
+                basicAttack.GetAutoAttackTime -= 1.0f;
+                break;
+        }
+    }
+
+    private void LoseEquipmentAbility()
+    {
+        switch (equipmentAbility)
+        {
+            case (Ability.NONE):
+                return;
+            case (Ability.SwiftStrike):
+                skill.GetManaCost = skill.GetSinisterPossessionManaCost;
+                break;
+            case (Ability.StormThrust):
+                skill.GetEnemyStatusEffect = StatusEffect.DefenseDOWN;
+                skill.GetStatusEffectName = "Defense Down";
+                skill.GetStatusDescription = "Lowered Defense.";
+                skill.GetStatusDuration = 15.0f;
+                break;
+            case (Ability.BurnStatus):
+                basicAttack.GetHasBurnStatus = false;
+                break;
+            case (Ability.ReducedAutoAttack):
+                basicAttack.GetAutoAttackTime += 1.0f;
+                break;
+        }
     }
 
     public void ShowEquipmentStatInfo()

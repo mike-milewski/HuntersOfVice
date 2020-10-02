@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
 
 public class BasicAttack : MonoBehaviour
 {
@@ -38,14 +39,27 @@ public class BasicAttack : MonoBehaviour
     private ParticleSystem HitParticle;
 
     [SerializeField]
+    private GameObject StatusEffectIcon = null;
+
+    [SerializeField]
+    private Sprite StatusEffectSprite = null;
+
+    private Transform StatusEffectIconTrans = null, TextHolder = null;
+
+    [SerializeField]
     private PlayerElement playerElement;
+
+    [SerializeField]
+    private bool HasBurnStatusEffect;
 
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
 
     private float AttackDistance;
 
-    private Vector3 MousePos;
+    private Vector3 MousePos, TargetPosition;
+
+    private Quaternion LookDir;
 
     private RaycastHit hit;
 
@@ -70,6 +84,18 @@ public class BasicAttack : MonoBehaviour
         set
         {
             AttackRange = value;
+        }
+    }
+
+    public bool GetHasBurnStatus
+    {
+        get
+        {
+            return HasBurnStatusEffect;
+        }
+        set
+        {
+            HasBurnStatusEffect = value;
         }
     }
 
@@ -218,10 +244,10 @@ public class BasicAttack : MonoBehaviour
                 }
                 if (AutoAttackTime >= AttackDelay && Target != null && !SkillsManager.Instance.GetActivatedSkill)
                 {
-                    Vector3 TargetPosition = new Vector3(Target.transform.position.x - this.transform.position.x, 0, 
+                    TargetPosition = new Vector3(Target.transform.position.x - this.transform.position.x, 0, 
                                                          Target.transform.position.z - this.transform.position.z).normalized;
 
-                    Quaternion LookDir = Quaternion.LookRotation(TargetPosition);
+                    LookDir = Quaternion.LookRotation(TargetPosition);
 
                     if(this.GetComponent<Animator>().GetFloat("Speed") < 1)
                     {
@@ -503,7 +529,16 @@ public class BasicAttack : MonoBehaviour
         }
         #endregion
 
-        if(Target.GetAI != null)
+        if (HasBurnStatusEffect)
+        {
+            if (Random.value * 100 <= 100)
+            {
+                if(!CheckStatusEffects())
+                Status();
+            }
+        }
+
+        if (Target.GetAI != null)
         {
             if (Target.GetAI.GetStates != States.Skill && Target.GetAI.GetStates != States.ApplyingAttack && Target.GetAI.GetStates != States.SkillAnimation &&
                 !CheckAbsorptions())
@@ -577,6 +612,60 @@ public class BasicAttack : MonoBehaviour
             }
         }
         return Absorption;
+    }
+
+    private TextMeshProUGUI Status()
+    {
+        TextHolder = Target.GetUI;
+
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Burning";
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = StatusEffectSprite;
+
+        ApplyStatusEffect();
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void ApplyStatusEffect()
+    {
+        StatusEffectIconTrans = Target.GetDebuffTransform;
+
+        StatusEffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+        StatusEffectIcon.SetActive(true);
+
+        StatusEffectIcon.transform.SetParent(StatusEffectIconTrans, false);
+
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = StatusEffectSprite;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetHasBurnStatus = true;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.DamageOverTime;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = character.GetComponent<PlayerController>();
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = StatusEffectSprite;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().BurnStatus();
+    }
+
+    private bool CheckStatusEffects()
+    {
+        bool BurnStatus = false;
+
+        foreach(EnemyStatusIcon enemystatus in Target.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if(enemystatus.GetStatusEffect == StatusEffect.DamageOverTime)
+            {
+                BurnStatus = true;
+            }
+        }
+
+        return BurnStatus;
     }
 
     public void HitParticleEffect()
