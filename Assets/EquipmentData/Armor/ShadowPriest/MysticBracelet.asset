@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Mystic Bracelet
   Element: 0
-  StatIncrease: 0
-  BuyValue: 15
+  StatIncrease: 2
+  BuyValue: 100

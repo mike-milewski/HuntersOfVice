@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Iron Rod
   Element: 2
-  StatIncrease: 0
+  StatIncrease: 5
   BuyValue: 10

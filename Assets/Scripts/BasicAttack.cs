@@ -50,7 +50,7 @@ public class BasicAttack : MonoBehaviour
     private PlayerElement playerElement;
 
     [SerializeField]
-    private bool HasBurnStatusEffect;
+    private bool HasBurnStatusEffect, HasSlowStatusEffect;
 
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
@@ -96,6 +96,18 @@ public class BasicAttack : MonoBehaviour
         set
         {
             HasBurnStatusEffect = value;
+        }
+    }
+
+    public bool GetHasSlowStatus
+    {
+        get
+        {
+            return HasSlowStatusEffect;
+        }
+        set
+        {
+            HasSlowStatusEffect = value;
         }
     }
 
@@ -531,10 +543,12 @@ public class BasicAttack : MonoBehaviour
 
         if (HasBurnStatusEffect)
         {
-            if (Random.value * 100 <= 100)
+            if (Random.value * 100 <= 10)
             {
-                if(!CheckStatusEffects())
-                Status();
+                if(!CheckBurnStatusEffect())
+                {
+                    BurningStatus();
+                }
             }
         }
 
@@ -614,7 +628,7 @@ public class BasicAttack : MonoBehaviour
         return Absorption;
     }
 
-    private TextMeshProUGUI Status()
+    private TextMeshProUGUI BurningStatus()
     {
         TextHolder = Target.GetUI;
 
@@ -653,7 +667,7 @@ public class BasicAttack : MonoBehaviour
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().BurnStatus();
     }
 
-    private bool CheckStatusEffects()
+    private bool CheckBurnStatusEffect()
     {
         bool BurnStatus = false;
 

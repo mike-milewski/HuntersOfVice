@@ -405,6 +405,10 @@ public class PlayerAnimations : MonoBehaviour
             {
                 SoundManager.Instance.RightFootStep();
             }
+            else if(hit.collider.tag == "Rock")
+            {
+                SoundManager.Instance.StoneStep();
+            }
             else
             {
                 SoundManager.Instance.WoodStep();
@@ -420,7 +424,11 @@ public class PlayerAnimations : MonoBehaviour
         {
             if (hit.collider.tag == "Grass")
             {
-                SoundManager.Instance.LeftFootStep();
+                SoundManager.Instance.RightFootStep();
+            }
+            else if (hit.collider.tag == "Rock")
+            {
+                SoundManager.Instance.StoneStep();
             }
             else
             {

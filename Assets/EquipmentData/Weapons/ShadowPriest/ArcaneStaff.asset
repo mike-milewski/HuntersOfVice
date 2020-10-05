@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Arcane Staff
   Element: 2
-  StatIncrease: 0
-  BuyValue: 150
+  StatIncrease: 10
+  BuyValue: 15

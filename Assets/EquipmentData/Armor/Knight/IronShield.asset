@@ -15,4 +15,4 @@ MonoBehaviour:
   EquipmentName: Iron Shield
   Element: 0
   StatIncrease: 2
-  BuyValue: 40
+  BuyValue: 100

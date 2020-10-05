@@ -228,4 +228,10 @@ public class SoundManager : MonoBehaviour
         if (!settings.MuteAudio)
             audiosource[1].PlayOneShot(audioclips[29]);
     }
+
+    public void StoneStep()
+    {
+        if (!settings.MuteAudio)
+            audiosource[1].PlayOneShot(audioclips[30]);
+    }
 }

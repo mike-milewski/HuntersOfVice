@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Steel Blade
   Element: 1
-  StatIncrease: 20
-  BuyValue: 100
+  StatIncrease: 21
+  BuyValue: 600

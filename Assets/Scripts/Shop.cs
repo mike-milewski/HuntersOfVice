@@ -537,13 +537,15 @@ public class Shop : MonoBehaviour
                     EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
                     EquipmentRewardInfoText.text = "<size=12>" + "<u>" + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease;
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
             }
             if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 2)
@@ -555,7 +557,8 @@ public class Shop : MonoBehaviour
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
@@ -563,7 +566,8 @@ public class Shop : MonoBehaviour
                                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
                                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
                                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease;
+                                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease +
+                                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
             }
             if (KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 3)
@@ -577,7 +581,8 @@ public class Shop : MonoBehaviour
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
@@ -587,7 +592,8 @@ public class Shop : MonoBehaviour
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease;
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
 
             }
@@ -603,7 +609,8 @@ public class Shop : MonoBehaviour
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
@@ -615,7 +622,8 @@ public class Shop : MonoBehaviour
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease;
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
 
             }
@@ -634,7 +642,8 @@ public class Shop : MonoBehaviour
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
-                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
@@ -648,7 +657,8 @@ public class Shop : MonoBehaviour
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
                                                 KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease;
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease +
+                                                KnightShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
             }
         }
@@ -661,13 +671,15 @@ public class Shop : MonoBehaviour
                     EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
                     EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease;
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
             }
             if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 2)
@@ -679,7 +691,8 @@ public class Shop : MonoBehaviour
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
@@ -687,7 +700,8 @@ public class Shop : MonoBehaviour
                                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
                                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
                                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
-                                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease;
+                                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease +
+                                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
             }
             if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 3)
@@ -701,7 +715,8 @@ public class Shop : MonoBehaviour
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
@@ -711,7 +726,8 @@ public class Shop : MonoBehaviour
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease;
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
 
             }
@@ -728,7 +744,8 @@ public class Shop : MonoBehaviour
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
@@ -740,7 +757,8 @@ public class Shop : MonoBehaviour
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease;
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
 
             }
@@ -759,7 +777,8 @@ public class Shop : MonoBehaviour
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
-                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element;
+                                                "Element: " + ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
                 else
                 {
@@ -773,7 +792,8 @@ public class Shop : MonoBehaviour
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
-                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease;
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease +
+                                                ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
             }
         }

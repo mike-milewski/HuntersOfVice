@@ -7,7 +7,7 @@ public enum EquipmentType { Weapon, Armor }
 
 public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 
-public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack }
+public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity }
 
 [System.Serializable]
 public class StatusType
@@ -562,7 +562,7 @@ public class Equipment : MonoBehaviour
         return EquipmentInfoText;
     }
 
-    private string EquipmentAbilityText()
+    public string EquipmentAbilityText()
     {
         string skillText = "";
 
@@ -575,10 +575,16 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Storm Thrust now applies the Stun status effect instead with a 5 second duration." + "</color> ";
                 break;
             case (Ability.BurnStatus):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack has a 10% of inflicting the Burning status effect." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack has a 10% chance of inflicting the Burning status effect." + "</color> ";
                 break;
             case (Ability.ReducedAutoAttack):
                 skillText = "\n\n" + "<#EFDFB8>" + "Reduces auto-attack time by 1 second." + "</color> ";
+                break;
+            case (Ability.SlowStatus):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack has a 10% chance of inflicting the Slowed status effect." + "</color> ";
+                break;
+            case (Ability.Tenacity):
+                skillText = "\n\n" + "<#EFDFB8>" + "Tenacity increases strength by 30% instead." + "</color> ";
                 break;
         }
 
@@ -606,6 +612,13 @@ public class Equipment : MonoBehaviour
             case (Ability.ReducedAutoAttack):
                 basicAttack.GetAutoAttackTime -= 1.0f;
                 break;
+            case (Ability.SlowStatus):
+                basicAttack.GetHasSlowStatus = true;
+                break;
+            case (Ability.Tenacity):
+                skill.GetStatusEffectPotency = 30;
+                skill.GetSkillDescription = "Increases strength by 30%";
+                break;
         }
     }
 
@@ -629,6 +642,13 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.ReducedAutoAttack):
                 basicAttack.GetAutoAttackTime += 1.0f;
+                break;
+            case (Ability.SlowStatus):
+                basicAttack.GetHasSlowStatus = false;
+                break;
+            case (Ability.Tenacity):
+                skill.GetStatusEffectPotency = 10;
+                skill.GetSkillDescription = "Increases strength by 10%";
                 break;
         }
     }

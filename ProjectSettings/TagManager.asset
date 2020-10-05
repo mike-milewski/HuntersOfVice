@@ -8,6 +8,7 @@ TagManager:
   - FxTemporaire
   - Grass
   - Bridge
+  - Rock
   layers:
   - Default
   - TransparentFX
