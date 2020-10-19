@@ -16,7 +16,7 @@ public class TreasureChest : MonoBehaviour
     private Equipment[] equipments;
 
     [SerializeField]
-    private Transform ItemTransform, ItemMessageTransform;
+    private Transform WeaponTransform, ArmorTransform, ItemMessageTransform;
 
     [SerializeField]
     private MeshRenderer[] meshRenderer;
@@ -60,7 +60,15 @@ public class TreasureChest : MonoBehaviour
 
         if(Knight.gameObject.activeInHierarchy)
         {
-            equipments[0].transform.SetParent(ItemTransform, true);
+            switch(equipments[0].GetEquipmentType)
+            {
+                case (EquipmentType.Weapon):
+                    equipments[0].transform.SetParent(WeaponTransform, true);
+                    break;
+                default:
+                    equipments[0].transform.SetParent(ArmorTransform, true);
+                    break;
+            }
             equipments[0].transform.localScale = new Vector3(1, 1, 1);
             equipments[0].transform.rotation = Quaternion.Euler(0, 0, 0);
 
@@ -68,7 +76,15 @@ public class TreasureChest : MonoBehaviour
         }
         else if(ShadowPriest.gameObject.activeInHierarchy)
         {
-            equipments[1].transform.SetParent(ItemTransform, true);
+            switch (equipments[1].GetEquipmentType)
+            {
+                case (EquipmentType.Weapon):
+                    equipments[1].transform.SetParent(WeaponTransform, true);
+                    break;
+                default:
+                    equipments[1].transform.SetParent(ArmorTransform, true);
+                    break;
+            }
             equipments[1].transform.localScale = new Vector3(1, 1, 1);
             equipments[1].transform.rotation = Quaternion.Euler(0, 0, 0);
 

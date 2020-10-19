@@ -1718,7 +1718,8 @@ public class EnemySkills : MonoBehaviour
         CreateHitParticleEffect();
 
         potency = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetEnemyElement == EnemyElement.Magic ? 
-                  character.CharacterIntelligence : character.CharacterStrength;
+                  character.CharacterIntelligence + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency : 
+                  character.CharacterStrength + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency;
 
         float Critical = character.GetCriticalChance;
 

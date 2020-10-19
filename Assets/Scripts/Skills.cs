@@ -1291,14 +1291,14 @@ public class Skills : StatusEffects
 
     private void FaceEnemy()
     {
-        if(GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        if(GetCharacter.GetComponent<BasicAttack>().GetTarget != null && GetCharacter.GetComponent<PlayerAnimations>().GetAnimator.GetFloat("Speed") <= 0)
         {
             Vector3 Distance = new Vector3(GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position.x - GetCharacter.transform.position.x, 0,
-                                       GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position.z - GetCharacter.transform.position.z).normalized;
+                                           GetCharacter.GetComponent<BasicAttack>().GetTarget.transform.position.z - GetCharacter.transform.position.z).normalized;
 
             Quaternion Look = Quaternion.LookRotation(Distance);
 
-            GetCharacter.transform.rotation = Quaternion.Slerp(GetCharacter.transform.rotation, Look, 10 * Time.deltaTime);
+            GetCharacter.transform.rotation = Quaternion.Slerp(GetCharacter.transform.rotation, Look, 10 * Time.deltaTime).normalized;
         }
     }
 

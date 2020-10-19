@@ -64,6 +64,7 @@ public class ObstacleDamageRadius : MonoBehaviour
             case (ObstacleShapes.Rectangle):
                 var Rectangle = DamageShapeRectangle;
                 DamageShape.GetComponent<Image>().sprite = Rectangle;
+                SetBoxColliderSize();
                 break;
         }
 
@@ -71,7 +72,7 @@ public class ObstacleDamageRadius : MonoBehaviour
         {
             Vector3 Trans = new Vector3(gameObject.transform.position.x, transform.position.y, gameObject.transform.position.z);
 
-            transform.position = Trans + gameObject.transform.forward * 1.6f;
+            transform.position = Trans + gameObject.transform.up * 8f;
         }
         if (shapes == ObstacleShapes.Circle)
         {
@@ -130,11 +131,16 @@ public class ObstacleDamageRadius : MonoBehaviour
                     DisableRadius();
                     break;
                 case (ObstacleShapes.Rectangle):
-                    CheckIfPlayerIsInRectangleRadius(DamageShape.transform.position, new Vector3(SizeDeltaX, SizeDeltaY, 1.7f), transform.rotation);
+                    InvokeEffect();
                     DisableRadius();
                     break;
             }
         }
+    }
+
+    private void SetBoxColliderSize()
+    {
+        gameObject.GetComponent<BoxCollider>().size = new Vector2(SizeDeltaX, SizeDeltaY);
     }
 
     private void IncreaseCircle()
@@ -157,11 +163,11 @@ public class ObstacleDamageRadius : MonoBehaviour
 
         if (DamageShape.rectTransform.sizeDelta.x < SizeDeltaX)
         {
-            DamageShape.rectTransform.sizeDelta += new Vector2(100, 0) * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(100, 0) * 13 * Time.deltaTime;
         }
         if (DamageShape.rectTransform.sizeDelta.y < SizeDeltaY)
         {
-            DamageShape.rectTransform.sizeDelta += new Vector2(0, 100) * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(0, 100) * 13 * Time.deltaTime;
         }
     }
 
@@ -173,24 +179,6 @@ public class ObstacleDamageRadius : MonoBehaviour
     private void ResetSizeDelta()
     {
         DamageShape.rectTransform.sizeDelta = new Vector2(0, 0);
-    }
-
-    private void CheckIfPlayerIsInRectangleRadius(Vector3 center, Vector3 radius, Quaternion rotation)
-    {
-        Collider[] hitColliders = Physics.OverlapBox(center, radius, rotation);
-
-        for (int i = 0; i < hitColliders.Length; i++)
-        {
-            if (hitColliders[i].GetComponent<PlayerController>())
-            {
-                IsInRadius = true;
-                PlayerTarget = hitColliders[i].GetComponent<Character>();
-                InvokeEffect();
-            }
-            else return;
-        }
-        InvokeParticle();
-        DisableRadius();
     }
 
     private void CheckIfPlayerIsInCircleRadius(Vector3 center, float radius)
@@ -353,5 +341,25 @@ public class ObstacleDamageRadius : MonoBehaviour
         }
 
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.GetComponent<PlayerController>())
+        {
+            PlayerTarget = other.GetComponent<Character>();
+
+            IsInRadius = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<PlayerController>())
+        {
+            PlayerTarget = null;
+
+            IsInRadius = false;
+        }
     }
 }

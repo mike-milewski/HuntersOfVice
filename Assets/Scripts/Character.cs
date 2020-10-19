@@ -193,7 +193,7 @@ public class Character : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody>();
     }
 
-    private void Awake()
+    private void OnEnable()
     {
         var cData = Instantiate(CharData);
 

@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
 
     [SerializeField]
+    private ChangeSpawnPointLocation changeSpawnPointLocation = null;
+
+    [SerializeField]
     private AudioChanger audioChanger;
 
     [SerializeField]
@@ -69,6 +72,18 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private EventSystem eventsystem;
+
+    public ChangeSpawnPointLocation GetChangeSpawnPointLocation
+    {
+        get
+        {
+            return changeSpawnPointLocation;
+        }
+        set
+        {
+            changeSpawnPointLocation = value;
+        }
+    }
 
     public Shop GetShop
     {
@@ -485,6 +500,9 @@ public class GameManager : MonoBehaviour
                     IsInInventory = false;
                     InventoryToggle = false;
                     InventoryPanelAnimator.SetBool("FadeIn", false);
+                    MonsterBookAnimator.SetBool("FadeIn", false);
+                    MonsterToggle = false;
+                    monsterbook.SetIsSelectedToFalse();
                 }
                 StartCoroutine(SetMenuAnimationToFalse());
             }
@@ -978,6 +996,12 @@ public class GameManager : MonoBehaviour
 
             ShadowPriest.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
             ShadowPriest.GetComponent<PlayerAnimations>().GetAnimator.ResetTrigger("Damaged");
+        }
+
+        if(changeSpawnPointLocation != null)
+        {
+            changeSpawnPointLocation.EnableWallTrigger();
+            changeSpawnPointLocation.DisableDamageRadii();
         }
     }
 

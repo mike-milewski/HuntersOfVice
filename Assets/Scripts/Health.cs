@@ -297,4 +297,11 @@ public class Health : MonoBehaviour
 
         FillBarTwo.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
     }
+
+    public void ResetHealthAnimation()
+    {
+        HealthAnimationObj.GetComponent<LowHpAnimation>().GetAnimator.SetBool("LowHealth", false);
+
+        HealthAnimationObj.GetComponent<LowHpAnimation>().GetAnimator.Play("HighHealth", -1, 0f);
+    }
 }

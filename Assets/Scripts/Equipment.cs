@@ -7,7 +7,7 @@ public enum EquipmentType { Weapon, Armor }
 
 public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 
-public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity }
+public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse }
 
 [System.Serializable]
 public class StatusType
@@ -338,7 +338,7 @@ public class Equipment : MonoBehaviour
             else
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + EquipmentAbilityText() + EquipmentAbilityText() +
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + EquipmentAbilityText() +
                                         "\n\n" + "Sell Value: " + SellValue();
             }
         }
@@ -586,6 +586,9 @@ public class Equipment : MonoBehaviour
             case (Ability.Tenacity):
                 skillText = "\n\n" + "<#EFDFB8>" + "Tenacity increases strength by 30% instead." + "</color> ";
                 break;
+            case (Ability.ManaPulse):
+                skillText = "\n\n" + "<#EFDFB8>" + "Ether discharges a wave that deals damage to all targets in range with a power of 30." + "</color> ";
+                break;
         }
 
         return skillText;
@@ -619,6 +622,8 @@ public class Equipment : MonoBehaviour
                 skill.GetStatusEffectPotency = 30;
                 skill.GetSkillDescription = "Increases strength by 30%";
                 break;
+            case (Ability.ManaPulse):
+                break;
         }
     }
 
@@ -649,6 +654,8 @@ public class Equipment : MonoBehaviour
             case (Ability.Tenacity):
                 skill.GetStatusEffectPotency = 10;
                 skill.GetSkillDescription = "Increases strength by 10%";
+                break;
+            case (Ability.ManaPulse):
                 break;
         }
     }

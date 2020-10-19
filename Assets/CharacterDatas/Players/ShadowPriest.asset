@@ -22,8 +22,8 @@ MonoBehaviour:
   Mana: 50
   Strength: 12
   Defense: 17
-  Intelligence: 22
-  HpIncrease: 25
-  MpIncrease: 26
+  Intelligence: 25
+  HpIncrease: 28
+  MpIncrease: 29
   CriticalHitChance: 5
   MoveSpeed: 4.5

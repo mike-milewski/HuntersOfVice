@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weaknesses: 05000000
   Resistances: 01000000
-  Immunities: 00000000
-  Absorbtions: 00000000
+  Immunities: 
+  Absorbtions: 
   CharacterName: Rock Spirit
   CharacterLevel: 3
   Health: 1
@@ -26,4 +26,7 @@ MonoBehaviour:
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5
+  Coins: 0
+  EXP: 0
   MoveSpeed: 0
+  CheckedData: 0

@@ -23,11 +23,6 @@ public class MonsterInformation : MonoBehaviour
     [SerializeField]
     private bool IsSelected;
 
-    private void Awake()
-    {
-        ParentObj = transform.parent.parent.parent.gameObject;
-    }
-
     public Character GetCharacter
     {
         get
@@ -78,18 +73,19 @@ public class MonsterInformation : MonoBehaviour
 
     public void ShowMonsterInfo()
     {
+        ParentObj = transform.parent.parent.parent.gameObject;
+
         IsSelected = true;
 
         ShowLevelButtons();
 
-        ParentObj.GetComponent<MonsterBook>().GetMonsterInfoTxt.text = "<u>" + characterData[0].CharacterName + "</u>" + "\n\n" + "<size=12>" + "Level: " +
+        ParentObj.GetComponent<MonsterBook>().GetMonsterInfoTxt.text = "<u>" + characterData[0].CharacterName + "</u>" + "\n\n" + "<size=10>" + "Level: " +
                                                                         characterData[0].CharacterLevel + "\n" + "HP: " + characterData[0].Health +
                                                                         "\n" + "Strength: " + characterData[0].Strength + "\n" + "Defense: " +
                                                                         characterData[0].Defense + "\n" + "Intelligence: " +
-                                                                        characterData[0].Intelligence + "\n\n" + GetWeaknesses() + GetResistances() + 
+                                                                        characterData[0].Intelligence + "\n\n" + GetWeaknesses() + GetResistances() +
                                                                         GetImmunities() + GetAbsorbtions() + "\n" + "EXP: " +
-                                                                        character.GetComponent<Enemy>().GetExperiencePoints + "\n" + "Coins: " +
-                                                                        character.GetComponent<Enemy>().GetCoins;
+                                                                        characterData[0].EXP + "\n" + "Coins: " + characterData[0].Coins + "\n\n" + "Drop: " + ItemDrops();
     }
 
     public void ShowLevelButtons()
@@ -214,5 +210,21 @@ public class MonsterInformation : MonoBehaviour
         }
 
         return absorb;
+    }
+
+    private string ItemDrops()
+    {
+        string items = "";
+
+        if (characterData[0].materialdata != null)
+        {
+            items = characterData[0].materialdata.MaterialName + " - " + characterData[0].MaterialDataDropChance + "%";
+        }
+        else
+        {
+            items = "None";
+        }
+
+        return items;
     }
 }

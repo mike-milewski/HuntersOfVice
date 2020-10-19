@@ -31,6 +31,8 @@ public class EnemyAnimations : MonoBehaviour
     [SerializeField]
     private ChangeEnemyMaterial changeEnemyMaterial = null;
 
+    private bool CheckedForPuzzle;
+
 	private const string IDLE	= "Idle";
 	private const string MOVE	= "Move";
 	private const string ATTACK	= "Attack";
@@ -255,6 +257,28 @@ public class EnemyAnimations : MonoBehaviour
     public void IncrementEnemyPuzzleCount()
     {
         if(AI.GetIsAPuzzleComponent)
-        puzzle.EnemyPuzzleType();
+        {
+            if (!CheckedForPuzzle)
+            {
+                puzzle.EnemyPuzzleType();
+                CheckedForPuzzle = true;
+            }
+        }
+        else if(AI.GetIsABushPuzzleComponent)
+        {
+            if(!CheckedForPuzzle)
+            {
+                puzzle.BushPuzzle();
+                CheckedForPuzzle = true;
+            }
+        }
+    }
+
+    public void SpawnEnemy()
+    {
+        if (AI.GetIsATreasurePuzzleComponent)
+        {
+            puzzle.SpawnNewEnemy();
+        }  
     }
 }

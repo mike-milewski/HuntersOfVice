@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
   m_Name: Puck
   m_EditorClassIdentifier: 
-  Weaknesses: 00000000
-  Resistances: 00000000
-  Immunities: 00000000
-  Absorbtions: 00000000
+  Weaknesses: 
+  Resistances: 
+  Immunities: 
+  Absorbtions: 
   CharacterName: Puck, Sylvan's Chosen
   CharacterLevel: 5
   Health: 1000
@@ -27,3 +27,4 @@ MonoBehaviour:
   MpIncrease: 0
   CriticalHitChance: 5
   MoveSpeed: 0
+  CheckedData: 0

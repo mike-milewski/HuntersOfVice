@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
+  m_Name: GiantBeeLv2
+  m_EditorClassIdentifier: 
+  Weaknesses: 05000000
+  Resistances: 00000000
+  Immunities: 00000000
+  Absorbtions: 00000000
+  CharacterName: Giant Bee
+  CharacterLevel: 2
+  Health: 180
+  Mana: 0
+  Strength: 24
+  Defense: 11
+  Intelligence: 11
+  HpIncrease: 0
+  MpIncrease: 0
+  CriticalHitChance: 5
+  Coins: 9
+  EXP: 18
+  MaterialDataDropChance: 20
+  MoveSpeed: 3
+  CheckedData: 0
+  materialdata: {fileID: 11400000, guid: b4811e09ed0a2c34caac46e4fc16ff24, type: 2}

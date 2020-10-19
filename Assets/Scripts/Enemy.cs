@@ -317,8 +317,8 @@ public class Enemy : MonoBehaviour
 
     public void GetEnemyInfo()
     {
-        EnemyInfo.text = "LV: " + character.Level + " " + character.characterName;
-        LocalEnemyInfo.text = "LV: " + character.Level + " " + character.characterName;
+        EnemyInfo.text = "LV: " + character.GetCharacterData.CharacterLevel + " " + character.characterName;
+        LocalEnemyInfo.text = "LV: " + character.GetCharacterData.CharacterLevel + " " + character.characterName;
     }
 
     public void ReturnCoins()

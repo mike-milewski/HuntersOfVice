@@ -58,6 +58,9 @@ public class EnemyAI : MonoBehaviour
     private Character character;
 
     [SerializeField]
+    private CharacterData[] characterData;
+
+    [SerializeField]
     private Character Knight, ShadowPriest;
 
     [SerializeField]
@@ -77,6 +80,9 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField]
     private EnemyAnimations Anim;
+
+    [SerializeField]
+    private EnemyConnection enemyConnection = null;
 
     [SerializeField]
     private Transform[] Waypoints;
@@ -112,7 +118,7 @@ public class EnemyAI : MonoBehaviour
     private int WaypointIndex;
 
     [SerializeField]
-    private bool IsHostile, IsAnAdd, IsAPuzzleComponent;
+    private bool IsHostile, IsAnAdd, IsAPuzzleComponent, IsAbushPuzzleComponent, IsATreasurePuzzleComponent;
 
     [SerializeField]
     private bool IsUsingAnimator;
@@ -215,6 +221,30 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    public bool GetIsABushPuzzleComponent
+    {
+        get
+        {
+            return IsAbushPuzzleComponent;
+        }
+        set
+        {
+            IsAbushPuzzleComponent = value;
+        }
+    }
+
+    public bool GetIsATreasurePuzzleComponent
+    {
+        get
+        {
+            return IsATreasurePuzzleComponent;
+        }
+        set
+        {
+            IsATreasurePuzzleComponent = value;
+        }
+    }
+
     public void IncreaseArray()
     {
         StateArrayIndex++;
@@ -226,6 +256,8 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
+        character.GetCharacterData.CheckedData = false;
+
         if(IsAnAdd)
         {
             EnemyTriggerSphere.gameObject.SetActive(false);
@@ -585,6 +617,8 @@ public class EnemyAI : MonoBehaviour
 
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
 
+        enemy.GetHealth.ResetHealthAnimation();
+
         enemy.GetLocalHealth.gameObject.SetActive(false);
 
         enemySkills.GetSkillBar.gameObject.SetActive(false);
@@ -646,10 +680,15 @@ public class EnemyAI : MonoBehaviour
             monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
 
             monsterinfo.GetCharacterData.Add(character.GetCharacterData);
+
+            character.GetCharacterData.CheckedData = true;
         }
         else
         {
-            CheckForSameEnemyDataLevel();
+            if(!CheckForSameEnemyDataLevel())
+            {
+                return;
+            }
 
             if (CheckForSameEnemyDataName())
             {
@@ -673,6 +712,8 @@ public class EnemyAI : MonoBehaviour
                 monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
 
                 monsterinfo.GetCharacterData.Add(character.GetCharacterData);
+
+                character.GetCharacterData.CheckedData = true;
             }
         }
     }
@@ -727,16 +768,23 @@ public class EnemyAI : MonoBehaviour
         return SameName;
     }
 
-    private void CheckForSameEnemyDataLevel()
+    private bool CheckForSameEnemyDataLevel()
     {
+        bool SameLevel = false;
+
         foreach (MonsterInformation mi in monsterBook.GetMonsterTransform.GetComponentsInChildren<MonsterInformation>(true))
         {
-            if (mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName &&
-                mi.GetCharacter.GetCharacterData.CharacterLevel != character.GetCharacterData.CharacterLevel)
+            if (character.GetCharacterData.CheckedData)
             {
-                if(mi.GetCharacterData.Count < monsterBook.GetMonsterLevelButtons.Length)
+                SameLevel = true;
+            }
+            else
+            {
+                if (mi.GetCharacterData.Count < monsterBook.GetMonsterLevelButtons.Length)
                 {
                     mi.GetCharacterData.Add(character.GetCharacterData);
+                    character.GetCharacterData.CheckedData = true;
+                    GetMonsterEntryText();
                 }
             }
 
@@ -745,12 +793,34 @@ public class EnemyAI : MonoBehaviour
                 mi.ShowLevelButtons();
             }
         }
+        return SameLevel;
     }
 
     //Resets the enemy's stats when enabled in the scene.
     private void ResetStats()
     {
         StateArrayIndex = 0;
+
+        if(enemyConnection != null)
+        {
+            if(enemyConnection.GetIsInsideCollider)
+            {
+                PlayerEntry = true;
+                PlayerTarget = enemyConnection.GetCharacter;
+                states = States.Chase;
+                enemy.GetExperience = enemyConnection.GetCharacter.GetComponent<Experience>();
+            }
+            else
+            {
+                states = States.Patrol;
+            }
+        }
+        else
+        {
+            EnemyTriggerSphere.enabled = true;
+
+            states = States.Patrol;
+        }
 
         if(!IsAnAdd)
         {
@@ -769,31 +839,20 @@ public class EnemyAI : MonoBehaviour
                 EnemyTriggerSphere.enabled = false;
             }
 
-            enemy.GetHealth.IncreaseHealth(character.MaxHealth);
             enemy.GetLocalHealth.gameObject.SetActive(true);
+            enemy.GetHealth.IncreaseHealth(character.MaxHealth);
             enemy.GetLocalHealthInfo();
+            enemy.GetEnemyInfo();
 
             this.gameObject.GetComponent<BoxCollider>().enabled = true;
             character.GetRigidbody.useGravity = true;
-
-            states = States.Patrol;
         }
         else
         {
-            if (IsHostile)
-            {
-                ThreatPic.sprite = ThreatSprite;
-                EnemyTriggerSphere.enabled = true;
-            }
-            else
-            {
-                ThreatPic.sprite = DocileSprite;
-                EnemyTriggerSphere.enabled = false;
-            }
-
             enemy.GetHealth.IncreaseHealth(character.MaxHealth);
             enemy.GetLocalHealth.gameObject.SetActive(true);
             enemy.GetLocalHealthInfo();
+            enemy.GetEnemyInfo();
 
             this.gameObject.GetComponent<BoxCollider>().enabled = true;
             character.GetRigidbody.useGravity = true;
@@ -841,11 +900,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (states != States.Patrol)
         {
-            if (other.gameObject.GetComponent<PlayerController>() && IsHostile)
-            {
-                EndBattle();
-            }
-            if (other.gameObject.GetComponent<PlayerController>() && !IsHostile)
+            if (other.gameObject.GetComponent<PlayerController>())
             {
                 EndBattle();
             }
