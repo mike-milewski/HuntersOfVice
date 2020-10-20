@@ -15,6 +15,8 @@ public enum Skill
     StunningStinger,
     //Bunnykins Skill
     Hop,
+    //SylvanSpider Skills
+    SilkyFang,
     //GolemFragment Skills
     Slam,
     GaiasProwess,
@@ -39,7 +41,7 @@ public enum Skill
 };
 
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                     IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP };
+                     IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP, T, TE, TES, TEST, Slowed };
 
 public enum EnemyElement { NONE, Fire, Water, Wind, Earth, Light, Dark, Magic };
 
@@ -633,6 +635,14 @@ public class EnemySkills : MonoBehaviour
                             GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                         break;
                     #endregion
+
+                    #region Sylvan Spider Skills
+                    case (Skill.SilkyFang):
+                        SilkyFang(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                                  GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetAttackRange,
+                                  GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                        #endregion
                 }
             }
         }
@@ -1033,6 +1043,20 @@ public class EnemySkills : MonoBehaviour
         if (enemyAI.GetPlayerTarget != null)
         {
             FungiBumpAnimation();
+        }
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region Silky Fang
+    public void SilkyFang(int potency, float attackRange, string skillname)
+    {
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        if (enemyAI.GetPlayerTarget != null)
+        {
+            AnimatorSkill1();
         }
         ActiveSkill = false;
     }

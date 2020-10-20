@@ -10,21 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
-  m_Name: GolemFragment
+  m_Name: RockSpirit
   m_EditorClassIdentifier: 
   Weaknesses: 05000000
   Resistances: 01000000
   Immunities: 
   Absorbtions: 
-  CharacterName: Golem Fragment
-  CharacterLevel: 5
-  Health: 500
+  CharacterName: Rock Spirit
+  CharacterLevel: 3
+  Health: 1
   Mana: 0
-  Strength: 20
-  Defense: 15
-  Intelligence: 3
+  Strength: 25
+  Defense: 18
+  Intelligence: 30
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5
+  Coins: 0
+  EXP: 0
+  MaterialDataDropChance: 0
   MoveSpeed: 0
   CheckedData: 0
+  materialdata: {fileID: 0}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense, Aegis }
+                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense, Aegis, Slowed }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -203,6 +203,9 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.Stun):
                 CreateStunEffectParticle();
+                break;
+            case (EffectStatus.Slowed):
+                SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetMoveSpeed / 2;
                 break;
         }
     }
@@ -418,6 +421,9 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.Doom):
                 SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(-SkillsManager.Instance.GetCharacter.CurrentHealth);
+                break;
+            case (EffectStatus.Slowed):
+                SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetDefaultSpeed;
                 break;
         }
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();

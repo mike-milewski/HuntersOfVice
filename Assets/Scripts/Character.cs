@@ -18,6 +18,8 @@ public class Character : MonoBehaviour
     [SerializeField]
     private float MoveSpeed;
 
+    private float DefaultSpeed;
+
     [SerializeField]
     private string CharacterName;
 
@@ -163,6 +165,14 @@ public class Character : MonoBehaviour
         }
     }
 
+    public float GetDefaultSpeed
+    {
+        get
+        {
+            return DefaultSpeed;
+        }
+    }
+
     public Rigidbody GetRigidbody
     {
         get
@@ -206,6 +216,8 @@ public class Character : MonoBehaviour
         Intelligence = cData.Intelligence;
         CriticalHitChance = cData.CriticalHitChance;
         MoveSpeed = cData.MoveSpeed;
+
+        DefaultSpeed = MoveSpeed;
 
         weaknesses = cData.Weaknesses;
         resistances = cData.Resistances;

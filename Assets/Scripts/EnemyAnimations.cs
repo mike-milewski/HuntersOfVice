@@ -281,4 +281,9 @@ public class EnemyAnimations : MonoBehaviour
             puzzle.SpawnNewEnemy();
         }  
     }
+
+    public void CheckItem()
+    {
+        AI.CheckItemDrop();
+    }
 }

@@ -58,9 +58,6 @@ public class EnemyAI : MonoBehaviour
     private Character character;
 
     [SerializeField]
-    private CharacterData[] characterData;
-
-    [SerializeField]
     private Character Knight, ShadowPriest;
 
     [SerializeField]
@@ -108,12 +105,6 @@ public class EnemyAI : MonoBehaviour
     private float TimeToMove, DistanceToTarget;
 
     private bool StandingStill, PlayerEntry;
-
-    [SerializeField]
-    private Image ThreatPic;
-
-    [SerializeField]
-    private Sprite DocileSprite, ThreatSprite;
 
     private int WaypointIndex;
 
@@ -830,12 +821,10 @@ public class EnemyAI : MonoBehaviour
 
             if (IsHostile)
             {
-                ThreatPic.sprite = ThreatSprite;
                 EnemyTriggerSphere.enabled = true;
             }
             else
             {
-                ThreatPic.sprite = DocileSprite;
                 EnemyTriggerSphere.enabled = false;
             }
 
@@ -1098,5 +1087,13 @@ public class EnemyAI : MonoBehaviour
         MonsterEntryTxt.SetActive(true);
 
         MonsterEntryTxt.transform.SetParent(GameManager.Instance.GetMonsterEntryTransform, false);
+    }
+
+    public void CheckItemDrop()
+    {
+        if(gameObject.GetComponent<ItemDrop>())
+        {
+            gameObject.GetComponent<ItemDrop>().DropItem();
+        }
     }
 }

@@ -29,7 +29,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4642787788074294}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 9.071823, y: 14.831072, z: -63.323368}
+  m_LocalEulerAnglesHint: {x: 0.0000047188555, y: -0.0000032245184, z: -34.34582}
 --- !u!1 &1023828478263654
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +57,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023828478263654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.387}
+  m_LocalPosition: {x: 0, y: 0, z: 0.305}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224687718858340958}
@@ -184,7 +184,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!65 &65682214923017900
 BoxCollider:
@@ -236,7 +236,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 114608563224863254}
   enemyAnimations: {fileID: 114240702591557228}
+  puckAnimations: {fileID: 0}
+  runeGolemAnimations: {fileID: 0}
   enemyAI: {fileID: 114880966079448276}
+  puckAI: {fileID: 0}
+  runeGolemAI: {fileID: 0}
   health: {fileID: 114858683076657210}
   enemySkills: {fileID: 114265172899639790}
   enemy: {fileID: 114229555450686462}
@@ -250,8 +254,9 @@ MonoBehaviour:
   TargetedImage: {fileID: 114969598954128844}
   EnemyInfo: {fileID: 114348216417458504}
   LocalEnemyInfo: {fileID: 114487629168322208}
-  ExperiencePoints: 50
-  CoinAmount: 15
+  ExperiencePoints: 18
+  CoinAmount: 8
+  IsInanimateEnemy: 0
 --- !u!114 &114880966079448276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,13 +272,15 @@ MonoBehaviour:
   states: 0
   enemyType: 0
   aiStates:
-  - state: 3
-    SkillIndex: 0
-  - state: 3
+  - state: 4
     SkillIndex: 0
   - state: 4
     SkillIndex: 0
+  - state: 5
+    SkillIndex: 0
   character: {fileID: 114608563224863254}
+  Knight: {fileID: 0}
+  ShadowPriest: {fileID: 0}
   monsterBook: {fileID: 0}
   monsterInformation: {fileID: 114702138956978278, guid: 3b5ed524b56ab30458a90b74aebc013e,
     type: 3}
@@ -281,9 +288,11 @@ MonoBehaviour:
   enemy: {fileID: 114229555450686462}
   enemySkills: {fileID: 114265172899639790}
   Anim: {fileID: 114240702591557228}
+  enemyConnection: {fileID: 0}
   Waypoints:
   - {fileID: 0}
   - {fileID: 0}
+  OriginPoint: {fileID: 0}
   MoveSpeed: 3
   AttackRange: 2.5
   AttackDelay: 1.5
@@ -294,10 +303,14 @@ MonoBehaviour:
   HitParticle: {fileID: 198157547220164012, guid: 4961a16ba01e09547be3e1c9d16d5ad0,
     type: 3}
   TimeToMoveAgain: 3
-  ThreatPic: {fileID: 114756676791719972}
-  DocileSprite: {fileID: 21300000, guid: 1e1e9c17372152a42a972ac8f0074e6a, type: 3}
-  ThreatSprite: {fileID: 21300000, guid: 43a17ebdf749ab5499e13424f6a7b7fd, type: 3}
+  WayPointDistance: 20
+  PlayerDistance: 15
+  OuterAttackDistance: 5
   IsHostile: 1
+  IsAnAdd: 0
+  IsAPuzzleComponent: 0
+  IsAbushPuzzleComponent: 1
+  IsATreasurePuzzleComponent: 0
   IsUsingAnimator: 0
 --- !u!114 &114265172899639790
 MonoBehaviour:
@@ -329,21 +342,25 @@ MonoBehaviour:
     StatusDescription: Unable To Act
     SkillName: Stunning Stinger
     StatusDuration: 5
-    CastTime: 3
+    CastTime: 2
     SizeDeltaX: 12
     SizeDeltaY: 30
     ApplySkill: 1
     ShapeSize: {x: 0.85, y: 0.7, z: 0.7}
     AttackRange: 2.5
     StatusEffectPotency: 0
-    Potency: 28
+    Potency: 10
     IsBuff: 0
   character: {fileID: 114608563224863254}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114229555450686462}
   enemyAI: {fileID: 114880966079448276}
+  puckAI: {fileID: 0}
+  runeGolemAI: {fileID: 0}
   skillBar: {fileID: 114493978846615074}
   damageRadius: {fileID: 114048631002934456}
+  puckDamageRadius: {fileID: 0}
+  runeGolemDamageRadius: {fileID: 0}
   health: {fileID: 114858683076657210}
   ActiveSkill: 0
   DisruptedSkill: 0
@@ -384,7 +401,9 @@ MonoBehaviour:
   anim: {fileID: 111726338691668954}
   EnemyAnimator: {fileID: 0}
   animator: {fileID: 95734209269154556}
+  puzzle: {fileID: 0}
   AI: {fileID: 114880966079448276}
+  puckAI: {fileID: 0}
   enemyskills: {fileID: 114265172899639790}
   damageradius: {fileID: 114048631002934456}
   changeEnemyMaterial: {fileID: 114463153668081854}
@@ -403,8 +422,8 @@ MonoBehaviour:
   itemDrops:
   - materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
       type: 3}
-    materialData: {fileID: 11400000, guid: 5a17d6c3adb8f094587e6b4e04aa9528, type: 2}
-    DropChance: 100
+    materialData: {fileID: 11400000, guid: b4811e09ed0a2c34caac46e4fc16ff24, type: 2}
+    DropChance: 20
   materials: {fileID: 114981688024183722, guid: 12db12329a55bdd47885aecec096dd8f,
     type: 3}
   CanDropThroughPass: 0
@@ -819,7 +838,7 @@ Transform:
   - {fileID: 4352009052622362}
   m_Father: {fileID: 4224851340826148}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0.000008555072, y: 0.0000026937837, z: 57.126083}
+  m_LocalEulerAnglesHint: {x: 0.000008572223, y: -0.0000026388102, z: 22.538242}
 --- !u!1 &1134229249915384
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,7 +891,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1134229249915384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -924,7 +943,7 @@ Transform:
   - {fileID: 4642787788074294}
   m_Father: {fileID: 4549644435828676}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 1.1983544, y: -89.556244, z: -150.07709}
+  m_LocalEulerAnglesHint: {x: 2.4250884, y: -100.111595, z: 166.97836}
 --- !u!1 &1157721277493132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,7 +1080,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4224851340826148}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -0.5279119, y: 74.97945, z: -160.91301}
+  m_LocalEulerAnglesHint: {x: -0.5279281, y: 74.97947, z: 153.41063}
 --- !u!1 &1184721442167030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,7 +1110,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4748755150860974}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 1.0884371e-12, y: -1.2888163e-13, z: -6.752938}
+  m_LocalEulerAnglesHint: {x: -0.7693194, y: -14.839658, z: -20.1202}
 --- !u!1 &1184858600478936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,8 +1362,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.5, y: -64.87}
-  m_SizeDelta: {x: 97.43, y: 32.06}
+  m_AnchoredPosition: {x: -1.5, y: -62.28}
+  m_SizeDelta: {x: 97.43, y: 26.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222539913338711708
 CanvasRenderer:
@@ -1478,7 +1497,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310020785497278}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.3135, y: -0.049999952, z: -0}
+  m_LocalPosition: {x: 0.06, y: -0.049999952, z: 0.06}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4549644435828676}
@@ -1495,7 +1514,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1328705366961300
 GameObject:
@@ -1612,7 +1631,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4019297026939376}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -12.908674, y: -19.575415, z: -65.165306}
+  m_LocalEulerAnglesHint: {x: 10.81297, y: 14.173457, z: -36.606773}
 --- !u!1 &1358276189618464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,7 +1662,7 @@ Transform:
   - {fileID: 4893088070262082}
   m_Father: {fileID: 4001871042164966}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -4.2543767e-15, y: -8.964915e-15, z: 19.612873}
+  m_LocalEulerAnglesHint: {x: -6.3637075, y: -17.022537, z: 17.966425}
 --- !u!1 &1375762779733742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1965,7 +1984,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.4, y: 22.8}
+  m_AnchoredPosition: {x: -0.4, y: 25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222804983382288262
@@ -2033,14 +2052,14 @@ MonoBehaviour:
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 9.97
+  m_lineSpacing: -10.44
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 35
+  m_firstOverflowCharacterIndex: 38
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2064,13 +2083,13 @@ MonoBehaviour:
   m_margin: {x: 36.72016, y: 27.560055, z: 35.828022, w: -18.863323}
   m_textInfo:
     textComponent: {fileID: 114915937640130450}
-    characterCount: 0
+    characterCount: 57
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 8
+    wordCount: 7
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 3
+    pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -2476,7 +2495,7 @@ Transform:
   - {fileID: 4001871042164966}
   m_Father: {fileID: 4036020211043170}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.0000014899357, y: 0.0000037723473, z: -158.4478}
+  m_LocalEulerAnglesHint: {x: -0.00000017643188, y: 0.0000040520727, z: -177.50684}
 --- !u!1 &1518408829903622
 GameObject:
   m_ObjectHideFlags: 0
@@ -2507,7 +2526,7 @@ Transform:
   - {fileID: 4304134894598008}
   m_Father: {fileID: 4036020211043170}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 1.7537606, y: 20.160017, z: 11.792156}
+  m_LocalEulerAnglesHint: {x: 27.491783, y: 27.647202, z: -11.970952}
 --- !u!1 &1631567284800838
 GameObject:
   m_ObjectHideFlags: 0
@@ -2564,6 +2583,8 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   enemy: {fileID: 114229555450686462}
   enemyAI: {fileID: 114880966079448276}
+  puckAI: {fileID: 0}
+  runeGolemAI: {fileID: 0}
   enemySkills: {fileID: 114265172899639790}
   SkillBarFillImage: {fileID: 114061177905720458}
   SkillName: {fileID: 114734101091037254}
@@ -2600,7 +2621,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4224851340826148}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.5279, y: 105.02058, z: -19.086893}
+  m_LocalEulerAnglesHint: {x: -0.52788585, y: 105.020645, z: 15.418035}
 --- !u!1 &1643350431405394
 GameObject:
   m_ObjectHideFlags: 0
@@ -3293,6 +3314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinnedMeshRenderer: {fileID: 137177222824363494}
+  meshRenderer: {fileID: 0}
+  enemyRespawn: {fileID: 0}
   AlphaMaterial: {fileID: 2100000, guid: dd747a0182ae3224dab379066fa1cfbe, type: 2}
   OpaqueMaterial: {fileID: 2100000, guid: 2faa208cb15168f4daa55adc47632b4d, type: 2}
   ParentObject: {fileID: 1046869630431942}
@@ -3466,7 +3489,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4224851340826148}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -8.952058, y: 78.968636, z: -17.435854}
+  m_LocalEulerAnglesHint: {x: -8.952081, y: 78.968636, z: 18.160627}
 --- !u!1 &1880399756829626
 GameObject:
   m_ObjectHideFlags: 0
@@ -3497,7 +3520,7 @@ Transform:
   - {fileID: 4806598413872468}
   m_Father: {fileID: 4352009052622362}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.000009008929, y: -0.000012314665, z: 36.179237}
+  m_LocalEulerAnglesHint: {x: 2.538797, y: -17.9452, z: 7.7831907}
 --- !u!1 &1892222746299686
 GameObject:
   m_ObjectHideFlags: 0
@@ -3528,7 +3551,7 @@ Transform:
   - {fileID: 4904305849021964}
   m_Father: {fileID: 4806598413872468}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 21.409012}
+  m_LocalEulerAnglesHint: {x: 0.3823624, y: -18.037281, z: -0.65392643}
 --- !u!1 &1933870760684404
 GameObject:
   m_ObjectHideFlags: 0
@@ -3715,7 +3738,7 @@ Transform:
   - {fileID: 4803327195904796}
   m_Father: {fileID: 4036020211043170}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 4.0341945, y: -10.628995, z: 6.6870704}
+  m_LocalEulerAnglesHint: {x: -5.814726, y: -40.7113, z: -23.776716}
 --- !u!1 &1944404966208154
 GameObject:
   m_ObjectHideFlags: 0
@@ -3746,7 +3769,7 @@ Transform:
   - {fileID: 4748755150860974}
   m_Father: {fileID: 4893088070262082}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 12.4312935}
+  m_LocalEulerAnglesHint: {x: -2.8122761, y: -17.884203, z: -9.770223}
 --- !u!1 &1966635781487086
 GameObject:
   m_ObjectHideFlags: 0
@@ -3776,7 +3799,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4224851340826148}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -8.952077, y: 101.031334, z: -162.56418}
+  m_LocalEulerAnglesHint: {x: -8.952038, y: 101.03134, z: 150.17966}
 --- !u!1 &1989477639907844
 GameObject:
   m_ObjectHideFlags: 0
@@ -3813,10 +3836,10 @@ RectTransform:
   m_Father: {fileID: 224228331584694266}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 129.46, y: -17.5}
-  m_SizeDelta: {x: 35, y: 35}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222200346141838698
 CanvasRenderer:

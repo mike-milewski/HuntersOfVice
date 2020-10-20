@@ -4,7 +4,8 @@
 AnimationClip:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: EvilsEnd
   serializedVersion: 6
   m_Legacy: 0
@@ -11812,7 +11813,6 @@ AnimationClip:
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_GenerateMotionCurves: 0
   m_Events:
   - time: 0.3
     functionName: DealSkillDamage
@@ -11823,6 +11823,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.3
     functionName: HitParticleEffect
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.3
+    functionName: PlaySwordHit
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
