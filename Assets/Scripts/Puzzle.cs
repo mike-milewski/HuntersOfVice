@@ -4,10 +4,7 @@ using UnityEngine;
 public class Puzzle : MonoBehaviour
 {
     [SerializeField]
-    private CharacterData[] characterData;
-
-    [SerializeField]
-    private Enemy enemyToSpawn = null;
+    private Enemy[] enemyToSpawn = null;
 
     [SerializeField]
     private GameObject ParticleEffect;
@@ -85,13 +82,8 @@ public class Puzzle : MonoBehaviour
     {
         if(SpawnIndex < NumberOfEnemiesToSpawn)
         {
-            enemyToSpawn.transform.position = EnemySpawnPoint.position;
-            enemyToSpawn.GetCharacter.GetCharacterData = characterData[SpawnIndex];
-            characterData[SpawnIndex].CheckedData = false;
-            enemyToSpawn.GetComponent<Enemy>().GetExperiencePoints = characterData[SpawnIndex].EXP;
-            enemyToSpawn.GetComponent<Enemy>().GetCoins = characterData[SpawnIndex].Coins;
             EnemySpawnParticle();
-            enemyToSpawn.gameObject.SetActive(true);
+            enemyToSpawn[SpawnIndex].gameObject.SetActive(true);
         }
         else
         {
