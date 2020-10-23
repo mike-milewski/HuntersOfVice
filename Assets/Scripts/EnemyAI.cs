@@ -109,7 +109,7 @@ public class EnemyAI : MonoBehaviour
     private int WaypointIndex;
 
     [SerializeField]
-    private bool IsHostile, IsAnAdd, IsAPuzzleComponent, IsAbushPuzzleComponent, IsATreasurePuzzleComponent;
+    private bool IsHostile, IsAnAdd, IsAPuzzleComponent, IsAbushPuzzleComponent, IsATreasurePuzzleComponent, DataCheck;
 
     [SerializeField]
     private bool IsUsingAnimator;
@@ -247,7 +247,10 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        character.GetCharacterData.CheckedData = false;
+        if(!DataCheck)
+        {
+            character.GetCharacterData.CheckedData = false;
+        }
 
         if(IsAnAdd)
         {
@@ -543,6 +546,11 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
+                if(enemyConnection != null)
+                {
+                    enemyConnection.GetIsInsideCollider = false;
+                }
+
                 enemy.GetHealth.IncreaseHealth(character.MaxHealth);
                 enemy.GetLocalHealthInfo();
 
@@ -601,6 +609,8 @@ public class EnemyAI : MonoBehaviour
 
     public void Dead()
     {
+        DataCheck = true;
+
         StandingStill = false;
         PlayerTarget = null;
         AutoAttackTime = 0;

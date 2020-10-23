@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
-  m_Name: GiantBeeLv4
+  m_Name: GiantBeeLv3
   m_EditorClassIdentifier: 
   Weaknesses: 05000000
   Resistances: 00000000
   Immunities: 00000000
   Absorbtions: 00000000
   CharacterName: Giant Bee
-  CharacterLevel: 4
-  Health: 435
+  CharacterLevel: 3
+  Health: 266
   Mana: 0
-  Strength: 45
-  Defense: 22
-  Intelligence: 16
+  Strength: 30
+  Defense: 18
+  Intelligence: 14
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5
-  Coins: 77
+  Coins: 15
   EXP: 26
   MaterialDataDropChance: 0
   MoveSpeed: 3
