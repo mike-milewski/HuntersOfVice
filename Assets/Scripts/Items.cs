@@ -20,6 +20,9 @@ public class Items : MonoBehaviour
     private Transform HealTextTransform;
 
     [SerializeField]
+    private Transform TextHolder = null;
+
+    [SerializeField]
     private TextMeshProUGUI ItemText, CoolDownText;
 
     [SerializeField]
@@ -36,6 +39,9 @@ public class Items : MonoBehaviour
 
     [SerializeField]
     private float ApplyItemUse, Cooldown;
+
+    [SerializeField]
+    private bool UnlockedPassive;
 
     private float cooldown;
 
@@ -99,6 +105,18 @@ public class Items : MonoBehaviour
         }
     }
 
+    public bool GetUnlockedPassive
+    {
+        get
+        {
+            return UnlockedPassive;
+        }
+        set
+        {
+            UnlockedPassive = value;
+        }
+    }
+
     private void Awake()
     {
         cooldown = Cooldown;
@@ -144,6 +162,7 @@ public class Items : MonoBehaviour
                 break;
             case (ItemType.MpHeal):
                 ReadyMpHealing();
+                ManaPulsePassive();
                 break;
         }
     }
@@ -336,5 +355,111 @@ public class Items : MonoBehaviour
         {
             CoolDownText.enabled = false;
         }
+    }
+
+    private void ManaPulsePassive()
+    {
+        if (UnlockedPassive)
+        {
+            if(Knight.gameObject.activeInHierarchy)
+            {
+                SetUpDamagePerimiter(Knight.gameObject.transform.position, 15f);
+            }
+            else if(ShadowPriest.gameObject.activeInHierarchy)
+            {
+                SetUpDamagePerimiter(ShadowPriest.gameObject.transform.position, 5f);
+            }
+            ManaPulseParticle();
+        }
+        else return;
+    }
+
+    private void ManaPulseParticle()
+    {
+        var ManaPulse = ObjectPooler.Instance.GetManaPulseParticle();
+
+        ManaPulse.SetActive(true);
+
+        ManaPulse.transform.position = new Vector3(ShadowPriest.transform.position.x, ShadowPriest.transform.position.y, ShadowPriest.transform.position.z);
+    }
+
+    private void SetUpDamagePerimiter(Vector3 center, float radius)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].GetComponent<Enemy>())
+            {
+                if (settings.UseParticleEffects)
+                {
+                    var HitParticle = ObjectPooler.Instance.GetHitParticle();
+
+                    HitParticle.SetActive(true);
+
+                    HitParticle.transform.position = new Vector3(hitColliders[i].transform.position.x, hitColliders[i].transform.position.y + 0.5f,
+                                                                 hitColliders[i].transform.position.z);
+
+                    HitParticle.transform.SetParent(hitColliders[i].transform);
+                }
+                DamageSkillText(hitColliders[i].GetComponent<Enemy>());
+            }
+        }
+    }
+
+    private TextMeshProUGUI DamageSkillText(Enemy Target)
+    {
+        var DamageTxt = ObjectPooler.Instance.GetEnemyDamageText();
+
+        if(Target != null)
+        {
+            DamageTxt.SetActive(true);
+
+            TextHolder = Target.GetUI;
+
+            DamageTxt.transform.SetParent(TextHolder.transform, false);
+
+            Target.GetHealth.ModifyHealth(-((60 + ShadowPriest.CharacterIntelligence) - Target.GetCharacter.CharacterIntelligence));
+
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "Mana Pulse" + " " + ((60 + ShadowPriest.CharacterIntelligence) - 
+                                                                                                            Target.GetCharacter.CharacterIntelligence);
+        }
+
+        if (Target.GetAI != null)
+        {
+            if (Target.GetAI.GetPlayerTarget == null)
+            {
+                Target.GetAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+            }
+
+            if (Target.GetAI.GetStates != States.Skill && Target.GetAI.GetStates != States.ApplyingAttack && Target.GetAI.GetStates != States.SkillAnimation)
+            {
+                Target.GetAI.GetStates = States.Damaged;
+            }
+        }
+        if (Target.GetPuckAI != null)
+        {
+            if (Target.GetPuckAI.GetPlayerTarget == null)
+            {
+                Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                Target.GetPuckAI.GetSphereTrigger.gameObject.SetActive(false);
+                Target.GetPuckAI.GetStates = BossStates.Chase;
+                Target.GetPuckAI.EnableSpeech();
+            }
+
+            Target.GetPuckAI.CheckHP();
+        }
+        if (Target.GetRuneGolemAI != null)
+        {
+            if (Target.GetRuneGolemAI.GetPlayerTarget == null)
+            {
+                Target.GetRuneGolemAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                Target.GetRuneGolemAI.GetSphereTrigger.gameObject.SetActive(false);
+                Target.GetRuneGolemAI.GetStates = RuneGolemStates.Chase;
+            }
+
+            Target.GetRuneGolemAI.CheckHP();
+        }
+        return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 }

@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     private MonsterBook monsterbook;
 
     [SerializeField]
+    private ShopKeeper shopKeeper;
+
+    [SerializeField]
     private Shop shop;
 
     [SerializeField]
@@ -54,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private Transform SpawnPoint, InventoryMaterialTransform, ItemMessageTransform, MonsterEntryTransform, StatusEffectTextHolder, DebuffStatusIconHolder, 
-                      BuffStatusIconHolder;
+                      BuffStatusIconHolder, ShopKeeperLastPosition;
 
     [SerializeField]
     private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel, ItemDescriptionPanel;
@@ -226,6 +229,18 @@ public class GameManager : MonoBehaviour
         set
         {
             MonsterEntryTransform = value;
+        }
+    }
+
+    public Transform GetShopKeeperLastPosition
+    {
+        get
+        {
+            return ShopKeeperLastPosition;
+        }
+        set
+        {
+            ShopKeeperLastPosition = value;
         }
     }
 
@@ -1002,6 +1017,10 @@ public class GameManager : MonoBehaviour
         {
             changeSpawnPointLocation.EnableWallTrigger();
             changeSpawnPointLocation.DisableDamageRadii();
+        }
+        if(shopKeeper.GetCurrentPosition != ShopKeeperLastPosition)
+        {
+            shopKeeper.transform.position = new Vector3(ShopKeeperLastPosition.position.x, 3.342f, ShopKeeperLastPosition.position.z);
         }
     }
 

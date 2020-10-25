@@ -206,6 +206,7 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.Slowed):
                 SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetMoveSpeed / 2;
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay += 1;
                 break;
         }
     }
@@ -424,6 +425,7 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.Slowed):
                 SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetDefaultSpeed;
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay -= 1;
                 break;
         }
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
@@ -1137,11 +1139,18 @@ public class StatusIcon : MonoBehaviour
 
             StunParticle = SP;
 
-            SP.SetActive(true);
+            if(StunParticle.activeInHierarchy)
+            {
 
-            SP.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.8f, character.transform.position.z);
+            }
+            else
+            {
+                SP.SetActive(true);
 
-            SP.transform.SetParent(character.transform, true);
+                SP.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 0.8f, character.transform.position.z);
+
+                SP.transform.SetParent(character.transform, true);
+            }
         }
     }
 

@@ -42,7 +42,7 @@ public class BasicAttack : MonoBehaviour
     private GameObject StatusEffectIcon = null;
 
     [SerializeField]
-    private Sprite StatusEffectSprite = null;
+    private Sprite BurningStatusEffectSprite = null, SlowStatusEffectSprite = null;
 
     private Transform StatusEffectIconTrans = null, TextHolder = null;
 
@@ -72,6 +72,18 @@ public class BasicAttack : MonoBehaviour
         set
         {
             AutoAttackTime = value;
+        }
+    }
+
+    public float GetAttackDelay
+    {
+        get
+        {
+            return AttackDelay;
+        }
+        set
+        {
+            AttackDelay = value;
         }
     }
 
@@ -551,6 +563,16 @@ public class BasicAttack : MonoBehaviour
                 }
             }
         }
+        if (HasSlowStatusEffect)
+        {
+            if (Random.value * 100 <= 100)
+            {
+                if (!CheckSlowStatusEffect())
+                {
+                    SlowStatus();
+                }
+            }
+        }
 
         if (Target.GetAI != null)
         {
@@ -640,14 +662,33 @@ public class BasicAttack : MonoBehaviour
 
         StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Burning";
 
-        StatusTxt.GetComponentInChildren<Image>().sprite = StatusEffectSprite;
+        StatusTxt.GetComponentInChildren<Image>().sprite = BurningStatusEffectSprite;
 
-        ApplyStatusEffect();
+        ApplyBurningStatus();
 
         return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private void ApplyStatusEffect()
+    private TextMeshProUGUI SlowStatus()
+    {
+        TextHolder = Target.GetUI;
+
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Slowed";
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = SlowStatusEffectSprite;
+
+        ApplySlowStatus();
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void ApplyBurningStatus()
     {
         StatusEffectIconTrans = Target.GetDebuffTransform;
 
@@ -657,14 +698,38 @@ public class BasicAttack : MonoBehaviour
 
         StatusEffectIcon.transform.SetParent(StatusEffectIconTrans, false);
 
-        StatusEffectIcon.GetComponentInChildren<Image>().sprite = StatusEffectSprite;
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = BurningStatusEffectSprite;
 
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetHasBurnStatus = true;
 
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.DamageOverTime;
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = character.GetComponent<PlayerController>();
-        StatusEffectIcon.GetComponentInChildren<Image>().sprite = StatusEffectSprite;
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = BurningStatusEffectSprite;
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().BurnStatus();
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().CreateBurningParticle();
+    }
+
+    private void ApplySlowStatus()
+    {
+        StatusEffectIconTrans = Target.GetDebuffTransform;
+
+        StatusEffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+        StatusEffectIcon.SetActive(true);
+
+        StatusEffectIcon.transform.SetParent(StatusEffectIconTrans, false);
+
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = BurningStatusEffectSprite;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetHasSlowStatus = true;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.Slow;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = character.GetComponent<PlayerController>();
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = SlowStatusEffectSprite;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().SlowStatus();
+
+        //StatusEffectIcon.GetComponent<EnemyStatusIcon>().CreateBurningParticle();
     }
 
     private bool CheckBurnStatusEffect()
@@ -680,6 +745,21 @@ public class BasicAttack : MonoBehaviour
         }
 
         return BurnStatus;
+    }
+
+    private bool CheckSlowStatusEffect()
+    {
+        bool SlowStatus = false;
+
+        foreach (EnemyStatusIcon enemystatus in Target.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if (enemystatus.GetStatusEffect == StatusEffect.Slow)
+            {
+                SlowStatus = true;
+            }
+        }
+
+        return SlowStatus;
     }
 
     public void HitParticleEffect()

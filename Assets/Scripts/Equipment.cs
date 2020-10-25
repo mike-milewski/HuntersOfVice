@@ -73,6 +73,9 @@ public class Equipment : MonoBehaviour
     private Skills skill = null;
 
     [SerializeField]
+    private Items items = null;
+
+    [SerializeField]
     private EquipmentType equipmentType;
 
     [SerializeField]
@@ -572,7 +575,7 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Removes the MP cost of Swift Strike." + "</color> ";
                 break;
             case (Ability.StormThrust):
-                skillText = "\n\n" + "<#EFDFB8>" + "Storm Thrust now applies the Stun status effect instead with a 5 second duration." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Storm Thrust now applies the Stun status effect instead with a 5 second duration and a 15 second cooldown." + "</color> ";
                 break;
             case (Ability.BurnStatus):
                 skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack has a 10% chance of inflicting the Burning status effect." + "</color> ";
@@ -587,7 +590,7 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Tenacity increases strength by 30% instead." + "</color> ";
                 break;
             case (Ability.ManaPulse):
-                skillText = "\n\n" + "<#EFDFB8>" + "Ether discharges a wave that deals damage to all targets in range with a power of 30." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Ether discharges a wave that deals damage to all targets in range with a power of 60." + "</color> ";
                 break;
         }
 
@@ -608,6 +611,7 @@ public class Equipment : MonoBehaviour
                 skill.GetStatusEffectName = "Stun";
                 skill.GetStatusDescription = "Unable to act.";
                 skill.GetStatusDuration = 5.0f;
+                skill.GetCoolDown = 10;
                 break;
             case (Ability.BurnStatus):
                 basicAttack.GetHasBurnStatus = true;
@@ -623,6 +627,7 @@ public class Equipment : MonoBehaviour
                 skill.GetSkillDescription = "Increases strength by 30%";
                 break;
             case (Ability.ManaPulse):
+                items.GetUnlockedPassive = true;
                 break;
         }
     }
@@ -641,6 +646,7 @@ public class Equipment : MonoBehaviour
                 skill.GetStatusEffectName = "Defense Down";
                 skill.GetStatusDescription = "Lowered Defense.";
                 skill.GetStatusDuration = 15.0f;
+                skill.GetCoolDown = 3;
                 break;
             case (Ability.BurnStatus):
                 basicAttack.GetHasBurnStatus = false;
@@ -656,6 +662,7 @@ public class Equipment : MonoBehaviour
                 skill.GetSkillDescription = "Increases strength by 10%";
                 break;
             case (Ability.ManaPulse):
+                items.GetUnlockedPassive = false;
                 break;
         }
     }

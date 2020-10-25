@@ -685,7 +685,7 @@ public class Puck : MonoBehaviour
         EnableSpeechDead();
 
         DisableWall1();
-        DisableWall2();
+        //DisableWall2();
 
         KillAdds();
         DisablePoisonMushroomDamageRadius();

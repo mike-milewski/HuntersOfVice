@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Quick Plate
   Element: 0
-  StatIncrease: 4
+  StatIncrease: 6
   BuyValue: 340

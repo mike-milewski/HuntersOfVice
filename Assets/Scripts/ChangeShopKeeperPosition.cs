@@ -7,10 +7,10 @@ public class ChangeShopKeeperPosition : MonoBehaviour
     private ShopKeeper shopKeeper;
 
     [SerializeField]
-    private Transform shopKeeperPosition;
+    private Transform shopKeeperPosition, PositionToSpawnWhenDead;
 
     [SerializeField]
-    private GameObject Trigger;
+    private GameObject Trigger = null;
 
     [SerializeField]
     private float shopPositionY;
@@ -19,9 +19,17 @@ public class ChangeShopKeeperPosition : MonoBehaviour
     {
         if(other.GetComponent<PlayerController>())
         {
+            GameManager.Instance.GetShopKeeperLastPosition = PositionToSpawnWhenDead;
+
+            shopKeeper.GetCurrentPosition = shopKeeperPosition;
+
             shopKeeper.gameObject.transform.position = new Vector3(shopKeeperPosition.position.x, shopPositionY, shopKeeperPosition.position.z);
-            Trigger.SetActive(true);
-            gameObject.SetActive(false);
+
+            if(Trigger != null)
+            {
+                Trigger.SetActive(true);
+                gameObject.SetActive(false);
+            }
         }
     }
 }

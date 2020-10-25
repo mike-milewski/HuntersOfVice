@@ -90,6 +90,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private float MoveSpeed, AttackRange, AttackDelay, AutoAttackTime, LookSpeed;
 
+    private float DefaultAttackDelay, DefaultMoveSpeed;
+
     [SerializeField] [Tooltip("Current targeted Player. Keep this empty!")]
     private Character PlayerTarget = null;
 
@@ -102,6 +104,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private float TimeToMoveAgain, WayPointDistance, PlayerDistance, OuterAttackDistance; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
 
+    [SerializeField]
     private float TimeToMove, DistanceToTarget;
 
     private bool StandingStill, PlayerEntry;
@@ -161,6 +164,54 @@ public class EnemyAI : MonoBehaviour
         set
         {
             aiStates = value;
+        }
+    }
+
+    public float GetMoveSpeed
+    {
+        get
+        {
+            return MoveSpeed;
+        }
+        set
+        {
+            MoveSpeed = value;
+        }
+    }
+
+    public float GetDefaultMoveSpeed
+    {
+        get
+        {
+            return DefaultMoveSpeed;
+        }
+        set
+        {
+            DefaultMoveSpeed = value;
+        }
+    }
+
+    public float GetAttackDelay
+    {
+        get
+        {
+            return AttackDelay;
+        }
+        set
+        {
+            AttackDelay = value;
+        }
+    }
+
+    public float GetDefaultAttackDelay
+    {
+        get
+        {
+            return DefaultAttackDelay;
+        }
+        set
+        {
+            DefaultAttackDelay = value;
         }
     }
 
@@ -266,6 +317,9 @@ public class EnemyAI : MonoBehaviour
 
             TimeToMove = TimeToMoveAgain;
         }
+
+        DefaultMoveSpeed = MoveSpeed;
+        DefaultAttackDelay = AttackDelay;
     }
 
     private void OnEnable()
@@ -427,7 +481,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        if (DistanceToTarget <= 0.1f)
+        if (DistanceToTarget <= 0.3f)
         {
             StandingStill = true;
             TimeToMove -= Time.deltaTime;
@@ -609,6 +663,11 @@ public class EnemyAI : MonoBehaviour
 
     public void Dead()
     {
+        if(gameObject.GetComponent<AudioSource>() != null)
+        {
+            gameObject.GetComponent<AudioSource>().volume = 0;
+        }
+
         DataCheck = true;
 
         StandingStill = false;
@@ -800,6 +859,14 @@ public class EnemyAI : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     private void ResetStats()
     {
+        if(gameObject.GetComponent<AudioSource>() != null)
+        {
+            if(!settings.MuteAudio)
+            {
+                gameObject.GetComponent<AudioSource>().volume = 1;
+            }
+        }
+
         StateArrayIndex = 0;
 
         if(enemyConnection != null)

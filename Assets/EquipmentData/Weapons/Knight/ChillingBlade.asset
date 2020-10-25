@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Chilling Blade
   Element: 4
-  StatIncrease: 40
-  BuyValue: 800
+  StatIncrease: 46
+  BuyValue: 1000

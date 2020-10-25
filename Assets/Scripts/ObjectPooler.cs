@@ -135,6 +135,8 @@ public class ObjectPooler : MonoBehaviour
         AddNetherStarParticle(poolcontroller[44].GetPoolAmount);
         AddNetherStarExplosionParticle(poolcontroller[45].GetPoolAmount);
         AddUpliftParticle(poolcontroller[46].GetPoolAmount);
+        AddManaPulseParticle(poolcontroller[47].GetPoolAmount);
+        AddBurningEffectParticle(poolcontroller[48].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -701,6 +703,30 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddManaPulseParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[47].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[47].GetPoolParent.transform, false);
+            poolcontroller[47].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddBurningEffectParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[48].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[48].GetPoolParent.transform, false);
+            poolcontroller[48].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -934,6 +960,16 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetUpliftParticle()
     {
         return poolcontroller[46].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetManaPulseParticle()
+    {
+        return poolcontroller[47].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetBurningEffectParticle()
+    {
+        return poolcontroller[48].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1309,6 +1345,22 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[46].GetPoolParent.transform, false);
 
         poolcontroller[46].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnManaPulseParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[47].GetPoolParent.transform, false);
+
+        poolcontroller[47].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnBurningEffectParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[48].GetPoolParent.transform, false);
+
+        poolcontroller[48].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

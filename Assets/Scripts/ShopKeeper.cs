@@ -13,6 +13,9 @@ public class ShopKeeper : MonoBehaviour
     private Animator ShopAnimator, UpgradeAnimator, BuyAnimator;
 
     [SerializeField]
+    private Transform CurrentPosition;
+
+    [SerializeField]
     private float ShoppingDistance;
 
     private bool IsInShop = false;
@@ -38,6 +41,18 @@ public class ShopKeeper : MonoBehaviour
         set
         {
             animator = value;
+        }
+    }
+
+    public Transform GetCurrentPosition
+    {
+        get
+        {
+            return CurrentPosition;
+        }
+        set
+        {
+            CurrentPosition = value;
         }
     }
 

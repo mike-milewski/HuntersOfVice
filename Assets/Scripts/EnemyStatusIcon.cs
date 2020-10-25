@@ -28,7 +28,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private int TempSkillIndex;
 
-    private bool HasBurnStatus;
+    private bool HasBurnStatus, HasSlowStatus;
 
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
@@ -43,7 +43,7 @@ public class EnemyStatusIcon : MonoBehaviour
     [SerializeField]
     private GameObject StatusPanel;
 
-    private GameObject StunParticle = null;
+    private GameObject StunParticle = null, BurningParticle = null;
 
     public PlayerController GetPlayer
     {
@@ -93,6 +93,18 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    public bool GetHasSlowStatus
+    {
+        get
+        {
+            return HasSlowStatus;
+        }
+        set
+        {
+            HasSlowStatus = value;
+        }
+    }
+
     private void Start()
     {
         if(player == null)
@@ -119,6 +131,9 @@ public class EnemyStatusIcon : MonoBehaviour
             case (StatusEffect.Stun):
                 CreateStunEffectParticle();
                 break;
+            case (StatusEffect.Slow):
+                Slow();
+                break;
         }
     }
 
@@ -139,6 +154,12 @@ public class EnemyStatusIcon : MonoBehaviour
             if(HasBurnStatus)
             {
                 RemoveBurnStatusEffectText();
+                CheckBurningParticleActive();
+                ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            }
+            else if(HasSlowStatus)
+            {
+                RemoveSlowedStatusEffectText();
                 ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
             }
             else
@@ -210,6 +231,18 @@ public class EnemyStatusIcon : MonoBehaviour
         DamageOrHealTick = 3.0f;
 
         TempTick = DamageOrHealTick;
+    }
+
+    public void SlowStatus()
+    {
+        character = GetComponentInParent<Character>();
+
+        character.GetComponentInChildren<Health>().GetSleepHit = false;
+
+        Duration = 10.0f;
+
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Slowed </u>" + "</color>" +
+                                     "</size>" + "\n" + "<size=10> Decreased movement & Increased Auto-attack time.";
     }
 
     public TextMeshProUGUI RemoveStatusEffectText()
@@ -297,6 +330,26 @@ public class EnemyStatusIcon : MonoBehaviour
         StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
         CreateParticleOnRemoveEnemy();
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemoveSlowedStatusEffectText()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Slowed";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        CreateParticleOnRemoveEnemy();
+
+        character.GetComponent<EnemyAI>().GetMoveSpeed = character.GetComponent<EnemyAI>().GetDefaultMoveSpeed;
+        character.GetComponent<EnemyAI>().GetAttackDelay = character.GetComponent<EnemyAI>().GetDefaultAttackDelay;
 
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -394,6 +447,12 @@ public class EnemyStatusIcon : MonoBehaviour
         {
             Duration = 0;
         }
+    }
+
+    private void Slow()
+    {
+        character.GetComponent<EnemyAI>().GetMoveSpeed = character.GetComponent<EnemyAI>().GetMoveSpeed / 2;
+        character.GetComponent<EnemyAI>().GetAttackDelay += 1;
     }
 
     private void DefenseDOWN(float value)
@@ -545,6 +604,14 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    private void CheckBurningParticleActive()
+    {
+        if (BurningParticle.activeInHierarchy)
+        {
+            ObjectPooler.Instance.ReturnBurningEffectParticleToPool(BurningParticle);
+        }
+    }
+
     private void CreateStunEffectParticle()
     {
         if (settings.UseParticleEffects)
@@ -560,7 +627,26 @@ public class EnemyStatusIcon : MonoBehaviour
             SP.transform.position = new Vector3(cHARACTER.transform.position.x, cHARACTER.transform.position.y + 0.8f, cHARACTER.transform.position.z);
 
             SP.transform.SetParent(cHARACTER.transform, true);
+
+            SP.transform.localScale = new Vector3(1, 1, 1);
         }
+    }
+
+    public void CreateBurningParticle()
+    {
+        var cHARACTER = character;
+
+        var BP = ObjectPooler.Instance.GetBurningEffectParticle();
+
+        BurningParticle = BP;
+
+        BP.SetActive(true);
+
+        BP.transform.position = new Vector3(cHARACTER.transform.position.x, cHARACTER.transform.position.y + 1f, cHARACTER.transform.position.z);
+
+        BP.transform.SetParent(cHARACTER.transform, true);
+
+        BP.transform.localScale = new Vector3(1, 1, 1);
     }
 
     private void LateUpdate()

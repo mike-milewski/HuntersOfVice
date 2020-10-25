@@ -24,4 +24,17 @@ public class EnemySounds : MonoBehaviour
         }
         audiosource.PlayOneShot(audioclip);
     }
+
+    public void PlayBeeStingerSE()
+    {
+        if (!settings.MuteAudio)
+        {
+            this.GetComponent<AudioSource>().volume = 1;
+        }
+        else
+        {
+            this.GetComponent<AudioSource>().volume = 0;
+        }
+        audiosource.PlayOneShot(audioclip);
+    }
 }
