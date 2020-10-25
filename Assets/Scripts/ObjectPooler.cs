@@ -137,6 +137,7 @@ public class ObjectPooler : MonoBehaviour
         AddUpliftParticle(poolcontroller[46].GetPoolAmount);
         AddManaPulseParticle(poolcontroller[47].GetPoolAmount);
         AddBurningEffectParticle(poolcontroller[48].GetPoolAmount);
+        AddAquaBulletParticle(poolcontroller[49].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -727,6 +728,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddAquaBulletParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[49].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[49].GetPoolParent.transform, false);
+            poolcontroller[49].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -970,6 +983,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetBurningEffectParticle()
     {
         return poolcontroller[48].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetAquaBulletParticle()
+    {
+        return poolcontroller[49].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1361,6 +1379,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[48].GetPoolParent.transform, false);
 
         poolcontroller[48].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnAquaBulletParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[49].GetPoolParent.transform, false);
+
+        poolcontroller[49].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

@@ -33,6 +33,9 @@ public class ObstacleDamageRadius : MonoBehaviour
     private Transform StatusEffectTextTransform, DamageTextTransform, StatusIconTransform;
 
     [SerializeField]
+    private Transform AquaBulletTransform = null;
+
+    [SerializeField]
     private Image DamageShape;
 
     [SerializeField]
@@ -205,6 +208,15 @@ public class ObstacleDamageRadius : MonoBehaviour
 
     private void InvokeEffect()
     {
+        if(settings.UseParticleEffects)
+        {
+            var ParticleEffect = ObjectPooler.Instance.GetAquaBulletParticle();
+
+            ParticleEffect.gameObject.SetActive(true);
+
+            ParticleEffect.transform.position = new Vector3(AquaBulletTransform.position.x, AquaBulletTransform.position.y, AquaBulletTransform.position.z);
+        }
+
         Invoke("TakeRadiusEffects", InvokeEffectTime);
     }
 
@@ -235,9 +247,12 @@ public class ObstacleDamageRadius : MonoBehaviour
 
             if (DamagePotency > 0)
             {
-                DamageText(DamagePotency, DamageName);
+                if(PlayerTarget.GetComponent<Character>().CurrentHealth > 0)
+                {
+                    DamageText(DamagePotency, DamageName);
 
-                PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                    PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                }
             }
         }
     }
