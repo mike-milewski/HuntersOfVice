@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Wicked Broom
   Element: 2
-  StatIncrease: 21
-  BuyValue: 600
+  StatIncrease: 40
+  BuyValue: 800

@@ -7,7 +7,8 @@ public enum EquipmentType { Weapon, Armor }
 
 public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 
-public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse }
+public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse, StrengthIntelligenceReverse, Alleviate, 
+                      HpForSkillCast, WhirlwindSlash }
 
 [System.Serializable]
 public class StatusType
@@ -592,6 +593,15 @@ public class Equipment : MonoBehaviour
             case (Ability.ManaPulse):
                 skillText = "\n\n" + "<#EFDFB8>" + "Ether discharges a wave that deals damage to all targets in range with a power of 60." + "</color> ";
                 break;
+            case (Ability.StrengthIntelligenceReverse):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack applies damage based on intelligence." + "</color> ";
+                break;
+            case (Ability.Alleviate):
+                skillText = "\n\n" + "<#EFDFB8>" + "Alleviate heals HP by 30% instead." + "</color> ";
+                break;
+            case (Ability.HpForSkillCast):
+                skillText = "\n\n" + "<#EFDFB8>" + "Skills cost 3% of your HP to cast instead of using MP." + "</color> ";
+                break;
         }
 
         return skillText;
@@ -629,6 +639,16 @@ public class Equipment : MonoBehaviour
             case (Ability.ManaPulse):
                 items.GetUnlockedPassive = true;
                 break;
+            case (Ability.StrengthIntelligenceReverse):
+                basicAttack.GetUsesIntelligenceForDamage = true;
+                break;
+            case (Ability.Alleviate):
+                skill.GetAlleviateHealPercentage = 30;
+                skill.GetSkillDescription = "Removes all status ailments and restores HP by 30%.";
+                break;
+            case (Ability.HpForSkillCast):
+                SkillsManager.Instance.GetUsesHpForSkillCast = true;
+                break;
         }
     }
 
@@ -663,6 +683,16 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.ManaPulse):
                 items.GetUnlockedPassive = false;
+                break;
+            case (Ability.StrengthIntelligenceReverse):
+                basicAttack.GetUsesIntelligenceForDamage = false;
+                break;
+            case (Ability.Alleviate):
+                skill.GetAlleviateHealPercentage = 20;
+                skill.GetSkillDescription = "Removes all status ailments and restores HP by 20%.";
+                break;
+            case (Ability.HpForSkillCast):
+                SkillsManager.Instance.GetUsesHpForSkillCast = false;
                 break;
         }
     }

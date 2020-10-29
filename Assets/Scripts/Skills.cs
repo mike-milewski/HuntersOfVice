@@ -68,7 +68,7 @@ public class Skills : StatusEffects
     private float CastTime;
 
     [SerializeField]
-    private float NefariousManaCostReduction, NefariousHealthReduction;
+    private float NefariousManaCostReduction, NefariousHealthReduction, AlleviateHealPercentage;
 
     [SerializeField]
     private int index;
@@ -140,6 +140,18 @@ public class Skills : StatusEffects
         set
         {
             NefariousCastTime = value;
+        }
+    }
+
+    public float GetAlleviateHealPercentage
+    {
+        get
+        {
+            return AlleviateHealPercentage;
+        }
+        set
+        {
+            AlleviateHealPercentage = value;
         }
     }
 
@@ -508,27 +520,55 @@ public class Skills : StatusEffects
 
     private void CheckCoolDownStatus()
     {
-        if (CoolDownImage.fillAmount <= 0 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead && 
-            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged)
+        if(SkillsManager.Instance.GetUsesHpForSkillCast)
         {
-            button.interactable = true;
+            if (CoolDownImage.fillAmount <= 0 && GetCharacter.CurrentHealth >= Mathf.Round(0.03f * GetCharacter.MaxHealth) && !GameManager.Instance.GetIsDead &&
+            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged)
+            {
+                button.interactable = true;
 
-            CD = CoolDown;
+                CD = CoolDown;
 
-            CoolDownText.enabled = false;
+                CoolDownText.enabled = false;
 
-            return;
+                return;
+            }
+            else
+            {
+                this.CoolDownImage.fillAmount -= Time.deltaTime / CoolDown;
+                this.button.interactable = false;
+            }
+            if (CoolDownImage.fillAmount > 0)
+            {
+                CD -= Time.deltaTime;
+
+                CoolDownText.text = Mathf.Clamp(CD, 0, CoolDown).ToString("F1");
+            }
         }
         else
         {
-            this.CoolDownImage.fillAmount -= Time.deltaTime / CoolDown;
-            this.button.interactable = false;
-        }
-        if(CoolDownImage.fillAmount > 0)
-        {
-            CD -= Time.deltaTime;
+            if (CoolDownImage.fillAmount <= 0 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead &&
+            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged)
+            {
+                button.interactable = true;
 
-            CoolDownText.text = Mathf.Clamp(CD, 0, CoolDown).ToString("F1");
+                CD = CoolDown;
+
+                CoolDownText.enabled = false;
+
+                return;
+            }
+            else
+            {
+                this.CoolDownImage.fillAmount -= Time.deltaTime / CoolDown;
+                this.button.interactable = false;
+            }
+            if (CoolDownImage.fillAmount > 0)
+            {
+                CD -= Time.deltaTime;
+
+                CoolDownText.text = Mathf.Clamp(CD, 0, CoolDown).ToString("F1");
+            }
         }
 
         if (StormThrustActivated)
@@ -629,7 +669,18 @@ public class Skills : StatusEffects
 
         if(Target != null)
         {
-            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+            if(SkillsManager.Instance.GetUsesHpForSkillCast)
+            {
+                float Percentage = 0.03f * GetCharacter.MaxHealth;
+
+                Mathf.Round(Percentage);
+
+                GetCharacter.GetComponent<Health>().ModifyHealth(-(int)Percentage);
+            }
+            else
+            {
+                GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+            }
 
             if (settings.UseParticleEffects)
             {
@@ -793,6 +844,19 @@ public class Skills : StatusEffects
 
     private void InvokeDiabolicLightningParticle()
     {
+        if (SkillsManager.Instance.GetUsesHpForSkillCast)
+        {
+            float Percentage = 0.03f * GetCharacter.MaxHealth;
+
+            Mathf.Round(Percentage);
+
+            GetCharacter.GetComponent<Health>().ModifyHealth(-(int)Percentage);
+        }
+        else
+        {
+            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+        }
+
         if (settings.UseParticleEffects)
         {
             SkillParticle = ObjectPooler.Instance.GetDiabolicLightningParticle();
@@ -885,7 +949,18 @@ public class Skills : StatusEffects
 
         if (Target != null)
         {
-            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+            if (SkillsManager.Instance.GetUsesHpForSkillCast)
+            {
+                float Percentage = 0.03f * GetCharacter.MaxHealth;
+
+                Mathf.Round(Percentage);
+
+                GetCharacter.GetComponent<Health>().ModifyHealth(-(int)Percentage);
+            }
+            else
+            {
+                GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+            }
 
             if (settings.UseParticleEffects)
             {
@@ -1206,7 +1281,18 @@ public class Skills : StatusEffects
         {
             this.CoolDownImage.fillAmount = 1;
 
-            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+            if (SkillsManager.Instance.GetUsesHpForSkillCast)
+            {
+                float Percentage = 0.03f * GetCharacter.MaxHealth;
+
+                Mathf.Round(Percentage);
+
+                GetCharacter.GetComponent<Health>().ModifyHealth(-(int)Percentage);
+            }
+            else
+            {
+                GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+            }
 
             if (settings.UseParticleEffects)
             {
@@ -1223,7 +1309,7 @@ public class Skills : StatusEffects
 
     private void InvokeNetherStarDamage()
     {
-        SetUpDamagePerimiter(EnemyTransform.position, 20f);
+        SetUpDamagePerimiter(EnemyTransform.position, 17f);
 
         if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <= 0)
         {
@@ -1428,7 +1514,7 @@ public class Skills : StatusEffects
 
     private void WhirlwindSlashHit()
     {
-        GetCharacter.transform.Rotate(0, 420 * Time.deltaTime, 0);
+        GetCharacter.transform.Rotate(0, 220, 0);
     }
 
     public void SetUpDamagePerimiter(Vector3 center, float radius)
@@ -1512,7 +1598,7 @@ public class Skills : StatusEffects
         #region CriticalHealChance
         if (GetCharacter.CurrentHealth > 0)
         {
-            float AlleviatePercentage = 0.20f * GetCharacter.MaxHealth;
+            float AlleviatePercentage = (AlleviateHealPercentage / 100) * GetCharacter.MaxHealth;
 
             Mathf.RoundToInt(AlleviatePercentage);
 

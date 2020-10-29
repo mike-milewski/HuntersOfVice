@@ -50,7 +50,7 @@ public class BasicAttack : MonoBehaviour
     private PlayerElement playerElement;
 
     [SerializeField]
-    private bool HasBurnStatusEffect, HasSlowStatusEffect;
+    private bool HasBurnStatusEffect, HasSlowStatusEffect, UsesIntelligenceForDamage;
 
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
@@ -120,6 +120,18 @@ public class BasicAttack : MonoBehaviour
         set
         {
             HasSlowStatusEffect = value;
+        }
+    }
+
+    public bool GetUsesIntelligenceForDamage
+    {
+        get
+        {
+            return UsesIntelligenceForDamage;
+        }
+        set
+        {
+            UsesIntelligenceForDamage = value;
         }
     }
 
@@ -362,6 +374,11 @@ public class BasicAttack : MonoBehaviour
         }
 
         int DamageType = character.CharacterStrength;
+
+        if(UsesIntelligenceForDamage)
+        {
+            DamageType = character.CharacterIntelligence;
+        }
 
         float Critical = character.GetCriticalChance;
 

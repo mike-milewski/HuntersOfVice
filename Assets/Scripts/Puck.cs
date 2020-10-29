@@ -153,7 +153,7 @@ public class Puck : MonoBehaviour
     private GameObject treasureChest, ChestSpawnParticle;
 
     [SerializeField]
-    private GameObject[] AddsToSpawn, MushroomObjs, PoisonMushrooms;
+    private GameObject[] AddsToSpawn, MushroomObjs, PoisonMushrooms, SoothingSpheres;
 
     [SerializeField]
     private GameObject SwordObj, WallTrigger;
@@ -584,6 +584,8 @@ public class Puck : MonoBehaviour
 
                     IncrementPhase();
 
+                    SpawnSoothingSpheres();
+
                     states = phases[PhaseIndex].GetBossAiStates[StateArrayIndex].GetState;
                 }
             }
@@ -593,6 +595,30 @@ public class Puck : MonoBehaviour
 
                 return;
             }
+        }
+    }
+
+    private void SpawnSoothingSpheres()
+    {
+        for(int i = 0; i < SoothingSpheres.Length; i++)
+        {
+            if (!SoothingSpheres[i].activeInHierarchy)
+            {
+                SoothingSpheres[i].SetActive(true);
+            }
+            else return;
+        }
+    }
+
+    private void DespawnSoothingSpheres()
+    {
+        for (int i = 0; i < SoothingSpheres.Length; i++)
+        {
+            if (SoothingSpheres[i].activeInHierarchy)
+            {
+                SoothingSpheres[i].SetActive(false);
+            }
+            else return;
         }
     }
 
@@ -686,6 +712,8 @@ public class Puck : MonoBehaviour
 
         DisableWall1();
         //DisableWall2();
+
+        DespawnSoothingSpheres();
 
         KillAdds();
         DisablePoisonMushroomDamageRadius();
@@ -840,6 +868,8 @@ public class Puck : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     public void ResetStats()
     {
+        DespawnSoothingSpheres();
+
         DisableSpeech();
 
         PlayParticle();

@@ -29,10 +29,13 @@ public class SkillsManager : MonoBehaviour
     [SerializeField]
     private Skills ContractSkill = null;
 
-    private bool ActivatedSkill, DisruptedSkill, WhirlWindSlashAbility;
+    [SerializeField]
+    private bool UsesHpForSkillCast;
 
     [SerializeField]
     private int ContractStack, MaxContractStack;
+
+    private bool ActivatedSkill, DisruptedSkill, WhirlWindSlashAbility;
 
     private int KeyInput;
 
@@ -71,6 +74,18 @@ public class SkillsManager : MonoBehaviour
         set
         {
             WhirlWindSlashAbility = value;
+        }
+    }
+
+    public bool GetUsesHpForSkillCast
+    {
+        get
+        {
+            return UsesHpForSkillCast;
+        }
+        set
+        {
+            UsesHpForSkillCast = value;
         }
     }
 
