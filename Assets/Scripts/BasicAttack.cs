@@ -582,7 +582,7 @@ public class BasicAttack : MonoBehaviour
         }
         if (HasSlowStatusEffect)
         {
-            if (Random.value * 100 <= 100)
+            if (Random.value * 100 <= 10)
             {
                 if (!CheckSlowStatusEffect())
                 {
@@ -719,7 +719,7 @@ public class BasicAttack : MonoBehaviour
 
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetHasBurnStatus = true;
 
-        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.DamageOverTime;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.Burning;
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = character.GetComponent<PlayerController>();
         StatusEffectIcon.GetComponentInChildren<Image>().sprite = BurningStatusEffectSprite;
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().BurnStatus();
@@ -745,8 +745,6 @@ public class BasicAttack : MonoBehaviour
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = character.GetComponent<PlayerController>();
         StatusEffectIcon.GetComponentInChildren<Image>().sprite = SlowStatusEffectSprite;
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().SlowStatus();
-
-        //StatusEffectIcon.GetComponent<EnemyStatusIcon>().CreateBurningParticle();
     }
 
     private bool CheckBurnStatusEffect()
@@ -755,7 +753,7 @@ public class BasicAttack : MonoBehaviour
 
         foreach(EnemyStatusIcon enemystatus in Target.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
         {
-            if(enemystatus.GetStatusEffect == StatusEffect.DamageOverTime)
+            if(enemystatus.GetStatusEffect == StatusEffect.Burning)
             {
                 BurnStatus = true;
             }

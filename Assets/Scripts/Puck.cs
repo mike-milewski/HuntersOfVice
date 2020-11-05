@@ -602,11 +602,7 @@ public class Puck : MonoBehaviour
     {
         for(int i = 0; i < SoothingSpheres.Length; i++)
         {
-            if (!SoothingSpheres[i].activeInHierarchy)
-            {
-                SoothingSpheres[i].SetActive(true);
-            }
-            else return;
+            SoothingSpheres[i].SetActive(true);
         }
     }
 
@@ -663,7 +659,7 @@ public class Puck : MonoBehaviour
     public void DisableWalls()
     {
         Walls[0].gameObject.SetActive(false);
-        Walls[1].gameObject.SetActive(false);
+        //Walls[1].gameObject.SetActive(false);
     }
 
     public void EnableChestSpawnParticle()
@@ -749,6 +745,10 @@ public class Puck : MonoBehaviour
         {
             this.GetComponent<ItemDrop>().DropItem();
         }
+
+        enemy.ReturnCoins();
+
+        enemy.ReturnExperience();
 
         CheckForInformation();
     }

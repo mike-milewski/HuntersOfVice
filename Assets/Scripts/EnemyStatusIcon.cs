@@ -6,7 +6,7 @@ using TMPro;
 using System.Collections.Generic;
 
 public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP, Slow };
+                           IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP, Slow, Burning };
 
 public class EnemyStatusIcon : MonoBehaviour
 {
@@ -548,6 +548,9 @@ public class EnemyStatusIcon : MonoBehaviour
                 HealthRegen(RegenAndDOTCalculation(), 3f);
                 break;
             case (StatusEffect.DamageOverTime):
+                DamageOverTime(RegenAndDOTCalculation());
+                break;
+            case (StatusEffect.Burning):
                 DamageOverTime(RegenAndDOTCalculation());
                 break;
             case (StatusEffect.Stun):

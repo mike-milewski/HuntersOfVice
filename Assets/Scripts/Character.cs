@@ -1,4 +1,5 @@
 ﻿#pragma warning disable 0414
+#pragma warning disable 0649
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -13,7 +14,8 @@ public class Character : MonoBehaviour
     [SerializeField]
     private int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, CriticalHitChance;
 
-    private int DefaultHealth, DefaultMana, DefaultStrength, DefaultDefense, DefaultIntelligence;
+    private int DefaultHealth, DefaultMana, DefaultStrength, DefaultDefense, DefaultIntelligence, DefaultHpIncrease, DefaultMpIncrease, DefaultCriticalChance,
+                HpIncrease, MpIncrease;
 
     [SerializeField]
     private float MoveSpeed;
@@ -217,8 +219,6 @@ public class Character : MonoBehaviour
         CriticalHitChance = cData.CriticalHitChance;
         MoveSpeed = cData.MoveSpeed;
 
-        DefaultSpeed = MoveSpeed;
-
         weaknesses = cData.Weaknesses;
         resistances = cData.Resistances;
         immunities = cData.Immunities;
@@ -229,6 +229,10 @@ public class Character : MonoBehaviour
         DefaultStrength = Strength;
         DefaultDefense = Defense;
         DefaultIntelligence = Intelligence;
+        DefaultSpeed = MoveSpeed;
+        DefaultHpIncrease = HpIncrease;
+        DefaultMpIncrease = MpIncrease;
+        DefaultCriticalChance = CriticalHitChance;
     }
 
     public void DefaultStats()
@@ -238,5 +242,9 @@ public class Character : MonoBehaviour
         CharData.Strength = DefaultStrength;
         CharData.Defense = DefaultDefense;
         CharData.Intelligence = DefaultIntelligence;
+        CharData.MoveSpeed = DefaultSpeed;
+        CharData.HpIncrease = DefaultHpIncrease;
+        CharData.MpIncrease = DefaultMpIncrease;
+        CharData.CriticalHitChance = DefaultCriticalChance;
     }
 }

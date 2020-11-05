@@ -58,6 +58,8 @@ public class MenuButtons : MonoBehaviour
         {
             FadeScreen.Instance.GetReturnToMenu = true;
             FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
+
+            GameManager.Instance.GetCharacter.DefaultStats();
         }
         else return;
     }

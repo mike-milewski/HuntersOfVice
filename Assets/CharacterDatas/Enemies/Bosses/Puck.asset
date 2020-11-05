@@ -18,13 +18,17 @@ MonoBehaviour:
   Absorbtions: 
   CharacterName: Puck, Sylvan's Chosen
   CharacterLevel: 5
-  Health: 1000
+  Health: 1500
   Mana: 0
-  Strength: 25
-  Defense: 21
-  Intelligence: 20
+  Strength: 28
+  Defense: 24
+  Intelligence: 22
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5
+  Coins: 0
+  EXP: 0
+  MaterialDataDropChance: 0
   MoveSpeed: 0
   CheckedData: 0
+  materialdata: {fileID: 0}

@@ -196,7 +196,7 @@ public class ObstacleDamageRadius : MonoBehaviour
             {
                 IsInRadius = true;
                 PlayerTarget = hitColliders[i].GetComponent<Character>();
-                InvokeEffect();
+                Invoke("TakeRadiusEffects", InvokeEffectTime);
             }
         }
     }

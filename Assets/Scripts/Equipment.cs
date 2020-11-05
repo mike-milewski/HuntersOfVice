@@ -8,7 +8,7 @@ public enum EquipmentType { Weapon, Armor }
 public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 
 public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse, StrengthIntelligenceReverse, Alleviate, 
-                      HpForSkillCast, WhirlwindSlash }
+                      HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease }
 
 [System.Serializable]
 public class StatusType
@@ -308,7 +308,7 @@ public class Equipment : MonoBehaviour
 
         if(equipmentData.Element != PlayerElement.NONE)
         {
-            EquipmentInfoText.text = StatsText().text + "\n" + "Element: " + equipmentData.Element + EquipmentAbilityText();
+            EquipmentInfoText.text = StatsText().text + "\n" + "Element: " + equipmentData.Element + EquipmentAbilityTextInEquipMenu();
         }
     }
 
@@ -316,7 +316,7 @@ public class Equipment : MonoBehaviour
     {
         EquipmentNameText.text = equipmentData.EquipmentName;
 
-        EquipmentInfoText.text = StatsText().text + EquipmentAbilityText();
+        EquipmentInfoText.text = StatsText().text + EquipmentAbilityTextInEquipMenu();
     }
 
     public void PanelText(GameObject panel)
@@ -336,7 +336,7 @@ public class Equipment : MonoBehaviour
             if (equipmentData.Element != PlayerElement.NONE)
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
-                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element + 
+                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
                                         EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
             }
             else
@@ -426,7 +426,6 @@ public class Equipment : MonoBehaviour
                                         "\n\n" + "Sell Value: " + SellValue();
             }
         }
-
         return EquipmentPanelText;
     }
 
@@ -527,7 +526,6 @@ public class Equipment : MonoBehaviour
                                         "\n\n" + "Buy Value: " + equipmentData.BuyValue;
             }
         }
-
         return EquipmentPanelText;
     }
 
@@ -566,6 +564,55 @@ public class Equipment : MonoBehaviour
         return EquipmentInfoText;
     }
 
+    public string EquipmentAbilityTextInEquipMenu()
+    {
+        string skillText = "";
+
+        switch (equipmentAbility)
+        {
+            case (Ability.SwiftStrike):
+                skillText = "\n\n" + "<#EFDFB8>" + "Removes the MP cost of Swift Strike." + "</color> ";
+                break;
+            case (Ability.StormThrust):
+                skillText = "\n\n" + "<#EFDFB8>" + "Storm Thrust - Stun status." + "</color> ";
+                break;
+            case (Ability.BurnStatus):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack - 10% Burning status." + "</color> ";
+                break;
+            case (Ability.ReducedAutoAttack):
+                skillText = "\n\n" + "<#EFDFB8>" + "Reduces auto-attack time by 1 second." + "</color> ";
+                break;
+            case (Ability.SlowStatus):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack - 10% Slowed status." + "</color> ";
+                break;
+            case (Ability.Tenacity):
+                skillText = "\n\n" + "<#EFDFB8>" + "Tenacity - strength 30%." + "</color> ";
+                break;
+            case (Ability.ManaPulse):
+                skillText = "\n\n" + "<#EFDFB8>" + "Ether - Mana Pulse." + "</color> ";
+                break;
+            case (Ability.StrengthIntelligenceReverse):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack - Damage based on intelligence." + "</color> ";
+                break;
+            case (Ability.Alleviate):
+                skillText = "\n\n" + "<#EFDFB8>" + "Alleviate heals HP by 30% instead." + "</color> ";
+                break;
+            case (Ability.HpForSkillCast):
+                skillText = "\n\n" + "<#EFDFB8>" + "Skills - 3% HP cost." + "</color> ";
+                break;
+            case (Ability.WhirlwindSlash):
+                skillText = "\n\n" + "<#EFDFB8>" + "Whirlwind Slash - Wind Scarred status." + "</color> ";
+                break;
+            case (Ability.EvilsEnd):
+                skillText = "\n\n" + "<#EFDFB8>" + "Evil's End - 40% HP requirement." + "</color> ";
+                break;
+            case (Ability.CriticalChanceIncrease):
+                skillText = "\n\n" + "<#EFDFB8>" + "Critical Hit Chance - 15%." + "</color> ";
+                break;
+        }
+        return skillText;
+    }
+
     public string EquipmentAbilityText()
     {
         string skillText = "";
@@ -594,13 +641,22 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Ether discharges a wave that deals damage to all targets in range with a power of 60." + "</color> ";
                 break;
             case (Ability.StrengthIntelligenceReverse):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack applies damage based on intelligence." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack applies damage based on intelligence instead." + "</color> ";
                 break;
             case (Ability.Alleviate):
                 skillText = "\n\n" + "<#EFDFB8>" + "Alleviate heals HP by 30% instead." + "</color> ";
                 break;
             case (Ability.HpForSkillCast):
                 skillText = "\n\n" + "<#EFDFB8>" + "Skills cost 3% of your HP to cast instead of using MP." + "</color> ";
+                break;
+            case (Ability.WhirlwindSlash):
+                skillText = "\n\n" + "<#EFDFB8>" + "Whirlwind Slash gains the Wind Scarred status effect, dealing damage gradually." + "</color> ";
+                break;
+            case (Ability.EvilsEnd):
+                skillText = "\n\n" + "<#EFDFB8>" + "The HP penalty for Evil's End is increased to 40%." + "</color> ";
+                break;
+            case (Ability.CriticalChanceIncrease):
+                skillText = "\n\n" + "<#EFDFB8>" + "Increases Critical Hit rate to 15%." + "</color> ";
                 break;
         }
 
@@ -649,6 +705,19 @@ public class Equipment : MonoBehaviour
             case (Ability.HpForSkillCast):
                 SkillsManager.Instance.GetUsesHpForSkillCast = true;
                 break;
+            case (Ability.WhirlwindSlash):
+                skill.GetGainedPassive = true;
+                skill.GetEnemyStatusEffect = StatusEffect.DamageOverTime;
+                skill.GetStatusEffectName = "Wind Scarred";
+                skill.GetStatusDescription = "Taking damage over time.";
+                break;
+            case (Ability.EvilsEnd):
+                skill.GetStatusEffectPotency = 40;
+                skill.GetSkillDescription = "Delivers a punishing blow to the target. <#EFDFB8>Can only be executed while the target is at 40% HP or below.</color>";
+                break;
+            case (Ability.CriticalChanceIncrease):
+                character.GetCriticalChance = 15;
+                break;
         }
     }
 
@@ -693,6 +762,17 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.HpForSkillCast):
                 SkillsManager.Instance.GetUsesHpForSkillCast = false;
+                break;
+            case (Ability.WhirlwindSlash):
+                skill.GetGainedPassive = false;
+                skill.GetEnemyStatusEffect = StatusEffect.NONE;
+                break;
+            case (Ability.EvilsEnd):
+                skill.GetStatusEffectPotency = 25;
+                skill.GetSkillDescription = "Delivers a punishing blow to the target. <#EFDFB8>Can only be executed while the target is at 25% HP or below.</color>";
+                break;
+            case (Ability.CriticalChanceIncrease):
+                character.GetCriticalChance = 5;
                 break;
         }
     }

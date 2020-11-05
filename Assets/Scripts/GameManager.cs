@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance = null;
 
+    private Character character;
+
     [SerializeField]
     private ChangeSpawnPointLocation changeSpawnPointLocation = null;
 
@@ -75,6 +77,18 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private EventSystem eventsystem;
+
+    public Character GetCharacter
+    {
+        get
+        {
+            return character;
+        }
+        set
+        {
+            character = value;
+        }
+    }
 
     public ChangeSpawnPointLocation GetChangeSpawnPointLocation
     {
@@ -431,6 +445,8 @@ public class GameManager : MonoBehaviour
 
         if(Knight.activeInHierarchy)
         {
+            character = Knight.GetComponent<Character>();
+
             for(int i = 0; i < KnightSkills.Length; i++)
             {
                 KnightSkills[i].SetActive(true);
@@ -439,6 +455,8 @@ public class GameManager : MonoBehaviour
         }
         else if(ShadowPriest.activeInHierarchy)
         {
+            character = ShadowPriest.GetComponent<Character>();
+
             for (int i = 0; i < ShadowPriestSkills.Length; i++)
             {
                 ShadowPriestSkills[i].SetActive(true);
