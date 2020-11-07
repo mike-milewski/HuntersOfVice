@@ -89,6 +89,7 @@ public class Puzzle : MonoBehaviour
         {
             ParticleEffect.SetActive(true);
             ObjectToSpawn.SetActive(true);
+            ObjectToDespawn.SetActive(false);
         }
     }
 

@@ -8,7 +8,7 @@ public enum EquipmentType { Weapon, Armor }
 public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 
 public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse, StrengthIntelligenceReverse, Alleviate, 
-                      HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease }
+                      HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease, ExtraContract, RemoveContractDebuffs, ImperviousBuff }
 
 [System.Serializable]
 public class StatusType
@@ -609,6 +609,15 @@ public class Equipment : MonoBehaviour
             case (Ability.CriticalChanceIncrease):
                 skillText = "\n\n" + "<#EFDFB8>" + "Critical Hit Chance - 15%." + "</color> ";
                 break;
+            case (Ability.ExtraContract):
+                skillText = "\n\n" + "<#EFDFB8>" + "Additional contract stack." + "</color> ";
+                break;
+            case (Ability.RemoveContractDebuffs):
+                skillText = "\n\n" + "<#EFDFB8>" + "Contracts - Removed debuffs." + "</color> ";
+                break;
+            case (Ability.ImperviousBuff):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-Attack - 25% Consecrated Defense." + "</color> ";
+                break;
         }
         return skillText;
     }
@@ -658,8 +667,16 @@ public class Equipment : MonoBehaviour
             case (Ability.CriticalChanceIncrease):
                 skillText = "\n\n" + "<#EFDFB8>" + "Increases Critical Hit rate to 15%." + "</color> ";
                 break;
+            case (Ability.ExtraContract):
+                skillText = "\n\n" + "<#EFDFB8>" + "Allows the stacking of an additional contract." + "</color> ";
+                break;
+            case (Ability.RemoveContractDebuffs):
+                skillText = "\n\n" + "<#EFDFB8>" + "Removes the detrimental effects of all contracts." + "</color> ";
+                break;
+            case (Ability.ImperviousBuff):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack has a 25% chance of applying the Consecrated Defense buff." + "</color> ";
+                break;
         }
-
         return skillText;
     }
 

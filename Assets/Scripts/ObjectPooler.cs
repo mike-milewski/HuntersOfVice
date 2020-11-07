@@ -85,7 +85,6 @@ public class ObjectPooler : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
         #endregion
 
         AddTextForPlayerDamage(poolcontroller[0].GetPoolAmount);

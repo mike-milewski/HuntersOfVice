@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: 1
   m_Shader: {fileID: 4800000, guid: 4a2d0ef71f180834aa9a4deb63f6e613, type: 3}
   m_ShaderKeywords: _SECONDARYENABLETHIS_ON
@@ -88,9 +89,9 @@ Material:
     - _BlendBlendDistance: 0
     - _BlendEnableThis: 0
     - _BumpScale: 1
-    - _CubemapFresnel: 4
+    - _CubemapFresnel: 0.4
     - _CubemapGlossiness: 1
-    - _CubemapStrength: 0.46
+    - _CubemapStrength: 0
     - _CubemapUseCustomCubemap: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -107,8 +108,8 @@ Material:
     - _OverallWaveHeight: 0.8
     - _Parallax: 0.02
     - _PrimaryHeightStrength: 0.15
-    - _SSRefractionDecaydistance: 50
-    - _SSRefractionRefractionFresnel: 5
+    - _SSRefractionDecaydistance: 37.6
+    - _SSRefractionRefractionFresnel: 0
     - _SSRefractionStrength: 0
     - _SecondaryEnableThis: 1
     - _SecondaryHeightStrength: 0.18
@@ -117,14 +118,14 @@ Material:
     - _SrcBlend: 1
     - _TessellationFarCap: 20
     - _TessellationNearCap: 0
-    - _TessellationStrength: 5
+    - _TessellationStrength: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.29999998, g: 0.5, b: 0.9, a: 0.5}
-    - _BlendColor: {r: 0, g: 0.6442697, b: 0.7720588, a: 1}
+    - _BaseColor: {r: 0, g: 0.9307901, b: 0.990566, a: 0.5647059}
+    - _BlendColor: {r: 0.2009167, g: 0.92387825, b: 0.990566, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CubemapBaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CubemapBaseColor: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _PrimaryUandVspeedZWNotused: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _SecondaryUandVspeedZWNotused: {r: -0.05, g: -0.075, b: 0, a: 0}
