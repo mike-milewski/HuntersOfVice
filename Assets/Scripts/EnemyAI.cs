@@ -107,12 +107,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private float TimeToMove, DistanceToTarget;
 
-    private bool StandingStill, PlayerEntry;
+    private bool StandingStill, PlayerEntry, IsDead, IsDisabled;
 
     private int WaypointIndex;
 
     [SerializeField]
-    private bool IsHostile, IsAnAdd, IsAPuzzleComponent, IsAbushPuzzleComponent, IsATreasurePuzzleComponent, DataCheck;
+    private bool IsHostile, IsAnAdd, IsAPuzzleComponent, IsAbushPuzzleComponent, IsATreasurePuzzleComponent;
 
     [SerializeField]
     private bool IsUsingAnimator;
@@ -251,6 +251,30 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    public bool GetIsDead
+    {
+        get
+        {
+            return IsDead;
+        }
+        set
+        {
+            IsDead = value;
+        }
+    }
+
+    public bool GetIsDisabled
+    {
+        get
+        {
+            return IsDisabled;
+        }
+        set
+        {
+            IsDisabled = value;
+        }
+    }
+
     public bool GetIsAPuzzleComponent
     {
         get
@@ -298,11 +322,6 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        if(!DataCheck)
-        {
-            character.GetCharacterData.CheckedData = false;
-        }
-
         if(IsAnAdd)
         {
             EnemyTriggerSphere.gameObject.SetActive(false);
@@ -663,12 +682,12 @@ public class EnemyAI : MonoBehaviour
 
     public void Dead()
     {
+        IsDead = true;
+
         if(gameObject.GetComponent<AudioSource>() != null)
         {
             gameObject.GetComponent<AudioSource>().volume = 0;
         }
-
-        DataCheck = true;
 
         StandingStill = false;
         PlayerTarget = null;
@@ -745,11 +764,12 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
+            /*
             if(!CheckForSameEnemyDataLevel())
             {
                 return;
             }
-
+            */
             if (CheckForSameEnemyDataName())
             {
                 return;
@@ -820,7 +840,28 @@ public class EnemyAI : MonoBehaviour
 
         foreach (MonsterInformation mi in monsterBook.GetMonsterTransform.GetComponentsInChildren<MonsterInformation>(true))
         {
-            if (mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName)
+            if (mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName && !character.GetCharacterData.CheckedData)
+            {
+                character.GetCharacterData.CheckedData = true;
+
+                if (mi.GetCharacterData.Count < monsterBook.GetMonsterLevelButtons.Length)
+                {
+                    mi.GetCharacterData.Add(character.GetCharacterData);
+                    GetMonsterEntryText();
+                }
+
+                if (mi.GetIsSelected)
+                {
+                    mi.ShowLevelButtons();
+                }
+
+                SameName = true;
+            }
+            else if(mi.GetCharacter.GetCharacterData.CharacterName != character.GetCharacterData.CharacterName && !character.GetCharacterData.CheckedData)
+            {
+                SameName = false;
+            }
+            else if(mi.GetCharacter.GetCharacterData.CharacterName == character.GetCharacterData.CharacterName && character.GetCharacterData.CheckedData)
             {
                 SameName = true;
             }
@@ -834,7 +875,7 @@ public class EnemyAI : MonoBehaviour
 
         foreach (MonsterInformation mi in monsterBook.GetMonsterTransform.GetComponentsInChildren<MonsterInformation>(true))
         {
-            if (character.GetCharacterData.CheckedData)
+            if (!character.GetCharacterData.CheckedData)
             {
                 SameLevel = true;
             }
@@ -859,6 +900,8 @@ public class EnemyAI : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     private void ResetStats()
     {
+        IsDead = false;
+
         if(gameObject.GetComponent<AudioSource>() != null)
         {
             if(!settings.MuteAudio)

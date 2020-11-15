@@ -4,7 +4,16 @@ using UnityEngine;
 public class ChangeSpawnPointLocation : MonoBehaviour
 {
     [SerializeField]
+    private SpawnPoint spawnPoint;
+
+    [SerializeField]
+    private EnemyAI[] EnemiesToEnable, EnemiesToDisable;
+
+    [SerializeField]
     private Transform CurrentSpawnPointLocation, DesiredSpawnPointLocation;
+
+    [SerializeField]
+    private Transform[] EnemyZonesToEnable, EnemyZonesToDisable;
 
     [SerializeField]
     private bool AddSpawnPointToGameManager;
@@ -32,6 +41,8 @@ public class ChangeSpawnPointLocation : MonoBehaviour
                 GameManager.Instance.GetChangeSpawnPointLocation = null;
                 gameObject.SetActive(false);
             }
+
+            spawnPoint.GetSpawnPointLocation = this;
         }
     }
 
@@ -50,5 +61,61 @@ public class ChangeSpawnPointLocation : MonoBehaviour
         {
             obstacleDamageRadius[i].enabled = false;
         }
+    }
+
+    private void EnableEnemies()
+    {
+        if(EnemiesToEnable.Length > 0)
+        {
+            for (int i = 0; i < EnemiesToEnable.Length; i++)
+            {
+                EnemiesToEnable[i].gameObject.SetActive(true);
+
+                EnemiesToEnable[i].GetIsDisabled = false;
+            }
+        }
+    }
+
+    private void DisableEnemies()
+    {
+        if(EnemiesToDisable.Length > 0)
+        {
+            for (int i = 0; i < EnemiesToDisable.Length; i++)
+            {
+                EnemiesToDisable[i].gameObject.SetActive(false);
+
+                EnemiesToDisable[i].GetIsDisabled = true;
+            }
+        }
+    }
+
+    private void EnableEnemyZones()
+    {
+        if(EnemyZonesToEnable.Length > 0)
+        {
+            for(int i = 0; i < EnemyZonesToEnable.Length; i++)
+            {
+                EnemyZonesToEnable[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void DisableEnemyZones()
+    {
+        if (EnemyZonesToDisable.Length > 0)
+        {
+            for (int i = 0; i < EnemyZonesToDisable.Length; i++)
+            {
+                EnemyZonesToDisable[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void ZonesAndEnemies()
+    {
+        EnableEnemies();
+        DisableEnemies();
+        EnableEnemyZones();
+        DisableEnemyZones();
     }
 }

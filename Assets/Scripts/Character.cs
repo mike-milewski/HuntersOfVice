@@ -235,6 +235,17 @@ public class Character : MonoBehaviour
         DefaultCriticalChance = CriticalHitChance;
     }
 
+    public void DefaultStatsOnLevelUp()
+    {
+        CharData.Health = DefaultHealth;
+        CharData.Mana = DefaultMana;
+        CharData.Strength = DefaultStrength;
+        CharData.Defense = DefaultDefense;
+        CharData.Intelligence = DefaultIntelligence;
+        CharData.MoveSpeed = DefaultSpeed;
+        CharData.CriticalHitChance = DefaultCriticalChance;
+    }
+
     public void DefaultStats()
     {
         CharData.Health = DefaultHealth;

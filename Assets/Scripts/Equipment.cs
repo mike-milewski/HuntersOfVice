@@ -8,7 +8,7 @@ public enum EquipmentType { Weapon, Armor }
 public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 
 public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse, StrengthIntelligenceReverse, Alleviate, 
-                      HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease, ExtraContract, RemoveContractDebuffs, ImperviousBuff }
+                      HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease, ExtraContract, BraveLight, Contracts, MiasmaPulse, NetherStar, IgnoreDefense }
 
 [System.Serializable]
 public class StatusType
@@ -72,6 +72,9 @@ public class Equipment : MonoBehaviour
 
     [SerializeField]
     private Skills skill = null;
+
+    [SerializeField]
+    private Skills[] ContractSkills;
 
     [SerializeField]
     private Items items = null;
@@ -612,11 +615,20 @@ public class Equipment : MonoBehaviour
             case (Ability.ExtraContract):
                 skillText = "\n\n" + "<#EFDFB8>" + "Additional contract stack." + "</color> ";
                 break;
-            case (Ability.RemoveContractDebuffs):
-                skillText = "\n\n" + "<#EFDFB8>" + "Contracts - Removed debuffs." + "</color> ";
+            case (Ability.BraveLight):
+                skillText = "\n\n" + "<#EFDFB8>" + "Bravelight - 45s cooldown." + "</color> ";
                 break;
-            case (Ability.ImperviousBuff):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-Attack - 25% Consecrated Defense." + "</color> ";
+            case (Ability.Contracts):
+                skillText = "\n\n" + "<#EFDFB8>" + "Contracts - Removed negative status." + "</color> ";
+                break;
+            case (Ability.MiasmaPulse):
+                skillText = "\n\n" + "<#EFDFB8>" + "Potion - Miasma Pulse." + "</color> ";
+                break;
+            case (Ability.NetherStar):
+                skillText = "\n\n" + "<#EFDFB8>" + "Nether Star - Increased power." + "</color> ";
+                break;
+            case (Ability.IgnoreDefense):
+                skillText = "\n\n" + "<#EFDFB8>" + "Ignores enemy's defense." + "</color> ";
                 break;
         }
         return skillText;
@@ -647,7 +659,7 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Tenacity increases strength by 30% instead." + "</color> ";
                 break;
             case (Ability.ManaPulse):
-                skillText = "\n\n" + "<#EFDFB8>" + "Ether discharges a wave that deals damage to all targets in range with a power of 60." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Ether discharges a potent wave that deals damage to all targets in range with a power of 60." + "</color> ";
                 break;
             case (Ability.StrengthIntelligenceReverse):
                 skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack applies damage based on intelligence instead." + "</color> ";
@@ -670,11 +682,20 @@ public class Equipment : MonoBehaviour
             case (Ability.ExtraContract):
                 skillText = "\n\n" + "<#EFDFB8>" + "Allows the stacking of an additional contract." + "</color> ";
                 break;
-            case (Ability.RemoveContractDebuffs):
+            case (Ability.BraveLight):
+                skillText = "\n\n" + "<#EFDFB8>" + "Reduces the cooldown of Bravelight by half." + "</color> ";
+                break;
+            case (Ability.Contracts):
                 skillText = "\n\n" + "<#EFDFB8>" + "Removes the detrimental effects of all contracts." + "</color> ";
                 break;
-            case (Ability.ImperviousBuff):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack has a 25% chance of applying the Consecrated Defense buff." + "</color> ";
+            case (Ability.MiasmaPulse):
+                skillText = "\n\n" + "<#EFDFB8>" + "Potion discharges a toxic wave that poisons all targets in range with a power of 30." + "</color> ";
+                break;
+            case (Ability.NetherStar):
+                skillText = "\n\n" + "<#EFDFB8>" + "Increases the power of Nether Star by 200." + "</color> ";
+                break;
+            case (Ability.IgnoreDefense):
+                skillText = "\n\n" + "<#EFDFB8>" + "Ignores enemies defense." + "</color> ";
                 break;
         }
         return skillText;
@@ -693,8 +714,9 @@ public class Equipment : MonoBehaviour
                 skill.GetEnemyStatusEffect = StatusEffect.Stun;
                 skill.GetStatusEffectName = "Stun";
                 skill.GetStatusDescription = "Unable to act.";
+                skill.GetAddedEffect = "Unable to act";
                 skill.GetStatusDuration = 5.0f;
-                skill.GetCoolDown = 10;
+                skill.GetCoolDown = 15;
                 break;
             case (Ability.BurnStatus):
                 basicAttack.GetHasBurnStatus = true;
@@ -735,6 +757,35 @@ public class Equipment : MonoBehaviour
             case (Ability.CriticalChanceIncrease):
                 character.GetCriticalChance = 15;
                 break;
+            case (Ability.BraveLight):
+                skill.GetCoolDown = 45;
+                skill.GetCoolDownImage.fillAmount = skill.GetElapsedCoolDown;
+                break;
+            case (Ability.Contracts):
+                ContractSkills[0].GetPlayerStatusEffect = EffectStatus.ContractWithEvilNoNegative;
+                ContractSkills[1].GetPlayerStatusEffect = EffectStatus.ContractWithTheVileNoNegative;
+                ContractSkills[2].GetPlayerStatusEffect = EffectStatus.ContractWithNefariousnessNoNegative;
+                ContractSkills[0].GetSkillDescription = "Increases Intelligence by 15%.";
+                ContractSkills[1].GetSkillDescription = "Restores 3% MP over 3 seconds.";
+                ContractSkills[2].GetSkillDescription = "Reduces the casting time of all skills by 25%.";
+                ContractSkills[0].GetStatusDescription = "Increased Intelligence";
+                ContractSkills[1].GetStatusDescription = "Restoring MP";
+                ContractSkills[2].GetStatusDescription = "Skill cast and cost reduced.";
+                ApplyContractEffects();
+                break;
+            case (Ability.ExtraContract):
+                SkillsManager.Instance.GetMaxContractStack++;
+                break;
+            case (Ability.MiasmaPulse):
+                items.GetUnlockedPassive = true;
+                items.GetStatusEffect = true;
+                break;
+            case (Ability.NetherStar):
+                skill.GetPotency += 200;
+                break;
+            case (Ability.IgnoreDefense):
+                basicAttack.GetIgnoreDefense = true;
+                break;
         }
     }
 
@@ -751,6 +802,7 @@ public class Equipment : MonoBehaviour
                 skill.GetEnemyStatusEffect = StatusEffect.DefenseDOWN;
                 skill.GetStatusEffectName = "Defense Down";
                 skill.GetStatusDescription = "Lowered Defense.";
+                skill.GetAddedEffect = "Lowered defense";
                 skill.GetStatusDuration = 15.0f;
                 skill.GetCoolDown = 3;
                 break;
@@ -791,6 +843,78 @@ public class Equipment : MonoBehaviour
             case (Ability.CriticalChanceIncrease):
                 character.GetCriticalChance = 5;
                 break;
+            case (Ability.BraveLight):
+                skill.GetCoolDown = 90;
+                skill.GetCoolDownImage.fillAmount = skill.GetElapsedCoolDown;
+                break;
+            case (Ability.Contracts):
+                ContractSkills[0].GetPlayerStatusEffect = EffectStatus.ContractWithEvil;
+                ContractSkills[1].GetPlayerStatusEffect = EffectStatus.ContractWithTheVile;
+                ContractSkills[2].GetPlayerStatusEffect = EffectStatus.ContractWithNefariousness;
+                ContractSkills[0].GetSkillDescription = "Increases intelligence by 15% and decreases defense by 15%.";
+                ContractSkills[1].GetSkillDescription = "Restores 3% MP over 3 seconds and reduces HP by 1% over 5 seconds.";
+                ContractSkills[2].GetSkillDescription = "Reduces the casting time of all skills by 25% and reduces maximum HP by 25%.";
+                ContractSkills[0].GetStatusDescription = "Increased Intelligence, Decreased Defense";
+                ContractSkills[1].GetStatusDescription = "Restoring MP, Taking Damage";
+                ContractSkills[2].GetStatusDescription = "Skill cast and cost reduced, HP halved";
+                RemoveContracts();
+                break;
+            case (Ability.ExtraContract):
+                SkillsManager.Instance.GetMaxContractStack--;
+                if (SkillsManager.Instance.GetContractStack >= SkillsManager.Instance.GetMaxContractStack)
+                {
+                    SkillsManager.Instance.GetContractSkill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                    SkillsManager.Instance.GetContractStack--;
+                }
+                break;
+            case (Ability.MiasmaPulse):
+                items.GetUnlockedPassive = false;
+                items.GetStatusEffect = false;
+                break;
+            case (Ability.NetherStar):
+                skill.GetPotency -= 200;
+                break;
+            case (Ability.IgnoreDefense):
+                basicAttack.GetIgnoreDefense = false;
+                break;
+        }
+    }
+
+    private void ApplyContractEffects()
+    {
+        if(ContractSkills[0].GetStatusIcon.activeInHierarchy)
+        {
+            ContractSkills[0].GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+            SkillsManager.Instance.GetContractStack--;
+        }
+        if (ContractSkills[1].GetStatusIcon.activeInHierarchy)
+        {
+            ContractSkills[1].GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+            SkillsManager.Instance.GetContractStack--;
+        }
+        if (ContractSkills[2].GetStatusIcon.activeInHierarchy)
+        {
+            ContractSkills[2].GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+            SkillsManager.Instance.GetContractStack--;
+        }
+    }
+
+    private void RemoveContracts()
+    {
+        if (ContractSkills[0].GetStatusIcon.activeInHierarchy)
+        {
+            ContractSkills[0].GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+            SkillsManager.Instance.GetContractStack--;
+        }
+        if (ContractSkills[1].GetStatusIcon.activeInHierarchy)
+        {
+            ContractSkills[1].GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+            SkillsManager.Instance.GetContractStack--;
+        }
+        if (ContractSkills[2].GetStatusIcon.activeInHierarchy)
+        {
+            ContractSkills[2].GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+            SkillsManager.Instance.GetContractStack--;
         }
     }
 

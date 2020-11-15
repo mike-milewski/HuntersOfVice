@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+using System.Runtime.Serialization;
 
 public class BasicAttack : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class BasicAttack : MonoBehaviour
     private PlayerElement playerElement;
 
     [SerializeField]
-    private bool HasBurnStatusEffect, HasSlowStatusEffect, UsesIntelligenceForDamage;
+    private bool HasBurnStatusEffect, HasSlowStatusEffect, UsesIntelligenceForDamage, IgnoresDefense;
 
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
@@ -96,6 +97,18 @@ public class BasicAttack : MonoBehaviour
         set
         {
             AttackRange = value;
+        }
+    }
+
+    public bool GetIgnoreDefense
+    {
+        get
+        {
+            return IgnoresDefense;
+        }
+        set
+        {
+            IgnoresDefense = value;
         }
     }
 
@@ -406,19 +419,29 @@ public class BasicAttack : MonoBehaviour
             {
                 int WeakDamage = (DamageType * 2) + (int)CriticalValue;
 
-                if(WeakDamage - Target.GetCharacter.CharacterDefense < 0)
+                if(IgnoresDefense)
                 {
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-1);
+                    Target.GetComponentInChildren<Health>().ModifyHealth(-WeakDamage);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "1!" +
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(WeakDamage) + "!" +
                                                                                 "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
                 }
                 else
                 {
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
+                    if (WeakDamage - Target.GetCharacter.CharacterDefense < 0)
+                    {
+                        Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(WeakDamage - Target.GetCharacter.CharacterDefense) + "!" +
-                                                                                "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "1!" +
+                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
+                    }
+                    else
+                    {
+                        Target.GetComponentInChildren<Health>().ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
+
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(WeakDamage - Target.GetCharacter.CharacterDefense) + "!" +
+                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
+                    }
                 }
             }
             else if(CheckResistances())
@@ -427,19 +450,29 @@ public class BasicAttack : MonoBehaviour
 
                 Mathf.RoundToInt(ResistDamage);
 
-                if (ResistDamage - Target.GetCharacter.CharacterDefense < 0)
+                if(IgnoresDefense)
                 {
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-1);
+                    Target.GetComponentInChildren<Health>().ModifyHealth(-(int)ResistDamage);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "1!" +
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(ResistDamage) + "!" +
                                                                                 "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
                 }
                 else
                 {
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-((int)ResistDamage - Target.GetCharacter.CharacterDefense));
+                    if (ResistDamage - Target.GetCharacter.CharacterDefense < 0)
+                    {
+                        Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(ResistDamage - Target.GetCharacter.CharacterDefense) + "!" +
-                                                                                "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "1!" +
+                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
+                    }
+                    else
+                    {
+                        Target.GetComponentInChildren<Health>().ModifyHealth(-((int)ResistDamage - Target.GetCharacter.CharacterDefense));
+
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(ResistDamage - Target.GetCharacter.CharacterDefense) + "!" +
+                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
+                    }
                 }
             }
             else if(CheckImmunities())
@@ -448,39 +481,60 @@ public class BasicAttack : MonoBehaviour
             }
             else if(CheckAbsorptions())
             {
-                if(CriticalValue - Target.GetCharacter.CharacterDefense < 0)
+                if(IgnoresDefense)
                 {
-                    Target.GetHealth.IncreaseHealth(1);
+                    Target.GetHealth.IncreaseHealth((int)CriticalValue);
 
                     Target.GetLocalHealthInfo();
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "<#4CFFAD>" + "1!" + "</color>" + "\n" + "</size>" + "<size=12> " +
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "<#4CFFAD>" + Mathf.Round(CriticalValue) + "!" + "</color>" + "\n" + "</size>" + "<size=12> " +
                                                                                 "<#EFDFB8>" + "(ABSORBED!)" + "</color> </size>";
                 }
                 else
                 {
-                    Target.GetHealth.IncreaseHealth((int)CriticalValue - Target.GetCharacter.CharacterDefense);
+                    if (CriticalValue - Target.GetCharacter.CharacterDefense < 0)
+                    {
+                        Target.GetHealth.IncreaseHealth(1);
 
-                    Target.GetLocalHealthInfo();
+                        Target.GetLocalHealthInfo();
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "<#4CFFAD>" + Mathf.Round(CriticalValue -
-                                                                                Target.GetCharacter.CharacterDefense) + "!" + "</color>" + "\n" + "</size>" + "<size=12> " +
-                                                                                "<#EFDFB8>" + "(ABSORBED!)" + "</color> </size>";
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "<#4CFFAD>" + "1!" + "</color>" + "\n" + "</size>" + "<size=12> " +
+                                                                                    "<#EFDFB8>" + "(ABSORBED!)" + "</color> </size>";
+                    }
+                    else
+                    {
+                        Target.GetHealth.IncreaseHealth((int)CriticalValue - Target.GetCharacter.CharacterDefense);
+
+                        Target.GetLocalHealthInfo();
+
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "<#4CFFAD>" + Mathf.Round(CriticalValue -
+                                                                                    Target.GetCharacter.CharacterDefense) + "!" + "</color>" + "\n" + "</size>" + "<size=12> " +
+                                                                                    "<#EFDFB8>" + "(ABSORBED!)" + "</color> </size>";
+                    }
                 }
             }
             else
             {
-                if(CriticalValue - Target.GetCharacter.CharacterDefense < 0)
+                if(IgnoresDefense)
                 {
-                    Target.GetHealth.ModifyHealth(-1);
+                    Target.GetHealth.ModifyHealth(-(int)CriticalValue);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "1!";
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(CriticalValue) + "!";
                 }
                 else
                 {
-                    Target.GetHealth.ModifyHealth(-((int)CriticalValue - Target.GetCharacter.CharacterDefense));
+                    if (CriticalValue - Target.GetCharacter.CharacterDefense < 0)
+                    {
+                        Target.GetHealth.ModifyHealth(-1);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(CriticalValue - Target.GetCharacter.CharacterDefense) + "!";
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + "1!";
+                    }
+                    else
+                    {
+                        Target.GetHealth.ModifyHealth(-((int)CriticalValue - Target.GetCharacter.CharacterDefense));
+
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(CriticalValue - Target.GetCharacter.CharacterDefense) + "!";
+                    }
                 }
             }
         }
@@ -490,19 +544,29 @@ public class BasicAttack : MonoBehaviour
             {
                 int WeakDamage = (DamageType * 2);
 
-                if(WeakDamage - Target.GetCharacter.CharacterDefense < 0)
+                if(IgnoresDefense)
                 {
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-1);
+                    Target.GetComponentInChildren<Health>().ModifyHealth(-WeakDamage);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "1" +
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(WeakDamage) +
                                                                                 "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
                 }
                 else
                 {
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
+                    if (WeakDamage - Target.GetCharacter.CharacterDefense < 0)
+                    {
+                        Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(WeakDamage - Target.GetCharacter.CharacterDefense) +
-                                                                                "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "1" +
+                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
+                    }
+                    else
+                    {
+                        Target.GetComponentInChildren<Health>().ModifyHealth(-(WeakDamage - Target.GetCharacter.CharacterDefense));
+
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(WeakDamage - Target.GetCharacter.CharacterDefense) +
+                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(WEAKNESS!)" + "</color> </size>";
+                    }
                 }
             }
             else if (CheckResistances())
@@ -511,19 +575,29 @@ public class BasicAttack : MonoBehaviour
 
                 Mathf.RoundToInt(ResistDamage);
 
-                if (ResistDamage - Target.GetCharacter.CharacterDefense < 0)
-                {      
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-1);
+                if(IgnoresDefense)
+                {
+                    Target.GetComponentInChildren<Health>().ModifyHealth(-(int)ResistDamage);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "1" +
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(ResistDamage) +
                                                                                 "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
                 }
                 else
                 {
-                    Target.GetComponentInChildren<Health>().ModifyHealth(-((int)ResistDamage - Target.GetCharacter.CharacterDefense));
+                    if (ResistDamage - Target.GetCharacter.CharacterDefense < 0)
+                    {
+                        Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(ResistDamage - Target.GetCharacter.CharacterDefense) +
-                                                                                "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "1" +
+                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
+                    }
+                    else
+                    {
+                        Target.GetComponentInChildren<Health>().ModifyHealth(-((int)ResistDamage - Target.GetCharacter.CharacterDefense));
+
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(ResistDamage - Target.GetCharacter.CharacterDefense) +
+                                                                                    "\n" + "<size=12> <#EFDFB8>" + "(RESISTED!)" + "</color> </size>";
+                    }
                 }
             }
             else if (CheckImmunities())
@@ -532,39 +606,60 @@ public class BasicAttack : MonoBehaviour
             }
             else if (CheckAbsorptions())
             {
-                if(DamageType - Target.GetCharacter.CharacterDefense < 0)
+                if(IgnoresDefense)
                 {
-                    Target.GetHealth.IncreaseHealth(1);
+                    Target.GetHealth.IncreaseHealth(DamageType);
 
                     Target.GetLocalHealthInfo();
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "<#4CFFAD>" + "1" + "</color>" + "\n" + "<size=12> <#EFDFB8>" +
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "<#4CFFAD>" + Mathf.Round(DamageType) + "</color>" + "\n" + "<size=12> <#EFDFB8>" +
                                                                                 "(ABSORBED!)";
                 }
                 else
                 {
-                    Target.GetHealth.IncreaseHealth((DamageType - Target.GetCharacter.CharacterDefense));
+                    if (DamageType - Target.GetCharacter.CharacterDefense < 0)
+                    {
+                        Target.GetHealth.IncreaseHealth(1);
 
-                    Target.GetLocalHealthInfo();
+                        Target.GetLocalHealthInfo();
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "<#4CFFAD>" + Mathf.Round(DamageType -
-                                                                                Target.GetCharacter.CharacterDefense) + "</color>" + "\n" + "<size=12> <#EFDFB8>" +
-                                                                                "(ABSORBED!)";
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "<#4CFFAD>" + "1" + "</color>" + "\n" + "<size=12> <#EFDFB8>" +
+                                                                                    "(ABSORBED!)";
+                    }
+                    else
+                    {
+                        Target.GetHealth.IncreaseHealth((DamageType - Target.GetCharacter.CharacterDefense));
+
+                        Target.GetLocalHealthInfo();
+
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "<#4CFFAD>" + Mathf.Round(DamageType -
+                                                                                    Target.GetCharacter.CharacterDefense) + "</color>" + "\n" + "<size=12> <#EFDFB8>" +
+                                                                                    "(ABSORBED!)";
+                    }
                 }
             }
             else
             {
-                if(DamageType - Target.GetCharacter.CharacterDefense < 0)
+                if(IgnoresDefense)
                 {
-                    Target.GetHealth.ModifyHealth(-1);
+                    Target.GetHealth.ModifyHealth(-DamageType);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "1";
+                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(DamageType);
                 }
                 else
                 {
-                    Target.GetHealth.ModifyHealth(-(DamageType - Target.GetCharacter.CharacterDefense));
+                    if (DamageType - Target.GetCharacter.CharacterDefense < 0)
+                    {
+                        Target.GetHealth.ModifyHealth(-1);
 
-                    Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(DamageType - Target.GetCharacter.CharacterDefense);
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "1";
+                    }
+                    else
+                    {
+                        Target.GetHealth.ModifyHealth(-(DamageType - Target.GetCharacter.CharacterDefense));
+
+                        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + Mathf.Round(DamageType - Target.GetCharacter.CharacterDefense);
+                    }
                 }
             }
         }

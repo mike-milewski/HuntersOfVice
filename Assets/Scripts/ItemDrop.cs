@@ -151,6 +151,7 @@ public class ItemDrop : MonoBehaviour
         ItemMessage.SetActive(true);
 
         ItemMessage.GetComponent<Animator>().SetBool("Appear", true);
+        ItemMessage.GetComponent<ResetItemMessage>().StartCoroutine("ReverseMessage");
         ItemMessage.GetComponentInChildren<TextMeshProUGUI>().text = itemDrops[i].GetMaterialData.MaterialName;
 
         ItemMessage.GetComponentInChildren<RawImage>().texture = itemDrops[i].GetMaterialData.MaterialSprite.texture;

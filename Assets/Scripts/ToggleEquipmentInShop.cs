@@ -50,11 +50,7 @@ public class ToggleEquipmentInShop : MonoBehaviour
         {
             foreach (Equipment equipment in WeaponParent.GetComponentsInChildren<Equipment>(true))
             {
-                if (equipment.gameObject.activeInHierarchy)
-                {
-                    return;
-                }
-                else
+                if (!equipment.gameObject.activeInHierarchy)
                 {
                     equipment.gameObject.SetActive(true);
                 }
@@ -68,11 +64,7 @@ public class ToggleEquipmentInShop : MonoBehaviour
         {
             foreach (Equipment equipment in ArmorParent.GetComponentsInChildren<Equipment>(true))
             {
-                if (equipment.gameObject.activeInHierarchy)
-                {
-                    return;
-                }
-                else
+                if (!equipment.gameObject.activeInHierarchy)
                 {
                     equipment.gameObject.SetActive(true);
                 }

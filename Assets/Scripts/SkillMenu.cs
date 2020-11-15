@@ -605,7 +605,7 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "Mana is recovered by 5% every time damage is dealt to a target by basic attack.";
+        SkillInfoText.text = "Mana is recovered by 5% every time damage is dealt to a target by auto-attack.";
     }
 
     private void EvilsEndBonusPassiveText()

@@ -115,7 +115,8 @@ public class TreasureChest : MonoBehaviour
         ItemMessage.SetActive(true);
 
         ItemMessage.GetComponent<Animator>().SetBool("Appear", true);
-        if(Knight.gameObject.activeInHierarchy)
+        ItemMessage.GetComponent<ResetItemMessage>().StartCoroutine("ReverseMessage");
+        if (Knight.gameObject.activeInHierarchy)
         {
             ItemMessage.GetComponentInChildren<TextMeshProUGUI>().text = equipments[0].GetEquipmentData.EquipmentName;
 

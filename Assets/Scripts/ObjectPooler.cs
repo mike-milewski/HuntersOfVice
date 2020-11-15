@@ -137,6 +137,7 @@ public class ObjectPooler : MonoBehaviour
         AddManaPulseParticle(poolcontroller[47].GetPoolAmount);
         AddBurningEffectParticle(poolcontroller[48].GetPoolAmount);
         AddAquaBulletParticle(poolcontroller[49].GetPoolAmount);
+        AddMiasmaPulseParticle(poolcontroller[50].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -739,6 +740,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddMiasmaPulseParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[50].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[50].GetPoolParent.transform, false);
+            poolcontroller[50].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -987,6 +1000,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetAquaBulletParticle()
     {
         return poolcontroller[49].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetMiasmaPulseParticle()
+    {
+        return poolcontroller[50].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1386,6 +1404,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[49].GetPoolParent.transform, false);
 
         poolcontroller[49].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnMiasmaPulseParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[50].GetPoolParent.transform, false);
+
+        poolcontroller[50].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

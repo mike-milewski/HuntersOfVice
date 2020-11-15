@@ -8,6 +8,9 @@ public enum ItemType { HpHeal, MpHeal }
 public class Items : MonoBehaviour
 {
     [SerializeField]
+    private StatusEffect statusEffect;
+
+    [SerializeField]
     private Character Knight, ShadowPriest;
 
     [SerializeField]
@@ -20,7 +23,10 @@ public class Items : MonoBehaviour
     private Transform HealTextTransform;
 
     [SerializeField]
-    private Transform TextHolder = null;
+    private Transform TextHolder = null, StatusEffectIconTrans = null;
+
+    [SerializeField]
+    private GameObject StatusIcon = null;
 
     [SerializeField]
     private TextMeshProUGUI ItemText, CoolDownText;
@@ -32,16 +38,19 @@ public class Items : MonoBehaviour
     private Image CooldownImage;
 
     [SerializeField]
-    private string ItemName;
+    private Sprite StatusEffectImage = null;
 
     [SerializeField]
-    private int HealAmount;
+    private string ItemName, DamageName, StatusEffectName;
+
+    [SerializeField]
+    private int HealAmount, Power;
 
     [SerializeField]
     private float ApplyItemUse, Cooldown;
 
     [SerializeField]
-    private bool UnlockedPassive;
+    private bool UnlockedPassive, HasStatusEffect;
 
     private float cooldown;
 
@@ -117,6 +126,18 @@ public class Items : MonoBehaviour
         }
     }
 
+    public bool GetStatusEffect
+    {
+        get
+        {
+            return HasStatusEffect;
+        }
+        set
+        {
+            HasStatusEffect = value;
+        }
+    }
+
     private void Awake()
     {
         cooldown = Cooldown;
@@ -159,6 +180,7 @@ public class Items : MonoBehaviour
         {
             case (ItemType.HpHeal):
                 ReadyHpHealing();
+                MiasmaPulsePassive();
                 break;
             case (ItemType.MpHeal):
                 ReadyMpHealing();
@@ -374,9 +396,29 @@ public class Items : MonoBehaviour
         else return;
     }
 
+    private void MiasmaPulsePassive()
+    {
+        if (UnlockedPassive)
+        {
+            SetUpDamagePerimiter(ShadowPriest.gameObject.transform.position, 5f);
+
+            MiasmaPulseParticle();
+        }
+        else return;
+    }
+
     private void ManaPulseParticle()
     {
         var ManaPulse = ObjectPooler.Instance.GetManaPulseParticle();
+
+        ManaPulse.SetActive(true);
+
+        ManaPulse.transform.position = new Vector3(ShadowPriest.transform.position.x, ShadowPriest.transform.position.y, ShadowPriest.transform.position.z);
+    }
+
+    private void MiasmaPulseParticle()
+    {
+        var ManaPulse = ObjectPooler.Instance.GetMiasmaPulseParticle();
 
         ManaPulse.SetActive(true);
 
@@ -403,8 +445,74 @@ public class Items : MonoBehaviour
                     HitParticle.transform.SetParent(hitColliders[i].transform);
                 }
                 DamageSkillText(hitColliders[i].GetComponent<Enemy>());
+
+                if (HasStatusEffect)
+                {
+                    if(!CheckStatus(hitColliders[i].GetComponent<Enemy>()))
+                    {
+                        StatusEffectIconTrans = hitColliders[i].GetComponent<Enemy>().GetDebuffTransform;
+
+                        PoisonStatus(hitColliders[i].GetComponent<Enemy>());
+                    }
+                }
             }
         }
+    }
+
+    private bool CheckStatus(Enemy enemy)
+    {
+        bool PoisonStatus = false;
+
+        foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if (enemystatus.GetStatusEffect == StatusEffect.Poison)
+            {
+                PoisonStatus = true;
+            }
+        }
+
+        return PoisonStatus;
+    }
+
+    private TextMeshProUGUI PoisonStatus(Enemy enemy)
+    {
+        TextHolder = enemy.GetUI;
+
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Poison";
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = StatusEffectImage;
+
+        ApplyPoisonStatus(enemy);
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void ApplyPoisonStatus(Enemy enemy)
+    {
+        StatusEffectIconTrans = enemy.GetDebuffTransform;
+
+        StatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+        StatusIcon.SetActive(true);
+
+        StatusIcon.transform.SetParent(StatusEffectIconTrans, false);
+
+        StatusIcon.GetComponentInChildren<Image>().sprite = StatusEffectImage;
+
+        StatusIcon.GetComponent<EnemyStatusIcon>().GetHasPoisonStatus = true;
+
+        StatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.Poison;
+        StatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+        StatusIcon.GetComponentInChildren<Image>().sprite = StatusEffectImage;
+        StatusIcon.GetComponent<EnemyStatusIcon>().PoisonStatus();
+
+        StatusIcon.GetComponent<EnemyStatusIcon>().CreatePoisonEffectParticle();
     }
 
     private TextMeshProUGUI DamageSkillText(Enemy Target)
@@ -419,10 +527,10 @@ public class Items : MonoBehaviour
 
             DamageTxt.transform.SetParent(TextHolder.transform, false);
 
-            Target.GetHealth.ModifyHealth(-((60 + ShadowPriest.CharacterIntelligence) - Target.GetCharacter.CharacterIntelligence));
+            Target.GetHealth.ModifyHealth(-((Power + ShadowPriest.CharacterIntelligence) - Target.GetCharacter.CharacterIntelligence));
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + "Mana Pulse" + " " + ((60 + ShadowPriest.CharacterIntelligence) - 
-                                                                                                            Target.GetCharacter.CharacterIntelligence);
+            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + DamageName + " " + ((Power + ShadowPriest.CharacterIntelligence) - 
+                                                                                                          Target.GetCharacter.CharacterIntelligence);
         }
 
         if (Target.GetAI != null)
@@ -461,5 +569,20 @@ public class Items : MonoBehaviour
             Target.GetRuneGolemAI.CheckHP();
         }
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private TextMeshProUGUI StatusEffects()
+    {
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + StatusEffectName;
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = StatusEffectImage;
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 }

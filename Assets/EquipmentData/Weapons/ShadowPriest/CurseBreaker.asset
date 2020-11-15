@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4e2e784dfbaf94badedcf054aebda2, type: 3}
   m_Name: CurseBreaker
   m_EditorClassIdentifier: 
-  EquipmentName: CurseBreaker
+  EquipmentName: Curse Breaker
   Element: 2
   StatIncrease: 100
   BuyValue: 5000

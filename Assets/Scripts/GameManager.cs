@@ -428,7 +428,6 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        /*
         SelectedCharacter selectedCharacter = FindObjectOfType<SelectedCharacter>();
 
         if(selectedCharacter.GetKnightSelected)
@@ -441,7 +440,6 @@ public class GameManager : MonoBehaviour
             ShadowPriest.SetActive(true);
             Knight.SetActive(false);
         }
-        */
 
         if(Knight.activeInHierarchy)
         {
@@ -1040,6 +1038,8 @@ public class GameManager : MonoBehaviour
         {
             shopKeeper.transform.position = new Vector3(ShopKeeperLastPosition.position.x, 3.342f, ShopKeeperLastPosition.position.z);
         }
+
+        SpawnPoint.GetComponent<SpawnPoint>().ZonesAndEnemies();
     }
 
     public TextMeshProUGUI ShowNotEnoughManaText()

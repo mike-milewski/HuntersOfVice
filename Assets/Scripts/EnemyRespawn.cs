@@ -22,7 +22,11 @@ public class EnemyRespawn : MonoBehaviour
         RespawnTimer -= Time.deltaTime;
         if(RespawnTimer <= 0)
         {
-            EnemyToRespawn.gameObject.SetActive(true);
+            if(!EnemyToRespawn.GetIsDisabled)
+            {
+                EnemyToRespawn.gameObject.SetActive(true);
+            }
+            EnemyToRespawn.GetIsDead = false;
 
             this.enabled = false;
         }

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense, Aegis, Slowed }
+                           IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense, Aegis, Slowed,
+                           ContractWithEvilNoNegative, ContractWithTheVileNoNegative, ContractWithNefariousnessNoNegative }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -189,6 +190,19 @@ public class StatusIcon : MonoBehaviour
                 ContractWithNefariousnessHealthCut();
                 ContractWithNefariousnessCastTimeReduction();
                 break;
+            case (EffectStatus.ContractWithEvilNoNegative):
+                SetIntelligenceToDefault();
+                SetDefenseToDefault();
+                IntelligenceUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.ContractWithNefariousnessNoNegative):
+                ReturnHealthToNormalValue();
+                ContractWithNefariousnessCastTimeReduction();
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
             case (EffectStatus.MaliciousPossession):
                 MaliciousPossessionBuff();
                 break;
@@ -356,10 +370,18 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FFFFFF>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
+            case (EffectStatus.ContractWithEvilNoNegative):
+                SetIntelligenceToDefault();
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#FFFFFF>";
+                SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
             case (EffectStatus.ContractWithNefariousness):
                 ReturnHealthToNormalValue();
                 ReturnCastTimeToNormal();
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
+                break;
+            case (EffectStatus.ContractWithNefariousnessNoNegative):
+                ReturnCastTimeToNormal();
                 break;
             case (EffectStatus.MaliciousPossession):
                 ReturnSkillCostAndCastToNormal();
@@ -991,6 +1013,9 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.ContractWithTheVile):
                 ContractDamageOverTime(ContractWithTheVileDamageOverTime());
+                HealMpOverTime(ContractWithTheVileMpRestore());
+                break;
+            case (EffectStatus.ContractWithTheVileNoNegative):
                 HealMpOverTime(ContractWithTheVileMpRestore());
                 break;
             case (EffectStatus.Stun):

@@ -248,14 +248,20 @@ public class Experience : MonoBehaviour
 
         UpdateCharacterLevel();
 
-        //RespecButton.interactable = false;
-
         Stats.gameObject.SetActive(true);
 
         StatPointsTxt.gameObject.SetActive(true);
 
-        character.GetCharacterData.HpIncrease++;
-        character.GetCharacterData.MpIncrease++;
+        if(GameManager.Instance.GetKnight.activeInHierarchy)
+        {
+            character.GetCharacterData.HpIncrease += 3;
+            character.GetCharacterData.MpIncrease += 2;
+        }
+        else if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
+        {
+            character.GetCharacterData.HpIncrease += 2;
+            character.GetCharacterData.MpIncrease += 3;
+        }
 
         StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
 
@@ -283,7 +289,7 @@ public class Experience : MonoBehaviour
 
         MaxStatPoints += StatPoints;
 
-        CumulativeStatPoints = StatPoints;
+        CumulativeStatPoints += StatPointIncrease;
 
         StatPointsTxt.text = StatPoints.ToString();
     }
@@ -304,7 +310,7 @@ public class Experience : MonoBehaviour
 
             StatConfirmButton.SetActive(true);
 
-            character.DefaultStats();
+            character.DefaultStatsOnLevelUp();
 
             character.CharacterStrength = character.GetCharacterData.Strength;
             character.CharacterDefense = character.GetCharacterData.Defense;

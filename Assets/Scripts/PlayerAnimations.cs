@@ -346,6 +346,7 @@ public class PlayerAnimations : MonoBehaviour
 
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].BraveLightAnimation();
 
+        /*
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 20);
 
         if (gameObject.GetComponent<BasicAttack>().DistanceToTarget() >= gameObject.GetComponent<BasicAttack>().GetAttackRange)
@@ -355,6 +356,7 @@ public class PlayerAnimations : MonoBehaviour
                 gameObject.GetComponent<BasicAttack>().RemoveTarget();
             }
         }
+        */
     }
 
     public void BraveLightStatus()

@@ -1318,9 +1318,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 94b0e873d745c1f458b1b2b03f92c2a7, type: 3}
   CharacterInformationText: {fileID: 1622403781}
   CharacterNameText: {fileID: 604502234}
-  CharacterInformaion: The Knight bears his sword and shield to swiftly cast evil
-    asunder with offensive and defensive abilities while also providing himself with
-    healing powers.
+  CharacterInformaion: The Knight proudly bears his sword and shield to swiftly cast
+    evil asunder with offensive and defensive abilities along with providing himself
+    with healing powers.
   CharacterClass: Knight
 --- !u!1001 &108119370
 PrefabInstance:
@@ -3928,7 +3928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 472700, guid: d638ef2ca2fe20c4c9c08e125692d3f4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -100.951385
+      value: -100.9
       objectReference: {fileID: 0}
     - target: {fileID: 472700, guid: d638ef2ca2fe20c4c9c08e125692d3f4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4595,23 +4595,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -35.327667
+      value: -30.5
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.079925366
+      value: -0.27855763
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.85853666
+      value: -0.8244129
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.07249479
+      value: 0.11981945
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5012697
+      value: 0.4779042
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_RootOrder
@@ -4619,15 +4619,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 2.542
+      value: -3.9390001
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -119.172005
+      value: -121.046005
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 12.13
+      value: 35.112003
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalScale.x
@@ -10948,6 +10948,145 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7986b2d54ec33f4b8d0dd855c370967, type: 3}
+--- !u!1001 &826314880
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2062613935}
+    m_Modifications:
+    - target: {fileID: 1927926509759792, guid: f4a00273bf646a14196f670e663e4ade, type: 3}
+      propertyPath: m_Name
+      value: FadeScreenOverlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4.516
+      objectReference: {fileID: 0}
+    - target: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f4a00273bf646a14196f670e663e4ade, type: 3}
+--- !u!224 &826314881 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224374009210562588, guid: f4a00273bf646a14196f670e663e4ade,
+    type: 3}
+  m_PrefabInstance: {fileID: 826314880}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &826913911 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 464830, guid: bb1a6ef5a890dd8489e9d9bed4c86c0a,
@@ -14361,9 +14500,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bc6a36db79d6d2a4c83617fffe311a7c, type: 3}
   CharacterInformationText: {fileID: 1622403781}
   CharacterNameText: {fileID: 604502234}
-  CharacterInformaion: The Shadow Priest employs unholy magicks to devastate foes
-    while also receiving influence from the underworld to amplify his powers for a
-    price.
+  CharacterInformaion: The Shadow Priest deploys unholy magicks to devastate foes
+    along with carrying the capability of receiving influence from the underworld
+    to amplify his powers for a price.
   CharacterClass: Shadow Priest
 --- !u!4 &940351225 stripped
 Transform:
@@ -20587,7 +20726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 472700, guid: d638ef2ca2fe20c4c9c08e125692d3f4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -95.43271
+      value: -100.39
       objectReference: {fileID: 0}
     - target: {fileID: 472700, guid: d638ef2ca2fe20c4c9c08e125692d3f4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26362,19 +26501,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.10079067
+      value: -0.09363769
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6179842
+      value: -0.6059564
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.038533054
+      value: 0.21774906
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7787503
+      value: 0.75936437
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_RootOrder
@@ -26382,15 +26521,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -6.2780004
+      value: 6.9890003
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -77.457
+      value: -75.525
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 10.702001
+      value: 26.584002
       objectReference: {fileID: 0}
     - target: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
       propertyPath: m_LocalScale.x
@@ -27654,8 +27793,7 @@ MonoBehaviour:
   SkillInfoText: {fileID: 1971399959}
   KnightSkillName: Illumination
   ShadowPriestSkillName: Soul Pierce
-  KnightSkillInfo: Surrounds yourself in prominent light, healing wounds over a period
-    of time.
+  KnightSkillInfo: Surrounds yourself in prominent light, healing wounds gradually.
   ShadowPriestSkillInfo: Calls tormented souls onto an enemy, eating away at the victim's
     soul gradually.
 --- !u!4 &1953326466 stripped
@@ -29186,6 +29324,7 @@ RectTransform:
   - {fileID: 497436870}
   - {fileID: 322448083}
   - {fileID: 611565958}
+  - {fileID: 826314881}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

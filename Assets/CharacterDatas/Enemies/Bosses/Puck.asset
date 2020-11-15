@@ -20,14 +20,14 @@ MonoBehaviour:
   CharacterLevel: 5
   Health: 1500
   Mana: 0
-  Strength: 28
+  Strength: 30
   Defense: 24
   Intelligence: 22
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5
-  Coins: 0
-  EXP: 0
+  Coins: 100
+  EXP: 500
   MaterialDataDropChance: 0
   MoveSpeed: 0
   CheckedData: 0

@@ -6,7 +6,7 @@ using TMPro;
 using System.Collections.Generic;
 
 public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                           IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP, Slow, Burning };
+                           IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP, Slow, Burning, Poison };
 
 public class EnemyStatusIcon : MonoBehaviour
 {
@@ -28,7 +28,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private int TempSkillIndex;
 
-    private bool HasBurnStatus, HasSlowStatus;
+    private bool HasBurnStatus, HasSlowStatus, HasPoisonStatus;
 
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
@@ -43,7 +43,7 @@ public class EnemyStatusIcon : MonoBehaviour
     [SerializeField]
     private GameObject StatusPanel;
 
-    private GameObject StunParticle = null, BurningParticle = null;
+    private GameObject StunParticle = null, BurningParticle = null, PoisonParticle = null;
 
     public PlayerController GetPlayer
     {
@@ -90,6 +90,18 @@ public class EnemyStatusIcon : MonoBehaviour
         set
         {
             HasBurnStatus = value;
+        }
+    }
+
+    public bool GetHasPoisonStatus
+    {
+        get
+        {
+            return HasPoisonStatus;
+        }
+        set
+        {
+            HasPoisonStatus = value;
         }
     }
 
@@ -162,6 +174,12 @@ public class EnemyStatusIcon : MonoBehaviour
                 RemoveSlowedStatusEffectText();
                 ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
             }
+            else if(HasPoisonStatus)
+            {
+                RemovePoisonStatusEffectText();
+                CheckPoisonParticleActive();
+                ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            }
             else
             {
                 RemoveEnemyStatusEffectText();
@@ -226,6 +244,22 @@ public class EnemyStatusIcon : MonoBehaviour
         Duration = 10.0f;
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Burning </u>" + "</color>" +
+                                     "</size>" + "\n" + "<size=10> Taking damage over time.";
+
+        DamageOrHealTick = 3.0f;
+
+        TempTick = DamageOrHealTick;
+    }
+
+    public void PoisonStatus()
+    {
+        character = GetComponentInParent<Character>();
+
+        character.GetComponentInChildren<Health>().GetSleepHit = false;
+
+        Duration = 10.0f;
+
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Poison </u>" + "</color>" +
                                      "</size>" + "\n" + "<size=10> Taking damage over time.";
 
         DamageOrHealTick = 3.0f;
@@ -314,6 +348,23 @@ public class EnemyStatusIcon : MonoBehaviour
                 character.GetComponentInChildren<Health>().ModifyHealth(-character.CurrentHealth);
                 break;
         }
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemovePoisonStatusEffectText()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Poison";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        CreateParticleOnRemoveEnemy();
+
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -430,6 +481,11 @@ public class EnemyStatusIcon : MonoBehaviour
             character.GetComponent<Enemy>().GetLocalHealthInfo();
 
             TempTick = DamageOrHealTick;
+
+            if(character.GetComponent<Puck>())
+            {
+                character.GetComponent<Puck>().CheckHP();
+            }
         }
     }
 
@@ -553,6 +609,9 @@ public class EnemyStatusIcon : MonoBehaviour
             case (StatusEffect.Burning):
                 DamageOverTime(RegenAndDOTCalculation());
                 break;
+            case (StatusEffect.Poison):
+                DamageOverTime(RegenAndDOTCalculation());
+                break;
             case (StatusEffect.Stun):
                 Stun();
                 break;
@@ -612,6 +671,34 @@ public class EnemyStatusIcon : MonoBehaviour
         if (BurningParticle.activeInHierarchy)
         {
             ObjectPooler.Instance.ReturnBurningEffectParticleToPool(BurningParticle);
+        }
+    }
+
+    private void CheckPoisonParticleActive()
+    {
+        if (PoisonParticle.activeInHierarchy)
+        {
+            ObjectPooler.Instance.ReturnPoisonEffectParticleToPool(PoisonParticle);
+        }
+    }
+
+    public void CreatePoisonEffectParticle()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var cHARACTER = character;
+
+            var PP = ObjectPooler.Instance.GetPoisonEffectParticle();
+
+            PoisonParticle = PP;
+
+            PP.SetActive(true);
+
+            PP.transform.position = new Vector3(cHARACTER.transform.position.x, cHARACTER.transform.position.y + 0.8f, cHARACTER.transform.position.z);
+
+            PP.transform.SetParent(cHARACTER.transform, true);
+
+            PP.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
