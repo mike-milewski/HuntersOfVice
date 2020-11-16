@@ -323,7 +323,7 @@ public class Enemy : MonoBehaviour
 
     public void ReturnCoins()
     {
-        if(CoinAmount > 0)
+        if(CoinAmount > 0 && GameManager.Instance.GetCharacter.CurrentHealth > 0)
         {
             inventory.AddCoins(CoinAmount);
             inventory.ReturnCoinText().text = CoinAmount + "<size=20>" + " Coins";
@@ -332,7 +332,7 @@ public class Enemy : MonoBehaviour
 
     public void ReturnExperience()
     {
-        if(ExperiencePoints > 0)
+        if(ExperiencePoints > 0 && GameManager.Instance.GetCharacter.CurrentHealth > 0)
         {
             CheckExperienceHolder();
 

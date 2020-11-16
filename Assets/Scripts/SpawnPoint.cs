@@ -21,6 +21,7 @@ public class SpawnPoint : MonoBehaviour
 
     public void ZonesAndEnemies()
     {
+        if(CurrentSpawnPointLocation != null)
         CurrentSpawnPointLocation.ZonesAndEnemies();
     }
 }

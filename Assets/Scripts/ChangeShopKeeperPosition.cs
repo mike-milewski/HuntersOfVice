@@ -15,6 +15,18 @@ public class ChangeShopKeeperPosition : MonoBehaviour
     [SerializeField]
     private float shopPositionY;
 
+    public Transform GetPosition
+    {
+        get
+        {
+            return PositionToSpawnWhenDead;
+        }
+        set
+        {
+            PositionToSpawnWhenDead = value;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<PlayerController>())

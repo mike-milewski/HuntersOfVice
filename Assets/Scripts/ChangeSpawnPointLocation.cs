@@ -13,6 +13,12 @@ public class ChangeSpawnPointLocation : MonoBehaviour
     private Transform CurrentSpawnPointLocation, DesiredSpawnPointLocation;
 
     [SerializeField]
+    private ShopKeeper shopKeeper = null;
+
+    [SerializeField]
+    private Transform ShopKeeperPositionOnRespawn = null;
+
+    [SerializeField]
     private Transform[] EnemyZonesToEnable, EnemyZonesToDisable;
 
     [SerializeField]
@@ -40,6 +46,11 @@ public class ChangeSpawnPointLocation : MonoBehaviour
             {
                 GameManager.Instance.GetChangeSpawnPointLocation = null;
                 gameObject.SetActive(false);
+            }
+
+            if(shopKeeper != null)
+            {
+                GameManager.Instance.GetShopKeeperLastPosition = ShopKeeperPositionOnRespawn;
             }
 
             spawnPoint.GetSpawnPointLocation = this;
