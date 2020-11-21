@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaterialSprite: {fileID: 21300000, guid: b67346bdb72ecc84dbd019003c6964f0, type: 3}
   MaterialName: Vermillion Shard
-  ShopPoints: 20
+  ShopPoints: 25
   MaterialDescription: A blood red shard with a sharp glow.

@@ -44,6 +44,7 @@ public class StatusIcon : MonoBehaviour
 
     private float RegenTick;
 
+    [SerializeField]
     private bool ObstacleEffect;
 
     [SerializeField]
@@ -145,7 +146,7 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void CheckStatusEffect()
     {
         switch(status)
         {
@@ -223,10 +224,7 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay += 1;
                 break;
         }
-    }
 
-    private void OnEnable()
-    {
         StatusPanel.SetActive(false);
     }
 
@@ -236,6 +234,8 @@ public class StatusIcon : MonoBehaviour
         {
             RemoveEnemyStatusEffectText();
             CheckStatus();
+            status = EffectStatus.NONE;
+            enemyTarget = null;
             ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
         }
         else
@@ -243,13 +243,22 @@ public class StatusIcon : MonoBehaviour
             if(!ObstacleEffect)
             {
                 RemoveStatusEffectText();
+
+                CheckStatus();
+                status = EffectStatus.NONE;
+                enemyTarget = null;
+                
+                ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
             }
             else
             {
                 RemoveStatusObstacleEffectText();
+                CheckStatus();
+                status = EffectStatus.NONE;
+                ObstacleEffect = false;
+
+                ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
             }
-            CheckStatus();
-            ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
         }
     }
 
@@ -311,6 +320,11 @@ public class StatusIcon : MonoBehaviour
         PlayerMaxHealth = SkillsManager.Instance.GetCharacter.GetCharacterData.Health;
 
         RegenTick = SkillsManager.Instance.GetSkills[KeyInput].GetHpAndDamageOverTimeTick / 100f;
+
+        if (Duration < 0)
+        {
+            DurationText.text = "";
+        }
     }
 
     public void EnemyInput()
@@ -418,9 +432,12 @@ public class StatusIcon : MonoBehaviour
         switch (status)
         {
             case (EffectStatus.Stun):
-                SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
+                if(SkillsManager.Instance.GetCharacter.CurrentHealth > 0)
+                {
+                    SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
+                    SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
+                }
                 SkillsManager.Instance.GetDisruptedSkill = false;
-                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().enabled = true;
                 break;
             case (EffectStatus.Sleep):
                 SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
@@ -1183,7 +1200,7 @@ public class StatusIcon : MonoBehaviour
     {
         CheckStatusEffectIcon();
 
-        if(Duration <= -1)
+        if(Duration < 0)
         {
             if(SkillsManager.Instance.GetCharacter.CurrentHealth <= 0)
             {
@@ -1197,18 +1214,6 @@ public class StatusIcon : MonoBehaviour
             if (Duration <= 0 || SkillsManager.Instance.GetCharacter.CurrentHealth <= 0)
             {
                 RemoveEffect();
-            }
-        }
-
-        if(enemyTarget != null)
-        {
-            if(enemyTarget.GetComponent<Puck>())
-            {
-                if(enemyTarget.GetComponent<Puck>().GetIsReseted)
-                {
-                    RemoveEffect();
-                    enemyTarget.GetComponent<Puck>().GetIsReseted = false;
-                }
             }
         }
     }

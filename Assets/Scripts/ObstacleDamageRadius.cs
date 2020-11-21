@@ -51,6 +51,7 @@ public class ObstacleDamageRadius : MonoBehaviour
     [SerializeField]
     private GameObject Particle;
 
+    [SerializeField]
     private bool IsInRadius, DisabledRadius;
 
     [SerializeField]
@@ -63,6 +64,7 @@ public class ObstacleDamageRadius : MonoBehaviour
             case (ObstacleShapes.Circle):
                 var Circle = DamageShapeCircle;
                 DamageShape.GetComponent<Image>().sprite = Circle;
+                SetCircleCollider();
                 break;
             case (ObstacleShapes.Rectangle):
                 var Rectangle = DamageShapeRectangle;
@@ -73,9 +75,7 @@ public class ObstacleDamageRadius : MonoBehaviour
 
         if (shapes == ObstacleShapes.Rectangle)
         {
-            Vector3 Trans = new Vector3(gameObject.transform.position.x, transform.position.y, gameObject.transform.position.z);
-
-            transform.position = Trans + gameObject.transform.up * 8f;
+            transform.position = new Vector3(gameObject.transform.position.x, transform.position.y, gameObject.transform.position.z);
         }
         if (shapes == ObstacleShapes.Circle)
         {
@@ -130,7 +130,9 @@ public class ObstacleDamageRadius : MonoBehaviour
             switch (shapes)
             {
                 case (ObstacleShapes.Circle):
-                    CheckIfPlayerIsInCircleRadius(DamageShape.transform.position, SetCircleColliderSize());
+                    //CheckIfPlayerIsInCircleRadius(DamageShape.transform.position, SetCircleColliderSize());
+                    InvokeParticle();
+                    Invoke("TakeRadiusEffects", InvokeEffectTime);
                     DisableRadius();
                     break;
                 case (ObstacleShapes.Rectangle):
@@ -144,6 +146,11 @@ public class ObstacleDamageRadius : MonoBehaviour
     private void SetBoxColliderSize()
     {
         gameObject.GetComponent<BoxCollider>().size = new Vector2(SizeDeltaX, SizeDeltaY);
+    }
+
+    private void SetCircleCollider()
+    {
+        gameObject.GetComponent<SphereCollider>().radius = SizeDeltaX / 40;
     }
 
     private void IncreaseCircle()
@@ -251,7 +258,15 @@ public class ObstacleDamageRadius : MonoBehaviour
                 {
                     DamageText(DamagePotency, DamageName);
 
-                    PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                    if(PlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1 && !PlayerTarget.GetComponent<Animator>().GetBool("Attacking") &&
+                       !PlayerTarget.GetComponent<PlayerAnimations>().GetAnimator.GetBool("Damaged"))
+                    {
+                        PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                    }
+                }
+                if(PlayerTarget.GetComponent<Character>().CurrentHealth <= 0)
+                {
+                    IsInRadius = false;
                 }
             }
         }
@@ -310,9 +325,12 @@ public class ObstacleDamageRadius : MonoBehaviour
 
             StatusIcon.GetComponent<StatusIcon>().GetObstacleEffect = true;
 
-            StatusIcon.GetComponent<StatusIcon>().GetStatusDescription.text = StatusEffectDescrption;
+            StatusIcon.GetComponent<StatusIcon>().GetStatusDescription.text = "<#EFDFB8>" + "<size=16>" + "<u>" + StatusEffectName + "</u>" + "</color>" + "</size>" +
+                                                                              "\n" + "<size=14>" + StatusEffectDescrption;
 
             StatusIcon.GetComponent<StatusIcon>().GetDuration = StatusDuration;
+
+            StatusIcon.GetComponent<StatusIcon>().CheckStatusEffect();
         }
         else
         {

@@ -429,7 +429,7 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         SelectedCharacter selectedCharacter = FindObjectOfType<SelectedCharacter>();
-
+        /*
         if(selectedCharacter.GetKnightSelected)
         {
             Knight.SetActive(true);
@@ -440,7 +440,7 @@ public class GameManager : MonoBehaviour
             ShadowPriest.SetActive(true);
             Knight.SetActive(false);
         }
-
+        */
         if(Knight.activeInHierarchy)
         {
             character = Knight.GetComponent<Character>();
@@ -905,9 +905,15 @@ public class GameManager : MonoBehaviour
     public void Dead()
     {
         IsDead = true;
+
         SkillsManager.Instance.DeactivateSkillButtons();
 
         SkillsManager.Instance.GetActivatedSkill = false;
+
+        if(character.GetComponent<BasicAttack>().GetTarget != null)
+        {
+            character.GetComponent<BasicAttack>().RemoveTarget();
+        }
 
         if(Knight.activeInHierarchy)
         {
@@ -952,20 +958,17 @@ public class GameManager : MonoBehaviour
             }
             audioChanger.GetChangeToLevelTheme = true;
         }
-        else
-        {
-            audioChanger.gameObject.SetActive(false);
-        }
     }
 
     private IEnumerator Fade()
     {
         yield return new WaitForSeconds(2);
         FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
+
         audioChanger.gameObject.SetActive(true);
 
         ChangeAudioToLevelTheme();
-        
+
         StartCoroutine(Respawn());
     }
 
@@ -1027,6 +1030,8 @@ public class GameManager : MonoBehaviour
 
             ShadowPriest.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
             ShadowPriest.GetComponent<PlayerAnimations>().GetAnimator.ResetTrigger("Damaged");
+
+            SkillsManager.Instance.GetContractStack = 0;
         }
 
         if(changeSpawnPointLocation != null)

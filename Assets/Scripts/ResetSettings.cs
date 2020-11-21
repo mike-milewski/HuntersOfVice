@@ -10,5 +10,13 @@ public class ResetSettings : MonoBehaviour
     {
         settings.MuteAudio = false;
         settings.UseParticleEffects = true;
+
+        SelectedCharacter selectedCharacter = GameObject.FindObjectOfType<SelectedCharacter>();
+
+        if(selectedCharacter != null)
+        {
+            selectedCharacter.GetKnightSelected = false;
+            selectedCharacter.GetShadowPriestSelected = false;
+        }
     }
 }

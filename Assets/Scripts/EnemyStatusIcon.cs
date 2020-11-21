@@ -10,6 +10,7 @@ public enum StatusEffect { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste
 
 public class EnemyStatusIcon : MonoBehaviour
 {
+    [SerializeField]
     private PlayerController player = null;
 
     [SerializeField]
@@ -117,7 +118,7 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void CheckStatusEffects()
     {
         if(player == null)
         {
@@ -159,11 +160,13 @@ public class EnemyStatusIcon : MonoBehaviour
         if (character.GetComponent<PlayerController>())
         {
             RemoveStatusEffectText();
+            effect = StatusEffect.NONE;
+            player = null;
             ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
         }
         else
         {
-            if(HasBurnStatus)
+            if (HasBurnStatus)
             {
                 RemoveBurnStatusEffectText();
                 CheckBurningParticleActive();
@@ -185,6 +188,14 @@ public class EnemyStatusIcon : MonoBehaviour
                 RemoveEnemyStatusEffectText();
                 ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
             }
+            effect = StatusEffect.NONE;
+
+            player = null;
+        }
+        if(player != null)
+        {
+            effect = StatusEffect.NONE;
+            player = null;
         }
     }
 
@@ -260,7 +271,7 @@ public class EnemyStatusIcon : MonoBehaviour
         Duration = 10.0f;
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Poison </u>" + "</color>" +
-                                     "</size>" + "\n" + "<size=10> Taking damage over time.";
+                                     "</size>" + "\n" + "<size=10> Taking damage.";
 
         DamageOrHealTick = 3.0f;
 
@@ -348,6 +359,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 character.GetComponentInChildren<Health>().ModifyHealth(-character.CurrentHealth);
                 break;
         }
+
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -596,7 +608,7 @@ public class EnemyStatusIcon : MonoBehaviour
         character.CharacterIntelligence = DefaultIntelligence;
     }
 
-    private void CheckStatusEffect()
+    private void CheckStatus()
     {
         switch (effect)
         {
@@ -743,7 +755,7 @@ public class EnemyStatusIcon : MonoBehaviour
     {
         ToggleStatusIcon();
 
-        CheckStatusEffect();
+        CheckStatus();
 
         if(Duration <= -1)
         {
@@ -759,15 +771,6 @@ public class EnemyStatusIcon : MonoBehaviour
             if (Duration <= 0 || character.CurrentHealth <= 0)
             {
                 RemoveEffect();
-            }
-        }
-
-        if (character.GetComponent<Puck>())
-        {
-            if (character.GetComponent<Puck>().GetIsReseted)
-            {
-                RemoveEffect();
-                character.GetComponent<Puck>().GetIsReseted = false;
             }
         }
     }

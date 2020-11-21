@@ -519,6 +519,8 @@ public class Items : MonoBehaviour
     {
         var DamageTxt = ObjectPooler.Instance.GetEnemyDamageText();
 
+        int HitPower = Power + ShadowPriest.CharacterIntelligence;
+
         if(Target != null)
         {
             DamageTxt.SetActive(true);
@@ -527,10 +529,18 @@ public class Items : MonoBehaviour
 
             DamageTxt.transform.SetParent(TextHolder.transform, false);
 
-            Target.GetHealth.ModifyHealth(-((Power + ShadowPriest.CharacterIntelligence) - Target.GetCharacter.CharacterIntelligence));
+            if(HitPower - Target.GetCharacter.CharacterIntelligence < 0)
+            {
+                Target.GetHealth.ModifyHealth(-1);
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + DamageName + " " + ((Power + ShadowPriest.CharacterIntelligence) - 
-                                                                                                          Target.GetCharacter.CharacterIntelligence);
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + DamageName + " " + 1;
+            }
+            else
+            {
+                Target.GetHealth.ModifyHealth(-(HitPower - Target.GetCharacter.CharacterIntelligence));
+
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + DamageName + " " + (HitPower - Target.GetCharacter.CharacterIntelligence);
+            }
         }
 
         if (Target.GetAI != null)

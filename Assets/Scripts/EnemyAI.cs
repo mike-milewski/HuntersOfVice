@@ -389,6 +389,14 @@ public class EnemyAI : MonoBehaviour
                     break;
             }
         }
+
+        if(PlayerTarget != null)
+        {
+            if(PlayerTarget.CurrentHealth <= 0)
+            {
+                RemoveStatusEffects();
+            }
+        }
     }
 
     public States GetStates
@@ -734,6 +742,11 @@ public class EnemyAI : MonoBehaviour
             Anim.DeadAnimator();
         }
 
+        if(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        {
+            SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveTarget();
+        }
+
         CheckForInformation();
     }
 
@@ -764,12 +777,6 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            /*
-            if(!CheckForSameEnemyDataLevel())
-            {
-                return;
-            }
-            */
             if (CheckForSameEnemyDataName())
             {
                 return;
@@ -1018,7 +1025,7 @@ public class EnemyAI : MonoBehaviour
 
     public void EndBattle()
     {
-        RemoveNegativeStatusEffects();
+        RemoveStatusEffects();
 
         if (IsHostile)
         {
@@ -1063,13 +1070,24 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void RemoveNegativeStatusEffects()
+    private void RemoveStatusEffects()
     {
         foreach(EnemyStatusIcon esi in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
         {
             if(enemy.GetDebuffTransform.childCount > 0)
             {
                 esi.RemoveEffect();
+            }
+        }
+
+        if(enemy.GetBuffTransform != null)
+        {
+            foreach (EnemyStatusIcon esi in enemy.GetBuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+            {
+                if (enemy.GetBuffTransform.childCount > 0)
+                {
+                    esi.RemoveEffect();
+                }
             }
         }
     }
@@ -1172,7 +1190,8 @@ public class EnemyAI : MonoBehaviour
                 }
                 #endregion
 
-                if(PlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1 && !PlayerTarget.GetComponent<Animator>().GetBool("Attacking"))
+                if(PlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1 && !PlayerTarget.GetComponent<Animator>().GetBool("Attacking") && 
+                   !PlayerTarget.GetComponent<PlayerAnimations>().GetAnimator.GetBool("Damaged"))
                 {
                     PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
                 }

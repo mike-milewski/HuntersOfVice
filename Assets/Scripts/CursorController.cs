@@ -75,27 +75,37 @@ public class CursorController : MonoBehaviour
                 {
                     if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "Knight")
                     {
+                        if (!hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected)
+                        {
+                            hit.collider.GetComponent<Animator>().SetBool("CharacterSelection", true);
+                        }
+
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = true;
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = false;
 
-                        hit.collider.GetComponent<Animator>().SetBool("CharacterSelection", true);
-
                         hit.collider.GetComponent<CharacterSelector>().PlayPanelAndButtonAnimations();
                         hit.collider.GetComponent<CharacterSelector>().ShowCharacterInformation();
 
                         hit.collider.GetComponent<CharacterSelector>().ShowCharacterSkills();
+
+                        hit.collider.GetComponent<BoxCollider>().enabled = false;
                     }
                     else if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "Shadow Priest")
                     {
+                        if (!hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected)
+                        {
+                            hit.collider.GetComponent<Animator>().SetBool("CharacterSelection", true);
+                        }
+
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = true;
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = false;
-
-                        hit.collider.GetComponent<Animator>().SetBool("CharacterSelection", true);
 
                         hit.collider.GetComponent<CharacterSelector>().PlayPanelAndButtonAnimations();
                         hit.collider.GetComponent<CharacterSelector>().ShowCharacterInformation();
 
                         hit.collider.GetComponent<CharacterSelector>().ShowCharacterSkills();
+
+                        hit.collider.GetComponent<BoxCollider>().enabled = false;
                     }
                 }
             }

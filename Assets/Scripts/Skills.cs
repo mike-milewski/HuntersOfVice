@@ -1202,8 +1202,6 @@ public class Skills : StatusEffects
             SkillsManager.Instance.GetContractSkill = this;
             SkillsManager.Instance.GetContractStack++;
 
-            SkillsManager.Instance.GetStatusIcon.PlayerInput();
-
             PlayerStatus();
         }
         else if (SkillsManager.Instance.GetContractStack >= SkillsManager.Instance.GetMaxContractStack)
@@ -1211,8 +1209,6 @@ public class Skills : StatusEffects
             SkillsManager.Instance.GetContractSkill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
 
             SkillsManager.Instance.GetContractSkill = this;
-
-            SkillsManager.Instance.GetStatusIcon.PlayerInput();
 
             PlayerStatus();
         }
@@ -1775,11 +1771,17 @@ public class Skills : StatusEffects
 
                 GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
 
+                GetStatusIcon.GetComponent<StatusIcon>().GetEnemyTarget = null;
+
                 GetStatusIcon.GetComponent<StatusIcon>().GetEffectStatus = GetPlayerStatusEffect;
+
+                GetStatusIcon.GetComponent<StatusIcon>().GetKeyInput = SkillsManager.Instance.GetKeyInput;
 
                 GetStatusIcon.GetComponent<StatusIcon>().PlayerInput();
 
                 GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
+                GetStatusIcon.GetComponent<StatusIcon>().CheckStatusEffect();
             }
             else
             {
@@ -1796,7 +1798,9 @@ public class Skills : StatusEffects
                 GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
                 GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
                 GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+                GetStatusIcon.GetComponent<EnemyStatusIcon>().GetKeyInput = SkillsManager.Instance.GetKeyInput;
                 GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+                GetStatusIcon.GetComponent<EnemyStatusIcon>().CheckStatusEffects();
             }
         }
         else
@@ -2136,7 +2140,7 @@ public class Skills : StatusEffects
             }
             #endregion
 
-            if(Target.GetAI != null)
+            if(Target.GetAI != null && Target.GetCharacter.CurrentHealth > 0)
             {
                 if (Target.GetAI.GetPlayerTarget == null)
                 {

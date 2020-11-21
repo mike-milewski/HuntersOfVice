@@ -52,7 +52,14 @@ public class PlayerAnimations : MonoBehaviour
 
     public void DamagedAnimation()
     {
-        animator.SetBool("Damaged", true);
+        if(animator.GetBool("Damaged"))
+        {
+            return;
+        }
+        else
+        {
+            animator.SetBool("Damaged", true);
+        }
     }
 
     //Animation event placed at the end of the Damaged animation.
@@ -230,11 +237,6 @@ public class PlayerAnimations : MonoBehaviour
         else
         {
             SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
-        }
-
-        if (gameObject.GetComponent<BasicAttack>().GetTarget.GetCharacter.CurrentHealth <= 0)
-        {
-            gameObject.GetComponent<BasicAttack>().RemoveTarget();
         }
     }
 

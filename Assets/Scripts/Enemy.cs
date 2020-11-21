@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
     private GameObject LocalHealth;
 
     [SerializeField]
-    private Transform UI, DebuffTransform;
+    private Transform UI, DebuffTransform, BuffTransform = null;
 
     [SerializeField]
     private Image LocalHealthBar, TargetedImage;
@@ -243,6 +243,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public Transform GetBuffTransform
+    {
+        get
+        {
+            return BuffTransform;
+        }
+        set
+        {
+            BuffTransform = value;
+        }
+    }
+
     private void Awake()
     {
         character = GetComponent<Character>();
@@ -265,7 +277,7 @@ public class Enemy : MonoBehaviour
     {
         if (GameManager.Instance.GetEnemyObject == enemy.gameObject)
         {
-            if(enemyAnimations != null)
+            if (enemyAnimations != null)
             {
                 enemyAnimations.PlayHealthFade();
             }
@@ -281,7 +293,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if(enemyAnimations != null)
+            if (enemyAnimations != null)
             {
                 enemyAnimations.ReverseFadeHealth();
             }
@@ -299,7 +311,7 @@ public class Enemy : MonoBehaviour
 
     public void TurnOffHealthBar()
     {
-        if(enemyAnimations != null)
+        if (enemyAnimations != null)
         {
             enemyAnimations.ReverseFadeHealth();
         }

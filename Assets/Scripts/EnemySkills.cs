@@ -695,7 +695,7 @@ public class EnemySkills : MonoBehaviour
 
     public void UseSylvanBlessing()
     {
-        if(puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex > -1)
+        if (puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex > -1 && !puckAI.GetIsMovingToPosition)
         {
             SylvanBlessing(GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusDuration,
                            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
@@ -704,7 +704,7 @@ public class EnemySkills : MonoBehaviour
 
     public void InvokeSylvanBlessing()
     {
-        if (puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex > -1)
+        if (puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex > -1 && !puckAI.GetIsMovingToPosition)
         {
             BossStatus();
 
@@ -808,8 +808,6 @@ public class EnemySkills : MonoBehaviour
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
                                                                     transform.position.x, transform.position.y + 0.2f, transform.position.z);
-
-                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(gameObject.transform);
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
             }
@@ -1015,19 +1013,6 @@ public class EnemySkills : MonoBehaviour
 
     private void InvokeStunningStinger()
     {
-        if (settings.UseParticleEffects)
-        {
-            var StingerParticle = ObjectPooler.Instance.GetHitParticle();
-
-            StingerParticle.SetActive(true);
-
-            Vector3 Trans = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f, character.transform.position.z);
-
-            StingerParticle.transform.position = Trans + character.transform.forward * 1f;
-
-            StingerParticle.transform.SetParent(character.transform);
-        }
-
         DisableRadius();
 
         ActiveSkill = false;
@@ -1607,6 +1592,8 @@ public class EnemySkills : MonoBehaviour
 
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().GetEnemyTarget = enemy;
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().CheckStatusEffect();
             }
             else
             {
@@ -1623,7 +1610,12 @@ public class EnemySkills : MonoBehaviour
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite = 
                     this.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
 
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().GetKeyInput =
+                enemyAI.GetAiStates[character.GetComponent<EnemyAI>().GetStateArrayIndex].GetSkillIndex;
+
                 GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().CheckStatusEffects();
             }
         }
         else
@@ -1676,7 +1668,11 @@ public class EnemySkills : MonoBehaviour
                 GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite =
                     this.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
 
+                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().GetKeyInput = 
+                character.GetComponent<Puck>().GetPhases[character.GetComponent<Puck>().GetPhaseIndex].GetBossAiStates[character.GetComponent<Puck>().GetStateArrayIndex].GetSkillIndex;
+
                 GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
+                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().CheckStatusEffects();
             }
         }
         else
@@ -1794,7 +1790,8 @@ public class EnemySkills : MonoBehaviour
 
             if (!SkillsManager.Instance.GetActivatedSkill)
             {
-                if (enemyAI.GetPlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1 && !enemyAI.GetPlayerTarget.GetComponent<Animator>().GetBool("Attacking"))
+                if (enemyAI.GetPlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1 && !enemyAI.GetPlayerTarget.GetComponent<Animator>().GetBool("Attacking") &&
+                    !enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().GetAnimator.GetBool("Damaged"))
                 {
                     enemyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
                 }

@@ -79,6 +79,7 @@ public class MenuButtons : MonoBehaviour
     public void DisableBoxCollider(BoxCollider boxCollider)
     {
         boxCollider.enabled = false;
+        boxCollider.size = new Vector3(0, 0, 0);
     }
 
     public void EnableMenuPanel(GameObject Panel)
