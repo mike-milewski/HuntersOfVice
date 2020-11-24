@@ -1911,7 +1911,7 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        if (WeakDamage - DefenseType < 0)
+                        if (WeakDamage - DefenseType <= 0)
                         {
                             Target.GetHealth.ModifyHealth(-1);
 
@@ -1944,7 +1944,7 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        if ((int)ResistValue - DefenseType < 0)
+                        if ((int)ResistValue - DefenseType <= 0)
                         {
                             Target.GetHealth.ModifyHealth(-1);
 
@@ -1978,7 +1978,7 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        if ((DamageType + (int)CritValue) - DefenseType < 0)
+                        if ((DamageType + (int)CritValue) - DefenseType <= 0)
                         {
                             Target.GetHealth.IncreaseHealth(1);
 
@@ -2005,7 +2005,7 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        if ((DamageType + (int)CritValue) - DefenseType < 0)
+                        if ((DamageType + (int)CritValue) - DefenseType <= 0)
                         {
                             Target.GetHealth.ModifyHealth(-1);
 
@@ -2036,7 +2036,7 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        if (WeakDamage - DefenseType < 0)
+                        if (WeakDamage - DefenseType <= 0)
                         {
                             Target.GetHealth.ModifyHealth(-1);
 
@@ -2066,7 +2066,7 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        if (ResistDamage - DefenseType < 0)
+                        if (ResistDamage - DefenseType <= 0)
                         {
                             Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 
@@ -2097,7 +2097,7 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        if ((Potency + DamageType) - DefenseType < 0)
+                        if ((Potency + DamageType) - DefenseType <= 0)
                         {
                             Target.GetHealth.IncreaseHealth(1);
 
@@ -2123,7 +2123,7 @@ public class Skills : StatusEffects
                     }
                     else
                     {
-                        if ((Potency + DamageType) - DefenseType < 0)
+                        if ((Potency + DamageType) - DefenseType <= 0)
                         {
                             Target.GetHealth.ModifyHealth(-1);
 

@@ -432,7 +432,7 @@ public class BasicAttack : MonoBehaviour
                     }
                     else
                     {
-                        if (WeakDamage - enemy.GetCharacter.CharacterDefense < 0)
+                        if (WeakDamage - enemy.GetCharacter.CharacterDefense <= 0)
                         {
                             enemy.GetComponentInChildren<Health>().ModifyHealth(-1);
 
@@ -463,7 +463,7 @@ public class BasicAttack : MonoBehaviour
                     }
                     else
                     {
-                        if (ResistDamage - enemy.GetCharacter.CharacterDefense < 0)
+                        if (ResistDamage - enemy.GetCharacter.CharacterDefense <= 0)
                         {
                             enemy.GetComponentInChildren<Health>().ModifyHealth(-1);
 
@@ -496,7 +496,7 @@ public class BasicAttack : MonoBehaviour
                     }
                     else
                     {
-                        if (CriticalValue - enemy.GetCharacter.CharacterDefense < 0)
+                        if (CriticalValue - enemy.GetCharacter.CharacterDefense <= 0)
                         {
                             enemy.GetHealth.IncreaseHealth(1);
 
@@ -527,7 +527,7 @@ public class BasicAttack : MonoBehaviour
                     }
                     else
                     {
-                        if (CriticalValue - enemy.GetCharacter.CharacterDefense < 0)
+                        if (CriticalValue - enemy.GetCharacter.CharacterDefense <= 0)
                         {
                             enemy.GetHealth.ModifyHealth(-1);
 
@@ -557,7 +557,7 @@ public class BasicAttack : MonoBehaviour
                     }
                     else
                     {
-                        if (WeakDamage - enemy.GetCharacter.CharacterDefense < 0)
+                        if (WeakDamage - enemy.GetCharacter.CharacterDefense <= 0)
                         {
                             enemy.GetComponentInChildren<Health>().ModifyHealth(-1);
 
@@ -588,7 +588,7 @@ public class BasicAttack : MonoBehaviour
                     }
                     else
                     {
-                        if (ResistDamage - enemy.GetCharacter.CharacterDefense < 0)
+                        if (ResistDamage - enemy.GetCharacter.CharacterDefense <= 0)
                         {
                             enemy.GetComponentInChildren<Health>().ModifyHealth(-1);
 
@@ -621,7 +621,7 @@ public class BasicAttack : MonoBehaviour
                     }
                     else
                     {
-                        if (DamageType - enemy.GetCharacter.CharacterDefense < 0)
+                        if (DamageType - enemy.GetCharacter.CharacterDefense <= 0)
                         {
                             enemy.GetHealth.IncreaseHealth(1);
 
@@ -652,7 +652,7 @@ public class BasicAttack : MonoBehaviour
                     }
                     else
                     {
-                        if (DamageType - enemy.GetCharacter.CharacterDefense < 0)
+                        if (DamageType - enemy.GetCharacter.CharacterDefense <= 0)
                         {
                             enemy.GetHealth.ModifyHealth(-1);
 

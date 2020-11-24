@@ -1756,7 +1756,7 @@ public class EnemySkills : MonoBehaviour
 
                 Mathf.Round(CritCalc);
 
-                if ((int)CritCalc - Target.GetComponent<Character>().CharacterDefense < 0)
+                if ((int)CritCalc - Target.GetComponent<Character>().CharacterDefense <= 0)
                 {
                     Target.GetComponent<Health>().ModifyHealth(-1);
 
@@ -1772,7 +1772,7 @@ public class EnemySkills : MonoBehaviour
             }
             else
             {
-                if (potency - Target.GetComponent<Character>().CharacterDefense < 0)
+                if (potency - Target.GetComponent<Character>().CharacterDefense <= 0)
                 {
                     Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 

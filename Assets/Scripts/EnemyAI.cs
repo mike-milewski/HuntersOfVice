@@ -490,7 +490,10 @@ public class EnemyAI : MonoBehaviour
             Distance = new Vector3(Waypoints[WaypointIndex].position.x - this.transform.position.x, 0,
                                    Waypoints[WaypointIndex].position.z - this.transform.position.z).normalized;
 
-            LookDir = Quaternion.LookRotation(Distance);
+            if(Distance != Vector3.zero)
+            {
+                LookDir = Quaternion.LookRotation(Distance).normalized;
+            }
 
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, LookDir, LookSpeed * Time.deltaTime);
 
@@ -1160,7 +1163,7 @@ public class EnemyAI : MonoBehaviour
 
                     Mathf.Round(CritCalc);
 
-                    if ((int)CritCalc - PlayerTarget.GetComponent<Character>().CharacterDefense < 0)
+                    if ((int)CritCalc - PlayerTarget.GetComponent<Character>().CharacterDefense <= 0)
                     {
                         PlayerTarget.GetComponent<Health>().ModifyHealth(-1);
 
@@ -1175,7 +1178,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 else
                 {
-                    if (character.CharacterStrength - PlayerTarget.GetComponent<Character>().CharacterDefense < 0)
+                    if (character.CharacterStrength - PlayerTarget.GetComponent<Character>().CharacterDefense <= 0)
                     {
                         PlayerTarget.GetComponent<Health>().ModifyHealth(-1);
 

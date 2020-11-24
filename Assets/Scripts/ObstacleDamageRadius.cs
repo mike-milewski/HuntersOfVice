@@ -57,6 +57,54 @@ public class ObstacleDamageRadius : MonoBehaviour
     [SerializeField]
     private ObstacleShapes shapes;
 
+    public string GetDamageName
+    {
+        get
+        {
+            return DamageName;
+        }
+        set
+        {
+            DamageName = value;
+        }
+    }
+
+    public int GetDamagePotency
+    {
+        get
+        {
+            return DamagePotency;
+        }
+        set
+        {
+            DamagePotency = value;
+        }
+    }
+
+    public float GetDamageTime
+    {
+        get
+        {
+            return DamageTime;
+        }
+        set
+        {
+            DamageTime = value;
+        }
+    }
+
+    public float GetTimeToIncrease
+    {
+        get
+        {
+            return TimeToIncrease;
+        }
+        set
+        {
+            TimeToIncrease = value;
+        }
+    }
+
     private void OnEnable()
     {
         switch (shapes)
@@ -130,7 +178,6 @@ public class ObstacleDamageRadius : MonoBehaviour
             switch (shapes)
             {
                 case (ObstacleShapes.Circle):
-                    //CheckIfPlayerIsInCircleRadius(DamageShape.transform.position, SetCircleColliderSize());
                     InvokeParticle();
                     Invoke("TakeRadiusEffects", InvokeEffectTime);
                     DisableRadius();
@@ -354,7 +401,7 @@ public class ObstacleDamageRadius : MonoBehaviour
 
         DamageTxt.transform.SetParent(DamageTextTransform, false);
 
-        if (Damage - PlayerTarget.GetComponent<Character>().CharacterDefense < 0)
+        if (Damage - PlayerTarget.GetComponent<Character>().CharacterDefense <= 0)
         {
             PlayerTarget.GetComponentInChildren<Health>().ModifyHealth(-1);
 

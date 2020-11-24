@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaterialSprite: {fileID: 21300000, guid: 2fdb0b474a5264c42b972ad9b31bd977, type: 3}
   MaterialName: Storming Shard
-  ShopPoints: 20
+  ShopPoints: 35
   MaterialDescription: A stone imbued with the power of wind.
