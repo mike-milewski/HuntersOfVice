@@ -138,7 +138,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 DefenseUP(50);
                 break;
             case (StatusEffect.StrengthAndCriticalUP):
-                StrengthUP(50);
+                StrengthUP(15);
                 CriticalUP(5);
                 break;
             case (StatusEffect.Stun):

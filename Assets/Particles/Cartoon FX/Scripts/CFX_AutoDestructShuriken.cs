@@ -5,7 +5,7 @@ using System.Collections;
 public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticle, Heal, CastParticle, EnemyCastParticle, PoisonSpore, HpItem, MpItem,
                              StrengthUp, RemoveStatus, StunningStinger, Illumination, Hop, GaiasProwess, SylvanBlessing, Slam, Slag, SylvanStorm, EnemyAppear,
                              VicePlanter, Shatter, Alleviate, Contract, Aegis, BraveLight, SinisterPossession, DiabolicLightning, SoulPierce, NetherStar,
-                             NetherStarExplosion, Uplift, ManaPulse, AquaBullet, MiasmaPulse }
+                             NetherStarExplosion, Uplift, ManaPulse, AquaBullet, MiasmaPulse, StatueLaser, LaserExplosion }
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -145,6 +145,12 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
                 break;
             case (ParticleEffect.MiasmaPulse):
                 ObjectPooler.Instance.ReturnMiasmaPulseParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.StatueLaser):
+                ObjectPooler.Instance.ReturnStatueLaserParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.LaserExplosion):
+                ObjectPooler.Instance.ReturnLaserExplosionParticleToPool(gameObject);
                 break;
         }
     }

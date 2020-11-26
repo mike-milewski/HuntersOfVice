@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
   m_Name: BunnykinsLv7
   m_EditorClassIdentifier: 
-  Weaknesses: 08000000
+  Weaknesses: 00000000
   Resistances: 00000000
   Immunities: 00000000
   Absorbtions: 00000000
   CharacterName: Bunnykins
   CharacterLevel: 7
-  Health: 333
+  Health: 350
   Mana: 0
-  Strength: 40
-  Defense: 17
-  Intelligence: 15
+  Strength: 43
+  Defense: 22
+  Intelligence: 20
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 15
-  Coins: 20
-  EXP: 40
+  Coins: 24
+  EXP: 45
   MaterialDataDropChance: 30
   MoveSpeed: 0
   CheckedData: 0

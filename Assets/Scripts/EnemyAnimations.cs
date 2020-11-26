@@ -274,6 +274,18 @@ public class EnemyAnimations : MonoBehaviour
         }
     }
 
+    public void IncrementGatePuzzleCount()
+    {
+        if (AI.GetIsAPuzzleComponent)
+        {
+            if (!CheckedForPuzzle)
+            {
+                puzzle.GatePuzzleType();
+                CheckedForPuzzle = true;
+            }
+        }
+    }
+
     public void SpawnEnemy()
     {
         if (AI.GetIsATreasurePuzzleComponent)

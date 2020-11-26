@@ -55,6 +55,18 @@ public class Puzzle : MonoBehaviour
         else return;
     }
 
+    public void GatePuzzleType()
+    {
+        EnemyCountRequired++;
+
+        if (EnemyCountRequired >= MaxEnemyCountRequired)
+        {
+            ObjectToDespawn.SetActive(false);
+            gameObject.SetActive(false);
+        }
+        else return;
+    }
+
     public void BushPuzzle()
     {
         EnemyCountRequired++;

@@ -23,6 +23,7 @@ public class ReturnObjectToOriginalRotation : MonoBehaviour
 
         if(transform.rotation == Quaternion.LookRotation(Distance).normalized)
         {
+            statueObstacle.DisableAudio();
             this.enabled = false;
         }
     }

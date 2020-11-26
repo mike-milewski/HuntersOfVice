@@ -52,7 +52,7 @@ public class ObstacleDamageRadius : MonoBehaviour
     private GameObject Particle;
 
     [SerializeField]
-    private bool IsInRadius, DisabledRadius;
+    private bool IsInRadius, DisabledRadius, IsStatue;
 
     [SerializeField]
     private ObstacleShapes shapes;
@@ -257,6 +257,7 @@ public class ObstacleDamageRadius : MonoBehaviour
 
     private void InvokeParticle()
     {
+        if(!IsStatue)
         Invoke("CastParticleEffect", InvokeParticleEffectTime);
     }
 

@@ -138,6 +138,8 @@ public class ObjectPooler : MonoBehaviour
         AddBurningEffectParticle(poolcontroller[48].GetPoolAmount);
         AddAquaBulletParticle(poolcontroller[49].GetPoolAmount);
         AddMiasmaPulseParticle(poolcontroller[50].GetPoolAmount);
+        AddStatueLaserParticle(poolcontroller[51].GetPoolAmount);
+        AddLaserExplosionParticle(poolcontroller[52].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -752,6 +754,30 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddStatueLaserParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[51].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[51].GetPoolParent.transform, false);
+            poolcontroller[51].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddLaserExplosionParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[52].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[52].GetPoolParent.transform, false);
+            poolcontroller[52].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -1005,6 +1031,16 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetMiasmaPulseParticle()
     {
         return poolcontroller[50].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetStatueLaserParticle()
+    {
+        return poolcontroller[51].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetLaserExplosionParticle()
+    {
+        return poolcontroller[52].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1412,6 +1448,22 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[50].GetPoolParent.transform, false);
 
         poolcontroller[50].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnStatueLaserParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[51].GetPoolParent.transform, false);
+
+        poolcontroller[51].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnLaserExplosionParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[52].GetPoolParent.transform, false);
+
+        poolcontroller[52].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

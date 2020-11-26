@@ -10,16 +10,19 @@ public class StatueObstacle : MonoBehaviour
     private ObstacleDamageRadius obstacleDamageRadius;
 
     [SerializeField]
+    private Transform LaserParticleOriginPoint;
+
+    [SerializeField]
     private bool IsFollowingPlayer, Attacking;
 
     [SerializeField]
-    private float TimeToStop, DamageTime, TimeToIncrease;
+    private float TimeToStop, DamageTime, ParticleTime;
 
-    private float FollowTime;
+    private float FollowTime, ParticleWaitTime, TimeToIncrease;
 
-    private Vector3 Distance;
+    private Vector3 StatueDistance, LaserPointDistance;
 
-    private Quaternion LookDir;
+    private Quaternion LookDirection, LaserPointLookDirection;
 
     [SerializeField]
     private float LookSpeed;
@@ -76,6 +79,7 @@ public class StatueObstacle : MonoBehaviour
     {
         TimeToIncrease = 0;
         FollowTime = 0;
+        ParticleWaitTime = 0;
     }
 
     private void Update()
@@ -94,15 +98,56 @@ public class StatueObstacle : MonoBehaviour
 
         if(IsFollowingPlayer && !Attacking)
         {
-            Distance = new Vector3(PlayerTarget.transform.position.x - transform.position.x, 0,
-                                   PlayerTarget.transform.position.z - transform.position.z).normalized;
+            EnableAudio();
 
-            LookDir = Quaternion.LookRotation(Distance).normalized;
+            StatueDistance = new Vector3(transform.position.x - PlayerTarget.transform.position.x, 0,
+                                   transform.position.z - PlayerTarget.transform.position.z).normalized;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, LookDir, LookSpeed * Time.deltaTime);
+            LaserPointDistance = new Vector3(LaserParticleOriginPoint.position.x - PlayerTarget.transform.position.x,
+                                             LaserParticleOriginPoint.position.y - PlayerTarget.transform.position.y,
+                                             LaserParticleOriginPoint.position.z - PlayerTarget.transform.position.z).normalized;
+
+            LookDirection = Quaternion.LookRotation(StatueDistance).normalized;
+            LaserPointLookDirection = Quaternion.LookRotation(LaserPointDistance).normalized;
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, LookDirection, LookSpeed * Time.deltaTime);
+            LaserParticleOriginPoint.rotation = Quaternion.Slerp(LaserParticleOriginPoint.rotation, LaserPointLookDirection, LookSpeed * Time.deltaTime);
+        }
+
+        if(Attacking)
+        {
+            DisableAudio();
+
+            ParticleWaitTime += Time.deltaTime;
+            if(ParticleWaitTime >= ParticleTime)
+            {
+                InvokeParticleEffect();
+                CreateLaserExplosionParticleEffect();
+                ParticleWaitTime = 0;
+            }
         }
 
         CheckAOEStatus();
+    }
+
+    private void EnableAudio()
+    {
+        if (!gameObject.GetComponent<AudioSource>().enabled)
+        {
+            gameObject.GetComponent<AudioSource>().enabled = true;
+            gameObject.GetComponent<AudioSource>().Play();
+        }
+        else return;
+    }
+
+    public void DisableAudio()
+    {
+        if (gameObject.GetComponent<AudioSource>().enabled)
+        {
+            gameObject.GetComponent<AudioSource>().Stop();
+            gameObject.GetComponent<AudioSource>().enabled = false;
+        }
+        else return;
     }
 
     private void DrawAOE()
@@ -124,9 +169,31 @@ public class StatueObstacle : MonoBehaviour
                 Attacking = false;
                 IsFollowingPlayer = true;
                 TimeToIncrease = 0;
+                ParticleWaitTime = 0;
                 obstacleDamageRadius.enabled = false;
             }
         }
         else return;
+    }
+
+    private void InvokeParticleEffect()
+    {
+        var StatueLaser = ObjectPooler.Instance.GetStatueLaserParticle();
+
+        StatueLaser.SetActive(true);
+
+        StatueLaser.transform.SetParent(LaserParticleOriginPoint, false);
+
+        StatueLaser.transform.position = new Vector3(LaserParticleOriginPoint.position.x, LaserParticleOriginPoint.position.y, LaserParticleOriginPoint.position.z);
+    }
+
+    private void CreateLaserExplosionParticleEffect()
+    {
+        var LaserExplosion = ObjectPooler.Instance.GetLaserExplosionParticle();
+
+        LaserExplosion.SetActive(true);
+
+        LaserExplosion.transform.position = new Vector3(obstacleDamageRadius.transform.position.x, obstacleDamageRadius.transform.position.y + 0.3f,
+                                                        obstacleDamageRadius.transform.position.z);
     }
 }
