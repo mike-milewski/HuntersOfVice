@@ -1659,10 +1659,17 @@ public class Skills : StatusEffects
 
         HealTxt.transform.SetParent(TextHolder.transform, false);
 
-        #region CriticalHealChance
-        if (GetCharacter.CurrentHealth > 0)
+        if(GetCharacter.CurrentHealth > 0)
         {
-            float AlleviatePercentage = (AlleviateHealPercentage / 100) * GetCharacter.MaxHealth;
+            float HealReduction = GameManager.Instance.GetHealingReduction / 100;
+
+            if (GameManager.Instance.GetHealingReduction > 100)
+            {
+                HealReduction = 1;
+            }
+
+            float AlleviatePercentage = (AlleviateHealPercentage / 100) * GetCharacter.MaxHealth - 
+                                        ((GetCharacter.MaxHealth * (AlleviateHealPercentage / 100)) * HealReduction);
 
             Mathf.RoundToInt(AlleviatePercentage);
 
@@ -1670,8 +1677,6 @@ public class Skills : StatusEffects
 
             HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + SkillName + " " + (int)AlleviatePercentage;
         }
-        #endregion
-
         return HealTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -1685,24 +1690,35 @@ public class Skills : StatusEffects
 
         var Critical = GetCharacter.GetCriticalChance;
 
+        float HealReduction = GameManager.Instance.GetHealingReduction / 100;
+
+        if (GameManager.Instance.GetHealingReduction > 100)
+        {
+            HealReduction = 1;
+        }
+
+        float HealPercentage = (Potency + GetCharacter.CharacterIntelligence) - ((Potency + GetCharacter.CharacterIntelligence) * HealReduction);
+
+        Mathf.RoundToInt(HealPercentage);
+
         #region CriticalHealChance
         if (GetCharacter.CurrentHealth > 0)
         {
             if (Random.value * 100 <= Critical)
             {
-                float CriticalValue = Potency * 1.5f;
+                float CriticalValue = HealPercentage * 1.5f;
                 Mathf.Round(CriticalValue);
 
-                GetCharacter.GetComponent<Health>().IncreaseHealth((int)CriticalValue + GetCharacter.CharacterIntelligence);
+                GetCharacter.GetComponent<Health>().IncreaseHealth((int)CriticalValue);
 
                 HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + SkillName + "</size>" + " " + "<size=35>" + 
-                                                                         Mathf.Round(CriticalValue + GetCharacter.CharacterIntelligence) + "!";
+                                                                         (int)CriticalValue + "!";
             }
             else
             {
-                GetCharacter.GetComponent<Health>().IncreaseHealth(Potency + GetCharacter.CharacterIntelligence);
+                GetCharacter.GetComponent<Health>().IncreaseHealth((int)HealPercentage);
 
-                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + SkillName + " " + (Potency + GetCharacter.CharacterIntelligence);
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + SkillName + " " + (int)HealPercentage;
             }
         }
         #endregion

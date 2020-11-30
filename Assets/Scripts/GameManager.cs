@@ -70,6 +70,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float RespawnTime;
 
+    private float HealingReduction;
+
     private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating, IsTargeting;
 
     [SerializeField]
@@ -351,6 +353,18 @@ public class GameManager : MonoBehaviour
         set
         {
             ItemDescriptionPanel = value;
+        }
+    }
+
+    public float GetHealingReduction
+    {
+        get
+        {
+            return HealingReduction;
+        }
+        set
+        {
+            HealingReduction = value;
         }
     }
 

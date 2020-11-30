@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public enum ObstacleShapes { Circle, Rectangle }
 
-public enum ObstacleStatus { NONE, DamageOverTime, Stun }
-
 public class ObstacleDamageRadius : MonoBehaviour
 {
     [SerializeField]
@@ -21,7 +19,7 @@ public class ObstacleDamageRadius : MonoBehaviour
     private int DamagePotency;
 
     [SerializeField]
-    private ObstacleStatus obstacleStatus;
+    private EffectStatus obstacleStatus;
 
     [SerializeField]
     private float DamageTime, TimeToIncrease, SizeDeltaX, SizeDeltaY, InvokeEffectTime, InvokeParticleEffectTime, StatusDuration, DamageTick;
@@ -52,7 +50,7 @@ public class ObstacleDamageRadius : MonoBehaviour
     private GameObject Particle;
 
     [SerializeField]
-    private bool IsInRadius, DisabledRadius, IsStatue;
+    private bool IsInRadius, DisabledRadius, IsStatue, IsSpikeTrap;
 
     [SerializeField]
     private ObstacleShapes shapes;
@@ -183,7 +181,8 @@ public class ObstacleDamageRadius : MonoBehaviour
                     DisableRadius();
                     break;
                 case (ObstacleShapes.Rectangle):
-                    InvokeEffect();
+                    InvokeParticle();
+                    Invoke("TakeRadiusEffects", InvokeEffectTime);
                     DisableRadius();
                     break;
             }
@@ -257,8 +256,29 @@ public class ObstacleDamageRadius : MonoBehaviour
 
     private void InvokeParticle()
     {
-        if(!IsStatue)
-        Invoke("CastParticleEffect", InvokeParticleEffectTime);
+        if(!IsStatue && !IsSpikeTrap)
+        {
+            Invoke("CastParticleEffect", InvokeParticleEffectTime);
+        }
+        if(IsSpikeTrap)
+        {
+            Invoke("HitParticleEffect", InvokeParticleEffectTime);
+        }
+    }
+
+    private void HitParticleEffect()
+    {
+        if (settings.UseParticleEffects)
+        {
+            if(PlayerTarget != null)
+            {
+                var ParticleEffect = ObjectPooler.Instance.GetHitParticle();
+
+                ParticleEffect.gameObject.SetActive(true);
+
+                ParticleEffect.transform.position = new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.6f, PlayerTarget.transform.position.z);
+            }
+        }
     }
 
     private void InvokeEffect()
@@ -295,7 +315,7 @@ public class ObstacleDamageRadius : MonoBehaviour
     {
         if(IsInRadius)
         {
-            if (obstacleStatus != ObstacleStatus.NONE)
+            if (obstacleStatus != EffectStatus.NONE)
             {
                 PlayerStatus();
             }
@@ -367,7 +387,9 @@ public class ObstacleDamageRadius : MonoBehaviour
 
             StatusIcon.GetComponent<StatusIcon>().GetTempTick = StatusIcon.GetComponent<StatusIcon>().GetDamageOrHealTick;
 
-            StatusIcon.GetComponent<StatusIcon>().GetEffectStatus = (EffectStatus)obstacleStatus;
+            StatusIcon.GetComponent<StatusIcon>().GetEffectStatus = obstacleStatus;
+
+            StatusIcon.GetComponent<StatusIcon>().GetObstacleStatusEffectName = StatusEffectName;
 
             StatusIcon.GetComponent<Image>().sprite = StatusSprite;
 

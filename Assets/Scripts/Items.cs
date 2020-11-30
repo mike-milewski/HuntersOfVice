@@ -11,7 +11,7 @@ public class Items : MonoBehaviour
     private StatusEffect statusEffect;
 
     [SerializeField]
-    private Character Knight, ShadowPriest;
+    private Character Player, Knight, ShadowPriest;
 
     [SerializeField]
     private Settings settings;
@@ -141,6 +141,15 @@ public class Items : MonoBehaviour
     private void Awake()
     {
         cooldown = Cooldown;
+
+        if(Knight.gameObject.activeInHierarchy)
+        {
+            Player = Knight;
+        }
+        if(ShadowPriest.gameObject.activeInHierarchy)
+        {
+            Player = ShadowPriest;
+        }
     }
 
     private void Update()
@@ -271,7 +280,14 @@ public class Items : MonoBehaviour
     {
         float Percentage = value / 100;
 
-        float HealthAmt = Knight.MaxHealth * Percentage;
+        float HealReduction = GameManager.Instance.GetHealingReduction / 100;
+
+        if (GameManager.Instance.GetHealingReduction > 100)
+        {
+            HealReduction = 1;
+        }
+
+        float HealthAmt = Mathf.Abs((Player.MaxHealth * Percentage) - ((Player.MaxHealth * Percentage) * HealReduction));
 
         Mathf.Round(HealthAmt);
 
@@ -282,7 +298,14 @@ public class Items : MonoBehaviour
     {
         float Percentage = value / 100;
 
-        float ManaAmt = Knight.MaxMana * Percentage;
+        float HealReduction = GameManager.Instance.GetHealingReduction / 100;
+
+        if (GameManager.Instance.GetHealingReduction > 100)
+        {
+            HealReduction = 1;
+        }
+
+        float ManaAmt = Mathf.Abs((Player.MaxMana * Percentage) - ((Player.MaxMana * Percentage) * HealReduction));
 
         Mathf.Round(ManaAmt);
 

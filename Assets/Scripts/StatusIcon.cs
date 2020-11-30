@@ -6,7 +6,7 @@ using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
                            IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense, Aegis, Slowed,
-                           ContractWithEvilNoNegative, ContractWithTheVileNoNegative, ContractWithNefariousnessNoNegative }
+                           ContractWithEvilNoNegative, ContractWithTheVileNoNegative, ContractWithNefariousnessNoNegative, Wound }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -30,6 +30,8 @@ public class StatusIcon : MonoBehaviour
     private EffectStatus status;
 
     private Skills skill;
+
+    private string ObstacleStatusEffectName;
 
     private int TempSkillIndex;
 
@@ -71,6 +73,18 @@ public class StatusIcon : MonoBehaviour
         set
         {
             status = value;
+        }
+    }
+
+    public string GetObstacleStatusEffectName
+    {
+        get
+        {
+            return ObstacleStatusEffectName;
+        }
+        set
+        {
+            ObstacleStatusEffectName = value;
         }
     }
 
@@ -219,6 +233,9 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.Stun):
                 CreateStunEffectParticle();
                 break;
+            case (EffectStatus.Wound):
+                GameManager.Instance.GetHealingReduction += 25;
+                break;
             case (EffectStatus.Slowed):
                 SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetMoveSpeed / 2;
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay += 1;
@@ -271,6 +288,9 @@ public class StatusIcon : MonoBehaviour
                 break;
             case (EffectStatus.Stun):
                 CheckStunParticleActive();
+                break;
+            case (EffectStatus.Wound):
+                GameManager.Instance.GetHealingReduction -= 25;
                 break;
         }
     }
@@ -478,7 +498,7 @@ public class StatusIcon : MonoBehaviour
 
         StatusEffectText.transform.SetParent(GameManager.Instance.GetStatusEffectTransform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Poison";
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>-" + ObstacleStatusEffectName;
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
