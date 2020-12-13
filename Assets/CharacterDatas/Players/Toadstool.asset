@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
+  m_Name: Toadstool
+  m_EditorClassIdentifier: 
+  Weaknesses: 
+  Resistances: 
+  Immunities: 
+  Absorbtions: 
+  CharacterName: Toadstool
+  CharacterLevel: 1
+  Health: 124
+  Mana: 40
+  Strength: 20
+  Defense: 15
+  Intelligence: 20
+  HpIncrease: 0
+  MpIncrease: 0
+  CriticalHitChance: 5
+  Coins: 0
+  EXP: 0
+  MaterialDataDropChance: 0
+  MoveSpeed: 4.5
+  CheckedData: 0
+  materialdata: {fileID: 0}

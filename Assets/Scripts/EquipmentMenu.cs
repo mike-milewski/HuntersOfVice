@@ -8,13 +8,16 @@ using TMPro;
 public class EquipmentMenu : MonoBehaviour
 {
     [SerializeField]
-    private Character character, Knight, ShadowPriest;
+    private Character character, Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private Equipment[] KnightEquipment;
 
     [SerializeField]
     private Equipment[] ShadowPriestEquipment;
+
+    [SerializeField]
+    private Equipment[] ToadstoolEquipment;
 
     [SerializeField]
     private GameObject WeaponPanel, ArmorPanel, WeaponSlot, ArmorSlot, EquipmentDescriptionPanel;
@@ -90,9 +93,13 @@ public class EquipmentMenu : MonoBehaviour
         {
             character = Knight;
         }
-        else if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
+        if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
         {
             character = ShadowPriest;
+        }
+        if (GameManager.Instance.GetToadstool.activeInHierarchy)
+        {
+            character = Toadstool;
         }
 
         SetStartingEquipment();
@@ -135,7 +142,7 @@ public class EquipmentMenu : MonoBehaviour
                 }
             }
         }
-        else if(character.GetCharacterData.name == "ShadowPriest")
+        if(character.GetCharacterData.name == "ShadowPriest")
         {
             if (ShadowPriestEquipment.Length > 0)
             {
@@ -167,6 +174,41 @@ public class EquipmentMenu : MonoBehaviour
                     ShadowPriestEquipment[1].Equip();
 
                     ShadowPriestEquipment[1].transform.localScale = new Vector3(1, 1, 1);
+                }
+            }
+        }
+        if (character.GetCharacterData.name == "Toadstool")
+        {
+            if (ToadstoolEquipment.Length > 0)
+            {
+                if (ToadstoolEquipment[0].GetEquipmentType == EquipmentType.Weapon)
+                {
+                    ToadstoolEquipment[0].transform.SetParent(WeaponSlot.transform, true);
+                    ToadstoolEquipment[0].Equip();
+
+                    ToadstoolEquipment[0].transform.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    ToadstoolEquipment[0].transform.SetParent(ArmorSlot.transform, true);
+                    ToadstoolEquipment[0].Equip();
+
+                    ToadstoolEquipment[0].transform.localScale = new Vector3(1, 1, 1);
+                }
+
+                if (ToadstoolEquipment[1].GetEquipmentType == EquipmentType.Armor)
+                {
+                    ToadstoolEquipment[1].transform.SetParent(ArmorSlot.transform, true);
+                    ToadstoolEquipment[1].Equip();
+
+                    ToadstoolEquipment[1].transform.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    ToadstoolEquipment[1].transform.SetParent(WeaponSlot.transform, true);
+                    ToadstoolEquipment[1].Equip();
+
+                    ToadstoolEquipment[1].transform.localScale = new Vector3(1, 1, 1);
                 }
             }
         }

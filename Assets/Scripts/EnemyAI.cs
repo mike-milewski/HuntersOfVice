@@ -58,7 +58,7 @@ public class EnemyAI : MonoBehaviour
     private Character character;
 
     [SerializeField]
-    private Character Knight, ShadowPriest;
+    private Character Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private MonsterBook monsterBook;
@@ -112,7 +112,7 @@ public class EnemyAI : MonoBehaviour
     private int WaypointIndex;
 
     [SerializeField]
-    private bool IsHostile, IsAnAdd, IsAPuzzleComponent, IsAbushPuzzleComponent, IsATreasurePuzzleComponent;
+    private bool IsHostile, IsAnAdd, IsAPuzzleComponent, IsAbushPuzzleComponent, IsATreasurePuzzleComponent, IsAMagicWallPuzzle, IsAsecretCharacterPuzzle;
 
     [SerializeField]
     private bool IsUsingAnimator;
@@ -308,6 +308,30 @@ public class EnemyAI : MonoBehaviour
         set
         {
             IsATreasurePuzzleComponent = value;
+        }
+    }
+
+    public bool GetIsAMagicWallPuzzleComponent
+    {
+        get
+        {
+            return IsAMagicWallPuzzle;
+        }
+        set
+        {
+            IsAMagicWallPuzzle = value;
+        }
+    }
+
+    public bool GetIsAsecretCharacterPuzzleComponent
+    {
+        get
+        {
+            return IsAsecretCharacterPuzzle;
+        }
+        set
+        {
+            IsAsecretCharacterPuzzle = value;
         }
     }
 
@@ -820,9 +844,13 @@ public class EnemyAI : MonoBehaviour
         {
             PlayerTarget = Knight;
         }
-        else if (ShadowPriest.gameObject.activeInHierarchy)
+        if (ShadowPriest.gameObject.activeInHierarchy)
         {
             PlayerTarget = ShadowPriest;
+        }
+        if (Toadstool.gameObject.activeInHierarchy)
+        {
+            PlayerTarget = Toadstool;
         }
         states = States.Chase;
     }

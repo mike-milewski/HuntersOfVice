@@ -333,7 +333,7 @@ public class ObstacleDamageRadius : MonoBehaviour
                     }
                 }
                 if(PlayerTarget.GetComponent<Character>().CurrentHealth <= 0)
-                {
+                { 
                     IsInRadius = false;
                 }
             }
@@ -409,8 +409,6 @@ public class ObstacleDamageRadius : MonoBehaviour
             StatusIcon.GetComponent<StatusIcon>().GetDamageOrHealTick = DamageTick;
 
             StatusIcon.GetComponent<StatusIcon>().GetTempTick = StatusIcon.GetComponent<StatusIcon>().GetDamageOrHealTick;
-
-            StatusIcon.GetComponent<StatusIcon>().GetStatusDescription.text = StatusEffectDescrption;
 
             StatusIcon.GetComponent<StatusIcon>().GetDuration = StatusDuration;
         }

@@ -82,6 +82,7 @@ public class CursorController : MonoBehaviour
 
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = true;
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = false;
+                        hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetToadstoolSelected = false;
 
                         hit.collider.GetComponent<CharacterSelector>().PlayPanelAndButtonAnimations();
                         hit.collider.GetComponent<CharacterSelector>().ShowCharacterInformation();
@@ -90,7 +91,7 @@ public class CursorController : MonoBehaviour
 
                         hit.collider.GetComponent<BoxCollider>().enabled = false;
                     }
-                    else if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "Shadow Priest")
+                    if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "Shadow Priest")
                     {
                         if (!hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected)
                         {
@@ -99,6 +100,25 @@ public class CursorController : MonoBehaviour
 
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = true;
                         hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = false;
+                        hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetToadstoolSelected = false;
+
+                        hit.collider.GetComponent<CharacterSelector>().PlayPanelAndButtonAnimations();
+                        hit.collider.GetComponent<CharacterSelector>().ShowCharacterInformation();
+
+                        hit.collider.GetComponent<CharacterSelector>().ShowCharacterSkills();
+
+                        hit.collider.GetComponent<BoxCollider>().enabled = false;
+                    }
+                    if (hit.collider.GetComponent<CharacterSelector>().GetCharacterClass == "Toadstool")
+                    {
+                        if (!hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetToadstoolSelected)
+                        {
+                            hit.collider.GetComponent<Animator>().SetBool("CharacterSelection", true);
+                        }
+
+                        hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetToadstoolSelected = true;
+                        hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetKnightSelected = false;
+                        hit.collider.GetComponent<CharacterSelector>().GetSelectedCharacter.GetShadowPriestSelected = false;
 
                         hit.collider.GetComponent<CharacterSelector>().PlayPanelAndButtonAnimations();
                         hit.collider.GetComponent<CharacterSelector>().ShowCharacterInformation();

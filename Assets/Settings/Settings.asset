@@ -4,11 +4,16 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3c29c7b72eb8a5438eead4c3ee71823, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  UseParticleEffects: 0
+  CharacterSavior: Knight
+  UseParticleEffects: 1
+  MuteAudio: 0
+  SecretCharacterUnlocked: 1
+  AlreadyCheckedForCharacter: 0

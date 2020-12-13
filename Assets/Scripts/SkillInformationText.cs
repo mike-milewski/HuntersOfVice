@@ -11,10 +11,10 @@ public class SkillInformationText : MonoBehaviour
     private TextMeshProUGUI SkillNameText, SkillInfoText;
 
     [SerializeField]
-    private string KnightSkillName, ShadowPriestSkillName;
+    private string KnightSkillName, ShadowPriestSkillName, ToadstoolSkillName;
 
     [SerializeField][TextArea]
-    private string KnightSkillInfo, ShadowPriestSkillInfo;
+    private string KnightSkillInfo, ShadowPriestSkillInfo, ToadstoolSkillInfo;
 
     private void OnEnable()
     {
@@ -30,10 +30,15 @@ public class SkillInformationText : MonoBehaviour
             SkillNameText.text = KnightSkillName;
             SkillInfoText.text = KnightSkillInfo;
         }
-        else if(selectedCharacter.GetShadowPriestSelected)
+        if(selectedCharacter.GetShadowPriestSelected)
         {
             SkillNameText.text = ShadowPriestSkillName;
             SkillInfoText.text = ShadowPriestSkillInfo;
+        }
+        if (selectedCharacter.GetToadstoolSelected)
+        {
+            SkillNameText.text = ToadstoolSkillName;
+            SkillInfoText.text = ToadstoolSkillInfo;
         }
     }
 }

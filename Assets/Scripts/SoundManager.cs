@@ -234,4 +234,22 @@ public class SoundManager : MonoBehaviour
         if (!settings.MuteAudio)
             audiosource[1].PlayOneShot(audioclips[30]);
     }
+
+    public void ToadstoolJump()
+    {
+        if (!settings.MuteAudio)
+            audiosource[1].PlayOneShot(audioclips[31]);
+    }
+
+    public void ToadstoolWalk()
+    {
+        if (!settings.MuteAudio)
+            audiosource[1].PlayOneShot(audioclips[32]);
+    }
+
+    public void ToadstoolHit()
+    {
+        if (!settings.MuteAudio)
+            audiosource[1].PlayOneShot(audioclips[33]);
+    }
 }

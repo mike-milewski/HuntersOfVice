@@ -3,5 +3,7 @@
 [CreateAssetMenu(fileName = "Setting", menuName = "Settings")]
 public class Settings : ScriptableObject
 {
-    public bool UseParticleEffects, MuteAudio;
+    public string CharacterSavior;
+
+    public bool UseParticleEffects, MuteAudio, SecretCharacterUnlocked, AlreadyCheckedForCharacter;
 }

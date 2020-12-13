@@ -13,7 +13,7 @@ public class Experience : MonoBehaviour
     private GameObject skillMenu;
 
     [SerializeField]
-    private Transform Player, Knight, ShadowPriest;
+    private Transform Player, Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private Image ExperienceBar, FillBarTwo;
@@ -152,6 +152,10 @@ public class Experience : MonoBehaviour
         {
             Player = ShadowPriest;
         }
+        if (Toadstool.gameObject.activeInHierarchy)
+        {
+            Player = Toadstool;
+        }
 
         character = GetComponent<Character>();
 
@@ -257,9 +261,14 @@ public class Experience : MonoBehaviour
             character.GetCharacterData.HpIncrease += 3;
             character.GetCharacterData.MpIncrease += 2;
         }
-        else if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
+        if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
         {
             character.GetCharacterData.HpIncrease += 2;
+            character.GetCharacterData.MpIncrease += 3;
+        }
+        if (GameManager.Instance.GetToadstool.activeInHierarchy)
+        {
+            character.GetCharacterData.HpIncrease += 3;
             character.GetCharacterData.MpIncrease += 3;
         }
 

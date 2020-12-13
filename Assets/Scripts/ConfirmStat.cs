@@ -4,7 +4,7 @@ using UnityEngine;
 public class ConfirmStat : MonoBehaviour
 {
     [SerializeField]
-    private Character Knight, ShadowPriest;
+    private Character Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private GameObject StatusButton, Stats, StatParent;
@@ -15,12 +15,16 @@ public class ConfirmStat : MonoBehaviour
         {
             experience = Knight.GetComponent<Experience>();
         }
-        else if(ShadowPriest.gameObject.activeInHierarchy)
+        if(ShadowPriest.gameObject.activeInHierarchy)
         {
             experience = ShadowPriest.GetComponent<Experience>();
         }
+        if (Toadstool.gameObject.activeInHierarchy)
+        {
+            experience = Toadstool.GetComponent<Experience>();
+        }
 
-        if(!GameManager.Instance.GetIsDead)
+        if (!GameManager.Instance.GetIsDead)
         {
             experience.GetMaxStatPoints = experience.GetStatPoints;
 

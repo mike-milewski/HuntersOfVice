@@ -14,7 +14,7 @@ public class SpikeTrap : MonoBehaviour
         if(other.GetComponent<PlayerController>())
         {
             obstacleDamageRadius.enabled = true;
-            Invoke("InvokeResetTrap", 0.6f);
+            Invoke("InvokeResetTrap", 0.4f);
         }
     }
 

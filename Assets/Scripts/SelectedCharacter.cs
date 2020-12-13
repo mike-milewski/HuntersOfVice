@@ -7,7 +7,7 @@ public class SelectedCharacter : MonoBehaviour
     public static SelectedCharacter instance = null;
 
     [SerializeField]
-    private bool KnightSelected, ShadowPriestSelected;
+    private bool KnightSelected, ShadowPriestSelected, ToadstoolSelected;
 
     private Scene scene;
 
@@ -32,6 +32,18 @@ public class SelectedCharacter : MonoBehaviour
         set
         {
             ShadowPriestSelected = value;
+        }
+    }
+
+    public bool GetToadstoolSelected
+    {
+        get
+        {
+            return ToadstoolSelected;
+        }
+        set
+        {
+            ToadstoolSelected = value;
         }
     }
 

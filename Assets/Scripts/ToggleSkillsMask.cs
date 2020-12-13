@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class ToggleSkillsMask : MonoBehaviour
 {
     [SerializeField]
-    private GameObject Knight, ShadowPriest;
+    private GameObject Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
-    private GameObject[] KnightSkills, ShadowPriestSkills;
+    private GameObject[] KnightSkills, ShadowPriestSkills, ToadstoolSkills;
 
     public void ToggleMask()
     {
@@ -18,9 +18,13 @@ public class ToggleSkillsMask : MonoBehaviour
         {
             TurnOnKnightSkills();
         }
-        else if(ShadowPriest.activeInHierarchy)
+        if(ShadowPriest.activeInHierarchy)
         {
             TurnOnShadowPriestSkills();
+        }
+        if (Toadstool.activeInHierarchy)
+        {
+            TurnOnToadstoolSkills();
         }
     }
 
@@ -30,9 +34,13 @@ public class ToggleSkillsMask : MonoBehaviour
         {
             TurnOffKnightSkills();
         }
-        else if (ShadowPriest.activeInHierarchy)
+        if (ShadowPriest.activeInHierarchy)
         {
             TurnOffShadowPriestSkills();
+        }
+        if (Toadstool.activeInHierarchy)
+        {
+            TurnOffToadstoolSkills();
         }
     }
 
@@ -66,6 +74,21 @@ public class ToggleSkillsMask : MonoBehaviour
         }
     }
 
+    private void TurnOnToadstoolSkills()
+    {
+        for (int i = 0; i < ToadstoolSkills.Length; i++)
+        {
+            foreach (Mask m in ToadstoolSkills[i].GetComponentsInChildren<Mask>())
+            {
+                m.showMaskGraphic = true;
+            }
+            foreach (Image img in ToadstoolSkills[i].GetComponentsInChildren<Image>())
+            {
+                img.raycastTarget = true;
+            }
+        }
+    }
+
     private void TurnOffKnightSkills()
     {
         for (int i = 0; i < KnightSkills.Length; i++)
@@ -90,6 +113,21 @@ public class ToggleSkillsMask : MonoBehaviour
                 m.showMaskGraphic = false;
             }
             foreach (Image img in ShadowPriestSkills[i].GetComponentsInChildren<Image>())
+            {
+                img.raycastTarget = false;
+            }
+        }
+    }
+
+    private void TurnOffToadstoolSkills()
+    {
+        for (int i = 0; i < ToadstoolSkills.Length; i++)
+        {
+            foreach (Mask m in ToadstoolSkills[i].GetComponentsInChildren<Mask>())
+            {
+                m.showMaskGraphic = false;
+            }
+            foreach (Image img in ToadstoolSkills[i].GetComponentsInChildren<Image>())
             {
                 img.raycastTarget = false;
             }

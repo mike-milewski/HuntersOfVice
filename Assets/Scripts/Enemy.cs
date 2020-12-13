@@ -359,9 +359,13 @@ public class Enemy : MonoBehaviour
         {
             EXP = GameManager.Instance.GetKnight.GetComponent<Experience>();
         }
-        else if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
+        if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
         {
             EXP = GameManager.Instance.GetShadowPriest.GetComponent<Experience>();
+        }
+        if (GameManager.Instance.GetToadstool.activeInHierarchy)
+        {
+            EXP = GameManager.Instance.GetToadstool.GetComponent<Experience>();
         }
     }
 }

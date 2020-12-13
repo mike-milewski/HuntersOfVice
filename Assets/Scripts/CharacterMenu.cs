@@ -6,7 +6,7 @@ using TMPro;
 public class CharacterMenu : MonoBehaviour
 {
     [SerializeField]
-    private Character character, Knight, ShadowPriest;
+    private Character character, Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private TextMeshProUGUI CharacterName, Level, HP, MP, Strength, Defense, Intelligence;
@@ -62,6 +62,10 @@ public class CharacterMenu : MonoBehaviour
         if(ShadowPriest.gameObject.activeInHierarchy)
         {
             character = ShadowPriest;
+        }
+        if (Toadstool.gameObject.activeInHierarchy)
+        {
+            character = Toadstool;
         }
 
         SetCharacterInfoText();

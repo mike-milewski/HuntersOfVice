@@ -4,7 +4,7 @@ using UnityEngine;
 public class ShopKeeper : MonoBehaviour
 {
     [SerializeField]
-    private Character character, Knight, ShadowPriest;
+    private Character character, Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private Animator animator;
@@ -62,9 +62,13 @@ public class ShopKeeper : MonoBehaviour
         {
             character = Knight;
         }
-        else if(ShadowPriest.gameObject.activeInHierarchy)
+        if(ShadowPriest.gameObject.activeInHierarchy)
         {
             character = ShadowPriest;
+        }
+        if (Toadstool.gameObject.activeInHierarchy)
+        {
+            character = Toadstool;
         }
     }
 

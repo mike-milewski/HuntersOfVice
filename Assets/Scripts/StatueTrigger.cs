@@ -7,16 +7,52 @@ public class StatueTrigger : MonoBehaviour
     private StatueObstacle[] statueObstacle;
 
     [SerializeField]
+    private SpikeTrap[] spikeTraps;
+
+    [SerializeField]
     private GameObject[] StatueTriggersColliders;
+
+    [SerializeField]
+    private bool TurnOffAllTrapObjects;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<PlayerController>())
         {
-            StatueTriggersColliders[0].SetActive(true);
-            StatueTriggersColliders[1].SetActive(false);
+            if(TurnOffAllTrapObjects)
+            {
+                TurnOffAllTraps();
+            }
+            else
+            {
+                StatueTriggersColliders[0].SetActive(true);
+                StatueTriggersColliders[1].SetActive(false);
 
-            CheckStatues(other.GetComponent<PlayerController>());
+                CheckStatues(other.GetComponent<PlayerController>());
+            }
+        }
+    }
+
+    private void TurnOffAllTraps()
+    {
+        for(int i = 0; i < statueObstacle.Length; i++)
+        {
+            if(statueObstacle[i].enabled)
+            {
+                statueObstacle[i].GetObstacleDamageRadius.enabled = false;
+                statueObstacle[i].enabled = false;
+            }
+        }
+        for(int j = 0; j < spikeTraps.Length; j++)
+        {
+            spikeTraps[j].GetComponent<BoxCollider>().enabled = false;
+        }
+        for(int k = 0; k < StatueTriggersColliders.Length; k++)
+        {
+            if(StatueTriggersColliders[k].activeInHierarchy)
+            {
+                StatueTriggersColliders[k].SetActive(false);
+            }
         }
     }
 

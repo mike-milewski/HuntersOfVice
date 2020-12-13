@@ -264,13 +264,17 @@ public class EnemyAnimations : MonoBehaviour
                 CheckedForPuzzle = true;
             }
         }
-        else if(AI.GetIsABushPuzzleComponent)
+        if(AI.GetIsABushPuzzleComponent)
         {
             if(!CheckedForPuzzle)
             {
                 puzzle.BushPuzzle();
                 CheckedForPuzzle = true;
             }
+        }
+        if (AI.GetIsAsecretCharacterPuzzleComponent)
+        {
+            puzzle.SecretCharacterSpawn();
         }
     }
 
@@ -283,6 +287,10 @@ public class EnemyAnimations : MonoBehaviour
                 puzzle.GatePuzzleType();
                 CheckedForPuzzle = true;
             }
+        }
+        if(AI.GetIsAMagicWallPuzzleComponent)
+        {
+            puzzle.MagicWallPuzzleType();
         }
     }
 

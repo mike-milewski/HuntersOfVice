@@ -57,13 +57,16 @@ public class ShopLevelRewards
 public class Shop : MonoBehaviour
 {
     [SerializeField]
-    private Character Knight, ShadowPriest;
+    private Character Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private ShopLevelRewards[] KnightShopLevelRewards;
 
     [SerializeField]
     private ShopLevelRewards[] ShadowPriestShopLevelRewards;
+
+    [SerializeField]
+    private ShopLevelRewards[] ToadstoolShopLevelRewards;
 
     [SerializeField]
     private Inventory inventory;
@@ -300,7 +303,7 @@ public class Shop : MonoBehaviour
                     break;
             }
         }
-        else if (ShadowPriest.gameObject.activeInHierarchy)
+        if (ShadowPriest.gameObject.activeInHierarchy)
         {
             switch (ShadowPriestShopLevelRewards[ShopLevel].GetShopRewards)
             {
@@ -317,6 +320,24 @@ public class Shop : MonoBehaviour
                     {
                         ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
                         ShadowPriestShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
+                    }
+                    break;
+            }
+        }
+        if (Toadstool.gameObject.activeInHierarchy)
+        {
+            switch (ToadstoolShopLevelRewards[ShopLevel].GetShopRewards)
+            {
+                case (ShopRewards.equipment):
+                    if (ToadstoolShopLevelRewards[ShopLevel].GetEquip.GetEquipmentType == EquipmentType.Weapon)
+                    {
+                        ToadstoolShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        ToadstoolShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(WeaponTransform, false);
+                    }
+                    else
+                    {
+                        ToadstoolShopLevelRewards[ShopLevel].GetEquip.GetComponent<DragUiObject>().enabled = false;
+                        ToadstoolShopLevelRewards[ShopLevel].GetEquip.transform.SetParent(ArmorTransform, false);
                     }
                     break;
             }
@@ -343,7 +364,7 @@ public class Shop : MonoBehaviour
                         break;
                 }
             }
-            else if (ShadowPriest.gameObject.activeInHierarchy)
+            if (ShadowPriest.gameObject.activeInHierarchy)
             {
                 switch (ShadowPriestShopLevelRewards[ShopLevel].GetShopRewards)
                 {
@@ -356,6 +377,22 @@ public class Shop : MonoBehaviour
                         EquipmentImage.gameObject.SetActive(true);
                         DiscountText.gameObject.SetActive(false);
                         EquipmentImage.sprite = ShadowPriestShopLevelRewards[ShopLevel].GetEquip.GetEquipmentSprite;
+                        break;
+                }
+            }
+            if (Toadstool.gameObject.activeInHierarchy)
+            {
+                switch (ToadstoolShopLevelRewards[ShopLevel].GetShopRewards)
+                {
+                    case (ShopRewards.Discount):
+                        DiscountText.gameObject.SetActive(true);
+                        EquipmentImage.gameObject.SetActive(false);
+                        DiscountText.text = "Item discount -" + ToadstoolShopLevelRewards[ShopLevel].GetDiscountAmount + "%";
+                        break;
+                    case (ShopRewards.equipment):
+                        EquipmentImage.gameObject.SetActive(true);
+                        DiscountText.gameObject.SetActive(false);
+                        EquipmentImage.sprite = ToadstoolShopLevelRewards[ShopLevel].GetEquip.GetEquipmentSprite;
                         break;
                 }
             }
@@ -382,7 +419,7 @@ public class Shop : MonoBehaviour
                         break;
                 }
             }
-            else if (ShadowPriest.gameObject.activeInHierarchy)
+            if (ShadowPriest.gameObject.activeInHierarchy)
             {
                 switch (ShadowPriestShopLevelRewards[ShopLevel].GetShopRewards)
                 {
@@ -395,6 +432,22 @@ public class Shop : MonoBehaviour
                         EquipmentImage.gameObject.SetActive(true);
                         DiscountText.gameObject.SetActive(false);
                         EquipmentImage.sprite = ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentSprite;
+                        break;
+                }
+            }
+            if (Toadstool.gameObject.activeInHierarchy)
+            {
+                switch (ToadstoolShopLevelRewards[ShopLevel].GetShopRewards)
+                {
+                    case (ShopRewards.Discount):
+                        DiscountText.gameObject.SetActive(true);
+                        EquipmentImage.gameObject.SetActive(false);
+                        DiscountText.text = "Item discount -" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetDiscountAmount + "%";
+                        break;
+                    case (ShopRewards.equipment):
+                        EquipmentImage.gameObject.SetActive(true);
+                        DiscountText.gameObject.SetActive(false);
+                        EquipmentImage.sprite = ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentSprite;
                         break;
                 }
             }
@@ -662,7 +715,7 @@ public class Shop : MonoBehaviour
                 }
             }
         }
-        else if(ShadowPriest.gameObject.activeInHierarchy)
+        if(ShadowPriest.gameObject.activeInHierarchy)
         {
             if (ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 1)
             {
@@ -794,6 +847,141 @@ public class Shop : MonoBehaviour
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease +
                                                 ShadowPriestShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+            }
+        }
+        if (Toadstool.gameObject.activeInHierarchy)
+        {
+            if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 1)
+            {
+                if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                "Element: " + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+            }
+            if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 2)
+            {
+                if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                "Element: " + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease +
+                                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+            }
+            if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 3)
+            {
+                if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                "Element: " + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+
+            }
+            if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 4)
+            {
+                if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                "Element: " + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+
+            }
+            if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType.Length == 5)
+            {
+                if (ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element != PlayerElement.NONE)
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease + "\n" +
+                                                "Element: " + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.Element +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
+                }
+                else
+                {
+                    EquipmentRewardInfoText.text = "<size=12>" + "<u>" + ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetEquipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[0].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[1].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[2].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[3].GetStatIncrease + "\n" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatusTypes + " +" +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.GetStatusType[4].GetStatIncrease +
+                                                ToadstoolShopLevelRewards[ShopLevel + ShopPreviewLevel].GetEquip.EquipmentAbilityText();
                 }
             }
         }

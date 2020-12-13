@@ -190,7 +190,7 @@ public class Equipment : MonoBehaviour
         {
             case (EquipmentType.Weapon):
                 basicAttack.GetEquipment[0] = null;
-                if(character.GetCharacterData.name == "Knight")
+                if(character.GetCharacterData.name == "Knight" || character.GetCharacterData.name == "Toadstool")
                 {
                     basicAttack.GetPlayerElement = PlayerElement.Physical;
                 }

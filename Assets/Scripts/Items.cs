@@ -11,7 +11,7 @@ public class Items : MonoBehaviour
     private StatusEffect statusEffect;
 
     [SerializeField]
-    private Character Player, Knight, ShadowPriest;
+    private Character Player, Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private Settings settings;
@@ -150,12 +150,16 @@ public class Items : MonoBehaviour
         {
             Player = ShadowPriest;
         }
+        if(Toadstool.gameObject.activeInHierarchy)
+        {
+            Player = Toadstool;
+        }
     }
 
     private void Update()
     {
-        if(Knight != null || ShadowPriest != null)
-        CheckCoolDownStatus();
+        if(Knight != null || ShadowPriest != null || Toadstool != null)
+            CheckCoolDownStatus();
     }
 
     private void CheckCoolDownStatus()
@@ -202,14 +206,7 @@ public class Items : MonoBehaviour
     {
         if(settings.UseParticleEffects)
         {
-            if(Knight.gameObject.activeInHierarchy)
-            {
-                HpParticleKnight();
-            }
-            else if(ShadowPriest.gameObject.activeInHierarchy)
-            {
-                HpParticleShadowPriest();
-            }
+            HpParticle();
         }
 
         SoundManager.Instance.ItemBottle();
@@ -222,14 +219,7 @@ public class Items : MonoBehaviour
     {
         if(settings.UseParticleEffects)
         {
-            if(Knight.gameObject.activeInHierarchy)
-            {
-                MpParticleKnight();
-            }
-            else if(ShadowPriest.gameObject.activeInHierarchy)
-            {
-                MpParticleShadowPriest();
-            }
+            MpParticle();
         }
 
         SoundManager.Instance.ItemBottle();
@@ -240,7 +230,7 @@ public class Items : MonoBehaviour
 
     private void HpHealing()
     {
-        if(Knight.CurrentHealth > 0 || ShadowPriest.CurrentHealth > 0)
+        if(Knight.CurrentHealth > 0 || ShadowPriest.CurrentHealth > 0 || Toadstool.CurrentHealth > 0)
         {
             SoundManager.Instance.ItemHeal();
 
@@ -248,9 +238,13 @@ public class Items : MonoBehaviour
             {
                 Knight.GetComponent<Health>().IncreaseHealth(HpHeal(HealAmount));
             }
-            else if(ShadowPriest.gameObject.activeInHierarchy)
+            if(ShadowPriest.gameObject.activeInHierarchy)
             {
                 ShadowPriest.GetComponent<Health>().IncreaseHealth(HpHeal(HealAmount));
+            }
+            if (Toadstool.gameObject.activeInHierarchy)
+            {
+                Toadstool.GetComponent<Health>().IncreaseHealth(HpHeal(HealAmount));
             }
 
             HealText();
@@ -259,7 +253,7 @@ public class Items : MonoBehaviour
 
     private void MpHealing()
     {
-        if(Knight.CurrentHealth > 0 || ShadowPriest.CurrentHealth > 0)
+        if(Knight.CurrentHealth > 0 || ShadowPriest.CurrentHealth > 0 || Toadstool.CurrentHealth > 0)
         {
             SoundManager.Instance.ItemHeal();
 
@@ -267,9 +261,13 @@ public class Items : MonoBehaviour
             {
                 Knight.GetComponent<Mana>().IncreaseMana(MpHeal(HealAmount));
             }
-            else if(ShadowPriest.gameObject.activeInHierarchy)
+            if(ShadowPriest.gameObject.activeInHierarchy)
             {
                 ShadowPriest.GetComponent<Mana>().IncreaseMana(MpHeal(HealAmount));
+            }
+            if (Toadstool.gameObject.activeInHierarchy)
+            {
+                Toadstool.GetComponent<Mana>().IncreaseMana(MpHeal(HealAmount));
             }
 
             HealText();
@@ -346,48 +344,26 @@ public class Items : MonoBehaviour
         }
     }
 
-    private void HpParticleKnight()
+    private void HpParticle()
     {
         var HpParticles = ObjectPooler.Instance.GetHpItemParticle();
 
         HpParticles.SetActive(true);
 
-        HpParticles.transform.position = new Vector3(Knight.transform.position.x, Knight.transform.position.y + 2f, Knight.transform.position.z);
+        HpParticles.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y + 2f, Player.transform.position.z);
 
-        HpParticles.transform.SetParent(Knight.transform);
+        HpParticles.transform.SetParent(Player.transform);
     }
 
-    private void HpParticleShadowPriest()
-    {
-        var HpParticles = ObjectPooler.Instance.GetHpItemParticle();
-
-        HpParticles.SetActive(true);
-
-        HpParticles.transform.position = new Vector3(ShadowPriest.transform.position.x, ShadowPriest.transform.position.y + 2f, ShadowPriest.transform.position.z);
-
-        HpParticles.transform.SetParent(ShadowPriest.transform);
-    }
-
-    private void MpParticleKnight()
+    private void MpParticle()
     {
         var MpParticles = ObjectPooler.Instance.GetMpItemParticle();
 
         MpParticles.SetActive(true);
 
-        MpParticles.transform.position = new Vector3(Knight.transform.position.x, Knight.transform.position.y + 2f, Knight.transform.position.z);
+        MpParticles.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y + 2f, Player.transform.position.z);
 
-        MpParticles.transform.SetParent(Knight.transform);
-    }
-
-    private void MpParticleShadowPriest()
-    {
-        var HpParticles = ObjectPooler.Instance.GetMpItemParticle();
-
-        HpParticles.SetActive(true);
-
-        HpParticles.transform.position = new Vector3(ShadowPriest.transform.position.x, ShadowPriest.transform.position.y + 2f, ShadowPriest.transform.position.z);
-
-        HpParticles.transform.SetParent(ShadowPriest.transform);
+        MpParticles.transform.SetParent(Player.transform);
     }
 
     public void ShowCoolDownText()

@@ -8,9 +8,13 @@ public class ResetStats : MonoBehaviour
         {
             GameManager.Instance.GetKnight.GetComponent<Experience>().SetStatPointsText();
         }
-        else if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
+        if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
         {
             GameManager.Instance.GetShadowPriest.GetComponent<Experience>().SetStatPointsText();
+        }
+        if (GameManager.Instance.GetToadstool.activeInHierarchy)
+        {
+            GameManager.Instance.GetToadstool.GetComponent<Experience>().SetStatPointsText();
         }
     }
 }

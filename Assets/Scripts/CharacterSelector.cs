@@ -12,7 +12,7 @@ public class CharacterSelector : MonoBehaviour
     private Animator CharacterInfoPanel, StartButton;
 
     [SerializeField]
-    private GameObject Knight, ShadowPriest, ShadowPriestParticleEffect;
+    private GameObject Knight, ShadowPriest, Toadstool, ShadowPriestParticleEffect;
 
     [SerializeField]
     private GameObject[] SkillExamples;
@@ -22,6 +22,12 @@ public class CharacterSelector : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI CharacterInformationText, CharacterNameText;
+
+    [SerializeField]
+    private Settings settings;
+
+    [SerializeField]
+    private CursorController cursorController;
 
     [SerializeField][TextArea]
     private string CharacterInformaion;
@@ -80,12 +86,23 @@ public class CharacterSelector : MonoBehaviour
         ShadowPriest.GetComponent<BoxCollider>().enabled = true;
     }
 
+    public void EnableToadstoolCollider()
+    {
+        Toadstool.GetComponent<BoxCollider>().enabled = true;
+    }
+
+    public void DisableToadstoolCollider()
+    {
+        Toadstool.GetComponent<BoxCollider>().enabled = false;
+    }
+
     public void EndCharacterSelectionAnimation()
     {
         gameObject.GetComponent<Animator>().SetBool("CharacterSelection", false);
 
         EnableKnightCollider();
         EnableShadowPriestCollider();
+        EnableToadstoolCollider();
     }
 
     public void PlayPanelAndButtonAnimations()
@@ -101,8 +118,23 @@ public class CharacterSelector : MonoBehaviour
 
     public void ShowCharacterInformation()
     {
-        CharacterInformationText.text = CharacterInformaion;
+        if(selectedCharacter.GetToadstoolSelected)
+        {
+            ToadstoolCharacterDescription();
+        }
+        else
+        {
+            CharacterInformationText.text = CharacterInformaion;
+        }
         CharacterNameText.text = CharacterClass;
+    }
+
+    private string ToadstoolCharacterDescription()
+    {
+        CharacterInformationText.text = "With the help from the " + settings.CharacterSavior + 
+                                        ", the Toadstool has joined forces with the Hunters in the fight against evil. \n\n" + CharacterInformaion;
+
+        return CharacterInformaion;
     }
 
     public void ShowCharacterSkills()
@@ -119,9 +151,13 @@ public class CharacterSelector : MonoBehaviour
         {
             SoundManager.Instance.SwordSwing();
         }
-        else if(selectedCharacter.GetShadowPriestSelected)
+        if(selectedCharacter.GetShadowPriestSelected)
         {
             SoundManager.Instance.ContractCast();
+        }
+        if(selectedCharacter.GetToadstoolSelected)
+        {
+            SoundManager.Instance.ToadstoolJump();
         }
     }
 

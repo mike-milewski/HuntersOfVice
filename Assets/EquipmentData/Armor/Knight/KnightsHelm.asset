@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Knight's Helm
   Element: 0
-  StatIncrease: 7
+  StatIncrease: 4
   BuyValue: 400

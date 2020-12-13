@@ -130,6 +130,20 @@ public class StatueObstacle : MonoBehaviour
         CheckAOEStatus();
     }
 
+    public void CheckPlayerHealth()
+    {
+        if(PlayerTarget != null)
+        {
+            if (PlayerTarget.CurrentHealth <= 0)
+            {
+                Attacking = false;
+                this.enabled = false;
+                obstacleDamageRadius.enabled = false;
+                this.GetComponent<ReturnObjectToOriginalRotation>().enabled = true;
+            }
+        }
+    }
+
     private void EnableAudio()
     {
         if (!gameObject.GetComponent<AudioSource>().enabled)
@@ -185,6 +199,8 @@ public class StatueObstacle : MonoBehaviour
         StatueLaser.transform.SetParent(LaserParticleOriginPoint, false);
 
         StatueLaser.transform.position = new Vector3(LaserParticleOriginPoint.position.x, LaserParticleOriginPoint.position.y, LaserParticleOriginPoint.position.z);
+
+        CheckPlayerHealth();
     }
 
     private void CreateLaserExplosionParticleEffect()

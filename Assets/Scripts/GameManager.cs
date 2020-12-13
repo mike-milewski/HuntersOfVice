@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     private Animator animator, SkillPanelAnimator, CharacterPanelAnimator, EquipmentPanelAnimator, InventoryPanelAnimator, SettingsPanelAnimator, MonsterBookAnimator;
 
     [SerializeField]
-    private GameObject Knight, ShadowPriest;
+    private GameObject Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private GameObject EnemyObject = null;
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     private GameObject CharacterPanel, SkillsPanel, EquipmentPanel, InventoryPanel, SettingsPanel, ShopUpgradePanel, ItemDescriptionPanel;
 
     [SerializeField]
-    private GameObject[] KnightSkills, ShadowPriestSkills;
+    private GameObject[] KnightSkills, ShadowPriestSkills, ToadstoolSkills;
 
     [SerializeField]
     private float RespawnTime;
@@ -284,6 +284,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public GameObject GetToadstool
+    {
+        get
+        {
+            return Toadstool;
+        }
+        set
+        {
+            Toadstool = value;
+        }
+    }
+
     public GameObject GetSkillPanel
     {
         get
@@ -448,14 +460,22 @@ public class GameManager : MonoBehaviour
         {
             Knight.SetActive(true);
             ShadowPriest.SetActive(false);
+            Toadstool.SetActive(false);
         }
-        else if(selectedCharacter.GetShadowPriestSelected)
+        if(selectedCharacter.GetShadowPriestSelected)
         {
             ShadowPriest.SetActive(true);
             Knight.SetActive(false);
+            Toadstool.SetActive(false);
+        }
+        if(selectedCharacter.GetToadstoolSelected)
+        {
+            Toadstool.SetActive(true);
+            ShadowPriest.SetActive(false);
+            Knight.SetActive(false);
         }
         */
-        if(Knight.activeInHierarchy)
+        if (Knight.activeInHierarchy)
         {
             character = Knight.GetComponent<Character>();
 
@@ -465,7 +485,7 @@ public class GameManager : MonoBehaviour
                 lowHpAnimation.GetCharacter = Knight.GetComponent<Character>();
             }
         }
-        else if(ShadowPriest.activeInHierarchy)
+        if(ShadowPriest.activeInHierarchy)
         {
             character = ShadowPriest.GetComponent<Character>();
 
@@ -473,6 +493,16 @@ public class GameManager : MonoBehaviour
             {
                 ShadowPriestSkills[i].SetActive(true);
                 lowHpAnimation.GetCharacter = ShadowPriest.GetComponent<Character>();
+            }
+        }
+        if (Toadstool.activeInHierarchy)
+        {
+            character = Toadstool.GetComponent<Character>();
+
+            for (int i = 0; i < ToadstoolSkills.Length; i++)
+            {
+                ToadstoolSkills[i].SetActive(true);
+                lowHpAnimation.GetCharacter = Toadstool.GetComponent<Character>();
             }
         }
     }
@@ -510,9 +540,13 @@ public class GameManager : MonoBehaviour
         {
             Knight.GetComponent<Experience>().UpdateCharacterLevel();
         }
-        else if (ShadowPriest.activeInHierarchy)
+        if (ShadowPriest.activeInHierarchy)
         {
             ShadowPriest.GetComponent<Experience>().UpdateCharacterLevel();
+        }
+        if(Toadstool.activeInHierarchy)
+        {
+            Toadstool.GetComponent<Experience>().UpdateCharacterLevel();
         }
     }
 
@@ -943,7 +977,7 @@ public class GameManager : MonoBehaviour
             Knight.GetComponent<Character>().GetRigidbody.useGravity = false;
             Knight.GetComponent<Character>().GetRigidbody.isKinematic = true;
         }
-        else if(ShadowPriest.activeInHierarchy)
+        if(ShadowPriest.activeInHierarchy)
         {
             ShadowPriest.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
             ShadowPriest.GetComponent<BasicAttack>().enabled = false;
@@ -956,6 +990,20 @@ public class GameManager : MonoBehaviour
 
             ShadowPriest.GetComponent<Character>().GetRigidbody.useGravity = false;
             ShadowPriest.GetComponent<Character>().GetRigidbody.isKinematic = true;
+        }
+        if (Toadstool.activeInHierarchy)
+        {
+            Toadstool.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
+            Toadstool.GetComponent<BasicAttack>().enabled = false;
+
+            Toadstool.GetComponent<CapsuleCollider>().enabled = false;
+
+            Toadstool.GetComponent<PlayerController>().enabled = false;
+
+            Toadstool.GetComponent<PlayerAnimations>().DeathAnimation();
+
+            Toadstool.GetComponent<Character>().GetRigidbody.useGravity = false;
+            Toadstool.GetComponent<Character>().GetRigidbody.isKinematic = true;
         }
 
         StartCoroutine(Fade());
@@ -1018,7 +1066,7 @@ public class GameManager : MonoBehaviour
             Knight.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
             Knight.GetComponent<PlayerAnimations>().GetAnimator.ResetTrigger("Damaged");
         }
-        else if(ShadowPriest.activeInHierarchy)
+        if(ShadowPriest.activeInHierarchy)
         {
             ShadowPriest.transform.position = SpawnPoint.position;
 
@@ -1047,8 +1095,37 @@ public class GameManager : MonoBehaviour
 
             SkillsManager.Instance.GetContractStack = 0;
         }
+        if (Toadstool.activeInHierarchy)
+        {
+            Toadstool.transform.position = SpawnPoint.position;
 
-        if(changeSpawnPointLocation != null)
+            Toadstool.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            Toadstool.GetComponent<Health>().IncreaseHealth(Toadstool.GetComponent<Character>().MaxHealth);
+            Toadstool.GetComponent<Mana>().IncreaseMana(Toadstool.GetComponent<Character>().MaxMana);
+
+            Toadstool.GetComponent<BasicAttack>().enabled = true;
+
+            if (Toadstool.GetComponent<BasicAttack>().GetTarget != null)
+            {
+                Toadstool.GetComponent<BasicAttack>().GetTarget.TurnOffHealthBar();
+                Toadstool.GetComponent<BasicAttack>().GetTarget = null;
+                EnemyObject = null;
+                LastEnemyObject = null;
+            }
+
+            Toadstool.GetComponent<CapsuleCollider>().enabled = true;
+
+            Toadstool.GetComponent<Character>().GetRigidbody.useGravity = true;
+            Toadstool.GetComponent<Character>().GetRigidbody.isKinematic = false;
+
+            Toadstool.GetComponent<PlayerAnimations>().PlayResurrectAnimation();
+            Toadstool.GetComponent<PlayerAnimations>().GetAnimator.ResetTrigger("Damaged");
+
+            SkillsManager.Instance.GetContractStack = 0;
+        }
+
+        if (changeSpawnPointLocation != null)
         {
             changeSpawnPointLocation.EnableWallTrigger();
             changeSpawnPointLocation.DisableDamageRadii();

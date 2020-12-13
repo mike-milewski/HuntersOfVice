@@ -13,6 +13,9 @@ public class TreasureChest : MonoBehaviour
     private PlayerController ShadowPriest;
 
     [SerializeField]
+    private PlayerController Toadstool;
+
+    [SerializeField]
     private Equipment[] equipments;
 
     [SerializeField]
@@ -74,7 +77,7 @@ public class TreasureChest : MonoBehaviour
 
             equipments[0].transform.position = new Vector3(equipments[0].transform.position.x, equipments[0].transform.position.y, 0);
         }
-        else if(ShadowPriest.gameObject.activeInHierarchy)
+        if(ShadowPriest.gameObject.activeInHierarchy)
         {
             switch (equipments[1].GetEquipmentType)
             {
@@ -90,6 +93,22 @@ public class TreasureChest : MonoBehaviour
 
             equipments[1].transform.position = new Vector3(equipments[1].transform.position.x, equipments[1].transform.position.y, 0);
         }
+        if (Toadstool.gameObject.activeInHierarchy)
+        {
+            switch (equipments[2].GetEquipmentType)
+            {
+                case (EquipmentType.Weapon):
+                    equipments[2].transform.SetParent(WeaponTransform, true);
+                    break;
+                default:
+                    equipments[2].transform.SetParent(ArmorTransform, true);
+                    break;
+            }
+            equipments[2].transform.localScale = new Vector3(1, 1, 1);
+            equipments[2].transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            equipments[2].transform.position = new Vector3(equipments[2].transform.position.x, equipments[2].transform.position.y, 0);
+        }
 
         ItemMessageComponents();
 
@@ -99,9 +118,13 @@ public class TreasureChest : MonoBehaviour
             {
                 equipments[0].gameObject.SetActive(true);
             }
-            else if(ShadowPriest.gameObject.activeInHierarchy)
+            if(ShadowPriest.gameObject.activeInHierarchy)
             {
                 equipments[1].gameObject.SetActive(true);
+            }
+            if (Toadstool.gameObject.activeInHierarchy)
+            {
+                equipments[2].gameObject.SetActive(true);
             }
         }
     }
@@ -127,6 +150,12 @@ public class TreasureChest : MonoBehaviour
             ItemMessage.GetComponentInChildren<TextMeshProUGUI>().text = equipments[1].GetEquipmentData.EquipmentName;
 
             ItemMessage.GetComponentInChildren<RawImage>().texture = equipments[1].GetEquipmentSprite.texture;
+        }
+        if (Toadstool.gameObject.activeInHierarchy)
+        {
+            ItemMessage.GetComponentInChildren<TextMeshProUGUI>().text = equipments[2].GetEquipmentData.EquipmentName;
+
+            ItemMessage.GetComponentInChildren<RawImage>().texture = equipments[2].GetEquipmentSprite.texture;
         }
     }
 

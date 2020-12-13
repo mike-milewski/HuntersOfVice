@@ -4,7 +4,7 @@ using UnityEngine;
 public class CamFollow : MonoBehaviour
 {
     [SerializeField]
-    private Transform Knight, ShadowPriest;
+    private Transform Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private Vector3 Offset;
@@ -31,11 +31,17 @@ public class CamFollow : MonoBehaviour
 
             transform.LookAt(Knight);
         }
-        else if(CheckShadowPriestActive())
+        if(CheckShadowPriestActive())
         {
             ShadowPriestPos();
 
             transform.LookAt(ShadowPriest);
+        }
+        if (CheckToadstoolActive())
+        {
+            ToadstoolPos();
+
+            transform.LookAt(Toadstool);
         }
     }
 
@@ -49,6 +55,11 @@ public class CamFollow : MonoBehaviour
         return ShadowPriest.gameObject.activeInHierarchy;
     }
 
+    private bool CheckToadstoolActive()
+    {
+        return Toadstool.gameObject.activeInHierarchy;
+    }
+
     private void KnightPos()
     {
         NewPosition = Knight.position + Offset;
@@ -59,6 +70,13 @@ public class CamFollow : MonoBehaviour
     private void ShadowPriestPos()
     {
         NewPosition = ShadowPriest.position + Offset;
+
+        transform.position = Vector3.Slerp(transform.position, NewPosition, SmoothFactor);
+    }
+
+    private void ToadstoolPos()
+    {
+        NewPosition = Toadstool.position + Offset;
 
         transform.position = Vector3.Slerp(transform.position, NewPosition, SmoothFactor);
     }

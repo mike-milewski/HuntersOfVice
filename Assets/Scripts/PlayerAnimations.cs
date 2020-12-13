@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerAnimations : MonoBehaviour
 {
     [SerializeField]
-    private Character Knight, ShadowPriest;
+    private Character Knight, ShadowPriest, Toadstool;
 
     [SerializeField]
     private Animator animator;
@@ -348,7 +348,6 @@ public class PlayerAnimations : MonoBehaviour
 
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].BraveLightAnimation();
 
-        /*
         SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 20);
 
         if (gameObject.GetComponent<BasicAttack>().DistanceToTarget() >= gameObject.GetComponent<BasicAttack>().GetAttackRange)
@@ -358,7 +357,6 @@ public class PlayerAnimations : MonoBehaviour
                 gameObject.GetComponent<BasicAttack>().RemoveTarget();
             }
         }
-        */
     }
 
     public void BraveLightStatus()
@@ -449,5 +447,15 @@ public class PlayerAnimations : MonoBehaviour
     public void PlayStaffHit()
     {
         SoundManager.Instance.StaffHit();
+    }
+
+    public void ToadstoolHopSE()
+    {
+        SoundManager.Instance.ToadstoolWalk();
+    }
+
+    public void ToadstoolHitSE()
+    {
+        SoundManager.Instance.ToadstoolHit();
     }
 }
