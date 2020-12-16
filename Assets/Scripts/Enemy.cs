@@ -337,8 +337,20 @@ public class Enemy : MonoBehaviour
     {
         if(CoinAmount > 0 && GameManager.Instance.GetCharacter.CurrentHealth > 0)
         {
-            inventory.AddCoins(CoinAmount);
-            inventory.ReturnCoinText().text = CoinAmount + "<size=20>" + " Coins";
+            if(EXP.GetGetsExtraExp)
+            {
+                float ExtraCoins = CoinAmount * 0.25f;
+
+                Mathf.Round(ExtraCoins);
+
+                inventory.AddCoins(CoinAmount + (int)ExtraCoins);
+                inventory.ReturnCoinText().text = Mathf.Round(CoinAmount + ExtraCoins) + "<size=20>" + " Coins";
+            }
+            else
+            {
+                inventory.AddCoins(CoinAmount);
+                inventory.ReturnCoinText().text = CoinAmount + "<size=20>" + " Coins";
+            }
         }
     }
 
@@ -349,7 +361,18 @@ public class Enemy : MonoBehaviour
             CheckExperienceHolder();
 
             EXP.GainEXP(ExperiencePoints);
-            EXP.GetShowExperienceText().text = ExperiencePoints + "<size=20>" + " EXP";
+            if(EXP.GetGetsExtraExp)
+            {
+                float ExtraExp = ExperiencePoints * 0.25f;
+
+                Mathf.Round(ExtraExp);
+
+                EXP.GetShowExperienceText().text = Mathf.Round(ExperiencePoints + ExtraExp) + "<size=20>" + " EXP";
+            }
+            else
+            {
+                EXP.GetShowExperienceText().text = ExperiencePoints + "<size=20>" + " EXP";
+            }
         }
     }
 

@@ -2214,11 +2214,17 @@ public class Skills : StatusEffects
     {
         bool Resistance = false;
 
-        for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Resistances.Length; i++)
+        if(GetCharacter.GetComponent<BasicAttack>().GetIgnoreElements)
         {
-            if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i])
+        }
+        else
+        {
+            for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Resistances.Length; i++)
             {
-                Resistance = true;
+                if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i])
+                {
+                    Resistance = true;
+                }
             }
         }
         return Resistance;
@@ -2228,11 +2234,17 @@ public class Skills : StatusEffects
     {
         bool Immunity = false;
 
-        for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Immunities.Length; i++)
+        if (GetCharacter.GetComponent<BasicAttack>().GetIgnoreElements)
         {
-            if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i])
+        }
+        else
+        {
+            for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Immunities.Length; i++)
             {
-                Immunity = true;
+                if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i])
+                {
+                    Immunity = true;
+                }
             }
         }
         return Immunity;
@@ -2242,11 +2254,17 @@ public class Skills : StatusEffects
     {
         bool Absorption = false;
 
-        for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Absorbtions.Length; i++)
+        if (GetCharacter.GetComponent<BasicAttack>().GetIgnoreElements)
         {
-            if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
+        }
+        else
+        {
+            for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Absorbtions.Length; i++)
             {
-                Absorption = true;
+                if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
+                {
+                    Absorption = true;
+                }
             }
         }
         return Absorption;

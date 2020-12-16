@@ -8,7 +8,8 @@ public enum EquipmentType { Weapon, Armor }
 public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 
 public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse, StrengthIntelligenceReverse, Alleviate, 
-                      HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease, ExtraContract, BraveLight, Contracts, MiasmaPulse, NetherStar, IgnoreDefense }
+                      HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease, ExtraContract, BraveLight, Contracts, MiasmaPulse, NetherStar, IgnoreDefense,
+                      MyceliumBash }
 
 [System.Serializable]
 public class StatusType
@@ -630,6 +631,9 @@ public class Equipment : MonoBehaviour
             case (Ability.IgnoreDefense):
                 skillText = "\n\n" + "<#EFDFB8>" + "Ignores enemy's defense." + "</color> ";
                 break;
+            case (Ability.MyceliumBash):
+                skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash - 2 hits & 3 MP cost." + "</color> ";
+                break;
         }
         return skillText;
     }
@@ -696,6 +700,9 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.IgnoreDefense):
                 skillText = "\n\n" + "<#EFDFB8>" + "Ignores enemies defense." + "</color> ";
+                break;
+            case (Ability.MyceliumBash):
+                skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash deals damage twice but now costs 3 MP." + "</color> ";
                 break;
         }
         return skillText;
@@ -785,6 +792,10 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.IgnoreDefense):
                 basicAttack.GetIgnoreDefense = true;
+                break;
+            case (Ability.MyceliumBash):
+                character.GetComponent<PlayerAnimations>().GetAdditionalHit = true;
+                skill.GetManaCost = 3;
                 break;
         }
     }
@@ -876,6 +887,10 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.IgnoreDefense):
                 basicAttack.GetIgnoreDefense = false;
+                break;
+            case (Ability.MyceliumBash):
+                character.GetComponent<PlayerAnimations>().GetAdditionalHit = false;
+                skill.GetManaCost = 0;
                 break;
         }
     }

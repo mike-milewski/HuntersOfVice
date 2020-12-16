@@ -44,6 +44,9 @@ public class Experience : MonoBehaviour
     private int MaxStatPoints, CumulativeStatPoints, ToNextLevelIndex;
 
     [SerializeField]
+    private bool GetsExtraExp;
+
+    [SerializeField]
     private float FillValue;
 
     public Button GetRespecButton
@@ -55,6 +58,18 @@ public class Experience : MonoBehaviour
         set
         {
             RespecButton = value;
+        }
+    }
+
+    public bool GetGetsExtraExp
+    {
+        get
+        {
+            return GetsExtraExp;
+        }
+        set
+        {
+            GetsExtraExp = value;
         }
     }
 
@@ -197,7 +212,18 @@ public class Experience : MonoBehaviour
 
         if(character.Level < MaxLevel)
         {
-            ExperiencePoints += Value;
+            if(GetsExtraExp)
+            {
+                float ExtraExp = Value * 0.25f;
+
+                Mathf.Round(ExtraExp);
+
+                ExperiencePoints += Value + (int)ExtraExp;
+            }
+            else
+            {
+                ExperiencePoints += Value;
+            }
 
             //Creates a level up particle effect when the player levels up. 
             //We put this in a separate conditional so that multiple particles don't spawn.

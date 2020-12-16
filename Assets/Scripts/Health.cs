@@ -181,7 +181,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    private IEnumerator DealDamage()
+    private IEnumerator DealTheDamage()
     {
         float elapsedTime = 0;
         float time = 2f;
@@ -229,7 +229,7 @@ public class Health : MonoBehaviour
 
     public void ModifyHealth(int Value)
     {
-        if(routine != null)
+        if (routine != null)
         {
             StopCoroutine(routine);
         }
@@ -238,12 +238,12 @@ public class Health : MonoBehaviour
 
         character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
 
-        if(character.GetComponent<Enemy>())
+        if (character.GetComponent<Enemy>())
         {
             character.GetComponent<Enemy>().GetLocalHealthInfo();
         }
 
-        if(HealthText != null)
+        if (HealthText != null)
         {
             HealthText.text = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth).ToString();
         }
@@ -257,23 +257,23 @@ public class Health : MonoBehaviour
 
         HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
 
-        if(character.CurrentHealth <= 0)
+        if (character.CurrentHealth <= 0)
         {
-            if(character.GetComponent<PlayerController>())
+            if (character.GetComponent<PlayerController>())
             {
                 GameManager.Instance.Dead();
             }
             else
             {
-                if(character.GetComponent<EnemyAI>())
+                if (character.GetComponent<EnemyAI>())
                 {
                     character.GetComponent<EnemyAI>().Dead();
                 }
-                if(character.GetComponent<Puck>())
+                if (character.GetComponent<Puck>())
                 {
                     character.GetComponent<Puck>().Dead();
                 }
-                if(character.GetComponent<RuneGolem>())
+                if (character.GetComponent<RuneGolem>())
                 {
                     character.GetComponent<RuneGolem>().Dead();
                 }
@@ -281,7 +281,7 @@ public class Health : MonoBehaviour
         }
         SleepHit = true;
 
-        routine = StartCoroutine(DealDamage());
+        routine = StartCoroutine(DealTheDamage());
 
         if (characterMenu != null)
         {

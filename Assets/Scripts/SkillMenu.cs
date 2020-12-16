@@ -7,7 +7,8 @@ using System.Collections;
 public enum SkillType { Active, Passive };
 
 public enum PassiveBonus { HP, MP, Strength, Defense, Intelligence, Critical, ItemHP, ItemMana, Heal, WhirlwindSlash, StatPointsBonus, Illumination, ManaSiphon,
-                           EvilsEndBonus, DiabolicLightningBonus, ShatterBonus, DiabolicTour, DualDeal, MightyValor };
+                           EvilsEndBonus, DiabolicLightningBonus, ShatterBonus, DiabolicTour, DualDeal, MightyValor, Burgeon, BreakthroughElements, QuickSpores, 
+                           StatusGift, Regeneration };
 
 public class SkillMenu : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class SkillMenu : MonoBehaviour
 
     [SerializeField]
     private Skills IlluminationSkill, HealSkill, EvilsEndSkill, DiabolicLightningSkill, ShatterSkill, ContractWithEvilSkill, ContractWithTheVileSkill, 
-                   ContractWithNefariousnessSkill, TenacitySkill, AegisSkill;
+                   ContractWithNefariousnessSkill, TenacitySkill, AegisSkill, ShroomSporeAlpha, ShroomSproreBeta, ShroomSporeGamma;
 
     [SerializeField]
     private Items[] items;
@@ -508,6 +509,21 @@ public class SkillMenu : MonoBehaviour
                 case (PassiveBonus.MightyValor):
                     MightyValorBonusPassiveText();
                     break;
+                case (PassiveBonus.Burgeon):
+                    BurgeonBonusPassiveText();
+                    break;
+                case (PassiveBonus.BreakthroughElements):
+                    BreakThroughElementsBonusPassiveText();
+                    break;
+                case (PassiveBonus.QuickSpores):
+                    QuickSporesBonusPassiveText();
+                    break;
+                case (PassiveBonus.StatusGift):
+                    StatusGiftBonusPassiveText();
+                    break;
+                case (PassiveBonus.Regeneration):
+                    RegenerationBonusPassiveText();
+                    break;
             }
         }
         #endregion
@@ -651,6 +667,41 @@ public class SkillMenu : MonoBehaviour
         SkillInfoText.text = "Doubles the duration of Tenacity, Illumination, and Aegis.";
     }
 
+    private void BurgeonBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Experience and coins gained from enemies is increased by 25%.";
+    }
+
+    private void BreakThroughElementsBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Ignores enemies' elemental resistances, immunities, and absorptions.";
+    }
+
+    private void QuickSporesBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Removes the casting cost of Shroom Spore: Alpha, Shroom Spore: Beta, and Shroom Spore: Gamma.";
+    }
+
+    private void StatusGiftBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "Enemies have a 25% chance of being infliced with the Poison, Slowed, or Stun status effect when attacking.";
+    }
+
+    private void RegenerationBonusPassiveText()
+    {
+        SkillNameText.text = PassiveSkillName;
+
+        SkillInfoText.text = "If your HP would be reduced to 0, instead you are restored to full HP. <#EFDFB8>This ability can only be activated 3 times.</color>";
+    }
+
     private void GetPassiveBonus()
     {
         switch(passivebonus)
@@ -708,6 +759,21 @@ public class SkillMenu : MonoBehaviour
                 break;
             case (PassiveBonus.MightyValor):
                 MightyValorBonus();
+                break;
+            case (PassiveBonus.Burgeon):
+                BurgeonBonus();
+                break;
+            case (PassiveBonus.BreakthroughElements):
+                BreakthroughElementsBonus();
+                break;
+            case (PassiveBonus.QuickSpores):
+                QuickSporesBonus();
+                break;
+            case (PassiveBonus.StatusGift):
+                StatusGiftBonus();
+                break;
+            case (PassiveBonus.Regeneration):
+                RegenerationBonus();
                 break;
         }
     }
@@ -887,9 +953,36 @@ public class SkillMenu : MonoBehaviour
         IlluminationSkill.GetStatusDuration *= 2;
     }
 
+    private void BurgeonBonus()
+    {
+        character.GetComponent<Experience>().GetGetsExtraExp = true;
+    }
+
     private void StatPointBonus()
     {
         character.GetComponent<Experience>().GetStatPointIncrease++;
+    }
+
+    private void QuickSporesBonus()
+    {
+        ShroomSporeAlpha.GetCastTime = 0;
+        ShroomSproreBeta.GetCastTime = 0;
+        ShroomSporeGamma.GetCastTime = 0;
+    }
+
+    private void BreakthroughElementsBonus()
+    {
+        character.GetComponent<BasicAttack>().GetIgnoreElements = true;
+    }
+
+    private void StatusGiftBonus()
+    {
+
+    }
+
+    private void RegenerationBonus()
+    {
+        character.GetCanRegenerate = true;
     }
 
     private void ItemBonusHP()

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Damp Shroom
   Element: 4
-  StatIncrease: 40
-  BuyValue: 800
+  StatIncrease: 57
+  BuyValue: 1650

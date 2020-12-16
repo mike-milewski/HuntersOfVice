@@ -9,6 +9,8 @@ public class PlayerAnimations : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
+    private bool AdditionalHit;
+
     public Animator GetAnimator
     {
         get
@@ -18,6 +20,18 @@ public class PlayerAnimations : MonoBehaviour
         set
         {
             animator = value;
+        }
+    }
+
+    public bool GetAdditionalHit
+    {
+        get
+        {
+            return AdditionalHit;
+        }
+        set
+        {
+            AdditionalHit = value;
         }
     }
 
@@ -238,6 +252,12 @@ public class PlayerAnimations : MonoBehaviour
         {
             SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
         }
+    }
+
+    public void AdditionalSkillDamage()
+    {
+        if(AdditionalHit)
+        SkillsManager.Instance.GetSkills[SkillsManager.Instance.GetKeyInput].DamageSkillText(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget);
     }
 
     public void UltimateSkillAnimation()

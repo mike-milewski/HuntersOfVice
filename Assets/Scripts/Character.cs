@@ -12,7 +12,7 @@ public class Character : MonoBehaviour
     private Rigidbody _rigidBody;
     
     [SerializeField]
-    private int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, CriticalHitChance;
+    private int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, CriticalHitChance, MaxRegenerationCount;
 
     private int DefaultHealth, DefaultMana, DefaultStrength, DefaultDefense, DefaultIntelligence, DefaultHpIncrease, DefaultMpIncrease, DefaultCriticalChance,
                 HpIncrease, MpIncrease;
@@ -20,10 +20,15 @@ public class Character : MonoBehaviour
     [SerializeField]
     private float MoveSpeed;
 
+    private int RegenerationCount;
+
     private float DefaultSpeed;
 
     [SerializeField]
     private string CharacterName;
+
+    [SerializeField]
+    private bool CanRegenerate;
 
     private ElementalWeaknesses[] weaknesses;
 
@@ -155,6 +160,30 @@ public class Character : MonoBehaviour
         }
     }
 
+    public int GetRegenerationCount
+    {
+        get
+        {
+            return RegenerationCount;
+        }
+        set
+        {
+            RegenerationCount = value;
+        }
+    }
+
+    public int GetMaxRegenerationCount
+    {
+        get
+        {
+            return MaxRegenerationCount;
+        }
+        set
+        {
+            MaxRegenerationCount = value;
+        }
+    }
+
     public float GetMoveSpeed
     {
         get
@@ -172,6 +201,18 @@ public class Character : MonoBehaviour
         get
         {
             return DefaultSpeed;
+        }
+    }
+
+    public bool GetCanRegenerate
+    {
+        get
+        {
+            return CanRegenerate;
+        }
+        set
+        {
+            CanRegenerate = value;
         }
     }
 
