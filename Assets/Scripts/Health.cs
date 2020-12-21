@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
 
     //This variable is used to check and uncheck a hit while under the effect of the sleep status.
     [SerializeField]
-    private bool SleepHit;
+    private bool SleepHit, UnlockedPassive, HasStatusGiftPassive;
 
     [SerializeField]
     private float FillValue;
@@ -79,6 +79,30 @@ public class Health : MonoBehaviour
         set
         {
             SleepHit = value;
+        }
+    }
+
+    public bool GetUnlockedPassive
+    {
+        get
+        {
+            return UnlockedPassive;
+        }
+        set
+        {
+            UnlockedPassive = value;
+        }
+    }
+
+    public bool GetHasStatusGiftPassive
+    {
+        get
+        {
+            return HasStatusGiftPassive;
+        }
+        set
+        {
+            HasStatusGiftPassive = value;
         }
     }
 
@@ -257,11 +281,28 @@ public class Health : MonoBehaviour
 
         HealthBar.fillAmount = (float)character.CurrentHealth / (float)character.MaxHealth;
 
+        routine = StartCoroutine(DealTheDamage());
+
         if (character.CurrentHealth <= 0)
         {
             if (character.GetComponent<PlayerController>())
             {
-                GameManager.Instance.Dead();
+                if(character.GetCanRegenerate)
+                {
+                    if(character.GetRegenerationCount < character.GetMaxRegenerationCount)
+                    {
+                        IncreaseHealth(character.MaxHealth);
+                        character.GetRegenerationCount++;
+                    }
+                    else
+                    {
+                        GameManager.Instance.Dead();
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.Dead();
+                }
             }
             else
             {
@@ -280,8 +321,6 @@ public class Health : MonoBehaviour
             }
         }
         SleepHit = true;
-
-        routine = StartCoroutine(DealTheDamage());
 
         if (characterMenu != null)
         {
@@ -303,5 +342,42 @@ public class Health : MonoBehaviour
         HealthAnimationObj.GetComponent<LowHpAnimation>().GetAnimator.SetBool("LowHealth", false);
 
         HealthAnimationObj.GetComponent<LowHpAnimation>().GetAnimator.Play("HighHealth", -1, 0f);
+    }
+
+    public int RestoreHealth()
+    {
+        if (character.CurrentHealth >= character.MaxHealth)
+        {
+            return 0;
+        }
+        else
+        {
+            float percent = Mathf.Round(0.02f * (float)character.MaxHealth);
+
+            int GetHP = (int)percent;
+
+            Mathf.Round(GetHP);
+            if (GetHP < 1)
+            {
+                GetHP = 1;
+            }
+
+            IncreaseHealth(GetHP);
+
+            return GetHP;
+        }
+    }
+
+    public void GiveStatusEffect()
+    {
+        if(Random.value * 100 <= 20)
+        {
+            Random.Range(0, 2);
+        }
+    }
+
+    private void StatusGiftEffects()
+    {
+
     }
 }

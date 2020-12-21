@@ -6,7 +6,7 @@ using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
                            IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense, Aegis, Slowed,
-                           ContractWithEvilNoNegative, ContractWithTheVileNoNegative, ContractWithNefariousnessNoNegative, Wound }
+                           ContractWithEvilNoNegative, ContractWithTheVileNoNegative, ContractWithNefariousnessNoNegative, Wound, Quickness }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -44,7 +44,7 @@ public class StatusIcon : MonoBehaviour
 
     private float TempTick, ContractHpTempTick, ContractMpTempTick;
 
-    private float RegenTick;
+    private float RegenTick, QuicknessBonusSpeed, QuicknessBonusAttack;
 
     [SerializeField]
     private bool ObstacleEffect;
@@ -237,11 +237,18 @@ public class StatusIcon : MonoBehaviour
                 GameManager.Instance.GetHealingReduction += 25;
                 break;
             case (EffectStatus.Slowed):
-                SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetMoveSpeed / 2;
+                SkillsManager.Instance.GetCharacter.GetMoveSpeed = (SkillsManager.Instance.GetCharacter.GetMoveSpeed / 2);
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay += 1;
                 break;
+            case (EffectStatus.Quickness):
+                QuicknessBonusSpeed = 2;
+                QuicknessBonusAttack = 0.5f;
+                SkillsManager.Instance.GetCharacter.GetComponent<Animator>().speed = 1.5f;
+                SkillsManager.Instance.GetCharacter.GetComponent<Animator>().SetBool("Running", true);
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay -= QuicknessBonusAttack;
+                SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetMoveSpeed + QuicknessBonusSpeed;
+                break;
         }
-
         StatusPanel.SetActive(false);
     }
 
@@ -429,8 +436,15 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.Haste):
                 ResetSpeedAndCoolDowns();
                 break;
+            case (EffectStatus.Quickness):
+                SkillsManager.Instance.GetCharacter.GetComponent<Animator>().speed = 1;
+                SkillsManager.Instance.GetCharacter.GetComponent<Animator>().SetBool("Running", false);
+                SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay += 1 - QuicknessBonusAttack;
+                SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetMoveSpeed - QuicknessBonusSpeed;
+                QuicknessBonusSpeed = 0;
+                QuicknessBonusAttack = 0;
+                break;
         }   
-
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -483,7 +497,7 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacter.GetComponent<Health>().ModifyHealth(-SkillsManager.Instance.GetCharacter.CurrentHealth);
                 break;
             case (EffectStatus.Slowed):
-                SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetDefaultSpeed;
+                SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetDefaultSpeed + QuicknessBonusSpeed;
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay -= 1;
                 break;
         }

@@ -176,12 +176,13 @@ public class SkillBar : MonoBehaviour
             SkillBarImage.fillAmount = 0;
             CastTime = skills.GetCastTime;
             CastParticle.gameObject.SetActive(false);
-            gameObject.SetActive(false);
 
             if (character.GetComponent<BasicAttack>().GetTarget == null)
             {
                 EndSpell();
             }
+
+            gameObject.SetActive(false);
         }
     }
 

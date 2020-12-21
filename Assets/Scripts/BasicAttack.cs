@@ -388,6 +388,19 @@ public class BasicAttack : MonoBehaviour
         return HealingText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    private TextMeshProUGUI HpHealText()
+    {
+        var HealingText = ObjectPooler.Instance.GetPlayerHealText();
+
+        HealingText.SetActive(true);
+
+        HealingText.transform.SetParent(HealTextTransform, false);
+
+        HealingText.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + character.GetComponent<Health>().RestoreHealth();
+
+        return HealingText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     public void DealDamage()
     {
         TakeDamage(Target);
@@ -412,7 +425,11 @@ public class BasicAttack : MonoBehaviour
         {
             MpHealText();
         }
-        if(enemy != null)
+        if (character.GetComponent<Health>().GetUnlockedPassive)
+        {
+            HpHealText();
+        }
+        if (enemy != null)
         {
             Damagetext.SetActive(true);
 

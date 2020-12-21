@@ -165,11 +165,13 @@ public class PlayerAnimations : MonoBehaviour
 
     public void EndSpellCast()
     {
-        if(ShadowPriest.gameObject.activeInHierarchy)
+        if(ShadowPriest.gameObject.activeInHierarchy || Toadstool.gameObject.activeInHierarchy)
         {
             animator.SetBool("SpellFinish", false);
         }
         animator.SetBool("Damaged", false);
+
+        SkillsManager.Instance.GetActivatedSkill = false;
     }
 
     public void EndSpellCastingAnimation()
@@ -377,6 +379,18 @@ public class PlayerAnimations : MonoBehaviour
                 gameObject.GetComponent<BasicAttack>().RemoveTarget();
             }
         }
+    }
+
+    public void QuicknessAnimation()
+    {
+        animator.SetBool("QuicknessSkill", true);
+    }
+
+    public void EndQuicknessAnimation()
+    {
+        animator.SetBool("QuicknessSkill", false);
+
+        SkillsManager.Instance.GetActivatedSkill = false;
     }
 
     public void BraveLightStatus()

@@ -123,6 +123,8 @@ public class EnemyAI : MonoBehaviour
 
     private Quaternion LookDir;
 
+    private bool IsDoomed;
+
     public int GetStateArrayIndex
     {
         get
@@ -718,6 +720,7 @@ public class EnemyAI : MonoBehaviour
     public void Dead()
     {
         IsDead = true;
+        IsDoomed = false;
 
         if(gameObject.GetComponent<AudioSource>() != null)
         {
@@ -1044,14 +1047,34 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other)
-    {
-        if (states != States.Patrol)
+    {        
+        if(CheckDoomedStatusEffect())
         {
-            if (other.gameObject.GetComponent<PlayerController>())
+            RemoveStatusEffects();
+        }
+        else
+        {
+            if (states != States.Patrol)
             {
-                EndBattle();
+                if (other.gameObject.GetComponent<PlayerController>())
+                {
+                    EndBattle();
+                }
             }
         }
+    }
+
+    private bool CheckDoomedStatusEffect()
+    {
+        foreach (EnemyStatusIcon esi in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if (esi.GetStatusEffect == StatusEffect.Doom)
+            {
+                IsDoomed = true;
+            }
+        }
+
+        return IsDoomed;
     }
 
     public void EndBattle()

@@ -699,7 +699,9 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "If your HP would be reduced to 0, instead you are restored to full HP. <#EFDFB8>This ability can only be activated 3 times.</color>";
+        SkillInfoText.text = "If your HP would be reduced to 0, instead you are restored to full HP. " +
+                             "<#EFDFB8>This ability can only be activated 3 times.</color> \n\n Regenerations left: " + 
+                             Mathf.Abs(character.GetRegenerationCount - character.GetMaxRegenerationCount);
     }
 
     private void GetPassiveBonus()

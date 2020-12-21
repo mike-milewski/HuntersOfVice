@@ -685,8 +685,6 @@ public class Skills : StatusEffects
 
                         FacingEnemy = false;
 
-                        SkillsManager.Instance.GetActivatedSkill = false;
-
                         SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
                         GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
@@ -965,8 +963,6 @@ public class Skills : StatusEffects
 
                         FacingEnemy = false;
 
-                        SkillsManager.Instance.GetActivatedSkill = false;
-
                         SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
                         GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
@@ -1082,6 +1078,97 @@ public class Skills : StatusEffects
         }
     }
 
+    public void ShroomSpores()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            if (DistanceToAttack() <= AttackRange)
+            {
+                TextHolder = Target.GetUI;
+
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                if (this.CastTime > 0.0f)
+                {
+                    if (skillbar.GetSkillBar.fillAmount < 1)
+                    {
+                        skillbar.gameObject.SetActive(true);
+
+                        skillbar.GetSkill = this.button.GetComponent<Skills>();
+
+                        skillbar.GetCastTime = this.CastTime;
+
+                        skillbar.GetSkillImage.sprite = this.GetComponent<Image>().sprite;
+
+                        GetCharacter.GetComponent<PlayerAnimations>().PlaySpellCastAnimation();
+                    }
+                    if (skillbar.GetSkillBar.fillAmount >= 1)
+                    {
+                        this.CoolDownImage.fillAmount = 1;
+
+                        SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                        if (settings.UseParticleEffects)
+                        {
+                        }
+
+                        SetUpStatusEffectPerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
+
+                        GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
+                        GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+                    }
+                }
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
+    }
+
+    public void ShroomSporeDisaster()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            if (DistanceToAttack() <= AttackRange)
+            {
+                TextHolder = Target.GetUI;
+
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                this.CoolDownImage.fillAmount = 1;
+
+                SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                SetUpStatusEffectPerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
+
+                GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
+
+                if (settings.UseParticleEffects)
+                {
+                }
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
+    }
+
     public void Tenacity()
     {
         if(settings.UseParticleEffects)
@@ -1177,6 +1264,15 @@ public class Skills : StatusEffects
         SkillsManager.Instance.GetActivatedSkill = true;
 
         SkillCast();
+    }
+
+    public void Quickness()
+    {
+        GetCharacter.GetComponent<PlayerAnimations>().QuicknessAnimation();
+
+        SkillsManager.Instance.GetActivatedSkill = true;
+
+        Invoke("PlayerStatusEffectSkill", ApplySkill);
     }
 
     private void ContractSkillCast()
@@ -1605,6 +1701,25 @@ public class Skills : StatusEffects
         }
     }
 
+    private void SetUpStatusEffectPerimiter(Vector3 center, float radius)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].GetComponent<Enemy>())
+            {
+                DamageSkillText(hitColliders[i].GetComponent<Enemy>());
+
+                GetStatusEffectIconTrans = hitColliders[i].GetComponent<Enemy>().GetDebuffTransform;
+
+                WhirlWindSlashEnemyStatus();
+
+                SporeStatusEffects(hitColliders[i].GetComponent<Enemy>());
+            }
+        }
+    }
+
     public void EvilsEnd()
     {
         var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
@@ -1852,17 +1967,17 @@ public class Skills : StatusEffects
 
     private void WhirlwindSlashStatus(Enemy enemy)
     {
-        bool HasStatus = false;
+        bool HasDOT = false;
 
         foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>(false))
         {
             if (enemystatus.GetStatusEffect == StatusEffect.DamageOverTime)
             {
-                HasStatus = true;
+                HasDOT = true;
             }
         }
 
-        if (!HasStatus)
+        if (!HasDOT)
         {
             GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
@@ -1876,11 +1991,29 @@ public class Skills : StatusEffects
             GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
             GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
             GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().CheckStatusEffects();
         }
         else
         {
             GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
         }
+    }
+
+    private void SporeStatusEffects(Enemy enemy)
+    {
+        GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+            GetStatusIcon.SetActive(true);
+
+            GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
+
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().CheckStatusEffects();
     }
 
     public TextMeshProUGUI DamageSkillText(Enemy Target)

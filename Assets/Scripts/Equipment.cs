@@ -9,7 +9,7 @@ public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 
 public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse, StrengthIntelligenceReverse, Alleviate, 
                       HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease, ExtraContract, BraveLight, Contracts, MiasmaPulse, NetherStar, IgnoreDefense,
-                      MyceliumBash }
+                      MyceliumBash, IronCap, HpHeal, Quickness }
 
 [System.Serializable]
 public class StatusType
@@ -634,6 +634,15 @@ public class Equipment : MonoBehaviour
             case (Ability.MyceliumBash):
                 skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash - 2 hits & 3 MP cost." + "</color> ";
                 break;
+            case (Ability.IronCap):
+                skillText = "\n\n" + "<#EFDFB8>" + "Iron Cap - Double Duration & double cooldown." + "</color> ";
+                break;
+            case (Ability.HpHeal):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack - 2% HP heal." + "</color> ";
+                break;
+            case (Ability.Quickness):
+                skillText = "\n\n" + "<#EFDFB8>" + "Quickness - Removed duration." + "</color> ";
+                break;
         }
         return skillText;
     }
@@ -704,6 +713,15 @@ public class Equipment : MonoBehaviour
             case (Ability.MyceliumBash):
                 skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash deals damage twice but now costs 3 MP." + "</color> ";
                 break;
+            case (Ability.IronCap):
+                skillText = "\n\n" + "<#EFDFB8>" + "Doubles the duration of Iron Cap but also doubles the cooldown." + "</color> ";
+                break;
+            case (Ability.HpHeal):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack restores 2% HP." + "</color> ";
+                break;
+            case (Ability.Quickness):
+                skillText = "\n\n" + "<#EFDFB8>" + "Removes the duration of Quickness." + "</color> ";
+                break;
         }
         return skillText;
     }
@@ -729,7 +747,7 @@ public class Equipment : MonoBehaviour
                 basicAttack.GetHasBurnStatus = true;
                 break;
             case (Ability.ReducedAutoAttack):
-                basicAttack.GetAutoAttackTime -= 1.0f;
+                basicAttack.GetAttackDelay -= 0.5f;
                 break;
             case (Ability.SlowStatus):
                 basicAttack.GetHasSlowStatus = true;
@@ -797,6 +815,16 @@ public class Equipment : MonoBehaviour
                 character.GetComponent<PlayerAnimations>().GetAdditionalHit = true;
                 skill.GetManaCost = 3;
                 break;
+            case (Ability.IronCap):
+                skill.GetStatusDuration = 30;
+                skill.GetCoolDown = 60;
+                break;
+            case (Ability.HpHeal):
+                character.GetComponent<Health>().GetUnlockedPassive = true;
+                break;
+            case (Ability.Quickness):
+                skill.GetStatusDuration = 0;
+                break;
         }
     }
 
@@ -821,7 +849,7 @@ public class Equipment : MonoBehaviour
                 basicAttack.GetHasBurnStatus = false;
                 break;
             case (Ability.ReducedAutoAttack):
-                basicAttack.GetAutoAttackTime += 1.0f;
+                basicAttack.GetAttackDelay += 0.5f;
                 break;
             case (Ability.SlowStatus):
                 basicAttack.GetHasSlowStatus = false;
@@ -891,6 +919,20 @@ public class Equipment : MonoBehaviour
             case (Ability.MyceliumBash):
                 character.GetComponent<PlayerAnimations>().GetAdditionalHit = false;
                 skill.GetManaCost = 0;
+                break;
+            case (Ability.IronCap):
+                skill.GetStatusDuration = 15;
+                skill.GetCoolDown = 30;
+                break;
+            case (Ability.HpHeal):
+                character.GetComponent<Health>().GetUnlockedPassive = false;
+                break;
+            case (Ability.Quickness):
+                skill.GetStatusDuration = 20;
+                if(skill.GetStatusIcon.activeInHierarchy)
+                {
+                    skill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                }
                 break;
         }
     }

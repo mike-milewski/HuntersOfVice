@@ -144,7 +144,12 @@ public class EnemyStatusIcon : MonoBehaviour
             case (StatusEffect.Stun):
                 CreateStunEffectParticle();
                 break;
+            case (StatusEffect.Poison):
+                HasPoisonStatus = true;
+                CreatePoisonEffectParticle();
+                break;
             case (StatusEffect.Slow):
+                HasSlowStatus = true;
                 Slow();
                 break;
         }
