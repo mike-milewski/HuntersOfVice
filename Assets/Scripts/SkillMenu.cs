@@ -692,7 +692,8 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "Enemies have a 25% chance of being infliced with the Poison, Slowed, or Stun status effect when attacking.";
+        SkillInfoText.text = "Enemies have a 25% chance of being infliced with the Poison, Slowed, or Stun status effect when attacking. \n\n" +
+                             "Poison: 15 second duration. \n Slowed: 10 second duration. \n Stun: 5 second duration.";
     }
 
     private void RegenerationBonusPassiveText()
@@ -979,7 +980,7 @@ public class SkillMenu : MonoBehaviour
 
     private void StatusGiftBonus()
     {
-
+        character.GetComponent<Health>().GetHasStatusGiftPassive = true;
     }
 
     private void RegenerationBonus()

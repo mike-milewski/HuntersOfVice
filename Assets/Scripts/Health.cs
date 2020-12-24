@@ -367,17 +367,4 @@ public class Health : MonoBehaviour
             return GetHP;
         }
     }
-
-    public void GiveStatusEffect()
-    {
-        if(Random.value * 100 <= 20)
-        {
-            Random.Range(0, 2);
-        }
-    }
-
-    private void StatusGiftEffects()
-    {
-
-    }
 }

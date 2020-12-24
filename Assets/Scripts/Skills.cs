@@ -56,8 +56,8 @@ public class Skills : StatusEffects
 
     private bool IsBeingDragged;
 
-    private bool StormThrustActivated, FacingEnemy;
-
+    private bool StormThrustActivated, FacingEnemy, SpinShroomActivated;
+    
     [SerializeField]
     private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill, NetherStarSkill, SinisterPossessionSkill;
 
@@ -629,10 +629,18 @@ public class Skills : StatusEffects
         {
             StormThrustHit();
         }
+        if(SpinShroomActivated)
+        {
+            SpinShroomHit();
+        }
 
         if (SkillsManager.Instance.GetWhirlwind)
         {
             WhirlwindSlashHit();
+        }
+        if(SkillsManager.Instance.GetSpin)
+        {
+            SpinShroomSpin();
         }
 
         if(FacingEnemy)
@@ -1169,6 +1177,122 @@ public class Skills : StatusEffects
         }
     }
 
+    public void MildewSplash()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            if (DistanceToAttack() <= AttackRange)
+            {
+                TextHolder = Target.GetUI;
+
+                SkillsManager.Instance.GetActivatedSkill = true;
+
+                this.CoolDownImage.fillAmount = 1;
+
+                SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
+
+                GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
+
+                if (settings.UseParticleEffects)
+                {
+                }
+            }
+            else
+            {
+                GameManager.Instance.ShowTargetOutOfRangeText();
+            }
+        }
+        else
+        {
+            GameManager.Instance.InvalidTargetText();
+            TextHolder = null;
+        }
+    }
+
+    public void SpinShroom()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        rot = GetCharacter.transform.rotation;
+
+        if (Target == null)
+        {
+            GameManager.Instance.InvalidTargetText();
+        }
+        else if (DistanceToAttack() < AttackRange)
+        {
+            GameManager.Instance.ShowTargetOutOfRangeText();
+        }
+        else if (DistanceToAttack() >= AttackRange)
+        {
+            SpinShroomActivated = true;
+
+            SkillsManager.Instance.GetSpin = true;
+
+            TextHolder = Target.GetUI;
+
+            SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
+
+            this.CoolDownImage.fillAmount = 1;
+
+            SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+            GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
+            SkillsManager.Instance.GetActivatedSkill = true;
+        }
+    }
+
+    private void SpinShroomHit()
+    {
+        var Target = GetCharacter.GetComponent<BasicAttack>().GetTarget;
+
+        if (Target != null)
+        {
+            Vector3 Distance = new Vector3(Target.transform.position.x - GetCharacter.transform.position.x, 0,
+                                           Target.transform.position.z - GetCharacter.transform.position.z).normalized;
+
+            GetCharacter.GetRigidbody.transform.position += Distance * 25 * Time.deltaTime;
+
+            if (DistanceToAttack() <= 2)
+            {
+                GetCharacter.GetComponent<BasicAttack>().HitParticleEffect();
+
+                SoundManager.Instance.ToadstoolHit();
+
+                DamageSkillText(Target);
+
+                if(UnlockedBonus)
+                {
+                    GetStatusEffectIconTrans = Target.GetDebuffTransform;
+
+                    EnemyStatus();
+                }
+
+                SpinShroomActivated = false;
+                SkillsManager.Instance.GetSpin = false;
+
+                GetCharacter.transform.rotation = rot;
+
+                SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
+
+                SkillsManager.Instance.GetActivatedSkill = false;
+            }
+        }
+        else
+        {
+            SpinShroomActivated = false;
+
+            SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = true;
+
+            SkillsManager.Instance.GetActivatedSkill = false;
+        }
+    }
+
     public void Tenacity()
     {
         if(settings.UseParticleEffects)
@@ -1668,6 +1792,11 @@ public class Skills : StatusEffects
         GetCharacter.transform.Rotate(0, 220, 0);
     }
 
+    private void SpinShroomSpin()
+    {
+        GetCharacter.transform.Rotate(0, 280 * Time.deltaTime, 0);
+    }
+
     public void SetUpDamagePerimiter(Vector3 center, float radius)
     {
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
@@ -1709,6 +1838,17 @@ public class Skills : StatusEffects
         {
             if (hitColliders[i].GetComponent<Enemy>())
             {
+                if (settings.UseParticleEffects)
+                {
+                    SkillParticle = ObjectPooler.Instance.GetHitParticle();
+
+                    SkillParticle.SetActive(true);
+
+                    SkillParticle.transform.position = new Vector3(hitColliders[i].transform.position.x, hitColliders[i].transform.position.y + 0.5f,
+                                                                   hitColliders[i].transform.position.z);
+
+                    SkillParticle.transform.SetParent(hitColliders[i].transform);
+                }
                 DamageSkillText(hitColliders[i].GetComponent<Enemy>());
 
                 GetStatusEffectIconTrans = hitColliders[i].GetComponent<Enemy>().GetDebuffTransform;

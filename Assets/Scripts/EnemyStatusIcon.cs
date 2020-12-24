@@ -29,7 +29,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private int TempSkillIndex;
 
-    private bool HasBurnStatus, HasSlowStatus, HasPoisonStatus;
+    private bool HasBurnStatus, HasSlowStatus, HasPoisonStatus, HasStunStatus;
 
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
@@ -94,6 +94,18 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    public bool GetHasStunStatus
+    {
+        get
+        {
+            return HasStunStatus;
+        }
+        set
+        {
+            HasStunStatus = value;
+        }
+    }
+
     public bool GetHasPoisonStatus
     {
         get
@@ -142,6 +154,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 CriticalUP(5);
                 break;
             case (StatusEffect.Stun):
+                HasStunStatus = true;
                 CreateStunEffectParticle();
                 break;
             case (StatusEffect.Poison):
@@ -186,6 +199,12 @@ public class EnemyStatusIcon : MonoBehaviour
             {
                 RemovePoisonStatusEffectText();
                 CheckPoisonParticleActive();
+                ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            }
+            else if(HasStunStatus)
+            {
+                RemoveStunStatusEffectText();
+                CheckStunParticleActive();
                 ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
             }
             else
@@ -273,10 +292,10 @@ public class EnemyStatusIcon : MonoBehaviour
 
         character.GetComponentInChildren<Health>().GetSleepHit = false;
 
-        Duration = 10.0f;
+        Duration = 15.0f;
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Poison </u>" + "</color>" +
-                                     "</size>" + "\n" + "<size=10> Taking damage.";
+                                     "</size>" + "\n" + "<size=10> Taking damage";
 
         DamageOrHealTick = 3.0f;
 
@@ -289,10 +308,22 @@ public class EnemyStatusIcon : MonoBehaviour
 
         character.GetComponentInChildren<Health>().GetSleepHit = false;
 
-        Duration = 10.0f;
+        Duration = 15.0f;
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Slowed </u>" + "</color>" +
-                                     "</size>" + "\n" + "<size=10> Decreased movement & Increased Auto-attack time.";
+                                     "</size>" + "\n" + "<size=10> Decreased movement & Increased Auto-attack time";
+    }
+
+    public void StunStatus()
+    {
+        character = GetComponentInParent<Character>();
+
+        character.GetComponentInChildren<Health>().GetSleepHit = false;
+
+        Duration = 5.0f;
+
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Stun </u>" + "</color>" +
+                                     "</size>" + "\n" + "<size=10> Unable to act";
     }
 
     public TextMeshProUGUI RemoveStatusEffectText()
@@ -418,6 +449,25 @@ public class EnemyStatusIcon : MonoBehaviour
 
         character.GetComponent<EnemyAI>().GetMoveSpeed = character.GetComponent<EnemyAI>().GetDefaultMoveSpeed;
         character.GetComponent<EnemyAI>().GetAttackDelay = character.GetComponent<EnemyAI>().GetDefaultAttackDelay;
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemoveStunStatusEffectText()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Stun";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        CreateParticleOnRemoveEnemy();
+
+        CheckEnemyStates();
 
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -719,7 +769,7 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
-    private void CreateStunEffectParticle()
+    public void CreateStunEffectParticle()
     {
         if (settings.UseParticleEffects)
         {

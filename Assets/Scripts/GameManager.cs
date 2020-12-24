@@ -80,6 +80,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private EventSystem eventsystem;
 
+    [SerializeField]
+    private Sprite PoisonSprite, SlowedSprite, StunSprite;
+
     public Character GetCharacter
     {
         get
@@ -365,6 +368,30 @@ public class GameManager : MonoBehaviour
         set
         {
             ItemDescriptionPanel = value;
+        }
+    }
+
+    public Sprite GetPoisonSprite
+    {
+        get
+        {
+            return PoisonSprite;
+        }
+    }
+
+    public Sprite GetSlowedSprite
+    {
+        get
+        {
+            return SlowedSprite;
+        }
+    }
+
+    public Sprite GetStunSprite
+    {
+        get
+        {
+            return StunSprite;
         }
     }
 

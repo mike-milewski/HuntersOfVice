@@ -184,6 +184,30 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
+    public GameObject GetStatusEffectIcon
+    {
+        get
+        {
+            return StatusEffectIcon;
+        }
+        set
+        {
+            StatusEffectIcon = value;
+        }
+    }
+
+    public Transform GetStatusEffectIconTrans
+    {
+        get
+        {
+            return StatusEffectIconTrans;
+        }
+        set
+        {
+            StatusEffectIconTrans = value;
+        }
+    }
+
     public PlayerElement GetPlayerElement
     {
         get
