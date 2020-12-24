@@ -59,7 +59,7 @@ public class Skills : StatusEffects
     private bool StormThrustActivated, FacingEnemy, SpinShroomActivated;
     
     [SerializeField]
-    private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill, NetherStarSkill, SinisterPossessionSkill;
+    private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill, NetherStarSkill, SinisterPossessionSkill, AlphaSpore, BetaSpore, GammaSpore;
 
     [SerializeField]
     private int ManaCost, Potency;
@@ -1120,12 +1120,66 @@ public class Skills : StatusEffects
 
                         if (settings.UseParticleEffects)
                         {
+                            if(AlphaSpore)
+                            {
+                                SkillParticle = ObjectPooler.Instance.GetAlphaSporeParticle();
+                            }
+                            if(BetaSpore)
+                            {
+                                SkillParticle = ObjectPooler.Instance.GetBetaSporeParticle();
+                            }
+                            if(GammaSpore)
+                            {
+                                SkillParticle = ObjectPooler.Instance.GetGammaSporeParticle();
+                            }
+
+                            SkillParticle.SetActive(true);
+
+                            SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 0.5f, GetCharacter.transform.position.z);
+
+                            SkillParticle.transform.SetParent(GetCharacter.transform, true);
                         }
+
+                        GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
                         SetUpStatusEffectPerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
 
                         GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
                         GetCharacter.GetComponent<PlayerAnimations>().EndSpellCastingAnimation();
+                    }
+                }
+                else
+                {
+                    this.CoolDownImage.fillAmount = 1;
+
+                    SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
+
+                    SetUpStatusEffectPerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
+
+                    GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
+
+                    if (settings.UseParticleEffects)
+                    {
+                        if (AlphaSpore)
+                        {
+                            SkillParticle = ObjectPooler.Instance.GetAlphaSporeParticle();
+                        }
+                        if (BetaSpore)
+                        {
+                            SkillParticle = ObjectPooler.Instance.GetBetaSporeParticle();
+                        }
+                        if (GammaSpore)
+                        {
+                            SkillParticle = ObjectPooler.Instance.GetGammaSporeParticle();
+                        }
+
+                        GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
+                        SkillParticle.SetActive(true);
+
+                        SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 0.5f, GetCharacter.transform.position.z);
+
+                        SkillParticle.transform.SetParent(GetCharacter.transform, true);
                     }
                 }
             }
@@ -1163,6 +1217,13 @@ public class Skills : StatusEffects
 
                 if (settings.UseParticleEffects)
                 {
+                    SkillParticle = ObjectPooler.Instance.GetDisasterSporeParticle();
+
+                    SkillParticle.SetActive(true);
+
+                    SkillParticle.transform.position = new Vector3(GetCharacter.transform.position.x, GetCharacter.transform.position.y + 1.0f, GetCharacter.transform.position.z);
+
+                    SkillParticle.transform.SetParent(GetCharacter.transform, true);
                 }
             }
             else
@@ -1193,12 +1254,23 @@ public class Skills : StatusEffects
 
                 SkillsManager.Instance.CheckForSameSkills(this.GetComponent<Skills>());
 
+                GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
+
                 SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
 
                 GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
 
                 if (settings.UseParticleEffects)
                 {
+                    SkillParticle = ObjectPooler.Instance.GetMildewSplashParticle();
+
+                    SkillParticle.SetActive(true);
+
+                    SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 0.5f, SkillParticleParent.position.z);
+
+                    SkillParticle.transform.SetParent(GetCharacter.transform);
+
+                    SkillParticle.transform.localScale = new Vector3(1, 1, 1);
                 }
             }
             else
@@ -1232,6 +1304,8 @@ public class Skills : StatusEffects
             SpinShroomActivated = true;
 
             SkillsManager.Instance.GetSpin = true;
+
+            SoundManager.Instance.SpinshroomSE();
 
             TextHolder = Target.GetUI;
 
@@ -1304,6 +1378,26 @@ public class Skills : StatusEffects
             SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
 
             SkillParticle.transform.SetParent(GetCharacter.transform);
+        }
+
+        SkillsManager.Instance.GetActivatedSkill = true;
+
+        SkillCast();
+    }
+
+    public void IronCap()
+    {
+        if (settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetIronCapParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 1.0f, SkillParticleParent.position.z);
+
+            SkillParticle.transform.SetParent(GetCharacter.transform);
+
+            SkillParticle.transform.localScale = new Vector3(1, 1, 1);
         }
 
         SkillsManager.Instance.GetActivatedSkill = true;
@@ -1396,7 +1490,21 @@ public class Skills : StatusEffects
 
         SkillsManager.Instance.GetActivatedSkill = true;
 
+        Invoke("InvokeQuicknessParticle", 0.1f);
+
         Invoke("PlayerStatusEffectSkill", ApplySkill);
+    }
+
+    private void InvokeQuicknessParticle()
+    {
+        if (settings.UseParticleEffects)
+        {
+            SkillParticle = ObjectPooler.Instance.GetQuicknessParticle();
+
+            SkillParticle.SetActive(true);
+
+            SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y + 2.0f, SkillParticleParent.position.z);
+        }
     }
 
     private void ContractSkillCast()

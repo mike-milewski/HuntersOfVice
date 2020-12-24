@@ -308,7 +308,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
         character.GetComponentInChildren<Health>().GetSleepHit = false;
 
-        Duration = 15.0f;
+        Duration = 10.0f;
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Slowed </u>" + "</color>" +
                                      "</size>" + "\n" + "<size=10> Decreased movement & Increased Auto-attack time";

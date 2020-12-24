@@ -252,4 +252,10 @@ public class SoundManager : MonoBehaviour
         if (!settings.MuteAudio)
             audiosource[1].PlayOneShot(audioclips[33]);
     }
+
+    public void SpinshroomSE()
+    {
+        if (!settings.MuteAudio)
+            audiosource[1].PlayOneShot(audioclips[34]);
+    }
 }

@@ -5,7 +5,8 @@ using System.Collections;
 public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticle, Heal, CastParticle, EnemyCastParticle, PoisonSpore, HpItem, MpItem,
                              StrengthUp, RemoveStatus, StunningStinger, Illumination, Hop, GaiasProwess, SylvanBlessing, Slam, Slag, SylvanStorm, EnemyAppear,
                              VicePlanter, Shatter, Alleviate, Contract, Aegis, BraveLight, SinisterPossession, DiabolicLightning, SoulPierce, NetherStar,
-                             NetherStarExplosion, Uplift, ManaPulse, AquaBullet, MiasmaPulse, StatueLaser, LaserExplosion }
+                             NetherStarExplosion, Uplift, ManaPulse, AquaBullet, MiasmaPulse, StatueLaser, LaserExplosion, AlphaSpore, BetaSpore, GammaSpore, 
+                             DisasterSpore, IronCap, Quickness, MildewSplash }
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -151,6 +152,27 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
                 break;
             case (ParticleEffect.LaserExplosion):
                 ObjectPooler.Instance.ReturnLaserExplosionParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.AlphaSpore):
+                ObjectPooler.Instance.ReturnAlphaSporeParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.BetaSpore):
+                ObjectPooler.Instance.ReturnBetaSporeParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.GammaSpore):
+                ObjectPooler.Instance.ReturnGammaSporeParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.DisasterSpore):
+                ObjectPooler.Instance.ReturnDisasterSporeParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.IronCap):
+                ObjectPooler.Instance.ReturnIronCapParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.MildewSplash):
+                ObjectPooler.Instance.ReturnMildewSplashParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.Quickness):
+                ObjectPooler.Instance.ReturnQuicknessParticleToPool(gameObject);
                 break;
         }
     }

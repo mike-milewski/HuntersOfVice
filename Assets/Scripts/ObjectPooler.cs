@@ -140,6 +140,13 @@ public class ObjectPooler : MonoBehaviour
         AddMiasmaPulseParticle(poolcontroller[50].GetPoolAmount);
         AddStatueLaserParticle(poolcontroller[51].GetPoolAmount);
         AddLaserExplosionParticle(poolcontroller[52].GetPoolAmount);
+        AddAlphaSporeParticle(poolcontroller[53].GetPoolAmount);
+        AddBetaSporeParticle(poolcontroller[54].GetPoolAmount);
+        AddGammaSporeParticle(poolcontroller[55].GetPoolAmount);
+        AddDisasterSporeParticle(poolcontroller[56].GetPoolAmount);
+        AddIronCapParticle(poolcontroller[57].GetPoolAmount);
+        AddMildewSplashParticle(poolcontroller[58].GetPoolAmount);
+        AddQuicknessParticle(poolcontroller[58].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -778,6 +785,90 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddAlphaSporeParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[53].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[53].GetPoolParent.transform, false);
+            poolcontroller[53].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddBetaSporeParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[54].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[54].GetPoolParent.transform, false);
+            poolcontroller[54].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddGammaSporeParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[55].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[55].GetPoolParent.transform, false);
+            poolcontroller[55].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddDisasterSporeParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[56].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[56].GetPoolParent.transform, false);
+            poolcontroller[56].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddIronCapParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[57].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[57].GetPoolParent.transform, false);
+            poolcontroller[57].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddMildewSplashParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[58].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[58].GetPoolParent.transform, false);
+            poolcontroller[58].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddQuicknessParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[59].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[59].GetPoolParent.transform, false);
+            poolcontroller[59].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -1041,6 +1132,41 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetLaserExplosionParticle()
     {
         return poolcontroller[52].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetAlphaSporeParticle()
+    {
+        return poolcontroller[53].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetBetaSporeParticle()
+    {
+        return poolcontroller[54].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetGammaSporeParticle()
+    {
+        return poolcontroller[55].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetDisasterSporeParticle()
+    {
+        return poolcontroller[56].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetIronCapParticle()
+    {
+        return poolcontroller[57].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetMildewSplashParticle()
+    {
+        return poolcontroller[58].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetQuicknessParticle()
+    {
+        return poolcontroller[59].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1464,6 +1590,62 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[52].GetPoolParent.transform, false);
 
         poolcontroller[52].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnAlphaSporeParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[53].GetPoolParent.transform, false);
+
+        poolcontroller[53].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnBetaSporeParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[54].GetPoolParent.transform, false);
+
+        poolcontroller[54].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnGammaSporeParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[55].GetPoolParent.transform, false);
+
+        poolcontroller[55].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnDisasterSporeParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[56].GetPoolParent.transform, false);
+
+        poolcontroller[56].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnIronCapParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[57].GetPoolParent.transform, false);
+
+        poolcontroller[57].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnMildewSplashParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[58].GetPoolParent.transform, false);
+
+        poolcontroller[58].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnQuicknessParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[59].GetPoolParent.transform, false);
+
+        poolcontroller[59].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }
