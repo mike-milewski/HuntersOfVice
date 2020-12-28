@@ -6,7 +6,7 @@ using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
                            IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense, Aegis, Slowed,
-                           ContractWithEvilNoNegative, ContractWithTheVileNoNegative, ContractWithNefariousnessNoNegative, Wound, Quickness }
+                           ContractWithEvilNoNegative, ContractWithTheVileNoNegative, ContractWithNefariousnessNoNegative, Wound, Quickness, MpRestore, Confusion }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -48,6 +48,8 @@ public class StatusIcon : MonoBehaviour
 
     [SerializeField]
     private bool ObstacleEffect;
+
+    private bool HasMpRestore;
 
     [SerializeField]
     private int KeyInput;
@@ -112,6 +114,18 @@ public class StatusIcon : MonoBehaviour
         }
     }
 
+    public bool GetHasMpRestore
+    {
+        get
+        {
+            return HasMpRestore;
+        }
+        set
+        {
+            HasMpRestore = value;
+        }
+    }
+
     public float GetDuration
     {
         get
@@ -166,17 +180,17 @@ public class StatusIcon : MonoBehaviour
         {
             case (EffectStatus.StrengthUP):
                 StrengthUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
-                SkillsManager.Instance.GetCharacterMenu.GetStrengthStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.GetStrengthStatColor = "<#C8CF2C>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.DefenseUP):
                 DefenseUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
-                SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#C8CF2C>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.IntelligenceUP):
                 IntelligenceUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
-                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#C8CF2C>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
             case (EffectStatus.StrengthDOWN):
@@ -197,7 +211,7 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.ContractWithEvil):
                 IntelligenceUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
                 DefenseDOWN(15);
-                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#C8CF2C>";
                 SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FA2900>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
@@ -209,7 +223,7 @@ public class StatusIcon : MonoBehaviour
                 SetIntelligenceToDefault();
                 SetDefenseToDefault();
                 IntelligenceUP((int)SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency);
-                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#EFDFB8>";
+                SkillsManager.Instance.GetCharacterMenu.GetIntelligenceStatColor = "<#C8CF2C>";
                 SkillsManager.Instance.GetCharacterMenu.GetDefenseStatColor = "<#FFFFFF>";
                 SkillsManager.Instance.GetCharacterMenu.SetCharacterInfoText();
                 break;
@@ -247,6 +261,9 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacter.GetComponent<Animator>().SetBool("Running", true);
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay -= QuicknessBonusAttack;
                 SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetMoveSpeed + QuicknessBonusSpeed;
+                break;
+            case (EffectStatus.Confusion):
+                SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().GetIsReversed = true;
                 break;
         }
         StatusPanel.SetActive(false);
@@ -500,8 +517,33 @@ public class StatusIcon : MonoBehaviour
                 SkillsManager.Instance.GetCharacter.GetMoveSpeed = SkillsManager.Instance.GetCharacter.GetDefaultSpeed + QuicknessBonusSpeed;
                 SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetAttackDelay -= 1;
                 break;
+            case (EffectStatus.Confusion):
+                SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().GetIsReversed = false;
+                break;
         }
         return StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemoveMpRestoreStatus()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetPlayerStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(GameManager.Instance.GetStatusEffectTransform, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Mana Regen";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetMpRestoreSprite;
+
+        CreateParticleOnRemovePlayer();
+
+        status = EffectStatus.NONE;
+        enemyTarget = null;
+
+        ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public TextMeshProUGUI RemoveStatusObstacleEffectText()
@@ -521,6 +563,39 @@ public class StatusIcon : MonoBehaviour
         ObstacleEffect = false;
 
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void MpRestorePassive()
+    {
+        ObstacleEffect = false;
+
+        KeyInput = SkillsManager.Instance.GetKeyInput;
+
+        skill = SkillsManager.Instance.GetSkills[KeyInput];
+
+        TempSkillIndex = skill.GetIndex;
+
+        Duration = -1;
+
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=16>" + "<u> Mana Regen </u>" + "</color>" + "</size>" +
+                                     "\n" + "<size=14>" + "Gradually restoring MP.";
+
+        ContractValue = 0.01f;
+
+        ContractMpTick = 3;
+
+        TempTick = DamageOrHealTick;
+        ContractHpTempTick = ContractHpTick;
+        ContractMpTempTick = ContractMpTick;
+
+        ContractValue = SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectPotency;
+
+        PlayerMaxHealth = SkillsManager.Instance.GetCharacter.GetCharacterData.Health;
+
+        if (Duration < 0)
+        {
+            DurationText.text = "";
+        }
     }
 
     private void DamageOverTime(int value)
@@ -566,17 +641,20 @@ public class StatusIcon : MonoBehaviour
         ContractMpTempTick -= Time.deltaTime;
         if (ContractMpTempTick <= 0)
         {
-            SkillsManager.Instance.GetCharacter.GetComponent<Mana>().IncreaseMana(value);
+            if(SkillsManager.Instance.GetCharacter.CurrentHealth > 0)
+            {
+                SkillsManager.Instance.GetCharacter.GetComponent<Mana>().IncreaseMana(value);
 
-            var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
+                var HealTxt = ObjectPooler.Instance.GetPlayerHealText();
 
-            HealTxt.SetActive(true);
+                HealTxt.SetActive(true);
 
-            HealTxt.transform.SetParent(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageTextParent.transform, false);
+                HealTxt.transform.SetParent(SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetDamageTextParent.transform, false);
 
-            HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + value.ToString() + "</size>" + "<size=20>" + " MP";
+                HealTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + value.ToString() + "</size>" + "<size=20>" + " MP";
 
-            ContractMpTempTick = ContractMpTick;
+                ContractMpTempTick = ContractMpTick;
+            }
         }
     }
 
@@ -1075,6 +1153,9 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.Sleep):
                 Sleep();
                 break;
+            case (EffectStatus.MpRestore):
+                HealMpOverTime(ContractWithTheVileMpRestore());
+                break;
         }
     }
 
@@ -1108,6 +1189,11 @@ public class StatusIcon : MonoBehaviour
         int GetMana = (int)percent;
 
         Mathf.Round(GetMana);
+
+        if(GetMana < 1)
+        {
+            GetMana = 1;
+        }
 
         return GetMana;
     }
@@ -1238,6 +1324,7 @@ public class StatusIcon : MonoBehaviour
         {
             if(SkillsManager.Instance.GetCharacter.CurrentHealth <= 0)
             {
+                if(GetEffectStatus != EffectStatus.MpRestore)
                 RemoveEffect();
             }
         }

@@ -358,15 +358,28 @@ public class ObstacleDamageRadius : MonoBehaviour
     {
         var StatusEffectText = ObjectPooler.Instance.GetPlayerStatusText();
 
-        StatusEffectText.SetActive(true);
+        if (PlayerTarget.GetComponent<Character>().GetIsImmuneToStatusEffects)
+        {
+            StatusEffectText.SetActive(true);
 
-        StatusEffectText.transform.SetParent(StatusEffectTextTransform, false);
+            StatusEffectText.transform.SetParent(StatusEffectTextTransform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + StatusEffectName;
+            StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + StatusEffectName + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)";
 
-        StatusEffectText.GetComponentInChildren<Image>().sprite = StatusSprite;
+            StatusEffectText.GetComponentInChildren<Image>().sprite = StatusSprite;
+        }
+        else
+        {
+            StatusEffectText.SetActive(true);
 
-        StatusEffectSkillTextTransform();
+            StatusEffectText.transform.SetParent(StatusEffectTextTransform, false);
+
+            StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + StatusEffectName;
+
+            StatusEffectText.GetComponentInChildren<Image>().sprite = StatusSprite;
+
+            StatusEffectSkillTextTransform();
+        }
 
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }

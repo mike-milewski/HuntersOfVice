@@ -540,16 +540,23 @@ public class EnemyAI : MonoBehaviour
         if (DistanceToTarget <= 0.3f)
         {
             StandingStill = true;
-            TimeToMove -= Time.deltaTime;
-            if (TimeToMove <= 0)
+            if(Waypoints.Length == 1)
             {
-                WaypointIndex++;
-                if (WaypointIndex >= Waypoints.Length)
+                return;
+            }
+            else
+            {
+                TimeToMove -= Time.deltaTime;
+                if (TimeToMove <= 0)
                 {
-                    WaypointIndex = 0;
+                    WaypointIndex++;
+                    if (WaypointIndex >= Waypoints.Length)
+                    {
+                        WaypointIndex = 0;
+                    }
+                    TimeToMove = TimeToMoveAgain;
+                    StandingStill = false;
                 }
-                TimeToMove = TimeToMoveAgain;
-                StandingStill = false;
             }
         }
     }
@@ -1139,7 +1146,18 @@ public class EnemyAI : MonoBehaviour
 
     private TextMeshProUGUI ReflectedDamage()
     {
-        float RelectedValue = 0.10f * PlayerTarget.GetComponent<Character>().MaxHealth;
+        float ReflectedValue = 0;
+
+        if(GameManager.Instance.GetKnight.activeInHierarchy)
+        {
+            ReflectedValue = 0.10f * PlayerTarget.GetComponent<Character>().MaxHealth;
+        }
+        else if(GameManager.Instance.GetToadstool.activeInHierarchy)
+        {
+            ReflectedValue = 0.05f * PlayerTarget.GetComponent<Character>().MaxHealth;
+        }
+
+        Mathf.Round(ReflectedValue);
 
         var Damagetext = ObjectPooler.Instance.GetEnemyDamageText();
 
@@ -1147,9 +1165,9 @@ public class EnemyAI : MonoBehaviour
 
         Damagetext.transform.SetParent(GetComponentInChildren<Health>().GetDamageTextParent.transform, false);
 
-        GetComponentInChildren<Health>().ModifyHealth(-(int)RelectedValue);
+        GetComponentInChildren<Health>().ModifyHealth(-(int)ReflectedValue);
 
-        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(RelectedValue);
+        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + (int)ReflectedValue;
 
         return Damagetext.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -1271,7 +1289,47 @@ public class EnemyAI : MonoBehaviour
     {
         if (Random.value * 100 <= 25)
         {
-            StatusGiftEffects(Random.Range(0, 3));
+            if(PlayerTarget.GetComponent<BasicAttack>().GetInflictsDoomStatus)
+            {
+                if(!CheckDoomedStatusEffect())
+                {
+                    if (Random.value * 100 <= 5)
+                    {
+                        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+                        StatusTxt.SetActive(true);
+
+                        StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
+
+                        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Doomed";
+
+                        StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+
+                        GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+                        statuseffectIcon.SetActive(true);
+
+                        statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasDoomedStatus = true;
+
+                        statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
+
+                        statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+
+                        statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.Doom;
+                        statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
+                        statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+                        statuseffectIcon.GetComponent<EnemyStatusIcon>().DoomedStatus();
+                    }
+                }
+                else
+                {
+                    StatusGiftEffects(Random.Range(0, 3));
+                }
+            }
+            else
+            {
+                StatusGiftEffects(Random.Range(0, 3));
+            }
         }
     }
 

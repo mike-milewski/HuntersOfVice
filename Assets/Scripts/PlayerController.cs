@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private float Speed, LookRotation;
+
+    private bool ControlsReversed;
     
     public Vector3 GetMovement
     {
@@ -43,6 +45,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool GetIsReversed
+    {
+        get
+        {
+            return ControlsReversed;
+        }
+        set
+        {
+            ControlsReversed = value;
+        }
+    }
+
     private void Reset()
     {
         character = GetComponent<Character>();
@@ -64,8 +78,16 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        direction.x = Input.GetAxis("Horizontal");
-        direction.z = Input.GetAxis("Vertical");
+        if(!ControlsReversed)
+        {
+            direction.x = Input.GetAxis("Horizontal");
+            direction.z = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            direction.x = Input.GetAxis("ReversedHorizontal");
+            direction.z = Input.GetAxis("ReversedVertical");
+        }
         
         Movement = new Vector3(direction.x, 0, direction.z);
 

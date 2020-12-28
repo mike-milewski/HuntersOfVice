@@ -503,35 +503,6 @@ public class SkillsManager : MonoBehaviour
                 GameManager.Instance.CannotExecuteText();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha0) && skills.Count > 9)
-        {
-            if(skills[9].GetButton.interactable)
-            {
-                input = 10;
-                if (input > skills.Count)
-                {
-                    return;
-                }
-                else
-                {
-                    KeyInput = skills.IndexOf(skills[9]);
-                    if (skills[KeyInput].GetButton.GetComponent<Image>().fillAmount >= 1
-                                                       && skills[KeyInput].GetCharacter.CurrentMana >= skills[KeyInput].GetManaCost 
-                                                       && skills[KeyInput].GetComponent<Button>().interactable)
-                    {
-                        skills[KeyInput].GetButton.onClick.Invoke();
-                    }
-                    else if (skills[KeyInput].GetCharacter.CurrentMana < skills[KeyInput].GetManaCost)
-                    {
-                        GameManager.Instance.ShowNotEnoughManaText();
-                    }
-                }
-            }
-            else
-            {
-                GameManager.Instance.CannotExecuteText();
-            }
-        }
     }
 
     public void CheckForSameSkills(Skills other)

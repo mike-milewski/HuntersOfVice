@@ -571,15 +571,6 @@ public class SkillMenu : MonoBehaviour
         SkillInfoText.text = "Increases critical hit chance by " + PassiveBonusValue + "%";
     }
 
-    private void StormThrustBonusPassiveText()
-    {
-        SkillNameText.text = PassiveSkillName;
-
-        SkillInfoText.text = "Storm Thrust receives the following bonuses:" + 
-                             "\n\n" + "<#EFDFB8>" + "Element: " + "</color>" + "Wind" + "\n\n" + "<#EFDFB8>" + "Added Effect: " + "</color>" + "Stun" + "\n" + "<#EFDFB8>" + 
-                             "Duration: " + "</color>" + "4s";
-    }
-
     private void ItemHPBonusPassiveText()
     {
         SkillNameText.text = PassiveSkillName;

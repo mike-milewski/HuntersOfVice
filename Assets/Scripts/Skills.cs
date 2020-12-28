@@ -1256,8 +1256,6 @@ public class Skills : StatusEffects
 
                 GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
 
-                SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
-
                 GetCharacter.GetComponent<PlayerAnimations>().SpellCast();
 
                 if (settings.UseParticleEffects)
@@ -1272,6 +1270,8 @@ public class Skills : StatusEffects
 
                     SkillParticle.transform.localScale = new Vector3(1, 1, 1);
                 }
+
+                SetUpDamagePerimiter(SkillsManager.Instance.GetCharacter.transform.position, 2);
             }
             else
             {
@@ -1938,6 +1938,20 @@ public class Skills : StatusEffects
         }
     }
 
+    private bool CheckDoomedStatusEffect()
+    {
+        bool IsDoomed = false;
+
+        foreach (EnemyStatusIcon esi in GetCharacter.GetComponent<BasicAttack>().GetTarget.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if (esi.GetStatusEffect == StatusEffect.Doom)
+            {
+                IsDoomed = true;
+            }
+        }
+        return IsDoomed;
+    }
+
     private void SetUpStatusEffectPerimiter(Vector3 center, float radius)
     {
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
@@ -1961,9 +1975,25 @@ public class Skills : StatusEffects
 
                 GetStatusEffectIconTrans = hitColliders[i].GetComponent<Enemy>().GetDebuffTransform;
 
-                WhirlWindSlashEnemyStatus();
+                if(GetCharacter.GetComponent<BasicAttack>().GetInflictsDoomStatus)
+                {
+                    if (Random.value * 100 <= 5)
+                    {
+                        DoomedStatusEffect(hitColliders[i].GetComponent<Enemy>());
+                    }
+                    else
+                    {
+                        WhirlWindSlashEnemyStatus();
 
-                SporeStatusEffects(hitColliders[i].GetComponent<Enemy>());
+                        SporeStatusEffects(hitColliders[i].GetComponent<Enemy>());
+                    }
+                }
+                else
+                {
+                    WhirlWindSlashEnemyStatus();
+
+                    SporeStatusEffects(hitColliders[i].GetComponent<Enemy>());
+                }
             }
         }
     }
@@ -2251,17 +2281,55 @@ public class Skills : StatusEffects
     {
         GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
+        GetStatusIcon.SetActive(true);
+
+        GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
+
+        GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
+        GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
+        GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+        GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+        GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+        GetStatusIcon.GetComponent<EnemyStatusIcon>().CheckStatusEffects();
+    }
+
+    private void DoomedStatusEffect(Enemy enemy)
+    {
+        if (CheckDoomedStatusEffect())
+        {
+            return;
+        }
+        else
+        {
+            var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+            StatusTxt.SetActive(true);
+
+            StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+            StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Doomed";
+
+            StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+
+            GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
             GetStatusIcon.SetActive(true);
 
             GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
 
-            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
 
-            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetHasDoomedStatus = true;
+
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.Doom;
             GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
-            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
             GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
-            GetStatusIcon.GetComponent<EnemyStatusIcon>().CheckStatusEffects();
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().DoomedStatus();
+        }
+
+        
     }
 
     public TextMeshProUGUI DamageSkillText(Enemy Target)

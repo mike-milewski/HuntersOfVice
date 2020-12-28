@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
+  m_Name: RockSpiritLv6
+  m_EditorClassIdentifier: 
+  Weaknesses: 05000000
+  Resistances: 0100000006000000
+  Immunities: 
+  Absorbtions: 
+  CharacterName: Rock Spirit
+  CharacterLevel: 5
+  Health: 356
+  Mana: 0
+  Strength: 28
+  Defense: 21
+  Intelligence: 34
+  HpIncrease: 0
+  MpIncrease: 0
+  CriticalHitChance: 5
+  Coins: 25
+  EXP: 40
+  MaterialDataDropChance: 30
+  MoveSpeed: 0
+  CheckedData: 1
+  materialdata: {fileID: 11400000, guid: 1589613105fa9ae41bf38cea464a0efc, type: 2}

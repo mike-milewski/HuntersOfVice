@@ -51,7 +51,7 @@ public class BasicAttack : MonoBehaviour
     private PlayerElement playerElement;
 
     [SerializeField]
-    private bool HasBurnStatusEffect, HasSlowStatusEffect, UsesIntelligenceForDamage, IgnoresDefense, IgnoresElements;
+    private bool HasBurnStatusEffect, HasSlowStatusEffect, UsesIntelligenceForDamage, IgnoresDefense, IgnoresElements, DoublesStatusDuration, InflictsDoomStatus;
 
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
@@ -157,6 +157,30 @@ public class BasicAttack : MonoBehaviour
         set
         {
             IgnoresElements = value;
+        }
+    }
+
+    public bool GetDoublesStatusDuration
+    {
+        get
+        {
+            return DoublesStatusDuration;
+        }
+        set
+        {
+            DoublesStatusDuration = value;
+        }
+    }
+
+    public bool GetInflictsDoomStatus
+    {
+        get
+        {
+            return InflictsDoomStatus;
+        }
+        set
+        {
+            InflictsDoomStatus = value;
         }
     }
 

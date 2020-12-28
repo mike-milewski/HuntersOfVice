@@ -9,19 +9,33 @@ public class OpenToadstoolCage : MonoBehaviour
     [SerializeField]
     private Settings settings;
 
+    [SerializeField]
+    private GameObject SecretTreasureChest;
+
+    [SerializeField]
+    private GameObject TreasureChestParticle;
+
     public void InvokeOpenCage()
     {
-        settings.SecretCharacterUnlocked = true;
-        if (GameManager.Instance.GetKnight.activeInHierarchy)
+        if(settings.SecretCharacterUnlocked)
         {
-            settings.CharacterSavior = "Knight";
+            TreasureChestParticle.SetActive(true);
+            SecretTreasureChest.SetActive(true);
         }
-        if (GameManager.Instance.GetShadowPriest.activeInHierarchy)
+        else
         {
-            settings.CharacterSavior = "Shadow Priest";
-        }
+            settings.SecretCharacterUnlocked = true;
+            if (GameManager.Instance.GetKnight.activeInHierarchy)
+            {
+                settings.CharacterSavior = "Knight";
+            }
+            if (GameManager.Instance.GetShadowPriest.activeInHierarchy)
+            {
+                settings.CharacterSavior = "Shadow Priest";
+            }
 
-        Invoke("OpenCage", 4f);
+            Invoke("OpenCage", 4f);
+        }
     }
 
     private void OpenCage()

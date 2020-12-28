@@ -28,7 +28,7 @@ public class Character : MonoBehaviour
     private string CharacterName;
 
     [SerializeField]
-    private bool CanRegenerate;
+    private bool CanRegenerate, IsImmuneToStatusEffects;
 
     private ElementalWeaknesses[] weaknesses;
 
@@ -213,6 +213,18 @@ public class Character : MonoBehaviour
         set
         {
             CanRegenerate = value;
+        }
+    }
+
+    public bool GetIsImmuneToStatusEffects
+    {
+        get
+        {
+            return IsImmuneToStatusEffects;
+        }
+        set
+        {
+            IsImmuneToStatusEffects = value;
         }
     }
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c29c7b72eb8a5438eead4c3ee71823, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  CharacterSavior: Knight
+  CharacterSavior: 
   UseParticleEffects: 1
   MuteAudio: 0
   SecretCharacterUnlocked: 0

@@ -23,7 +23,6 @@ public enum Skill
     //RockSpirit Skills
     Gnaw,
     Slag,
-    //MINI BOSSES:
     //Puck Skills
     SylvanBlessing,
     SylvanFury,
@@ -34,14 +33,16 @@ public enum Skill
     Uplift,
     EarthHammer,
     SmashWave,
-    //MAIN BOSS:
     //SylvanDiety Skills
     MagicDreams,
-    Light
+    Light,
+    //FungusLord Skills
+    ConfusionBreath,
+    Punch
 };
 
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                     IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP, T, TE, TES, TEST, Slowed };
+                     IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP, T, TE, TES, TEST, Slowed, E, ES, EST, TS, ESS, SS, Confusion };
 
 public enum EnemyElement { NONE, Fire, Water, Wind, Earth, Light, Dark, Magic };
 
@@ -70,7 +71,7 @@ public class enemySkillManager
     private Transform TextHolder;
 
     [SerializeField]
-    private Transform StatusIconTrans = null;
+    private Transform StatusIconTrans = null, SkillParticleParent = null;
     
     [SerializeField] [Tooltip("Text holder representing heal or damage.")]
     private GameObject DamageORHealText = null;
@@ -390,6 +391,18 @@ public class enemySkillManager
         }
     }
 
+    public Transform GetSkillParticleParent
+    {
+        get
+        {
+            return SkillParticleParent;
+        }
+        set
+        {
+            SkillParticleParent = value;
+        }
+    }
+
     public Transform GetStatusIconTrans
     {
         get
@@ -641,6 +654,19 @@ public class EnemySkills : MonoBehaviour
                         SilkyFang(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
                                   GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetAttackRange,
                                   GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                    #endregion
+
+                    #region Fungus Lord Skills
+                    case (Skill.ConfusionBreath):
+                        ConfusionBreath();
+                        break;
+                    case (Skill.Punch):
+                        Punch(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                           GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                           new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                           GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                           GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                         break;
                         #endregion
                 }
@@ -1047,6 +1073,61 @@ public class EnemySkills : MonoBehaviour
     }
     #endregion
 
+    #region Confusion Breath
+    public void ConfusionBreath()
+    {
+        if (enemyAI.GetPlayerTarget != null)
+        {
+            AnimatorSkill1();
+        }
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region Punch
+    public void Punch(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        AnimatorCastingAnimation();
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            enemyAI.GetAnimation.Skill2Animator();
+
+            damageRadius.CheckIfPlayerIsInRectangleRadius(damageRadius.GetDamageShape.transform.position, new Vector3(
+                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.x,
+                                                          GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 1.7f),
+                                                          character.transform.rotation);
+
+            DisableRadiusImage();
+
+            Invoke("InvokePunch", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+        }
+    }
+
+    private void InvokePunch()
+    {
+        DisableRadius();
+
+        ActiveSkill = false;
+    }
+    #endregion
+
     #region Vice Planter
     private void VicePlanter(float castTime, string skillname)
     {
@@ -1063,6 +1144,26 @@ public class EnemySkills : MonoBehaviour
         if (skillBar.GetFillImage.fillAmount >= 1)
         {
             PuckAnimatorSkill3();
+        }
+    }
+
+    public void InvokeConfusionBreath()
+    {
+        if(settings.UseParticleEffects)
+        {
+            var ConfusionBreath = ObjectPooler.Instance.GetConfusionBreathParticle();
+
+            ConfusionBreath.SetActive(true);
+
+            ConfusionBreath.transform.SetParent(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticleParent);
+
+            ConfusionBreath.transform.position = new Vector3(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticleParent.position.x,
+                                                             skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticleParent.position.y,
+                                                             skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticleParent.position.z);
+
+            ConfusionBreath.transform.rotation = skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticleParent.rotation;
+
+            ConfusionBreath.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
@@ -1557,16 +1658,30 @@ public class EnemySkills : MonoBehaviour
     {
         var StatusEffectText = ObjectPooler.Instance.GetPlayerStatusText();
 
-        StatusEffectText.SetActive(true);
+        if (enemyAI.GetPlayerTarget.GetComponent<Character>().GetIsImmuneToStatusEffects)
+        {
+            StatusEffectText.SetActive(true);
 
-        StatusEffectText.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectHolder.transform, false);
+            StatusEffectText.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectHolder.transform, false);
 
-        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].
-                                                                                          GetStatusEffectName;
+            StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].
+                                                                                              GetStatusEffectName + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)";
 
-        StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
+            StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
+        }
+        else
+        {
+            StatusEffectText.SetActive(true);
 
-        StatusEffectSkillTextTransform();
+            StatusEffectText.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectHolder.transform, false);
+
+            StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].
+                                                                                              GetStatusEffectName;
+
+            StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
+
+            StatusEffectSkillTextTransform();
+        }
 
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -1692,18 +1807,38 @@ public class EnemySkills : MonoBehaviour
     {
         float ReflectedValue = 0;
 
-        if(puckAI != null)
+        if(GameManager.Instance.GetKnight.activeInHierarchy)
         {
-            ReflectedValue = 0.10f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            if (puckAI != null)
+            {
+                ReflectedValue = 0.01f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+            if (enemyAI != null)
+            {
+                ReflectedValue = 0.10f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+            if (runeGolemAI != null)
+            {
+                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
         }
-        if(enemyAI != null)
+        else if(GameManager.Instance.GetToadstool.activeInHierarchy)
         {
-            ReflectedValue = 0.10f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            if (puckAI != null)
+            {
+                ReflectedValue = 0.01f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+            if (enemyAI != null)
+            {
+                ReflectedValue = 0.05f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+            if (runeGolemAI != null)
+            {
+                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
         }
-        if(runeGolemAI != null)
-        {
-            ReflectedValue = 0.10f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
-        }
+
+        Mathf.Round(ReflectedValue);
 
         var Damagetext = ObjectPooler.Instance.GetEnemyDamageText();
 
@@ -1713,7 +1848,7 @@ public class EnemySkills : MonoBehaviour
 
         GetComponentInChildren<Health>().ModifyHealth(-(int)ReflectedValue);
 
-        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + Mathf.Round(ReflectedValue);
+        Damagetext.GetComponentInChildren<TextMeshProUGUI>().text = "<size=20>" + (int)ReflectedValue;
 
         return Damagetext.GetComponentInChildren<TextMeshProUGUI>();
     }

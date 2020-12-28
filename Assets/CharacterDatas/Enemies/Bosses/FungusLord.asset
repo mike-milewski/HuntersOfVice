@@ -18,7 +18,7 @@ MonoBehaviour:
   Absorbtions: 00000000
   CharacterName: Fungus Lord
   CharacterLevel: 10
-  Health: 1
+  Health: 3000
   Mana: 0
   Strength: 37
   Defense: 30

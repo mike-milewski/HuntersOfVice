@@ -147,6 +147,7 @@ public class ObjectPooler : MonoBehaviour
         AddIronCapParticle(poolcontroller[57].GetPoolAmount);
         AddMildewSplashParticle(poolcontroller[58].GetPoolAmount);
         AddQuicknessParticle(poolcontroller[58].GetPoolAmount);
+        AddConfusionBreathParticle(poolcontroller[59].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -869,6 +870,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddConfusionBreathParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[60].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[60].GetPoolParent.transform, false);
+            poolcontroller[60].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -1167,6 +1180,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetQuicknessParticle()
     {
         return poolcontroller[59].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetConfusionBreathParticle()
+    {
+        return poolcontroller[60].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1646,6 +1664,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[59].GetPoolParent.transform, false);
 
         poolcontroller[59].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnConfusionBreathParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[60].GetPoolParent.transform, false);
+
+        poolcontroller[60].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

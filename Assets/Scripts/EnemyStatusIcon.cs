@@ -29,7 +29,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private int TempSkillIndex;
 
-    private bool HasBurnStatus, HasSlowStatus, HasPoisonStatus, HasStunStatus;
+    private bool HasBurnStatus, HasSlowStatus, HasPoisonStatus, HasStunStatus, HasDoomedStatus;
 
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
@@ -130,6 +130,18 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    public bool GetHasDoomedStatus
+    {
+        get
+        {
+            return HasDoomedStatus;
+        }
+        set
+        {
+            HasDoomedStatus = value;
+        }
+    }
+
     public void CheckStatusEffects()
     {
         if(player == null)
@@ -207,6 +219,11 @@ public class EnemyStatusIcon : MonoBehaviour
                 CheckStunParticleActive();
                 ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
             }
+            else if(HasDoomedStatus)
+            {
+                RemoveDoomedStatusEffectText();
+                ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            }
             else
             {
                 RemoveEnemyStatusEffectText();
@@ -260,7 +277,14 @@ public class EnemyStatusIcon : MonoBehaviour
 
         TempSkillIndex = skill.GetIndex;
 
-        Duration = skill.GetStatusDuration;
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetDoublesStatusDuration)
+        {
+            Duration = skill.GetStatusDuration * 2;
+        }
+        else
+        {
+            Duration = skill.GetStatusDuration;
+        }
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u>" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusEffectName + "</u>" + "</color>" +
                                      "</size>" + "\n" + "<size=10>" + SkillsManager.Instance.GetSkills[KeyInput].GetStatusDescription;
@@ -286,13 +310,36 @@ public class EnemyStatusIcon : MonoBehaviour
         TempTick = DamageOrHealTick;
     }
 
+    public void DoomedStatus()
+    {
+        character = GetComponentInParent<Character>();
+
+        character.GetComponentInChildren<Health>().GetSleepHit = false;
+
+        Duration = 5.0f;
+
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Doomed </u>" + "</color>" +
+                                     "</size>" + "\n" + "<size=10> Sudden death approaches.";
+
+        DamageOrHealTick = 3.0f;
+
+        TempTick = DamageOrHealTick;
+    }
+
     public void PoisonStatus()
     {
         character = GetComponentInParent<Character>();
 
         character.GetComponentInChildren<Health>().GetSleepHit = false;
 
-        Duration = 15.0f;
+        if(SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetDoublesStatusDuration)
+        {
+            Duration = 30.0f;
+        }
+        else
+        {
+            Duration = 15.0f;
+        }
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Poison </u>" + "</color>" +
                                      "</size>" + "\n" + "<size=10> Taking damage";
@@ -308,7 +355,14 @@ public class EnemyStatusIcon : MonoBehaviour
 
         character.GetComponentInChildren<Health>().GetSleepHit = false;
 
-        Duration = 10.0f;
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetDoublesStatusDuration)
+        {
+            Duration = 20.0f;
+        }
+        else
+        {
+            Duration = 10.0f;
+        }
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Slowed </u>" + "</color>" +
                                      "</size>" + "\n" + "<size=10> Decreased movement & Increased Auto-attack time";
@@ -320,7 +374,14 @@ public class EnemyStatusIcon : MonoBehaviour
 
         character.GetComponentInChildren<Health>().GetSleepHit = false;
 
-        Duration = 5.0f;
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetDoublesStatusDuration)
+        {
+            Duration = 10.0f;
+        }
+        else
+        {
+            Duration = 5.0f;
+        }
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Stun </u>" + "</color>" +
                                      "</size>" + "\n" + "<size=10> Unable to act";
@@ -411,6 +472,8 @@ public class EnemyStatusIcon : MonoBehaviour
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
+        HasPoisonStatus = false;
+
         CreateParticleOnRemoveEnemy();
 
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
@@ -428,7 +491,30 @@ public class EnemyStatusIcon : MonoBehaviour
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
 
+        HasBurnStatus = false;
+
         CreateParticleOnRemoveEnemy();
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemoveDoomedStatusEffectText()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Doomed";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        HasDoomedStatus = false;
+
+        CreateParticleOnRemoveEnemy();
+
+        character.GetComponentInChildren<Health>().ModifyHealth(-character.CurrentHealth);
 
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -444,6 +530,8 @@ public class EnemyStatusIcon : MonoBehaviour
         StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Slowed";
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        HasSlowStatus = false;
 
         CreateParticleOnRemoveEnemy();
 
@@ -464,6 +552,8 @@ public class EnemyStatusIcon : MonoBehaviour
         StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Stun";
 
         StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        HasStunStatus = false;
 
         CreateParticleOnRemoveEnemy();
 

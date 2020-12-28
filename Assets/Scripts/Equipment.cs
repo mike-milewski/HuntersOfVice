@@ -9,7 +9,8 @@ public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 
 public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse, StrengthIntelligenceReverse, Alleviate, 
                       HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease, ExtraContract, BraveLight, Contracts, MiasmaPulse, NetherStar, IgnoreDefense,
-                      MyceliumBash, IronCap, HpHeal, Quickness }
+                      MyceliumBash, IronCap, HpHeal, Quickness, ImmuneToStatusEffects, DoubleStatusDuration, MpHeal, MildewSplash, SpinShroom, ViciousEmbodiment,
+                      ToadstoolReflectDamage }
 
 [System.Serializable]
 public class StatusType
@@ -61,6 +62,8 @@ public class Equipment : MonoBehaviour
 
     [SerializeField]
     private Inventory inventory;
+
+    private GameObject statusicon = null;
 
     [SerializeField]
     private Shop shop;
@@ -635,13 +638,34 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash - 2 hits & 3 MP cost." + "</color> ";
                 break;
             case (Ability.IronCap):
-                skillText = "\n\n" + "<#EFDFB8>" + "Iron Cap - Double Duration & double cooldown." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Iron Cap - Increased duration." + "</color> ";
                 break;
             case (Ability.HpHeal):
                 skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack - 2% HP heal." + "</color> ";
                 break;
             case (Ability.Quickness):
                 skillText = "\n\n" + "<#EFDFB8>" + "Quickness - Removed duration." + "</color> ";
+                break;
+            case (Ability.ImmuneToStatusEffects):
+                skillText = "\n\n" + "<#EFDFB8>" + "Immune to status ailments." + "</color> ";
+                break;
+            case (Ability.DoubleStatusDuration):
+                skillText = "\n\n" + "<#EFDFB8>" + "Doubled status aliment duration." + "</color> ";
+                break;
+            case (Ability.MpHeal):
+                skillText = "\n\n" + "<#EFDFB8>" + "Gradual MP recovery." + "</color> ";
+                break;
+            case (Ability.MildewSplash):
+                skillText = "\n\n" + "<#EFDFB8>" + "Mildew Splash - Halved cooldown." + "</color> ";
+                break;
+            case (Ability.SpinShroom):
+                skillText = "\n\n" + "<#EFDFB8>" + "Spinshroom - Increased power." + "</color> ";
+                break;
+            case (Ability.ToadstoolReflectDamage):
+                skillText = "\n\n" + "<#EFDFB8>" + "5% of max HP reflected as damage. Bosses - 1% reflected." + "</color> ";
+                break;
+            case (Ability.ViciousEmbodiment):
+                skillText = "\n\n" + "<#EFDFB8>" + "Status effects - 5% Doomed status." + "</color> ";
                 break;
         }
         return skillText;
@@ -714,13 +738,34 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash deals damage twice but now costs 3 MP." + "</color> ";
                 break;
             case (Ability.IronCap):
-                skillText = "\n\n" + "<#EFDFB8>" + "Doubles the duration of Iron Cap but also doubles the cooldown." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Increases the duration of Iron Cap by 5 seconds." + "</color> ";
                 break;
             case (Ability.HpHeal):
                 skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack restores 2% HP." + "</color> ";
                 break;
             case (Ability.Quickness):
                 skillText = "\n\n" + "<#EFDFB8>" + "Removes the duration of Quickness." + "</color> ";
+                break;
+            case (Ability.ImmuneToStatusEffects):
+                skillText = "\n\n" + "<#EFDFB8>" + "Nullifies status ailments." + "</color> ";
+                break;
+            case (Ability.DoubleStatusDuration):
+                skillText = "\n\n" + "<#EFDFB8>" + "Doubles the duration of status ailments." + "</color> ";
+                break;
+            case (Ability.MpHeal):
+                skillText = "\n\n" + "<#EFDFB8>" + "Gradually restores 1% of MP over 3 seconds." + "</color> ";
+                break;
+            case (Ability.MildewSplash):
+                skillText = "\n\n" + "<#EFDFB8>" + "Reduces the cooldown of Mildew Splash by half." + "</color> ";
+                break;
+            case (Ability.SpinShroom):
+                skillText = "\n\n" + "<#EFDFB8>" + "Increases the power of Spinshroom to 100." + "</color> ";
+                break;
+            case (Ability.ToadstoolReflectDamage):
+                skillText = "\n\n" + "<#EFDFB8>" + "Reflects damage back to an enemy based on 5% of your maximum HP. Attacks from bosses reflect 1% damage." + "</color> ";
+                break;
+            case (Ability.ViciousEmbodiment):
+                skillText = "\n\n" + "<#EFDFB8>" + "Inflicting status ailments has a 5% chance of inflicting the Doomed status instead." + "</color> ";
                 break;
         }
         return skillText;
@@ -784,7 +829,11 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.BraveLight):
                 skill.GetCoolDown = 45;
-                skill.GetCoolDownImage.fillAmount = skill.GetElapsedCoolDown;
+                if (skill.GetCoolDownImage.fillAmount > 0)
+                {
+                    skill.GetCoolDownImage.fillAmount = 1;
+                    skill.GetCD = skill.GetCoolDown;
+                }
                 break;
             case (Ability.Contracts):
                 ContractSkills[0].GetPlayerStatusEffect = EffectStatus.ContractWithEvilNoNegative;
@@ -816,14 +865,39 @@ public class Equipment : MonoBehaviour
                 skill.GetManaCost = 3;
                 break;
             case (Ability.IronCap):
-                skill.GetStatusDuration = 30;
-                skill.GetCoolDown = 60;
+                skill.GetStatusDuration = 20;
                 break;
             case (Ability.HpHeal):
                 character.GetComponent<Health>().GetUnlockedPassive = true;
                 break;
             case (Ability.Quickness):
-                skill.GetStatusDuration = 0;
+                skill.GetStatusDuration = -1;
+                break;
+            case (Ability.ImmuneToStatusEffects):
+                character.GetIsImmuneToStatusEffects = true;
+                break;
+            case (Ability.DoubleStatusDuration):
+                basicAttack.GetDoublesStatusDuration = true;
+                break;
+            case (Ability.MpHeal):
+                RestoreMpEffect();
+                break;
+            case (Ability.MildewSplash):
+                skill.GetCoolDown = 12.5f;
+                if (skill.GetCoolDownImage.fillAmount > 0)
+                {
+                    skill.GetCoolDownImage.fillAmount = 1;
+                    skill.GetCD = skill.GetCoolDown;
+                }
+                break;
+            case (Ability.SpinShroom):
+                skill.GetPotency = 100;
+                break;
+            case (Ability.ToadstoolReflectDamage):
+                character.GetComponent<Health>().GetReflectingDamage = true;
+                break;
+            case (Ability.ViciousEmbodiment):
+                basicAttack.GetInflictsDoomStatus = true;
                 break;
         }
     }
@@ -884,7 +958,11 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.BraveLight):
                 skill.GetCoolDown = 90;
-                skill.GetCoolDownImage.fillAmount = skill.GetElapsedCoolDown;
+                if (skill.GetCoolDownImage.fillAmount > 0)
+                {
+                    skill.GetCoolDownImage.fillAmount = 1;
+                    skill.GetCD = skill.GetCoolDown;
+                }
                 break;
             case (Ability.Contracts):
                 ContractSkills[0].GetPlayerStatusEffect = EffectStatus.ContractWithEvil;
@@ -893,9 +971,9 @@ public class Equipment : MonoBehaviour
                 ContractSkills[0].GetSkillDescription = "Increases intelligence by 15% and decreases defense by 15%.";
                 ContractSkills[1].GetSkillDescription = "Restores 3% MP over 3 seconds and reduces HP by 1% over 5 seconds.";
                 ContractSkills[2].GetSkillDescription = "Reduces the casting time of all skills by 25% and reduces maximum HP by 25%.";
-                ContractSkills[0].GetStatusDescription = "Increased Intelligence, Decreased Defense";
-                ContractSkills[1].GetStatusDescription = "Restoring MP, Taking Damage";
-                ContractSkills[2].GetStatusDescription = "Skill cast and cost reduced, HP halved";
+                ContractSkills[0].GetStatusDescription = "Increased Intelligence & Decreased Defense";
+                ContractSkills[1].GetStatusDescription = "Restoring MP & Taking Damage";
+                ContractSkills[2].GetStatusDescription = "Skill cast and cost reduced & HP halved";
                 RemoveContracts();
                 break;
             case (Ability.ExtraContract):
@@ -922,7 +1000,6 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.IronCap):
                 skill.GetStatusDuration = 15;
-                skill.GetCoolDown = 30;
                 break;
             case (Ability.HpHeal):
                 character.GetComponent<Health>().GetUnlockedPassive = false;
@@ -933,6 +1010,32 @@ public class Equipment : MonoBehaviour
                 {
                     skill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
                 }
+                break;
+            case (Ability.ImmuneToStatusEffects):
+                character.GetIsImmuneToStatusEffects = false;
+                break;
+            case (Ability.DoubleStatusDuration):
+                basicAttack.GetDoublesStatusDuration = false;
+                break;
+            case (Ability.MpHeal):
+                statusicon.GetComponent<StatusIcon>().RemoveMpRestoreStatus();
+                break;
+            case (Ability.MildewSplash):
+                skill.GetCoolDown = 25;
+                if(skill.GetCoolDownImage.fillAmount > 0)
+                {
+                    skill.GetCoolDownImage.fillAmount = 1;
+                    skill.GetCD = skill.GetCoolDown;
+                }
+                break;
+            case (Ability.SpinShroom):
+                skill.GetPotency = 65;
+                break;
+            case (Ability.ToadstoolReflectDamage):
+                character.GetComponent<Health>().GetReflectingDamage = false;
+                break;
+            case (Ability.ViciousEmbodiment):
+                basicAttack.GetInflictsDoomStatus = false;
                 break;
         }
     }
@@ -1085,5 +1188,32 @@ public class Equipment : MonoBehaviour
         inventory.AddCoins(value);
 
         shop.UpdateCoins();
+    }
+
+    private void RestoreMpEffect()
+    {
+        var StatusTxt = ObjectPooler.Instance.GetPlayerStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(skill.GetTextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Mana Regen";
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetMpRestoreSprite;
+
+        statusicon = ObjectPooler.Instance.GetPlayerStatusIcon();
+
+        statusicon.SetActive(true);
+
+        statusicon.transform.SetParent(skill.GetStatusEffectIconTrans, false);
+
+        statusicon.GetComponent<StatusIcon>().GetEffectStatus = EffectStatus.MpRestore;
+
+        statusicon.GetComponent<StatusIcon>().PlayerInput();
+
+        statusicon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetMpRestoreSprite;
+
+        statusicon.GetComponent<StatusIcon>().MpRestorePassive();
     }
 }

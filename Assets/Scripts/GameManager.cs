@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     private Animator animator, SkillPanelAnimator, CharacterPanelAnimator, EquipmentPanelAnimator, InventoryPanelAnimator, SettingsPanelAnimator, MonsterBookAnimator;
 
     [SerializeField]
-    private GameObject Knight, ShadowPriest, Toadstool;
+    private GameObject Knight, ShadowPriest, Toadstool, Cage, TempToadstool;
 
     [SerializeField]
     private GameObject EnemyObject = null;
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
     private EventSystem eventsystem;
 
     [SerializeField]
-    private Sprite PoisonSprite, SlowedSprite, StunSprite;
+    private Sprite PoisonSprite, SlowedSprite, StunSprite, MpRestoreSprite, DoomedSprite;
 
     public Character GetCharacter
     {
@@ -395,6 +395,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Sprite GetDoomedSprite
+    {
+        get
+        {
+            return DoomedSprite;
+        }
+    }
+
+    public Sprite GetMpRestoreSprite
+    {
+        get
+        {
+            return MpRestoreSprite;
+        }
+    }
+
     public float GetHealingReduction
     {
         get
@@ -531,6 +547,12 @@ public class GameManager : MonoBehaviour
                 ToadstoolSkills[i].SetActive(true);
                 lowHpAnimation.GetCharacter = Toadstool.GetComponent<Character>();
             }
+        }
+
+        if(settings.SecretCharacterUnlocked)
+        {
+            Cage.SetActive(false);
+            TempToadstool.SetActive(false);
         }
     }
 
