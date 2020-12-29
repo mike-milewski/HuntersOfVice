@@ -54,6 +54,17 @@ public class EnemyConnection : MonoBehaviour
         }
     }
 
+    public void EnableChase()
+    {
+        foreach (EnemyAI enemyai in enemyAI)
+        {
+            enemyai.GetPlayerEntry = true;
+            enemyai.GetPlayerTarget = character;
+            enemyai.GetStates = States.Chase;
+            enemyai.GetEnemy.GetExperience = character.GetComponent<Experience>();
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if(other.GetComponent<PlayerController>())

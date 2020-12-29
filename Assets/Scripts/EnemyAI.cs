@@ -105,7 +105,7 @@ public class EnemyAI : MonoBehaviour
     private float TimeToMoveAgain, WayPointDistance, PlayerDistance, OuterAttackDistance; //A value that determines how long the enemy will stay at one waypoint before moving on to the next.
 
     [SerializeField]
-    private float TimeToMove, DistanceToTarget;
+    private float TimeToMove, DistanceToTarget, HealTime;
 
     private bool StandingStill, PlayerEntry, IsDead, IsDisabled;
 
@@ -123,7 +123,7 @@ public class EnemyAI : MonoBehaviour
 
     private Quaternion LookDir;
 
-    private bool IsDoomed;
+    private bool IsDoomed, Healing;
 
     public int GetStateArrayIndex
     {
@@ -559,6 +559,15 @@ public class EnemyAI : MonoBehaviour
                 }
             }
         }
+
+        if (character.CurrentHealth >= character.MaxHealth)
+        {
+            return;
+        }
+        else
+        {
+            Hel();
+        }
     }
 
     private void Chase()
@@ -848,6 +857,32 @@ public class EnemyAI : MonoBehaviour
         SelectPlayerTarget();
     }
 
+    private void Hel()
+    {
+        HealTime += Time.deltaTime;
+        if(HealTime >= 1.5f)
+        {
+            InvokeHeal();
+            HealTime = 0;
+        }
+    }
+
+    private void InvokeHeal()
+    {
+        float HealthAmount = 0.10f * character.MaxHealth;
+
+        Mathf.Round(HealthAmount);
+
+        enemy.GetHealth.IncreaseHealth((int)HealthAmount);
+
+        enemy.GetLocalHealthInfo();
+
+        if(character.CurrentHealth >= character.MaxHealth)
+        {
+            HealTime = 0;
+        }
+    }
+
     private void SelectPlayerTarget()
     {
         if (Knight.gameObject.activeInHierarchy)
@@ -1021,6 +1056,8 @@ public class EnemyAI : MonoBehaviour
             PlayerTarget = other.GetComponent<Character>();
             states = States.Chase;
 
+            HealTime = 0;
+
             enemy.GetExperience = other.gameObject.GetComponent<Experience>();
         }
     }
@@ -1076,8 +1113,6 @@ public class EnemyAI : MonoBehaviour
                 enemySkills.GetActiveSkill = false;
                 enemySkills.GetSkillBar.gameObject.SetActive(false);
             }
-            enemy.GetHealth.IncreaseHealth(character.MaxHealth);
-            enemy.GetLocalHealthInfo();
             StateArrayIndex = 0;
         }
         if (!IsHostile)
@@ -1097,10 +1132,9 @@ public class EnemyAI : MonoBehaviour
                 enemySkills.GetActiveSkill = false;
                 enemySkills.GetSkillBar.gameObject.SetActive(false);
             }
-            enemy.GetHealth.IncreaseHealth(character.MaxHealth);
-            enemy.GetLocalHealthInfo();
             StateArrayIndex = 0;
         }
+        HealTime = 0;
     }
 
     private void RemoveStatusEffects()

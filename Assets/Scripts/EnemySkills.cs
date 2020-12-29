@@ -38,7 +38,8 @@ public enum Skill
     Light,
     //FungusLord Skills
     ConfusionBreath,
-    Punch
+    Punch,
+    Harrow
 };
 
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
@@ -668,6 +669,13 @@ public class EnemySkills : MonoBehaviour
                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                         break;
+                    case (Skill.Harrow):
+                        Harrow(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                           GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                           new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                           GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                           GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
                         #endregion
                 }
             }
@@ -1121,6 +1129,59 @@ public class EnemySkills : MonoBehaviour
     }
 
     private void InvokePunch()
+    {
+        DisableRadius();
+
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region Harrow
+    public void Harrow(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        AnimatorCastingAnimation();
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            enemyAI.GetAnimation.Skill3Animator();
+
+            damageRadius.CheckIfPlayerIsInCircleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
+
+            DisableRadiusImage();
+
+            if(settings.UseParticleEffects)
+            {
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHarrowParticle();
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                    transform.position.x, transform.position.y + 2f, transform.position.z);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            Invoke("InvokeHarrow", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+        }
+    }
+
+    private void InvokeHarrow()
     {
         DisableRadius();
 

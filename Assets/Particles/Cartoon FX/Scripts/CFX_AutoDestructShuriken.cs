@@ -6,7 +6,7 @@ public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticl
                              StrengthUp, RemoveStatus, StunningStinger, Illumination, Hop, GaiasProwess, SylvanBlessing, Slam, Slag, SylvanStorm, EnemyAppear,
                              VicePlanter, Shatter, Alleviate, Contract, Aegis, BraveLight, SinisterPossession, DiabolicLightning, SoulPierce, NetherStar,
                              NetherStarExplosion, Uplift, ManaPulse, AquaBullet, MiasmaPulse, StatueLaser, LaserExplosion, AlphaSpore, BetaSpore, GammaSpore, 
-                             DisasterSpore, IronCap, Quickness, MildewSplash, ConfusionBreath }
+                             DisasterSpore, IronCap, Quickness, MildewSplash, ConfusionBreath, Harrow }
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -176,6 +176,9 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
                 break;
             case (ParticleEffect.ConfusionBreath):
                 ObjectPooler.Instance.ReturnConfusionBreathParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.Harrow):
+                ObjectPooler.Instance.ReturnHarrowParticleToPool(gameObject);
                 break;
         }
     }

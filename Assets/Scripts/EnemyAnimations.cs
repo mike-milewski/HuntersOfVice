@@ -69,6 +69,11 @@ public class EnemyAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Damaged", false);
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
+
+        if (EnemyAnimator.GetBool("Skill3"))
+        {
+            EnemyAnimator.SetBool("Skill3", false);
+        }
     }
 
     public void DamageAni ()
@@ -116,10 +121,20 @@ public class EnemyAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill2", true);
     }
 
+    public void Skill3Animator()
+    {
+        EnemyAnimator.SetBool("Skill3", true);
+    }
+
     public void ResetSkillAnimator()
     {
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
+
+        if (EnemyAnimator.GetBool("Skill3"))
+        {
+            EnemyAnimator.SetBool("Skill3", false);
+        }
 
         enemyskills.GetActiveSkill = false;
     }
@@ -132,6 +147,11 @@ public class EnemyAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Damaged", false);
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
+
+        if(EnemyAnimator.GetBool("Skill3"))
+        {
+            EnemyAnimator.SetBool("Skill3", false);
+        }
     }
 
     public void IdleAnimator()
