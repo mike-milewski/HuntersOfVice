@@ -59,7 +59,8 @@ public class Skills : StatusEffects
     private bool StormThrustActivated, FacingEnemy, SpinShroomActivated;
     
     [SerializeField]
-    private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill, NetherStarSkill, SinisterPossessionSkill, AlphaSpore, BetaSpore, GammaSpore;
+    private bool GainedPassive, OffensiveSpell, UnlockedBonus, ShatterSkill, SoulPierceSkill, NetherStarSkill, SinisterPossessionSkill, AlphaSpore, BetaSpore, GammaSpore,
+                 DistanceSkill;
 
     [SerializeField]
     private int ManaCost, Potency;
@@ -79,7 +80,7 @@ public class Skills : StatusEffects
     [SerializeField][TextArea]
     private string SkillDescription;
 
-    private float CD, TempCoolDown, ElapsedCooldown, NefariousCastTime;
+    private float CD, NefariousCastTime;
 
     private Quaternion rot;
 
@@ -128,30 +129,6 @@ public class Skills : StatusEffects
         set
         {
             CastTime = value;
-        }
-    }
-
-    public float GetTempCoolDown
-    {
-        get
-        {
-            return TempCoolDown;
-        }
-        set
-        {
-            TempCoolDown = value;
-        }
-    }
-
-    public float GetElapsedCoolDown
-    {
-        get
-        {
-            return ElapsedCooldown;
-        }
-        set
-        {
-            ElapsedCooldown = value;
         }
     }
 
@@ -395,6 +372,18 @@ public class Skills : StatusEffects
         }
     }
 
+    public bool GetDistanceSkill
+    {
+        get
+        {
+            return DistanceSkill;
+        }
+        set
+        {
+            DistanceSkill = value;
+        }
+    }
+
     public bool GetShatterSkill
     {
         get
@@ -597,7 +586,7 @@ public class Skills : StatusEffects
         else
         {
             if (CoolDownImage.fillAmount <= 0 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead &&
-            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged)
+            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged && !DistanceSkill)
             {
                 button.interactable = true;
 
@@ -607,13 +596,15 @@ public class Skills : StatusEffects
 
                 return;
             }
+            else if(DistanceSkill)
+            {
+                this.button.interactable = false;
+
+                this.CoolDownImage.fillAmount -= Time.deltaTime / CoolDown;
+            }
             else
             {
                 this.CoolDownImage.fillAmount -= Time.deltaTime / CoolDown;
-
-                TempCoolDown -= Time.deltaTime / CoolDown;
-
-                ElapsedCooldown = this.CoolDownImage.fillAmount;
 
                 this.button.interactable = false;
             }
@@ -657,6 +648,25 @@ public class Skills : StatusEffects
     public int ReturnManaCost()
     {
         return SinisterManaCost;
+    }
+
+    public void CheckSkillDistance()
+    {
+        if (GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        {
+            if (DistanceToAttack() < AttackRange)
+            {
+                DistanceSkill = true;
+            }
+            else
+            {
+                DistanceSkill = false;
+            }
+        }
+        else
+        {
+            DistanceSkill = true;
+        }
     }
 
     public void Shatter()

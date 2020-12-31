@@ -251,4 +251,14 @@ public class MenuButtons : MonoBehaviour
     {
         CreditsText.text = "";
     }
+
+    public void IsUpgradingShop()
+    {
+        GameManager.Instance.GetIsInUpgrade = true;
+    }
+
+    public void IsNotUpgradingShop()
+    {
+        GameManager.Instance.GetIsInUpgrade = false;
+    }
 }

@@ -10,7 +10,7 @@ public class OpenToadstoolCage : MonoBehaviour
     private Settings settings;
 
     [SerializeField]
-    private GameObject SecretTreasureChest;
+    private GameObject SecretTreasureChest, CageCollider;
 
     [SerializeField]
     private GameObject TreasureChestParticle;
@@ -36,6 +36,7 @@ public class OpenToadstoolCage : MonoBehaviour
 
             Invoke("OpenCage", 4f);
         }
+        CageCollider.SetActive(false);
     }
 
     private void OpenCage()

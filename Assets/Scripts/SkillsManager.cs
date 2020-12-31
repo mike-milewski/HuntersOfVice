@@ -27,7 +27,7 @@ public class SkillsManager : MonoBehaviour
     private List<Skills> skills = new List<Skills>();
 
     [SerializeField]
-    private Skills ContractSkill = null;
+    private Skills ContractSkill = null, StormThrust, SpinShroom;
 
     [SerializeField]
     private bool UsesHpForSkillCast;
@@ -185,6 +185,18 @@ public class SkillsManager : MonoBehaviour
         }
     }
 
+    public Skills GetStormThrust
+    {
+        get
+        {
+            return StormThrust;
+        }
+        set
+        {
+            StormThrust = value;
+        }
+    }
+
     public StatusIcon GetStatusIcon
     {
         get
@@ -251,6 +263,9 @@ public class SkillsManager : MonoBehaviour
 
     private void Update()
     {
+        StormThrust.CheckSkillDistance();
+        SpinShroom.CheckSkillDistance();
+
         if (Input.GetKeyDown(KeyCode.Alpha1) && skills.Count > 0)
         {
             if(skills[0].GetButton.interactable)

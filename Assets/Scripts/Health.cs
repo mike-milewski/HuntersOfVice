@@ -308,15 +308,22 @@ public class Health : MonoBehaviour
             {
                 if (character.GetComponent<EnemyAI>())
                 {
+                    SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveEnemyFromList(character.GetComponent<Enemy>());
                     character.GetComponent<EnemyAI>().Dead();
                 }
                 if (character.GetComponent<Puck>())
                 {
+                    SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveEnemyFromList(character.GetComponent<Enemy>());
                     character.GetComponent<Puck>().Dead();
                 }
                 if (character.GetComponent<RuneGolem>())
                 {
+                    SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveEnemyFromList(character.GetComponent<Enemy>());
                     character.GetComponent<RuneGolem>().Dead();
+                }
+                if(character.GetComponent<SylvanDiety>())
+                {
+                    SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveEnemyFromList(character.GetComponent<Enemy>());
                 }
             }
         }

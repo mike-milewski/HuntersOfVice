@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Steamed Cap
   Element: 3
-  StatIncrease: 46
+  StatIncrease: 50
   BuyValue: 1000

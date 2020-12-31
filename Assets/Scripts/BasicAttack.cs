@@ -37,6 +37,9 @@ public class BasicAttack : MonoBehaviour
     private Enemy Target = null;
 
     [SerializeField]
+    private List<Enemy> enemyTargets;
+
+    [SerializeField]
     private ParticleSystem HitParticle;
 
     [SerializeField]
@@ -54,9 +57,12 @@ public class BasicAttack : MonoBehaviour
     private bool HasBurnStatusEffect, HasSlowStatusEffect, UsesIntelligenceForDamage, IgnoresDefense, IgnoresElements, DoublesStatusDuration, InflictsDoomStatus;
 
     [SerializeField]
-    private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance;
+    private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance, EnemyCheckDistance;
 
     private float AttackDistance;
+
+    [SerializeField]
+    private int EnemyIndex;
 
     private Vector3 MousePos, TargetPosition;
 
@@ -255,11 +261,144 @@ public class BasicAttack : MonoBehaviour
         {
             MousePoint();
         }
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            CheckForTargets();
+        }
 
         if (Target != null)
         {
             Attack();
         }
+    }
+
+    private void CheckForTargets()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(character.transform.position, EnemyCheckDistance);
+
+        if(enemyTargets.Count <= 0)
+        {
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].GetComponent<Enemy>())
+                {
+                    GameManager.Instance.GetIsTargeting = true;
+
+                    SoundManager.Instance.ButtonClick();
+
+                    AddEnemyToList(hitColliders[i].GetComponent<Enemy>());
+
+                    if (enemyTargets[EnemyIndex].GetComponent<Character>().CurrentHealth > 0)
+                    {
+                        AutoAttackTime = 0;
+                        Target = enemyTargets[EnemyIndex].GetComponent<Enemy>();
+
+                        GameManager.Instance.GetEnemyObject = Target.gameObject;
+                        Target.GetEnemySkillBar.ToggleCastBar();
+                        Target.ToggleHealthBar();
+
+                        Target.GetFilledBar();
+
+                        if (GameManager.Instance.GetLastEnemyObject != null)
+                        {
+                            GameManager.Instance.GetLastEnemyObject.GetComponent<Enemy>().ToggleHealthBar();
+                            GameManager.Instance.GetLastEnemyObject.GetComponent<Enemy>().GetEnemySkillBar.ToggleCastBar();
+                        }
+                        GameManager.Instance.GetLastEnemyObject = Target.gameObject;
+                    }
+                }
+            }
+        }
+        else
+        {
+            SoundManager.Instance.ButtonClick();
+
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].GetComponent<Enemy>())
+                {
+                    if (CheckTargetName(hitColliders[i].GetComponent<Enemy>()))
+                    {  
+                    }
+                    else
+                    {
+                        AddEnemyToList(hitColliders[i].GetComponent<Enemy>());
+                    }
+                }
+            }
+            CheckEnemyTargetDistance();
+
+            EnemyIndex++;
+            if (EnemyIndex >= enemyTargets.Count)
+            {
+                EnemyIndex = 0;
+            }
+            if(enemyTargets.Count > 0)
+            {
+                if (enemyTargets[EnemyIndex].GetComponent<Character>().CurrentHealth > 0)
+                {
+                    AutoAttackTime = 0;
+                    Target = enemyTargets[EnemyIndex].GetComponent<Enemy>();
+
+                    GameManager.Instance.GetEnemyObject = Target.gameObject;
+                    Target.GetEnemySkillBar.ToggleCastBar();
+                    Target.ToggleHealthBar();
+
+                    Target.GetFilledBar();
+
+                    if (GameManager.Instance.GetLastEnemyObject != null)
+                    {
+                        GameManager.Instance.GetLastEnemyObject.GetComponent<Enemy>().ToggleHealthBar();
+                        GameManager.Instance.GetLastEnemyObject.GetComponent<Enemy>().GetEnemySkillBar.ToggleCastBar();
+                    }
+                    GameManager.Instance.GetLastEnemyObject = Target.gameObject;
+                }
+            }
+        }
+    }
+
+    private void AddEnemyToList(Enemy enemy)
+    {
+        enemyTargets.Add(enemy);
+        enemy.GetCheckedForTarget = true;
+    }
+
+    public void RemoveEnemyFromList(Enemy enemy)
+    {
+        if(enemyTargets.Count > 0)
+        {
+            enemy.GetCheckedForTarget = false;
+            enemyTargets.Remove(enemy);
+        }
+    }
+
+    private void CheckEnemyTargetDistance()
+    {
+        foreach(Enemy enemies in enemyTargets.ToArray())
+        {
+            if (Vector3.Distance(character.transform.position, enemies.transform.position) >= EnemyCheckDistance)
+            {
+                RemoveEnemyFromList(enemies);
+            }
+        }
+    }
+
+    private bool CheckTargetName(Enemy enemy)
+    {
+        bool SameName = false;
+
+        for(int i = 0; i < enemyTargets.Count; i++)
+        {
+            if(enemyTargets[i].name == enemy.name && enemy.GetCheckedForTarget)
+            {
+                SameName = true;
+            }
+            else if(enemyTargets[i].name != enemy.name && !enemy.GetCheckedForTarget)
+            {
+                SameName = false;
+            }
+        }
+        return SameName;
     }
 
     private void MousePoint()
@@ -281,11 +420,26 @@ public class BasicAttack : MonoBehaviour
                     AutoAttackTime = 0;
                     Target = hit.collider.GetComponent<Enemy>();
 
+                    if (!CheckTargetName(Target))
+                    {
+                        AddEnemyToList(Target);
+                    }
+
                     GameManager.Instance.GetEnemyObject = Target.gameObject;
                     Target.GetEnemySkillBar.ToggleCastBar();
                     Target.ToggleHealthBar();
 
                     Target.GetFilledBar();
+
+                    if(GameManager.Instance.GetEnemyObject != GameManager.Instance.GetLastEnemyObject)
+                    {
+                        EnemyIndex++;
+                    }
+
+                    if (EnemyIndex >= enemyTargets.Count)
+                    {
+                        EnemyIndex = 0;
+                    }
 
                     if (GameManager.Instance.GetLastEnemyObject != null)
                     {
@@ -310,6 +464,7 @@ public class BasicAttack : MonoBehaviour
 
                         Target.GetEnemySkillBar.ToggleCastBar();
                         Target.ToggleHealthBar();
+                        RemoveEnemyFromList(Target);
                         Target = null;
                         AutoAttackTime = 0;
                     }
@@ -354,7 +509,7 @@ public class BasicAttack : MonoBehaviour
                 if (AutoAttackTime >= AttackDelay && Target != null && !SkillsManager.Instance.GetActivatedSkill)
                 {
                     TargetPosition = new Vector3(Target.transform.position.x - this.transform.position.x, 0, 
-                                                         Target.transform.position.z - this.transform.position.z).normalized;
+                                                 Target.transform.position.z - this.transform.position.z).normalized;
 
                     LookDir = Quaternion.LookRotation(TargetPosition);
 
@@ -399,6 +554,7 @@ public class BasicAttack : MonoBehaviour
 
                 Target.GetSkills.DisableEnemySkillBar();
                 Target.TurnOffHealthBar();
+                RemoveEnemyFromList(Target);
                 Target = null;
 
                 GameManager.Instance.GetEnemyObject = null;

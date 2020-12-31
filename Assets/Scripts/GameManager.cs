@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating, IsTargeting;
 
     [SerializeField]
-    private bool IsInInventory;
+    private bool IsInInventory, IsInUpgrade;
 
     [SerializeField]
     private EventSystem eventsystem;
@@ -444,6 +444,18 @@ public class GameManager : MonoBehaviour
         set
         {
             MonsterToggle = value;
+        }
+    }
+
+    public bool GetIsInUpgrade
+    {
+        get
+        {
+            return IsInUpgrade;
+        }
+        set
+        {
+            IsInUpgrade = value;
         }
     }
 

@@ -236,6 +236,37 @@ public class Materials : MonoBehaviour
         return SameName;
     }
 
+    public void SetAllMaterialsToShop(int quantity)
+    {
+        quantity = Quantity;
+
+        if (GameManager.Instance.GetShopupgrade.GetCanUpgrade)
+        {
+            if (gameObject.transform.parent == GameManager.Instance.GetInventoryPanel.GetComponent<Inventory>().GetShopMaterialTransform)
+            {
+                if (Quantity > 0)
+                {
+                    if (GameManager.Instance.GetShop.GetShopLevel < GameManager.Instance.GetShop.GetMaxShopLevel ||
+                       GameManager.Instance.GetShop.GetShopPreviewLevel + GameManager.Instance.GetShop.GetShopLevel < GameManager.Instance.GetShop.GetMaxShopLevel)
+                    {
+                        CheckQuantity();
+                        if (!CheckForSameMaterialName())
+                        {
+                            Materials mat = Instantiate(InstancedObject, GameManager.Instance.GetShopUpgradePanel.transform);
+                            mat.FadedImage.gameObject.SetActive(false);
+                            mat.CommittedQuantity++;
+                        }
+                        AddExperience();
+                    }
+                    else
+                    {
+                        GameManager.Instance.CannotExecuteText();
+                    }
+                }
+            }
+        }
+    }
+
     private void AddExperience()
     {
         GameManager.Instance.GetShop.GetExperiencePoints += ShopPoints;

@@ -202,11 +202,11 @@ public class Shop : MonoBehaviour
     {
         FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
-        if ((float)ExperiencePoints >= (float)NextToLevel)
+        while ((float)ExperiencePoints >= (float)NextToLevel)
         {
             PreviewLevelUp();
         }
-        if ((float)ExperiencePoints < 0)
+        if((float)ExperiencePoints < 0)
         {
             ShopPreviewLevel--;
             int shoplevel = Mathf.Abs(ShopLevelExperiences[ShopLevel + ShopPreviewLevel]);
@@ -234,6 +234,7 @@ public class Shop : MonoBehaviour
         {
             PreviewShopExperienceText.text = "";
             ShopExperienceText.text = Mathf.Abs(NTL).ToString();
+            FillArea.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
         }
         else
         {
@@ -248,6 +249,12 @@ public class Shop : MonoBehaviour
                 ShopExperienceText.text = "";
             }
         }
+    }
+
+    public void ChangeShopExpText()
+    {
+        PreviewShopExperienceText.text = "";
+        ShopExperienceText.text = Mathf.Abs(NTL).ToString();
     }
 
     private void UpdateShopExperience()

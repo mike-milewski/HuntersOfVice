@@ -63,6 +63,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private bool IsInanimateEnemy;
 
+    private bool CheckedForTarget;
+
     public EnemyAnimations GetEnemyAnimations
     {
         get
@@ -84,6 +86,18 @@ public class Enemy : MonoBehaviour
         set
         {
             IsInanimateEnemy = value;
+        }
+    }
+
+    public bool GetCheckedForTarget
+    {
+        get
+        {
+            return CheckedForTarget;
+        }
+        set
+        {
+            CheckedForTarget = value;
         }
     }
 

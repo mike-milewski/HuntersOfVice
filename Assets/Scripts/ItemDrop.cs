@@ -90,6 +90,7 @@ public class ItemDrop : MonoBehaviour
                     if (GameManager.Instance.GetIsInInventory)
                     {
                         mat.gameObject.SetActive(true);
+                        mat.CheckQuantity();
                     }
                     else
                     {
