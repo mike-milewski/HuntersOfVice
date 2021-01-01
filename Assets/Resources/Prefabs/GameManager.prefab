@@ -43,12 +43,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21a4a2bd797d5149aa0e99908ba640a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeSpawnPointLocation: {fileID: 0}
+  audioChanger: {fileID: 0}
   settings: {fileID: 11400000, guid: 6ec4bb8cc87131146b14d0f5ae42c97a, type: 2}
   monsterbook: {fileID: 0}
+  shopKeeper: {fileID: 0}
   shop: {fileID: 0}
   shopUpgrade: {fileID: 0}
   equipmentMenu: {fileID: 0}
+  loreMonolith: {fileID: 0}
+  lowHpAnimation: {fileID: 0}
   cam: {fileID: 0}
+  AudioCamera: {fileID: 0}
   InvalidText: {fileID: 0}
   animator: {fileID: 0}
   SkillPanelAnimator: {fileID: 0}
@@ -59,12 +65,19 @@ MonoBehaviour:
   MonsterBookAnimator: {fileID: 0}
   Knight: {fileID: 0}
   ShadowPriest: {fileID: 0}
+  Toadstool: {fileID: 0}
+  Cage: {fileID: 0}
+  TempToadstool: {fileID: 0}
   EnemyObject: {fileID: 0}
   LastEnemyObject: {fileID: 0}
   SpawnPoint: {fileID: 0}
   InventoryMaterialTransform: {fileID: 0}
   ItemMessageTransform: {fileID: 0}
   MonsterEntryTransform: {fileID: 0}
+  StatusEffectTextHolder: {fileID: 0}
+  DebuffStatusIconHolder: {fileID: 0}
+  BuffStatusIconHolder: {fileID: 0}
+  ShopKeeperLastPosition: {fileID: 0}
   CharacterPanel: {fileID: 0}
   SkillsPanel: {fileID: 0}
   EquipmentPanel: {fileID: 0}
@@ -72,6 +85,24 @@ MonoBehaviour:
   SettingsPanel: {fileID: 0}
   ShopUpgradePanel: {fileID: 0}
   ItemDescriptionPanel: {fileID: 0}
+  KnightSkills:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ShadowPriestSkills:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ToadstoolSkills:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   RespawnTime: 0.5
   IsInInventory: 0
+  IsInUpgrade: 0
   eventsystem: {fileID: 0}
+  PoisonSprite: {fileID: 21300000, guid: 6dcb18064905519499482e45aebdf4a2, type: 3}
+  SlowedSprite: {fileID: 21300000, guid: 572bf3d93719a0d4b9c598308d110a80, type: 3}
+  StunSprite: {fileID: 21300000, guid: 79e78dc54d9192046bc7f83ecaa138e8, type: 3}
+  MpRestoreSprite: {fileID: 21300000, guid: 6fe4c2a9ac2165b449752dd9bb5d7e25, type: 3}
+  DoomedSprite: {fileID: 21300000, guid: 760417aeb61139643ac77b02324c67dc, type: 3}

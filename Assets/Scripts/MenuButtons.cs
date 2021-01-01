@@ -261,4 +261,10 @@ public class MenuButtons : MonoBehaviour
     {
         GameManager.Instance.GetIsInUpgrade = false;
     }
+
+    public void CloseLorePanel()
+    {
+        GameManager.Instance.GetLoreMonolith.ClosePanel();
+        GameManager.Instance.GetLoreMonolith = null;
+    }
 }

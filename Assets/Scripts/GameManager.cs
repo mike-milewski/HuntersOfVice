@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
     private EquipmentMenu equipmentMenu;
 
     [SerializeField]
+    private LoreMonolith loreMonolith = null;
+
+    [SerializeField]
     private LowHpAnimation lowHpAnimation;
 
     [SerializeField]
@@ -140,6 +143,18 @@ public class GameManager : MonoBehaviour
         set
         {
             equipmentMenu = value;
+        }
+    }
+
+    public LoreMonolith GetLoreMonolith
+    {
+        get
+        {
+            return loreMonolith;
+        }
+        set
+        {
+            loreMonolith = value;
         }
     }
 
@@ -723,6 +738,21 @@ public class GameManager : MonoBehaviour
             }
         }
         #endregion
+
+        CheckMonolithDistance();
+    }
+
+    private void CheckMonolithDistance()
+    {
+        if (loreMonolith != null)
+        {
+            if (Vector3.Distance(character.transform.position, loreMonolith.transform.position) >= loreMonolith.GetLoreDistance)
+            {
+                loreMonolith.ClosePanel();
+                loreMonolith = null;
+            }
+        }
+        else return;
     }
 
     private IEnumerator SetMenuAnimationToFalse()

@@ -4709,6 +4709,8 @@ GameObject:
   - component: {fileID: 4666064240953786}
   - component: {fileID: 33101503895390180}
   - component: {fileID: 23789080647812758}
+  - component: {fileID: 1103257712}
+  - component: {fileID: 1662883797625752839}
   m_Layer: 0
   m_Name: Tombstone_07
   m_TagString: Untagged
@@ -4776,3 +4778,34 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1103257712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822213079043498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c1f876553d297429dbb876155bceee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoreNumberString: Monolith Lore Volume I
+  LoreString: 
+  LorePanel: {fileID: 0}
+  PanelTitleText: {fileID: 0}
+  PanelText: {fileID: 0}
+  LoreDistance: 5
+--- !u!65 &1662883797625752839
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822213079043498}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1630278, y: 2.589233, z: 0.5057504}
+  m_Center: {x: -0.0025709867, y: 1.299823, z: 0.0054216236}

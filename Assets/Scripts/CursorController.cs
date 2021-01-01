@@ -134,6 +134,7 @@ public class CursorController : MonoBehaviour
         {
             OpenTreasureChest();
             OpenShopMenu();
+            OpenLoreMonolith();
         }
     }
 
@@ -219,6 +220,24 @@ public class CursorController : MonoBehaviour
                     SoundManager.Instance.Menu();
                     hit.collider.GetComponent<ShopKeeper>().GetIsInShop = true;
                     hit.collider.GetComponent<ShopKeeper>().GetAnimator.SetBool("FadeIn", true);
+                }
+            }
+        }
+    }
+
+    private void OpenLoreMonolith()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, SpeechMouseRange))
+            {
+                if (hit.collider.GetComponent<LoreMonolith>())
+                {
+                    SoundManager.Instance.Menu();
+                    hit.collider.GetComponent<LoreMonolith>().OpenPanel();
+                    GameManager.Instance.GetLoreMonolith = hit.collider.GetComponent<LoreMonolith>();
                 }
             }
         }

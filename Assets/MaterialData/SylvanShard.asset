@@ -15,4 +15,4 @@ MonoBehaviour:
   MaterialSprite: {fileID: 21300000, guid: cc981a80d633de9428e06af6d8076368, type: 3}
   MaterialName: Sylvan Shard
   ShopPoints: 5
-  MaterialDescription: A gleaming piece of a crystal found in the forest.
+  MaterialDescription: A gleaming gem found in the forest.

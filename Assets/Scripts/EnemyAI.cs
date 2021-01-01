@@ -123,7 +123,7 @@ public class EnemyAI : MonoBehaviour
 
     private Quaternion LookDir;
 
-    private bool IsDoomed, Healing;
+    private bool IsDoomed, Healing, GainedEXP;
 
     public int GetStateArrayIndex
     {
@@ -750,8 +750,6 @@ public class EnemyAI : MonoBehaviour
 
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
 
-        enemy.GetHealth.ResetHealthAnimation();
-
         enemy.GetLocalHealth.gameObject.SetActive(false);
 
         enemySkills.GetSkillBar.gameObject.SetActive(false);
@@ -775,11 +773,16 @@ public class EnemyAI : MonoBehaviour
 
         enemy.ToggleHealthBar();
 
-        enemy.ReturnCoins();
+        if(!GainedEXP)
+        {
+            enemy.ReturnCoins();
 
-        enemy.ReturnExperience();
+            enemy.ReturnExperience();
 
-        if(!IsUsingAnimator)
+            GainedEXP = true;
+        }
+
+        if (!IsUsingAnimator)
         {
             Anim.DeathAni();
         }
@@ -956,6 +959,7 @@ public class EnemyAI : MonoBehaviour
     private void ResetStats()
     {
         IsDead = false;
+        GainedEXP = false;
 
         if(gameObject.GetComponent<AudioSource>() != null)
         {
@@ -1004,6 +1008,7 @@ public class EnemyAI : MonoBehaviour
             }
 
             enemy.GetLocalHealth.gameObject.SetActive(true);
+            enemy.GetHealth.ResetHealthAnimation();
             enemy.GetHealth.IncreaseHealth(character.MaxHealth);
             enemy.GetLocalHealthInfo();
             enemy.GetEnemyInfo();
