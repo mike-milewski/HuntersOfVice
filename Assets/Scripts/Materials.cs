@@ -249,6 +249,7 @@ public class Materials : MonoBehaviour
                     if (GameManager.Instance.GetShop.GetShopLevel < GameManager.Instance.GetShop.GetMaxShopLevel ||
                        GameManager.Instance.GetShop.GetShopPreviewLevel + GameManager.Instance.GetShop.GetShopLevel < GameManager.Instance.GetShop.GetMaxShopLevel)
                     {
+                        SoundManager.Instance.ShopMaterials();
                         CheckQuantity();
                         if (!CheckForSameMaterialName())
                         {

@@ -872,6 +872,10 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.Quickness):
                 skill.GetStatusDuration = -1;
+                if (skill.GetStatusIcon.activeInHierarchy)
+                {
+                    skill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                }
                 break;
             case (Ability.ImmuneToStatusEffects):
                 character.GetIsImmuneToStatusEffects = true;

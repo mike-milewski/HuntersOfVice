@@ -202,7 +202,7 @@ public class Shop : MonoBehaviour
     {
         FillAreaTwo.fillAmount = (float)ExperiencePoints / (float)NextToLevel;
 
-        while ((float)ExperiencePoints >= (float)NextToLevel)
+        while ((float)ExperiencePoints >= (float)NextToLevel && (ShopLevel + ShopPreviewLevel < MaxShopLevel))
         {
             PreviewLevelUp();
         }

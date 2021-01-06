@@ -5,7 +5,8 @@ public class SetAllMaterials : MonoBehaviour
 {
     public void AddAllMaterials()
     {
-        if(GameManager.Instance.GetInventoryMaterialTransform.childCount > 0 && GameManager.Instance.GetIsInUpgrade)
+        if(GameManager.Instance.GetInventoryMaterialTransform.childCount > 0 && GameManager.Instance.GetShopupgrade.GetCanUpgrade && 
+           GameManager.Instance.GetShop.GetShopLevel < GameManager.Instance.GetShop.GetMaxShopLevel)
         {
             foreach (Materials m in GameManager.Instance.GetInventoryMaterialTransform.GetComponentsInChildren<Materials>())
             {

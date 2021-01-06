@@ -2757,9 +2757,18 @@ public class Skills : StatusEffects
             {
                 if(GetPlayerElement == PlayerElement.NONE)
                 {
-                    SkillPanelText.text = SkillDescription + "\n\n" + AddedEffectText() + "<#EFDFB8>" + "Status Duration: " + "</color>" 
+                    if(GetStatusDuration <= -1)
+                    {
+                        SkillPanelText.text = SkillDescription + "\n\n" + AddedEffectText() + "<#EFDFB8>" + "Status Duration: " + "</color>"
+                                          + "Infinite" + "\n\n" + "Cast Time: Instant" +
+                                          "\n" + "Cooldown: " + CoolDown + "s";
+                    }
+                    else
+                    {
+                        SkillPanelText.text = SkillDescription + "\n\n" + AddedEffectText() + "<#EFDFB8>" + "Status Duration: " + "</color>"
                                           + GetStatusDuration + "s" + "\n\n" + "Cast Time: Instant" +
                                           "\n" + "Cooldown: " + CoolDown + "s";
+                    }
                 }
                 else
                 {

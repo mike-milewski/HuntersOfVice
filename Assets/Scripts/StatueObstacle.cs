@@ -77,6 +77,8 @@ public class StatueObstacle : MonoBehaviour
 
     private void OnEnable()
     {
+        this.GetComponent<ReturnObjectToOriginalRotation>().GetDefaultDirection = transform.rotation;
+
         TimeToIncrease = 0;
         FollowTime = 0;
         ParticleWaitTime = 0;
@@ -101,7 +103,7 @@ public class StatueObstacle : MonoBehaviour
             EnableAudio();
 
             StatueDistance = new Vector3(transform.position.x - PlayerTarget.transform.position.x, 0,
-                                   transform.position.z - PlayerTarget.transform.position.z).normalized;
+                                         transform.position.z - PlayerTarget.transform.position.z).normalized;
 
             LaserPointDistance = new Vector3(LaserParticleOriginPoint.position.x - PlayerTarget.transform.position.x,
                                              LaserParticleOriginPoint.position.y - PlayerTarget.transform.position.y,

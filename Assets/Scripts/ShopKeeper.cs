@@ -83,6 +83,7 @@ public class ShopKeeper : MonoBehaviour
                 UpgradeAnimator.SetBool("FadeIn", false);
                 BuyAnimator.SetBool("FadeIn", false);
                 GameManager.Instance.CloseInventoryMenu();
+                GameManager.Instance.GetShopupgrade.GetCanUpgrade = false;
                 IsInShop = false;
             }
         }

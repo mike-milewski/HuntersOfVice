@@ -626,7 +626,7 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "Increases the damage area of Diabolic Lightning and increases its power by 25.";
+        SkillInfoText.text = "Increases the power of Diabolic Lightning by 35.";
     }
 
     private void ShatterBonusPassiveText()
@@ -891,8 +891,7 @@ public class SkillMenu : MonoBehaviour
 
     private void DiabolicLightningBonus()
     {
-        DiabolicLightningSkill.GetPotency += 25;
-        DiabolicLightningSkill.GetAreaOfEffectRange += 2;
+        DiabolicLightningSkill.GetPotency += 35;
     }
 
     private void ShatterBonus()

@@ -56,12 +56,27 @@ public class EnemyConnection : MonoBehaviour
 
     public void EnableChase()
     {
-        foreach (EnemyAI enemyai in enemyAI)
+        Invoke("InvokeChase", 1f);
+    }
+
+    private void InvokeChase()
+    {
+        if(IsInsideCollider)
         {
-            enemyai.GetPlayerEntry = true;
-            enemyai.GetPlayerTarget = character;
-            enemyai.GetStates = States.Chase;
-            enemyai.GetEnemy.GetExperience = character.GetComponent<Experience>();
+            foreach (EnemyAI enemyai in enemyAI)
+            {
+                enemyai.GetPlayerEntry = true;
+                enemyai.GetPlayerTarget = character;
+                enemyai.GetStates = States.Chase;
+                enemyai.GetEnemy.GetExperience = character.GetComponent<Experience>();
+            }
+        }
+        else
+        {
+            foreach (EnemyAI enemyai in enemyAI)
+            {
+                enemyai.GetStates = States.Patrol;
+            }
         }
     }
 
