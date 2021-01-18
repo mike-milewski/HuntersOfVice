@@ -100,8 +100,6 @@ public class StatueObstacle : MonoBehaviour
 
         if(IsFollowingPlayer && !Attacking)
         {
-            EnableAudio();
-
             StatueDistance = new Vector3(transform.position.x - PlayerTarget.transform.position.x, 0,
                                          transform.position.z - PlayerTarget.transform.position.z).normalized;
 
@@ -118,8 +116,6 @@ public class StatueObstacle : MonoBehaviour
 
         if(Attacking)
         {
-            DisableAudio();
-
             ParticleWaitTime += Time.deltaTime;
             if(ParticleWaitTime >= ParticleTime)
             {

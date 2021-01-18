@@ -2637,8 +2637,10 @@ public class Skills : StatusEffects
                     Target.GetPuckAI.GetStates = BossStates.Chase;
                     Target.GetPuckAI.EnableSpeech();
                 }
-
-                Target.GetPuckAI.CheckHP();
+                if(Target.GetCharacter.CurrentHealth > 0)
+                {
+                    Target.GetPuckAI.CheckHP();
+                }
             }
             if(Target.GetRuneGolemAI != null)
             {
@@ -2648,8 +2650,23 @@ public class Skills : StatusEffects
                     Target.GetRuneGolemAI.GetSphereTrigger.gameObject.SetActive(false);
                     Target.GetRuneGolemAI.GetStates = RuneGolemStates.Chase;
                 }
-
-                Target.GetRuneGolemAI.CheckHP();
+                if(Target.GetCharacter.CurrentHealth > 0)
+                {
+                    Target.GetRuneGolemAI.CheckHP();
+                }
+            }
+            if (Target.GetSylvanDietyAI != null)
+            {
+                if (Target.GetSylvanDietyAI.GetPlayerTarget == null)
+                {
+                    Target.GetRuneGolemAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                    Target.GetRuneGolemAI.GetSphereTrigger.gameObject.SetActive(false);
+                    Target.GetRuneGolemAI.GetStates = RuneGolemStates.Chase;
+                }
+                if(Target.GetCharacter.CurrentHealth > 0)
+                {
+                    Target.GetSylvanDietyAI.CheckHP();
+                }
             }
         }
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();

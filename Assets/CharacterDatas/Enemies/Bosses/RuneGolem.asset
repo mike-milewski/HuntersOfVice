@@ -17,8 +17,8 @@ MonoBehaviour:
   Immunities: 00000000
   Absorbtions: 00000000
   CharacterName: Rune Golem
-  CharacterLevel: 15
-  Health: 4000
+  CharacterLevel: 10
+  Health: 1
   Mana: 0
   Strength: 38
   Defense: 25

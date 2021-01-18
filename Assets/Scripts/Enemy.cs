@@ -19,6 +19,9 @@ public class Enemy : MonoBehaviour
     private RuneGolemAnimations runeGolemAnimations = null;
 
     [SerializeField]
+    private SylvanDietyAnimations SylvanDietyAnimations = null;
+
+    [SerializeField]
     private EnemyAI enemyAI = null;
 
     [SerializeField]
@@ -26,6 +29,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private RuneGolem runeGolemAI = null;
+
+    [SerializeField]
+    private SylvanDiety SylvanDietyAI = null;
 
     [SerializeField]
     private Health health;
@@ -170,6 +176,18 @@ public class Enemy : MonoBehaviour
         set
         {
             runeGolemAI = value;
+        }
+    }
+
+    public SylvanDiety GetSylvanDietyAI
+    {
+        get
+        {
+            return SylvanDietyAI;
+        }
+        set
+        {
+            SylvanDietyAI = value;
         }
     }
 
@@ -332,6 +350,10 @@ public class Enemy : MonoBehaviour
         if(puckAnimations != null)
         {
             puckAnimations.ReverseFadeHealth();
+        }
+        if(runeGolemAnimations != null)
+        {
+            runeGolemAnimations.ReverseFadeHealth();
         }
         TargetedImage.gameObject.SetActive(false);
     }

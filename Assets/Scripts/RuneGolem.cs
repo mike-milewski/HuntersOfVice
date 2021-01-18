@@ -611,7 +611,7 @@ public class RuneGolem : MonoBehaviour
 
             monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
 
-            //monsterinfo.GetCharacterData.Add(character.GetCharacterData);
+            monsterinfo.GetCharacterData.Add(character.GetCharacterData);
         }
         else
         {
@@ -638,7 +638,7 @@ public class RuneGolem : MonoBehaviour
 
                 monsterinfo.GetMonsterName.text = character.GetCharacterData.CharacterName;
 
-                //monsterinfo.GetCharacterData.Add(character.GetCharacterData);
+                monsterinfo.GetCharacterData.Add(character.GetCharacterData);
             }
         }
     }

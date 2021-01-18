@@ -20,6 +20,7 @@ public class SpikeTrap : MonoBehaviour
 
     private void InvokeResetTrap()
     {
+        SoundManager.Instance.SpikeTrapSE();
         animator.SetBool("PlaySpikes", true);
         Invoke("InvokeResetAnimator", 0.4f);
         obstacleDamageRadius.enabled = false;

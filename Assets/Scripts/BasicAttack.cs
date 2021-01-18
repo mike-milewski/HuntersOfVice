@@ -679,7 +679,7 @@ public class BasicAttack : MonoBehaviour
                 }
                 else if (CheckResistances(enemy))
                 {
-                    float ResistDamage = (DamageType / 1.25f) + (int)CriticalValue;
+                    float ResistDamage = (int)CriticalValue / 1.25f;
 
                     Mathf.RoundToInt(ResistDamage);
 
@@ -929,11 +929,24 @@ public class BasicAttack : MonoBehaviour
             }
             if (enemy.GetPuckAI != null)
             {
-                enemy.GetPuckAI.CheckHP();
+                if (enemy.GetCharacter.CurrentHealth > 0)
+                {
+                    enemy.GetPuckAI.CheckHP();
+                }
             }
             if (enemy.GetRuneGolemAI != null)
             {
-                enemy.GetRuneGolemAI.CheckHP();
+                if(enemy.GetCharacter.CurrentHealth > 0)
+                {
+                    enemy.GetRuneGolemAI.CheckHP();
+                }
+            }
+            if (enemy.GetSylvanDietyAI != null)
+            {
+                if (enemy.GetCharacter.CurrentHealth > 0)
+                {
+                    enemy.GetSylvanDietyAI.CheckHP();
+                }
             }
         }
         return Damagetext.GetComponentInChildren<TextMeshProUGUI>();

@@ -441,6 +441,9 @@ public class EnemySkills : MonoBehaviour
     private RuneGolem runeGolemAI = null;
 
     [SerializeField]
+    private SylvanDiety SylvanDietyAI = null;
+
+    [SerializeField]
     private EnemySkillBar skillBar;
 
     [SerializeField]
@@ -451,6 +454,9 @@ public class EnemySkills : MonoBehaviour
 
     [SerializeField]
     private RuneGolemDamageRadius runeGolemDamageRadius = null;
+
+    [SerializeField]
+    private SylvanDietyDamageRadius SylvanDietyDamageRadius = null;
 
     [SerializeField]
     private Health health;
@@ -1625,6 +1631,22 @@ public class EnemySkills : MonoBehaviour
         }
     }
 
+    public void DisableSylvanDietyRadiusImage()
+    {
+        foreach (Image r in SylvanDietyDamageRadius.GetComponentsInChildren<Image>())
+        {
+            r.enabled = false;
+        }
+    }
+
+    public void EnableSylvanDietyRadiusImage()
+    {
+        foreach (Image r in SylvanDietyDamageRadius.GetComponentsInChildren<Image>())
+        {
+            r.enabled = true;
+        }
+    }
+
     public void EnableRadiusImage()
     {
         foreach (Image r in damageRadius.GetComponentsInChildren<Image>())
@@ -1677,6 +1699,19 @@ public class EnemySkills : MonoBehaviour
     public void EnableRuneGolemRadius()
     {
         runeGolemDamageRadius.enabled = true;
+    }
+
+    public void DisableSylvanDietyRadius()
+    {
+        SylvanDietyDamageRadius.ResetLocalScale();
+        SylvanDietyDamageRadius.ResetSizeDelta();
+
+        SylvanDietyDamageRadius.enabled = false;
+    }
+
+    public void EnableSylvanDietyRadius()
+    {
+        SylvanDietyDamageRadius.enabled = true;
     }
 
     public TextMeshProUGUI EnemyStatus()
@@ -1844,7 +1879,7 @@ public class EnemySkills : MonoBehaviour
                 GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<Image>().sprite =
                     this.GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
 
-                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().GetKeyInput = 
+                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().GetKeyInput =
                 character.GetComponent<Puck>().GetPhases[character.GetComponent<Puck>().GetPhaseIndex].GetBossAiStates[character.GetComponent<Puck>().GetStateArrayIndex].GetSkillIndex;
 
                 GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
@@ -1885,15 +1920,19 @@ public class EnemySkills : MonoBehaviour
         }
         else if(GameManager.Instance.GetToadstool.activeInHierarchy)
         {
-            if (puckAI != null)
-            {
-                ReflectedValue = 0.01f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
-            }
             if (enemyAI != null)
             {
                 ReflectedValue = 0.05f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
             }
+            if (puckAI != null)
+            {
+                ReflectedValue = 0.01f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
             if (runeGolemAI != null)
+            {
+                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+            if(SylvanDietyAI != null)
             {
                 ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
             }
@@ -2174,6 +2213,92 @@ public class EnemySkills : MonoBehaviour
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    public TextMeshProUGUI SylvanDietySkillDamageText(int potency, string skillName)
+    {
+        skills[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillName;
+
+        var DamageTxt = ObjectPooler.Instance.GetPlayerDamageText();
+
+        DamageTxt.SetActive(true);
+
+        DamageTxt.transform.SetParent(GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetTextHolder.transform, false);
+
+        var Target = SylvanDietyAI.GetPlayerTarget;
+
+        CreateSylvanDietyHitParticleEffect();
+
+        float Critical = character.GetCriticalChance;
+
+        if (Target == null)
+        {
+            return null;
+        }
+        else
+        {
+            if (Target.GetComponent<Health>().GetIsImmune)
+            {
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=25>" + "0";
+            }
+            else
+            {
+                #region CriticalHitCalculation
+                if (Random.value * 100 <= Critical)
+                {
+                    float CritCalc = potency * 1.25f;
+
+                    Mathf.Round(CritCalc);
+
+                    if ((int)CritCalc - Target.GetComponent<Character>().CharacterDefense < 0)
+                    {
+                        Target.GetComponent<Health>().ModifyHealth(-1);
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
+                    }
+                    else
+                    {
+                        Target.GetComponent<Health>().ModifyHealth
+                                                                 (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
+                                                                                   Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                    }
+                }
+                else
+                {
+                    if (potency - Target.GetComponent<Character>().CharacterDefense < 0)
+                    {
+                        Target.GetComponent<Health>().ModifyHealth(-1);
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1";
+                    }
+                    else
+                    {
+                        Target.GetComponent<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
+
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                                                                                   (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                    }
+                }
+                #endregion
+            }
+
+            if (!SkillsManager.Instance.GetActivatedSkill)
+            {
+                if (SylvanDietyAI.GetPlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1)
+                {
+                    SylvanDietyAI.GetPlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
+                }
+            }
+        }
+
+        if (Target.GetComponent<Health>().GetReflectingDamage)
+        {
+            ReflectedDamage();
+        }
+
+        return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     public TextMeshProUGUI SkillHealText(int potency, string skillName)
     {
         skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillName;
@@ -2269,6 +2394,25 @@ public class EnemySkills : MonoBehaviour
                                                                                 Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
 
             GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
+        }
+    }
+
+    private void CreateSylvanDietyHitParticleEffect()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var Target = SylvanDietyAI.GetPlayerTarget;
+
+            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+
+            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
+
+            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                                Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
+
+            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
         }
     }
 }

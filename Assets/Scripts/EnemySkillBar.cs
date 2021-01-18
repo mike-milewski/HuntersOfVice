@@ -24,6 +24,9 @@ public class EnemySkillBar : MonoBehaviour
     private RuneGolem runeGolemAI = null;
 
     [SerializeField]
+    private SylvanDiety SylvanDietyAI = null;
+
+    [SerializeField]
     private EnemySkills enemySkills = null;
 
     [SerializeField]
@@ -132,6 +135,11 @@ public class EnemySkillBar : MonoBehaviour
         {
             CastTime = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
             character.GetComponentInChildren<RuneGolemDamageRadius>().GetShapes = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetShapes;
+        }
+        if (SylvanDietyAI != null)
+        {
+            CastTime = enemySkills.GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+            character.GetComponentInChildren<SylvanDietyDamageRadius>().GetShapes = enemySkills.GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetShapes;
         }
         Casting = true;
         SkillBarFillImage.fillAmount = 0;

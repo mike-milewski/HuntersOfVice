@@ -35,7 +35,6 @@ public class ReturnObjectToOriginalRotation : MonoBehaviour
 
         if(transform.rotation == LookDirection)
         {
-            statueObstacle.DisableAudio();
             this.enabled = false;
         }
     }
