@@ -305,6 +305,10 @@ public class EnemyAnimations : MonoBehaviour
             if (!CheckedForPuzzle)
             {
                 puzzle.GatePuzzleType();
+                if(gameObject.GetComponent<LanternPuzzle>())
+                {
+                    gameObject.GetComponent<LanternPuzzle>().TurnOnLantern();
+                }
                 CheckedForPuzzle = true;
             }
         }

@@ -7,6 +7,9 @@ public class ToadstoolWalk : MonoBehaviour
     private Animator animator;
 
     [SerializeField]
+    private TipText tipText;
+
+    [SerializeField]
     private Transform TargetPositionToMoveTowards;
 
     [SerializeField]
@@ -48,6 +51,7 @@ public class ToadstoolWalk : MonoBehaviour
     private void InvokeParticleEffect()
     {
         SpawnParticleEffect();
+        tipText.ShowTip();
         gameObject.SetActive(false);
     }
 

@@ -17,7 +17,7 @@ MonoBehaviour:
   Immunities: 
   Absorbtions: 
   CharacterName: Rock Spirit
-  CharacterLevel: 5
+  CharacterLevel: 6
   Health: 356
   Mana: 0
   Strength: 28
@@ -27,8 +27,8 @@ MonoBehaviour:
   MpIncrease: 0
   CriticalHitChance: 5
   Coins: 25
-  EXP: 40
-  MaterialDataDropChance: 30
+  EXP: 41
+  MaterialDataDropChance: 45
   MoveSpeed: 0
   CheckedData: 1
   materialdata: {fileID: 11400000, guid: 1589613105fa9ae41bf38cea464a0efc, type: 2}

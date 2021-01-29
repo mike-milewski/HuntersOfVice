@@ -29,6 +29,6 @@ MonoBehaviour:
   Coins: 0
   EXP: 0
   MaterialDataDropChance: 0
-  MoveSpeed: 4.5
+  MoveSpeed: 5.5
   CheckedData: 0
   materialdata: {fileID: 0}
