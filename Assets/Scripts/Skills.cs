@@ -2659,9 +2659,9 @@ public class Skills : StatusEffects
             {
                 if (Target.GetSylvanDietyAI.GetPlayerTarget == null)
                 {
-                    Target.GetRuneGolemAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
-                    Target.GetRuneGolemAI.GetSphereTrigger.gameObject.SetActive(false);
-                    Target.GetRuneGolemAI.GetStates = RuneGolemStates.Chase;
+                    Target.GetSylvanDietyAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                    Target.GetSylvanDietyAI.GetSphereTrigger.gameObject.SetActive(false);
+                    Target.GetSylvanDietyAI.GetSylvanDietyStates = SylvanDietyBossStates.Chase;
                 }
                 if(Target.GetCharacter.CurrentHealth > 0)
                 {

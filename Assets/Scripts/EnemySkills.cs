@@ -39,7 +39,17 @@ public enum Skill
     //FungusLord Skills
     ConfusionBreath,
     Punch,
-    Harrow
+    Harrow,
+    //Shared Beetle Skills
+    Smash,
+    //AmberBeetle Skills
+    Shock,
+    //RubyBeetle Skills
+    Burn,
+    //EmeraldBeetle Skills
+    Wind,
+    //AmythestBeetle Skills
+    Dark
 };
 
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
@@ -586,6 +596,19 @@ public class EnemySkills : MonoBehaviour
                         #endregion
                 }
             }
+            else if(SylvanDietyAI != null)
+            {
+                switch (skills[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkills)
+                {
+                    #region SylvanDiety Skills
+                    case (Skill.Light):
+                        Lux(GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                        #endregion
+                }
+            }
             else
             {
                 switch (skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkills)
@@ -681,6 +704,54 @@ public class EnemySkills : MonoBehaviour
                            new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                    #endregion
+
+                    #region Shared Beetle Skills
+                    case (Skill.Smash):
+                        Smash(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                                  GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetAttackRange,
+                                  GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                    #endregion
+
+                    #region AmberBeetle Skill
+                    case (Skill.Shock):
+                        Shock(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                    #endregion
+
+                    #region EmeraldBeetle Skill
+                    case (Skill.Wind):
+                        Wind(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                    #endregion
+
+                    #region RubyBeetle Skill
+                    case (Skill.Burn):
+                        Burn(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
+                    #endregion
+
+                    #region AmythestBeetle Skill
+                    case (Skill.Dark):
+                        Dark(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            new Vector2(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY),
+                            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                         break;
                         #endregion
                 }
@@ -1496,6 +1567,272 @@ public class EnemySkills : MonoBehaviour
     }
     #endregion
 
+    #region Shock
+    public void Shock(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        AnimatorCastingAnimation();
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            enemyAI.GetAnimation.Skill2Animator();
+
+            damageRadius.CheckIfPlayerIsInCircleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
+
+            DisableRadiusImage();
+
+            if (settings.UseParticleEffects)
+            {
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetShockParticle();
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                    transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            Invoke("InvokeShock", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+        }
+    }
+
+    private void InvokeShock()
+    {
+        DisableRadius();
+
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region Wind
+    public void Wind(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        AnimatorCastingAnimation();
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            enemyAI.GetAnimation.Skill2Animator();
+
+            damageRadius.CheckIfPlayerIsInCircleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
+
+            DisableRadiusImage();
+
+            if (settings.UseParticleEffects)
+            {
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetWindParticle();
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                    transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            Invoke("InvokeWind", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+        }
+    }
+
+    private void InvokeWind()
+    {
+        DisableRadius();
+
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region Burn
+    public void Burn(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        AnimatorCastingAnimation();
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            enemyAI.GetAnimation.Skill2Animator();
+
+            damageRadius.CheckIfPlayerIsInCircleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
+
+            DisableRadiusImage();
+
+            if (settings.UseParticleEffects)
+            {
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetBurnParticle();
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                    transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            Invoke("InvokeBurn", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+        }
+    }
+
+    private void InvokeBurn()
+    {
+        DisableRadius();
+
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region Dark
+    public void Dark(int potency, float castTime, Vector2 sizeDelta, string skillname)
+    {
+        AnimatorCastingAnimation();
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+
+        sizeDelta = new Vector2(skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX,
+                                skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY);
+
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableRadius();
+        EnableRadiusImage();
+
+        if (skillBar.GetFillImage.fillAmount >= 1)
+        {
+            enemyAI.GetAnimation.Skill2Animator();
+
+            damageRadius.CheckIfPlayerIsInCircleRadius(damageRadius.GetDamageShape.transform.position, damageRadius.SetCircleColliderSize());
+
+            DisableRadiusImage();
+
+            if (settings.UseParticleEffects)
+            {
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetDarkParticle();
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                    transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+                GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            Invoke("InvokeDark", skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetApplySkill);
+        }
+    }
+
+    private void InvokeDark()
+    {
+        DisableRadius();
+
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region Smash
+    public void Smash(int potency, float attackRange, string skillname)
+    {
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency = potency;
+        skills[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        if (enemyAI.GetPlayerTarget != null)
+        {
+            AnimatorSkill1();
+        }
+        ActiveSkill = false;
+    }
+    #endregion
+
+    #region Lux
+    public void Lux(int potency, float castTime, string skillname)
+    {
+        SylvanDietySpellCastingAnimation();
+
+        skills[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        if (skillBar.GetFillImage.fillAmount >= 1 && SylvanDietyAI.GetPlayerTarget != null)
+        {
+            SylvanDietySkillCast();
+
+            if (settings.UseParticleEffects)
+            {
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetLightParticle();
+
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                                                                     SylvanDietyAI.GetPlayerTarget.transform.position.x,
+                                                                                                                     SylvanDietyAI.GetPlayerTarget.transform.position.y + 0.7f,
+                                                                                                                     SylvanDietyAI.GetPlayerTarget.transform.position.z);
+
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(SylvanDietyAI.GetPlayerTarget.transform);
+
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.localScale = new Vector3(1, 1, 1);
+            }
+            ActiveSkill = false;
+
+            SylvanDietySkillDamageText(GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+        }
+    }
+    #endregion
+
     private void UseSkillBar()
     {
         skillBar.gameObject.SetActive(true);
@@ -1515,6 +1852,11 @@ public class EnemySkills : MonoBehaviour
     private void RuneGolemSpellCastingAnimation()
     {
         runeGolemAI.GetAnimation.AnimatorCasting();
+    }
+
+    private void SylvanDietySpellCastingAnimation()
+    {
+        SylvanDietyAI.GetAnimation.AnimatorCasting();
     }
 
     private void AnimatorCastingAnimation()
@@ -1571,6 +1913,11 @@ public class EnemySkills : MonoBehaviour
     private void RuneGolemSmashWaveSkillAnimation()
     {
         runeGolemAI.GetAnimation.Skill2Animator();
+    }
+
+    private void SylvanDietySkillCast()
+    {
+        SylvanDietyAI.GetAnimation.SkillAnimator();
     }
 
     public void DisableEnemySkillBar()

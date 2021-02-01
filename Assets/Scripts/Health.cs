@@ -324,6 +324,7 @@ public class Health : MonoBehaviour
                 if(character.GetComponent<SylvanDiety>())
                 {
                     SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveEnemyFromList(character.GetComponent<Enemy>());
+                    character.GetComponent<SylvanDiety>().Dead();
                 }
             }
         }

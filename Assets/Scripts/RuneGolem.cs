@@ -144,9 +144,6 @@ public class RuneGolem : MonoBehaviour
     private GameObject treasureChest, ChestSpawnParticle, EarthEffigy;
 
     [SerializeField]
-    private GameObject[] TreeObjects;
-
-    [SerializeField]
     private GameObject WallTrigger;
 
     [SerializeField]
@@ -754,12 +751,15 @@ public class RuneGolem : MonoBehaviour
 
     private void DisableEarthEffigy()
     {
-        if(settings.UseParticleEffects)
+        if(EarthEffigy.activeInHierarchy)
         {
-            SpawnParticleEffect(new Vector3(EarthEffigy.transform.position.x, EarthEffigy.transform.position.y, EarthEffigy.transform.position.z - 0.3f));
+            if (settings.UseParticleEffects)
+            {
+                SpawnParticleEffect(new Vector3(EarthEffigy.transform.position.x, EarthEffigy.transform.position.y, EarthEffigy.transform.position.z - 0.3f));
+            }
+
+            EarthEffigy.SetActive(false);
         }
-        
-        EarthEffigy.SetActive(false);
     }
 
     private void OnEnabledOff()

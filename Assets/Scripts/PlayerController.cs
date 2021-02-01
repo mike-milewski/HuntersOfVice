@@ -121,4 +121,10 @@ public class PlayerController : MonoBehaviour
             direction = Vector3.zero;
         }
     }
+
+    public void SetMoveToFalse()
+    {
+        animator.SetFloat("Speed", 0);
+        direction = Vector3.zero;
+    }
 }

@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
     private MonsterBook monsterbook;
 
     [SerializeField]
+    private MenuButtons menubuttons;
+
+    [SerializeField]
     private ShopKeeper shopKeeper;
 
     [SerializeField]
@@ -79,6 +82,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private bool IsInInventory, IsInUpgrade;
+
+    private bool BeatGame;
 
     [SerializeField]
     private EventSystem eventsystem;
@@ -522,6 +527,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool GetBeatGame
+    {
+        get
+        {
+            return BeatGame;
+        }
+        set
+        {
+            BeatGame = value;
+        }
+    }
+
     private void OnEnable()
     {
         SelectedCharacter selectedCharacter = FindObjectOfType<SelectedCharacter>();
@@ -639,102 +656,105 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         #region UIPanels
-        if (Input.GetKeyDown(KeyCode.I))
+        if(!BeatGame)
         {
-            if(!MenuAnimating)
+            if (Input.GetKeyDown(KeyCode.I))
             {
-                MenuAnimating = true;
-                if (!InventoryToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleInventoryPanel();
+                    MenuAnimating = true;
+                    if (!InventoryToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleInventoryPanel();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
+                        IsInInventory = false;
+                        InventoryToggle = false;
+                        InventoryPanelAnimator.SetBool("FadeIn", false);
+                        MonsterBookAnimator.SetBool("FadeIn", false);
+                        MonsterToggle = false;
+                        monsterbook.SetIsSelectedToFalse();
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
-                    IsInInventory = false;
-                    InventoryToggle = false;
-                    InventoryPanelAnimator.SetBool("FadeIn", false);
-                    MonsterBookAnimator.SetBool("FadeIn", false);
-                    MonsterToggle = false;
-                    monsterbook.SetIsSelectedToFalse();
-                }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if(!MenuAnimating)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                MenuAnimating = true;
-                if (!EquipmentToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleEquipmentPanel();
+                    MenuAnimating = true;
+                    if (!EquipmentToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleEquipmentPanel();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
+                        EquipmentToggle = false;
+                        EquipmentPanelAnimator.SetBool("FadeIn", false);
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
-                    EquipmentToggle = false;
-                    EquipmentPanelAnimator.SetBool("FadeIn", false);
-                }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if(!MenuAnimating)
+            if (Input.GetKeyDown(KeyCode.C))
             {
-                MenuAnimating = true;
-                if (!CharacterToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleCharacterPanel();
+                    MenuAnimating = true;
+                    if (!CharacterToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleCharacterPanel();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
+                        CharacterToggle = false;
+                        CharacterPanelAnimator.SetBool("FadeIn", false);
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
-                    CharacterToggle = false;
-                    CharacterPanelAnimator.SetBool("FadeIn", false);
-                }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            if(!MenuAnimating)
+            if (Input.GetKeyDown(KeyCode.V))
             {
-                MenuAnimating = true;
-                if (!SkillsToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleSkillsPanel();
+                    MenuAnimating = true;
+                    if (!SkillsToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleSkillsPanel();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
+                        MaskSkillsPanel();
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
-                    MaskSkillsPanel();
-                }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            if(!MenuAnimating)
+            if (Input.GetKeyDown(KeyCode.O))
             {
-                MenuAnimating = true;
-                if (!SettingsToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleSettingsPanel();
+                    MenuAnimating = true;
+                    if (!SettingsToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleSettingsPanel();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
+                        SettingsToggle = false;
+                        SettingsPanelAnimator.SetBool("FadeIn", false);
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
-                    SettingsToggle = false;
-                    SettingsPanelAnimator.SetBool("FadeIn", false);
-                }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
         }
         #endregion
@@ -764,105 +784,120 @@ public class GameManager : MonoBehaviour
 
     public void ButtonEquipmentPanel()
     {
-        if(!MenuAnimating)
+        if(!BeatGame)
         {
-            MenuAnimating = true;
-            if (!EquipmentToggle)
+            if (!MenuAnimating)
             {
-                SoundManager.Instance.Menu();
-                ToggleEquipmentPanel();
+                MenuAnimating = true;
+                if (!EquipmentToggle)
+                {
+                    SoundManager.Instance.Menu();
+                    ToggleEquipmentPanel();
+                }
+                else
+                {
+                    SoundManager.Instance.ReverseMenu();
+                    EquipmentToggle = false;
+                    EquipmentPanelAnimator.SetBool("FadeIn", false);
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
             }
-            else
-            {
-                SoundManager.Instance.ReverseMenu();
-                EquipmentToggle = false;
-                EquipmentPanelAnimator.SetBool("FadeIn", false);
-            }
-            StartCoroutine(SetMenuAnimationToFalse());
         }
     }
 
     public void ButtonCharacterPanel()
     {
-        if(!MenuAnimating)
+        if(!BeatGame)
         {
-            MenuAnimating = true;
-            if (!CharacterToggle)
+            if (!MenuAnimating)
             {
-                SoundManager.Instance.Menu();
-                ToggleCharacterPanel();
+                MenuAnimating = true;
+                if (!CharacterToggle)
+                {
+                    SoundManager.Instance.Menu();
+                    ToggleCharacterPanel();
+                }
+                else
+                {
+                    SoundManager.Instance.ReverseMenu();
+                    CharacterToggle = false;
+                    CharacterPanelAnimator.SetBool("FadeIn", false);
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
             }
-            else
-            {
-                SoundManager.Instance.ReverseMenu();
-                CharacterToggle = false;
-                CharacterPanelAnimator.SetBool("FadeIn", false);
-            }
-            StartCoroutine(SetMenuAnimationToFalse());
         }
     }
 
     public void ButtonSkillsPanel()
     {
-        if(!MenuAnimating)
+        if(!BeatGame)
         {
-            MenuAnimating = true;
-            if (!SkillsToggle)
+            if (!MenuAnimating)
             {
-                SoundManager.Instance.Menu();
-                ToggleSkillsPanel();
+                MenuAnimating = true;
+                if (!SkillsToggle)
+                {
+                    SoundManager.Instance.Menu();
+                    ToggleSkillsPanel();
+                }
+                else
+                {
+                    SoundManager.Instance.ReverseMenu();
+                    MaskSkillsPanel();
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
             }
-            else
-            {
-                SoundManager.Instance.ReverseMenu();
-                MaskSkillsPanel();
-            }
-            StartCoroutine(SetMenuAnimationToFalse());
         }
     }
 
     public void ButtonSettingsPanel()
     {
-        if(!MenuAnimating)
+        if(!BeatGame)
         {
-            MenuAnimating = true;
-            if (!SettingsToggle)
+            if (!MenuAnimating)
             {
-                SoundManager.Instance.Menu();
-                ToggleSettingsPanel();
+                MenuAnimating = true;
+                if (!SettingsToggle)
+                {
+                    SoundManager.Instance.Menu();
+                    ToggleSettingsPanel();
+                }
+                else
+                {
+                    SoundManager.Instance.ReverseMenu();
+                    SettingsToggle = false;
+                    SettingsPanelAnimator.SetBool("FadeIn", false);
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
             }
-            else
-            {
-                SoundManager.Instance.ReverseMenu();
-                SettingsToggle = false;
-                SettingsPanelAnimator.SetBool("FadeIn", false);
-            }
-            StartCoroutine(SetMenuAnimationToFalse());
         }
     }
 
     public void ButtonInventoryPanel()
     {
-        if(!MenuAnimating)
+        if(!BeatGame)
         {
-            MenuAnimating = true;
-            if (!InventoryToggle)
+            if (!MenuAnimating)
             {
-                SoundManager.Instance.Menu();
-                ToggleInventoryPanel();
-            }
-            else
-            {
-                SoundManager.Instance.ReverseMenu();
+                MenuAnimating = true;
+                if (!InventoryToggle)
+                {
+                    SoundManager.Instance.Menu();
+                    ToggleInventoryPanel();
+                }
+                else
+                {
+                    SoundManager.Instance.ReverseMenu();
 
-                IsInInventory = false;
-                InventoryToggle = false;
-                MonsterToggle = false;
+                    IsInInventory = false;
+                    InventoryToggle = false;
+                    MonsterToggle = false;
 
-                MonsterBookAnimator.SetBool("FadeIn", false);
-                InventoryPanelAnimator.SetBool("FadeIn", false);
+                    MonsterBookAnimator.SetBool("FadeIn", false);
+                    InventoryPanelAnimator.SetBool("FadeIn", false);
+                }
+                StartCoroutine(SetMenuAnimationToFalse());
             }
-            StartCoroutine(SetMenuAnimationToFalse());
         }
     }
 
@@ -991,6 +1026,34 @@ public class GameManager : MonoBehaviour
         MaskSkillsPanel();
         EquipmentPanelAnimator.SetBool("FadeIn", false);
         MonsterBookAnimator.SetBool("FadeIn", false);
+    }
+
+    public void CheckAllTogggledMenus()
+    {
+        if(CharacterToggle)
+        {
+            CharacterPanelAnimator.SetBool("FadeIn", false);
+        }
+        if(InventoryToggle)
+        {
+            InventoryPanelAnimator.SetBool("FadeIn", false);
+        }
+        if(SkillsToggle)
+        {
+            MaskSkillsPanel();
+        }
+        if(SettingsToggle)
+        {
+            SettingsPanelAnimator.SetBool("FadeIn", false);
+        }
+        if(EquipmentToggle)
+        {
+            EquipmentPanelAnimator.SetBool("FadeIn", false);
+        }
+        if(MonsterToggle)
+        {
+            MonsterBookAnimator.SetBool("FadeIn", false);
+        }
     }
 
     public void MaskSkillsPanel()
@@ -1123,6 +1186,11 @@ public class GameManager : MonoBehaviour
         ChangeAudioToLevelTheme();
 
         StartCoroutine(Respawn());
+    }
+
+    public void ReturnToMenu()
+    {
+        menubuttons.ReturnToMenu();
     }
 
     private IEnumerator Respawn()

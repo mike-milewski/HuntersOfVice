@@ -120,6 +120,9 @@ public class SylvanDiety : MonoBehaviour
     private SylvanDietyAnimations sylvanDietyAnimations;
 
     [SerializeField]
+    private MuteBossAudio muteBossAudio;
+
+    [SerializeField]
     private float MoveSpeed, AttackRange, AttackDelay, AutoAttackTime, LookSpeed, OuterAttackDistance;
 
     [SerializeField]
@@ -148,7 +151,7 @@ public class SylvanDiety : MonoBehaviour
     private GameObject[] AddsToSpawn, SoothingSpheres;
 
     [SerializeField]
-    private GameObject WallTrigger;
+    private GameObject WallTrigger, BossParticle, BossObject;
 
     [SerializeField]
     private Quaternion BossRotation;
@@ -160,6 +163,7 @@ public class SylvanDiety : MonoBehaviour
     [SerializeField]
     private bool IsReseted;
 
+    [SerializeField]
     private int StateArrayIndex;
 
     [SerializeField]
@@ -259,7 +263,7 @@ public class SylvanDiety : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayParticle();
+        PlayBossParticle();
     }
 
     private void Update()
@@ -555,13 +559,6 @@ public class SylvanDiety : MonoBehaviour
     {
         enemySkills.SetRotationToFalse();
 
-        EnableAudioChanger();
-
-        EnableSpeechDead();
-
-        DisableWall1();
-        DisableWall2();
-
         DespawnSoothingSpheres();
 
         KillAdds();
@@ -597,6 +594,32 @@ public class SylvanDiety : MonoBehaviour
         {
             this.GetComponent<ItemDrop>().DropItem();
         }
+
+        GameManager.Instance.GetCharacter.GetComponent<PlayerController>().SetMoveToFalse();
+        GameManager.Instance.GetCharacter.GetComponent<PlayerController>().enabled = false;
+
+        GameManager.Instance.GetBeatGame = true;
+
+        GameManager.Instance.CheckAllTogggledMenus();
+
+        audioChanger.gameObject.SetActive(true);
+
+        muteBossAudio.gameObject.SetActive(true);
+
+        StartCoroutine("WaitToEndGame");
+    }
+
+    public void PlayParticleAndRemoveBoss()
+    {
+        BossParticle.transform.position = transform.position;
+        PlayBossParticle();
+        BossObject.SetActive(false);
+    }
+
+    private IEnumerator WaitToEndGame()
+    {
+        yield return new WaitForSeconds(11);
+        GameManager.Instance.ReturnToMenu();
     }
 
     private void EnableAudioChanger()
@@ -694,6 +717,11 @@ public class SylvanDiety : MonoBehaviour
             SpawnParticleEffect(new Vector3(BossPosition.position.x, BossPosition.position.y, BossPosition.position.z - 0.3f));
     }
 
+    private void PlayBossParticle()
+    {
+        SpawnBossParticleEffect();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         PlayerEntry = true;
@@ -701,7 +729,7 @@ public class SylvanDiety : MonoBehaviour
         {
             if (PhaseIndex == 0)
             {
-                EnableSpeech();
+                //EnableSpeech();
             }
 
             PlayerTarget = other.GetComponent<Character>();
@@ -918,6 +946,11 @@ public class SylvanDiety : MonoBehaviour
 
             SpawnParticle.transform.position = new Vector3(Pos.x, Pos.y + 0.5f, Pos.z);
         }
+    }
+
+    private void SpawnBossParticleEffect()
+    {
+        BossParticle.SetActive(true);
     }
 
     public void PuckHitSE()

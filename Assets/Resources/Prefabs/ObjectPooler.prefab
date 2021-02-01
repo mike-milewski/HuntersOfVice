@@ -289,3 +289,23 @@ MonoBehaviour:
       type: 3}
     PoolParent: {fileID: 0}
     PoolAmount: 1
+  - ObjectToPool: {fileID: 266609502719387042, guid: c741e8277ac8a0947afb021864bdf099,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 1
+  - ObjectToPool: {fileID: 2961184674678852646, guid: 5b1d214bd00a4664ea395fc1715bd6d0,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 1
+  - ObjectToPool: {fileID: 2889899834063796707, guid: 96913e95d48fbd6478dc867c93538816,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 1
+  - ObjectToPool: {fileID: 2815028921772549467, guid: 9518e990779f28243ac33d0da0af2dff,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 1
+  - ObjectToPool: {fileID: 4905561815847659152, guid: 5b1d9dedf0ad4fa4e98fc20c81f2be44,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 1

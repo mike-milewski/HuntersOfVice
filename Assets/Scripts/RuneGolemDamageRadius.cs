@@ -127,7 +127,7 @@ public class RuneGolemDamageRadius : MonoBehaviour
             if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetRuneGolemPhases[enemyAI.GetPhaseIndex].GetRuneGolemAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX && DamageShape.rectTransform.sizeDelta.y <
                                                         enemySkills.GetManager[enemyAI.GetRuneGolemPhases[enemyAI.GetPhaseIndex].GetRuneGolemAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
 
-                DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
+                DamageShape.rectTransform.sizeDelta += new Vector2(300f, 300f) * Time.deltaTime;
         }
         else
         {

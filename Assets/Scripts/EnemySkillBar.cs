@@ -177,6 +177,11 @@ public class EnemySkillBar : MonoBehaviour
                     SkillName.text = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
                     CastTime = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
                 }
+                if (SylvanDietyAI != null)
+                {
+                    SkillName.text = enemySkills.GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
+                    CastTime = enemySkills.GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+                }
             }
         }
     }
@@ -288,8 +293,38 @@ public class EnemySkillBar : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+        if (SylvanDietyAI != null)
+        {
+            if (SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex != -1)
+            {
+                SkillBarFillImage.fillAmount += Time.deltaTime / enemySkills.GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+                CastTime -= Time.deltaTime;
+                SkillName.text = enemySkills.GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName;
+                if (SkillBarFillImage.fillAmount >= 1)
+                {
+                    enemySkills.GetActiveSkill = false;
 
-        if(enemySkills.GetDisruptedSkill)
+                    enemySkills.ChooseSkill(SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex);
+
+                    SylvanDietyAI.GetSylvanDietyStates = SylvanDietyBossStates.SkillAnimation;
+
+                    SkillBarFillImage.fillAmount = 0;
+                    CastTime = enemySkills.GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;
+
+                    gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                enemySkills.GetActiveSkill = false;
+
+                SkillBarFillImage.fillAmount = 0;
+
+                gameObject.SetActive(false);
+            }
+        }
+
+        if (enemySkills.GetDisruptedSkill)
         {  
             enemySkills.GetActiveSkill = false;
 

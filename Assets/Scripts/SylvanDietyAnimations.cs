@@ -63,7 +63,6 @@ public class SylvanDietyAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
         EnemyAnimator.SetBool("Skill3", false);
-        EnemyAnimator.SetBool("Skill4", false);
     }
 
     public void DamageAni()
@@ -126,8 +125,6 @@ public class SylvanDietyAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
         EnemyAnimator.SetBool("Skill3", false);
-        EnemyAnimator.SetBool("Skill4", false);
-        EnemyAnimator.SetBool("SylvanStorm", false);
 
         enemyskills.GetActiveSkill = false;
     }
@@ -195,8 +192,6 @@ public class SylvanDietyAnimations : MonoBehaviour
                 ResetSkillAnimator();
                 AI.GetAutoAttack = 0;
                 AI.GetSylvanDietyStates = SylvanDietyBossStates.Attack;
-
-                AI.GetSylvanDietyStates = AI.GetSylvanDietyPhases[AI.GetPhaseIndex].GetSylvanDietyBossAiStates[AI.GetStateArrayIndex].GetSylvanDietyState;
             }
             else
             {
@@ -208,7 +203,6 @@ public class SylvanDietyAnimations : MonoBehaviour
             AI.GetSylvanDietyStates = SylvanDietyBossStates.Idle;
             EnemyAnimator.SetBool("Attacking", false);
             ResetSkillAnimator();
-            AI.GetAutoAttack = 0;
         }
     }
 

@@ -535,6 +535,10 @@ public class BasicAttack : MonoBehaviour
                     {
                         Target.GetRuneGolemAI.GetPlayerTarget = this.character;
                     }
+                    if (Target.GetSylvanDietyAI != null)
+                    {
+                        Target.GetSylvanDietyAI.GetPlayerTarget = this.character;
+                    }
                 }
             }
             else

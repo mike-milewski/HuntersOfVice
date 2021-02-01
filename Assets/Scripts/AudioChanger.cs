@@ -1,4 +1,5 @@
 ﻿#pragma warning disable 0649
+using System.Collections;
 using UnityEngine;
 
 public class AudioChanger : MonoBehaviour
@@ -7,7 +8,7 @@ public class AudioChanger : MonoBehaviour
     private AudioSource source;
 
     [SerializeField]
-    private AudioClip LevelTheme, MiniBossTheme, MainBossTheme;
+    private AudioClip LevelTheme, MiniBossTheme, MainBossTheme, VictoryTheme;
 
     [SerializeField]
     private bool ChangeToLevelTheme, ChangeToMiniBossTheme, ChangeToMainBossTheme;
@@ -189,5 +190,33 @@ public class AudioChanger : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void MuteAudio()
+    {
+        if(source.clip == MainBossTheme)
+        {
+            source.volume -= Time.deltaTime;
+            if(source.volume <= 0)
+            {
+                StartCoroutine("ChangeToVictoryAudio");
+            }
+        }
+        if(source.clip == VictoryTheme)
+        {
+            source.volume += Time.deltaTime;
+        }
+    }
+
+    private IEnumerator ChangeToVictoryAudio()
+    {
+        yield return new WaitForSeconds(2);
+        ChangeAudioToVictoryTheme();
+    }
+
+    public void ChangeAudioToVictoryTheme()
+    {
+        source.clip = VictoryTheme;
+        source.Play();
     }
 }

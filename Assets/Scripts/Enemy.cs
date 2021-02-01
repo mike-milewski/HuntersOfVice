@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     private RuneGolemAnimations runeGolemAnimations = null;
 
     [SerializeField]
-    private SylvanDietyAnimations SylvanDietyAnimations = null;
+    private SylvanDietyAnimations sylvanDietyAnimations = null;
 
     [SerializeField]
     private EnemyAI enemyAI = null;
@@ -321,6 +321,10 @@ public class Enemy : MonoBehaviour
             {
                 runeGolemAnimations.PlayHealthFade();
             }
+            if (sylvanDietyAnimations != null)
+            {
+                sylvanDietyAnimations.PlayHealthFade();
+            }
             TargetedImage.gameObject.SetActive(true);
         }
         else
@@ -336,6 +340,10 @@ public class Enemy : MonoBehaviour
             if (runeGolemAnimations != null)
             {
                 runeGolemAnimations.ReverseFadeHealth();
+            }
+            if (sylvanDietyAnimations != null)
+            {
+                sylvanDietyAnimations.ReverseFadeHealth();
             }
             TargetedImage.gameObject.SetActive(false);
         }
@@ -354,6 +362,10 @@ public class Enemy : MonoBehaviour
         if(runeGolemAnimations != null)
         {
             runeGolemAnimations.ReverseFadeHealth();
+        }
+        if (sylvanDietyAnimations != null)
+        {
+            sylvanDietyAnimations.ReverseFadeHealth();
         }
         TargetedImage.gameObject.SetActive(false);
     }

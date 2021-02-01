@@ -421,6 +421,11 @@ public class PlayerAnimations : MonoBehaviour
         SkillsManager.Instance.GetActivatedSkill = false;
     }
 
+    public void EndVictoryPose()
+    {
+        animator.SetBool("VictoryPose", false);
+    }
+
     public void SetWhirlwindOn()
     {
         SkillsManager.Instance.GetWhirlwind = true;
