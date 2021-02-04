@@ -314,7 +314,11 @@ public class EnemyAnimations : MonoBehaviour
         }
         if(AI.GetIsAMagicWallPuzzleComponent)
         {
-            puzzle.MagicWallPuzzleType();
+            if(!CheckedForPuzzle)
+            {
+                puzzle.MagicWallPuzzleType();
+                CheckedForPuzzle = true;
+            }
         }
     }
 

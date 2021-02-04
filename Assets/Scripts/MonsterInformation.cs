@@ -79,7 +79,7 @@ public class MonsterInformation : MonoBehaviour
 
         ShowLevelButtons();
 
-        ParentObj.GetComponent<MonsterBook>().GetMonsterInfoTxt.text = "<u>" + characterData[0].CharacterName + "</u>" + "\n\n" + "<size=10>" + "Level: " +
+        ParentObj.GetComponent<MonsterBook>().GetMonsterInfoTxt.text = "<u>" + characterData[0].CharacterName + "</u>" + "\n\n" + "<size=9>" + "Level: " +
                                                                         characterData[0].CharacterLevel + "\n" + "HP: " + characterData[0].Health +
                                                                         "\n" + "Strength: " + characterData[0].Strength + "\n" + "Defense: " +
                                                                         characterData[0].Defense + "\n" + "Intelligence: " +
