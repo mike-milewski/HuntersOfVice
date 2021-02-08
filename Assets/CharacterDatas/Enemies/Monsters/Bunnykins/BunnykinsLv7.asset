@@ -26,7 +26,7 @@ MonoBehaviour:
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 15
-  Coins: 24
+  Coins: 40
   EXP: 45
   MaterialDataDropChance: 30
   MoveSpeed: 0

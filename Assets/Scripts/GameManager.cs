@@ -1291,7 +1291,7 @@ public class GameManager : MonoBehaviour
         }
         if(shopKeeper.GetCurrentPosition != ShopKeeperLastPosition)
         {
-            shopKeeper.transform.position = new Vector3(ShopKeeperLastPosition.position.x, 3.342f, ShopKeeperLastPosition.position.z);
+            shopKeeper.transform.position = new Vector3(ShopKeeperLastPosition.position.x, shopKeeper.GetCurrentPosition.position.y + 0.6f, ShopKeeperLastPosition.position.z);
         }
 
         SpawnPoint.GetComponent<SpawnPoint>().ZonesAndEnemies();

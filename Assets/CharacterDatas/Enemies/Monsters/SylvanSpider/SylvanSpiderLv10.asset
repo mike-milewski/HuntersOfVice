@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
+  m_Name: SylvanSpiderLv10
+  m_EditorClassIdentifier: 
+  Weaknesses: 06000000
+  Resistances: 00000000
+  Immunities: 05000000
+  Absorbtions: 00000000
+  CharacterName: Sylvan Spider
+  CharacterLevel: 10
+  Health: 523
+  Mana: 0
+  Strength: 43
+  Defense: 24
+  Intelligence: 25
+  HpIncrease: 0
+  MpIncrease: 0
+  CriticalHitChance: 5
+  Coins: 43
+  EXP: 85
+  MaterialDataDropChance: 15
+  MoveSpeed: 0
+  CheckedData: 0
+  materialdata: {fileID: 11400000, guid: e79b4f84c4f14404dbe385552dbe61c1, type: 2}

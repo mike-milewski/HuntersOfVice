@@ -18,17 +18,17 @@ MonoBehaviour:
   Absorbtions: 00000000
   CharacterName: Bunnykins
   CharacterLevel: 10
-  Health: 420
+  Health: 476
   Mana: 0
-  Strength: 50
+  Strength: 45
   Defense: 30
-  Intelligence: 27
+  Intelligence: 29
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 20
-  Coins: 33
-  EXP: 70
+  Coins: 45
+  EXP: 80
   MaterialDataDropChance: 20
   MoveSpeed: 0
   CheckedData: 0
-  materialdata: {fileID: 11400000, guid: e08ee87ecc0f54f49bb6ba8f3025089b, type: 2}
+  materialdata: {fileID: 11400000, guid: ede10a45d1b78f04e90beddd4cfbcdad, type: 2}
