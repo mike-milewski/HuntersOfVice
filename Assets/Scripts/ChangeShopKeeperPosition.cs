@@ -37,6 +37,8 @@ public class ChangeShopKeeperPosition : MonoBehaviour
 
             shopKeeper.gameObject.transform.position = new Vector3(shopKeeperPosition.position.x, shopPositionY, shopKeeperPosition.position.z);
 
+            shopKeeper.transform.rotation = Quaternion.Euler(0, shopKeeperPosition.GetComponent<ShopKeeperRotation>().GetShopKeeperRotationY, 0);
+
             if(Trigger != null)
             {
                 Trigger.SetActive(true);

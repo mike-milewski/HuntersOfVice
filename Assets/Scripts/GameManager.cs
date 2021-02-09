@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float RespawnTime;
 
-    private float HealingReduction;
+    private float HealingReduction, LastShopKeeperRotationY;
 
     private bool IsDead, SkillsToggle, CharacterToggle, EquipmentToggle, InventoryToggle, SettingsToggle, MonsterToggle, TipToggle, MenuAnimating, IsTargeting;
 
@@ -440,6 +440,18 @@ public class GameManager : MonoBehaviour
         set
         {
             HealingReduction = value;
+        }
+    }
+
+    public float GetLastShopKeeperRotationY
+    {
+        get
+        {
+            return LastShopKeeperRotationY;
+        }
+        set
+        {
+            LastShopKeeperRotationY = value;
         }
     }
 
@@ -1291,7 +1303,11 @@ public class GameManager : MonoBehaviour
         }
         if(shopKeeper.GetCurrentPosition != ShopKeeperLastPosition)
         {
+            shopKeeper.GetCurrentPosition = ShopKeeperLastPosition;
+
             shopKeeper.transform.position = new Vector3(ShopKeeperLastPosition.position.x, shopKeeper.GetCurrentPosition.position.y + 0.6f, ShopKeeperLastPosition.position.z);
+
+            shopKeeper.transform.rotation = Quaternion.Euler(0, ShopKeeperLastPosition.GetComponent<ShopKeeperRotation>().GetShopKeeperRotationY, 0);
         }
 
         SpawnPoint.GetComponent<SpawnPoint>().ZonesAndEnemies();
