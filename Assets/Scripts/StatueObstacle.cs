@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 0649
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class StatueObstacle : MonoBehaviour
 {
@@ -135,9 +136,9 @@ public class StatueObstacle : MonoBehaviour
             if (PlayerTarget.CurrentHealth <= 0)
             {
                 Attacking = false;
-                this.enabled = false;
-                obstacleDamageRadius.enabled = false;
                 this.GetComponent<ReturnObjectToOriginalRotation>().enabled = true;
+                obstacleDamageRadius.enabled = false;
+                this.enabled = false;
             }
         }
     }
@@ -178,11 +179,7 @@ public class StatueObstacle : MonoBehaviour
             TimeToIncrease += Time.deltaTime;
             if(TimeToIncrease >= DamageTime)
             {
-                Attacking = false;
-                IsFollowingPlayer = true;
-                TimeToIncrease = 0;
-                ParticleWaitTime = 0;
-                obstacleDamageRadius.enabled = false;
+                StartCoroutine("WaitToFollowPlayer");
             }
         }
         else return;
@@ -209,5 +206,15 @@ public class StatueObstacle : MonoBehaviour
 
         LaserExplosion.transform.position = new Vector3(obstacleDamageRadius.transform.position.x, obstacleDamageRadius.transform.position.y + 0.3f,
                                                         obstacleDamageRadius.transform.position.z);
+    }
+
+    private IEnumerator WaitToFollowPlayer()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Attacking = false;
+        IsFollowingPlayer = true;
+        TimeToIncrease = 0;
+        ParticleWaitTime = 0;
+        obstacleDamageRadius.enabled = false;
     }
 }
