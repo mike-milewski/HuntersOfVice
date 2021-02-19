@@ -541,8 +541,8 @@ public class RuneGolem : MonoBehaviour
 
         DisableEarthEffigy();
 
-        //DisableWall1();
-        //DisableWall2();
+        DisableWall1();
+        DisableWall2();
 
         PlayerTarget = null;
         AutoAttackTime = 0;

@@ -537,7 +537,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        if (DistanceToTarget <= 0.3f)
+        if (DistanceToTarget <= 0.5f)
         {
             StandingStill = true;
             if(Waypoints.Length == 1)

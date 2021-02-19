@@ -18,11 +18,11 @@ MonoBehaviour:
   Absorbtions: 00000000
   CharacterName: Monoceros, The Sylvan Vice
   CharacterLevel: 15
-  Health: 1
+  Health: 2300
   Mana: 0
-  Strength: 45
-  Defense: 30
-  Intelligence: 38
+  Strength: 27
+  Defense: 15
+  Intelligence: 20
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5

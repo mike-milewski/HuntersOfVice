@@ -39,7 +39,7 @@ public class MonsterButton : MonoBehaviour
 
     public void ShowMonsterInfo()
     {
-        MonsterInfoText.text = "<u>" + monsterInformation.GetCharacterData[Index].CharacterName + "</u>" + "\n\n" + "<size=10>" + "Level: " +
+        MonsterInfoText.text = "<u>" + monsterInformation.GetCharacterData[Index].CharacterName + "</u>" + "\n\n" + "<size=9>" + "Level: " +
                                                                         monsterInformation.GetCharacterData[Index].CharacterLevel + "\n" + "HP: " +
                                                                         monsterInformation.GetCharacterData[Index].Health +
                                                                         "\n" + "Strength: " + monsterInformation.GetCharacterData[Index].Strength + "\n" + "Defense: " +

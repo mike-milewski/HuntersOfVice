@@ -669,7 +669,7 @@ public class Puck : MonoBehaviour
     public void DisableWalls()
     {
         Walls[0].gameObject.SetActive(false);
-        //Walls[1].gameObject.SetActive(false);
+        Walls[1].gameObject.SetActive(false);
     }
 
     public void EnableChestSpawnParticle()
@@ -717,7 +717,7 @@ public class Puck : MonoBehaviour
         EnableSpeechDead();
 
         DisableWall1();
-        //DisableWall2();
+        DisableWall2();
 
         DespawnSoothingSpheres();
 
