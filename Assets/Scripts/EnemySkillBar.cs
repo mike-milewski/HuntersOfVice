@@ -271,12 +271,9 @@ public class EnemySkillBar : MonoBehaviour
                 {
                     enemySkills.GetActiveSkill = false;
 
-                    if (!runeGolemAI.GetChangingPhase)
-                    {
-                        enemySkills.ChooseSkill(runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex);
+                    enemySkills.ChooseSkill(runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex);
 
-                        runeGolemAI.GetStates = RuneGolemStates.SkillAnimation;
-                    }
+                    runeGolemAI.GetStates = RuneGolemStates.SkillAnimation;
 
                     SkillBarFillImage.fillAmount = 0;
                     CastTime = enemySkills.GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetCastTime;

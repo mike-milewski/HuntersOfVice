@@ -6,7 +6,7 @@ public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticl
                              StrengthUp, RemoveStatus, StunningStinger, Illumination, Hop, GaiasProwess, SylvanBlessing, Slam, Slag, SylvanStorm, EnemyAppear,
                              VicePlanter, Shatter, Alleviate, Contract, Aegis, BraveLight, SinisterPossession, DiabolicLightning, SoulPierce, NetherStar,
                              NetherStarExplosion, Uplift, ManaPulse, AquaBullet, MiasmaPulse, StatueLaser, LaserExplosion, AlphaSpore, BetaSpore, GammaSpore, 
-                             DisasterSpore, IronCap, Quickness, MildewSplash, ConfusionBreath, Harrow, Shock, Wind, Burn, Dark, Light }
+                             DisasterSpore, IronCap, Quickness, MildewSplash, ConfusionBreath, Harrow, Shock, Wind, Burn, Dark, Light, EarthHammer, SmashWave, LuxSecundus, LuxTertium }
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -194,6 +194,18 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
                 break;
             case (ParticleEffect.Light):
                 ObjectPooler.Instance.ReturnLightParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.EarthHammer):
+                ObjectPooler.Instance.ReturnEarthHammerParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.SmashWave):
+                ObjectPooler.Instance.ReturnSmashWaveParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.LuxSecundus):
+                ObjectPooler.Instance.ReturnLuxSecundusParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.LuxTertium):
+                ObjectPooler.Instance.ReturnLuxTertiumParticleToPool(gameObject);
                 break;
         }
     }

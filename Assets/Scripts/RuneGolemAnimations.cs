@@ -105,10 +105,16 @@ public class RuneGolemAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill2", true);
     }
 
+    public void EarthHammerSkillAnimator()
+    {
+        EnemyAnimator.SetBool("EarthHammer", true);
+    }
+
     public void ResetSkillAnimator()
     {
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
+        EnemyAnimator.SetBool("EarthHammer", false);
 
         enemyskills.GetActiveSkill = false;
     }
@@ -121,6 +127,7 @@ public class RuneGolemAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Damaged", false);
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
+        EnemyAnimator.SetBool("EarthHammer", false);
     }
 
     public void IdleAnimator()

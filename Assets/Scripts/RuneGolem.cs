@@ -147,6 +147,9 @@ public class RuneGolem : MonoBehaviour
     private GameObject WallTrigger;
 
     [SerializeField]
+    private GameObject[] SoothingSpheres;
+
+    [SerializeField]
     private Quaternion BossRotation;
 
     private float DistanceToTarget;
@@ -206,6 +209,18 @@ public class RuneGolem : MonoBehaviour
         set
         {
             runeGolemAnimations = value;
+        }
+    }
+
+    public Transform GetBossPosition
+    {
+        get
+        {
+            return BossPosition;
+        }
+        set
+        {
+            BossPosition = value;
         }
     }
 
@@ -429,12 +444,20 @@ public class RuneGolem : MonoBehaviour
             {
                 if (HpCap <= HpToChangePhase[HpPhaseIndex])
                 {
-                    ChangingPhase = true;
-
                     if (HpPhaseIndex < HpToChangePhase.Length)
                     {
                         HpPhaseIndex++;
                     }
+
+                    enemySkills.GetSkillBar.GetFillImage.fillAmount = 0;
+
+                    if (enemySkills.GetManager.Length > 0)
+                    {
+                        enemySkills.DisableRuneGolemRadiusImage();
+                        enemySkills.DisableRuneGolemRadius();
+                    }
+
+                    SpawnSoothingSpheres();
 
                     IncrementPhase();
 
@@ -464,6 +487,22 @@ public class RuneGolem : MonoBehaviour
     private void ApplyingNormalAtk()
     {
         runeGolemAnimations.AttackAnimator();
+    }
+
+    private void SpawnSoothingSpheres()
+    {
+        for (int i = 0; i < SoothingSpheres.Length; i++)
+        {
+            SoothingSpheres[i].SetActive(true);
+        }
+    }
+
+    private void DespawnSoothingSpheres()
+    {
+        for (int i = 0; i < SoothingSpheres.Length; i++)
+        {
+            SoothingSpheres[i].SetActive(false);
+        }
     }
 
     private void Skill()
@@ -694,6 +733,8 @@ public class RuneGolem : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     public void ResetStats()
     {
+        DespawnSoothingSpheres();
+
         DisableEarthEffigy();
 
         PlayParticle();

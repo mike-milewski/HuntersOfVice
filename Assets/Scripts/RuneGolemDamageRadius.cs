@@ -67,7 +67,7 @@ public class RuneGolemDamageRadius : MonoBehaviour
         {
             Vector3 Trans = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z);
 
-            transform.position = Trans + character.transform.forward * 1.6f;
+            transform.position = Trans + character.transform.forward * 4f;
         }
         if (shapes == Shapes.Circle)
         {
@@ -144,17 +144,17 @@ public class RuneGolemDamageRadius : MonoBehaviour
 
         if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetRuneGolemPhases[enemyAI.GetPhaseIndex].GetRuneGolemAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX)
         {
-            DamageShape.rectTransform.sizeDelta += new Vector2(100, 0) * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(300, 0) * Time.deltaTime;
         }
         if (DamageShape.rectTransform.sizeDelta.y < enemySkills.GetManager[enemyAI.GetRuneGolemPhases[enemyAI.GetPhaseIndex].GetRuneGolemAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
         {
-            DamageShape.rectTransform.sizeDelta += new Vector2(0, 100) * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(0, 300) * Time.deltaTime;
         }
     }
 
     public void ResetLocalScale()
     {
-        DamageShape.transform.localScale = new Vector3(0, 0, 0);
+        DamageShape.transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void ResetSizeDelta()

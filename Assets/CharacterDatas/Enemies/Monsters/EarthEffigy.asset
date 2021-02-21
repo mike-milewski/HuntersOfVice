@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EarthEffigy
   m_EditorClassIdentifier: 
   Weaknesses: 00000000
-  Resistances: 
-  Immunities: 
-  Absorbtions: 
+  Resistances: 00000000
+  Immunities: 00000000
+  Absorbtions: 00000000
   CharacterName: Earth Effigy
   CharacterLevel: 10
   Health: 500
@@ -26,5 +26,9 @@ MonoBehaviour:
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 0
+  Coins: 0
+  EXP: 0
+  MaterialDataDropChance: 0
   MoveSpeed: 0
   CheckedData: 0
+  materialdata: {fileID: 0}

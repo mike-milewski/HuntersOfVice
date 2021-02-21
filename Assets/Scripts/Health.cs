@@ -326,6 +326,11 @@ public class Health : MonoBehaviour
                     SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveEnemyFromList(character.GetComponent<Enemy>());
                     character.GetComponent<SylvanDiety>().Dead();
                 }
+                if(character.GetComponent<EarthEffigy>())
+                {
+                    SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveEnemyFromList(character.GetComponent<Enemy>());
+                    character.GetComponent<EarthEffigy>().Dead();
+                }
             }
         }
         SleepHit = true;

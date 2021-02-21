@@ -35481,14 +35481,28 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.52
-    functionName: SkillRadiusDamage
+    functionName: RuneGolemSkillDamage
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.52
-    functionName: InvokeUpliftAnimation
+    functionName: InvokeEarthHammerAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.8
+    functionName: ResetSkillAnimator
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.8
+    functionName: IncrementPhase
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -35496,20 +35510,6 @@ AnimationClip:
     messageOptions: 0
   - time: 0.8
     functionName: ResetAutoAttackTime
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.8
-    functionName: ResetSkillAnim
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.8
-    functionName: IncreaseAiArray
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

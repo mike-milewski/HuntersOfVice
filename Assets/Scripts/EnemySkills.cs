@@ -34,7 +34,7 @@ public enum Skill
     EarthHammer,
     SmashWave,
     //SylvanDiety Skills
-    MagicDreams,
+    LightAmplification,
     Light,
     //FungusLord Skills
     ConfusionBreath,
@@ -1492,7 +1492,7 @@ public class EnemySkills : MonoBehaviour
         {
             if (runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex > -1)
             {
-                RuneGolemUpliftSkillAnimation();
+                RuneGolemEarthHammerSkillAnimation();
             }
         }
     }
@@ -1502,12 +1502,12 @@ public class EnemySkills : MonoBehaviour
         if (settings.UseParticleEffects)
         {
             GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle =
-                                                                                                                              ObjectPooler.Instance.GetUpliftParticle();
+                                                                                                                              ObjectPooler.Instance.GetEarthHammerParticle();
 
             GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
 
             GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position =
-                                                       new Vector3(character.transform.position.x, character.transform.position.y + 0.3f, character.transform.position.z);
+                                                       new Vector3(runeGolemAI.GetBossPosition.position.x, runeGolemAI.GetBossPosition.position.y, runeGolemAI.GetBossPosition.position.z);
         }
 
         ActiveSkill = false;
@@ -1539,7 +1539,7 @@ public class EnemySkills : MonoBehaviour
 
             runeGolemDamageRadius.CheckIfPlayerIsInRectangleRadius(runeGolemDamageRadius.GetDamageShape.transform.position, new Vector3(
                                                           GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.x,
-                                                          GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 1.7f),
+                                                          GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetShapeSize.y, 3f),
                                                           character.transform.rotation);
 
             DisableRuneGolemRadiusImage();
@@ -1552,15 +1552,17 @@ public class EnemySkills : MonoBehaviour
     {
         if (settings.UseParticleEffects)
         {
-            var SmashWaveParticle = ObjectPooler.Instance.GetHitParticle();
+            var p = Instantiate(skills[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle,
+                                character.transform.position, character.transform.rotation);
 
-            SmashWaveParticle.SetActive(true);
+            p.SetActive(true);
 
             Vector3 Trans = new Vector3(character.transform.position.x, character.transform.position.y + 0.5f, character.transform.position.z);
 
-            SmashWaveParticle.transform.position = Trans + character.transform.forward * 1f;
-        }
+            p.transform.position = Trans + character.transform.forward * 2f;
 
+            Destroy(p, 2f);
+        }
         DisableRuneGolemRadius();
 
         ActiveSkill = false;
@@ -1913,6 +1915,11 @@ public class EnemySkills : MonoBehaviour
     private void RuneGolemSmashWaveSkillAnimation()
     {
         runeGolemAI.GetAnimation.Skill2Animator();
+    }
+
+    private void RuneGolemEarthHammerSkillAnimation()
+    {
+        runeGolemAI.GetAnimation.EarthHammerSkillAnimator();
     }
 
     private void SylvanDietySkillCast()
@@ -2499,6 +2506,14 @@ public class EnemySkills : MonoBehaviour
             if (Target.GetComponent<Health>().GetIsImmune)
             {
                 DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=25>" + "0";
+
+                foreach (StatusIcon si in GameManager.Instance.GetBuffStatusIconHolder.GetComponentsInChildren<StatusIcon>())
+                {
+                    if (si.GetEffectStatus == EffectStatus.EarthenProtection)
+                    {
+                        si.RemoveEarthenProtection();
+                    }
+                }
             }
             else
             {
@@ -2693,16 +2708,13 @@ public class EnemySkills : MonoBehaviour
         {
             var Target = enemyAI.GetPlayerTarget;
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+            var hitParticle = ObjectPooler.Instance.GetHitParticle();
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+            hitParticle.SetActive(true);
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
+            hitParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
 
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
-                                                                                Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
-
-            GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
+            hitParticle.transform.SetParent(Target.transform);
         }
     }
 
@@ -2712,16 +2724,13 @@ public class EnemySkills : MonoBehaviour
         {
             var Target = puckAI.GetPlayerTarget;
 
-            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+            var hitParticle = ObjectPooler.Instance.GetHitParticle();
 
-            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+            hitParticle.SetActive(true);
 
-            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
+            hitParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
 
-            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
-                                                                                Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
-
-            GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
+            hitParticle.transform.SetParent(Target.transform);
         }
     }
 
@@ -2731,16 +2740,13 @@ public class EnemySkills : MonoBehaviour
         {
             var Target = runeGolemAI.GetPlayerTarget;
 
-            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+            var hitParticle = ObjectPooler.Instance.GetHitParticle();
 
-            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+            hitParticle.SetActive(true);
 
-            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
+            hitParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
 
-            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
-                                                                                Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
-
-            GetManager[runeGolemAI.GetRuneGolemPhases[runeGolemAI.GetPhaseIndex].GetRuneGolemAiStates[runeGolemAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
+            hitParticle.transform.SetParent(Target.transform);
         }
     }
 
@@ -2750,16 +2756,13 @@ public class EnemySkills : MonoBehaviour
         {
             var Target = SylvanDietyAI.GetPlayerTarget;
 
-            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetHitParticle();
+            var hitParticle = ObjectPooler.Instance.GetHitParticle();
 
-            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+            hitParticle.SetActive(true);
 
-            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3();
+            hitParticle.transform.position = new Vector3(Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
 
-            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
-                                                                                Target.transform.position.x, Target.transform.position.y + 0.6f, Target.transform.position.z);
-
-            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.SetParent(Target.transform);
+            hitParticle.transform.SetParent(Target.transform);
         }
     }
 }

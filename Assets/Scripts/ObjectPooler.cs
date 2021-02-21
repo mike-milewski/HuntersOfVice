@@ -154,6 +154,10 @@ public class ObjectPooler : MonoBehaviour
         AddBurnParticle(poolcontroller[64].GetPoolAmount);
         AddDarkParticle(poolcontroller[65].GetPoolAmount);
         AddLightParticle(poolcontroller[66].GetPoolAmount);
+        AddEarthHammerParticle(poolcontroller[67].GetPoolAmount);
+        AddSmashWaveParticle(poolcontroller[68].GetPoolAmount);
+        AddLuxSecundusParticle(poolcontroller[69].GetPoolAmount);
+        AddLuxTertiumParticle(poolcontroller[70].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -960,6 +964,54 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddEarthHammerParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[67].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[67].GetPoolParent.transform, false);
+            poolcontroller[67].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddSmashWaveParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[68].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[68].GetPoolParent.transform, false);
+            poolcontroller[68].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddLuxSecundusParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[69].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[69].GetPoolParent.transform, false);
+            poolcontroller[69].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddLuxTertiumParticle(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[70].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[70].GetPoolParent.transform, false);
+            poolcontroller[70].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -1293,6 +1345,26 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetLightParticle()
     {
         return poolcontroller[66].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetEarthHammerParticle()
+    {
+        return poolcontroller[67].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetSmashWaveParticle()
+    {
+        return poolcontroller[68].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetLuxSecundusParticle()
+    {
+        return poolcontroller[69].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetLuxTertiumParticle()
+    {
+        return poolcontroller[70].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1828,6 +1900,38 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[66].GetPoolParent.transform, false);
 
         poolcontroller[66].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnEarthHammerParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[67].GetPoolParent.transform, false);
+
+        poolcontroller[67].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnSmashWaveParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[68].GetPoolParent.transform, false);
+
+        poolcontroller[68].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnLuxSecundusParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[69].GetPoolParent.transform, false);
+
+        poolcontroller[69].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnLuxTertiumParticleToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[70].GetPoolParent.transform, false);
+
+        poolcontroller[70].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

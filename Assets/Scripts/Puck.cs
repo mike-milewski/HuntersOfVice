@@ -719,8 +719,6 @@ public class Puck : MonoBehaviour
         DisableWall1();
         DisableWall2();
 
-        DespawnSoothingSpheres();
-
         KillAdds();
         DisablePoisonMushroomDamageRadius();
 

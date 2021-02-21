@@ -63,6 +63,16 @@ public class ChangeEnemyMaterial : MonoBehaviour
         skinnedMeshRenderer.material.color = alpha;
     }
 
+    public void ChangeMeshToAlphaMaterial()
+    {
+        meshRenderer.material = AlphaMaterial;
+
+        Color alpha = meshRenderer.material.color;
+        meshRenderer.material.color = alpha;
+        alpha.a = 1.0f;
+        meshRenderer.material.color = alpha;
+    }
+
     private void ChangeToOpaqueMaterial()
     {
         skinnedMeshRenderer.material = OpaqueMaterial;

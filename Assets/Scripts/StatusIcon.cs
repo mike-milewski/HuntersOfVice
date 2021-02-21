@@ -6,7 +6,7 @@ using TMPro;
 
 public enum EffectStatus { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
                            IntelligenceDOWN, ContractWithEvil, ContractWithTheVile, ContractWithNefariousness, MaliciousPossession, ConsecratedDefense, Aegis, Slowed,
-                           ContractWithEvilNoNegative, ContractWithTheVileNoNegative, ContractWithNefariousnessNoNegative, Wound, Quickness, MpRestore, Confusion }
+                           ContractWithEvilNoNegative, ContractWithTheVileNoNegative, ContractWithNefariousnessNoNegative, Wound, Quickness, MpRestore, Confusion, EarthenProtection }
 
 public class StatusIcon : MonoBehaviour
 {
@@ -265,6 +265,9 @@ public class StatusIcon : MonoBehaviour
             case (EffectStatus.Confusion):
                 SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>().GetIsReversed = true;
                 break;
+            case (EffectStatus.EarthenProtection):
+                ConsecratedDefenses();
+                break;
         }
         StatusPanel.SetActive(false);
     }
@@ -301,6 +304,14 @@ public class StatusIcon : MonoBehaviour
                 ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
             }
         }
+    }
+
+    private void RemoveEarthenProtectionStatus()
+    {
+        status = EffectStatus.NONE;
+        ObstacleEffect = false;
+
+        ObjectPooler.Instance.ReturnPlayerStatusIconToPool(this.gameObject);
     }
 
     private void CheckStatus()
@@ -387,6 +398,38 @@ public class StatusIcon : MonoBehaviour
         DamageOrHealTick = enemyTarget.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectPotency;
 
         TempTick = DamageOrHealTick;
+    }
+
+    public void EarthenProtectionInput()
+    {
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=16>" + "<u> Earthen Protection </u>" + "</color>" + "</size>" +
+                                     "\n" + "<size=14> Immune to the next attack.";
+
+        Duration = -1;
+
+        if (Duration < 0)
+        {
+            DurationText.text = "";
+        }
+    }
+
+    public void RemoveEarthenProtection()
+    {
+        var StatusEffectTxt = ObjectPooler.Instance.GetPlayerStatusText();
+
+        StatusEffectTxt.SetActive(true);
+
+        StatusEffectTxt.transform.SetParent(GameManager.Instance.GetStatusEffectTransform, false);
+
+        StatusEffectTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Earthen Protection";
+
+        StatusEffectTxt.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        RemoveEarthenProtectionStatus();
+
+        SkillsManager.Instance.GetCharacter.GetComponent<Health>().GetIsImmune = false;
+
+        CreateParticleOnRemovePlayer();
     }
 
     //Called when a status effect cast by the player onto themselves gets removed.

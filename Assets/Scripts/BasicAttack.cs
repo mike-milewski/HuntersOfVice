@@ -573,7 +573,10 @@ public class BasicAttack : MonoBehaviour
 
     public void RemoveTarget()
     {
-        Target.GetSkills.DisableEnemySkillBar();
+        if(Target.GetComponent<EnemySkills>())
+        {
+            Target.GetSkills.DisableEnemySkillBar();
+        }
         Target.TurnOffHealthBar();
         Target = null;
 
