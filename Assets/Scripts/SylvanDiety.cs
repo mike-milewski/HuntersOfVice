@@ -148,7 +148,7 @@ public class SylvanDiety : MonoBehaviour
     private ParticleSystem[] Walls;
 
     [SerializeField]
-    private GameObject[] AddsToSpawn, SoothingSpheres;
+    private GameObject[] AddsToSpawn, LuxOrbs;
 
     [SerializeField]
     private GameObject WallTrigger, BossParticle, BossObject;
@@ -460,8 +460,6 @@ public class SylvanDiety : MonoBehaviour
 
                     IncrementPhase();
 
-                    SpawnSoothingSpheres();
-
                     states = phases[PhaseIndex].GetSylvanDietyBossAiStates[StateArrayIndex].GetSylvanDietyState;
                 }
             }
@@ -471,22 +469,6 @@ public class SylvanDiety : MonoBehaviour
 
                 return;
             }
-        }
-    }
-
-    private void SpawnSoothingSpheres()
-    {
-        for (int i = 0; i < SoothingSpheres.Length; i++)
-        {
-            SoothingSpheres[i].SetActive(true);
-        }
-    }
-
-    private void DespawnSoothingSpheres()
-    {
-        for (int i = 0; i < SoothingSpheres.Length; i++)
-        {
-            SoothingSpheres[i].SetActive(false);
         }
     }
 
@@ -555,13 +537,21 @@ public class SylvanDiety : MonoBehaviour
         main2.loop = false;
     }
 
+    private void SpawnLuxOrbs()
+    {
+
+    }
+
+    private void DespawnLuxOrbs()
+    {
+
+    }
+
     public void Dead()
     {
         enemySkills.SetRotationToFalse();
 
-        DespawnSoothingSpheres();
-
-        KillAdds();
+        DespawnLuxOrbs();
 
         PlayerTarget = null;
         AutoAttackTime = 0;
@@ -633,8 +623,6 @@ public class SylvanDiety : MonoBehaviour
     //Resets the enemy's stats when enabled in the scene.
     public void ResetStats()
     {
-        DespawnSoothingSpheres();
-
         DisableSpeech();
 
         PlayParticle();
@@ -672,7 +660,7 @@ public class SylvanDiety : MonoBehaviour
 
         EnableWall();
 
-        DespawnAdds();
+        DespawnLuxOrbs();
 
         InvokeOnEnabledFalse();
 
@@ -907,33 +895,6 @@ public class SylvanDiety : MonoBehaviour
         MonsterEntryTxt.SetActive(true);
 
         MonsterEntryTxt.transform.SetParent(GameManager.Instance.GetMonsterEntryTransform, false);
-    }
-
-    private void DespawnAdds()
-    {
-        for (int i = 0; i < AddsToSpawn.Length; i++)
-        {
-            if (AddsToSpawn[i].GetComponent<Enemy>().GetEnemySkillBar.gameObject.activeInHierarchy)
-            {
-                AddsToSpawn[i].GetComponent<Enemy>().GetEnemySkillBar.gameObject.SetActive(false);
-                AddsToSpawn[i].GetComponent<EnemySkills>().GetActiveSkill = false;
-            }
-
-            AddsToSpawn[i].SetActive(false);
-        }
-    }
-
-    //Kills all enemies spawned by the boss if the boss dies while the adds are still alive.
-    private void KillAdds()
-    {
-        for (int i = 0; i < AddsToSpawn.Length; i++)
-        {
-            if (AddsToSpawn[i].activeInHierarchy)
-            {
-                AddsToSpawn[i].GetComponentInChildren<Health>().ModifyHealth(-AddsToSpawn[i].GetComponent<Character>().MaxHealth);
-            }
-            else return;
-        }
     }
 
     private void SpawnParticleEffect(Vector3 Pos)

@@ -624,7 +624,23 @@ public class Puck : MonoBehaviour
     {
         for (int i = 0; i < SoothingSpheres.Length; i++)
         {
+            if (SoothingSpheres[i].activeInHierarchy)
+            {
+                SoothingOrbAppearParticle(new Vector3(SoothingSpheres[i].transform.position.x, SoothingSpheres[i].transform.position.y, SoothingSpheres[i].transform.position.z));
+            }
             SoothingSpheres[i].SetActive(false);
+        }
+    }
+
+    private void SoothingOrbAppearParticle(Vector3 Position)
+    {
+        if(settings.UseParticleEffects)
+        {
+            var particle = ObjectPooler.Instance.GetSoothingOrbParticle();
+
+            particle.SetActive(true);
+
+            particle.transform.position = new Vector3(Position.x, Position.y, Position.z);
         }
     }
 

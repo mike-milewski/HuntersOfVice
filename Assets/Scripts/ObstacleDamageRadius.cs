@@ -50,7 +50,7 @@ public class ObstacleDamageRadius : MonoBehaviour
     private GameObject Particle;
 
     [SerializeField]
-    private bool IsInRadius, DisabledRadius, IsStatue, IsSpikeTrap;
+    private bool IsInRadius, DisabledRadius, IsStatue, IsSpikeTrap, IsLuxOrb;
 
     [SerializeField]
     private ObstacleShapes shapes;
@@ -100,6 +100,18 @@ public class ObstacleDamageRadius : MonoBehaviour
         set
         {
             TimeToIncrease = value;
+        }
+    }
+
+    public bool GetIsInRadius
+    {
+        get
+        {
+            return IsInRadius;
+        }
+        set
+        {
+            IsInRadius = value;
         }
     }
 
@@ -256,13 +268,31 @@ public class ObstacleDamageRadius : MonoBehaviour
 
     private void InvokeParticle()
     {
-        if(!IsStatue && !IsSpikeTrap)
+        if(!IsStatue && !IsSpikeTrap && !IsLuxOrb)
         {
             Invoke("CastParticleEffect", InvokeParticleEffectTime);
         }
         if(IsSpikeTrap)
         {
             Invoke("HitParticleEffect", InvokeParticleEffectTime);
+        }
+        if(IsLuxOrb)
+        {
+            Invoke("LuxParticleEffect", InvokeParticleEffectTime);
+
+            transform.parent.parent.GetComponent<LuxOrb>().Detonate();
+        }
+    }
+
+    private void LuxParticleEffect()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var ParticleEffect = ObjectPooler.Instance.GetLightParticle();
+
+            ParticleEffect.gameObject.SetActive(true);
+
+            ParticleEffect.transform.position = new Vector3(transform.position.x, transform.position.y + 1.2f, transform.position.z);
         }
     }
 
@@ -278,6 +308,20 @@ public class ObstacleDamageRadius : MonoBehaviour
 
                 ParticleEffect.transform.position = new Vector3(PlayerTarget.transform.position.x, PlayerTarget.transform.position.y + 0.6f, PlayerTarget.transform.position.z);
             }
+        }
+    }
+
+    private void CastParticleEffect()
+    {
+        if (settings.UseParticleEffects)
+        {
+            Particle = ObjectPooler.Instance.GetPoisonSporeParticle();
+
+            Particle.SetActive(true);
+
+            Particle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+            Particle.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
@@ -337,20 +381,6 @@ public class ObstacleDamageRadius : MonoBehaviour
                     IsInRadius = false;
                 }
             }
-        }
-    }
-
-    private void CastParticleEffect()
-    {
-        if (settings.UseParticleEffects)
-        {
-            Particle = ObjectPooler.Instance.GetPoisonSporeParticle();
-
-            Particle.SetActive(true);
-
-            Particle.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
-
-            Particle.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

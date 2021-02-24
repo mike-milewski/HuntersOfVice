@@ -23,6 +23,22 @@ public class HealingSphere : MonoBehaviour
 
     private float Percentage;
 
+    private void OnDisable()
+    {
+        if(transform.parent)
+        {
+            if(transform.parent.GetComponent<EnableGameObject>())
+            {
+                transform.parent.GetComponent<EnableGameObject>().enabled = true;
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        AppearParticle();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<PlayerController>())
@@ -78,6 +94,18 @@ public class HealingSphere : MonoBehaviour
             }
         }
         return HealTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void AppearParticle()
+    {
+        if (settings.UseParticleEffects)
+        {
+            var Appear = ObjectPooler.Instance.GetSoothingOrbParticle();
+
+            Appear.SetActive(true);
+
+            Appear.transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
+        }
     }
 
     private void HealParticle()
