@@ -57,7 +57,8 @@ public enum Skill
 };
 
 public enum Status { NONE, DamageOverTime, HealthRegen, Stun, Sleep, Haste, Doom, StrengthUP, DefenseUP, IntelligenceUP, StrengthDOWN, DefenseDOWN,
-                     IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP, T, TE, TES, TEST, Slowed, E, ES, EST, TS, ESS, SS, Confusion };
+                     IntelligenceDOWN, StrengthAndCriticalUP, DefenseAndIntelligenceUP, T, TE, TES, TEST, Slowed, E, ES, EST, TS, ESS, SS, Confusion, LightAmplificationOne, 
+                     LightAmplificationTwo };
 
 public enum EnemyElement { NONE, Fire, Water, Wind, Earth, Light, Dark, Magic };
 
@@ -611,6 +612,9 @@ public class EnemySkills : MonoBehaviour
                             GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                         break;
                     case (Skill.LuxAmplificationOne):
+                        SylvanDietyLuxAmplify();
+                        break;
+                    case (Skill.LuxAmplificationTwo):
                         SylvanDietyLuxAmplify();
                         break;
                         #endregion
@@ -1828,7 +1832,7 @@ public class EnemySkills : MonoBehaviour
 
     public void InvokeLuxAmplification()
     {
-        EnemyStatus();
+        SylvanDietyBossStatus();
     }
     #endregion
 
