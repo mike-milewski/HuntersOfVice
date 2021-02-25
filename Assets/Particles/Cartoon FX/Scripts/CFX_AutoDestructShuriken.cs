@@ -7,7 +7,7 @@ public enum ParticleEffect { HitParticle, LevelupParticle, WhirlwindSlashParticl
                              VicePlanter, Shatter, Alleviate, Contract, Aegis, BraveLight, SinisterPossession, DiabolicLightning, SoulPierce, NetherStar,
                              NetherStarExplosion, Uplift, ManaPulse, AquaBullet, MiasmaPulse, StatueLaser, LaserExplosion, AlphaSpore, BetaSpore, GammaSpore, 
                              DisasterSpore, IronCap, Quickness, MildewSplash, ConfusionBreath, Harrow, Shock, Wind, Burn, Dark, Light, EarthHammer, SmashWave, LuxSecundus, LuxTertium,
-                             SoothingOrbAppear }
+                             SoothingOrbAppear, LuxAmplification }
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -210,6 +210,9 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
                 break;
             case (ParticleEffect.SoothingOrbAppear):
                 ObjectPooler.Instance.ReturnSoothingOrbParticleToPool(gameObject);
+                break;
+            case (ParticleEffect.LuxAmplification):
+                ObjectPooler.Instance.ReturnLuxAmplificationParticleToPool(gameObject);
                 break;
         }
     }

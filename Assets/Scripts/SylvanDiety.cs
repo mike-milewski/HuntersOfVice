@@ -184,6 +184,18 @@ public class SylvanDiety : MonoBehaviour
         }
     }
 
+    public float GetAttackRange
+    {
+        get
+        {
+            return AttackRange;
+        }
+        set
+        {
+            AttackRange = value;
+        }
+    }
+
     public int GetStateArrayIndex
     {
         get

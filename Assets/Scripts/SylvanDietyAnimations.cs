@@ -103,6 +103,9 @@ public class SylvanDietyAnimations : MonoBehaviour
     public void Skill2Animator()
     {
         EnemyAnimator.SetBool("Skill2", true);
+        EnemyAnimator.SetBool("Attacking", false);
+        EnemyAnimator.SetBool("Moving", false);
+        EnemyAnimator.SetBool("Damaged", false);
     }
 
     public void VicePlanterCast()

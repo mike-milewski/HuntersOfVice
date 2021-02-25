@@ -129,7 +129,7 @@ public class SylvanDietyDamageRadius : MonoBehaviour
             if (DamageShape.rectTransform.sizeDelta.x < enemySkills.GetManager[enemyAI.GetSylvanDietyPhases[enemyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaX && DamageShape.rectTransform.sizeDelta.y <
                                                         enemySkills.GetManager[enemyAI.GetSylvanDietyPhases[enemyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetSizeDeltaY)
 
-                DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
+                DamageShape.rectTransform.sizeDelta += new Vector2(300f, 300f) * Time.deltaTime;
         }
         else
         {
