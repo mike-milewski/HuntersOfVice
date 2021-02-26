@@ -118,7 +118,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 1.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -171,7 +171,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4807,7 +4807,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 3.0571098
+  MinDistance: 4.710449
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

@@ -616,10 +616,18 @@ public class EnemySkills : MonoBehaviour
                             GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
                             GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                         break;
+                    case (Skill.LuxTertium):
+                        LuxTertium(GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetPotency,
+                            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                            GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
+                        break;
                     case (Skill.LuxAmplificationOne):
                         SylvanDietyLuxAmplify();
                         break;
                     case (Skill.LuxAmplificationTwo):
+                        SylvanDietyLuxAmplify();
+                        break;
+                    case (Skill.SummonLuxOrbs):
                         SylvanDietyLuxAmplify();
                         break;
                         #endregion
@@ -1895,8 +1903,13 @@ public class EnemySkills : MonoBehaviour
         EnableSylvanDietyRadius();
         EnableSylvanDietyRadiusImage();
 
-        SylvanDietyDamageRadius.GetDamageShape.transform.position = new Vector3(SylvanDietyAI.GetPlayerTarget.transform.position.x, SylvanDietyDamageRadius.transform.position.y,
-                                                                                SylvanDietyAI.GetPlayerTarget.transform.position.z);
+        if(!SylvanDietyDamageRadius.GetDrawnRadius)
+        {
+            SylvanDietyDamageRadius.GetDamageShape.transform.position = new Vector3(SylvanDietyAI.GetPlayerTarget.transform.position.x, SylvanDietyDamageRadius.transform.position.y,
+                                                                                    SylvanDietyAI.GetPlayerTarget.transform.position.z);
+
+            SylvanDietyDamageRadius.GetDrawnRadius = true;
+        }
 
         if (skillBar.GetFillImage.fillAmount >= 1 && SylvanDietyAI.GetPlayerTarget != null)
         {
@@ -1904,11 +1917,12 @@ public class EnemySkills : MonoBehaviour
 
             SylvanDietyDamageRadius.CheckIfPlayerIsInCircleRadius(SylvanDietyDamageRadius.GetDamageShape.transform.position, SylvanDietyDamageRadius.SetCircleColliderSize());
 
+            SylvanDietyAI.GetComponent<SylvanDietyAnimations>().SkillRadiusDamage();
+
+            SylvanDietyDamageRadius.GetDrawnRadius = false;
+
             DisableSylvanDietyRadius();
             DisableSylvanDietyRadiusImage();
-
-            SylvanDietyDamageRadius.transform.position = new Vector3(transform.position.x, SylvanDietyDamageRadius.transform.position.y,
-                                                                     transform.position.z);
 
             if (settings.UseParticleEffects)
             {
@@ -1917,9 +1931,62 @@ public class EnemySkills : MonoBehaviour
                 GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
 
                 GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
-                                                                                                                     SylvanDietyDamageRadius.transform.position.x,
-                                                                                                                     SylvanDietyDamageRadius.transform.position.y + 0.7f,
-                                                                                                                     SylvanDietyDamageRadius.transform.position.z);
+                                                                                                                     SylvanDietyDamageRadius.GetDamageShape.transform.position.x,
+                                                                                                                     SylvanDietyDamageRadius.GetDamageShape.transform.position.y + 1.3f,
+                                                                                                                     SylvanDietyDamageRadius.GetDamageShape.transform.position.z);
+            }
+            ActiveSkill = false;
+        }
+    }
+    #endregion
+
+    #region LuxTertium
+    public void LuxTertium(int potency, float castTime, string skillname)
+    {
+        SylvanDietySpellCastingAnimation();
+
+        skills[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        EnableSylvanDietyRadius();
+        EnableSylvanDietyRadiusImage();
+
+        if (!SylvanDietyDamageRadius.GetDrawnRadius)
+        {
+            SylvanDietyDamageRadius.GetDamageShape.transform.position = new Vector3(SylvanDietyAI.GetPlayerTarget.transform.position.x, SylvanDietyDamageRadius.transform.position.y,
+                                                                                    SylvanDietyAI.GetPlayerTarget.transform.position.z);
+
+            SylvanDietyDamageRadius.GetDrawnRadius = true;
+        }
+
+        if (skillBar.GetFillImage.fillAmount >= 1 && SylvanDietyAI.GetPlayerTarget != null)
+        {
+            SylvanDietySkillCast();
+
+            SylvanDietyDamageRadius.CheckIfPlayerIsInCircleRadius(SylvanDietyDamageRadius.GetDamageShape.transform.position, SylvanDietyDamageRadius.SetCircleColliderSize());
+
+            SylvanDietyAI.GetComponent<SylvanDietyAnimations>().SkillRadiusDamage();
+
+            SylvanDietyDamageRadius.GetDrawnRadius = false;
+
+            DisableSylvanDietyRadius();
+            DisableSylvanDietyRadiusImage();
+
+            if (settings.UseParticleEffects)
+            {
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle = ObjectPooler.Instance.GetLuxTertiumParticle();
+
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.SetActive(true);
+
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillParticle.transform.position = new Vector3(
+                                                                                                                     SylvanDietyDamageRadius.GetDamageShape.transform.position.x,
+                                                                                                                     SylvanDietyDamageRadius.GetDamageShape.transform.position.y + 1.3f,
+                                                                                                                     SylvanDietyDamageRadius.GetDamageShape.transform.position.z);
             }
             ActiveSkill = false;
         }

@@ -23,7 +23,7 @@ public class SylvanDietyDamageRadius : MonoBehaviour
     [SerializeField]
     private Sprite DamageShapeCircle, DamageShapeCylinder, DamageShapeRectangle;
 
-    private bool IsInRadius;
+    private bool IsInRadius, DrawnRadius;
 
     public bool GetIsInRadius
     {
@@ -34,6 +34,18 @@ public class SylvanDietyDamageRadius : MonoBehaviour
         set
         {
             IsInRadius = value;
+        }
+    }
+
+    public bool GetDrawnRadius
+    {
+        get
+        {
+            return DrawnRadius;
+        }
+        set
+        {
+            DrawnRadius = value;
         }
     }
 

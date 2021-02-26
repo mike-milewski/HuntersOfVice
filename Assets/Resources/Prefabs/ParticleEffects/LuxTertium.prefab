@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5913224125588309041
 Transform:
   m_ObjectHideFlags: 0
@@ -171,8 +171,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10
-      minScalar: 0.5
+      scalar: 7
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -287,8 +287,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 3
+      scalar: 1.5
+      minScalar: 2.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -667,7 +667,7 @@ ParticleSystem:
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 0.9690105
-    donutRadius: 2.1171823
+    donutRadius: 4.6503158
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
@@ -4807,7 +4807,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 3.0571098
+  MinDistance: 8.795734
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
