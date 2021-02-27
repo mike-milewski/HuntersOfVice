@@ -220,7 +220,7 @@ public class ObstacleDamageRadius : MonoBehaviour
         if (DamageShape.rectTransform.sizeDelta.x < SizeDeltaX && DamageShape.rectTransform.sizeDelta.y <
                                                     SizeDeltaY)
 
-            DamageShape.rectTransform.sizeDelta += new Vector2(100f, 100f) * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(300f, 300f) * Time.deltaTime;
     }
 
     private void IncreaseRectangle()
@@ -231,11 +231,11 @@ public class ObstacleDamageRadius : MonoBehaviour
 
         if (DamageShape.rectTransform.sizeDelta.x < SizeDeltaX)
         {
-            DamageShape.rectTransform.sizeDelta += new Vector2(100, 0) * 13 * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(300, 0) * 13 * Time.deltaTime;
         }
         if (DamageShape.rectTransform.sizeDelta.y < SizeDeltaY)
         {
-            DamageShape.rectTransform.sizeDelta += new Vector2(0, 100) * 13 * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(0, 300) * 13 * Time.deltaTime;
         }
     }
 
@@ -394,7 +394,7 @@ public class ObstacleDamageRadius : MonoBehaviour
 
             StatusEffectText.transform.SetParent(StatusEffectTextTransform, false);
 
-            StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + StatusEffectName + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)";
+            StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + StatusEffectName + "\n" + "<size=16> <#EFDFB8>" + "(IMMUNE!)";
 
             StatusEffectText.GetComponentInChildren<Image>().sprite = StatusSprite;
         }

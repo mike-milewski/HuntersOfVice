@@ -194,17 +194,18 @@ public class MenuButtons : MonoBehaviour
 
     public void ShowArtCreditsText(TextMeshProUGUI ArtText)
     {
-        ArtText.text = "Space Hydra \n\n StumpyStrust \n\n Lamoot";
+        ArtText.text = "<size=25>Space Hydra \n\n StumpyStrust \n\n Lamoot";
     }
 
     public void ShowAudioCreditsText(TextMeshProUGUI AudioText)
     {
-        AudioText.text = "Music by Matthew Pablo http://www.matthewpablo.com \n\n HitCtrl \n\n HydroGene \n\n NenadSimic";
+        AudioText.text = "<size=19>Music by Matthew Pablo \n http://www.matthewpablo.com \n\n HitCtrl \n https://soundcloud.com/hitctrl \n\n HydroGene \n https://opengameart.org/users/hydrogene " +
+                         "\n\n ViRiX Dreamcore (David Mckee) www.soundcloud.com/virix \n\n NenadSimic";
     }
 
     public void ShowFontsCreditsText(TextMeshProUGUI FontsText)
     {
-        FontsText.text = "Jonathan S. Harris";
+        FontsText.text = "<size=25>Jonathan S. Harris";
     }
 
     public void ShowWeaponsText(TextMeshProUGUI WeaponsText)

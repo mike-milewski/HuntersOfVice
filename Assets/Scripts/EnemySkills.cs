@@ -628,7 +628,8 @@ public class EnemySkills : MonoBehaviour
                         SylvanDietyLuxAmplify();
                         break;
                     case (Skill.SummonLuxOrbs):
-                        SylvanDietyLuxAmplify();
+                        SummonLuxOrbs(GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime,
+                                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
                         break;
                         #endregion
                 }
@@ -1843,6 +1844,9 @@ public class EnemySkills : MonoBehaviour
 
     public void InvokeLuxAmplification()
     {
+        DisableSylvanDietyRadius();
+        DisableSylvanDietyRadiusImage();
+
         SylvanDietyBossStatus();
     }
     #endregion
@@ -1993,6 +1997,31 @@ public class EnemySkills : MonoBehaviour
     }
     #endregion
 
+    #region SummonLuxOrbs
+    public void SummonLuxOrbs(float castTime, string skillname)
+    {
+        SylvanDietySpellCastingAnimation();
+
+        skills[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetCastTime = castTime;
+
+        skills[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetSkillName = skillname;
+
+        skillBar.GetCharacter = character;
+
+        UseSkillBar();
+
+        if (skillBar.GetFillImage.fillAmount >= 1 && SylvanDietyAI.GetPlayerTarget != null)
+        {
+            SylvanDietySummonLux();
+
+            DisableSylvanDietyRadius();
+            DisableSylvanDietyRadiusImage();
+
+            ActiveSkill = false;
+        }
+    }
+    #endregion
+
     private void UseSkillBar()
     {
         skillBar.gameObject.SetActive(true);
@@ -2088,6 +2117,11 @@ public class EnemySkills : MonoBehaviour
     private void SylvanDietyLuxAmplify()
     {
         SylvanDietyAI.GetAnimation.Skill2Animator();
+    }
+
+    private void SylvanDietySummonLux()
+    {
+        SylvanDietyAI.GetAnimation.Skill3Animator();
     }
 
     public void DisableEnemySkillBar()
@@ -2296,7 +2330,7 @@ public class EnemySkills : MonoBehaviour
             StatusEffectText.transform.SetParent(GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectHolder.transform, false);
 
             StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].
-                                                                                              GetStatusEffectName + "\n" + "<size=12> <#EFDFB8>" + "(IMMUNE!)";
+                                                                                              GetStatusEffectName + "\n" + "<size=16> <#EFDFB8>" + "(IMMUNE!)";
 
             StatusEffectText.GetComponentInChildren<Image>().sprite = GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusSprite;
         }

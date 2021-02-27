@@ -13,7 +13,10 @@ public class RuneGolemPhases
     RuneGolemAiStates[] states;
 
     [SerializeField]
-    private bool DontCheckHP, SpawnEarthEffigy;
+    private int EarthEffigysToKill, EarthEffigyKillCount;
+
+    [SerializeField]
+    private bool DontCheckHP, SpawnEarthEffigy, SpawnWeakEarthEffigys;
 
     public RuneGolemAiStates[] GetRuneGolemAiStates
     {
@@ -24,6 +27,30 @@ public class RuneGolemPhases
         set
         {
             states = value;
+        }
+    }
+
+    public int GetEarthEffigysToKill
+    {
+        get
+        {
+            return EarthEffigysToKill;
+        }
+        set
+        {
+            EarthEffigysToKill = value;
+        }
+    }
+
+    public int GetEarthEffigyKillCount
+    {
+        get
+        {
+            return EarthEffigyKillCount;
+        }
+        set
+        {
+            EarthEffigyKillCount = value;
         }
     }
 
@@ -48,6 +75,18 @@ public class RuneGolemPhases
         set
         {
             SpawnEarthEffigy = value;
+        }
+    }
+
+    public bool GetSpawnWeakEarthEffigys
+    {
+        get
+        {
+            return SpawnWeakEarthEffigys;
+        }
+        set
+        {
+            SpawnWeakEarthEffigys = value;
         }
     }
 }
@@ -147,7 +186,7 @@ public class RuneGolem : MonoBehaviour
     private GameObject WallTrigger;
 
     [SerializeField]
-    private GameObject[] SoothingSpheres;
+    private GameObject[] SoothingSpheres, WeakEarthEffigys;
 
     [SerializeField]
     private Quaternion BossRotation;
@@ -362,8 +401,6 @@ public class RuneGolem : MonoBehaviour
     {
         runeGolemAnimations.MoveAnimator();
 
-        enemySkills.GetSkillBar.gameObject.SetActive(false);
-
         if (PlayerTarget != null)
         {
             if (PlayerTarget != null)
@@ -463,9 +500,15 @@ public class RuneGolem : MonoBehaviour
 
                     states = phases[PhaseIndex].GetRuneGolemAiStates[StateArrayIndex].GetState;
 
-                    if(phases[PhaseIndex].GetSpawnEarthEffigy)
+                    phases[PhaseIndex].GetEarthEffigyKillCount = 0;
+
+                    if (phases[PhaseIndex].GetSpawnEarthEffigy)
                     {
-                        EnableEarthEffigy();
+                        SpawnEarthEffigy();
+                    }
+                    if (phases[PhaseIndex].GetSpawnWeakEarthEffigys)
+                    {
+                        SpawnWeakEarthEffigys();
                     }
                 }
             }
@@ -594,7 +637,8 @@ public class RuneGolem : MonoBehaviour
     {
         EnableAudioChanger();
 
-        DisableEarthEffigy();
+        DespawnEarthEffigy();
+        DespawnWeakEarthEffigys();
 
         DisableWall1();
         DisableWall2();
@@ -751,7 +795,8 @@ public class RuneGolem : MonoBehaviour
     {
         DespawnSoothingSpheres();
 
-        DisableEarthEffigy();
+        DespawnEarthEffigy();
+        DespawnWeakEarthEffigys();
 
         PlayParticle();
 
@@ -764,6 +809,8 @@ public class RuneGolem : MonoBehaviour
         ChangingPhase = false;
 
         PlayerTarget = null;
+
+        PlayerEntry = false;
 
         runeGolemAnimations.ResetSkillAnimator();
 
@@ -798,24 +845,43 @@ public class RuneGolem : MonoBehaviour
         Invoke("OnEnabledOff", 0.5f);
     }
 
-    private void EnableEarthEffigy()
+    private void SpawnEarthEffigy()
     {
         EarthEffigy.SetActive(true);
 
-        if(settings.UseParticleEffects)
         SpawnParticleEffect(new Vector3(EarthEffigy.transform.position.x, EarthEffigy.transform.position.y, EarthEffigy.transform.position.z - 0.3f));
     }
 
-    private void DisableEarthEffigy()
+    private void DespawnEarthEffigy()
     {
         if(EarthEffigy.activeInHierarchy)
         {
-            if (settings.UseParticleEffects)
-            {
-                SpawnParticleEffect(new Vector3(EarthEffigy.transform.position.x, EarthEffigy.transform.position.y, EarthEffigy.transform.position.z - 0.3f));
-            }
+            SpawnParticleEffect(new Vector3(EarthEffigy.transform.position.x, EarthEffigy.transform.position.y, EarthEffigy.transform.position.z - 0.3f));
 
             EarthEffigy.SetActive(false);
+        }
+    }
+
+    private void SpawnWeakEarthEffigys()
+    {
+        for(int i = 0; i < WeakEarthEffigys.Length; i++)
+        {
+            WeakEarthEffigys[i].SetActive(true);
+
+            SpawnParticleEffect(new Vector3(WeakEarthEffigys[i].transform.position.x, WeakEarthEffigys[i].transform.position.y, WeakEarthEffigys[i].transform.position.z - 0.3f));
+        }
+    }
+
+    private void DespawnWeakEarthEffigys()
+    {
+        for (int i = 0; i < WeakEarthEffigys.Length; i++)
+        {
+            if(WeakEarthEffigys[i].activeInHierarchy)
+            {
+                SpawnParticleEffect(new Vector3(WeakEarthEffigys[i].transform.position.x, WeakEarthEffigys[i].transform.position.y, WeakEarthEffigys[i].transform.position.z - 0.3f));
+            }
+
+            WeakEarthEffigys[i].SetActive(false);
         }
     }
 
@@ -832,13 +898,13 @@ public class RuneGolem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerEntry = true;
-        if (other.gameObject.GetComponent<PlayerController>())
+        if (other.gameObject.GetComponent<PlayerController>() && !PlayerEntry)
         {
             PlayerTarget = other.GetComponent<Character>();
             states = RuneGolemStates.Chase;
             EnemyTriggerSphere.gameObject.SetActive(false);
             IsReseted = false;
+            PlayerEntry = true;
         }
     }
 

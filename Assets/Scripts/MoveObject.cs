@@ -4,7 +4,7 @@ using UnityEngine;
 public class MoveObject : MonoBehaviour
 {
     [SerializeField]
-    private float Speed, MinDisappearValue, MaxDisappearValue;
+    private float Speed, DisappearValue;
 
     [SerializeField]
     private Transform CenterPoint, OriginPoint;
@@ -23,7 +23,7 @@ public class MoveObject : MonoBehaviour
     {
         transform.position = OriginPoint.position;
 
-        SetDisappearValue = Random.Range(MinDisappearValue, MaxDisappearValue);
+        SetDisappearValue = DisappearValue;
     }
 
     private void Update()

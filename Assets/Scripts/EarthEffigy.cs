@@ -12,6 +12,9 @@ public class EarthEffigy : MonoBehaviour
     private Enemy enemy;
 
     [SerializeField]
+    private RuneGolem runeGolem;
+
+    [SerializeField]
     private Transform TextHolder, StatusEffectIconTransform;
 
     [SerializeField]
@@ -54,7 +57,12 @@ public class EarthEffigy : MonoBehaviour
 
     public void Dead()
     {
-        GiveStatusEffect();
+        runeGolem.GetRuneGolemPhases[runeGolem.GetPhaseIndex].GetEarthEffigyKillCount++;
+
+        if (runeGolem.GetRuneGolemPhases[runeGolem.GetPhaseIndex].GetEarthEffigyKillCount >= runeGolem.GetRuneGolemPhases[runeGolem.GetPhaseIndex].GetEarthEffigysToKill)
+        {
+            GiveStatusEffect();
+        }
 
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
 

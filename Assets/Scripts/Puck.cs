@@ -910,6 +910,8 @@ public class Puck : MonoBehaviour
 
         PlayerTarget = null;
 
+        PlayerEntry = false;
+
         puckAnimations.ResetSkillAnimator();
 
         states = BossStates.Idle;
@@ -986,8 +988,7 @@ public class Puck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerEntry = true;
-        if (other.gameObject.GetComponent<PlayerController>())
+        if (other.gameObject.GetComponent<PlayerController>() && !PlayerEntry)
         {
             if(PhaseIndex == 0)
             {
@@ -998,6 +999,7 @@ public class Puck : MonoBehaviour
             states = BossStates.Chase;
             EnemyTriggerSphere.gameObject.SetActive(false);
             IsReseted = false;
+            PlayerEntry = true;
         }
     }
 

@@ -148,7 +148,7 @@ public class SylvanDiety : MonoBehaviour
     private ParticleSystem[] Walls;
 
     [SerializeField]
-    private GameObject[] AddsToSpawn, LuxOrbs;
+    private GameObject[] LuxOrbs;
 
     [SerializeField]
     private GameObject WallTrigger, BossParticle, BossObject;
@@ -263,6 +263,15 @@ public class SylvanDiety : MonoBehaviour
         if (StateArrayIndex >= phases[PhaseIndex].GetSylvanDietyBossAiStates.Length || OnEnabled)
         {
             StateArrayIndex = 0;
+        }
+
+        if (phases[PhaseIndex].GetSylvanDietyBossAiStates[StateArrayIndex].GetSylvanDietyState == SylvanDietyBossStates.Skill)
+        {
+            AttackRange = enemySkills.GetManager[phases[PhaseIndex].GetSylvanDietyBossAiStates[StateArrayIndex].GetSkillIndex].GetAttackRange;
+        }
+        else
+        {
+            AttackRange = 2.5f;
         }
     }
 
@@ -488,6 +497,15 @@ public class SylvanDiety : MonoBehaviour
     {
         StateArrayIndex = 0;
         PhaseIndex++;
+
+        if (phases[PhaseIndex].GetSylvanDietyBossAiStates[StateArrayIndex].GetSylvanDietyState == SylvanDietyBossStates.Skill)
+        {
+            AttackRange = enemySkills.GetManager[phases[PhaseIndex].GetSylvanDietyBossAiStates[StateArrayIndex].GetSkillIndex].GetAttackRange;
+        }
+        else
+        {
+            AttackRange = 2.5f;
+        }
     }
 
     private void ApplyingNormalAtk()
@@ -522,12 +540,6 @@ public class SylvanDiety : MonoBehaviour
         sylvanDietyAnimations.DamagedAnimator();
     }
 
-    public void DisableWalls()
-    {
-        Walls[0].gameObject.SetActive(false);
-        Walls[1].gameObject.SetActive(false);
-    }
-
     private void EnableWall()
     {
         var main = Walls[0].main;
@@ -537,26 +549,21 @@ public class SylvanDiety : MonoBehaviour
         WallTrigger.SetActive(true);
     }
 
-    private void DisableWall1()
+    public void SpawnLuxOrbs()
     {
-        var main = Walls[0].main;
-        main.loop = false;
+        for(int i = 0; i < LuxOrbs.Length; i++)
+        {
+            LuxOrbs[i].SetActive(true);
+        }
     }
 
-    private void DisableWall2()
+    public void DespawnLuxOrbs()
     {
-        var main2 = Walls[1].main;
-        main2.loop = false;
-    }
-
-    private void SpawnLuxOrbs()
-    {
-
-    }
-
-    private void DespawnLuxOrbs()
-    {
-
+        for (int i = 0; i < LuxOrbs.Length; i++)
+        {
+            LuxOrbs[i].GetComponent<EnableGameObject>().GetRespawnTime = 0;
+            LuxOrbs[i].SetActive(false);
+        }
     }
 
     public void Dead()
@@ -639,6 +646,8 @@ public class SylvanDiety : MonoBehaviour
 
         PlayParticle();
 
+        DespawnLuxOrbs();
+
         enemySkills.SetRotationToFalse();
 
         OnEnabled = true;
@@ -646,6 +655,8 @@ public class SylvanDiety : MonoBehaviour
         ChangingPhase = false;
 
         PlayerTarget = null;
+
+        PlayerEntry = false;
 
         sylvanDietyAnimations.ResetSkillAnimator();
 
@@ -724,8 +735,7 @@ public class SylvanDiety : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerEntry = true;
-        if (other.gameObject.GetComponent<PlayerController>())
+        if (other.gameObject.GetComponent<PlayerController>() && !PlayerEntry)
         {
             if (PhaseIndex == 0)
             {
@@ -736,6 +746,7 @@ public class SylvanDiety : MonoBehaviour
             states = SylvanDietyBossStates.Chase;
             EnemyTriggerSphere.gameObject.SetActive(false);
             IsReseted = false;
+            PlayerEntry = true;
         }
     }
 

@@ -11,7 +11,24 @@ public class EnableGameObject : MonoBehaviour
 
     private float RespawnTime;
 
+    public float GetRespawnTime
+    {
+        get
+        {
+            return RespawnTime;
+        }
+        set
+        {
+            RespawnTime = value;
+        }
+    }
+
     private void OnEnable()
+    {
+        RespawnTime = 0;
+    }
+
+    private void OnDisable()
     {
         RespawnTime = 0;
     }
