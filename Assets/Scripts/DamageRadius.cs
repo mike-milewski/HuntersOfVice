@@ -184,11 +184,25 @@ public class DamageRadius : MonoBehaviour
         }
     }
 
+    private bool CheckStatusEffectLimit()
+    {
+        bool ReachedLimit = false;
+
+        if (enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectHolder.transform.childCount >= 6)
+        {
+            ReachedLimit = true;
+        }
+        return ReachedLimit;
+    }
+
     public void TakeRadiusDamage()
     {
         if (enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatus != Status.NONE)
         {
-            enemySkills.PlayerStatus();
+            if(!CheckStatusEffectLimit())
+            {
+                enemySkills.PlayerStatus();
+            }
         }
 
         if(enemySkills.GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetPotency > 0)

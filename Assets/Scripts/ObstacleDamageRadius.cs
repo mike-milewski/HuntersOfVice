@@ -361,7 +361,10 @@ public class ObstacleDamageRadius : MonoBehaviour
         {
             if (obstacleStatus != EffectStatus.NONE)
             {
-                PlayerStatus();
+                if(!CheckStatusEffectLimit())
+                {
+                    PlayerStatus();
+                }
             }
 
             if (DamagePotency > 0)
@@ -382,6 +385,17 @@ public class ObstacleDamageRadius : MonoBehaviour
                 }
             }
         }
+    }
+
+    private bool CheckStatusEffectLimit()
+    {
+        bool ReachedLimit = false;
+
+        if(StatusIconTransform.childCount >= 6)
+        {
+            ReachedLimit = true;
+        }
+        return ReachedLimit;
     }
 
     private TextMeshProUGUI PlayerStatus()

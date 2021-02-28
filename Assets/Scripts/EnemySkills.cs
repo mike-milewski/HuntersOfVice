@@ -2319,6 +2319,17 @@ public class EnemySkills : MonoBehaviour
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    private bool CheckStatusEffectLimit()
+    {
+        bool ReachedLimit = false;
+
+        if (GetManager[enemyAI.GetAiStates[enemyAI.GetStateArrayIndex].GetSkillIndex].GetStatusEffectHolder.transform.childCount >= 6)
+        {
+            ReachedLimit = true;
+        }
+        return ReachedLimit;
+    }
+
     public TextMeshProUGUI PlayerStatus()
     {
         var StatusEffectText = ObjectPooler.Instance.GetPlayerStatusText();

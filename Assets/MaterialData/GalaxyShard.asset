@@ -15,4 +15,4 @@ MonoBehaviour:
   MaterialSprite: {fileID: 21300000, guid: 396d48f8e5adbb4468cac143b1f0c7c6, type: 3}
   MaterialName: Galaxy Shard
   ShopPoints: 85
-  MaterialDescription: A shard with its own rotating, spacial world.
+  MaterialDescription: A shard with a shine like the night sky.

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Volatile Force
   Element: 0
-  StatIncrease: 16
-  BuyValue: 3500
+  StatIncrease: 13
+  BuyValue: 2000

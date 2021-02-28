@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Silver Greaves
   Element: 0
-  StatIncrease: 20
+  StatIncrease: 15
   BuyValue: 2000

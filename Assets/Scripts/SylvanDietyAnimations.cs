@@ -262,4 +262,9 @@ public class SylvanDietyAnimations : MonoBehaviour
     {
         SoundManager.Instance.EnemyHit();
     }
+
+    public void PlayMoveSE()
+    {
+        SoundManager.Instance.LeftFootStep();
+    }
 }
