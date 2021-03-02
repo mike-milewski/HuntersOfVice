@@ -862,9 +862,7 @@ public class RuneGolem : MonoBehaviour
     {
         if(EarthEffigy.activeInHierarchy)
         {
-            SpawnParticleEffect(new Vector3(EarthEffigy.transform.position.x, EarthEffigy.transform.position.y, EarthEffigy.transform.position.z - 0.3f));
-
-            EarthEffigy.SetActive(false);
+            StartCoroutine("WaitToDisableEffigy");
         }
     }
 
@@ -880,6 +878,20 @@ public class RuneGolem : MonoBehaviour
 
     private void DespawnWeakEarthEffigys()
     {
+        StartCoroutine("WaitToDisableWeakEffigys");
+    }
+
+    private IEnumerator WaitToDisableEffigy()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SpawnParticleEffect(new Vector3(EarthEffigy.transform.position.x, EarthEffigy.transform.position.y, EarthEffigy.transform.position.z - 0.3f));
+
+        EarthEffigy.SetActive(false);
+    }
+
+    private IEnumerator WaitToDisableWeakEffigys()
+    {
+        yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < WeakEarthEffigys.Length; i++)
         {
             if(WeakEarthEffigys[i].activeInHierarchy)

@@ -21,7 +21,7 @@ public class EarthEffigy : MonoBehaviour
     private GameObject GetStatusIcon;
 
     [SerializeField]
-    private GameObject[] ParticleObjectsToDisable, ObjectsToDisable;
+    private GameObject[] ParticleObjectsToDisable;
 
     [SerializeField]
     private ChangeEnemyMaterial[] changeEnemyMaterial;
@@ -91,9 +91,6 @@ public class EarthEffigy : MonoBehaviour
 
     private void ResetStats()
     {
-        enemy.GetEnemyAnimations.ReverseFadeHealth();
-        enemy.GetLocalHealth.gameObject.SetActive(false);
-
         for (int i = 0; i < ParticleObjectsToDisable.Length; i++)
         {
             ParticleObjectsToDisable[i].SetActive(true);
@@ -112,30 +109,21 @@ public class EarthEffigy : MonoBehaviour
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
     }
 
+    public void TestDead()
+    {
+        this.gameObject.GetComponent<BoxCollider>().enabled = false;
+
+        enemy.GetLocalHealth.gameObject.SetActive(false);
+
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+        {
+            SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().RemoveTarget();
+        }
+    }
+
     private void GiveStatusEffect()
     {
         PlayerStatus();
-    }
-
-    public void DisableEffigyComponents()
-    {
-        enemy.ToggleHealthBar();
-        enemy.GetLocalHealth.gameObject.SetActive(false);
-
-        enemy.enabled = false;
-        for(int i = 0; i < ObjectsToDisable.Length; i++)
-        {
-            ObjectsToDisable[i].SetActive(false);
-        }
-    }
-
-    public void EnableEffigyComponents()
-    {
-        enemy.enabled = true;
-        for (int i = 0; i < ObjectsToDisable.Length; i++)
-        {
-            ObjectsToDisable[i].SetActive(true);
-        }
     }
 
     private TextMeshProUGUI PlayerStatus()

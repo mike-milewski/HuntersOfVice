@@ -556,7 +556,10 @@ public class BasicAttack : MonoBehaviour
             {
                 cursorController.SetDefaultCursor();
 
-                Target.GetSkills.DisableEnemySkillBar();
+                if(Target.GetComponent<EnemySkills>())
+                {
+                    Target.GetSkills.DisableEnemySkillBar();
+                }
                 Target.TurnOffHealthBar();
                 RemoveEnemyFromList(Target);
                 Target = null;
