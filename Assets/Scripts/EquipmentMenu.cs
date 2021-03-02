@@ -218,14 +218,15 @@ public class EquipmentMenu : MonoBehaviour
     {
         foreach (Equipment Equip in WeaponPanel.GetComponentsInChildren<Equipment>(true))
         {
-            if(!Equip.gameObject.activeInHierarchy)
-            {
-                Equip.gameObject.SetActive(true);
-            }
-            else
-            {
-                Equip.gameObject.SetActive(false);
-            }
+            Equip.gameObject.SetActive(true);
+        }
+    }
+
+    public void DisableWeaponsInPanel()
+    {
+        foreach (Equipment Equip in WeaponPanel.GetComponentsInChildren<Equipment>(true))
+        {
+            Equip.gameObject.SetActive(false);
         }
     }
 
@@ -233,14 +234,15 @@ public class EquipmentMenu : MonoBehaviour
     {
         foreach (Equipment Equip in ArmorPanel.GetComponentsInChildren<Equipment>(true))
         {
-            if (!Equip.gameObject.activeInHierarchy)
-            {
-                Equip.gameObject.SetActive(true);
-            }
-            else
-            {
-                Equip.gameObject.SetActive(false);
-            }
+            Equip.gameObject.SetActive(true);
+        }
+    }
+
+    public void DisableArmorInPanel()
+    {
+        foreach (Equipment Equip in ArmorPanel.GetComponentsInChildren<Equipment>(true))
+        {
+            Equip.gameObject.SetActive(false);
         }
     }
 

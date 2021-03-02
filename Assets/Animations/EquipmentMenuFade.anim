@@ -8871,36 +8871,8 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.58
+  - time: 0.57
     functionName: SetIsOpenedToFalse
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.59
-    functionName: SetIsOpenedToTrue
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.59
-    functionName: DisableEquipmentPanel
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.59
-    functionName: ToggleWeaponInSlot
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.59
-    functionName: ToggleArmorInPanel
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -8914,7 +8886,21 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.59
-    functionName: ToggleWeaponsInPanel
+    functionName: SetIsOpenedToTrue
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.59
+    functionName: ToggleWeaponInSlot
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.59
+    functionName: DisableEquipmentPanel
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

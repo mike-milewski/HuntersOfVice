@@ -17,7 +17,7 @@ public class SylvanDietyPhases
     private string SpeechText;
 
     [SerializeField]
-    private bool DontCheckHP;
+    private bool DontCheckHP, PlaySpeech;
 
     public SylvanDietyBossAiStates[] GetSylvanDietyBossAiStates
     {
@@ -52,6 +52,18 @@ public class SylvanDietyPhases
         set
         {
             DontCheckHP = value;
+        }
+    }
+
+    public bool GetPlaySpeech
+    {
+        get
+        {
+            return PlaySpeech;
+        }
+        set
+        {
+            PlaySpeech = value;
         }
     }
 }
@@ -258,20 +270,23 @@ public class SylvanDiety : MonoBehaviour
 
     public void IncreaseArray()
     {
-        StateArrayIndex++;
+        if(PlayerTarget != null)
+        {
+            StateArrayIndex++;
 
-        if (StateArrayIndex >= phases[PhaseIndex].GetSylvanDietyBossAiStates.Length || OnEnabled)
-        {
-            StateArrayIndex = 0;
-        }
+            if (StateArrayIndex >= phases[PhaseIndex].GetSylvanDietyBossAiStates.Length || OnEnabled)
+            {
+                StateArrayIndex = 0;
+            }
 
-        if (phases[PhaseIndex].GetSylvanDietyBossAiStates[StateArrayIndex].GetSylvanDietyState == SylvanDietyBossStates.Skill)
-        {
-            AttackRange = enemySkills.GetManager[phases[PhaseIndex].GetSylvanDietyBossAiStates[StateArrayIndex].GetSkillIndex].GetAttackRange;
-        }
-        else
-        {
-            AttackRange = 2.5f;
+            if (phases[PhaseIndex].GetSylvanDietyBossAiStates[StateArrayIndex].GetSylvanDietyState == SylvanDietyBossStates.Skill)
+            {
+                AttackRange = enemySkills.GetManager[phases[PhaseIndex].GetSylvanDietyBossAiStates[StateArrayIndex].GetSkillIndex].GetAttackRange;
+            }
+            else
+            {
+                AttackRange = 2.5f;
+            }
         }
     }
 
@@ -506,6 +521,11 @@ public class SylvanDiety : MonoBehaviour
         {
             AttackRange = 2.5f;
         }
+
+        if(phases[PhaseIndex].GetPlaySpeech)
+        {
+            EnableSpeech();
+        }
     }
 
     private void ApplyingNormalAtk()
@@ -660,9 +680,6 @@ public class SylvanDiety : MonoBehaviour
 
         sylvanDietyAnimations.ResetSkillAnimator();
 
-        states = SylvanDietyBossStates.Idle;
-        Idle();
-
         PhaseIndex = 0;
         HpPhaseIndex = 0;
         StateArrayIndex = 0;
@@ -680,6 +697,11 @@ public class SylvanDiety : MonoBehaviour
         character.GetRigidbody.useGravity = true;
 
         transform.rotation = BossRotation;
+
+        states = SylvanDietyBossStates.Idle;
+        Idle();
+
+        AttackRange = 2.5f;
 
         EnableWall();
 
@@ -739,7 +761,7 @@ public class SylvanDiety : MonoBehaviour
         {
             if (PhaseIndex == 0)
             {
-                //EnableSpeech();
+                EnableSpeech();
             }
 
             PlayerTarget = other.GetComponent<Character>();
@@ -760,17 +782,8 @@ public class SylvanDiety : MonoBehaviour
 
                 SpeechText.text = phases[PhaseIndex].GetSpeechText;
             }
-            Invoke("DisableSpeech", 3.0f);
+            Invoke("DisableSpeech", 4.0f);
         }
-    }
-
-    private void EnableSpeechDead()
-    {
-        SpeechBox.SetBool("Fade", true);
-
-        SpeechText.text = "I...let everybody...down...";
-
-        Invoke("DisableSpeech", 3.0f);
     }
 
     private void DisableSpeech()

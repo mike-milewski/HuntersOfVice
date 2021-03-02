@@ -702,12 +702,15 @@ public class GameManager : MonoBehaviour
                     {
                         SoundManager.Instance.Menu();
                         ToggleEquipmentPanel();
+                        StartCoroutine("WaitToEnableEquipment");
                     }
                     else
                     {
                         SoundManager.Instance.ReverseMenu();
                         EquipmentToggle = false;
                         EquipmentPanelAnimator.SetBool("FadeIn", false);
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
                     }
                     StartCoroutine(SetMenuAnimationToFalse());
                 }
@@ -774,6 +777,13 @@ public class GameManager : MonoBehaviour
         CheckMonolithDistance();
     }
 
+    private IEnumerator WaitToEnableEquipment()
+    {
+        yield return new WaitForSeconds(0.4f);
+        EquipmentPanel.GetComponent<EquipmentMenu>().ToggleWeaponsInPanel();
+        EquipmentPanel.GetComponent<EquipmentMenu>().ToggleArmorInPanel();
+    }
+
     private void CheckMonolithDistance()
     {
         if (loreMonolith != null)
@@ -805,12 +815,15 @@ public class GameManager : MonoBehaviour
                 {
                     SoundManager.Instance.Menu();
                     ToggleEquipmentPanel();
+                    StartCoroutine("WaitToEnableEquipment");
                 }
                 else
                 {
                     SoundManager.Instance.ReverseMenu();
                     EquipmentToggle = false;
                     EquipmentPanelAnimator.SetBool("FadeIn", false);
+                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
                 }
                 StartCoroutine(SetMenuAnimationToFalse());
             }

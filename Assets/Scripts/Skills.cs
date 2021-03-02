@@ -2360,10 +2360,7 @@ public class Skills : StatusEffects
 
             var Critical = GetCharacter.GetCriticalChance;
 
-            if(playerElement == PlayerElement.Physical)
-            {
-                playerElement = GetCharacter.GetComponent<BasicAttack>().GetPlayerElement;
-            }
+            playerElement = GetCharacter.GetComponent<BasicAttack>().GetPlayerElement;
 
             #region CriticalHitChance
             if (Random.value * 100 <= Critical)
@@ -2447,6 +2444,8 @@ public class Skills : StatusEffects
                     {
                         Target.GetHealth.IncreaseHealth((DamageType + (int)CritValue));
 
+                        Target.GetLocalHealthInfo();
+
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<size=20>" + "<#4CFFAD>" +
                                                                                    DamageType + (int)CritValue
                                                                                    + "!" + "</size>" + "\n" + "</color>" + "<size=12> <#EFDFB8>" + "(ABSORBED!)";
@@ -2457,12 +2456,16 @@ public class Skills : StatusEffects
                         {
                             Target.GetHealth.IncreaseHealth(1);
 
+                            Target.GetLocalHealthInfo();
+
                             DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<size=20>" + "<#4CFFAD>" +
                                                                                        "1!" + "</size>" + "\n" + "</color>" + "<size=12> <#EFDFB8>" + "(ABSORBED!)";
                         }
                         else
                         {
                             Target.GetHealth.IncreaseHealth((DamageType + (int)CritValue) - DefenseType);
+
+                            Target.GetLocalHealthInfo();
 
                             DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<size=20>" + "<#4CFFAD>" +
                                                                                        ((DamageType + (int)CritValue) - DefenseType)
@@ -2568,6 +2571,8 @@ public class Skills : StatusEffects
                     {
                         Target.GetHealth.IncreaseHealth(Potency + DamageType);
 
+                        Target.GetLocalHealthInfo();
+
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<#4CFFAD>" + Potency + DamageType + "\n" + "</color> <size=12>" + "<#EFDFB8>" + "(ABSORBED!)";
                     }
                     else
@@ -2576,12 +2581,16 @@ public class Skills : StatusEffects
                         {
                             Target.GetHealth.IncreaseHealth(1);
 
+                            Target.GetLocalHealthInfo();
+
                             DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<#4CFFAD>" + "1" + "\n" + "</color> <size=12>" + "<#EFDFB8>" +
                                                                                        "(ABSORBED!)";
                         }
                         else
                         {
                             Target.GetHealth.IncreaseHealth((Potency + DamageType) - DefenseType);
+
+                            Target.GetLocalHealthInfo();
 
                             DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + "<#4CFFAD>" + ((Potency + DamageType) -
                                                                                        DefenseType) + "\n" + "</color> <size=12>" + "<#EFDFB8>" + "(ABSORBED!)";
@@ -2715,6 +2724,7 @@ public class Skills : StatusEffects
 
         if(GetCharacter.GetComponent<BasicAttack>().GetIgnoreElements)
         {
+            return false;
         }
         else
         {
@@ -2735,6 +2745,7 @@ public class Skills : StatusEffects
 
         if (GetCharacter.GetComponent<BasicAttack>().GetIgnoreElements)
         {
+            return false;
         }
         else
         {
@@ -2755,6 +2766,7 @@ public class Skills : StatusEffects
 
         if (GetCharacter.GetComponent<BasicAttack>().GetIgnoreElements)
         {
+            return false;
         }
         else
         {
