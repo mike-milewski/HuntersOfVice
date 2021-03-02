@@ -371,6 +371,8 @@ public class EnemyStatusIcon : MonoBehaviour
 
         StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Slowed </u>" + "</color>" +
                                      "</size>" + "\n" + "<size=10> Decreased movement & Increased Auto-attack time";
+
+        Slow();
     }
 
     public void StunStatus()
@@ -723,6 +725,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private void Slow()
     {
+
         character.GetComponent<EnemyAI>().GetMoveSpeed = character.GetComponent<EnemyAI>().GetMoveSpeed / 2;
         character.GetComponent<EnemyAI>().GetAttackDelay += 1;
     }

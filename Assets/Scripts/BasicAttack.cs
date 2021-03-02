@@ -1036,7 +1036,7 @@ public class BasicAttack : MonoBehaviour
         return Absorption;
     }
 
-    private TextMeshProUGUI BurningStatus(Enemy enemy)
+    public TextMeshProUGUI BurningStatus(Enemy enemy)
     {
         TextHolder = enemy.GetUI;
 
@@ -1055,7 +1055,7 @@ public class BasicAttack : MonoBehaviour
         return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private TextMeshProUGUI SlowStatus(Enemy enemy)
+    public TextMeshProUGUI SlowStatus(Enemy enemy)
     {
         TextHolder = enemy.GetUI;
 
@@ -1116,30 +1116,35 @@ public class BasicAttack : MonoBehaviour
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().SlowStatus();
     }
 
-    private bool CheckBurnStatusEffect(Enemy enemy)
+    public bool CheckBurnStatusEffect(Enemy enemy)
     {
         bool BurnStatus = false;
 
-        foreach(EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        if(enemy != null)
         {
-            if(enemystatus.GetStatusEffect == StatusEffect.Burning)
+            foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
             {
-                BurnStatus = true;
+                if (enemystatus.GetStatusEffect == StatusEffect.Burning)
+                {
+                    BurnStatus = true;
+                }
             }
         }
-
         return BurnStatus;
     }
 
-    private bool CheckSlowStatusEffect(Enemy enemy)
+    public bool CheckSlowStatusEffect(Enemy enemy)
     {
         bool SlowStatus = false;
 
-        foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        if(enemy != null)
         {
-            if (enemystatus.GetStatusEffect == StatusEffect.Slow)
+            foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
             {
-                SlowStatus = true;
+                if (enemystatus.GetStatusEffect == StatusEffect.Slow)
+                {
+                    SlowStatus = true;
+                }
             }
         }
 

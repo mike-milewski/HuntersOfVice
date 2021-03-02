@@ -584,13 +584,13 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Storm Thrust - Stun status." + "</color> ";
                 break;
             case (Ability.BurnStatus):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack - 10% Burning status." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Burning status." + "</color> ";
                 break;
             case (Ability.ReducedAutoAttack):
                 skillText = "\n\n" + "<#EFDFB8>" + "Reduces auto-attack time by 1 second." + "</color> ";
                 break;
             case (Ability.SlowStatus):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack - 10% Slowed status." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Slowed status." + "</color> ";
                 break;
             case (Ability.Tenacity):
                 skillText = "\n\n" + "<#EFDFB8>" + "Tenacity - strength 30%." + "</color> ";
@@ -684,13 +684,13 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Storm Thrust now applies the Stun status effect instead with a 5 second duration and a 15 second cooldown." + "</color> ";
                 break;
             case (Ability.BurnStatus):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack has a 10% chance of inflicting the Burning status effect." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Burning status effect." + "</color> ";
                 break;
             case (Ability.ReducedAutoAttack):
                 skillText = "\n\n" + "<#EFDFB8>" + "Reduces auto-attack time by 1 second." + "</color> ";
                 break;
             case (Ability.SlowStatus):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack has a 10% chance of inflicting the Slowed status effect." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Slowed status effect." + "</color> ";
                 break;
             case (Ability.Tenacity):
                 skillText = "\n\n" + "<#EFDFB8>" + "Tenacity increases strength by 30% instead." + "</color> ";
@@ -765,7 +765,7 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Reflects damage back to an enemy based on 5% of your maximum HP. Attacks from bosses reflect 1% damage." + "</color> ";
                 break;
             case (Ability.ViciousEmbodiment):
-                skillText = "\n\n" + "<#EFDFB8>" + "Inflicting status ailments has a 5% chance of inflicting the Doomed status instead." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Inflicting status ailments has a 5% chance of inflicting the Doomed status effect instead." + "</color> ";
                 break;
         }
         return skillText;

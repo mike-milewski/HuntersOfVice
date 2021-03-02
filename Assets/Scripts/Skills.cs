@@ -2668,6 +2668,29 @@ public class Skills : StatusEffects
                     Target.GetSylvanDietyAI.CheckHP();
                 }
             }
+
+            if (GetCharacter.GetComponent<BasicAttack>().GetHasBurnStatus)
+            {
+                if (Random.value * 100 <= 10)
+                {
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckBurnStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
+                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    {
+                        GetCharacter.GetComponent<BasicAttack>().BurningStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                    }
+                }
+            }
+            if (GetCharacter.GetComponent<BasicAttack>().GetHasSlowStatus)
+            {
+                if (Random.value * 100 <= 10)
+                {
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckSlowStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
+                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    {
+                        GetCharacter.GetComponent<BasicAttack>().SlowStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                    }
+                }
+            }
         }
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
