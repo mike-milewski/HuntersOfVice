@@ -30,5 +30,5 @@ MonoBehaviour:
   EXP: 10
   MaterialDataDropChance: 0
   MoveSpeed: 0
-  CheckedData: 1
+  CheckedData: 0
   materialdata: {fileID: 0}

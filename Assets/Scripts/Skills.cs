@@ -1907,7 +1907,7 @@ public class Skills : StatusEffects
 
     private void WhirlwindSlashHit()
     {
-        GetCharacter.transform.Rotate(0, 220, 0);
+        GetCharacter.transform.Rotate(0, 500, 0);
     }
 
     private void SpinShroomSpin()

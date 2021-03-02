@@ -263,6 +263,11 @@ public class EnemyStatusIcon : MonoBehaviour
         DamageOrHealTick = character.GetComponent<EnemySkills>().GetManager[KeyInput].GetStatusEffectPotency;
 
         TempTick = DamageOrHealTick;
+
+        if (Duration < 0)
+        {
+            DurationText.text = "";
+        }
     }
 
     public void PlayerInput()
@@ -564,15 +569,54 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private void CheckEnemyStates()
     {
-        if (character.GetComponent<EnemyAI>().GetPlayerTarget == null)
+        if(character.GetComponent<EnemyAI>())
         {
-            character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
-            character.GetComponent<EnemyAI>().GetStates = States.Patrol;
+            if (character.GetComponent<EnemyAI>().GetPlayerTarget == null)
+            {
+                character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+                character.GetComponent<EnemyAI>().GetStates = States.Patrol;
+            }
+            else
+            {
+                character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+                character.GetComponent<EnemyAI>().GetStates = States.Chase;
+            }
         }
-        else
+        if (character.GetComponent<Puck>())
         {
-            character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
-            character.GetComponent<EnemyAI>().GetStates = States.Chase;
+            if (character.GetComponent<Puck>().GetPlayerTarget == null)
+            {
+                character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+            }
+            else
+            {
+                character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+                character.GetComponent<Puck>().GetStates = BossStates.Chase;
+            }
+        }
+        if (character.GetComponent<RuneGolem>())
+        {
+            if (character.GetComponent<RuneGolem>().GetPlayerTarget == null)
+            {
+                character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+            }
+            else
+            {
+                character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+                character.GetComponent<RuneGolem>().GetStates = RuneGolemStates.Chase;
+            }
+        }
+        if (character.GetComponent<SylvanDiety>())
+        {
+            if (character.GetComponent<SylvanDiety>().GetPlayerTarget == null)
+            {
+                character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+            }
+            else
+            {
+                character.GetComponent<EnemySkills>().GetDisruptedSkill = false;
+                character.GetComponent<SylvanDiety>().GetSylvanDietyStates = SylvanDietyBossStates.Chase;
+            }
         }
     }
 
@@ -649,7 +693,22 @@ public class EnemyStatusIcon : MonoBehaviour
     private void Stun()
     {
         character.GetComponent<EnemySkills>().GetDisruptedSkill = true;
-        character.GetComponent<EnemyAI>().GetStates = States.Immobile;
+        if (character.GetComponent<Puck>())
+        {
+            character.GetComponent<Puck>().GetStates = BossStates.Immobile;
+        }
+        if (character.GetComponent<RuneGolem>())
+        {
+            character.GetComponent<RuneGolem>().GetStates = RuneGolemStates.Immobile;
+        }
+        if (character.GetComponent<SylvanDiety>())
+        {
+            character.GetComponent<SylvanDiety>().GetSylvanDietyStates = SylvanDietyBossStates.Immobile;
+        }
+        if (character.GetComponent<EnemyAI>())
+        {
+            character.GetComponent<EnemyAI>().GetStates = States.Immobile;
+        }
     }
 
     private void Sleep()

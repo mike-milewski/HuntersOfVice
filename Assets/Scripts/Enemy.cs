@@ -406,8 +406,6 @@ public class Enemy : MonoBehaviour
     {
         if(ExperiencePoints > 0 && GameManager.Instance.GetCharacter.CurrentHealth > 0)
         {
-            CheckExperienceHolder();
-
             EXP.GainEXP(ExperiencePoints);
             if(EXP.GetGetsExtraExp)
             {
@@ -424,7 +422,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void CheckExperienceHolder()
+    public void CheckExperienceHolder()
     {
         if(GameManager.Instance.GetKnight.activeInHierarchy)
         {

@@ -30,5 +30,5 @@ MonoBehaviour:
   EXP: 53
   MaterialDataDropChance: 30
   MoveSpeed: 4
-  CheckedData: 1
+  CheckedData: 0
   materialdata: {fileID: 11400000, guid: 1a406e0ee9bf4a343800675c6b39304b, type: 2}

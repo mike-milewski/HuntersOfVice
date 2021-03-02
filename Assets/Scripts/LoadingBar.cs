@@ -12,10 +12,14 @@ public class LoadingBar : MonoBehaviour
     [SerializeField]
     private int BuildIndex;
 
+    [SerializeField]
+    private CharacterData[] characterDatas;
+
     private Scene scene;
 
     private void OnEnable()
     {
+        ResetAllEnemyDataChecks();
         StartCoroutine(Async(BuildIndex));
     }
 
@@ -33,6 +37,14 @@ public class LoadingBar : MonoBehaviour
             }
 
             yield return null;
+        }
+    }
+
+    private void ResetAllEnemyDataChecks()
+    {
+        for(int i = 0; i < characterDatas.Length; i++)
+        {
+            characterDatas[i].CheckedData = false;
         }
     }
 }

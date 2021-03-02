@@ -1129,7 +1129,7 @@ public class GameManager : MonoBehaviour
             character.GetComponent<BasicAttack>().RemoveTarget();
         }
 
-        if(Knight.activeInHierarchy)
+        if (Knight.activeInHierarchy)
         {
             Knight.GetComponent<BasicAttack>().GetAutoAttackTime = 0;
             Knight.GetComponent<BasicAttack>().enabled = false;

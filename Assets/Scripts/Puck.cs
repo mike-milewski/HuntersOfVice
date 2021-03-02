@@ -726,6 +726,8 @@ public class Puck : MonoBehaviour
 
     public void Dead()
     {
+        enemy.CheckExperienceHolder();
+
         enemySkills.SetRotationToFalse();
 
         EnableAudioChanger();

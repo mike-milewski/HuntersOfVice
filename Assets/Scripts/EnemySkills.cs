@@ -2893,7 +2893,7 @@ public class EnemySkills : MonoBehaviour
 
                     Mathf.Round(CritCalc);
 
-                    if ((int)CritCalc - Target.GetComponent<Character>().CharacterDefense < 0)
+                    if ((int)CritCalc - Target.GetComponent<Character>().CharacterIntelligence < 0)
                     {
                         Target.GetComponent<Health>().ModifyHealth(-1);
 
@@ -2902,15 +2902,15 @@ public class EnemySkills : MonoBehaviour
                     else
                     {
                         Target.GetComponent<Health>().ModifyHealth
-                                                                 (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
+                                                                 (-((int)CritCalc - Target.GetComponent<Character>().CharacterIntelligence));
 
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
-                                                                                   Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                                                                                   Target.GetComponent<Character>().CharacterIntelligence).ToString() + "!";
                     }
                 }
                 else
                 {
-                    if (potency - Target.GetComponent<Character>().CharacterDefense < 0)
+                    if (potency - Target.GetComponent<Character>().CharacterIntelligence < 0)
                     {
                         Target.GetComponent<Health>().ModifyHealth(-1);
 
@@ -2918,10 +2918,10 @@ public class EnemySkills : MonoBehaviour
                     }
                     else
                     {
-                        Target.GetComponent<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
+                        Target.GetComponent<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterIntelligence));
 
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
-                                                                                   (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                                                                                   (potency - Target.GetComponent<Character>().CharacterIntelligence).ToString();
                     }
                 }
                 #endregion

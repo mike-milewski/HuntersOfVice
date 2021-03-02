@@ -27,7 +27,7 @@ MonoBehaviour:
   MpIncrease: 0
   CriticalHitChance: 5
   Coins: 350
-  EXP: 700
+  EXP: 550
   MaterialDataDropChance: 100
   MoveSpeed: 0
   CheckedData: 0

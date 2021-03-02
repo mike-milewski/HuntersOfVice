@@ -635,6 +635,8 @@ public class RuneGolem : MonoBehaviour
 
     public void Dead()
     {
+        enemy.CheckExperienceHolder();
+
         EnableAudioChanger();
 
         DespawnEarthEffigy();
@@ -674,6 +676,10 @@ public class RuneGolem : MonoBehaviour
         {
             this.GetComponent<ItemDrop>().DropItem();
         }
+
+        enemy.ReturnCoins();
+
+        enemy.ReturnExperience();
 
         CheckForInformation();
     }
