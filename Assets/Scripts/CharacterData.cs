@@ -25,7 +25,7 @@ public class CharacterData : ScriptableObject
 
     public float MoveSpeed;
 
-    public bool CheckedData;
+    public bool CheckedData, UsesStrength, UsesIntelligence;
 
     public MaterialData materialdata;
 }

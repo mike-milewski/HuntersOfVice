@@ -28,7 +28,7 @@ MonoBehaviour:
   CriticalHitChance: 5
   Coins: 80
   EXP: 120
-  MaterialDataDropChance: 70
+  MaterialDataDropChance: 30
   MoveSpeed: 4
   CheckedData: 0
-  materialdata: {fileID: 11400000, guid: e08ee87ecc0f54f49bb6ba8f3025089b, type: 2}
+  materialdata: {fileID: 11400000, guid: 7339010137ce4c8428cc272fd00ec619, type: 2}

@@ -2354,13 +2354,36 @@ public class Skills : StatusEffects
 
             DamageTxt.transform.SetParent(TextHolder.transform, false);
 
-            int DamageType = GetCharacter.GetCharacterData.CharacterName == "Knight" ? GetCharacter.CharacterStrength : GetCharacter.CharacterIntelligence;
+            playerElement = GetCharacter.GetComponent<BasicAttack>().GetPlayerElement;
 
-            int DefenseType = GetCharacter.GetCharacterData.CharacterName == "Knight" ? Target.GetCharacter.CharacterDefense : Target.GetCharacter.CharacterIntelligence;
+            int DamageType = 0;
+            if(GetCharacter.GetCharacterData.UsesStrength)
+            {
+                if(playerElement == PlayerElement.Magic)
+                {
+                    DamageType = GetCharacter.CharacterIntelligence;
+                }
+                else
+                {
+                    DamageType = GetCharacter.CharacterStrength;
+                }
+            }
+            if(GetCharacter.GetCharacterData.UsesIntelligence)
+            {
+                DamageType = GetCharacter.CharacterIntelligence;
+            }
+
+            int DefenseType = 0;
+            if (GetCharacter.GetCharacterData.UsesStrength)
+            {
+                DefenseType = Target.GetCharacter.CharacterDefense;
+            }
+            if (GetCharacter.GetCharacterData.UsesIntelligence)
+            {
+                DefenseType = Target.GetCharacter.CharacterIntelligence;
+            }
 
             var Critical = GetCharacter.GetCriticalChance;
-
-            playerElement = GetCharacter.GetComponent<BasicAttack>().GetPlayerElement;
 
             #region CriticalHitChance
             if (Random.value * 100 <= Critical)

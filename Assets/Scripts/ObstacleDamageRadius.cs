@@ -50,7 +50,7 @@ public class ObstacleDamageRadius : MonoBehaviour
     private GameObject Particle;
 
     [SerializeField]
-    private bool IsInRadius, DisabledRadius, IsStatue, IsSpikeTrap, IsLuxOrb;
+    private bool IsInRadius, DisabledRadius, IsStatue, IsSpikeTrap, IsLuxOrb, IsAnAquaBullet;
 
     [SerializeField]
     private ObstacleShapes shapes;
@@ -231,7 +231,7 @@ public class ObstacleDamageRadius : MonoBehaviour
 
         if (DamageShape.rectTransform.sizeDelta.x < SizeDeltaX)
         {
-            DamageShape.rectTransform.sizeDelta += new Vector2(300, 0) * 13 * Time.deltaTime;
+            DamageShape.rectTransform.sizeDelta += new Vector2(50, 0) * 13 * Time.deltaTime;
         }
         if (DamageShape.rectTransform.sizeDelta.y < SizeDeltaY)
         {
@@ -268,9 +268,13 @@ public class ObstacleDamageRadius : MonoBehaviour
 
     private void InvokeParticle()
     {
-        if(!IsStatue && !IsSpikeTrap && !IsLuxOrb)
+        if(!IsStatue && !IsSpikeTrap && !IsLuxOrb && !IsAnAquaBullet)
         {
             Invoke("CastParticleEffect", InvokeParticleEffectTime);
+        }
+        if(IsAnAquaBullet)
+        {
+            Invoke("AquaBulletParticle", InvokeParticleEffectTime);
         }
         if(IsSpikeTrap)
         {
@@ -325,7 +329,7 @@ public class ObstacleDamageRadius : MonoBehaviour
         }
     }
 
-    private void InvokeEffect()
+    private void AquaBulletParticle()
     {
         if(settings.UseParticleEffects)
         {
@@ -491,11 +495,6 @@ public class ObstacleDamageRadius : MonoBehaviour
 
             DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + Name + " " +
                                                                        (Damage - PlayerTarget.GetComponent<Character>().CharacterDefense).ToString();
-        }
-
-        if (!SkillsManager.Instance.GetActivatedSkill)
-        {
-            PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();
         }
 
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();

@@ -20,15 +20,15 @@ MonoBehaviour:
   CharacterLevel: 7
   Health: 350
   Mana: 0
-  Strength: 43
-  Defense: 22
-  Intelligence: 20
+  Strength: 34
+  Defense: 20
+  Intelligence: 18
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 15
   Coins: 40
   EXP: 45
-  MaterialDataDropChance: 30
+  MaterialDataDropChance: 45
   MoveSpeed: 0
   CheckedData: 0
   materialdata: {fileID: 11400000, guid: bfe3945cc85981c498f55df6f243902c, type: 2}

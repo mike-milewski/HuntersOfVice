@@ -59,4 +59,9 @@ public class ToadstoolWalk : MonoBehaviour
     {
         ParticleEffect.SetActive(true);
     }
+
+    public void ToadstoolHopSE()
+    {
+        SoundManager.Instance.ToadstoolWalk();
+    }
 }

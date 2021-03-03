@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Kirinomitake
   m_EditorClassIdentifier: 
   EquipmentName: Kirinomitake
-  Element: 6
+  Element: 0
   StatIncrease: 100
   BuyValue: 5000

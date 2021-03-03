@@ -31,4 +31,6 @@ MonoBehaviour:
   MaterialDataDropChance: 0
   MoveSpeed: 6
   CheckedData: 0
+  UsesStrength: 1
+  UsesIntelligence: 0
   materialdata: {fileID: 0}

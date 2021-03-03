@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Shadow Veil
   Element: 0
-  StatIncrease: 13
+  StatIncrease: 10
   BuyValue: 2000
