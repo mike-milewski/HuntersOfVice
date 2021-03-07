@@ -2723,6 +2723,39 @@ public class Skills : StatusEffects
                     }
                 }
             }
+            if (GetCharacter.GetComponent<BasicAttack>().GetHasDefenseDownStatus)
+            {
+                if (Random.value * 100 <= 10)
+                {
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckDefenseDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
+                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    {
+                        GetCharacter.GetComponent<BasicAttack>().DefenseDownStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                    }
+                }
+            }
+            if (GetCharacter.GetComponent<BasicAttack>().GetHasStrengthDownStatus)
+            {
+                if (Random.value * 100 <= 10)
+                {
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckStrengthDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
+                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    {
+                        GetCharacter.GetComponent<BasicAttack>().StrengthDownStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                    }
+                }
+            }
+            if (GetCharacter.GetComponent<BasicAttack>().GetHasIntelligenceDownStatus)
+            {
+                if (Random.value * 100 <= 10)
+                {
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckIntelligenceDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
+                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    {
+                        GetCharacter.GetComponent<BasicAttack>().IntelligenceDownStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                    }
+                }
+            }
         }
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }

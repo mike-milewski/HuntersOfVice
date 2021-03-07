@@ -18,17 +18,20 @@ MonoBehaviour:
   Absorbtions: 00000000
   CharacterName: Rune Golem
   CharacterLevel: 10
-  Health: 3000
+  Health: 3500
   Mana: 0
-  Strength: 34
-  Defense: 28
-  Intelligence: 20
+  Strength: 37
+  Defense: 32
+  Intelligence: 26
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5
   Coins: 500
   EXP: 800
   MaterialDataDropChance: 0
-  MoveSpeed: 0
+  SkillPoints: 25
+  MoveSpeed: 4
   CheckedData: 0
+  UsesStrength: 0
+  UsesIntelligence: 0
   materialdata: {fileID: 0}

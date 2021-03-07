@@ -10,7 +10,7 @@ public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse, StrengthIntelligenceReverse, Alleviate, 
                       HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease, ExtraContract, BraveLight, Contracts, MiasmaPulse, NetherStar, IgnoreDefense,
                       MyceliumBash, IronCap, HpHeal, Quickness, ImmuneToStatusEffects, DoubleStatusDuration, MpHeal, MildewSplash, SpinShroom, ViciousEmbodiment,
-                      ToadstoolReflectDamage }
+                      ToadstoolReflectDamage, ReducedDamage, StrengthDown, IntelligenceDown, DefenseDown, SoulPierce, ExtraSkillPoints }
 
 [System.Serializable]
 public class StatusType
@@ -72,7 +72,7 @@ public class Equipment : MonoBehaviour
     private Sprite EquipmentSprite;
 
     [SerializeField]
-    private TextMeshProUGUI EquipmentNameText, EquipmentInfoText, EquipmentPanelText, ShopEquipmentPanelText;
+    private TextMeshProUGUI EquipmentNameText, EquipmentInfoText, EquipmentPanelText, ShopEquipmentPanelText, SkillPointText;
 
     [SerializeField]
     private Skills skill = null;
@@ -91,6 +91,13 @@ public class Equipment : MonoBehaviour
 
     [SerializeField]
     private StatusType[] stattype;
+
+    [SerializeField]
+    private int SkillPointsRequired;
+
+    private int SkillPointsAcquired;
+
+    private bool SkillMastered;
 
     public Character GetCharacter
     {
@@ -164,6 +171,30 @@ public class Equipment : MonoBehaviour
         }
     }
 
+    public int GetRequiredSkillPoints
+    {
+        get
+        {
+            return SkillPointsRequired;
+        }
+        set
+        {
+            SkillPointsRequired = value;
+        }
+    }
+
+    public int GetAcquiredSkillPoints
+    {
+        get
+        {
+            return SkillPointsAcquired;
+        }
+        set
+        {
+            SkillPointsAcquired = value;
+        }
+    }
+
     private void Awake()
     {
         gameObject.GetComponent<Image>().sprite = EquipmentSprite;
@@ -212,6 +243,7 @@ public class Equipment : MonoBehaviour
 
         EquipmentNameText.text = "";
         EquipmentInfoText.text = "";
+        SkillPointText.text = "";
     }
 
     private void WeaponEquip()
@@ -313,6 +345,8 @@ public class Equipment : MonoBehaviour
     {
         EquipmentNameText.text = equipmentData.EquipmentName;
 
+        CheckSkillPointText();
+
         if(equipmentData.Element != PlayerElement.NONE)
         {
             EquipmentInfoText.text = StatsText().text + "\n" + "Element: " + equipmentData.Element + EquipmentAbilityTextInEquipMenu();
@@ -323,7 +357,72 @@ public class Equipment : MonoBehaviour
     {
         EquipmentNameText.text = equipmentData.EquipmentName;
 
+        CheckSkillPointText();
+
         EquipmentInfoText.text = StatsText().text + EquipmentAbilityTextInEquipMenu();
+    }
+
+    public TextMeshProUGUI CheckSkillPointText()
+    {
+        if (SkillPointsRequired > 0)
+        {
+            if (SkillPointsAcquired >= SkillPointsRequired && SkillPointsRequired != 0)
+            {
+                SkillPointText.text = "MASTERED";
+            }
+            else
+            {
+                SkillPointText.text = "Skill Points: " + SkillPointsAcquired + " / " + SkillPointsRequired;
+            }
+        }
+        return SkillPointText;
+    }
+
+    public string SkillPointTextInMenu()
+    {
+        string skillPoints = "";
+
+        if (SkillPointsRequired > 0)
+        {
+            skillPoints = "Skill Points: " + SkillPointsAcquired + " / " + SkillPointsRequired;
+            if (SkillPointsAcquired >= SkillPointsRequired && SkillPointsRequired != 0)
+            {
+                skillPoints = "MASTERED";
+                SkillMastered = true;
+            }
+        }
+
+        return skillPoints;
+    }
+
+    public void UpdateSkillPoinText()
+    {
+        if(SkillMastered)
+        {
+            SkillPointText.text = "MASTERED";
+        }
+        if (SkillPointsAcquired >= SkillPointsRequired && SkillPointsRequired != 0 && !SkillMastered)
+        {
+            SkillsManager.Instance.CreateSkillMasteryText(EquipmentAbilityTextInEquipMenu());
+            GameManager.Instance.ShowSkillMasteryText();
+            SkillPointText.text = "MASTERED";
+        }
+        if(SkillPointsAcquired < SkillPointsRequired && SkillPointsRequired != 0)
+        {
+            SkillPointText.text = "Skill Points: " + SkillPointsAcquired + " / " + SkillPointsRequired;
+        }
+    }
+
+    public string SkillPointRequirementInShopMenu()
+    {
+        string skillPointRequirement = "";
+
+        if (SkillPointsRequired > 0)
+        {
+            skillPointRequirement = "Required Skill Points: " + SkillPointsRequired;
+        }
+
+        return skillPointRequirement;
     }
 
     public void PanelText(GameObject panel)
@@ -344,13 +443,13 @@ public class Equipment : MonoBehaviour
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
+                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
             else
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + EquipmentAbilityText() +
-                                        "\n\n" + "Sell Value: " + SellValue();
+                                        "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
         }
         if (stattype.Length == 2)
@@ -360,14 +459,14 @@ public class Equipment : MonoBehaviour
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
+                                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
             else
             {
                 EquipmentPanelText.text = "<size=12>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + EquipmentAbilityText() +
-                                        "\n\n" + "Sell Value: " + SellValue();
+                                        "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
         }
         if (stattype.Length == 3)
@@ -378,7 +477,7 @@ public class Equipment : MonoBehaviour
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                       EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
+                                       EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
             else
             {
@@ -386,7 +485,7 @@ public class Equipment : MonoBehaviour
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + EquipmentAbilityText() +
-                                       "\n\n" + "Sell Value: " + SellValue();
+                                       "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
         }
         if (stattype.Length == 4)
@@ -398,7 +497,7 @@ public class Equipment : MonoBehaviour
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
+                                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
             else
             {
@@ -407,7 +506,7 @@ public class Equipment : MonoBehaviour
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + EquipmentAbilityText() +
-                                        "\n\n" + "Sell Value: " + SellValue();
+                                        "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
         }
         if (stattype.Length == 5)
@@ -420,7 +519,7 @@ public class Equipment : MonoBehaviour
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
                                                         stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue();
+                                                        EquipmentAbilityText() + "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
             else
             {
@@ -430,7 +529,7 @@ public class Equipment : MonoBehaviour
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
                                         stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + EquipmentAbilityText() +
-                                        "\n\n" + "Sell Value: " + SellValue();
+                                        "\n\n" + "Sell Value: " + SellValue() + "\n\n" + SkillPointTextInMenu(); ;
             }
         }
         return EquipmentPanelText;
@@ -444,13 +543,13 @@ public class Equipment : MonoBehaviour
             {
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
             else
             {
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + EquipmentAbilityText() +
-                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
         }
         if (stattype.Length == 2)
@@ -460,14 +559,14 @@ public class Equipment : MonoBehaviour
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
             else
             {
                 EquipmentPanelText.text = "<size=18>" + "<u>" + equipmentData.EquipmentName + "</u>" + "</size>" + "\n\n" +
                                         stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + EquipmentAbilityText() +
-                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
         }
         if (stattype.Length == 3)
@@ -478,7 +577,7 @@ public class Equipment : MonoBehaviour
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" + "Element: " + equipmentData.Element + EquipmentAbilityText() +
-                                       "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                       "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
             else
             {
@@ -486,7 +585,7 @@ public class Equipment : MonoBehaviour
                                        stattype[0].GetStatusTypes + " +" + stattype[0].GetStatIncrease + "\n" +
                                        stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                        stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + EquipmentAbilityText() +
-                                       "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                       "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
         }
         if (stattype.Length == 4)
@@ -498,7 +597,7 @@ public class Equipment : MonoBehaviour
                                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
             else
             {
@@ -507,7 +606,7 @@ public class Equipment : MonoBehaviour
                                         stattype[1].GetStatusTypes + " +" + stattype[1].GetStatIncrease + "\n" +
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + EquipmentAbilityText() +
-                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
         }
         if (stattype.Length == 5)
@@ -520,7 +619,7 @@ public class Equipment : MonoBehaviour
                                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
                                                         stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + "\n" + "Element: " + equipmentData.Element +
-                                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                                        EquipmentAbilityText() + "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
             else
             {
@@ -530,7 +629,7 @@ public class Equipment : MonoBehaviour
                                         stattype[2].GetStatusTypes + " +" + stattype[2].GetStatIncrease + "\n" +
                                         stattype[3].GetStatusTypes + " +" + stattype[3].GetStatIncrease + "\n" +
                                         stattype[4].GetStatusTypes + " +" + stattype[4].GetStatIncrease + EquipmentAbilityText() +
-                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue;
+                                        "\n\n" + "Buy Value: " + equipmentData.BuyValue + "\n\n" + SkillPointRequirementInShopMenu();
             }
         }
         return EquipmentPanelText;
@@ -635,7 +734,7 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Ignores enemy's defense." + "</color> ";
                 break;
             case (Ability.MyceliumBash):
-                skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash - 2 hits & 3 MP cost." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash - 2 hits & 2 MP cost." + "</color> ";
                 break;
             case (Ability.IronCap):
                 skillText = "\n\n" + "<#EFDFB8>" + "Iron Cap - Increased duration." + "</color> ";
@@ -666,6 +765,24 @@ public class Equipment : MonoBehaviour
                 break;
             case (Ability.ViciousEmbodiment):
                 skillText = "\n\n" + "<#EFDFB8>" + "Status effects - 5% Doomed status." + "</color> ";
+                break;
+            case (Ability.ReducedDamage):
+                skillText = "\n\n" + "<#EFDFB8>" + "Damage - 10% reduced." + "</color> ";
+                break;
+            case (Ability.SoulPierce):
+                skillText = "\n\n" + "<#EFDFB8>" + "Withering - 20s duration." + "</color> ";
+                break;
+            case (Ability.StrengthDown):
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Strength Down." + "</color> ";
+                break;
+            case (Ability.DefenseDown):
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Defense Down." + "</color> ";
+                break;
+            case (Ability.IntelligenceDown):
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Intelligence Down." + "</color> ";
+                break;
+            case (Ability.ExtraSkillPoints):
+                skillText = "\n\n" + "<#EFDFB8>" + "Skill Points earned +2." + "</color> ";
                 break;
         }
         return skillText;
@@ -735,7 +852,7 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Ignores enemies defense." + "</color> ";
                 break;
             case (Ability.MyceliumBash):
-                skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash deals damage twice but now costs 3 MP." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Mycelium Bash deals damage twice but now costs 2 MP." + "</color> ";
                 break;
             case (Ability.IronCap):
                 skillText = "\n\n" + "<#EFDFB8>" + "Increases the duration of Iron Cap by 5 seconds." + "</color> ";
@@ -767,280 +884,348 @@ public class Equipment : MonoBehaviour
             case (Ability.ViciousEmbodiment):
                 skillText = "\n\n" + "<#EFDFB8>" + "Inflicting status ailments has a 5% chance of inflicting the Doomed status effect instead." + "</color> ";
                 break;
+            case (Ability.ReducedDamage):
+                skillText = "\n\n" + "<#EFDFB8>" + "Taking damage has a 15% chance to reduce that damage by 10%." + "</color> ";
+                break;
+            case (Ability.SoulPierce):
+                skillText = "\n\n" + "<#EFDFB8>" + "Increases the duration of Soul Pierce's Withering status effect to 20 seconds." + "</color> ";
+                break;
+            case (Ability.StrengthDown):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Strength Down status effect." + "</color> ";
+                break;
+            case (Ability.DefenseDown):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Defense Down status effect." + "</color> ";
+                break;
+            case (Ability.IntelligenceDown):
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Intelligence Down status effect." + "</color> ";
+                break;
+            case (Ability.ExtraSkillPoints):
+                skillText = "\n\n" + "<#EFDFB8>" + "Skill Points earned  from enemies is increased by 2." + "</color>";
+                break;
         }
         return skillText;
     }
 
     private void GainEquipmentAbility()
     {
-        switch (equipmentAbility)
+        if(SkillMastered)
         {
-            case (Ability.NONE):
-                return;
-            case (Ability.SwiftStrike):
-                skill.GetManaCost = 0;
-                break;
-            case (Ability.StormThrust):
-                skill.GetEnemyStatusEffect = StatusEffect.Stun;
-                skill.GetStatusEffectName = "Stun";
-                skill.GetStatusDescription = "Unable to act.";
-                skill.GetAddedEffect = "Unable to act";
-                skill.GetStatusDuration = 5.0f;
-                skill.GetCoolDown = 15;
-                break;
-            case (Ability.BurnStatus):
-                basicAttack.GetHasBurnStatus = true;
-                break;
-            case (Ability.ReducedAutoAttack):
-                basicAttack.GetAttackDelay -= 0.5f;
-                break;
-            case (Ability.SlowStatus):
-                basicAttack.GetHasSlowStatus = true;
-                break;
-            case (Ability.Tenacity):
-                skill.GetStatusEffectPotency = 30;
-                skill.GetSkillDescription = "Increases strength by 30%";
-                break;
-            case (Ability.ManaPulse):
-                items.GetUnlockedPassive = true;
-                break;
-            case (Ability.StrengthIntelligenceReverse):
-                basicAttack.GetUsesIntelligenceForDamage = true;
-                break;
-            case (Ability.Alleviate):
-                skill.GetAlleviateHealPercentage = 30;
-                skill.GetSkillDescription = "Removes all status ailments and restores HP by 30%.";
-                break;
-            case (Ability.HpForSkillCast):
-                SkillsManager.Instance.GetUsesHpForSkillCast = true;
-                break;
-            case (Ability.WhirlwindSlash):
-                skill.GetGainedPassive = true;
-                skill.GetEnemyStatusEffect = StatusEffect.DamageOverTime;
-                skill.GetStatusEffectName = "Wind Scarred";
-                skill.GetStatusDescription = "Taking damage over time.";
-                break;
-            case (Ability.EvilsEnd):
-                skill.GetStatusEffectPotency = 40;
-                skill.GetSkillDescription = "Delivers a punishing blow to the target. <#EFDFB8>Can only be executed while the target is at 40% HP or below.</color>";
-                break;
-            case (Ability.CriticalChanceIncrease):
-                character.GetCriticalChance = 15;
-                break;
-            case (Ability.BraveLight):
-                skill.GetCoolDown = 45;
-                if (skill.GetCoolDownImage.fillAmount > 0)
-                {
-                    skill.GetCoolDownImage.fillAmount = 1;
-                    skill.GetCD = skill.GetCoolDown;
-                }
-                break;
-            case (Ability.Contracts):
-                ContractSkills[0].GetPlayerStatusEffect = EffectStatus.ContractWithEvilNoNegative;
-                ContractSkills[1].GetPlayerStatusEffect = EffectStatus.ContractWithTheVileNoNegative;
-                ContractSkills[2].GetPlayerStatusEffect = EffectStatus.ContractWithNefariousnessNoNegative;
-                ContractSkills[0].GetSkillDescription = "Increases Intelligence by 15%.";
-                ContractSkills[1].GetSkillDescription = "Restores 3% MP over 3 seconds.";
-                ContractSkills[2].GetSkillDescription = "Reduces the casting time of all skills by 25%.";
-                ContractSkills[0].GetStatusDescription = "Increased Intelligence";
-                ContractSkills[1].GetStatusDescription = "Restoring MP";
-                ContractSkills[2].GetStatusDescription = "Skill cast and cost reduced.";
-                ApplyContractEffects();
-                break;
-            case (Ability.ExtraContract):
-                SkillsManager.Instance.GetMaxContractStack++;
-                break;
-            case (Ability.MiasmaPulse):
-                items.GetUnlockedPassive = true;
-                items.GetStatusEffect = true;
-                break;
-            case (Ability.NetherStar):
-                skill.GetPotency += 200;
-                break;
-            case (Ability.IgnoreDefense):
-                basicAttack.GetIgnoreDefense = true;
-                break;
-            case (Ability.MyceliumBash):
-                character.GetComponent<PlayerAnimations>().GetAdditionalHit = true;
-                skill.GetManaCost = 3;
-                break;
-            case (Ability.IronCap):
-                skill.GetStatusDuration = 20;
-                break;
-            case (Ability.HpHeal):
-                character.GetComponent<Health>().GetUnlockedPassive = true;
-                break;
-            case (Ability.Quickness):
-                skill.GetStatusDuration = -1;
-                if (skill.GetStatusIcon.activeInHierarchy)
-                {
-                    skill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
-                }
-                break;
-            case (Ability.ImmuneToStatusEffects):
-                character.GetIsImmuneToStatusEffects = true;
-                break;
-            case (Ability.DoubleStatusDuration):
-                basicAttack.GetDoublesStatusDuration = true;
-                break;
-            case (Ability.MpHeal):
-                RestoreMpEffect();
-                break;
-            case (Ability.MildewSplash):
-                skill.GetCoolDown = 12.5f;
-                if (skill.GetCoolDownImage.fillAmount > 0)
-                {
-                    skill.GetCoolDownImage.fillAmount = 1;
-                    skill.GetCD = skill.GetCoolDown;
-                }
-                break;
-            case (Ability.SpinShroom):
-                skill.GetPotency = 100;
-                break;
-            case (Ability.ToadstoolReflectDamage):
-                character.GetComponent<Health>().GetReflectingDamage = true;
-                break;
-            case (Ability.ViciousEmbodiment):
-                basicAttack.GetInflictsDoomStatus = true;
-                break;
+            return;
+        }
+        else
+        {
+            switch (equipmentAbility)
+            {
+                case (Ability.NONE):
+                    return;
+                case (Ability.SwiftStrike):
+                    skill.GetManaCost = 0;
+                    break;
+                case (Ability.StormThrust):
+                    skill.GetEnemyStatusEffect = StatusEffect.Stun;
+                    skill.GetStatusEffectName = "Stun";
+                    skill.GetStatusDescription = "Unable to act.";
+                    skill.GetAddedEffect = "Unable to act";
+                    skill.GetStatusDuration = 5.0f;
+                    skill.GetCoolDown = 15;
+                    break;
+                case (Ability.BurnStatus):
+                    basicAttack.GetHasBurnStatus = true;
+                    break;
+                case (Ability.ReducedAutoAttack):
+                    basicAttack.GetAttackDelay -= 0.5f;
+                    break;
+                case (Ability.SlowStatus):
+                    basicAttack.GetHasSlowStatus = true;
+                    break;
+                case (Ability.Tenacity):
+                    skill.GetStatusEffectPotency = 30;
+                    skill.GetSkillDescription = "Increases strength by 30%";
+                    break;
+                case (Ability.ManaPulse):
+                    items.GetUnlockedPassive = true;
+                    break;
+                case (Ability.StrengthIntelligenceReverse):
+                    basicAttack.GetUsesIntelligenceForDamage = true;
+                    break;
+                case (Ability.Alleviate):
+                    skill.GetAlleviateHealPercentage = 30;
+                    skill.GetSkillDescription = "Removes all status ailments and restores HP by 30%.";
+                    break;
+                case (Ability.HpForSkillCast):
+                    SkillsManager.Instance.GetUsesHpForSkillCast = true;
+                    break;
+                case (Ability.WhirlwindSlash):
+                    skill.GetGainedPassive = true;
+                    skill.GetEnemyStatusEffect = StatusEffect.DamageOverTime;
+                    skill.GetStatusEffectName = "Wind Scarred";
+                    skill.GetStatusDescription = "Taking damage over time.";
+                    break;
+                case (Ability.EvilsEnd):
+                    skill.GetStatusEffectPotency = 40;
+                    skill.GetSkillDescription = "Delivers a punishing blow to the target. <#EFDFB8>Can only be executed while the target is at 40% HP or below.</color>";
+                    break;
+                case (Ability.CriticalChanceIncrease):
+                    character.GetCriticalChance = 15;
+                    break;
+                case (Ability.BraveLight):
+                    skill.GetCoolDown = 45;
+                    if (skill.GetCoolDownImage.fillAmount > 0)
+                    {
+                        skill.GetCoolDownImage.fillAmount = 1;
+                        skill.GetCD = skill.GetCoolDown;
+                    }
+                    break;
+                case (Ability.Contracts):
+                    ContractSkills[0].GetPlayerStatusEffect = EffectStatus.ContractWithEvilNoNegative;
+                    ContractSkills[1].GetPlayerStatusEffect = EffectStatus.ContractWithTheVileNoNegative;
+                    ContractSkills[2].GetPlayerStatusEffect = EffectStatus.ContractWithNefariousnessNoNegative;
+                    ContractSkills[0].GetSkillDescription = "Increases Intelligence by 15%.";
+                    ContractSkills[1].GetSkillDescription = "Restores 3% MP over 3 seconds.";
+                    ContractSkills[2].GetSkillDescription = "Reduces the casting time of all skills by 25%.";
+                    ContractSkills[0].GetStatusDescription = "Increased Intelligence";
+                    ContractSkills[1].GetStatusDescription = "Restoring MP";
+                    ContractSkills[2].GetStatusDescription = "Skill cast and cost reduced.";
+                    ApplyContractEffects();
+                    break;
+                case (Ability.ExtraContract):
+                    SkillsManager.Instance.GetMaxContractStack++;
+                    break;
+                case (Ability.MiasmaPulse):
+                    items.GetUnlockedPassive = true;
+                    items.GetStatusEffect = true;
+                    break;
+                case (Ability.NetherStar):
+                    skill.GetPotency += 200;
+                    break;
+                case (Ability.IgnoreDefense):
+                    basicAttack.GetIgnoreDefense = true;
+                    break;
+                case (Ability.MyceliumBash):
+                    character.GetComponent<PlayerAnimations>().GetAdditionalHit = true;
+                    skill.GetManaCost = 2;
+                    break;
+                case (Ability.IronCap):
+                    skill.GetStatusDuration = 20;
+                    break;
+                case (Ability.HpHeal):
+                    character.GetComponent<Health>().GetUnlockedPassive = true;
+                    break;
+                case (Ability.Quickness):
+                    skill.GetStatusDuration = -1;
+                    if (skill.GetStatusIcon.activeInHierarchy)
+                    {
+                        skill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                    }
+                    break;
+                case (Ability.ImmuneToStatusEffects):
+                    character.GetIsImmuneToStatusEffects = true;
+                    break;
+                case (Ability.DoubleStatusDuration):
+                    basicAttack.GetDoublesStatusDuration = true;
+                    break;
+                case (Ability.MpHeal):
+                    RestoreMpEffect();
+                    break;
+                case (Ability.MildewSplash):
+                    skill.GetCoolDown = 12.5f;
+                    if (skill.GetCoolDownImage.fillAmount > 0)
+                    {
+                        skill.GetCoolDownImage.fillAmount = 1;
+                        skill.GetCD = skill.GetCoolDown;
+                    }
+                    break;
+                case (Ability.SpinShroom):
+                    skill.GetPotency = 100;
+                    break;
+                case (Ability.ToadstoolReflectDamage):
+                    character.GetComponent<Health>().GetReflectingDamage = true;
+                    break;
+                case (Ability.ViciousEmbodiment):
+                    basicAttack.GetInflictsDoomStatus = true;
+                    break;
+                case (Ability.ReducedDamage):
+                    character.GetComponent<Health>().GetReducedDamage = true;
+                    break;
+                case (Ability.DefenseDown):
+                    basicAttack.GetHasDefenseDownStatus = true;
+                    break;
+                case (Ability.IntelligenceDown):
+                    basicAttack.GetHasIntelligenceDownStatus = true;
+                    break;
+                case (Ability.StrengthDown):
+                    basicAttack.GetHasStrengthDownStatus = true;
+                    break;
+                case (Ability.SoulPierce):
+                    skill.GetStatusDuration = 20;
+                    break;
+                case (Ability.ExtraSkillPoints):
+                    GameManager.Instance.GetEquipmentMenu.GetAdditionalSkillPoints = 2;
+                    break;
+            }
         }
     }
 
     private void LoseEquipmentAbility()
     {
-        switch (equipmentAbility)
+        if(SkillMastered)
         {
-            case (Ability.NONE):
-                return;
-            case (Ability.SwiftStrike):
-                skill.GetManaCost = skill.GetSinisterPossessionManaCost;
-                break;
-            case (Ability.StormThrust):
-                skill.GetEnemyStatusEffect = StatusEffect.DefenseDOWN;
-                skill.GetStatusEffectName = "Defense Down";
-                skill.GetStatusDescription = "Lowered Defense.";
-                skill.GetAddedEffect = "Lowered defense";
-                skill.GetStatusDuration = 15.0f;
-                skill.GetCoolDown = 3;
-                break;
-            case (Ability.BurnStatus):
-                basicAttack.GetHasBurnStatus = false;
-                break;
-            case (Ability.ReducedAutoAttack):
-                basicAttack.GetAttackDelay += 0.5f;
-                break;
-            case (Ability.SlowStatus):
-                basicAttack.GetHasSlowStatus = false;
-                break;
-            case (Ability.Tenacity):
-                skill.GetStatusEffectPotency = 10;
-                skill.GetSkillDescription = "Increases strength by 10%";
-                break;
-            case (Ability.ManaPulse):
-                items.GetUnlockedPassive = false;
-                break;
-            case (Ability.StrengthIntelligenceReverse):
-                basicAttack.GetUsesIntelligenceForDamage = false;
-                break;
-            case (Ability.Alleviate):
-                skill.GetAlleviateHealPercentage = 20;
-                skill.GetSkillDescription = "Removes all status ailments and restores HP by 20%.";
-                break;
-            case (Ability.HpForSkillCast):
-                SkillsManager.Instance.GetUsesHpForSkillCast = false;
-                break;
-            case (Ability.WhirlwindSlash):
-                skill.GetGainedPassive = false;
-                skill.GetEnemyStatusEffect = StatusEffect.NONE;
-                break;
-            case (Ability.EvilsEnd):
-                skill.GetStatusEffectPotency = 25;
-                skill.GetSkillDescription = "Delivers a punishing blow to the target. <#EFDFB8>Can only be executed while the target is at 25% HP or below.</color>";
-                break;
-            case (Ability.CriticalChanceIncrease):
-                character.GetCriticalChance = 5;
-                break;
-            case (Ability.BraveLight):
-                skill.GetCoolDown = 90;
-                if (skill.GetCoolDownImage.fillAmount > 0)
-                {
-                    skill.GetCoolDownImage.fillAmount = 1;
-                    skill.GetCD = skill.GetCoolDown;
-                }
-                break;
-            case (Ability.Contracts):
-                ContractSkills[0].GetPlayerStatusEffect = EffectStatus.ContractWithEvil;
-                ContractSkills[1].GetPlayerStatusEffect = EffectStatus.ContractWithTheVile;
-                ContractSkills[2].GetPlayerStatusEffect = EffectStatus.ContractWithNefariousness;
-                ContractSkills[0].GetSkillDescription = "Increases intelligence by 15% and decreases defense by 15%.";
-                ContractSkills[1].GetSkillDescription = "Restores 3% MP over 3 seconds and reduces HP by 1% over 5 seconds.";
-                ContractSkills[2].GetSkillDescription = "Reduces the casting time of all skills by 25% and reduces maximum HP by 25%.";
-                ContractSkills[0].GetStatusDescription = "Increased Intelligence & Decreased Defense";
-                ContractSkills[1].GetStatusDescription = "Restoring MP & Taking Damage";
-                ContractSkills[2].GetStatusDescription = "Skill cast and cost reduced & HP halved";
-                RemoveContracts();
-                break;
-            case (Ability.ExtraContract):
-                SkillsManager.Instance.GetMaxContractStack--;
-                if (SkillsManager.Instance.GetContractStack >= SkillsManager.Instance.GetMaxContractStack)
-                {
-                    SkillsManager.Instance.GetContractSkill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
-                    SkillsManager.Instance.GetContractStack--;
-                }
-                break;
-            case (Ability.MiasmaPulse):
-                items.GetUnlockedPassive = false;
-                items.GetStatusEffect = false;
-                break;
-            case (Ability.NetherStar):
-                skill.GetPotency -= 200;
-                break;
-            case (Ability.IgnoreDefense):
-                basicAttack.GetIgnoreDefense = false;
-                break;
-            case (Ability.MyceliumBash):
-                character.GetComponent<PlayerAnimations>().GetAdditionalHit = false;
-                skill.GetManaCost = 0;
-                break;
-            case (Ability.IronCap):
-                skill.GetStatusDuration = 15;
-                break;
-            case (Ability.HpHeal):
-                character.GetComponent<Health>().GetUnlockedPassive = false;
-                break;
-            case (Ability.Quickness):
-                skill.GetStatusDuration = 20;
-                if(skill.GetStatusIcon.activeInHierarchy)
-                {
-                    skill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
-                }
-                break;
-            case (Ability.ImmuneToStatusEffects):
-                character.GetIsImmuneToStatusEffects = false;
-                break;
-            case (Ability.DoubleStatusDuration):
-                basicAttack.GetDoublesStatusDuration = false;
-                break;
-            case (Ability.MpHeal):
-                statusicon.GetComponent<StatusIcon>().RemoveMpRestoreStatus();
-                break;
-            case (Ability.MildewSplash):
-                skill.GetCoolDown = 25;
-                if(skill.GetCoolDownImage.fillAmount > 0)
-                {
-                    skill.GetCoolDownImage.fillAmount = 1;
-                    skill.GetCD = skill.GetCoolDown;
-                }
-                break;
-            case (Ability.SpinShroom):
-                skill.GetPotency = 65;
-                break;
-            case (Ability.ToadstoolReflectDamage):
-                character.GetComponent<Health>().GetReflectingDamage = false;
-                break;
-            case (Ability.ViciousEmbodiment):
-                basicAttack.GetInflictsDoomStatus = false;
-                break;
+            return;
+        }
+        else
+        {
+            switch (equipmentAbility)
+            {
+                case (Ability.NONE):
+                    return;
+                case (Ability.SwiftStrike):
+                    skill.GetManaCost = skill.GetSinisterPossessionManaCost;
+                    break;
+                case (Ability.StormThrust):
+                    skill.GetEnemyStatusEffect = StatusEffect.DefenseDOWN;
+                    skill.GetStatusEffectName = "Defense Down";
+                    skill.GetStatusDescription = "Lowered Defense.";
+                    skill.GetAddedEffect = "Lowered defense";
+                    skill.GetStatusDuration = 15.0f;
+                    skill.GetCoolDown = 3;
+                    break;
+                case (Ability.BurnStatus):
+                    basicAttack.GetHasBurnStatus = false;
+                    break;
+                case (Ability.ReducedAutoAttack):
+                    basicAttack.GetAttackDelay += 0.5f;
+                    break;
+                case (Ability.SlowStatus):
+                    basicAttack.GetHasSlowStatus = false;
+                    break;
+                case (Ability.Tenacity):
+                    skill.GetStatusEffectPotency = 10;
+                    skill.GetSkillDescription = "Increases strength by 10%";
+                    break;
+                case (Ability.ManaPulse):
+                    items.GetUnlockedPassive = false;
+                    break;
+                case (Ability.StrengthIntelligenceReverse):
+                    basicAttack.GetUsesIntelligenceForDamage = false;
+                    break;
+                case (Ability.Alleviate):
+                    skill.GetAlleviateHealPercentage = 20;
+                    skill.GetSkillDescription = "Removes all status ailments and restores HP by 20%.";
+                    break;
+                case (Ability.HpForSkillCast):
+                    SkillsManager.Instance.GetUsesHpForSkillCast = false;
+                    break;
+                case (Ability.WhirlwindSlash):
+                    skill.GetGainedPassive = false;
+                    skill.GetEnemyStatusEffect = StatusEffect.NONE;
+                    break;
+                case (Ability.EvilsEnd):
+                    skill.GetStatusEffectPotency = 25;
+                    skill.GetSkillDescription = "Delivers a punishing blow to the target. <#EFDFB8>Can only be executed while the target is at 25% HP or below.</color>";
+                    break;
+                case (Ability.CriticalChanceIncrease):
+                    character.GetCriticalChance = 5;
+                    break;
+                case (Ability.BraveLight):
+                    skill.GetCoolDown = 90;
+                    if (skill.GetCoolDownImage.fillAmount > 0)
+                    {
+                        skill.GetCoolDownImage.fillAmount = 1;
+                        skill.GetCD = skill.GetCoolDown;
+                    }
+                    break;
+                case (Ability.Contracts):
+                    ContractSkills[0].GetPlayerStatusEffect = EffectStatus.ContractWithEvil;
+                    ContractSkills[1].GetPlayerStatusEffect = EffectStatus.ContractWithTheVile;
+                    ContractSkills[2].GetPlayerStatusEffect = EffectStatus.ContractWithNefariousness;
+                    ContractSkills[0].GetSkillDescription = "Increases intelligence by 15% and decreases defense by 15%.";
+                    ContractSkills[1].GetSkillDescription = "Restores 3% MP over 3 seconds and reduces HP by 1% over 5 seconds.";
+                    ContractSkills[2].GetSkillDescription = "Reduces the casting time of all skills by 25% and reduces maximum HP by 25%.";
+                    ContractSkills[0].GetStatusDescription = "Increased Intelligence & Decreased Defense";
+                    ContractSkills[1].GetStatusDescription = "Restoring MP & Taking Damage";
+                    ContractSkills[2].GetStatusDescription = "Skill cast and cost reduced & HP halved";
+                    RemoveContracts();
+                    break;
+                case (Ability.ExtraContract):
+                    SkillsManager.Instance.GetMaxContractStack--;
+                    if (SkillsManager.Instance.GetContractStack >= SkillsManager.Instance.GetMaxContractStack)
+                    {
+                        SkillsManager.Instance.GetContractSkill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                        SkillsManager.Instance.GetContractStack--;
+                    }
+                    break;
+                case (Ability.MiasmaPulse):
+                    items.GetUnlockedPassive = false;
+                    items.GetStatusEffect = false;
+                    break;
+                case (Ability.NetherStar):
+                    skill.GetPotency -= 200;
+                    break;
+                case (Ability.IgnoreDefense):
+                    basicAttack.GetIgnoreDefense = false;
+                    break;
+                case (Ability.MyceliumBash):
+                    character.GetComponent<PlayerAnimations>().GetAdditionalHit = false;
+                    skill.GetManaCost = 0;
+                    break;
+                case (Ability.IronCap):
+                    skill.GetStatusDuration = 15;
+                    break;
+                case (Ability.HpHeal):
+                    character.GetComponent<Health>().GetUnlockedPassive = false;
+                    break;
+                case (Ability.Quickness):
+                    skill.GetStatusDuration = 20;
+                    if (skill.GetStatusIcon.activeInHierarchy)
+                    {
+                        skill.GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                    }
+                    break;
+                case (Ability.ImmuneToStatusEffects):
+                    character.GetIsImmuneToStatusEffects = false;
+                    break;
+                case (Ability.DoubleStatusDuration):
+                    basicAttack.GetDoublesStatusDuration = false;
+                    break;
+                case (Ability.MpHeal):
+                    statusicon.GetComponent<StatusIcon>().RemoveMpRestoreStatus();
+                    break;
+                case (Ability.MildewSplash):
+                    skill.GetCoolDown = 25;
+                    if (skill.GetCoolDownImage.fillAmount > 0)
+                    {
+                        skill.GetCoolDownImage.fillAmount = 1;
+                        skill.GetCD = skill.GetCoolDown;
+                    }
+                    break;
+                case (Ability.SpinShroom):
+                    skill.GetPotency = 65;
+                    break;
+                case (Ability.ToadstoolReflectDamage):
+                    character.GetComponent<Health>().GetReflectingDamage = false;
+                    break;
+                case (Ability.ViciousEmbodiment):
+                    basicAttack.GetInflictsDoomStatus = false;
+                    break;
+                case (Ability.ReducedDamage):
+                    character.GetComponent<Health>().GetReducedDamage = false;
+                    break;
+                case (Ability.DefenseDown):
+                    basicAttack.GetHasDefenseDownStatus = false;
+                    break;
+                case (Ability.IntelligenceDown):
+                    basicAttack.GetHasIntelligenceDownStatus = false;
+                    break;
+                case (Ability.StrengthDown):
+                    basicAttack.GetHasStrengthDownStatus = false;
+                    break;
+                case (Ability.SoulPierce):
+                    skill.GetStatusDuration = 10;
+                    break;
+                case (Ability.ExtraSkillPoints):
+                    GameManager.Instance.GetEquipmentMenu.GetAdditionalSkillPoints = 0;
+                    break;
+            }
         }
     }
 

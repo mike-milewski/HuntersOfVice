@@ -605,7 +605,7 @@ public class SkillMenu : MonoBehaviour
     {
         SkillNameText.text = PassiveSkillName;
 
-        SkillInfoText.text = "HP regeneration from Illumination recovers faster and its potency is increased by 5%.";
+        SkillInfoText.text = "HP regeneration from Illumination recovers faster and its potency is increased to 5%.";
     }
 
     private void ManaSiphonPassiveText()
@@ -884,9 +884,9 @@ public class SkillMenu : MonoBehaviour
     private void IlluminationBonus()
     {
         IlluminationSkill.GetStatusEffectPotency = 2;
-        IlluminationSkill.GetHpAndDamageOverTimeTick += 5;
+        IlluminationSkill.GetHpAndDamageOverTimeTick = 5;
 
-        IlluminationSkill.GetSkillDescription = "Gradually restores HP by 15%.";
+        IlluminationSkill.GetSkillDescription = "Gradually restores HP by 5%.";
     }
 
     private void DiabolicLightningBonus()

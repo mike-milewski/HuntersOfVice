@@ -29,7 +29,7 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private int TempSkillIndex;
 
-    private bool HasBurnStatus, HasSlowStatus, HasPoisonStatus, HasStunStatus, HasDoomedStatus;
+    private bool HasBurnStatus, HasSlowStatus, HasPoisonStatus, HasStunStatus, HasDoomedStatus, HasDefenseDownStatus, HasIntelligenceDownStatus, HasStrengthDownStatus;
 
     [SerializeField]
     private TextMeshProUGUI DurationText, StatusDescriptionText;
@@ -94,6 +94,42 @@ public class EnemyStatusIcon : MonoBehaviour
         }
     }
 
+    public bool GetHasDefenseDownStatus
+    {
+        get
+        {
+            return HasDefenseDownStatus;
+        }
+        set
+        {
+            HasDefenseDownStatus = value;
+        }
+    }
+
+    public bool GetHasIntelligenceDownStatus
+    {
+        get
+        {
+            return HasIntelligenceDownStatus;
+        }
+        set
+        {
+            HasIntelligenceDownStatus = value;
+        }
+    }
+
+    public bool GetHasStrengthDownStatus
+    {
+        get
+        {
+            return HasStrengthDownStatus;
+        }
+        set
+        {
+            HasStrengthDownStatus = value;
+        }
+    }
+
     public bool GetHasStunStatus
     {
         get
@@ -152,10 +188,19 @@ public class EnemyStatusIcon : MonoBehaviour
         switch (effect)
         {
             case (StatusEffect.DefenseDOWN):
+                HasDefenseDownStatus = true;
                 DefenseDOWN(50);
                 break;
             case (StatusEffect.DefenseUP):
                 DefenseUP(50);
+                break;
+            case (StatusEffect.IntelligenceDOWN):
+                HasIntelligenceDownStatus = true;
+                IntelligenceDOWN(50);
+                break;
+            case (StatusEffect.StrengthDOWN):
+                HasStrengthDownStatus = true;
+                StrengthDOWN(50);
                 break;
             case (StatusEffect.DefenseAndIntelligenceUP):
                 IntelligenceUP(50);
@@ -222,6 +267,21 @@ public class EnemyStatusIcon : MonoBehaviour
             else if(HasDoomedStatus)
             {
                 RemoveDoomedStatusEffectText();
+                ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            }
+            else if(HasDefenseDownStatus)
+            {
+                RemoveDefenseDownStatusEffectText();
+                ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            }
+            else if (HasIntelligenceDownStatus)
+            {
+                RemoveIntelligenceDownStatusEffectText();
+                ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
+            }
+            else if (HasStrengthDownStatus)
+            {
+                RemoveStrengthDownStatusEffectText();
                 ObjectPooler.Instance.ReturnEnemyStatusIconToPool(this.gameObject);
             }
             else
@@ -373,6 +433,69 @@ public class EnemyStatusIcon : MonoBehaviour
                                      "</size>" + "\n" + "<size=10> Decreased movement & Increased Auto-attack time";
 
         Slow();
+    }
+
+    public void DefenseDownStatus()
+    {
+        character = GetComponentInParent<Character>();
+
+        character.GetComponentInChildren<Health>().GetSleepHit = false;
+
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetDoublesStatusDuration)
+        {
+            Duration = 30.0f;
+        }
+        else
+        {
+            Duration = 15.0f;
+        }
+
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Defense Down </u>" + "</color>" +
+                                     "</size>" + "\n" + "<size=10> Lowered Defense";
+
+        DefenseDOWN(50);
+    }
+
+    public void IntelligenceDownStatus()
+    {
+        character = GetComponentInParent<Character>();
+
+        character.GetComponentInChildren<Health>().GetSleepHit = false;
+
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetDoublesStatusDuration)
+        {
+            Duration = 30.0f;
+        }
+        else
+        {
+            Duration = 15.0f;
+        }
+
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Intelligence Down </u>" + "</color>" +
+                                     "</size>" + "\n" + "<size=10> Lowered Intelligence";
+
+        IntelligenceDOWN(50);
+    }
+
+    public void StrengthDownStatus()
+    {
+        character = GetComponentInParent<Character>();
+
+        character.GetComponentInChildren<Health>().GetSleepHit = false;
+
+        if (SkillsManager.Instance.GetCharacter.GetComponent<BasicAttack>().GetDoublesStatusDuration)
+        {
+            Duration = 30.0f;
+        }
+        else
+        {
+            Duration = 15.0f;
+        }
+
+        StatusDescriptionText.text = "<#EFDFB8>" + "<size=12>" + "<u> Strength Down </u>" + "</color>" +
+                                     "</size>" + "\n" + "<size=10> Lowered Strength";
+
+        StrengthDOWN(50);
     }
 
     public void StunStatus()
@@ -544,6 +667,69 @@ public class EnemyStatusIcon : MonoBehaviour
 
         character.GetComponent<EnemyAI>().GetMoveSpeed = character.GetComponent<EnemyAI>().GetDefaultMoveSpeed;
         character.GetComponent<EnemyAI>().GetAttackDelay = character.GetComponent<EnemyAI>().GetDefaultAttackDelay;
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemoveDefenseDownStatusEffectText()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Defense Down";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        HasDefenseDownStatus = false;
+
+        CreateParticleOnRemoveEnemy();
+
+        SetDefenseToDefault();
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemoveIntelligenceDownStatusEffectText()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Intelligence Down";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        HasIntelligenceDownStatus = false;
+
+        CreateParticleOnRemoveEnemy();
+
+        SetIntelligenceToDefault();
+
+        return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI RemoveStrengthDownStatusEffectText()
+    {
+        var StatusEffectText = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusEffectText.SetActive(true);
+
+        StatusEffectText.transform.SetParent(character.GetComponent<Enemy>().GetUI, false);
+
+        StatusEffectText.GetComponentInChildren<TextMeshProUGUI>().text = "<#969696>- Strength Down";
+
+        StatusEffectText.GetComponentInChildren<Image>().sprite = this.GetComponent<Image>().sprite;
+
+        HasStrengthDownStatus = false;
+
+        CreateParticleOnRemoveEnemy();
+
+        SetStrengthToDefault();
 
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -756,6 +942,19 @@ public class EnemyStatusIcon : MonoBehaviour
         character.CharacterStrength = (int)TempStrength;
     }
 
+    private void StrengthDOWN(float value)
+    {
+        float Percentage = (float)value / 100;
+
+        float TempStrength = (float)character.CharacterStrength;
+
+        TempStrength -= (float)character.CharacterStrength * Percentage;
+
+        Mathf.Round(TempStrength);
+
+        character.CharacterStrength = (int)TempStrength;
+    }
+
     private void DefenseUP(float value)
     {
         float Percentage = (float)value / 100;
@@ -776,6 +975,19 @@ public class EnemyStatusIcon : MonoBehaviour
         float TempIntelligence = (float)character.CharacterIntelligence;
 
         TempIntelligence += (float)character.CharacterIntelligence * Percentage;
+
+        Mathf.Round(TempIntelligence);
+
+        character.CharacterIntelligence = (int)TempIntelligence;
+    }
+
+    private void IntelligenceDOWN(float value)
+    {
+        float Percentage = (float)value / 100;
+
+        float TempIntelligence = (float)character.CharacterIntelligence;
+
+        TempIntelligence -= (float)character.CharacterIntelligence * Percentage;
 
         Mathf.Round(TempIntelligence);
 

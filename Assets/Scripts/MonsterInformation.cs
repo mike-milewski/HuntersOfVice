@@ -85,7 +85,8 @@ public class MonsterInformation : MonoBehaviour
                                                                         characterData[0].Defense + "\n" + "Intelligence: " +
                                                                         characterData[0].Intelligence + "\n\n" + GetWeaknesses() + GetResistances() +
                                                                         GetImmunities() + GetAbsorbtions() + "\n" + "EXP: " +
-                                                                        characterData[0].EXP + "\n" + "Coins: " + characterData[0].Coins + "\n\n" + "Drop: " + ItemDrops();
+                                                                        characterData[0].EXP + "\n" + "Coins: " + characterData[0].Coins + "\n" + "Skill Points: " + characterData[0].SkillPoints +
+                                                                        "\n\n" + "Drop: " + ItemDrops();
     }
 
     public void ShowLevelButtons()

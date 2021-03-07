@@ -130,11 +130,7 @@ public class EnemyAnimations : MonoBehaviour
     {
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
-
-        if (EnemyAnimator.GetBool("Skill3"))
-        {
-            EnemyAnimator.SetBool("Skill3", false);
-        }
+        EnemyAnimator.SetBool("Skill3", false);
 
         enemyskills.GetActiveSkill = false;
     }

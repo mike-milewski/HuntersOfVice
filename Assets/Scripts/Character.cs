@@ -283,8 +283,6 @@ public class Character : MonoBehaviour
         DefaultDefense = Defense;
         DefaultIntelligence = Intelligence;
         DefaultSpeed = MoveSpeed;
-        DefaultHpIncrease = HpIncrease;
-        DefaultMpIncrease = MpIncrease;
         DefaultCriticalChance = CriticalHitChance;
     }
 
@@ -307,8 +305,6 @@ public class Character : MonoBehaviour
         CharData.Defense = DefaultDefense;
         CharData.Intelligence = DefaultIntelligence;
         CharData.MoveSpeed = DefaultSpeed;
-        CharData.HpIncrease = DefaultHpIncrease;
-        CharData.MpIncrease = DefaultMpIncrease;
         CharData.CriticalHitChance = DefaultCriticalChance;
     }
 }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Rune Garb
   Element: 0
-  StatIncrease: 8
+  StatIncrease: 5
   BuyValue: 480

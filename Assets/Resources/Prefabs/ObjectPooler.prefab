@@ -333,3 +333,7 @@ MonoBehaviour:
       type: 3}
     PoolParent: {fileID: 0}
     PoolAmount: 1
+  - ObjectToPool: {fileID: 3013091430541225589, guid: 9061464f9f1140343b13ca13d5fe453c,
+      type: 3}
+    PoolParent: {fileID: 0}
+    PoolAmount: 10

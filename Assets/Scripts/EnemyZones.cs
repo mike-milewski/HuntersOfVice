@@ -45,11 +45,14 @@ public class EnemyZones : MonoBehaviour
     {
         for(int i = 0; i < enemies[0].GetEnemies.Length; i++)
         {
-            if(!enemies[0].GetEnemies[i].GetIsDead)
+            if(enemies[0].GetEnemies[i] != null)
             {
-                enemies[0].GetEnemies[i].gameObject.SetActive(true);
+                if (!enemies[0].GetEnemies[i].GetIsDead)
+                {
+                    enemies[0].GetEnemies[i].gameObject.SetActive(true);
+                }
+                enemies[0].GetEnemies[i].GetIsDisabled = false;
             }
-            enemies[0].GetEnemies[i].GetIsDisabled = false;
         }
     }
 
@@ -57,8 +60,11 @@ public class EnemyZones : MonoBehaviour
     {
         for (int i = 0; i < enemies[1].GetEnemies.Length; i++)
         {
-            enemies[1].GetEnemies[i].gameObject.SetActive(false);
-            enemies[1].GetEnemies[i].GetIsDisabled = true;
+            if(enemies[1].GetEnemies[i] != null)
+            {
+                enemies[1].GetEnemies[i].gameObject.SetActive(false);
+                enemies[1].GetEnemies[i].GetIsDisabled = true;
+            }
         }
     }
 }

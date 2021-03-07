@@ -363,6 +363,8 @@ public class EnemyAI : MonoBehaviour
             TimeToMove = TimeToMoveAgain;
         }
 
+        enemy.GetSkillPointAmount = character.GetCharacterData.SkillPoints;
+
         DefaultMoveSpeed = MoveSpeed;
         DefaultAttackDelay = AttackDelay;
     }
@@ -775,6 +777,8 @@ public class EnemyAI : MonoBehaviour
 
         if(!GainedEXP)
         {
+            enemy.ReturnSkillPoints();
+
             enemy.ReturnCoins();
 
             enemy.ReturnExperience();
@@ -1252,13 +1256,22 @@ public class EnemyAI : MonoBehaviour
                     {
                         PlayerTarget.GetComponent<Health>().ModifyHealth(-1);
 
-                        t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + "1" + "!";
+                        t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + "1!";
                     }
                     else
                     {
                         PlayerTarget.GetComponent<Health>().ModifyHealth(-((int)CritCalc - PlayerTarget.CharacterDefense));
 
-                        t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + ((int)CritCalc - PlayerTarget.CharacterDefense).ToString() + "!";
+                        if (PlayerTarget.GetComponent<Health>().GetDamageWasReduced)
+                        {
+                            t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" +
+                                PlayerTarget.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - PlayerTarget.CharacterDefense).ToString() + "!" + 
+                                "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        }
+                        else
+                        {
+                            t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + ((int)CritCalc - PlayerTarget.CharacterDefense).ToString() + "!";
+                        }
                     }
                 }
                 else
@@ -1273,12 +1286,21 @@ public class EnemyAI : MonoBehaviour
                     {
                         PlayerTarget.GetComponent<Health>().ModifyHealth(-(character.CharacterStrength - PlayerTarget.CharacterDefense));
 
-                        t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                        if (PlayerTarget.GetComponent<Health>().GetDamageWasReduced)
+                        {
+                            t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" +
+                            PlayerTarget.GetComponent<Health>().GetReducedDamageValue(character.CharacterStrength - PlayerTarget.CharacterDefense).ToString() + 
+                            "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        }
+                        else
+                        {
+                            t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                        }
                     }
                 }
                 #endregion
 
-                if(PlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1 && !PlayerTarget.GetComponent<Animator>().GetBool("Attacking") && 
+                if (PlayerTarget.GetComponent<Animator>().GetFloat("Speed") < 1 && !PlayerTarget.GetComponent<Animator>().GetBool("Attacking") && 
                    !PlayerTarget.GetComponent<PlayerAnimations>().GetAnimator.GetBool("Damaged"))
                 {
                     PlayerTarget.GetComponent<PlayerAnimations>().DamagedAnimation();

@@ -64,7 +64,7 @@ public class Enemy : MonoBehaviour
     private TextMeshProUGUI EnemyInfo, LocalEnemyInfo;
 
     [SerializeField]
-    private int ExperiencePoints, CoinAmount;
+    private int ExperiencePoints, CoinAmount, SkillPointAmount;
 
     [SerializeField]
     private bool IsInanimateEnemy;
@@ -128,6 +128,18 @@ public class Enemy : MonoBehaviour
         set
         {
             CoinAmount = value;
+        }
+    }
+
+    public int GetSkillPointAmount
+    {
+        get
+        {
+            return SkillPointAmount;
+        }
+        set
+        {
+            SkillPointAmount = value;
         }
     }
 
@@ -419,6 +431,15 @@ public class Enemy : MonoBehaviour
             {
                 EXP.GetShowExperienceText().text = ExperiencePoints + "<size=20>" + " EXP";
             }
+        }
+    }
+
+    public void ReturnSkillPoints()
+    {
+        if (SkillPointAmount > 0 && GameManager.Instance.GetCharacter.CurrentHealth > 0)
+        {
+            GameManager.Instance.GetEquipmentMenu.GainSkillPoints(SkillPointAmount);
+            GameManager.Instance.GetEquipmentMenu.ReturnSkillPointText().text = SkillPointAmount + "<size=20> SP";
         }
     }
 

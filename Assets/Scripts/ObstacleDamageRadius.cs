@@ -235,7 +235,14 @@ public class ObstacleDamageRadius : MonoBehaviour
         }
         if (DamageShape.rectTransform.sizeDelta.y < SizeDeltaY)
         {
-            DamageShape.rectTransform.sizeDelta += new Vector2(0, 300) * 13 * Time.deltaTime;
+            if(IsSpikeTrap)
+            {
+                DamageShape.rectTransform.sizeDelta += new Vector2(0, 50) * 13 * Time.deltaTime;
+            }
+            else
+            {
+                DamageShape.rectTransform.sizeDelta += new Vector2(0, 300) * 13 * Time.deltaTime;
+            }
         }
     }
 
@@ -339,8 +346,6 @@ public class ObstacleDamageRadius : MonoBehaviour
 
             ParticleEffect.transform.position = new Vector3(AquaBulletTransform.position.x, AquaBulletTransform.position.y, AquaBulletTransform.position.z);
         }
-
-        Invoke("TakeRadiusEffects", InvokeEffectTime);
     }
 
     private void EnableRadius()
@@ -485,7 +490,7 @@ public class ObstacleDamageRadius : MonoBehaviour
 
         if (Damage - PlayerTarget.GetComponent<Character>().CharacterDefense <= 0)
         {
-            PlayerTarget.GetComponentInChildren<Health>().ModifyHealth(-1);
+            PlayerTarget.GetComponent<Health>().ModifyHealth(-1);
 
             DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + Name + " " + "1";
         }
@@ -493,8 +498,17 @@ public class ObstacleDamageRadius : MonoBehaviour
         {
             PlayerTarget.GetComponentInChildren<Health>().ModifyHealth(-(Damage - PlayerTarget.GetComponent<Character>().CharacterDefense));
 
-            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + Name + " " +
-                                                                       (Damage - PlayerTarget.GetComponent<Character>().CharacterDefense).ToString();
+            if (PlayerTarget.GetComponent<Health>().GetDamageWasReduced)
+            {
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + Name + " " +
+                PlayerTarget.GetComponent<Health>().GetReducedDamageValue(Damage - PlayerTarget.GetComponent<Character>().CharacterDefense).ToString() + 
+                "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+            }
+            else
+            {
+                DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + Name + " " +
+                                                                           (Damage - PlayerTarget.GetComponent<Character>().CharacterDefense).ToString();
+            }
         }
 
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();

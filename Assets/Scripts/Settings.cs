@@ -5,5 +5,5 @@ public class Settings : ScriptableObject
 {
     public string CharacterSavior;
 
-    public bool UseParticleEffects, MuteAudio, SecretCharacterUnlocked, AlreadyCheckedForCharacter;
+    public bool UseParticleEffects, MuteAudio, SecretCharacterUnlocked;
 }

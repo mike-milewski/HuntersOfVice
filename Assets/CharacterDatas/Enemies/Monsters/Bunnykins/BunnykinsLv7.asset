@@ -29,6 +29,9 @@ MonoBehaviour:
   Coins: 40
   EXP: 45
   MaterialDataDropChance: 45
+  SkillPoints: 4
   MoveSpeed: 0
   CheckedData: 0
+  UsesStrength: 0
+  UsesIntelligence: 0
   materialdata: {fileID: 11400000, guid: bfe3945cc85981c498f55df6f243902c, type: 2}

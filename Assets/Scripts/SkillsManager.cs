@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 using System.Linq;
+using TMPro;
 
 public class SkillsManager : MonoBehaviour
 {
@@ -30,6 +31,12 @@ public class SkillsManager : MonoBehaviour
     private Skills ContractSkill = null, StormThrust, SpinShroom;
 
     [SerializeField]
+    private TextMeshProUGUI SkillMasteryText;
+
+    [SerializeField]
+    private Transform SkillMasteryParent;
+
+    [SerializeField]
     private bool UsesHpForSkillCast;
 
     [SerializeField]
@@ -40,6 +47,30 @@ public class SkillsManager : MonoBehaviour
     private int KeyInput;
 
     private int input;
+
+    public TextMeshProUGUI GetSkillMasteryText
+    {
+        get
+        {
+            return SkillMasteryText;
+        }
+        set
+        {
+            SkillMasteryText = value;
+        }
+    }
+
+    public Transform GetSkillMasteryParent
+    {
+        get
+        {
+            return SkillMasteryParent;
+        }
+        set
+        {
+            SkillMasteryParent = value;
+        }
+    }
 
     public bool GetActivatedSkill
     {
@@ -521,6 +552,13 @@ public class SkillsManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void CreateSkillMasteryText(string PassiveSkill)
+    {
+        var skillMastery = Instantiate(SkillMasteryText, SkillMasteryParent);
+
+        skillMastery.text = PassiveSkill;
     }
 
     public void CheckForSameSkills(Skills other)

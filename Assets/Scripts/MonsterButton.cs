@@ -47,7 +47,8 @@ public class MonsterButton : MonoBehaviour
                                                                         monsterInformation.GetCharacterData[Index].Intelligence + "\n\n" + GetWeaknesses()
                                                                         + GetResistances() + GetImmunities() + GetAbsorbtions() + "\n"
                                                                         + "EXP: " + monsterInformation.GetCharacterData[Index].EXP + "\n" +
-                                                                        "Coins: " + monsterInformation.GetCharacterData[Index].Coins + "\n\n" + "Drop: " + ItemDrops();
+                                                                        "Coins: " + monsterInformation.GetCharacterData[Index].Coins + 
+                                                                        "\n" + "Skill Points: " + monsterInformation.GetCharacterData[Index].SkillPoints + "\n\n" + "Drop: " + ItemDrops();
     }
 
     public string GetWeaknesses()

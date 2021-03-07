@@ -21,7 +21,7 @@ public class CharacterData : ScriptableObject
 
     public string CharacterName;
 
-    public int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, HpIncrease, MpIncrease, CriticalHitChance, Coins, EXP, MaterialDataDropChance;
+    public int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, HpIncrease, MpIncrease, CriticalHitChance, Coins, EXP, MaterialDataDropChance, SkillPoints;
 
     public float MoveSpeed;
 

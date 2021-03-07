@@ -25,11 +25,13 @@ public class Health : MonoBehaviour
 
     private Coroutine routine = null;
 
-    private bool IsImmune, ReflectingDamage;
+    private bool IsImmune, ReflectingDamage, DamageWasReduced;
 
     //This variable is used to check and uncheck a hit while under the effect of the sleep status.
     [SerializeField]
     private bool SleepHit, UnlockedPassive, HasStatusGiftPassive;
+
+    private bool ReducedDamage;
 
     [SerializeField]
     private float FillValue;
@@ -55,6 +57,30 @@ public class Health : MonoBehaviour
         set
         {
             IsImmune = value;
+        }
+    }
+
+    public bool GetReducedDamage
+    {
+        get
+        {
+            return ReducedDamage;
+        }
+        set
+        {
+            ReducedDamage = value;
+        }
+    }
+
+    public bool GetDamageWasReduced
+    {
+        get
+        {
+            return DamageWasReduced;
+        }
+        set
+        {
+            DamageWasReduced = value;
         }
     }
 
@@ -258,7 +284,34 @@ public class Health : MonoBehaviour
             StopCoroutine(routine);
         }
 
-        character.CurrentHealth += Value;
+        if (ReducedDamage)
+        {
+            if (Random.value * 100 <= 15)
+            {
+                DamageWasReduced = true;
+
+                float percentage = Mathf.Abs(0.10f * (float)Value);
+
+                Mathf.Round(percentage);
+
+                if (percentage <= 1)
+                {
+                    percentage = 1;
+                }
+
+                character.CurrentHealth += -Mathf.Abs(Value + (int)percentage);
+            }
+            else
+            {
+                DamageWasReduced = false;
+
+                character.CurrentHealth += Value;
+            }
+        }
+        else
+        {
+            character.CurrentHealth += Value;
+        }
 
         character.CurrentHealth = Mathf.Clamp(character.CurrentHealth, 0, character.MaxHealth);
 
@@ -339,6 +392,24 @@ public class Health : MonoBehaviour
         {
             characterMenu.SetCharacterInfoText();
         }
+    }
+
+    public int GetReducedDamageValue(int value)
+    {
+        float percentage = Mathf.Abs(0.10f * (float)value);
+
+        Mathf.Round(percentage);
+
+        if (percentage <= 1)
+        {
+            percentage = 1;
+        }
+
+        int Damage = (int)percentage;
+
+        Damage = Mathf.Abs(value - (int)percentage);
+
+        return Damage;
     }
 
     public void GetFilledBar()

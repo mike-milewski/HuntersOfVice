@@ -49,10 +49,10 @@ public class GameManager : MonoBehaviour
     private Camera cam, AudioCamera;
 
     [SerializeField]
-    private TextMeshProUGUI InvalidText;
+    private TextMeshProUGUI InvalidText, SkillMasteryText;
 
     [SerializeField]
-    private Animator animator, SkillPanelAnimator, CharacterPanelAnimator, EquipmentPanelAnimator, InventoryPanelAnimator, SettingsPanelAnimator, MonsterBookAnimator;
+    private Animator animator, SkillPanelAnimator, CharacterPanelAnimator, EquipmentPanelAnimator, InventoryPanelAnimator, SettingsPanelAnimator, MonsterBookAnimator, SkillMasteryAnimator;
 
     [SerializeField]
     private GameObject Knight, ShadowPriest, Toadstool, Cage, TempToadstool;
@@ -1340,6 +1340,19 @@ public class GameManager : MonoBehaviour
         }
 
         SpawnPoint.GetComponent<SpawnPoint>().ZonesAndEnemies();
+    }
+
+    public TextMeshProUGUI ShowSkillMasteryText()
+    {
+        SkillMasteryText.gameObject.SetActive(true);
+
+        SkillMasteryAnimator.Play("SkillMasteryText", -1, 0f);
+
+        SkillMasteryText.text = "Skill Mastered";
+
+        SoundManager.Instance.RecievedItem();
+
+        return SkillMasteryText;
     }
 
     public TextMeshProUGUI ShowNotEnoughManaText()

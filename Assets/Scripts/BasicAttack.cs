@@ -46,7 +46,7 @@ public class BasicAttack : MonoBehaviour
     private GameObject StatusEffectIcon = null;
 
     [SerializeField]
-    private Sprite BurningStatusEffectSprite = null, SlowStatusEffectSprite = null;
+    private Sprite BurningStatusEffectSprite, SlowStatusEffectSprite, DefenseDownStatusEffectSprite, IntelligenceDownStatusEffectSprite, StrengthDownStatusEffectSprite;
 
     private Transform StatusEffectIconTrans = null, TextHolder = null;
 
@@ -54,7 +54,8 @@ public class BasicAttack : MonoBehaviour
     private PlayerElement playerElement;
 
     [SerializeField]
-    private bool HasBurnStatusEffect, HasSlowStatusEffect, UsesIntelligenceForDamage, IgnoresDefense, IgnoresElements, DoublesStatusDuration, InflictsDoomStatus;
+    private bool HasBurnStatusEffect, HasSlowStatusEffect, UsesIntelligenceForDamage, IgnoresDefense, IgnoresElements, DoublesStatusDuration, InflictsDoomStatus,
+                 HasDefenseDownStatus, HasIntelligenceDownStatus, HasStrengthDownStatus;
 
     [SerializeField]
     private float MouseRange, AttackRange, AttackDelay, AutoAttackTime, HideStatsDistance, EnemyCheckDistance;
@@ -115,6 +116,42 @@ public class BasicAttack : MonoBehaviour
         set
         {
             IgnoresDefense = value;
+        }
+    }
+
+    public bool GetHasDefenseDownStatus
+    {
+        get
+        {
+            return HasDefenseDownStatus;
+        }
+        set
+        {
+            HasDefenseDownStatus = value;
+        }
+    }
+
+    public bool GetHasIntelligenceDownStatus
+    {
+        get
+        {
+            return HasIntelligenceDownStatus;
+        }
+        set
+        {
+            HasIntelligenceDownStatus = value;
+        }
+    }
+
+    public bool GetHasStrengthDownStatus
+    {
+        get
+        {
+            return HasStrengthDownStatus;
+        }
+        set
+        {
+            HasStrengthDownStatus = value;
         }
     }
 
@@ -928,6 +965,36 @@ public class BasicAttack : MonoBehaviour
                     }
                 }
             }
+            if (HasDefenseDownStatus)
+            {
+                if (Random.value * 100 <= 10)
+                {
+                    if (!CheckDefenseDownStatusEffect(enemy))
+                    {
+                        DefenseDownStatus(enemy);
+                    }
+                }
+            }
+            if (HasStrengthDownStatus)
+            {
+                if (Random.value * 100 <= 10)
+                {
+                    if (!CheckStrengthDownStatusEffect(enemy))
+                    {
+                        StrengthDownStatus(enemy);
+                    }
+                }
+            }
+            if (HasIntelligenceDownStatus)
+            {
+                if (Random.value * 100 <= 10)
+                {
+                    if (!CheckIntelligenceDownStatusEffect(enemy))
+                    {
+                        IntelligenceDownStatus(enemy);
+                    }
+                }
+            }
 
             if (enemy.GetAI != null)
             {
@@ -1074,6 +1141,63 @@ public class BasicAttack : MonoBehaviour
         return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    public TextMeshProUGUI DefenseDownStatus(Enemy enemy)
+    {
+        TextHolder = enemy.GetUI;
+
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Defense Down";
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = DefenseDownStatusEffectSprite;
+
+        ApplyDefenseDownStatus(enemy);
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI IntelligenceDownStatus(Enemy enemy)
+    {
+        TextHolder = enemy.GetUI;
+
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Intelligence Down";
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = IntelligenceDownStatusEffectSprite;
+
+        ApplyIntelligenceDownStatus(enemy);
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public TextMeshProUGUI StrengthDownStatus(Enemy enemy)
+    {
+        TextHolder = enemy.GetUI;
+
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Strength Down";
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = StrengthDownStatusEffectSprite;
+
+        ApplyStrengthDownStatus(enemy);
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     private void ApplyBurningStatus(Enemy enemy)
     {
         StatusEffectIconTrans = enemy.GetDebuffTransform;
@@ -1106,7 +1230,7 @@ public class BasicAttack : MonoBehaviour
 
         StatusEffectIcon.transform.SetParent(StatusEffectIconTrans, false);
 
-        StatusEffectIcon.GetComponentInChildren<Image>().sprite = BurningStatusEffectSprite;
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = SlowStatusEffectSprite;
 
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetHasSlowStatus = true;
 
@@ -1114,6 +1238,66 @@ public class BasicAttack : MonoBehaviour
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = character.GetComponent<PlayerController>();
         StatusEffectIcon.GetComponentInChildren<Image>().sprite = SlowStatusEffectSprite;
         StatusEffectIcon.GetComponent<EnemyStatusIcon>().SlowStatus();
+    }
+
+    private void ApplyDefenseDownStatus(Enemy enemy)
+    {
+        StatusEffectIconTrans = enemy.GetDebuffTransform;
+
+        StatusEffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+        StatusEffectIcon.SetActive(true);
+
+        StatusEffectIcon.transform.SetParent(StatusEffectIconTrans, false);
+
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = DefenseDownStatusEffectSprite;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetHasDefenseDownStatus = true;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.DefenseDOWN;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = character.GetComponent<PlayerController>();
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = DefenseDownStatusEffectSprite;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().DefenseDownStatus();
+    }
+
+    private void ApplyIntelligenceDownStatus(Enemy enemy)
+    {
+        StatusEffectIconTrans = enemy.GetDebuffTransform;
+
+        StatusEffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+        StatusEffectIcon.SetActive(true);
+
+        StatusEffectIcon.transform.SetParent(StatusEffectIconTrans, false);
+
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = IntelligenceDownStatusEffectSprite;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetHasIntelligenceDownStatus = true;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.IntelligenceDOWN;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = character.GetComponent<PlayerController>();
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = IntelligenceDownStatusEffectSprite;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().IntelligenceDownStatus();
+    }
+
+    private void ApplyStrengthDownStatus(Enemy enemy)
+    {
+        StatusEffectIconTrans = enemy.GetDebuffTransform;
+
+        StatusEffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+        StatusEffectIcon.SetActive(true);
+
+        StatusEffectIcon.transform.SetParent(StatusEffectIconTrans, false);
+
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = StrengthDownStatusEffectSprite;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetHasStrengthDownStatus = true;
+
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.StrengthDOWN;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = character.GetComponent<PlayerController>();
+        StatusEffectIcon.GetComponentInChildren<Image>().sprite = StrengthDownStatusEffectSprite;
+        StatusEffectIcon.GetComponent<EnemyStatusIcon>().StrengthDownStatus();
     }
 
     public bool CheckBurnStatusEffect(Enemy enemy)
@@ -1150,7 +1334,61 @@ public class BasicAttack : MonoBehaviour
 
         return SlowStatus;
     }
-    
+
+    public bool CheckDefenseDownStatusEffect(Enemy enemy)
+    {
+        bool LoweredDefense = false;
+
+        if (enemy != null)
+        {
+            foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+            {
+                if (enemystatus.GetStatusEffect == StatusEffect.DefenseDOWN)
+                {
+                    LoweredDefense = true;
+                }
+            }
+        }
+
+        return LoweredDefense;
+    }
+
+    public bool CheckStrengthDownStatusEffect(Enemy enemy)
+    {
+        bool LoweredStrength = false;
+
+        if (enemy != null)
+        {
+            foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+            {
+                if (enemystatus.GetStatusEffect == StatusEffect.StrengthDOWN)
+                {
+                    LoweredStrength = true;
+                }
+            }
+        }
+
+        return LoweredStrength;
+    }
+
+    public bool CheckIntelligenceDownStatusEffect(Enemy enemy)
+    {
+        bool LoweredIntelligence = false;
+
+        if (enemy != null)
+        {
+            foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+            {
+                if (enemystatus.GetStatusEffect == StatusEffect.IntelligenceDOWN)
+                {
+                    LoweredIntelligence = true;
+                }
+            }
+        }
+
+        return LoweredIntelligence;
+    }
+
     public void HitParticleEffect()
     {
         if(settings.UseParticleEffects)

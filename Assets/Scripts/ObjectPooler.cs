@@ -160,6 +160,7 @@ public class ObjectPooler : MonoBehaviour
         AddLuxTertiumParticle(poolcontroller[70].GetPoolAmount);
         AddSoothingOrbParticle(poolcontroller[71].GetPoolAmount);
         AddLuxAmplificationParticle(poolcontroller[72].GetPoolAmount);
+        AddSkillPointText(poolcontroller[73].GetPoolAmount);
     }
 
     private void AddTextForPlayerDamage(int Count)
@@ -1038,6 +1039,18 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    private void AddSkillPointText(int Count)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            var PO = Instantiate(poolcontroller[73].GetObjectToPool);
+            PO.transform.SetParent(poolcontroller[73].GetPoolParent.transform, false);
+            poolcontroller[73].GetPooledObject.Enqueue(PO);
+
+            PO.gameObject.SetActive(false);
+        }
+    }
+
     public GameObject GetPlayerDamageText()
     {
         return poolcontroller[0].GetPooledObject.Dequeue();
@@ -1401,6 +1414,11 @@ public class ObjectPooler : MonoBehaviour
     public GameObject GetLuxAmplificationParticle()
     {
         return poolcontroller[72].GetPooledObject.Dequeue();
+    }
+
+    public GameObject GetSkillPointText()
+    {
+        return poolcontroller[73].GetPooledObject.Dequeue();
     }
 
     public void ReturnPlayerDamageToPool(GameObject textObject)
@@ -1984,6 +2002,14 @@ public class ObjectPooler : MonoBehaviour
         Object.transform.SetParent(poolcontroller[72].GetPoolParent.transform, false);
 
         poolcontroller[72].GetPooledObject.Enqueue(Object);
+        Object.SetActive(false);
+    }
+
+    public void ReturnSkillPointTextToPool(GameObject Object)
+    {
+        Object.transform.SetParent(poolcontroller[73].GetPoolParent.transform, false);
+
+        poolcontroller[73].GetPooledObject.Enqueue(Object);
         Object.SetActive(false);
     }
 }

@@ -282,22 +282,6 @@ public class Experience : MonoBehaviour
 
         StatPointsTxt.gameObject.SetActive(true);
 
-        if(GameManager.Instance.GetKnight.activeInHierarchy)
-        {
-            character.GetCharacterData.HpIncrease += 3;
-            character.GetCharacterData.MpIncrease += 2;
-        }
-        if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
-        {
-            character.GetCharacterData.HpIncrease += 2;
-            character.GetCharacterData.MpIncrease += 3;
-        }
-        if (GameManager.Instance.GetToadstool.activeInHierarchy)
-        {
-            character.GetCharacterData.HpIncrease += 3;
-            character.GetCharacterData.MpIncrease += 3;
-        }
-
         StatusButton.GetComponent<Animator>().SetBool("StatPoints", true);
 
         StatConfirmButton.SetActive(true);

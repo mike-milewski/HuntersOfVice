@@ -22,10 +22,15 @@ public class EquipmentMenu : MonoBehaviour
     [SerializeField]
     private GameObject WeaponPanel, ArmorPanel, WeaponSlot, ArmorSlot, EquipmentDescriptionPanel;
 
+    [SerializeField]
+    private Transform SkillPointParent;
+
     private bool IsOpened;
 
     [SerializeField]
     private int MaxWeapons, MaxArmor;
+
+    private int AdditionalSkillPoints;
 
     public GameObject GetWeaponPanel
     {
@@ -48,6 +53,18 @@ public class EquipmentMenu : MonoBehaviour
         set
         {
             ArmorPanel = value;
+        }
+    }
+
+    public int GetAdditionalSkillPoints
+    {
+        get
+        {
+            return AdditionalSkillPoints;
+        }
+        set
+        {
+            AdditionalSkillPoints = value;
         }
     }
 
@@ -212,6 +229,39 @@ public class EquipmentMenu : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void GainSkillPoints(int value)
+    {
+        if (WeaponSlot.transform.childCount > 0)
+        {
+            if (WeaponSlot.transform.GetComponentInChildren<Equipment>(true).GetRequiredSkillPoints > 0)
+            {
+                WeaponSlot.transform.GetComponentInChildren<Equipment>(true).GetAcquiredSkillPoints += value + AdditionalSkillPoints;
+                WeaponSlot.transform.GetComponentInChildren<Equipment>(true).UpdateSkillPoinText();
+                WeaponSlot.transform.GetComponentInChildren<Equipment>(true).SkillPointTextInMenu();
+            }
+        }
+        if (ArmorSlot.transform.childCount > 0)
+        {
+            if (ArmorSlot.transform.GetComponentInChildren<Equipment>(true).GetRequiredSkillPoints > 0)
+            {
+                ArmorSlot.transform.GetComponentInChildren<Equipment>(true).GetAcquiredSkillPoints += value + AdditionalSkillPoints;
+                ArmorSlot.transform.GetComponentInChildren<Equipment>(true).UpdateSkillPoinText();
+                ArmorSlot.transform.GetComponentInChildren<Equipment>(true).SkillPointTextInMenu();
+            }
+        }
+    }
+
+    public TextMeshProUGUI ReturnSkillPointText()
+    {
+        var SkillPointText = ObjectPooler.Instance.GetSkillPointText();
+
+        SkillPointText.SetActive(true);
+
+        SkillPointText.transform.SetParent(SkillPointParent.transform, false);
+
+        return SkillPointText.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void ToggleWeaponsInPanel()

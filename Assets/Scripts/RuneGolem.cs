@@ -677,6 +677,8 @@ public class RuneGolem : MonoBehaviour
             this.GetComponent<ItemDrop>().DropItem();
         }
 
+        enemy.ReturnSkillPoints();
+
         enemy.ReturnCoins();
 
         enemy.ReturnExperience();
@@ -1003,13 +1005,22 @@ public class RuneGolem : MonoBehaviour
                 {
                     PlayerTarget.GetComponent<Health>().ModifyHealth(-1);
 
-                    t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + "1" + "!";
+                    t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + "1!";
                 }
                 else
                 {
                     PlayerTarget.GetComponent<Health>().ModifyHealth(-((int)CritCalc - PlayerTarget.CharacterDefense));
 
-                    t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + ((int)CritCalc - PlayerTarget.CharacterDefense).ToString() + "!";
+                    if (PlayerTarget.GetComponent<Health>().GetDamageWasReduced)
+                    {
+                        t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" +
+                        PlayerTarget.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - PlayerTarget.CharacterDefense).ToString() + "!" + 
+                        "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                    }
+                    else
+                    {
+                        t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=35>" + ((int)CritCalc - PlayerTarget.CharacterDefense).ToString() + "!";
+                    }
                 }
             }
             else
@@ -1024,7 +1035,16 @@ public class RuneGolem : MonoBehaviour
                 {
                     PlayerTarget.GetComponent<Health>().ModifyHealth(-(character.CharacterStrength - PlayerTarget.CharacterDefense));
 
-                    t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                    if (PlayerTarget.GetComponent<Health>().GetDamageWasReduced)
+                    {
+                        t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" +
+                        PlayerTarget.GetComponent<Health>().GetReducedDamageValue(character.CharacterStrength - PlayerTarget.CharacterDefense).ToString() + 
+                        "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                    }
+                    else
+                    {
+                        t.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + (character.CharacterStrength - PlayerTarget.CharacterDefense).ToString();
+                    }
                 }
             }
             #endregion

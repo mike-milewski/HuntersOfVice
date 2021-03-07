@@ -2632,14 +2632,22 @@ public class EnemySkills : MonoBehaviour
                 {
                     Target.GetComponent<Health>().ModifyHealth(-1);
 
-                    DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
+                    DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1!";
                 }
                 else
                 {
                     Target.GetComponent<Health>().ModifyHealth(-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
 
-                    DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
+                    if (Target.GetComponent<Health>().GetDamageWasReduced)
+                    {
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" +
+                        Target.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - Target.CharacterDefense).ToString() + "!" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                    }
+                    else
+                    {
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
                                                                                Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                    }
                 }
             }
             else
@@ -2654,8 +2662,17 @@ public class EnemySkills : MonoBehaviour
                 {
                     Target.GetComponentInChildren<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
 
-                    DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
-                                                                               (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                    if (Target.GetComponent<Health>().GetDamageWasReduced)
+                    {
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                        Target.GetComponent<Health>().GetReducedDamageValue(potency - Target.GetComponent<Character>().CharacterDefense).ToString() + 
+                        "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                    }
+                    else
+                    {
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" +
+                                                                                   (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                    }
                 }
             }
             #endregion
@@ -2717,15 +2734,22 @@ public class EnemySkills : MonoBehaviour
                     {
                         Target.GetComponent<Health>().ModifyHealth(-1);
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1!";
                     }
                     else
                     {
-                        Target.GetComponent<Health>().ModifyHealth
-                                                                 (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
+                        Target.GetComponent<Health>().ModifyHealth(-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
+                        if (Target.GetComponent<Health>().GetDamageWasReduced)
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" +
+                            Target.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - Target.CharacterDefense).ToString() + "!" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        }
+                        else
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
                                                                                    Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                        }
                     }
                 }
                 else
@@ -2740,8 +2764,17 @@ public class EnemySkills : MonoBehaviour
                     {
                         Target.GetComponent<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
-                                                                                   (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                        if (Target.GetComponent<Health>().GetDamageWasReduced)
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                            Target.GetComponent<Health>().GetReducedDamageValue(potency - Target.GetComponent<Character>().CharacterDefense).ToString() + 
+                            "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        }
+                        else
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                                                                                       (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                        }
                     }
                 }
                 #endregion
@@ -2811,15 +2844,22 @@ public class EnemySkills : MonoBehaviour
                     {
                         Target.GetComponent<Health>().ModifyHealth(-1);
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1!";
                     }
                     else
                     {
-                        Target.GetComponent<Health>().ModifyHealth
-                                                                 (-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
+                        Target.GetComponent<Health>().ModifyHealth(-((int)CritCalc - Target.GetComponent<Character>().CharacterDefense));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
+                        if (Target.GetComponent<Health>().GetDamageWasReduced)
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" +
+                            Target.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - Target.CharacterDefense).ToString() + "!" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        }
+                        else
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
                                                                                    Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                        }
                     }
                 }
                 else
@@ -2834,8 +2874,17 @@ public class EnemySkills : MonoBehaviour
                     {
                         Target.GetComponent<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterDefense));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
-                                                                                   (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                        if (Target.GetComponent<Health>().GetDamageWasReduced)
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                            Target.GetComponent<Health>().GetReducedDamageValue(potency - Target.GetComponent<Character>().CharacterDefense).ToString() + 
+                            "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        }
+                        else
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                                                                                       (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                        }
                     }
                 }
                 #endregion
@@ -2897,15 +2946,22 @@ public class EnemySkills : MonoBehaviour
                     {
                         Target.GetComponent<Health>().ModifyHealth(-1);
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1";
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
                     }
                     else
                     {
-                        Target.GetComponent<Health>().ModifyHealth
-                                                                 (-((int)CritCalc - Target.GetComponent<Character>().CharacterIntelligence));
+                        Target.GetComponent<Health>().ModifyHealth(-((int)CritCalc - Target.GetComponent<Character>().CharacterIntelligence));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
-                                                                                   Target.GetComponent<Character>().CharacterIntelligence).ToString() + "!";
+                        if (Target.GetComponent<Health>().GetDamageWasReduced)
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" +
+                            Target.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - Target.CharacterDefense).ToString() + "!" + RuneCheckForReducedDamage();
+                        }
+                        else
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + ((int)CritCalc -
+                                                                                   Target.GetComponent<Character>().CharacterDefense).ToString() + "!";
+                        }
                     }
                 }
                 else
@@ -2914,14 +2970,23 @@ public class EnemySkills : MonoBehaviour
                     {
                         Target.GetComponent<Health>().ModifyHealth(-1);
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1";
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
                     }
                     else
                     {
                         Target.GetComponent<Health>().ModifyHealth(-(potency - Target.GetComponent<Character>().CharacterIntelligence));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
-                                                                                   (potency - Target.GetComponent<Character>().CharacterIntelligence).ToString();
+                        if (Target.GetComponent<Health>().GetDamageWasReduced)
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                            Target.GetComponent<Health>().GetReducedDamageValue(potency - Target.GetComponent<Character>().CharacterDefense).ToString() + 
+                            "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        }
+                        else
+                        {
+                            DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " +
+                                                                                       (potency - Target.GetComponent<Character>().CharacterDefense).ToString();
+                        }
                     }
                 }
                 #endregion
@@ -2942,6 +3007,42 @@ public class EnemySkills : MonoBehaviour
         }
 
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private string CheckForReducedDamage()
+    {
+        string reducedDamage = "";
+
+        if (enemyAI.GetPlayerTarget.GetComponent<Health>().GetReducedDamage)
+        {
+            reducedDamage = "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+        }
+
+        return reducedDamage;
+    }
+
+    private string PuckCheckForReducedDamage()
+    {
+        string reducedDamage = "";
+
+        if (puckAI.GetPlayerTarget.GetComponent<Health>().GetReducedDamage)
+        {
+            reducedDamage = "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+        }
+
+        return reducedDamage;
+    }
+
+    private string RuneCheckForReducedDamage()
+    {
+        string reducedDamage = "";
+
+        if (runeGolemAI.GetPlayerTarget.GetComponent<Health>().GetReducedDamage)
+        {
+            reducedDamage = "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+        }
+
+        return reducedDamage;
     }
 
     public TextMeshProUGUI SkillHealText(int potency, string skillName)

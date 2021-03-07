@@ -107,6 +107,11 @@ public class ChangeSpawnPointLocation : MonoBehaviour
             for(int i = 0; i < EnemyZonesToEnable.Length; i++)
             {
                 EnemyZonesToEnable[i].gameObject.SetActive(true);
+
+                if (EnemyZonesToEnable[i].gameObject == null)
+                {
+                    break;
+                }
             }
         }
     }
@@ -118,6 +123,11 @@ public class ChangeSpawnPointLocation : MonoBehaviour
             for (int i = 0; i < EnemyZonesToDisable.Length; i++)
             {
                 EnemyZonesToDisable[i].gameObject.SetActive(false);
+
+                if (EnemyZonesToDisable[i].gameObject == null)
+                {
+                    break;
+                }
             }
         }
     }

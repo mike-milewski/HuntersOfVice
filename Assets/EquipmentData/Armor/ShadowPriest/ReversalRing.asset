@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Reversal Ring
   Element: 0
-  StatIncrease: 10
+  StatIncrease: 8
   BuyValue: 800

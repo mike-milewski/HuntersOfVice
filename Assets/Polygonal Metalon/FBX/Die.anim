@@ -85797,7 +85797,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.3333334
-    functionName: IncrementGatePuzzleCount
+    functionName: Fading
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -85818,7 +85818,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.3333334
-    functionName: Fading
+    functionName: IncrementGatePuzzleCount
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

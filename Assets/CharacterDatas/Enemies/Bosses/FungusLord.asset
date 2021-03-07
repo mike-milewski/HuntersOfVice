@@ -20,15 +20,18 @@ MonoBehaviour:
   CharacterLevel: 10
   Health: 2300
   Mana: 0
-  Strength: 27
-  Defense: 20
-  Intelligence: 17
+  Strength: 31
+  Defense: 30
+  Intelligence: 25
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5
   Coins: 350
   EXP: 550
   MaterialDataDropChance: 100
-  MoveSpeed: 0
-  CheckedData: 0
+  SkillPoints: 20
+  MoveSpeed: 3
+  CheckedData: 1
+  UsesStrength: 0
+  UsesIntelligence: 0
   materialdata: {fileID: 11400000, guid: dc952042edf5eb2438be5b45d525d60a, type: 2}

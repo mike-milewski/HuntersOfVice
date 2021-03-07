@@ -35,6 +35,8 @@ public class OpenToadstoolCage : MonoBehaviour
             }
 
             Invoke("OpenCage", 4f);
+
+            PlayerPrefs.SetInt("SecretCharacterUnlocked", 1);
         }
         CageCollider.SetActive(false);
     }

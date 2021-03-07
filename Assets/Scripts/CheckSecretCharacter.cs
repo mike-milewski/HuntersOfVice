@@ -24,15 +24,15 @@ public class CheckSecretCharacter : MonoBehaviour
 
     private void OnEnable()
     {
-        if(!settings.AlreadyCheckedForCharacter)
+        if (!PlayerPrefs.HasKey("AlreadyCheckedForSecretCharacter"))
         {
-            if (settings.SecretCharacterUnlocked)
+            if (PlayerPrefs.HasKey("SecretCharacterUnlocked"))
             {
                 Invoke("InvokeCharacterUnlock", 1f);
                 Knight.GetComponent<BoxCollider>().enabled = false;
                 ShadowPriest.GetComponent<BoxCollider>().enabled = false;
                 ReturnToMenu.interactable = false;
-                settings.AlreadyCheckedForCharacter = true;
+                PlayerPrefs.SetInt("AlreadyCheckedForSecretCharacter", 1);
             }
         }
         else

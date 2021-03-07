@@ -23,12 +23,13 @@ MonoBehaviour:
   Strength: 20
   Defense: 15
   Intelligence: 20
-  HpIncrease: 0
-  MpIncrease: 0
+  HpIncrease: 9
+  MpIncrease: 4
   CriticalHitChance: 5
   Coins: 0
   EXP: 0
   MaterialDataDropChance: 0
+  SkillPoints: 0
   MoveSpeed: 6
   CheckedData: 0
   UsesStrength: 1
