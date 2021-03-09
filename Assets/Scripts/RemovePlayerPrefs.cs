@@ -7,5 +7,6 @@ public class RemovePlayerPrefs : MonoBehaviour
     private void OnEnable()
     {
         PlayerPrefs.DeleteAll();
+        Debug.Log("Deleted");
     }
 }
