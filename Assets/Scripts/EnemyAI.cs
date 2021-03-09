@@ -1200,7 +1200,11 @@ public class EnemyAI : MonoBehaviour
         {
             ReflectedValue = 0.10f * PlayerTarget.GetComponent<Character>().MaxHealth;
         }
-        else if(GameManager.Instance.GetToadstool.activeInHierarchy)
+        if (GameManager.Instance.GetShadowPriest.activeInHierarchy)
+        {
+            ReflectedValue = 0.05f * PlayerTarget.GetComponent<Character>().MaxHealth;
+        }
+        if (GameManager.Instance.GetToadstool.activeInHierarchy)
         {
             ReflectedValue = 0.05f * PlayerTarget.GetComponent<Character>().MaxHealth;
         }

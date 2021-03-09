@@ -2555,7 +2555,26 @@ public class EnemySkills : MonoBehaviour
                 ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
             }
         }
-        else if(GameManager.Instance.GetToadstool.activeInHierarchy)
+        if (GameManager.Instance.GetShadowPriest.activeInHierarchy)
+        {
+            if (enemyAI != null)
+            {
+                ReflectedValue = 0.05f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+            if (puckAI != null)
+            {
+                ReflectedValue = 0.01f * puckAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+            if (runeGolemAI != null)
+            {
+                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+            if (SylvanDietyAI != null)
+            {
+                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+        }
+        if (GameManager.Instance.GetToadstool.activeInHierarchy)
         {
             if (enemyAI != null)
             {
@@ -2631,7 +2650,7 @@ public class EnemySkills : MonoBehaviour
 
                 Mathf.Round(CritCalc);
 
-                if ((int)CritCalc - Target.GetComponent<Character>().CharacterDefense <= 0)
+                if ((int)CritCalc - DefenseType <= 0)
                 {
                     Target.GetComponent<Health>().ModifyHealth(-1);
 
@@ -2644,7 +2663,7 @@ public class EnemySkills : MonoBehaviour
                     if (Target.GetComponent<Health>().GetDamageWasReduced)
                     {
                         DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" +
-                        Target.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - DefenseType).ToString() + "!" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        Target.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - DefenseType).ToString() + "!" + "</size>" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
                     }
                     else
                     {
@@ -2655,7 +2674,7 @@ public class EnemySkills : MonoBehaviour
             }
             else
             {
-                if (potency - Target.GetComponent<Character>().CharacterDefense <= 0)
+                if (potency - DefenseType <= 0)
                 {
                     Target.GetComponentInChildren<Health>().ModifyHealth(-1);
 
@@ -2673,8 +2692,7 @@ public class EnemySkills : MonoBehaviour
                     }
                     else
                     {
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" +
-                                                                                   (potency - DefenseType).ToString();
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + (potency - DefenseType).ToString();
                     }
                 }
             }
@@ -2949,7 +2967,7 @@ public class EnemySkills : MonoBehaviour
                     {
                         Target.GetComponent<Health>().ModifyHealth(-1);
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" + "1!";
                     }
                     else
                     {
@@ -2958,7 +2976,7 @@ public class EnemySkills : MonoBehaviour
                         if (Target.GetComponent<Health>().GetDamageWasReduced)
                         {
                             DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " </size>" + " " + "<size=35>" +
-                            Target.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - Target.CharacterDefense).ToString() + "!" + RuneCheckForReducedDamage();
+                            Target.GetComponent<Health>().GetReducedDamageValue((int)CritCalc - Target.CharacterDefense).ToString() + "!" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
                         }
                         else
                         {
@@ -2973,7 +2991,7 @@ public class EnemySkills : MonoBehaviour
                     {
                         Target.GetComponent<Health>().ModifyHealth(-1);
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1" + "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=25>" + skillName + " " + "1";
                     }
                     else
                     {
@@ -3012,35 +3030,11 @@ public class EnemySkills : MonoBehaviour
         return DamageTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private string CheckForReducedDamage()
+    private string SylvanCheckForReducedDamage()
     {
         string reducedDamage = "";
 
-        if (enemyAI.GetPlayerTarget.GetComponent<Health>().GetReducedDamage)
-        {
-            reducedDamage = "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
-        }
-
-        return reducedDamage;
-    }
-
-    private string PuckCheckForReducedDamage()
-    {
-        string reducedDamage = "";
-
-        if (puckAI.GetPlayerTarget.GetComponent<Health>().GetReducedDamage)
-        {
-            reducedDamage = "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
-        }
-
-        return reducedDamage;
-    }
-
-    private string RuneCheckForReducedDamage()
-    {
-        string reducedDamage = "";
-
-        if (runeGolemAI.GetPlayerTarget.GetComponent<Health>().GetReducedDamage)
+        if (SylvanDietyAI.GetPlayerTarget.GetComponent<Health>().GetReducedDamage)
         {
             reducedDamage = "\n" + "<size=16> <#EFDFB8>" + "(Reduced!)";
         }

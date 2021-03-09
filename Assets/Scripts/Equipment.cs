@@ -900,7 +900,7 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Intelligence Down status effect." + "</color> ";
                 break;
             case (Ability.ExtraSkillPoints):
-                skillText = "\n\n" + "<#EFDFB8>" + "Skill Points earned  from enemies is increased by 2." + "</color>";
+                skillText = "\n\n" + "<#EFDFB8>" + "Skill Points earned from enemies is increased by 2." + "</color>";
                 break;
         }
         return skillText;

@@ -452,9 +452,11 @@ public class Items : MonoBehaviour
                 {
                     if(!CheckStatus(hitColliders[i].GetComponent<Enemy>()))
                     {
-                        StatusEffectIconTrans = hitColliders[i].GetComponent<Enemy>().GetDebuffTransform;
-
-                        PoisonStatus(hitColliders[i].GetComponent<Enemy>());
+                        if(hitColliders[i].GetComponent<EnemyAI>())
+                        {
+                            StatusEffectIconTrans = hitColliders[i].GetComponent<Enemy>().GetDebuffTransform;
+                            PoisonStatus(hitColliders[i].GetComponent<Enemy>());
+                        }
                     }
                 }
             }

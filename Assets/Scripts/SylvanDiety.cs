@@ -766,9 +766,9 @@ public class SylvanDiety : MonoBehaviour
 
             PlayerTarget = other.GetComponent<Character>();
             states = SylvanDietyBossStates.Chase;
-            EnemyTriggerSphere.gameObject.SetActive(false);
             IsReseted = false;
             PlayerEntry = true;
+            EnemyTriggerSphere.gameObject.SetActive(false);
         }
     }
 
@@ -940,15 +940,6 @@ public class SylvanDiety : MonoBehaviour
 
             Hitparticle.transform.SetParent(PlayerTarget.transform, true);
         }
-    }
-
-    private void GetMonsterEntryText()
-    {
-        var MonsterEntryTxt = ObjectPooler.Instance.GetMonsterEntryText();
-
-        MonsterEntryTxt.SetActive(true);
-
-        MonsterEntryTxt.transform.SetParent(GameManager.Instance.GetMonsterEntryTransform, false);
     }
 
     private void SpawnParticleEffect(Vector3 Pos)

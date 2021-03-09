@@ -780,6 +780,24 @@ public class Skills : StatusEffects
                             }
                             else return;
                         }
+                        if (Target.GetComponent<RuneGolem>())
+                        {
+                            if (Target.GetRuneGolemAI.GetPlayerTarget == null)
+                            {
+                                Target.GetRuneGolemAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                                Target.GetRuneGolemAI.GetStates = RuneGolemStates.Chase;
+                            }
+                            else return;
+                        }
+                        if (Target.GetComponent<SylvanDiety>())
+                        {
+                            if (Target.GetSylvanDietyAI.GetPlayerTarget == null)
+                            {
+                                Target.GetSylvanDietyAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                                Target.GetSylvanDietyAI.GetSylvanDietyStates = SylvanDietyBossStates.Chase;
+                            }
+                            else return;
+                        }
                     }
                 }
                 else
@@ -790,6 +808,24 @@ public class Skills : StatusEffects
                         {
                             Target.GetPuckAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
                             Target.GetPuckAI.GetStates = BossStates.Chase;
+                        }
+                        else return;
+                    }
+                    if (Target.GetComponent<RuneGolem>())
+                    {
+                        if (Target.GetRuneGolemAI.GetPlayerTarget == null)
+                        {
+                            Target.GetRuneGolemAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                            Target.GetRuneGolemAI.GetStates = RuneGolemStates.Chase;
+                        }
+                        else return;
+                    }
+                    if (Target.GetComponent<SylvanDiety>())
+                    {
+                        if (Target.GetSylvanDietyAI.GetPlayerTarget == null)
+                        {
+                            Target.GetSylvanDietyAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                            Target.GetSylvanDietyAI.GetSylvanDietyStates = SylvanDietyBossStates.Chase;
                         }
                         else return;
                     }
@@ -815,12 +851,21 @@ public class Skills : StatusEffects
                     }
                     else return;
                 }
-                else if(Target.GetComponent<RuneGolem>())
+                if(Target.GetComponent<RuneGolem>())
                 {
                     if (Target.GetRuneGolemAI.GetPlayerTarget == null)
                     {
                         Target.GetRuneGolemAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
                         Target.GetRuneGolemAI.GetStates = RuneGolemStates.Chase;
+                    }
+                    else return;
+                }
+                if (Target.GetComponent<SylvanDiety>())
+                {
+                    if (Target.GetSylvanDietyAI.GetPlayerTarget == null)
+                    {
+                        Target.GetSylvanDietyAI.GetPlayerTarget = SkillsManager.Instance.GetCharacter;
+                        Target.GetSylvanDietyAI.GetSylvanDietyStates = SylvanDietyBossStates.Chase;
                     }
                     else return;
                 }
@@ -2701,23 +2746,29 @@ public class Skills : StatusEffects
 
             if (GetCharacter.GetComponent<BasicAttack>().GetHasBurnStatus)
             {
-                if (Random.value * 100 <= 10)
+                if(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetComponent<EnemyAI>())
                 {
-                    if (!GetCharacter.GetComponent<BasicAttack>().CheckBurnStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
-                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    if (Random.value * 100 <= 10)
                     {
-                        GetCharacter.GetComponent<BasicAttack>().BurningStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                        if (!GetCharacter.GetComponent<BasicAttack>().CheckBurnStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
+                            GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                        {
+                            GetCharacter.GetComponent<BasicAttack>().BurningStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                        }
                     }
                 }
             }
             if (GetCharacter.GetComponent<BasicAttack>().GetHasSlowStatus)
             {
-                if (Random.value * 100 <= 10)
+                if (GetCharacter.GetComponent<BasicAttack>().GetTarget.GetComponent<EnemyAI>())
                 {
-                    if (!GetCharacter.GetComponent<BasicAttack>().CheckSlowStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
-                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    if (Random.value * 100 <= 10)
                     {
-                        GetCharacter.GetComponent<BasicAttack>().SlowStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                        if (!GetCharacter.GetComponent<BasicAttack>().CheckSlowStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
+                            GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                        {
+                            GetCharacter.GetComponent<BasicAttack>().SlowStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                        }
                     }
                 }
             }
