@@ -17,7 +17,7 @@ public class OpenToadstoolCage : MonoBehaviour
 
     public void InvokeOpenCage()
     {
-        if(settings.SecretCharacterUnlocked)
+        if (settings.SecretCharacterUnlocked)
         {
             TreasureChestParticle.SetActive(true);
             SecretTreasureChest.SetActive(true);

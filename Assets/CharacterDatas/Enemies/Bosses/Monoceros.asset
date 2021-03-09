@@ -20,9 +20,9 @@ MonoBehaviour:
   CharacterLevel: 15
   Health: 6000
   Mana: 0
-  Strength: 50
-  Defense: 41
-  Intelligence: 38
+  Strength: 45
+  Defense: 30
+  Intelligence: 35
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5

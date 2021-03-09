@@ -775,6 +775,11 @@ public class EnemyAI : MonoBehaviour
 
         enemy.ToggleHealthBar();
 
+        if(PlayerTarget == null)
+        {
+            enemy.CheckExperienceHolder();
+        }
+
         if(!GainedEXP)
         {
             enemy.ReturnSkillPoints();

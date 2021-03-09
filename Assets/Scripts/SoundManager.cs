@@ -31,16 +31,8 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         #region Singleton
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else if(Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
-        #endregion 
+        Instance = this;
+        #endregion
     }
 
     public void FallSE()

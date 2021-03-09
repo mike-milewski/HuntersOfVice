@@ -31,7 +31,7 @@ MonoBehaviour:
   MaterialDataDropChance: 25
   SkillPoints: 3
   MoveSpeed: 0
-  CheckedData: 0
+  CheckedData: 1
   UsesStrength: 0
   UsesIntelligence: 0
   materialdata: {fileID: 11400000, guid: 7339010137ce4c8428cc272fd00ec619, type: 2}

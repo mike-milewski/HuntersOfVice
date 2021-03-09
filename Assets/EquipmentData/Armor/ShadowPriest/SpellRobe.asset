@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Spell Robe
   Element: 0
-  StatIncrease: 3
+  StatIncrease: 5
   BuyValue: 400

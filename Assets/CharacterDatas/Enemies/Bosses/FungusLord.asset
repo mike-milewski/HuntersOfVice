@@ -22,7 +22,7 @@ MonoBehaviour:
   Mana: 0
   Strength: 31
   Defense: 30
-  Intelligence: 25
+  Intelligence: 26
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5

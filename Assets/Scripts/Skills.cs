@@ -2354,8 +2354,6 @@ public class Skills : StatusEffects
 
             DamageTxt.transform.SetParent(TextHolder.transform, false);
 
-            playerElement = GetCharacter.GetComponent<BasicAttack>().GetPlayerElement;
-
             int DamageType = 0;
             if(GetCharacter.GetCharacterData.UsesStrength)
             {
@@ -2764,13 +2762,14 @@ public class Skills : StatusEffects
     {
         bool Weakness = false;
 
-        for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
+        for (int i = 0; i < Target.GetCharacter.GetCharacterData.Weaknesses.Length; i++)
         {
             if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Weaknesses[i])
             {
                 Weakness = true;
             }
         }
+
         return Weakness;
     }
 
@@ -2784,7 +2783,7 @@ public class Skills : StatusEffects
         }
         else
         {
-            for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Resistances.Length; i++)
+            for (int i = 0; i < Target.GetCharacter.GetCharacterData.Resistances.Length; i++)
             {
                 if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Resistances[i])
                 {
@@ -2792,6 +2791,7 @@ public class Skills : StatusEffects
                 }
             }
         }
+
         return Resistance;
     }
 
@@ -2805,7 +2805,7 @@ public class Skills : StatusEffects
         }
         else
         {
-            for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Immunities.Length; i++)
+            for (int i = 0; i < Target.GetCharacter.GetCharacterData.Immunities.Length; i++)
             {
                 if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Immunities[i])
                 {
@@ -2813,6 +2813,7 @@ public class Skills : StatusEffects
                 }
             }
         }
+
         return Immunity;
     }
 
@@ -2826,7 +2827,7 @@ public class Skills : StatusEffects
         }
         else
         {
-            for (int i = 0; i < GetCharacter.GetComponent<BasicAttack>().GetTarget.GetCharacter.GetCharacterData.Absorbtions.Length; i++)
+            for (int i = 0; i < Target.GetCharacter.GetCharacterData.Absorbtions.Length; i++)
             {
                 if (playerElement == (PlayerElement)Target.GetCharacter.GetCharacterData.Absorbtions[i])
                 {
@@ -2834,6 +2835,7 @@ public class Skills : StatusEffects
                 }
             }
         }
+
         return Absorption;
     }
 

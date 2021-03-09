@@ -194,7 +194,8 @@ public class MenuButtons : MonoBehaviour
 
     public void ShowArtCreditsText(TextMeshProUGUI ArtText)
     {
-        ArtText.text = "<size=25>Space Hydra \n\n StumpyStrust \n\n Lamoot";
+        ArtText.text = "<size=19>Space Hydra https://opengameart.org/users/%E3%83%89%E3%83%AA%E3%83%BC%E3%83%A0%E3%82%AD%E3%83%A3%E3%82%B9%E3%83%88 \n\n " +
+                       "StumpyStrust \n https://opengameart.org/users/stumpystrust \n\n Lamoot \n https://opengameart.org/users/lamoot";
     }
 
     public void ShowAudioCreditsText(TextMeshProUGUI AudioText)
@@ -205,7 +206,7 @@ public class MenuButtons : MonoBehaviour
 
     public void ShowFontsCreditsText(TextMeshProUGUI FontsText)
     {
-        FontsText.text = "<size=25>Jonathan S. Harris";
+        FontsText.text = "<size=19>Jonathan S. Harris \n https://www.1001freefonts.com/ace-records.font";
     }
 
     public void ShowWeaponsText(TextMeshProUGUI WeaponsText)

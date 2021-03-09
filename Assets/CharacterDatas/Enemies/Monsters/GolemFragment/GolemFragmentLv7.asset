@@ -15,7 +15,7 @@ MonoBehaviour:
   Weaknesses: 04000000
   Resistances: 01000000
   Immunities: 06000000
-  Absorbtions: 
+  Absorbtions: 00000000
   CharacterName: Golem Fragment
   CharacterLevel: 7
   Health: 412

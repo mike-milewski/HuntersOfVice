@@ -45,10 +45,9 @@ public class ToadstoolWalk : MonoBehaviour
     private void InvokeJump()
     {
         animator.SetBool("Jump", true);
-        Invoke("InvokeParticleEffect", 0.4f);
     }
 
-    private void InvokeParticleEffect()
+    public void InvokeParticleEffect()
     {
         SpawnParticleEffect();
         tipText.ShowTip();

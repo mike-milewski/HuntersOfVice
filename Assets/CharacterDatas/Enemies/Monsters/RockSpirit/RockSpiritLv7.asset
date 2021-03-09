@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weaknesses: 05000000
   Resistances: 01000000
-  Immunities: 
+  Immunities: 00000000
   Absorbtions: 06000000
   CharacterName: Rock Spirit
   CharacterLevel: 7
@@ -31,7 +31,7 @@ MonoBehaviour:
   MaterialDataDropChance: 55
   SkillPoints: 5
   MoveSpeed: 0
-  CheckedData: 0
+  CheckedData: 1
   UsesStrength: 0
   UsesIntelligence: 0
   materialdata: {fileID: 11400000, guid: 1589613105fa9ae41bf38cea464a0efc, type: 2}
