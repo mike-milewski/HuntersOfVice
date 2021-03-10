@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BrownFungus
   m_EditorClassIdentifier: 
   EquipmentName: Brown Fungus
-  Element: 1
+  Element: 6
   StatIncrease: 5
   BuyValue: 10

@@ -947,7 +947,7 @@ public class BasicAttack : MonoBehaviour
 
             if (HasBurnStatusEffect)
             {
-                if (Random.value * 100 <= 10)
+                if (Random.value * 100 <= 5)
                 {
                     if (!CheckBurnStatusEffect(enemy))
                     {
@@ -957,7 +957,7 @@ public class BasicAttack : MonoBehaviour
             }
             if (HasSlowStatusEffect)
             {
-                if (Random.value * 100 <= 10)
+                if (Random.value * 100 <= 5)
                 {
                     if (!CheckSlowStatusEffect(enemy))
                     {
@@ -967,7 +967,7 @@ public class BasicAttack : MonoBehaviour
             }
             if (HasDefenseDownStatus)
             {
-                if (Random.value * 100 <= 10)
+                if (Random.value * 100 <= 5)
                 {
                     if (!CheckDefenseDownStatusEffect(enemy))
                     {
@@ -977,7 +977,7 @@ public class BasicAttack : MonoBehaviour
             }
             if (HasStrengthDownStatus)
             {
-                if (Random.value * 100 <= 10)
+                if (Random.value * 100 <= 5)
                 {
                     if (!CheckStrengthDownStatusEffect(enemy))
                     {
@@ -987,7 +987,7 @@ public class BasicAttack : MonoBehaviour
             }
             if (HasIntelligenceDownStatus)
             {
-                if (Random.value * 100 <= 10)
+                if (Random.value * 100 <= 5)
                 {
                     if (!CheckIntelligenceDownStatusEffect(enemy))
                     {

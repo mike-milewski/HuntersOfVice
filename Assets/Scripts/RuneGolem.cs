@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum RuneGolemStates { Idle, Chase, Attack, ApplyingAttack, Skill, SkillAnimation, Damaged, Immobile, MovingToPosition, RotateToPosition, RotateToPositionTwo }
 
@@ -191,9 +192,9 @@ public class RuneGolem : MonoBehaviour
     [SerializeField]
     private Quaternion BossRotation;
 
-    private float DistanceToTarget;
+    private float DistanceToTarget, DefaultMoveSpeed, DefaultAttackDelay;
 
-    private bool PlayerEntry, ChangingPhase, IsReseted, OnEnabled;
+    private bool PlayerEntry, ChangingPhase, IsReseted, OnEnabled, IsDoomed;
 
     private int StateArrayIndex;
 
@@ -236,6 +237,54 @@ public class RuneGolem : MonoBehaviour
         set
         {
             PhaseIndex = value;
+        }
+    }
+
+    public float GetMoveSpeed
+    {
+        get
+        {
+            return MoveSpeed;
+        }
+        set
+        {
+            MoveSpeed = value;
+        }
+    }
+
+    public float GetAttackDelay
+    {
+        get
+        {
+            return AttackDelay;
+        }
+        set
+        {
+            AttackDelay = value;
+        }
+    }
+
+    public float GetDefaultMoveSpeed
+    {
+        get
+        {
+            return DefaultMoveSpeed;
+        }
+        set
+        {
+            DefaultMoveSpeed = value;
+        }
+    }
+
+    public float GetDefaultAttackDelay
+    {
+        get
+        {
+            return DefaultAttackDelay;
+        }
+        set
+        {
+            DefaultAttackDelay = value;
         }
     }
 
@@ -302,6 +351,9 @@ public class RuneGolem : MonoBehaviour
         states = RuneGolemStates.Idle;
 
         Idle();
+
+        DefaultMoveSpeed = MoveSpeed;
+        DefaultAttackDelay = AttackDelay;
     }
 
     private void OnEnable()
@@ -846,6 +898,30 @@ public class RuneGolem : MonoBehaviour
         EnableWall();
 
         InvokeOnEnabledFalse();
+
+        RemoveStatusEffects();
+    }
+
+    private void RemoveStatusEffects()
+    {
+        foreach (EnemyStatusIcon esi in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if (enemy.GetDebuffTransform.childCount > 0)
+            {
+                esi.RemoveEffect();
+            }
+        }
+
+        if (enemy.GetBuffTransform != null)
+        {
+            foreach (EnemyStatusIcon esi in enemy.GetBuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+            {
+                if (enemy.GetBuffTransform.childCount > 0)
+                {
+                    esi.RemoveEffect();
+                }
+            }
+        }
     }
 
     private void InvokeOnEnabledFalse()
@@ -990,6 +1066,11 @@ public class RuneGolem : MonoBehaviour
 
         if (PlayerTarget != null)
         {
+            if (PlayerTarget.GetComponent<Health>().GetHasStatusGiftPassive)
+            {
+                GiveStatusEffect();
+            }
+
             t.gameObject.SetActive(true);
 
             t.transform.SetParent(PlayerTarget.GetComponent<Health>().GetDamageTextParent.transform, false);
@@ -1098,6 +1179,164 @@ public class RuneGolem : MonoBehaviour
 
             SpawnParticle.transform.position = new Vector3(Pos.x, Pos.y + 0.5f, Pos.z);
         }
+    }
+
+    private void GiveStatusEffect()
+    {
+        if (Random.value * 100 <= 25)
+        {
+            if (PlayerTarget.GetComponent<BasicAttack>().GetInflictsDoomStatus)
+            {
+                if (!CheckDoomedStatusEffect())
+                {
+                    if (Random.value * 100 <= 5)
+                    {
+                        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+                        StatusTxt.SetActive(true);
+
+                        StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
+
+                        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Doomed";
+
+                        StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+
+                        GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+                        statuseffectIcon.SetActive(true);
+
+                        statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasDoomedStatus = true;
+
+                        statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
+
+                        statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+
+                        statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.Doom;
+                        statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
+                        statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+                        statuseffectIcon.GetComponent<EnemyStatusIcon>().DoomedStatus();
+                    }
+                }
+                else
+                {
+                    StatusGiftEffects(Random.Range(0, 3));
+                }
+            }
+            else
+            {
+                StatusGiftEffects(Random.Range(0, 3));
+            }
+        }
+    }
+
+    private int StatusGiftEffects(int RandomNumber)
+    {
+        StatusEffect[] GiftEffects = { StatusEffect.Poison, StatusEffect.Slow };
+
+        if (RandomNumber == 0)
+        {
+            if (!CheckPoisonStatusEffect())
+            {
+                var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+                StatusTxt.SetActive(true);
+
+                StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
+
+                StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Poison";
+
+                StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetPoisonSprite;
+
+                GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+                statuseffectIcon.SetActive(true);
+
+                statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
+
+                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetPoisonSprite;
+
+                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasPoisonStatus = true;
+
+                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GiftEffects[RandomNumber];
+                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
+                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetPoisonSprite;
+                statuseffectIcon.GetComponent<EnemyStatusIcon>().PoisonStatus();
+
+                statuseffectIcon.GetComponent<EnemyStatusIcon>().CreatePoisonEffectParticle();
+            }
+        }
+        if (RandomNumber == 1)
+        {
+            if (!CheckSlowStatusEffect())
+            {
+                var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+                StatusTxt.SetActive(true);
+
+                StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
+
+                StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Slowed";
+
+                StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetSlowedSprite;
+
+                GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+
+                statuseffectIcon.SetActive(true);
+
+                statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
+
+                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetSlowedSprite;
+
+                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasSlowStatus = true;
+
+                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GiftEffects[RandomNumber];
+                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
+                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetSlowedSprite;
+                statuseffectIcon.GetComponent<EnemyStatusIcon>().SlowStatus();
+            }
+        }
+        return RandomNumber;
+    }
+
+    private bool CheckPoisonStatusEffect()
+    {
+        bool PoisonStatus = false;
+
+        foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if (enemystatus.GetStatusEffect == StatusEffect.Poison)
+            {
+                PoisonStatus = true;
+            }
+        }
+        return PoisonStatus;
+    }
+
+    private bool CheckSlowStatusEffect()
+    {
+        bool SlowStatus = false;
+
+        foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if (enemystatus.GetStatusEffect == StatusEffect.Slow)
+            {
+                SlowStatus = true;
+            }
+        }
+        return SlowStatus;
+    }
+
+    private bool CheckDoomedStatusEffect()
+    {
+        foreach (EnemyStatusIcon esi in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>())
+        {
+            if (esi.GetStatusEffect == StatusEffect.Doom)
+            {
+                IsDoomed = true;
+            }
+        }
+
+        return IsDoomed;
     }
 
     public void RuneGolemMove()

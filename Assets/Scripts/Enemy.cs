@@ -439,7 +439,7 @@ public class Enemy : MonoBehaviour
         if (SkillPointAmount > 0 && GameManager.Instance.GetCharacter.CurrentHealth > 0)
         {
             GameManager.Instance.GetEquipmentMenu.GainSkillPoints(SkillPointAmount);
-            GameManager.Instance.GetEquipmentMenu.ReturnSkillPointText().text = SkillPointAmount + "<size=20> SP";
+            GameManager.Instance.GetEquipmentMenu.ReturnSkillPointText().text = SkillPointAmount + GameManager.Instance.GetEquipmentMenu.GetAdditionalSkillPoints + "<size=20> SP";
         }
     }
 

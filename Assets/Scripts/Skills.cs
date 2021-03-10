@@ -2045,9 +2045,18 @@ public class Skills : StatusEffects
                 }
                 else
                 {
-                    WhirlWindSlashEnemyStatus();
+                    if(hitColliders[i].GetComponent<Puck>() && GetEnemyStatusEffect == StatusEffect.Stun || 
+                       hitColliders[i].GetComponent<RuneGolem>() && GetEnemyStatusEffect == StatusEffect.Stun || 
+                       hitColliders[i].GetComponent<SylvanDiety>() && GetEnemyStatusEffect == StatusEffect.Stun)
+                    {
+                        EnemyStatusImmune();
+                    }
+                    else
+                    {
+                        WhirlWindSlashEnemyStatus();
 
-                    SporeStatusEffects(hitColliders[i].GetComponent<Enemy>());
+                        SporeStatusEffects(hitColliders[i].GetComponent<Enemy>());
+                    }
                 }
             }
         }
@@ -2183,6 +2192,21 @@ public class Skills : StatusEffects
         StatusTxt.transform.SetParent(TextHolder.transform, false);
 
         StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetStatusEffectName;
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private TextMeshProUGUI EnemyStatusImmune()
+    {
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetStatusEffectName + "\n <size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
 
         StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
@@ -2746,35 +2770,29 @@ public class Skills : StatusEffects
 
             if (GetCharacter.GetComponent<BasicAttack>().GetHasBurnStatus)
             {
-                if(GetCharacter.GetComponent<BasicAttack>().GetTarget.GetComponent<EnemyAI>())
+                if (Random.value * 100 <= 5)
                 {
-                    if (Random.value * 100 <= 10)
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckBurnStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
+                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
                     {
-                        if (!GetCharacter.GetComponent<BasicAttack>().CheckBurnStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
-                            GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
-                        {
-                            GetCharacter.GetComponent<BasicAttack>().BurningStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
-                        }
+                        GetCharacter.GetComponent<BasicAttack>().BurningStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
                     }
                 }
             }
             if (GetCharacter.GetComponent<BasicAttack>().GetHasSlowStatus)
             {
-                if (GetCharacter.GetComponent<BasicAttack>().GetTarget.GetComponent<EnemyAI>())
+                if (Random.value * 100 <= 5)
                 {
-                    if (Random.value * 100 <= 10)
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckSlowStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
+                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
                     {
-                        if (!GetCharacter.GetComponent<BasicAttack>().CheckSlowStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
-                            GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
-                        {
-                            GetCharacter.GetComponent<BasicAttack>().SlowStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
-                        }
+                        GetCharacter.GetComponent<BasicAttack>().SlowStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
                     }
                 }
             }
             if (GetCharacter.GetComponent<BasicAttack>().GetHasDefenseDownStatus)
             {
-                if (Random.value * 100 <= 10)
+                if (Random.value * 100 <= 5)
                 {
                     if (!GetCharacter.GetComponent<BasicAttack>().CheckDefenseDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
                         GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
@@ -2785,7 +2803,7 @@ public class Skills : StatusEffects
             }
             if (GetCharacter.GetComponent<BasicAttack>().GetHasStrengthDownStatus)
             {
-                if (Random.value * 100 <= 10)
+                if (Random.value * 100 <= 5)
                 {
                     if (!GetCharacter.GetComponent<BasicAttack>().CheckStrengthDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
                         GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
@@ -2796,7 +2814,7 @@ public class Skills : StatusEffects
             }
             if (GetCharacter.GetComponent<BasicAttack>().GetHasIntelligenceDownStatus)
             {
-                if (Random.value * 100 <= 10)
+                if (Random.value * 100 <= 5)
                 {
                     if (!GetCharacter.GetComponent<BasicAttack>().CheckIntelligenceDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
                         GetCharacter.GetComponent<BasicAttack>().GetTarget != null)

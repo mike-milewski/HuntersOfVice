@@ -801,13 +801,13 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Storm Thrust now applies the Stun status effect instead with a 5 second duration and a 15 second cooldown." + "</color> ";
                 break;
             case (Ability.BurnStatus):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Burning status effect." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 5% chance of inflicting the Burning status effect." + "</color> ";
                 break;
             case (Ability.ReducedAutoAttack):
                 skillText = "\n\n" + "<#EFDFB8>" + "Reduces auto-attack time by 1 second." + "</color> ";
                 break;
             case (Ability.SlowStatus):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Slowed status effect." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 5% chance of inflicting the Slowed status effect." + "</color> ";
                 break;
             case (Ability.Tenacity):
                 skillText = "\n\n" + "<#EFDFB8>" + "Tenacity increases strength by 30% instead." + "</color> ";
@@ -891,13 +891,13 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Increases the duration of Soul Pierce's Withering status effect to 20 seconds." + "</color> ";
                 break;
             case (Ability.StrengthDown):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Strength Down status effect." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 5% chance of inflicting the Strength Down status effect." + "</color> ";
                 break;
             case (Ability.DefenseDown):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Defense Down status effect." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 5% chance of inflicting the Defense Down status effect." + "</color> ";
                 break;
             case (Ability.IntelligenceDown):
-                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 10% chance of inflicting the Intelligence Down status effect." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Auto-attack and damage skills have a 5% chance of inflicting the Intelligence Down status effect." + "</color> ";
                 break;
             case (Ability.ExtraSkillPoints):
                 skillText = "\n\n" + "<#EFDFB8>" + "Skill Points earned from enemies is increased by 2." + "</color>";

@@ -583,7 +583,7 @@ public class EnemyStatusIcon : MonoBehaviour
                 SetIntelligenceToDefault();
                 break;
             case (StatusEffect.Doom):
-                character.GetComponentInChildren<Health>().ModifyHealth(-character.CurrentHealth);
+                character.GetComponentInChildren<Health>().ModifyHealth(-character.MaxHealth);
                 break;
         }
 
@@ -665,8 +665,26 @@ public class EnemyStatusIcon : MonoBehaviour
 
         CreateParticleOnRemoveEnemy();
 
-        character.GetComponent<EnemyAI>().GetMoveSpeed = character.GetComponent<EnemyAI>().GetDefaultMoveSpeed;
-        character.GetComponent<EnemyAI>().GetAttackDelay = character.GetComponent<EnemyAI>().GetDefaultAttackDelay;
+        if(character.GetComponent<EnemyAI>())
+        {
+            character.GetComponent<EnemyAI>().GetMoveSpeed = character.GetComponent<EnemyAI>().GetDefaultMoveSpeed;
+            character.GetComponent<EnemyAI>().GetAttackDelay = character.GetComponent<EnemyAI>().GetDefaultAttackDelay;
+        }
+        if(character.GetComponent<Puck>())
+        {
+            character.GetComponent<Puck>().GetMoveSpeed = character.GetComponent<Puck>().GetDefaultMoveSpeed;
+            character.GetComponent<Puck>().GetAttackDelay = character.GetComponent<Puck>().GetDefaultAttackDelay;
+        }
+        if (character.GetComponent<RuneGolem>())
+        {
+            character.GetComponent<RuneGolem>().GetMoveSpeed = character.GetComponent<RuneGolem>().GetDefaultMoveSpeed;
+            character.GetComponent<RuneGolem>().GetAttackDelay = character.GetComponent<RuneGolem>().GetDefaultAttackDelay;
+        }
+        if (character.GetComponent<SylvanDiety>())
+        {
+            character.GetComponent<SylvanDiety>().GetMoveSpeed = character.GetComponent<SylvanDiety>().GetDefaultMoveSpeed;
+            character.GetComponent<SylvanDiety>().GetAttackDelay = character.GetComponent<SylvanDiety>().GetDefaultAttackDelay;
+        }
 
         return StatusEffectText.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -880,40 +898,56 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private void Stun()
     {
-        character.GetComponent<EnemySkills>().GetDisruptedSkill = true;
-        if (character.GetComponent<Puck>())
-        {
-            character.GetComponent<Puck>().GetStates = BossStates.Immobile;
-        }
-        if (character.GetComponent<RuneGolem>())
-        {
-            character.GetComponent<RuneGolem>().GetStates = RuneGolemStates.Immobile;
-        }
-        if (character.GetComponent<SylvanDiety>())
-        {
-            character.GetComponent<SylvanDiety>().GetSylvanDietyStates = SylvanDietyBossStates.Immobile;
-        }
         if (character.GetComponent<EnemyAI>())
         {
+            character.GetComponent<EnemySkills>().GetDisruptedSkill = true;
             character.GetComponent<EnemyAI>().GetStates = States.Immobile;
+        }
+        if (character.GetComponent<Puck>() || character.GetComponent<RuneGolem>() || character.GetComponent<SylvanDiety>())
+        {
+            return;
         }
     }
 
     private void Sleep()
     {
-        character.GetComponent<EnemySkills>().GetDisruptedSkill = true;
-        character.GetComponent<EnemyAI>().GetStates = States.Immobile;
-        if (character.GetComponentInChildren<Health>().GetSleepHit)
+        if (character.GetComponent<EnemyAI>())
         {
-            Duration = 0;
+            character.GetComponent<EnemySkills>().GetDisruptedSkill = true;
+            character.GetComponent<EnemyAI>().GetStates = States.Immobile;
+            if (character.GetComponentInChildren<Health>().GetSleepHit)
+            {
+                Duration = 0;
+            }
+        }
+        if (character.GetComponent<Puck>() || character.GetComponent<RuneGolem>() || character.GetComponent<SylvanDiety>())
+        {
+            return;
         }
     }
 
     private void Slow()
     {
-
-        character.GetComponent<EnemyAI>().GetMoveSpeed = character.GetComponent<EnemyAI>().GetMoveSpeed / 2;
-        character.GetComponent<EnemyAI>().GetAttackDelay += 1;
+        if(character.GetComponent<EnemyAI>())
+        {
+            character.GetComponent<EnemyAI>().GetMoveSpeed = character.GetComponent<EnemyAI>().GetMoveSpeed / 2;
+            character.GetComponent<EnemyAI>().GetAttackDelay += 1;
+        }
+        if(character.GetComponent<Puck>())
+        {
+            character.GetComponent<Puck>().GetMoveSpeed = character.GetComponent<Puck>().GetMoveSpeed / 2;
+            character.GetComponent<Puck>().GetAttackDelay += 1;
+        }
+        if (character.GetComponent<RuneGolem>())
+        {
+            character.GetComponent<RuneGolem>().GetMoveSpeed = character.GetComponent<RuneGolem>().GetMoveSpeed / 2;
+            character.GetComponent<RuneGolem>().GetAttackDelay += 1;
+        }
+        if (character.GetComponent<SylvanDiety>())
+        {
+            character.GetComponent<SylvanDiety>().GetMoveSpeed = character.GetComponent<SylvanDiety>().GetMoveSpeed / 2;
+            character.GetComponent<SylvanDiety>().GetAttackDelay += 1;
+        }
     }
 
     private void DefenseDOWN(float value)
@@ -1054,7 +1088,18 @@ public class EnemyStatusIcon : MonoBehaviour
 
     private int RegenAndDOTCalculation()
     {
-        float percent = Mathf.Round(0.1f * (float)character.MaxHealth);
+        bool IsABoss = character.GetComponent<EnemyAI>() ? false : true;
+
+        float percent = 0;
+        
+        if(!IsABoss)
+        {
+            percent = Mathf.Round(0.1f * (float)character.MaxHealth);
+        }
+        else
+        {
+            percent = Mathf.Round(0.01f * (float)character.MaxHealth);
+        }
 
         int GetHealth = (int)percent;
 
@@ -1135,21 +1180,24 @@ public class EnemyStatusIcon : MonoBehaviour
 
     public void CreateStunEffectParticle()
     {
-        if (settings.UseParticleEffects)
+        if(character.GetComponent<EnemyAI>())
         {
-            var cHARACTER = character;
+            if (settings.UseParticleEffects)
+            {
+                var cHARACTER = character;
 
-            var SP = ObjectPooler.Instance.GetStunEffectParticle();
+                var SP = ObjectPooler.Instance.GetStunEffectParticle();
 
-            StunParticle = SP;
+                StunParticle = SP;
 
-            SP.SetActive(true);
+                SP.SetActive(true);
 
-            SP.transform.position = new Vector3(cHARACTER.transform.position.x, cHARACTER.transform.position.y + 0.8f, cHARACTER.transform.position.z);
+                SP.transform.position = new Vector3(cHARACTER.transform.position.x, cHARACTER.transform.position.y + 0.8f, cHARACTER.transform.position.z);
 
-            SP.transform.SetParent(cHARACTER.transform, true);
+                SP.transform.SetParent(cHARACTER.transform, true);
 
-            SP.transform.localScale = new Vector3(1, 1, 1);
+                SP.transform.localScale = new Vector3(1, 1, 1);
+            }
         }
     }
 
