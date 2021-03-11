@@ -683,13 +683,13 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Storm Thrust - Stun status." + "</color> ";
                 break;
             case (Ability.BurnStatus):
-                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Burning status." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 5% Burning status." + "</color> ";
                 break;
             case (Ability.ReducedAutoAttack):
                 skillText = "\n\n" + "<#EFDFB8>" + "Reduces auto-attack time by 1 second." + "</color> ";
                 break;
             case (Ability.SlowStatus):
-                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Slowed status." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 5% Slowed status." + "</color> ";
                 break;
             case (Ability.Tenacity):
                 skillText = "\n\n" + "<#EFDFB8>" + "Tenacity - strength 30%." + "</color> ";
@@ -773,13 +773,13 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Withering - 20s duration." + "</color> ";
                 break;
             case (Ability.StrengthDown):
-                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Strength Down." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 5% Strength Down." + "</color> ";
                 break;
             case (Ability.DefenseDown):
-                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Defense Down." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 5% Defense Down." + "</color> ";
                 break;
             case (Ability.IntelligenceDown):
-                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 10% Intelligence Down." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Attacks - 5% Intelligence Down." + "</color> ";
                 break;
             case (Ability.ExtraSkillPoints):
                 skillText = "\n\n" + "<#EFDFB8>" + "Skill Points earned +2." + "</color> ";

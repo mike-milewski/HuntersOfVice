@@ -1098,7 +1098,7 @@ public class EnemyStatusIcon : MonoBehaviour
         }
         else
         {
-            percent = Mathf.Round(0.01f * (float)character.MaxHealth);
+            percent = Mathf.Round(0.02f * (float)character.MaxHealth);
         }
 
         int GetHealth = (int)percent;

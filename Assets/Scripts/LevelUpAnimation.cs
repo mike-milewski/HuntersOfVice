@@ -15,11 +15,11 @@ public class LevelUpAnimation : MonoBehaviour
 
     public void PlayLevelUpAnimation()
     {
-        animator.SetBool("LevelUp", true);
+        animator.Play("LevelupText", -1, 0f);
     }
 
     public void ReverseTheLevelUp()
     {
-        animator.SetBool("LevelUp", false);
+        gameObject.SetActive(false);
     }
 }

@@ -270,6 +270,7 @@ public class Experience : MonoBehaviour
 
     private void LevelUp()
     {
+        levelUpAnimation.gameObject.SetActive(true);
         levelUpAnimation.PlayLevelUpAnimation();
 
         ExperienceBar.fillAmount = 0;

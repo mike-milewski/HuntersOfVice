@@ -233,22 +233,11 @@ public class Items : MonoBehaviour
 
     private void HpHealing()
     {
-        if(Knight.CurrentHealth > 0 || ShadowPriest.CurrentHealth > 0 || Toadstool.CurrentHealth > 0)
+        if(Player.CurrentHealth > 0)
         {
             SoundManager.Instance.ItemHeal();
 
-            if(Knight.gameObject.activeInHierarchy)
-            {
-                Knight.GetComponent<Health>().IncreaseHealth(HpHeal(HealAmount));
-            }
-            if(ShadowPriest.gameObject.activeInHierarchy)
-            {
-                ShadowPriest.GetComponent<Health>().IncreaseHealth(HpHeal(HealAmount));
-            }
-            if (Toadstool.gameObject.activeInHierarchy)
-            {
-                Toadstool.GetComponent<Health>().IncreaseHealth(HpHeal(HealAmount));
-            }
+            Player.GetComponent<Health>().IncreaseHealth(HpHeal(HealAmount));
 
             HealText();
         }
@@ -256,22 +245,11 @@ public class Items : MonoBehaviour
 
     private void MpHealing()
     {
-        if(Knight.CurrentHealth > 0 || ShadowPriest.CurrentHealth > 0 || Toadstool.CurrentHealth > 0)
+        if(Player.CurrentHealth > 0)
         {
             SoundManager.Instance.ItemHeal();
 
-            if(Knight.gameObject.activeInHierarchy)
-            {
-                Knight.GetComponent<Mana>().IncreaseMana(MpHeal(HealAmount));
-            }
-            if(ShadowPriest.gameObject.activeInHierarchy)
-            {
-                ShadowPriest.GetComponent<Mana>().IncreaseMana(MpHeal(HealAmount));
-            }
-            if (Toadstool.gameObject.activeInHierarchy)
-            {
-                Toadstool.GetComponent<Mana>().IncreaseMana(MpHeal(HealAmount));
-            }
+            Player.GetComponent<Mana>().IncreaseMana(MpHeal(HealAmount));
 
             HealText();
         }
@@ -385,14 +363,8 @@ public class Items : MonoBehaviour
     {
         if (UnlockedPassive)
         {
-            if(Knight.gameObject.activeInHierarchy)
-            {
-                SetUpDamagePerimiter(Knight.gameObject.transform.position, 15f);
-            }
-            else if(ShadowPriest.gameObject.activeInHierarchy)
-            {
-                SetUpDamagePerimiter(ShadowPriest.gameObject.transform.position, 5f);
-            }
+            SetUpDamagePerimiter(ShadowPriest.gameObject.transform.position, 5f);
+
             ManaPulseParticle();
         }
         else return;
