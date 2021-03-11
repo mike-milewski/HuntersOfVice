@@ -108,7 +108,7 @@ public class Puzzle : MonoBehaviour
 
         if (EnemyCountRequired >= MaxEnemyCountRequired)
         {
-            if(settings.UseParticleEffects)
+            if (settings.UseParticleEffects)
             {
                 ParticleEffect.SetActive(true);
             }
@@ -149,7 +149,6 @@ public class Puzzle : MonoBehaviour
             ObjectToDespawn.SetActive(false);
             gameObject.SetActive(false);
         }
-        else return;
     }
 
     public void SpawnNewEnemy()

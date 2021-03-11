@@ -51,7 +51,7 @@ MonoBehaviour:
   - ObjectToPool: {fileID: 1291980910090700, guid: 7185a481792577c45a204ce474e5a091,
       type: 3}
     PoolParent: {fileID: 0}
-    PoolAmount: 10
+    PoolAmount: 40
   - ObjectToPool: {fileID: 1509009448252176, guid: fc6877a7be1781e4dbc38c1eed7ecb78,
       type: 3}
     PoolParent: {fileID: 0}
@@ -67,7 +67,7 @@ MonoBehaviour:
   - ObjectToPool: {fileID: 1839082241841786, guid: 56933e54bfcaab94ba68a71bdd8393d1,
       type: 3}
     PoolParent: {fileID: 0}
-    PoolAmount: 10
+    PoolAmount: 20
   - ObjectToPool: {fileID: 1579302006077000, guid: b67c014625f00f14aa3ea33a3f92e0db,
       type: 3}
     PoolParent: {fileID: 0}

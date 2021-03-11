@@ -203,6 +203,35 @@ public class CursorController : MonoBehaviour
                         }
                     }
                 }
+
+                if (GameManager.Instance.GetToadstool.activeInHierarchy)
+                {
+                    if (hit.collider.GetComponent<TreasureChest>().GetEquipment[2].GetEquipmentType == EquipmentType.Weapon)
+                    {
+                        if (hit.collider.GetComponent<TreasureChest>().GetEquipment[2].GetComponent<DragUiObject>().GetMenuParent.childCount >=
+                           GameManager.Instance.GetEquipmentMenu.GetMaxWeapons)
+                        {
+                            GameManager.Instance.MaxWeaponsReachedText();
+                        }
+                        else
+                        {
+                            hit.collider.GetComponent<TreasureChest>().GetAnimator.SetBool("OpenChest", true);
+                        }
+                    }
+
+                    if (hit.collider.GetComponent<TreasureChest>().GetEquipment[2].GetEquipmentType == EquipmentType.Armor)
+                    {
+                        if (hit.collider.GetComponent<TreasureChest>().GetEquipment[2].GetComponent<DragUiObject>().GetMenuParent.childCount >=
+                           GameManager.Instance.GetEquipmentMenu.GetMaxArmor)
+                        {
+                            GameManager.Instance.MaxArmorReachedText();
+                        }
+                        else
+                        {
+                            hit.collider.GetComponent<TreasureChest>().GetAnimator.SetBool("OpenChest", true);
+                        }
+                    }
+                }
             }
         }
     }

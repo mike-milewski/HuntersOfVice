@@ -1952,12 +1952,12 @@ public class Skills : StatusEffects
 
     private void WhirlwindSlashHit()
     {
-        GetCharacter.transform.Rotate(0, 500, 0);
+        GetCharacter.transform.Rotate(0, 600, 0);
     }
 
     private void SpinShroomSpin()
     {
-        GetCharacter.transform.Rotate(0, 280 * Time.deltaTime, 0);
+        GetCharacter.transform.Rotate(0, 600, 0);
     }
 
     public void SetUpDamagePerimiter(Vector3 center, float radius)
@@ -2328,7 +2328,7 @@ public class Skills : StatusEffects
 
         foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>(false))
         {
-            if (enemystatus.GetStatusEffect == StatusEffect.DamageOverTime)
+            if (enemystatus.GetStatusEffect == StatusEffect.DamageOverTime || enemystatus.GetStatusEffect == StatusEffect.Poison)
             {
                 HasDOT = true;
             }
@@ -2358,19 +2358,36 @@ public class Skills : StatusEffects
 
     private void SporeStatusEffects(Enemy enemy)
     {
-        GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+        bool HasDOT = false;
 
-        GetStatusIcon.SetActive(true);
+        foreach (EnemyStatusIcon enemystatus in enemy.GetDebuffTransform.GetComponentsInChildren<EnemyStatusIcon>(false))
+        {
+            if (enemystatus.GetStatusEffect == GetEnemyStatusEffect)
+            {
+                HasDOT = true;
+            }
+        }
 
-        GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
+        if (!HasDOT)
+        {
+            GetStatusIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
-        GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            GetStatusIcon.SetActive(true);
 
-        GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
-        GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
-        GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
-        GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
-        GetStatusIcon.GetComponent<EnemyStatusIcon>().CheckStatusEffects();
+            GetStatusIcon.transform.SetParent(GetStatusEffectIconTrans, false);
+
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GetEnemyStatusEffect;
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().GetPlayer = SkillsManager.Instance.GetCharacter.GetComponent<PlayerController>();
+            GetStatusIcon.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().CheckStatusEffects();
+        }
+        else
+        {
+            GetStatusIcon.GetComponent<EnemyStatusIcon>().PlayerInput();
+        }
     }
 
     private void DoomedStatusEffect(Enemy enemy)

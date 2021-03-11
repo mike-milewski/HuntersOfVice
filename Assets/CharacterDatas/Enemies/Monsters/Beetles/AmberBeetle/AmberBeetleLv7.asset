@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AmberBeetleLv7
   m_EditorClassIdentifier: 
   Weaknesses: 04000000
-  Resistances: 00000000
-  Immunities: 06000000
+  Resistances: 06000000
+  Immunities: 00000000
   Absorbtions: 00000000
   CharacterName: Amber Beetle
   CharacterLevel: 7

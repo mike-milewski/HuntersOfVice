@@ -33,29 +33,29 @@ public class EnemyAnimations : MonoBehaviour
 
     private bool CheckedForPuzzle;
 
-	private const string IDLE	= "Idle";
-	private const string MOVE	= "Move";
-	private const string ATTACK	= "Attack";
+    private const string IDLE = "Idle";
+    private const string MOVE = "Move";
+    private const string ATTACK = "Attack";
     private const string SKILLATTACK = "SkillAttack";
     private const string SKILLATTACK2 = "SkillAttack2";
     private const string CASTING = "Casting";
-    private const string DAMAGE	= "Damage";
-	private const string DEATH	= "Death";
+    private const string DAMAGE = "Damage";
+    private const string DEATH = "Death";
 
-    public void IdleAni ()
+    public void IdleAni()
     {
         anim.Play(IDLE);
-	}
+    }
 
-	public void RunAni ()
+    public void RunAni()
     {
         anim.Play(MOVE);
-	}
+    }
 
-	public void AttackAni ()
+    public void AttackAni()
     {
         anim.Play(ATTACK);
-	}
+    }
 
     public void CastingAni()
     {
@@ -76,15 +76,15 @@ public class EnemyAnimations : MonoBehaviour
         }
     }
 
-    public void DamageAni ()
+    public void DamageAni()
     {
         anim.Play(DAMAGE);
-	}
+    }
 
-	public void DeathAni ()
+    public void DeathAni()
     {
         anim.Play(DEATH);
-	}
+    }
 
     public void DamagePlayer()
     {
@@ -144,7 +144,7 @@ public class EnemyAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Skill", false);
         EnemyAnimator.SetBool("Skill2", false);
 
-        if(EnemyAnimator.GetBool("Skill3"))
+        if (EnemyAnimator.GetBool("Skill3"))
         {
             EnemyAnimator.SetBool("Skill3", false);
         }
@@ -157,13 +157,13 @@ public class EnemyAnimations : MonoBehaviour
 
     public void SkillDamage()
     {
-        enemyskills.SkillDamageText(enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency, 
+        enemyskills.SkillDamageText(enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetPotency,
                                     enemyskills.GetManager[AI.GetAiStates[AI.GetStateArrayIndex].GetSkillIndex].GetSkillName);
     }
 
     public void SkillRadiusDamage()
     {
-        if(damageradius.GetIsInRadius)
+        if (damageradius.GetIsInRadius)
         {
             damageradius.TakeRadiusDamage();
         }
@@ -211,7 +211,7 @@ public class EnemyAnimations : MonoBehaviour
     {
         if (AI.GetStates != States.SkillAnimation || AI.GetIsAnAdd)
         {
-            if(AI.GetIsUsingAnimator)
+            if (AI.GetIsUsingAnimator)
             {
                 EnemyAnimator.SetBool("Attacking", false);
                 ResetSkillAnimator();
@@ -227,12 +227,12 @@ public class EnemyAnimations : MonoBehaviour
 
     public void EndDamaged()
     {
-        if(AI.GetIsUsingAnimator)
+        if (AI.GetIsUsingAnimator)
         {
             EnemyAnimator.SetBool("Damaged", false);
         }
-        
-        if(!AI.GetIsHostile)
+
+        if (!AI.GetIsHostile)
         {
             AI.GetSphereTrigger.enabled = true;
             AI.GetStates = States.Attack;
@@ -272,7 +272,7 @@ public class EnemyAnimations : MonoBehaviour
 
     public void IncrementEnemyPuzzleCount()
     {
-        if(AI.GetIsAPuzzleComponent)
+        if (AI.GetIsAPuzzleComponent || AI.GetIsABridgePuzzle)
         {
             if (!CheckedForPuzzle)
             {
@@ -291,6 +291,22 @@ public class EnemyAnimations : MonoBehaviour
         if (AI.GetIsAsecretCharacterPuzzleComponent)
         {
             puzzle.SecretCharacterSpawn();
+        }
+    }
+
+    public void IsALanternPuzzle()
+    {
+        if (AI.GetIsALanternPuzzleComponent)
+        {
+            if (!CheckedForPuzzle)
+            {
+                puzzle.GatePuzzleType();
+                if (gameObject.GetComponent<LanternPuzzle>())
+                {
+                    gameObject.GetComponent<LanternPuzzle>().TurnOnLantern();
+                }
+                CheckedForPuzzle = true;
+            }
         }
     }
 

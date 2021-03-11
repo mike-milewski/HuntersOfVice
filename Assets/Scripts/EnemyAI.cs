@@ -112,7 +112,7 @@ public class EnemyAI : MonoBehaviour
     private int WaypointIndex;
 
     [SerializeField]
-    private bool IsHostile, IsAnAdd, IsAPuzzleComponent, IsAbushPuzzleComponent, IsATreasurePuzzleComponent, IsAMagicWallPuzzle, IsAsecretCharacterPuzzle;
+    private bool IsHostile, IsAnAdd, IsAPuzzleComponent, IsAbushPuzzleComponent, IsATreasurePuzzleComponent, IsAMagicWallPuzzle, IsAsecretCharacterPuzzle, IsALanternPuzzleComponent, IsABridgePuzzle;
 
     [SerializeField]
     private bool IsUsingAnimator;
@@ -334,6 +334,30 @@ public class EnemyAI : MonoBehaviour
         set
         {
             IsAsecretCharacterPuzzle = value;
+        }
+    }
+
+    public bool GetIsALanternPuzzleComponent
+    {
+        get
+        {
+            return IsALanternPuzzleComponent;
+        }
+        set
+        {
+            IsALanternPuzzleComponent = value;
+        }
+    }
+
+    public bool GetIsABridgePuzzle
+    {
+        get
+        {
+            return IsABridgePuzzle;
+        }
+        set
+        {
+            IsABridgePuzzle = value;
         }
     }
 

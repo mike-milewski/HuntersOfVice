@@ -17,7 +17,7 @@ MonoBehaviour:
   Immunities: 
   Absorbtions: 
   CharacterName: Toadstool
-  CharacterLevel: 1
+  CharacterLevel: 15
   Health: 124
   Mana: 40
   Strength: 20

@@ -761,7 +761,7 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Spinshroom - Increased power." + "</color> ";
                 break;
             case (Ability.ToadstoolReflectDamage):
-                skillText = "\n\n" + "<#EFDFB8>" + "5% of max HP reflected as damage. Bosses - 1% reflected." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "5% of max HP reflected as damage. Bosses - 1%." + "</color> ";
                 break;
             case (Ability.ViciousEmbodiment):
                 skillText = "\n\n" + "<#EFDFB8>" + "Status effects - 5% Doomed status." + "</color> ";
@@ -879,7 +879,7 @@ public class Equipment : MonoBehaviour
                 skillText = "\n\n" + "<#EFDFB8>" + "Increases the power of Spinshroom to 100." + "</color> ";
                 break;
             case (Ability.ToadstoolReflectDamage):
-                skillText = "\n\n" + "<#EFDFB8>" + "Reflects damage back to an enemy based on 5% of your maximum HP. Attacks from bosses reflect 1% damage." + "</color> ";
+                skillText = "\n\n" + "<#EFDFB8>" + "Reflects damage back based on 5% of your maximum HP. Attacks from bosses reflect 1% damage." + "</color> ";
                 break;
             case (Ability.ViciousEmbodiment):
                 skillText = "\n\n" + "<#EFDFB8>" + "Inflicting status ailments has a 5% chance of inflicting the Doomed status effect instead." + "</color> ";
