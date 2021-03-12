@@ -220,7 +220,7 @@ public class StatUpgrade : MonoBehaviour
         {
             character.MaxHealth += StatIncrease;
 
-            character.GetComponent<Health>().ModifyHealth(StatIncrease);
+            character.GetComponent<Health>().GetFilledBar();
 
             StatIncrease = 0;
             StatText.text = StatIncrease.ToString();
@@ -233,7 +233,7 @@ public class StatUpgrade : MonoBehaviour
         {
             character.MaxMana += StatIncrease;
 
-            character.GetComponent<Mana>().ModifyMana(StatIncrease);
+            character.GetComponent<Mana>().GetFilledBar();
 
             StatIncrease = 0;
             StatText.text = StatIncrease.ToString();

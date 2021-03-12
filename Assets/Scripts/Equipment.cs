@@ -10,7 +10,7 @@ public enum StatIncreaseType { HP, MP, Strength, Defense, Intelligence }
 public enum Ability { NONE, SwiftStrike, StormThrust, BurnStatus, ReducedAutoAttack, SlowStatus, Tenacity, ManaPulse, StrengthIntelligenceReverse, Alleviate, 
                       HpForSkillCast, WhirlwindSlash, EvilsEnd, CriticalChanceIncrease, ExtraContract, BraveLight, Contracts, MiasmaPulse, NetherStar, IgnoreDefense,
                       MyceliumBash, IronCap, HpHeal, Quickness, ImmuneToStatusEffects, DoubleStatusDuration, MpHeal, MildewSplash, SpinShroom, ViciousEmbodiment,
-                      ToadstoolReflectDamage, ReducedDamage, StrengthDown, IntelligenceDown, DefenseDown, SoulPierce, ExtraSkillPoints }
+                      ToadstoolReflectDamage, ReducedDamage, StrengthDown, IntelligenceDown, DefenseDown, SoulPierce, ExtraSkillPoints, ALL }
 
 [System.Serializable]
 public class StatusType
@@ -1061,6 +1061,19 @@ public class Equipment : MonoBehaviour
                     break;
                 case (Ability.ExtraSkillPoints):
                     GameManager.Instance.GetEquipmentMenu.GetAdditionalSkillPoints = 2;
+                    break;
+                case (Ability.ALL):
+                    GameManager.Instance.GetEquipmentMenu.GetAdditionalSkillPoints = 2;
+                    basicAttack.GetHasStrengthDownStatus = true;
+                    basicAttack.GetHasIntelligenceDownStatus = true;
+                    character.GetComponent<Health>().GetReducedDamage = true;
+                    character.GetComponent<Health>().GetReflectingDamage = true;
+                    RestoreMpEffect();
+                    character.GetIsImmuneToStatusEffects = true;
+                    character.GetComponent<PlayerAnimations>().GetAdditionalHit = true;
+                    character.GetCriticalChance = 15;
+                    basicAttack.GetHasBurnStatus = true;
+                    //basicAttack.GetAttackDelay -= 0.5f;
                     break;
             }
         }

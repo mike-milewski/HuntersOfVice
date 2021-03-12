@@ -2047,7 +2047,8 @@ public class Skills : StatusEffects
                 {
                     if(hitColliders[i].GetComponent<Puck>() && GetEnemyStatusEffect == StatusEffect.Stun || 
                        hitColliders[i].GetComponent<RuneGolem>() && GetEnemyStatusEffect == StatusEffect.Stun || 
-                       hitColliders[i].GetComponent<SylvanDiety>() && GetEnemyStatusEffect == StatusEffect.Stun)
+                       hitColliders[i].GetComponent<SylvanDiety>() && GetEnemyStatusEffect == StatusEffect.Stun || 
+                       hitColliders[i].GetComponent<SylvanDiety>() && GetEnemyStatusEffect == StatusEffect.Doom)
                     {
                         EnemyStatusImmune();
                     }

@@ -1036,7 +1036,7 @@ public class RuneGolem : MonoBehaviour
 
     private TextMeshProUGUI ReflectedDamage()
     {
-        float RelectedValue = 0.10f * PlayerTarget.GetComponent<Character>().MaxHealth;
+        float RelectedValue = 0.01f * PlayerTarget.GetComponent<Character>().MaxHealth;
 
         var Damagetext = ObjectPooler.Instance.GetEnemyDamageText();
 

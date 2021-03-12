@@ -2525,13 +2525,13 @@ public class EnemySkills : MonoBehaviour
         }
         else
         {
-            if (GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>())
+            if (GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>())
             {
-                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<StatusIcon>().EnemyInput();
             }
             else
             {
-                GetManager[puckAI.GetPhases[puckAI.GetPhaseIndex].GetBossAiStates[puckAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
+                GetManager[SylvanDietyAI.GetSylvanDietyPhases[SylvanDietyAI.GetPhaseIndex].GetSylvanDietyBossAiStates[SylvanDietyAI.GetStateArrayIndex].GetSkillIndex].GetStatusIcon.GetComponent<EnemyStatusIcon>().EnemyInput();
             }
         }
     }
@@ -2552,7 +2552,11 @@ public class EnemySkills : MonoBehaviour
             }
             if (runeGolemAI != null)
             {
-                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+                ReflectedValue = 0.01f * runeGolemAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+            }
+            if (SylvanDietyAI != null)
+            {
+                ReflectedValue = 0.01f * SylvanDietyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
             }
         }
         if (GameManager.Instance.GetShadowPriest.activeInHierarchy)
@@ -2567,11 +2571,11 @@ public class EnemySkills : MonoBehaviour
             }
             if (runeGolemAI != null)
             {
-                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+                ReflectedValue = 0.01f * runeGolemAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
             }
             if (SylvanDietyAI != null)
             {
-                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+                ReflectedValue = 0.01f * SylvanDietyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
             }
         }
         if (GameManager.Instance.GetToadstool.activeInHierarchy)
@@ -2586,11 +2590,11 @@ public class EnemySkills : MonoBehaviour
             }
             if (runeGolemAI != null)
             {
-                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+                ReflectedValue = 0.01f * runeGolemAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
             }
             if(SylvanDietyAI != null)
             {
-                ReflectedValue = 0.01f * enemyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
+                ReflectedValue = 0.01f * SylvanDietyAI.GetPlayerTarget.GetComponent<Character>().MaxHealth;
             }
         }
 

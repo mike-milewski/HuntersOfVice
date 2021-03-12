@@ -92,7 +92,7 @@ public class SylvanDietyAnimations : MonoBehaviour
 
     public void DamagedAnimator()
     {
-        EnemyAnimator.SetBool("Damaged", true);
+        //EnemyAnimator.SetBool("Damaged", true);
     }
 
     public void SkillAnimator()
@@ -114,21 +114,6 @@ public class SylvanDietyAnimations : MonoBehaviour
         EnemyAnimator.SetBool("Attacking", false);
         EnemyAnimator.SetBool("Moving", false);
         EnemyAnimator.SetBool("Damaged", false);
-    }
-
-    public void VicePlanterCast()
-    {
-        EnemyAnimator.SetBool("Skill3", true);
-    }
-
-    public void WoodishSireAnimator()
-    {
-        EnemyAnimator.SetBool("Skill4", true);
-    }
-
-    public void SylvanStormAnim()
-    {
-        EnemyAnimator.SetBool("SylvanStorm", true);
     }
 
     public void ResetSkillAnimator()
