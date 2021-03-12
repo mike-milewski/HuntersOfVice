@@ -19,6 +19,8 @@ public class CharacterData : ScriptableObject
 
     public ElementalAbsorbtion[] Absorbtions;
 
+    public StatusEffect[] StatusImmunity;
+
     public string CharacterName;
 
     public int CharacterLevel, Health, Mana, Strength, Defense, Intelligence, HpIncrease, MpIncrease, CriticalHitChance, Coins, EXP, MaterialDataDropChance, SkillPoints;

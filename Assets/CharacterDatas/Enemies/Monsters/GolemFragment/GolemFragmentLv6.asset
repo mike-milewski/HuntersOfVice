@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weaknesses: 04000000
   Resistances: 0100000006000000
-  Immunities: 00000000
+  Immunities: 02000000
   Absorbtions: 00000000
   CharacterName: Golem Fragment
   CharacterLevel: 6

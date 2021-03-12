@@ -949,9 +949,16 @@ public class BasicAttack : MonoBehaviour
             {
                 if (Random.value * 100 <= 5)
                 {
-                    if (!CheckBurnStatusEffect(enemy))
+                    if(CheckEnemyStatusEffectImmunities(enemy))
                     {
-                        BurningStatus(enemy);
+                        EnemyStatusImmune(enemy, "Burning", BurningStatusEffectSprite);
+                    }
+                    else
+                    {
+                        if (!CheckBurnStatusEffect(enemy))
+                        {
+                            BurningStatus(enemy);
+                        }
                     }
                 }
             }
@@ -1387,6 +1394,39 @@ public class BasicAttack : MonoBehaviour
         }
 
         return LoweredIntelligence;
+    }
+
+    private bool CheckEnemyStatusEffectImmunities(Enemy Target)
+    {
+        bool IsImmune = false;
+
+        StatusEffect statuseffect = StatusEffect.NONE;
+
+        for (int i = 0; i < Target.GetCharacter.GetCharacterData.StatusImmunity.Length; i++)
+        {
+            if (statuseffect == Target.GetCharacter.GetCharacterData.StatusImmunity[i])
+            {
+                IsImmune = true;
+            }
+        }
+        return IsImmune;
+    }
+
+    private TextMeshProUGUI EnemyStatusImmune(Enemy enemy, string StatusEffectName, Sprite statusEffectSprite)
+    {
+        TextHolder = enemy.GetUI;
+
+        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+
+        StatusTxt.SetActive(true);
+
+        StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>" + StatusEffectName + "\n <size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
+
+        StatusTxt.GetComponentInChildren<Image>().sprite = statusEffectSprite;
+
+        return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void HitParticleEffect()

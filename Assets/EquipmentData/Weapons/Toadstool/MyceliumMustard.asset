@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentName: Mycelium Mustard
   Element: 6
-  StatIncrease: 23
+  StatIncrease: 14
   BuyValue: 300

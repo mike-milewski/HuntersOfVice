@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb9c364b8538b541a705a6c7aed2ca9, type: 3}
   m_Name: GolemFragmentLv7
   m_EditorClassIdentifier: 
-  Weaknesses: 04000000
-  Resistances: 01000000
-  Immunities: 06000000
+  Weaknesses: 0400000005000000
+  Resistances: 0100000006000000
+  Immunities: 02000000
   Absorbtions: 00000000
   CharacterName: Golem Fragment
   CharacterLevel: 7

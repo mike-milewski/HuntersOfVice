@@ -2045,10 +2045,7 @@ public class Skills : StatusEffects
                 }
                 else
                 {
-                    if(hitColliders[i].GetComponent<Puck>() && GetEnemyStatusEffect == StatusEffect.Stun || 
-                       hitColliders[i].GetComponent<RuneGolem>() && GetEnemyStatusEffect == StatusEffect.Stun || 
-                       hitColliders[i].GetComponent<SylvanDiety>() && GetEnemyStatusEffect == StatusEffect.Stun || 
-                       hitColliders[i].GetComponent<SylvanDiety>() && GetEnemyStatusEffect == StatusEffect.Doom)
+                    if(CheckEnemyStatusEffectImmunities(hitColliders[i].GetComponent<Enemy>()))
                     {
                         EnemyStatusImmune();
                     }
@@ -2856,7 +2853,6 @@ public class Skills : StatusEffects
                 Weakness = true;
             }
         }
-
         return Weakness;
     }
 
@@ -2878,7 +2874,6 @@ public class Skills : StatusEffects
                 }
             }
         }
-
         return Resistance;
     }
 
@@ -2900,7 +2895,6 @@ public class Skills : StatusEffects
                 }
             }
         }
-
         return Immunity;
     }
 
@@ -2922,8 +2916,21 @@ public class Skills : StatusEffects
                 }
             }
         }
-
         return Absorption;
+    }
+
+    private bool CheckEnemyStatusEffectImmunities(Enemy Target)
+    {
+        bool IsImmune = false;
+
+        for (int i = 0; i < Target.GetCharacter.GetCharacterData.StatusImmunity.Length; i++)
+        {
+            if (GetEnemyStatusEffect == Target.GetCharacter.GetCharacterData.StatusImmunity[i])
+            {
+                IsImmune = true;
+            }
+        }
+        return IsImmune;
     }
 
     public void ShowSkillPanel(GameObject Panel)
