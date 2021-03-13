@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 00000000
   Immunities: 00000000
   Absorbtions: 00000000
+  StatusImmunity: 11000000
   CharacterName: Mushroom Man
   CharacterLevel: 2
   Health: 225

@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 00000000
   Immunities: 04000000
   Absorbtions: 00000000
+  StatusImmunity: 0300000011000000
   CharacterName: Giant Bee
   CharacterLevel: 8
   Health: 420

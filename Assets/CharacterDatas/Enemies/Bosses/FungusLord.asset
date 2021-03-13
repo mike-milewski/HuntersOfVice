@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 00000000
   Immunities: 00000000
   Absorbtions: 00000000
+  StatusImmunity: 11000000030000001000000006000000
   CharacterName: Fungus Lord
   CharacterLevel: 10
   Health: 2500

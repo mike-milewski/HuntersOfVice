@@ -275,6 +275,30 @@ public class BasicAttack : MonoBehaviour
         }
     }
 
+    public Sprite GetBurningStatusEffectSprite
+    {
+        get
+        {
+            return BurningStatusEffectSprite;
+        }
+        set
+        {
+            BurningStatusEffectSprite = value;
+        }
+    }
+
+    public Sprite GetSlowStatusEffectSprite
+    {
+        get
+        {
+            return SlowStatusEffectSprite;
+        }
+        set
+        {
+            SlowStatusEffectSprite = value;
+        }
+    }
+
     public PlayerElement GetPlayerElement
     {
         get
@@ -949,9 +973,9 @@ public class BasicAttack : MonoBehaviour
             {
                 if (Random.value * 100 <= 5)
                 {
-                    if(CheckEnemyStatusEffectImmunities(enemy))
+                    if(CheckEnemyStatusEffectImmunities(enemy, StatusEffect.Burning))
                     {
-                        EnemyStatusImmune(enemy, "Burning", BurningStatusEffectSprite);
+                        EnemyStatusImmunityText(enemy, "Burning", BurningStatusEffectSprite);
                     }
                     else
                     {
@@ -966,9 +990,16 @@ public class BasicAttack : MonoBehaviour
             {
                 if (Random.value * 100 <= 5)
                 {
-                    if (!CheckSlowStatusEffect(enemy))
+                    if (CheckEnemyStatusEffectImmunities(enemy, StatusEffect.Slow))
                     {
-                        SlowStatus(enemy);
+                        EnemyStatusImmunityText(enemy, "Slowed", SlowStatusEffectSprite);
+                    }
+                    else
+                    {
+                        if (!CheckSlowStatusEffect(enemy))
+                        {
+                            SlowStatus(enemy);
+                        }
                     }
                 }
             }
@@ -1338,7 +1369,6 @@ public class BasicAttack : MonoBehaviour
                 }
             }
         }
-
         return SlowStatus;
     }
 
@@ -1356,7 +1386,6 @@ public class BasicAttack : MonoBehaviour
                 }
             }
         }
-
         return LoweredDefense;
     }
 
@@ -1374,7 +1403,6 @@ public class BasicAttack : MonoBehaviour
                 }
             }
         }
-
         return LoweredStrength;
     }
 
@@ -1392,15 +1420,12 @@ public class BasicAttack : MonoBehaviour
                 }
             }
         }
-
         return LoweredIntelligence;
     }
 
-    private bool CheckEnemyStatusEffectImmunities(Enemy Target)
+    public bool CheckEnemyStatusEffectImmunities(Enemy Target, StatusEffect statuseffect)
     {
         bool IsImmune = false;
-
-        StatusEffect statuseffect = StatusEffect.NONE;
 
         for (int i = 0; i < Target.GetCharacter.GetCharacterData.StatusImmunity.Length; i++)
         {
@@ -1412,7 +1437,7 @@ public class BasicAttack : MonoBehaviour
         return IsImmune;
     }
 
-    private TextMeshProUGUI EnemyStatusImmune(Enemy enemy, string StatusEffectName, Sprite statusEffectSprite)
+    public TextMeshProUGUI EnemyStatusImmunityText(Enemy enemy, string StatusEffectName, Sprite statusEffectSprite)
     {
         TextHolder = enemy.GetUI;
 
@@ -1422,7 +1447,7 @@ public class BasicAttack : MonoBehaviour
 
         StatusTxt.transform.SetParent(TextHolder.transform, false);
 
-        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>" + StatusEffectName + "\n <size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#E03F3F> x " + StatusEffectName + "\n <size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
 
         StatusTxt.GetComponentInChildren<Image>().sprite = statusEffectSprite;
 

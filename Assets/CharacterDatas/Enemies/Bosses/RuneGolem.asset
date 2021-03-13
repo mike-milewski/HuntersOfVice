@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 01000000
   Immunities: 00000000
   Absorbtions: 00000000
+  StatusImmunity: 030000000600000011000000
   CharacterName: Rune Golem
   CharacterLevel: 10
   Health: 3500

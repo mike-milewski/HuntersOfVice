@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 00000000
   Immunities: 08000000
   Absorbtions: 00000000
+  StatusImmunity: 0f000000
   CharacterName: Amethyst Beetle
   CharacterLevel: 7
   Health: 400

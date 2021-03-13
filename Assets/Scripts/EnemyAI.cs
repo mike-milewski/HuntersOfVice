@@ -1389,30 +1389,37 @@ public class EnemyAI : MonoBehaviour
                 {
                     if (Random.value * 100 <= 5)
                     {
-                        var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+                        if (PlayerTarget.GetComponent<BasicAttack>().CheckEnemyStatusEffectImmunities(this.GetComponent<Enemy>(), StatusEffect.Doom))
+                        {
+                            PlayerTarget.GetComponent<BasicAttack>().EnemyStatusImmunityText(this.GetComponent<Enemy>(), "Doomed", GameManager.Instance.GetDoomedSprite);
+                        }
+                        else
+                        {
+                            var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
 
-                        StatusTxt.SetActive(true);
+                            StatusTxt.SetActive(true);
 
-                        StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
+                            StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
 
-                        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Doomed";
+                            StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Doomed";
 
-                        StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+                            StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
 
-                        GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+                            GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
-                        statuseffectIcon.SetActive(true);
+                            statuseffectIcon.SetActive(true);
 
-                        statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasDoomedStatus = true;
+                            statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasDoomedStatus = true;
 
-                        statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
+                            statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
 
-                        statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+                            statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
 
-                        statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.Doom;
-                        statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
-                        statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
-                        statuseffectIcon.GetComponent<EnemyStatusIcon>().DoomedStatus();
+                            statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = StatusEffect.Doom;
+                            statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
+                            statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetDoomedSprite;
+                            statuseffectIcon.GetComponent<EnemyStatusIcon>().DoomedStatus();
+                        }
                     }
                 }
                 else
@@ -1435,94 +1442,115 @@ public class EnemyAI : MonoBehaviour
         {
             if(!CheckPoisonStatusEffect())
             {
-                var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+                if (PlayerTarget.GetComponent<BasicAttack>().CheckEnemyStatusEffectImmunities(this.GetComponent<Enemy>(), StatusEffect.Poison))
+                {
+                    PlayerTarget.GetComponent<BasicAttack>().EnemyStatusImmunityText(this.GetComponent<Enemy>(), "Poison", GameManager.Instance.GetPoisonSprite);
+                }
+                else
+                {
+                    var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
 
-                StatusTxt.SetActive(true);
+                    StatusTxt.SetActive(true);
 
-                StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
+                    StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
 
-                StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Poison";
+                    StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Poison";
 
-                StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetPoisonSprite;
+                    StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetPoisonSprite;
 
-                GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+                    GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
-                statuseffectIcon.SetActive(true);
+                    statuseffectIcon.SetActive(true);
 
-                statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
+                    statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
 
-                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetPoisonSprite;
+                    statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetPoisonSprite;
 
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasPoisonStatus = true;
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasPoisonStatus = true;
 
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GiftEffects[RandomNumber];
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
-                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetPoisonSprite;
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().PoisonStatus();
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GiftEffects[RandomNumber];
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
+                    statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetPoisonSprite;
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().PoisonStatus();
 
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().CreatePoisonEffectParticle();
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().CreatePoisonEffectParticle();
+                }
             }
         }
         if(RandomNumber == 1)
         {
             if(!CheckSlowStatusEffect())
             {
-                var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+                if (PlayerTarget.GetComponent<BasicAttack>().CheckEnemyStatusEffectImmunities(this.GetComponent<Enemy>(), StatusEffect.Slow))
+                {
+                    PlayerTarget.GetComponent<BasicAttack>().EnemyStatusImmunityText(this.GetComponent<Enemy>(), "Slowed", GameManager.Instance.GetSlowedSprite);
+                }
+                else
+                {
+                    var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
 
-                StatusTxt.SetActive(true);
+                    StatusTxt.SetActive(true);
 
-                StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
+                    StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
 
-                StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Slowed";
+                    StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Slowed";
 
-                StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetSlowedSprite;
+                    StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetSlowedSprite;
 
-                GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+                    GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
-                statuseffectIcon.SetActive(true);
+                    statuseffectIcon.SetActive(true);
 
-                statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
+                    statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
 
-                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetSlowedSprite;
+                    statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetSlowedSprite;
 
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasSlowStatus = true;
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasSlowStatus = true;
 
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GiftEffects[RandomNumber];
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
-                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetSlowedSprite;
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().SlowStatus();
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GiftEffects[RandomNumber];
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
+                    statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetSlowedSprite;
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().SlowStatus();
+                }
             }
         }
         if(RandomNumber == 2)
         {
             if(!CheckStunStatusEffect())
             {
-                var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
+                if (PlayerTarget.GetComponent<BasicAttack>().CheckEnemyStatusEffectImmunities(this.GetComponent<Enemy>(), StatusEffect.Stun))
+                {
+                    PlayerTarget.GetComponent<BasicAttack>().EnemyStatusImmunityText(this.GetComponent<Enemy>(), "Stun", GameManager.Instance.GetStunSprite);
+                }
+                else
+                {
+                    var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
 
-                StatusTxt.SetActive(true);
+                    StatusTxt.SetActive(true);
 
-                StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
+                    StatusTxt.transform.SetParent(enemy.GetUI.transform, false);
 
-                StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Stun";
+                    StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Stun";
 
-                StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetStunSprite;
+                    StatusTxt.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetStunSprite;
 
-                GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
+                    GameObject statuseffectIcon = ObjectPooler.Instance.GetEnemyStatusIcon();
 
-                statuseffectIcon.SetActive(true);
+                    statuseffectIcon.SetActive(true);
 
-                statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
+                    statuseffectIcon.transform.SetParent(enemy.GetDebuffTransform, false);
 
-                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetStunSprite;
+                    statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetStunSprite;
 
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasStunStatus = true;
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().GetHasStunStatus = true;
 
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GiftEffects[RandomNumber];
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
-                statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetStunSprite;
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().StunStatus();
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().GetStatusEffect = GiftEffects[RandomNumber];
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().GetPlayer = PlayerTarget.GetComponent<PlayerController>();
+                    statuseffectIcon.GetComponentInChildren<Image>().sprite = GameManager.Instance.GetStunSprite;
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().StunStatus();
 
-                statuseffectIcon.GetComponent<EnemyStatusIcon>().CreateStunEffectParticle();
+                    statuseffectIcon.GetComponent<EnemyStatusIcon>().CreateStunEffectParticle();
+                }
             }
         }
         return RandomNumber;

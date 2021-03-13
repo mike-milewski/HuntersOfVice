@@ -456,16 +456,22 @@ public class Items : MonoBehaviour
 
         var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
 
-        StatusTxt.SetActive(true);
+        if(Player.GetComponent<BasicAttack>().CheckEnemyStatusEffectImmunities(enemy, StatusEffect.Poison))
+        {
+            Player.GetComponent<BasicAttack>().EnemyStatusImmunityText(enemy, "Poison", StatusEffectImage);
+        }
+        else
+        {
+            StatusTxt.SetActive(true);
 
-        StatusTxt.transform.SetParent(TextHolder.transform, false);
+            StatusTxt.transform.SetParent(TextHolder.transform, false);
 
-        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Poison";
+            StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ Poison";
 
-        StatusTxt.GetComponentInChildren<Image>().sprite = StatusEffectImage;
+            StatusTxt.GetComponentInChildren<Image>().sprite = StatusEffectImage;
 
-        ApplyPoisonStatus(enemy);
-
+            ApplyPoisonStatus(enemy);
+        }
         return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
 

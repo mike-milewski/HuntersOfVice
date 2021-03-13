@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 00000000
   Immunities: 05000000
   Absorbtions: 03000000
+  StatusImmunity: 10000000
   CharacterName: Ruby Beetle
   CharacterLevel: 12
   Health: 800

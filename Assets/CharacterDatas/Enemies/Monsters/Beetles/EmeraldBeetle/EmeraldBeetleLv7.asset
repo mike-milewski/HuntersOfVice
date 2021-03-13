@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 00000000
   Immunities: 05000000
   Absorbtions: 00000000
+  StatusImmunity: 1100000001000000
   CharacterName: Emerald Beetle
   CharacterLevel: 7
   Health: 400

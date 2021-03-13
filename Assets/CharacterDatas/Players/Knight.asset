@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 
   Immunities: 
   Absorbtions: 
+  StatusImmunity: 
   CharacterName: Knight
   CharacterLevel: 1
   Health: 150

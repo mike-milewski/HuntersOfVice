@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 00000000
   Immunities: 00000000
   Absorbtions: 00000000
+  StatusImmunity: 0300000006000000
   CharacterName: Puck, Sylvan's Chosen
   CharacterLevel: 5
   Health: 2000

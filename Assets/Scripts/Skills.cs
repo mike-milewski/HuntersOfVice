@@ -2045,7 +2045,7 @@ public class Skills : StatusEffects
                 }
                 else
                 {
-                    if(CheckEnemyStatusEffectImmunities(hitColliders[i].GetComponent<Enemy>()))
+                    if(CheckEnemyStatusEffectImmunities(hitColliders[i].GetComponent<Enemy>(), GetEnemyStatusEffect))
                     {
                         EnemyStatusImmune();
                     }
@@ -2204,7 +2204,7 @@ public class Skills : StatusEffects
 
         StatusTxt.transform.SetParent(TextHolder.transform, false);
 
-        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetStatusEffectName + "\n <size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
+        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#E03F3F> x " + GetStatusEffectName + "\n <size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
 
         StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
 
@@ -2215,15 +2215,28 @@ public class Skills : StatusEffects
     {
         var StatusTxt = ObjectPooler.Instance.GetEnemyStatusText();
 
-        StatusTxt.SetActive(true);
+        if (CheckEnemyStatusEffectImmunities(GetCharacter.GetComponent<BasicAttack>().GetTarget, GetEnemyStatusEffect))
+        {
+            StatusTxt.SetActive(true);
 
-        StatusTxt.transform.SetParent(TextHolder.transform, false);
+            StatusTxt.transform.SetParent(TextHolder.transform, false);
 
-        StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetStatusEffectName;
+            StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>" + GetStatusEffectName + "\n <size=12> <#EFDFB8>" + "(IMMUNE!)" + "</color> </size>";
 
-        StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+            StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+        }
+        else
+        {
+            StatusTxt.SetActive(true);
 
-        StatusEffectSkillText();
+            StatusTxt.transform.SetParent(TextHolder.transform, false);
+
+            StatusTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<#5DFFB4>+ " + GetStatusEffectName;
+
+            StatusTxt.GetComponentInChildren<Image>().sprite = button.GetComponent<Image>().sprite;
+
+            StatusEffectSkillText();
+        }
 
         return StatusTxt.GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -2785,12 +2798,18 @@ public class Skills : StatusEffects
 
             if (GetCharacter.GetComponent<BasicAttack>().GetHasBurnStatus)
             {
-                if (Random.value * 100 <= 5)
+                if (Random.value * 100 <= 100)
                 {
-                    if (!GetCharacter.GetComponent<BasicAttack>().CheckBurnStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
-                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    if(CheckEnemyStatusEffectImmunities(Target, StatusEffect.Burning))
                     {
-                        GetCharacter.GetComponent<BasicAttack>().BurningStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                        GetCharacter.GetComponent<BasicAttack>().EnemyStatusImmunityText(Target, "Burning", GetCharacter.GetComponent<BasicAttack>().GetBurningStatusEffectSprite);
+                    }
+                    else
+                    {
+                        if (!GetCharacter.GetComponent<BasicAttack>().CheckBurnStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) && Target != null)
+                        {
+                            GetCharacter.GetComponent<BasicAttack>().BurningStatus(Target);
+                        }
                     }
                 }
             }
@@ -2798,10 +2817,16 @@ public class Skills : StatusEffects
             {
                 if (Random.value * 100 <= 5)
                 {
-                    if (!GetCharacter.GetComponent<BasicAttack>().CheckSlowStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
-                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    if (CheckEnemyStatusEffectImmunities(Target, StatusEffect.Slow))
                     {
-                        GetCharacter.GetComponent<BasicAttack>().SlowStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                        GetCharacter.GetComponent<BasicAttack>().EnemyStatusImmunityText(Target, "Slowed", GetCharacter.GetComponent<BasicAttack>().GetSlowStatusEffectSprite);
+                    }
+                    else
+                    {
+                        if (!GetCharacter.GetComponent<BasicAttack>().CheckSlowStatusEffect(Target) && Target != null)
+                        {
+                            GetCharacter.GetComponent<BasicAttack>().SlowStatus(Target);
+                        }
                     }
                 }
             }
@@ -2809,10 +2834,9 @@ public class Skills : StatusEffects
             {
                 if (Random.value * 100 <= 5)
                 {
-                    if (!GetCharacter.GetComponent<BasicAttack>().CheckDefenseDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
-                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckDefenseDownStatusEffect(Target) && Target != null)
                     {
-                        GetCharacter.GetComponent<BasicAttack>().DefenseDownStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                        GetCharacter.GetComponent<BasicAttack>().DefenseDownStatus(Target);
                     }
                 }
             }
@@ -2820,10 +2844,9 @@ public class Skills : StatusEffects
             {
                 if (Random.value * 100 <= 5)
                 {
-                    if (!GetCharacter.GetComponent<BasicAttack>().CheckStrengthDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
-                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckStrengthDownStatusEffect(Target) && Target != null)
                     {
-                        GetCharacter.GetComponent<BasicAttack>().StrengthDownStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
+                        GetCharacter.GetComponent<BasicAttack>().StrengthDownStatus(Target);
                     }
                 }
             }
@@ -2831,8 +2854,7 @@ public class Skills : StatusEffects
             {
                 if (Random.value * 100 <= 5)
                 {
-                    if (!GetCharacter.GetComponent<BasicAttack>().CheckIntelligenceDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) &&
-                        GetCharacter.GetComponent<BasicAttack>().GetTarget != null)
+                    if (!GetCharacter.GetComponent<BasicAttack>().CheckIntelligenceDownStatusEffect(GetCharacter.GetComponent<BasicAttack>().GetTarget) && Target != null)
                     {
                         GetCharacter.GetComponent<BasicAttack>().IntelligenceDownStatus(GetCharacter.GetComponent<BasicAttack>().GetTarget);
                     }
@@ -2919,13 +2941,13 @@ public class Skills : StatusEffects
         return Absorption;
     }
 
-    private bool CheckEnemyStatusEffectImmunities(Enemy Target)
+    private bool CheckEnemyStatusEffectImmunities(Enemy Target, StatusEffect statuseffect)
     {
         bool IsImmune = false;
 
         for (int i = 0; i < Target.GetCharacter.GetCharacterData.StatusImmunity.Length; i++)
         {
-            if (GetEnemyStatusEffect == Target.GetCharacter.GetCharacterData.StatusImmunity[i])
+            if (statuseffect == Target.GetCharacter.GetCharacterData.StatusImmunity[i])
             {
                 IsImmune = true;
             }

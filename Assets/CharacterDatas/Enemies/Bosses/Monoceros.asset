@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 00000000
   Immunities: 00000000
   Absorbtions: 00000000
+  StatusImmunity: 0f000000060000001000000003000000
   CharacterName: Monoceros, The Sylvan Vice
   CharacterLevel: 15
   Health: 5000

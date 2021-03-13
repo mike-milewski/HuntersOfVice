@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 0100000006000000
   Immunities: 02000000
   Absorbtions: 00000000
+  StatusImmunity: 03000000
   CharacterName: Rock Spirit
   CharacterLevel: 7
   Health: 402

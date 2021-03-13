@@ -39,13 +39,13 @@ public class MonsterButton : MonoBehaviour
 
     public void ShowMonsterInfo()
     {
-        MonsterInfoText.text = "<u>" + monsterInformation.GetCharacterData[Index].CharacterName + "</u>" + "\n\n" + "<size=9>" + "Level: " +
+        MonsterInfoText.text = "<u>" + monsterInformation.GetCharacterData[Index].CharacterName + "</u>" + "\n" + "<size=8>" + "Level: " +
                                                                         monsterInformation.GetCharacterData[Index].CharacterLevel + "\n" + "HP: " +
                                                                         monsterInformation.GetCharacterData[Index].Health +
                                                                         "\n" + "Strength: " + monsterInformation.GetCharacterData[Index].Strength + "\n" + "Defense: " +
                                                                         monsterInformation.GetCharacterData[Index].Defense + "\n" + "Intelligence: " +
                                                                         monsterInformation.GetCharacterData[Index].Intelligence + "\n\n" + GetWeaknesses()
-                                                                        + GetResistances() + GetImmunities() + GetAbsorbtions() + "\n"
+                                                                        + GetResistances() + GetImmunities() + GetAbsorbtions() + GetStatusEffectImmunities() + "\n"
                                                                         + "EXP: " + monsterInformation.GetCharacterData[Index].EXP + "\n" +
                                                                         "Coins: " + monsterInformation.GetCharacterData[Index].Coins + 
                                                                         "\n" + "Skill Points: " + monsterInformation.GetCharacterData[Index].SkillPoints + "\n\n" + "Drop: " + ItemDrops();
@@ -118,7 +118,7 @@ public class MonsterButton : MonoBehaviour
                 {
                     immunities += "<#EFDFB8>" + monsterInformation.GetCharacterData[Index].Immunities[i] + "</color>" + " ";
                 }
-                immunity = "Resist: " + immunities + "\n";
+                immunity = "Immune: " + immunities + "\n";
             }
         }
         else
@@ -144,7 +144,7 @@ public class MonsterButton : MonoBehaviour
                 {
                     absorbtions += "<#EFDFB8>" + monsterInformation.GetCharacterData[Index].Absorbtions[i] + "</color>" + " ";
                 }
-                absorb = "Resist: " + absorbtions + "\n";
+                absorb = "Absorb: " + absorbtions + "\n";
             }
         }
         else
@@ -153,6 +153,32 @@ public class MonsterButton : MonoBehaviour
         }
 
         return absorb;
+    }
+
+    public string GetStatusEffectImmunities()
+    {
+        string Immunity = "";
+        string immune = "";
+
+        int i = 0;
+
+        if (monsterInformation.GetCharacterData[Index].StatusImmunity.Length > 0)
+        {
+            if (monsterInformation.GetCharacterData[Index].StatusImmunity[i] != StatusEffect.NONE)
+            {
+                for (i = 0; i < monsterInformation.GetCharacterData[Index].StatusImmunity.Length; i++)
+                {
+                    Immunity += "<#EFDFB8>" + monsterInformation.GetCharacterData[Index].StatusImmunity[i] + "</color>" + " ";
+                }
+                immune = "Status Immune: " + Immunity + "\n";
+            }
+        }
+        else
+        {
+            immune = "";
+        }
+
+        return immune;
     }
 
     private string ItemDrops()

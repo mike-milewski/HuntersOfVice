@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 0100000006000000
   Immunities: 02000000
   Absorbtions: 00000000
+  StatusImmunity: 11000000
   CharacterName: Golem Fragment
   CharacterLevel: 6
   Health: 399

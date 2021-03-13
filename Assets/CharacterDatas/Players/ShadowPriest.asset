@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 
   Immunities: 
   Absorbtions: 
+  StatusImmunity: 
   CharacterName: Shadow Priest
   CharacterLevel: 1
   Health: 105

@@ -79,12 +79,12 @@ public class MonsterInformation : MonoBehaviour
 
         ShowLevelButtons();
 
-        ParentObj.GetComponent<MonsterBook>().GetMonsterInfoTxt.text = "<u>" + characterData[0].CharacterName + "</u>" + "\n\n" + "<size=9>" + "Level: " +
+        ParentObj.GetComponent<MonsterBook>().GetMonsterInfoTxt.text = "<u>" + characterData[0].CharacterName + "</u>" + "\n" + "<size=8>" + "Level: " +
                                                                         characterData[0].CharacterLevel + "\n" + "HP: " + characterData[0].Health +
                                                                         "\n" + "Strength: " + characterData[0].Strength + "\n" + "Defense: " +
                                                                         characterData[0].Defense + "\n" + "Intelligence: " +
                                                                         characterData[0].Intelligence + "\n\n" + GetWeaknesses() + GetResistances() +
-                                                                        GetImmunities() + GetAbsorbtions() + "\n" + "EXP: " +
+                                                                        GetImmunities() + GetAbsorbtions() + GetStatusEffectImmunities() + "\n" + "EXP: " +
                                                                         characterData[0].EXP + "\n" + "Coins: " + characterData[0].Coins + "\n" + "Skill Points: " + characterData[0].SkillPoints +
                                                                         "\n\n" + "Drop: " + ItemDrops();
     }
@@ -211,6 +211,32 @@ public class MonsterInformation : MonoBehaviour
         }
 
         return absorb;
+    }
+
+    public string GetStatusEffectImmunities()
+    {
+        string Immunity = "";
+        string immune = "";
+
+        int i = 0;
+
+        if (characterData[0].StatusImmunity.Length > 0)
+        {
+            if (character.GetCharacterData.StatusImmunity[i] != StatusEffect.NONE)
+            {
+                for (i = 0; i < characterData[0].StatusImmunity.Length; i++)
+                {
+                    Immunity += "<#EFDFB8>" + character.GetCharacterData.StatusImmunity[i] + "</color>" + " ";
+                }
+                immune = "Status Immune: " + Immunity + "\n";
+            }
+        }
+        else
+        {
+            immune = "";
+        }
+
+        return immune;
     }
 
     private string ItemDrops()

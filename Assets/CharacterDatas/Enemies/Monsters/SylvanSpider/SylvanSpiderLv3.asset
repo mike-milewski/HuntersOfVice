@@ -16,6 +16,7 @@ MonoBehaviour:
   Resistances: 00000000
   Immunities: 00000000
   Absorbtions: 00000000
+  StatusImmunity: 00000000
   CharacterName: Sylvan Spider
   CharacterLevel: 3
   Health: 250
