@@ -1925,19 +1925,24 @@ public class Skills : StatusEffects
         {
             if(DistanceToAttack() <= AttackRange)
             {
-                SkillParticle = ObjectPooler.Instance.GetWhirlwindSlashParticle();
+                if(settings.UseParticleEffects)
+                {
+                    SkillParticle = ObjectPooler.Instance.GetWhirlwindSlashParticle();
 
-                SkillParticle.SetActive(true);
+                    SkillParticle.SetActive(true);
 
-                SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y, SkillParticleParent.position.z);
+                    SkillParticle.transform.position = new Vector3(SkillParticleParent.position.x, SkillParticleParent.position.y, SkillParticleParent.position.z);
 
-                SkillParticle.transform.SetParent(SkillParticleParent);
+                    SkillParticle.transform.SetParent(SkillParticleParent);
+                }
 
                 GetCharacter.GetComponent<PlayerAnimations>().WhirlwindSlashAnimation();
 
                 SkillsManager.Instance.GetActivatedSkill = true;
 
                 this.CoolDownImage.fillAmount = 1;
+
+                GetCharacter.GetComponent<Mana>().ModifyMana(-ManaCost);
             }
             else
             {
@@ -1952,12 +1957,12 @@ public class Skills : StatusEffects
 
     private void WhirlwindSlashHit()
     {
-        GetCharacter.transform.Rotate(0, 600, 0);
+        GetCharacter.transform.Rotate(0, 400 * Time.deltaTime, 0);
     }
 
     private void SpinShroomSpin()
     {
-        GetCharacter.transform.Rotate(0, 600, 0);
+        GetCharacter.transform.Rotate(0, 400 * Time.deltaTime, 0);
     }
 
     public void SetUpDamagePerimiter(Vector3 center, float radius)
