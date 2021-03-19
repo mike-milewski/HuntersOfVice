@@ -19,11 +19,11 @@ MonoBehaviour:
   StatusImmunity: 0f000000060000001000000003000000
   CharacterName: Monoceros, The Sylvan Vice
   CharacterLevel: 15
-  Health: 5000
+  Health: 7000
   Mana: 0
-  Strength: 45
-  Defense: 30
-  Intelligence: 35
+  Strength: 50
+  Defense: 50
+  Intelligence: 50
   HpIncrease: 0
   MpIncrease: 0
   CriticalHitChance: 5
