@@ -299,7 +299,7 @@ public class SkillsManager : MonoBehaviour
 
         if(!GameManager.Instance.GetBeatGame)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1) && skills.Count > 0)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && skills.Count > 0 || Input.GetKeyDown(KeyCode.Keypad1) && skills.Count > 0)
             {
                 if (skills[0].GetButton.interactable)
                 {
@@ -327,7 +327,7 @@ public class SkillsManager : MonoBehaviour
                     GameManager.Instance.CannotExecuteText();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2) && skills.Count > 1)
+            if (Input.GetKeyDown(KeyCode.Alpha2) && skills.Count > 1 || Input.GetKeyDown(KeyCode.Keypad2) && skills.Count > 0)
             {
                 if (skills[1].GetButton.interactable)
                 {
@@ -355,7 +355,7 @@ public class SkillsManager : MonoBehaviour
                     GameManager.Instance.CannotExecuteText();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3) && skills.Count > 2)
+            if (Input.GetKeyDown(KeyCode.Alpha3) && skills.Count > 2 || Input.GetKeyDown(KeyCode.Keypad3) && skills.Count > 0)
             {
                 if (skills[2].GetButton.interactable)
                 {
@@ -383,7 +383,7 @@ public class SkillsManager : MonoBehaviour
                     GameManager.Instance.CannotExecuteText();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha4) && skills.Count > 3)
+            if (Input.GetKeyDown(KeyCode.Alpha4) && skills.Count > 3 || Input.GetKeyDown(KeyCode.Keypad4) && skills.Count > 0)
             {
                 if (skills[3].GetButton.interactable)
                 {
@@ -411,7 +411,7 @@ public class SkillsManager : MonoBehaviour
                     GameManager.Instance.CannotExecuteText();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha5) && skills.Count > 4)
+            if (Input.GetKeyDown(KeyCode.Alpha5) && skills.Count > 4 || Input.GetKeyDown(KeyCode.Keypad5) && skills.Count > 0)
             {
                 if (skills[4].GetButton.interactable)
                 {
@@ -439,7 +439,7 @@ public class SkillsManager : MonoBehaviour
                     GameManager.Instance.CannotExecuteText();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha6) && skills.Count > 5)
+            if (Input.GetKeyDown(KeyCode.Alpha6) && skills.Count > 5 || Input.GetKeyDown(KeyCode.Keypad6) && skills.Count > 0)
             {
                 if (skills[5].GetButton.interactable)
                 {
@@ -467,7 +467,7 @@ public class SkillsManager : MonoBehaviour
                     GameManager.Instance.CannotExecuteText();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha7) && skills.Count > 6)
+            if (Input.GetKeyDown(KeyCode.Alpha7) && skills.Count > 6 || Input.GetKeyDown(KeyCode.Keypad7) && skills.Count > 0)
             {
                 if (skills[6].GetButton.interactable)
                 {
@@ -495,7 +495,7 @@ public class SkillsManager : MonoBehaviour
                     GameManager.Instance.CannotExecuteText();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha8) && skills.Count > 7)
+            if (Input.GetKeyDown(KeyCode.Alpha8) && skills.Count > 7 || Input.GetKeyDown(KeyCode.Keypad8) && skills.Count > 0)
             {
                 if (skills[7].GetButton.interactable)
                 {
@@ -523,7 +523,7 @@ public class SkillsManager : MonoBehaviour
                     GameManager.Instance.CannotExecuteText();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha9) && skills.Count > 8)
+            if (Input.GetKeyDown(KeyCode.Alpha9) && skills.Count > 8 || Input.GetKeyDown(KeyCode.Keypad9) && skills.Count > 0)
             {
                 if (skills[8].GetButton.interactable)
                 {

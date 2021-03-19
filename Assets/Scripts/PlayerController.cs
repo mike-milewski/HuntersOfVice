@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
         character.GetRigidbody.transform.position += Movement * character.GetMoveSpeed * Time.deltaTime;
 
-        direction.Normalize();
+        Movement.Normalize();
 
         if (direction.x > 0 || direction.z > 0 || direction.x < 0 || direction.z < 0)
         {

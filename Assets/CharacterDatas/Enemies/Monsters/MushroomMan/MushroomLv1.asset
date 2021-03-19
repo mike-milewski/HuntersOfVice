@@ -32,7 +32,7 @@ MonoBehaviour:
   MaterialDataDropChance: 0
   SkillPoints: 0
   MoveSpeed: 0
-  CheckedData: 1
+  CheckedData: 0
   UsesStrength: 0
   UsesIntelligence: 0
   materialdata: {fileID: 0}

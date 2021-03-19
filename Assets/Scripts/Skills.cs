@@ -2726,7 +2726,7 @@ public class Skills : StatusEffects
                     {
                         Target.GetHealth.ModifyHealth(-(Potency + DamageType));
 
-                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + Potency + DamageType;
+                        DamageTxt.GetComponentInChildren<TextMeshProUGUI>().text = "<size=15>" + SkillName + " " + (Potency + DamageType);
                     }
                     else
                     {
