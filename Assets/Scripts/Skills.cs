@@ -2803,7 +2803,7 @@ public class Skills : StatusEffects
 
             if (GetCharacter.GetComponent<BasicAttack>().GetHasBurnStatus)
             {
-                if (Random.value * 100 <= 100)
+                if (Random.value * 100 <= 5)
                 {
                     if(CheckEnemyStatusEffectImmunities(Target, StatusEffect.Burning))
                     {

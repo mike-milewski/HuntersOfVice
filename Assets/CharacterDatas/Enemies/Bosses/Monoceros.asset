@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Monoceros
   m_EditorClassIdentifier: 
   Weaknesses: 00000000
-  Resistances: 00000000
+  Resistances: 07000000
   Immunities: 00000000
   Absorbtions: 00000000
   StatusImmunity: 0f000000060000001000000003000000
