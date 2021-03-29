@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 193742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.9609118, y: 5.960911, z: 5.9609094}
+  m_LocalScale: {x: 3.747263, y: 3.747263, z: 3.747263}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: Tree Data
   m_EditorClassIdentifier: 
   _uniqueID: 107
-  materialHash: 15f7763ab917aad1c48e43f3c654b9c1215482368
+  materialHash: bde00063f7b9f60e71a5f6e9d35332bf215482368
   root:
     _uniqueID: 1
     seed: 1234
@@ -458,17 +458,17 @@ MonoBehaviour:
     rootSpread: 7.12
     groundOffset: 0
     rootMatrix:
-      e00: -0.0715024
-      e01: 0.35450873
-      e02: 0.9323149
+      e00: 0.56432235
+      e01: 0
+      e02: -0.8255546
       e03: 0
-      e10: 0.3856741
-      e11: 0.87183285
-      e12: -0.30193207
+      e10: -0
+      e11: 1
+      e12: 0
       e13: 0
-      e20: -0.91986024
-      e21: 0.3379808
-      e22: -0.19906299
+      e20: 0.8255546
+      e21: 0
+      e22: 0.56432235
       e23: 0
       e30: 0
       e31: 0
@@ -832,17 +832,17 @@ MonoBehaviour:
     pitch: -0
     rotation: {x: 0, y: 0, z: 0, w: 1}
     matrix:
-      e00: -0.0715024
-      e01: 0.35450873
-      e02: 0.9323149
+      e00: 0.56432235
+      e01: 0
+      e02: -0.8255546
       e03: 0
-      e10: 0.3856741
-      e11: 0.87183285
-      e12: -0.30193207
+      e10: -0
+      e11: 1
+      e12: 0
       e13: 0
-      e20: -0.91986024
-      e21: 0.3379808
-      e22: -0.19906299
+      e20: 0.8255546
+      e21: 0
+      e22: 0.56432235
       e23: 0
       e30: 0
       e31: 0
