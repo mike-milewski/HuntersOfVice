@@ -21,6 +21,8 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private GameObject PlaceHolder = null;
 
+    private bool Dragging;
+
     public Transform GetParentObj
     {
         get
@@ -71,191 +73,326 @@ public class DragUiObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(objectType == ObjectType.Skill)
+        if(Time.timeScale == 1 && !Dragging)
         {
-            PlaceHolder = new GameObject();
-            PlaceHolder.transform.SetParent(zone.transform, true);
+            Dragging = true;
 
-            RectTransform RectTrans = PlaceHolder.AddComponent<RectTransform>();
-
-            RectTrans.sizeDelta = new Vector2(GetComponent<RectTransform>().sizeDelta.x, GetComponent<RectTransform>().sizeDelta.y);
-
-            PlaceHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
-
-            SkillsManager.Instance.AllSkillsBeingDragged();
-        }
-        if(objectType == ObjectType.Weapon || objectType == ObjectType.Armor)
-        {
-            if (gameObject.transform.GetComponentInParent<EquippedCheck>())
+            if (objectType == ObjectType.Skill)
             {
-                gameObject.GetComponent<Equipment>().UnEquip();
-            }
-            if(zone.GetComponentInChildren<DragUiObject>())
-            {
-                if(zone.GetComponent<GridLayoutGroup>())
-                {
-                    zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;
-                }
-                else
-                {
-                    zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = false;
-                }
-            }
-        }
-        gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                PlaceHolder = new GameObject();
+                PlaceHolder.transform.SetParent(zone.transform, true);
 
-        foreach (Mask m in gameObject.GetComponentsInChildren<Mask>())
-        {
-            m.showMaskGraphic = true;
-        }
-        foreach (Image i in gameObject.GetComponentsInChildren<Image>())
-        {
-            i.raycastTarget = true;
+                RectTransform RectTrans = PlaceHolder.AddComponent<RectTransform>();
+
+                RectTrans.sizeDelta = new Vector2(GetComponent<RectTransform>().sizeDelta.x, GetComponent<RectTransform>().sizeDelta.y);
+
+                PlaceHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
+
+                SkillsManager.Instance.AllSkillsBeingDragged();
+            }
+            if (objectType == ObjectType.Weapon || objectType == ObjectType.Armor)
+            {
+                if (gameObject.transform.GetComponentInParent<EquippedCheck>())
+                {
+                    gameObject.GetComponent<Equipment>().UnEquip();
+                }
+                if (zone.GetComponentInChildren<DragUiObject>())
+                {
+                    if (zone.GetComponent<GridLayoutGroup>())
+                    {
+                        zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;
+                    }
+                    else
+                    {
+                        zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = false;
+                    }
+                }
+            }
+            gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+            foreach (Mask m in gameObject.GetComponentsInChildren<Mask>())
+            {
+                m.showMaskGraphic = true;
+            }
+            foreach (Image i in gameObject.GetComponentsInChildren<Image>())
+            {
+                i.raycastTarget = true;
+            }
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        gameObject.transform.SetParent(ParentObj, true);
-        transform.position = eventData.position;
-
-        if (objectType == ObjectType.Skill)
+        if(Dragging)
         {
-            int NewSiblingIndex = zone.transform.childCount;
+            gameObject.transform.SetParent(ParentObj, true);
+            transform.position = eventData.position;
 
-            for (int i = 0; i < zone.transform.childCount; i++)
+            if (objectType == ObjectType.Skill)
             {
-                if (transform.position.x < zone.transform.GetChild(i).position.x)
-                {
-                    NewSiblingIndex = i;
+                int NewSiblingIndex = zone.transform.childCount;
 
-                    if (PlaceHolder.transform.GetSiblingIndex() < NewSiblingIndex)
+                for (int i = 0; i < zone.transform.childCount; i++)
+                {
+                    if (transform.position.x < zone.transform.GetChild(i).position.x)
                     {
-                        NewSiblingIndex--;
+                        NewSiblingIndex = i;
+
+                        if (PlaceHolder.transform.GetSiblingIndex() < NewSiblingIndex)
+                        {
+                            NewSiblingIndex--;
+                        }
+                        break;
                     }
-                    break;
                 }
+                PlaceHolder.transform.SetSiblingIndex(NewSiblingIndex);
             }
-            PlaceHolder.transform.SetSiblingIndex(NewSiblingIndex);
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        if (gameObject.transform.parent != zone.transform)
+        if(Dragging)
         {
-            if(objectType == ObjectType.Skill)
+            gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            if (gameObject.transform.parent != zone.transform)
             {
-                if (gameObject.GetComponent<Skills>().GetStatusIcon != null)
+                if (objectType == ObjectType.Skill)
                 {
-                    if (gameObject.GetComponent<Skills>().GetStatusIcon.activeInHierarchy)
+                    if (gameObject.GetComponent<Skills>().GetStatusIcon != null)
                     {
-                        if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>())
+                        if (gameObject.GetComponent<Skills>().GetStatusIcon.activeInHierarchy)
                         {
-                            gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
-                            if(GameManager.Instance.GetShadowPriest.activeInHierarchy)
+                            if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>())
                             {
-                                SkillsManager.Instance.GetContractSkill = null;
-                                SkillsManager.Instance.GetContractStack--;
-                            }
+                                gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                                if (GameManager.Instance.GetShadowPriest.activeInHierarchy)
+                                {
+                                    SkillsManager.Instance.GetContractSkill = null;
+                                    SkillsManager.Instance.GetContractStack--;
+                                }
 
-                        }
-                        else if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>())
-                        {
-                            gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>().RemoveEffect();
+                            }
+                            else if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>())
+                            {
+                                gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>().RemoveEffect();
+                            }
                         }
                     }
+                    gameObject.GetComponent<Button>().enabled = false;
+                    gameObject.GetComponent<Mask>().showMaskGraphic = false;
+                    gameObject.GetComponent<Image>().raycastTarget = false;
+                    foreach (Mask m in gameObject.GetComponentsInChildren<Mask>())
+                    {
+                        m.showMaskGraphic = false;
+                    }
                 }
-                gameObject.GetComponent<Button>().enabled = false;
-                gameObject.GetComponent<Mask>().showMaskGraphic = false;
-                gameObject.GetComponent<Image>().raycastTarget = false;
-                foreach (Mask m in gameObject.GetComponentsInChildren<Mask>())
+                if (objectType == ObjectType.Weapon)
                 {
-                    m.showMaskGraphic = false;
+                    if (MenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxWeapons)
+                    {
+                        gameObject.transform.SetParent(zone.transform, true);
+                        gameObject.GetComponent<Equipment>().Equip();
+                    }
+                    else
+                    {
+                        gameObject.transform.SetParent(MenuParent, true);
+                        gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+                    }
                 }
-            }
-            if(objectType == ObjectType.Weapon)
-            {
-                if(MenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxWeapons)
+                if (objectType == ObjectType.Armor)
                 {
-                    gameObject.transform.SetParent(zone.transform, true);
-                    gameObject.GetComponent<Equipment>().Equip();
+                    if (MenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxArmor)
+                    {
+                        gameObject.transform.SetParent(zone.transform, true);
+                        gameObject.GetComponent<Equipment>().Equip();
+                    }
+                    else
+                    {
+                        gameObject.transform.SetParent(MenuParent, true);
+                        gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+                    }
                 }
-                else
+                if (objectType == ObjectType.Skill)
                 {
                     gameObject.transform.SetParent(MenuParent, true);
                     gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
                 }
-            }
-            if(objectType == ObjectType.Armor)
-            {
-                if (MenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxArmor)
+
+                ResetRectTransform();
+
+                if (!GameManager.Instance.GetSkillPanel.GetComponent<Image>().enabled)
                 {
-                    gameObject.transform.SetParent(zone.transform, true);
-                    gameObject.GetComponent<Equipment>().Equip();
+                    gameObject.GetComponent<Mask>().showMaskGraphic = false;
+                    gameObject.GetComponent<Skills>().GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = false;
+                    gameObject.GetComponent<Image>().raycastTarget = false;
                 }
-                else
+
+                if (objectType == ObjectType.Skill)
                 {
-                    gameObject.transform.SetParent(MenuParent, true);
-                    gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+                    SkillsManager.Instance.ClearSkills();
+                    SkillsManager.Instance.AddSkillsToList();
+                    SkillsManager.Instance.AllSkillsNotBeingDragged();
+                }
+                if (objectType == ObjectType.Weapon || objectType == ObjectType.Armor)
+                {
+                    SoundManager.Instance.UnEquipItem();
+                    if (zone.GetComponentInChildren<DragUiObject>())
+                    {
+                        zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;
+                    }
+                    if (!GameManager.Instance.GetEquipmentToggle)
+                    {
+                        gameObject.SetActive(false);
+                    }
                 }
             }
-            if(objectType == ObjectType.Skill)
+            else
             {
-                gameObject.transform.SetParent(MenuParent, true);
-                gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+                if (objectType == ObjectType.Skill)
+                {
+                    if (!gameObject.GetComponent<Button>().enabled)
+                    {
+                        gameObject.GetComponent<Button>().enabled = true;
+                    }
+                    transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
+                    CheckForSameSkills(gameObject.GetComponent<Skills>());
+
+                    SkillsManager.Instance.ClearSkills();
+                    SkillsManager.Instance.AddSkillsToList();
+                }
+                SetRectTransform();
             }
-
-            ResetRectTransform();
-
-            if (!GameManager.Instance.GetSkillPanel.GetComponent<Image>().enabled)
+            if (objectType == ObjectType.Skill)
             {
-                gameObject.GetComponent<Mask>().showMaskGraphic = false;
-                gameObject.GetComponent<Skills>().GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = false;
-                gameObject.GetComponent<Image>().raycastTarget = false;
-            }
-
-            if(objectType == ObjectType.Skill)
-            {
-                SkillsManager.Instance.ClearSkills();
-                SkillsManager.Instance.AddSkillsToList();
                 SkillsManager.Instance.AllSkillsNotBeingDragged();
-            }
-            if(objectType == ObjectType.Weapon || objectType == ObjectType.Armor)
-            {
-                SoundManager.Instance.UnEquipItem();
-                if (zone.GetComponentInChildren<DragUiObject>())
-                {
-                    zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;
-                }
-                if (!GameManager.Instance.GetEquipmentToggle)
-                {
-                    gameObject.SetActive(false);
-                }
-            }
-        }
-        else
-        {
-            if(objectType == ObjectType.Skill)
-            {
-                if (!gameObject.GetComponent<Button>().enabled)
-                {
-                    gameObject.GetComponent<Button>().enabled = true;
-                }
-                transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
-                CheckForSameSkills(gameObject.GetComponent<Skills>());
 
-                SkillsManager.Instance.ClearSkills();
-                SkillsManager.Instance.AddSkillsToList();
+                Destroy(PlaceHolder);
             }
-            SetRectTransform();
+            Dragging = false;
         }
-        if(objectType == ObjectType.Skill)
-        {
-            SkillsManager.Instance.AllSkillsNotBeingDragged();
+    }
 
-            Destroy(PlaceHolder);
+    public void CheckObjectDrag()
+    {
+        if(Dragging)
+        {
+            gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            if (gameObject.transform.parent != zone.transform)
+            {
+                if (objectType == ObjectType.Skill)
+                {
+                    if (gameObject.GetComponent<Skills>().GetStatusIcon != null)
+                    {
+                        if (gameObject.GetComponent<Skills>().GetStatusIcon.activeInHierarchy)
+                        {
+                            if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>())
+                            {
+                                gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<StatusIcon>().RemoveEffect();
+                                if (GameManager.Instance.GetShadowPriest.activeInHierarchy)
+                                {
+                                    SkillsManager.Instance.GetContractSkill = null;
+                                    SkillsManager.Instance.GetContractStack--;
+                                }
+
+                            }
+                            else if (gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>())
+                            {
+                                gameObject.GetComponent<Skills>().GetStatusIcon.GetComponent<EnemyStatusIcon>().RemoveEffect();
+                            }
+                        }
+                    }
+                    gameObject.GetComponent<Button>().enabled = false;
+                    gameObject.GetComponent<Mask>().showMaskGraphic = false;
+                    gameObject.GetComponent<Image>().raycastTarget = false;
+                    foreach (Mask m in gameObject.GetComponentsInChildren<Mask>())
+                    {
+                        m.showMaskGraphic = false;
+                    }
+                }
+                if (objectType == ObjectType.Weapon)
+                {
+                    if (MenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxWeapons)
+                    {
+                        gameObject.transform.SetParent(zone.transform, true);
+                        gameObject.GetComponent<Equipment>().Equip();
+                    }
+                    else
+                    {
+                        gameObject.transform.SetParent(MenuParent, true);
+                        gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+                    }
+                }
+                if (objectType == ObjectType.Armor)
+                {
+                    if (MenuParent.childCount >= GameManager.Instance.GetEquipmentMenu.GetMaxArmor)
+                    {
+                        gameObject.transform.SetParent(zone.transform, true);
+                        gameObject.GetComponent<Equipment>().Equip();
+                    }
+                    else
+                    {
+                        gameObject.transform.SetParent(MenuParent, true);
+                        gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+                    }
+                }
+                if (objectType == ObjectType.Skill)
+                {
+                    gameObject.transform.SetParent(MenuParent, true);
+                    gameObject.transform.position = new Vector2(MenuParent.transform.position.x, MenuParent.transform.position.y);
+                }
+
+                ResetRectTransform();
+
+                if (!GameManager.Instance.GetSkillPanel.GetComponent<Image>().enabled)
+                {
+                    gameObject.GetComponent<Mask>().showMaskGraphic = false;
+                    gameObject.GetComponent<Skills>().GetCoolDownImage.GetComponent<Mask>().showMaskGraphic = false;
+                    gameObject.GetComponent<Image>().raycastTarget = false;
+                }
+
+                if (objectType == ObjectType.Skill)
+                {
+                    SkillsManager.Instance.ClearSkills();
+                    SkillsManager.Instance.AddSkillsToList();
+                    SkillsManager.Instance.AllSkillsNotBeingDragged();
+                }
+                if (objectType == ObjectType.Weapon || objectType == ObjectType.Armor)
+                {
+                    SoundManager.Instance.UnEquipItem();
+                    if (zone.GetComponentInChildren<DragUiObject>())
+                    {
+                        zone.GetComponentInChildren<DragUiObject>().GetComponent<CanvasGroup>().blocksRaycasts = true;
+                    }
+                    if (!GameManager.Instance.GetEquipmentToggle)
+                    {
+                        gameObject.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                if (objectType == ObjectType.Skill)
+                {
+                    if (!gameObject.GetComponent<Button>().enabled)
+                    {
+                        gameObject.GetComponent<Button>().enabled = true;
+                    }
+                    transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
+                    CheckForSameSkills(gameObject.GetComponent<Skills>());
+
+                    SkillsManager.Instance.ClearSkills();
+                    SkillsManager.Instance.AddSkillsToList();
+                }
+                SetRectTransform();
+            }
+            if (objectType == ObjectType.Skill)
+            {
+                SkillsManager.Instance.AllSkillsNotBeingDragged();
+
+                Destroy(PlaceHolder);
+            }
+            Dragging = false;
         }
     }
 

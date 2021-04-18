@@ -560,7 +560,7 @@ public class Skills : StatusEffects
         if(SkillsManager.Instance.GetUsesHpForSkillCast)
         {
             if (CoolDownImage.fillAmount <= 0 && GetCharacter.CurrentHealth >= Mathf.Round(0.03f * GetCharacter.MaxHealth) && !GameManager.Instance.GetIsDead &&
-            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged)
+            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged && Time.timeScale == 1)
             {
                 button.interactable = true;
 
@@ -586,7 +586,7 @@ public class Skills : StatusEffects
         else
         {
             if (CoolDownImage.fillAmount <= 0 && GetCharacter.CurrentMana >= ManaCost && !GameManager.Instance.GetIsDead &&
-            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged && !DistanceSkill)
+            !SkillsManager.Instance.GetActivatedSkill && !SkillsManager.Instance.GetDisruptedSkill && !IsBeingDragged && !DistanceSkill && Time.timeScale == 1)
             {
                 button.interactable = true;
 

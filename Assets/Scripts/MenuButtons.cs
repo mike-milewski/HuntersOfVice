@@ -56,10 +56,13 @@ public class MenuButtons : MonoBehaviour
     {
         if (!GameManager.Instance.GetIsDead)
         {
-            FadeScreen.Instance.GetReturnToMenu = true;
-            FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
+            if(Time.timeScale == 1)
+            {
+                FadeScreen.Instance.GetReturnToMenu = true;
+                FadeScreen.Instance.GetFadeState = FadeState.FADEOUT;
 
-            GameManager.Instance.GetCharacter.DefaultStats();
+                GameManager.Instance.GetCharacter.DefaultStats();
+            }
         }
         else return;
     }
@@ -100,6 +103,7 @@ public class MenuButtons : MonoBehaviour
 
     public void PlayButtonClick()
     {
+        if(Time.timeScale == 1)
         SoundManager.Instance.ButtonClick();
     }
 

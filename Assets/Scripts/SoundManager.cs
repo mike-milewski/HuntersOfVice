@@ -134,7 +134,12 @@ public class SoundManager : MonoBehaviour
     public void Error()
     {
         if (!settings.MuteAudio)
-            audiosource[0].PlayOneShot(audioclips[15]);
+        {
+            if(Time.timeScale == 1)
+            {
+                audiosource[0].PlayOneShot(audioclips[15]);
+            }
+        }
     }
 
     public void Menu()

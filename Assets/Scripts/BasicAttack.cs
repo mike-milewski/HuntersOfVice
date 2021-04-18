@@ -320,16 +320,25 @@ public class BasicAttack : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            MousePoint();
+            if(Time.timeScale == 1)
+            {
+                MousePoint();
+            }
         }
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            CheckForTargets();
+            if(Time.timeScale == 1)
+            {
+                CheckForTargets();
+            }
         }
 
         if (Target != null)
         {
-            Attack();
+            if(Time.timeScale == 1)
+            {
+                Attack();
+            }
         }
     }
 

@@ -670,113 +670,116 @@ public class GameManager : MonoBehaviour
         #region UIPanels
         if(!BeatGame)
         {
-            if (Input.GetKeyDown(KeyCode.I))
+            if(Time.timeScale == 1)
             {
-                if (!MenuAnimating)
+                if (Input.GetKeyDown(KeyCode.I))
                 {
-                    MenuAnimating = true;
-                    if (!InventoryToggle)
+                    if (!MenuAnimating)
                     {
-                        SoundManager.Instance.Menu();
-                        ToggleInventoryPanel();
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                        MenuAnimating = true;
+                        if (!InventoryToggle)
+                        {
+                            SoundManager.Instance.Menu();
+                            ToggleInventoryPanel();
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                        }
+                        else
+                        {
+                            SoundManager.Instance.ReverseMenu();
+                            IsInInventory = false;
+                            InventoryToggle = false;
+                            InventoryPanelAnimator.SetBool("FadeIn", false);
+                            MonsterBookAnimator.SetBool("FadeIn", false);
+                            MonsterToggle = false;
+                            monsterbook.SetIsSelectedToFalse();
+                        }
+                        StartCoroutine(SetMenuAnimationToFalse());
                     }
-                    else
-                    {
-                        SoundManager.Instance.ReverseMenu();
-                        IsInInventory = false;
-                        InventoryToggle = false;
-                        InventoryPanelAnimator.SetBool("FadeIn", false);
-                        MonsterBookAnimator.SetBool("FadeIn", false);
-                        MonsterToggle = false;
-                        monsterbook.SetIsSelectedToFalse();
-                    }
-                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-            }
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (!MenuAnimating)
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    MenuAnimating = true;
-                    if (!EquipmentToggle)
+                    if (!MenuAnimating)
                     {
-                        SoundManager.Instance.Menu();
-                        ToggleEquipmentPanel();
-                        StartCoroutine("WaitToEnableEquipment");
+                        MenuAnimating = true;
+                        if (!EquipmentToggle)
+                        {
+                            SoundManager.Instance.Menu();
+                            ToggleEquipmentPanel();
+                            StartCoroutine("WaitToEnableEquipment");
+                        }
+                        else
+                        {
+                            SoundManager.Instance.ReverseMenu();
+                            EquipmentToggle = false;
+                            EquipmentPanelAnimator.SetBool("FadeIn", false);
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                        }
+                        StartCoroutine(SetMenuAnimationToFalse());
                     }
-                    else
-                    {
-                        SoundManager.Instance.ReverseMenu();
-                        EquipmentToggle = false;
-                        EquipmentPanelAnimator.SetBool("FadeIn", false);
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
-                    }
-                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-            }
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                if (!MenuAnimating)
+                if (Input.GetKeyDown(KeyCode.C))
                 {
-                    MenuAnimating = true;
-                    if (!CharacterToggle)
+                    if (!MenuAnimating)
                     {
-                        SoundManager.Instance.Menu();
-                        ToggleCharacterPanel();
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                        MenuAnimating = true;
+                        if (!CharacterToggle)
+                        {
+                            SoundManager.Instance.Menu();
+                            ToggleCharacterPanel();
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                        }
+                        else
+                        {
+                            SoundManager.Instance.ReverseMenu();
+                            CharacterToggle = false;
+                            CharacterPanelAnimator.SetBool("FadeIn", false);
+                        }
+                        StartCoroutine(SetMenuAnimationToFalse());
                     }
-                    else
-                    {
-                        SoundManager.Instance.ReverseMenu();
-                        CharacterToggle = false;
-                        CharacterPanelAnimator.SetBool("FadeIn", false);
-                    }
-                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-            }
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                if (!MenuAnimating)
+                if (Input.GetKeyDown(KeyCode.V))
                 {
-                    MenuAnimating = true;
-                    if (!SkillsToggle)
+                    if (!MenuAnimating)
                     {
-                        SoundManager.Instance.Menu();
-                        ToggleSkillsPanel();
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                        MenuAnimating = true;
+                        if (!SkillsToggle)
+                        {
+                            SoundManager.Instance.Menu();
+                            ToggleSkillsPanel();
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                        }
+                        else
+                        {
+                            SoundManager.Instance.ReverseMenu();
+                            MaskSkillsPanel();
+                        }
+                        StartCoroutine(SetMenuAnimationToFalse());
                     }
-                    else
-                    {
-                        SoundManager.Instance.ReverseMenu();
-                        MaskSkillsPanel();
-                    }
-                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-            }
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                if (!MenuAnimating)
+                if (Input.GetKeyDown(KeyCode.O))
                 {
-                    MenuAnimating = true;
-                    if (!SettingsToggle)
+                    if (!MenuAnimating)
                     {
-                        SoundManager.Instance.Menu();
-                        ToggleSettingsPanel();
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                        MenuAnimating = true;
+                        if (!SettingsToggle)
+                        {
+                            SoundManager.Instance.Menu();
+                            ToggleSettingsPanel();
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                            EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                        }
+                        else
+                        {
+                            SoundManager.Instance.ReverseMenu();
+                            SettingsToggle = false;
+                            SettingsPanelAnimator.SetBool("FadeIn", false);
+                        }
+                        StartCoroutine(SetMenuAnimationToFalse());
                     }
-                    else
-                    {
-                        SoundManager.Instance.ReverseMenu();
-                        SettingsToggle = false;
-                        SettingsPanelAnimator.SetBool("FadeIn", false);
-                    }
-                    StartCoroutine(SetMenuAnimationToFalse());
                 }
             }
         }
@@ -816,24 +819,27 @@ public class GameManager : MonoBehaviour
     {
         if(!BeatGame)
         {
-            if (!MenuAnimating)
+            if(Time.timeScale == 1)
             {
-                MenuAnimating = true;
-                if (!EquipmentToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleEquipmentPanel();
-                    StartCoroutine("WaitToEnableEquipment");
+                    MenuAnimating = true;
+                    if (!EquipmentToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleEquipmentPanel();
+                        StartCoroutine("WaitToEnableEquipment");
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
+                        EquipmentToggle = false;
+                        EquipmentPanelAnimator.SetBool("FadeIn", false);
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
-                    EquipmentToggle = false;
-                    EquipmentPanelAnimator.SetBool("FadeIn", false);
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
-                }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
         }
     }
@@ -842,23 +848,26 @@ public class GameManager : MonoBehaviour
     {
         if(!BeatGame)
         {
-            if (!MenuAnimating)
+            if(Time.timeScale == 1)
             {
-                MenuAnimating = true;
-                if (!CharacterToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleCharacterPanel();
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                    MenuAnimating = true;
+                    if (!CharacterToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleCharacterPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
+                        CharacterToggle = false;
+                        CharacterPanelAnimator.SetBool("FadeIn", false);
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
-                    CharacterToggle = false;
-                    CharacterPanelAnimator.SetBool("FadeIn", false);
-                }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
         }
     }
@@ -867,22 +876,25 @@ public class GameManager : MonoBehaviour
     {
         if(!BeatGame)
         {
-            if (!MenuAnimating)
+            if(Time.timeScale == 1)
             {
-                MenuAnimating = true;
-                if (!SkillsToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleSkillsPanel();
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                    MenuAnimating = true;
+                    if (!SkillsToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleSkillsPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
+                        MaskSkillsPanel();
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
-                    MaskSkillsPanel();
-                }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
         }
     }
@@ -891,23 +903,26 @@ public class GameManager : MonoBehaviour
     {
         if(!BeatGame)
         {
-            if (!MenuAnimating)
+            if(Time.timeScale == 1)
             {
-                MenuAnimating = true;
-                if (!SettingsToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleSettingsPanel();
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                    MenuAnimating = true;
+                    if (!SettingsToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleSettingsPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
+                        SettingsToggle = false;
+                        SettingsPanelAnimator.SetBool("FadeIn", false);
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
-                    SettingsToggle = false;
-                    SettingsPanelAnimator.SetBool("FadeIn", false);
-                }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
         }
     }
@@ -916,28 +931,31 @@ public class GameManager : MonoBehaviour
     {
         if(!BeatGame)
         {
-            if (!MenuAnimating)
+            if(Time.timeScale == 1)
             {
-                MenuAnimating = true;
-                if (!InventoryToggle)
+                if (!MenuAnimating)
                 {
-                    SoundManager.Instance.Menu();
-                    ToggleInventoryPanel();
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
-                    EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
-                }
-                else
-                {
-                    SoundManager.Instance.ReverseMenu();
+                    MenuAnimating = true;
+                    if (!InventoryToggle)
+                    {
+                        SoundManager.Instance.Menu();
+                        ToggleInventoryPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableWeaponsInPanel();
+                        EquipmentPanel.GetComponent<EquipmentMenu>().DisableArmorInPanel();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.ReverseMenu();
 
-                    IsInInventory = false;
-                    InventoryToggle = false;
-                    MonsterToggle = false;
+                        IsInInventory = false;
+                        InventoryToggle = false;
+                        MonsterToggle = false;
 
-                    MonsterBookAnimator.SetBool("FadeIn", false);
-                    InventoryPanelAnimator.SetBool("FadeIn", false);
+                        MonsterBookAnimator.SetBool("FadeIn", false);
+                        InventoryPanelAnimator.SetBool("FadeIn", false);
+                    }
+                    StartCoroutine(SetMenuAnimationToFalse());
                 }
-                StartCoroutine(SetMenuAnimationToFalse());
             }
         }
     }

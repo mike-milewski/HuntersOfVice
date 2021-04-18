@@ -10,29 +10,32 @@ public class ItemManager : MonoBehaviour
 
     private void Update()
     {
-        if(!GameManager.Instance.GetBeatGame)
+        if (!GameManager.Instance.GetBeatGame)
         {
-            if (Input.GetKeyDown(KeyCode.Z))
+            if (Time.timeScale == 1)
             {
-                if (item[0].GetButton.interactable)
+                if (Input.GetKeyDown(KeyCode.Z))
                 {
-                    item[0].GetButton.onClick.Invoke();
+                    if (item[0].GetButton.interactable)
+                    {
+                        item[0].GetButton.onClick.Invoke();
+                    }
+                    else
+                    {
+                        GameManager.Instance.CannotExecuteText();
+                    }
                 }
-                else
-                {
-                    GameManager.Instance.CannotExecuteText();
-                }
-            }
 
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                if (item[1].GetButton.interactable)
+                if (Input.GetKeyDown(KeyCode.X))
                 {
-                    item[1].GetButton.onClick.Invoke();
-                }
-                else
-                {
-                    GameManager.Instance.CannotExecuteText();
+                    if (item[1].GetButton.interactable)
+                    {
+                        item[1].GetButton.onClick.Invoke();
+                    }
+                    else
+                    {
+                        GameManager.Instance.CannotExecuteText();
+                    }
                 }
             }
         }

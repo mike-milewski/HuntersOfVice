@@ -191,16 +191,19 @@ public class Items : MonoBehaviour
     {
         if(!GameManager.Instance.GetBeatGame)
         {
-            switch (itemType)
+            if(Time.timeScale == 1)
             {
-                case (ItemType.HpHeal):
-                    ReadyHpHealing();
-                    MiasmaPulsePassive();
-                    break;
-                case (ItemType.MpHeal):
-                    ReadyMpHealing();
-                    ManaPulsePassive();
-                    break;
+                switch (itemType)
+                {
+                    case (ItemType.HpHeal):
+                        ReadyHpHealing();
+                        MiasmaPulsePassive();
+                        break;
+                    case (ItemType.MpHeal):
+                        ReadyMpHealing();
+                        ManaPulsePassive();
+                        break;
+                }
             }
         }
     }
